@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * Created by Reliese Model.
+ */
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+/**
+ * Class Beneficiaire
+ * 
+ * @property int $id
+ * @property string $uuid
+ * @property string $matricule
+ * @property string $cin
+ * @property Carbon|null $date
+ * @property string|null $lieu
+ * @property int|null $gestionnaires_id
+ * @property int|null $users_id
+ * @property int|null $villages_id
+ * @property string|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * 
+ * @property Village|null $village
+ * @property Gestionnaire|null $gestionnaire
+ * @property User|null $user
+ * @property Collection|Formation[] $formations
+ *
+ * @package App\Models
+ */
+class Beneficiaire extends Model
+{
+	use SoftDeletes;
+	protected $table = 'beneficiaires';
+
+	protected $casts = [
+		'gestionnaires_id' => 'int',
+		'users_id' => 'int',
+		'villages_id' => 'int'
+	];
+
+	protected $dates = [
+		'date'
+	];
+
+	protected $fillable = [
+		'uuid',
+		'matricule',
+		'cin',
+		'date',
+		'lieu',
+		'gestionnaires_id',
+		'users_id',
+		'villages_id'
+	];
+
+	public function village()
+	{
+		return $this->belongsTo(Village::class, 'villages_id');
+	}
+
+	public function gestionnaire()
+	{
+		return $this->belongsTo(Gestionnaire::class, 'gestionnaires_id');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
+	}
+
+	public function formations()
+	{
+		return $this->belongsToMany(Formation::class, 'beneficiaires_has_formations', 'beneficiaires_id', 'formations_id')
+					->withPivot('deleted_at')
+					->withTimestamps();
+	}
+}
