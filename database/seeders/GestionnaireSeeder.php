@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Administrateur;
+use App\Models\Gestionnaire;
 
-class AdministrateurSeeder extends Seeder
+class GestionnaireSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class AdministrateurSeeder extends Seeder
      */
     public function run()
     {
-        Administrateur::factory()
+        Gestionnaire::factory()
             ->count(30)
             ->create();
     }
