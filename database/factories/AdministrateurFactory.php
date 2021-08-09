@@ -15,7 +15,7 @@ class AdministrateurFactory extends Factory
      *
      * @var string
      */
-    protected $model = Role::class;
+    protected $model = Administrateur::class;
 
     /**
      * Define the model's default state.
@@ -29,8 +29,9 @@ class AdministrateurFactory extends Factory
         return [            
         'matricule' => "ADMIN".$this->faker->word,
         'users_id' => function () use($role_id) {
-             return factory(User::class)->create(["roles_id"=>$role_id])->id;
+             return User::factory()->create(["roles_id"=>$role_id])->id;
         },
+       /*  'users_id'  =>   User::factory()->create() , */
         ];
     }
 }
