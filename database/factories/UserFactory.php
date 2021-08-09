@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Helpers\SnNameGenerator as SnmG;
 
 class UserFactory extends Factory
 {
@@ -29,23 +30,23 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10), */
-
+            'uuid' => Str::uuid(),
             'civilite' => SnmG::getCivilite(),
             'firstname' => SnmG::getFirstName(),
             'name' => SnmG::getName(),
             'username' => Str::random(7),
             'email' => $this->faker->unique()->safeEmail(),
-            'telephone' => $faker->e164PhoneNumber,
-            'fixe' => $faker->phoneNumber,
+            'telephone' => $this->faker->e164PhoneNumber,
+            'fixe' => $this->faker->phoneNumber,
             'sexe' => SnmG::getSexe(),
-            'date_naissance' => $faker->dateTime(),
+            'date_naissance' => $this->faker->dateTime(),
             'lieu_naissance' => SnmG::getLieunaissance(),
             'situation_familiale' => SnmG::getFamiliale(),
-            'adresse' => $faker->address,
-            'bp' => $faker->postcode,
-            'fax' => $faker->e164PhoneNumber,
-            'email_verified_at' => $faker->dateTimeBetween(),
-            'password' => bcrypt($faker->password),
+            'adresse' => $this->faker->address,
+            'bp' => $this->faker->postcode,
+            'fax' => $this->faker->e164PhoneNumber,
+            'email_verified_at' => now(),
+            'password' => bcrypt($this->faker->password),
             'created_by' => SnmG::getFirstName().' '.SnmG::getFirstName().' ('.Str::random(7).')',
             'updated_by' => SnmG::getFirstName().' '.SnmG::getFirstName().' ('.Str::random(7).')',
             'deleted_by' => "",

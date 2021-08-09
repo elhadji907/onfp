@@ -3,14 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use App\Helpers\SnNameGenerator as SnmG;
 use Faker\Factory as Faker;
-use App\Models\User;
+use App\Models\Role;
+use App\Models\Administrateur;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use App\Helpers\SnNameGenerator as SnmG;
 
-class UserSeeder extends Seeder
+class AdministrateurSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()
+        Administrateur::factory()
             ->count(50)
             ->create();
     }
