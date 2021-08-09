@@ -31,7 +31,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Salaire extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'salaires';
 
 	protected $casts = [

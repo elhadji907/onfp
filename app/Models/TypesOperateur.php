@@ -28,7 +28,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class TypesOperateur extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'types_operateurs';
 
 	protected $fillable = [

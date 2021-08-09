@@ -27,7 +27,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ModulesHasNiveaux extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'modules_has_niveauxs';
 
 	protected $casts = [

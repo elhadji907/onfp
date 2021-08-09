@@ -27,7 +27,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DemandeursHasFormation extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'demandeurs_has_formations';
 
 	protected $casts = [

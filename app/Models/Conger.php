@@ -28,7 +28,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Conger extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'congers';
 
 	protected $casts = [

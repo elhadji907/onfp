@@ -38,7 +38,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class EtatsPrevi extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'etats_previs';
 
 	protected $casts = [

@@ -59,7 +59,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Operateur extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'operateurs';
 
 	protected $casts = [

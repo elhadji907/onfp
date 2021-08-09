@@ -29,7 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Detail extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'details';
 
 	protected $casts = [

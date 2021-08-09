@@ -53,7 +53,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Agrement extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'agrements';
 
 	protected $casts = [

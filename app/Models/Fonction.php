@@ -28,7 +28,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Fonction extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'fonctions';
 
 	protected $fillable = [

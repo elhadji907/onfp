@@ -29,7 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Domaine extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'domaines';
 
 	protected $casts = [

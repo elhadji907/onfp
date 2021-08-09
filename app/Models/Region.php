@@ -30,7 +30,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Region extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'regions';
 
 	protected $fillable = [

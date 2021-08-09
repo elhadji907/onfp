@@ -49,7 +49,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Mission extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'missions';
 
 	protected $casts = [

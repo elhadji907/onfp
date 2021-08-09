@@ -47,7 +47,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Sorty extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'sorties';
 
 	protected $casts = [

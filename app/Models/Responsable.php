@@ -35,7 +35,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Responsable extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'responsables';
 
 	protected $dates = [

@@ -34,7 +34,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Direction extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'directions';
 
 	protected $casts = [

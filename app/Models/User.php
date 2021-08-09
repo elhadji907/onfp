@@ -60,7 +60,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class User extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'users';
 
 	protected $casts = [

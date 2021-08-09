@@ -35,7 +35,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Facturesdaf extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'facturesdafs';
 
 	protected $casts = [

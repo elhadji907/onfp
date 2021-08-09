@@ -42,7 +42,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Dossier extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'dossiers';
 
 	protected $casts = [

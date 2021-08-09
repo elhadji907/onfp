@@ -26,7 +26,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class BeneficiairesHasFormation extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'beneficiaires_has_formations';
 	protected $primaryKey = 'beneficiaires_id';
 

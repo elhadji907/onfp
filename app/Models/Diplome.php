@@ -32,7 +32,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Diplome extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'diplomes';
 
 	protected $casts = [

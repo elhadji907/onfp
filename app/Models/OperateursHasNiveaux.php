@@ -26,7 +26,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class OperateursHasNiveaux extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'operateurs_has_niveaux';
 	protected $primaryKey = 'operateurs_id';
 

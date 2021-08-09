@@ -35,7 +35,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Collective extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'collectives';
 
 	protected $casts = [

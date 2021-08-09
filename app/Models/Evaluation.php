@@ -33,7 +33,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Evaluation extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'evaluations';
 
 	protected $casts = [

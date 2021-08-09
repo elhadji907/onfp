@@ -34,7 +34,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Ingenieur extends Model
 {
-	use SoftDeletes;
+		use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'ingenieurs';
 
 	protected $dates = [
