@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Banque
@@ -32,7 +33,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Banque extends Model
 {
-		use SoftDeletes;
+    use HasFactory;
+	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'banques';
 

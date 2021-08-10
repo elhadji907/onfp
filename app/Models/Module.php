@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Module
@@ -37,7 +38,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Module extends Model
 {
-		use SoftDeletes;
+    use HasFactory;
+	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'modules';
 
