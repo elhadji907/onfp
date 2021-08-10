@@ -45,7 +45,7 @@ class CourrierFactory extends Factory
             'description' => $this->faker->text,
             'message' => $this->faker->paragraph(2),
             'email' => $this->faker->safeEmail,
-            'fax' => $this->faker->tollFreePhoneNumber,
+            'fax' => $this->faker->e164PhoneNumber,
             'bp' => $this->faker->postcode,
             'telephone' => $this->faker->phoneNumber,
             'file' => "",
