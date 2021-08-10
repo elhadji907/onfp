@@ -42,7 +42,7 @@ class UserFactory extends Factory
             'password' => bcrypt($this->faker->password),
             'created_by' => SnmG::getFirstName().' '.SnmG::getFirstName().' ('.Str::random(7).')',
             'updated_by' => SnmG::getFirstName().' '.SnmG::getFirstName().' ('.Str::random(7).')',
-            'deleted_by' => "",
+            'deleted_by' => " ",
             'roles_id' => "1",
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
