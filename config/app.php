@@ -232,7 +232,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
-        'NumConvert' => 'HnhDigital\LaravelNumberConverter\Facade',
 
     ],
 

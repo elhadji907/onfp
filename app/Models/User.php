@@ -108,34 +108,49 @@ class User extends Authenticatable
 		'remember_token'
 	];
 
+	protected static function boot(){
+		parent::boot();
+		static::created(function ($user){
+			$user->profile()->create([
+				'titre'	=>	'',
+				'description'	=>	'',
+				'url'	=>	''
+			]);
+		});
+	} 
+	
+	public function getRouteKeyName()
+	{
+		return 'username';
+	}
 	public function role()
 	{
 		return $this->belongsTo(Role::class, 'roles_id');
 	}
 
-	public function administrateurs()
+	public function administrateur()
 	{
-		return $this->hasMany(Administrateur::class, 'users_id');
+		return $this->hasOne(Administrateur::class, 'users_id');
 	}
 
-	public function agents()
+	public function agent()
 	{
-		return $this->hasMany(Agent::class, 'users_id');
+		return $this->hasOne(Agent::class, 'users_id');
 	}
 
-	public function beneficiaires()
+	public function beneficiaire()
 	{
-		return $this->hasMany(Beneficiaire::class, 'users_id');
+		return $this->hasOne(Beneficiaire::class, 'users_id');
 	}
 
 	public function comments()
 	{
-		return $this->hasMany(Comment::class, 'users_id');
+		return $this->morphMany('Comment', 'commentable')->latest();
 	}
 
-	public function comptables()
+	public function comptable()
 	{
-		return $this->hasMany(Comptable::class, 'users_id');
+		return $this->hasOne(Comptable::class, 'users_id');
 	}
 
 	public function courriers()
@@ -143,34 +158,34 @@ class User extends Authenticatable
 		return $this->hasMany(Courrier::class, 'users_id');
 	}
 
-	public function demandeurs()
+	public function demandeur()
 	{
-		return $this->hasMany(Demandeur::class, 'users_id');
+		return $this->hasOne(Demandeur::class, 'users_id');
 	}
 
-	public function employees()
+	public function employee()
 	{
-		return $this->hasMany(Employee::class, 'users_id');
+		return $this->hasOne(Employee::class, 'users_id');
 	}
 
-	public function gestionnaires()
+	public function gestionnaire()
 	{
-		return $this->hasMany(Gestionnaire::class, 'users_id');
+		return $this->hasOne(Gestionnaire::class, 'users_id');
 	}
 
-	public function operateurs()
+	public function operateur()
 	{
-		return $this->hasMany(Operateur::class, 'users_id');
+		return $this->hasOne(Operateur::class, 'users_id');
 	}
 
-	public function postes()
+	public function poste()
 	{
-		return $this->hasMany(Poste::class, 'users_id');
+		return $this->hasOne(Poste::class, 'users_id');
 	}
 
-	public function profiles()
+	public function profile()
 	{
-		return $this->hasMany(Profile::class, 'users_id');
+		return $this->hasOne(Profile::class, 'users_id');
 	}
 
 	public function imputations()
@@ -178,5 +193,17 @@ class User extends Authenticatable
 		return $this->belongsToMany(Imputation::class, 'users_has_imputations', 'users_id', 'imputations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
+	}	
+	//gestion des roles
+	public function hasRole($roleName)
+	{
+		return $this->role->name === $roleName;
+	}	
+	public function hasAnyRoles($roles)
+	{
+		return in_array($this->role->name, $roles);
+	}	
+	public function isAdmin(){
+		return false;
 	}
 }

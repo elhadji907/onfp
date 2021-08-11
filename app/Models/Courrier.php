@@ -158,7 +158,11 @@ class Courrier extends Model
 		'projets_id',
 		'traitementcourriers_id'
 	];
-
+	
+	public function getFile(){
+		$filePath = $this->file ?? 'recues/default.jpg';
+		return "/storage/" . $filePath;
+	}
 	public function projet()
 	{
 		return $this->belongsTo(Projet::class, 'projets_id');

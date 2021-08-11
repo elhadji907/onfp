@@ -42,7 +42,7 @@
     @roles('Administrateur|Gestionnaire')
     <hr class="sidebar-divider my-0">
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-white">
-        <a class="nav-link d-flex align-items-center text-white" href="{{ route('localites.pdcej') }}">
+        <a class="nav-link d-flex align-items-center text-white" href="#">
             <span data-feather="settings"></span>
 
             <span data-feather="user"></span>
@@ -53,7 +53,7 @@
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link collapsed" href="{{ route('demandeurs.index') }}" data-toggle="collapse"
+        <a class="nav-link collapsed" href="#" data-toggle="collapse"
             data-target="#collapsePages_demande" aria-expanded="true" aria-controls="collapsePages_demande">
             <span data-feather="layers"></span>
             <span>Gestion des demandes</span>
@@ -61,13 +61,13 @@
         <div id="collapsePages_demande" class="collapse" aria-labelledby="headingPages"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('demandeurs.index') }}">
+                <a class="collapse-item" href="#">
                     <span>Toutes</span>
                 </a>
-                <a class="collapse-item" href="{{ route('individuelles.index') }}">
+                <a class="collapse-item" href="#">
                     <span>individuelles</span>
                 </a>
-                <a class="collapse-item" href="{{ route('collectives.index') }}">
+                <a class="collapse-item" href="#">
                     <span>collectives</span>
                 </a>
             </div>
@@ -85,13 +85,13 @@
         <div id="collapsePages_formation" class="collapse" aria-labelledby="headingPages"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('formations.index') }}">
+                <a class="collapse-item" href="#">
                     <span>Toutes</span>
                 </a>
-                <a class="collapse-item" href="{{ route('findividuelles.index') }}">
+                <a class="collapse-item" href="#">
                     <span>individuelles</span>
                 </a>
-                <a class="collapse-item" href="{{ route('fcollectives.index') }}">
+                <a class="collapse-item" href="#">
                     <span>collectives</span>
                 </a>
             </div>
@@ -109,10 +109,10 @@
         <div id="collapsePages_localite" class="collapse" aria-labelledby="headingPages"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('regions.index') }}">
+                <a class="collapse-item" href="#">
                     <span>Régions</span>
                 </a>
-                <a class="collapse-item" href="{{ route('departements.index') }}">
+                <a class="collapse-item" href="#">
                     <span>Départements</span>
                 </a>
             </div>
@@ -121,7 +121,7 @@
     </li>
     <li class="nav-item">
         @roles('Demandeur')
-        <a class="nav-link" href="{{ route('individuelles.create') }}">
+        <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Demande individuelle</span>
         </a>
@@ -129,7 +129,7 @@
     </li>
     <li class="nav-item">
         @roles('Demandeur')
-        <a class="nav-link" href="{{ route('collectives.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Demande collective</span>
         </a>
@@ -137,7 +137,7 @@
     </li>
     <li class="nav-item">
         @roles('Demandeur')
-        <a class="nav-link" href="{{ route('operateurs.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Devenir opérateur</span>
         </a>
@@ -145,7 +145,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Courrier|Gestionnaire')
-        <a class="nav-link" href="{{ route('courriers.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="mail"></span>
             <span>Gestion courriers</span>
         </a>
@@ -167,28 +167,28 @@
                         <a class="collapse-item" href="{{ route('register') }}">{{ __("S'inscrire") }}</a>
                     @endif
                 @else
-                    <a class="collapse-item" href="{{ route('bordereaus.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Bordereaux</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('facturesdafs.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Factures</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('tresors.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Recettes Trésor</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('banques.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Frais Bancaire</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('bordereaus.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Ordres de missions</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('bordereaus.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Etat paiement</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('bordereaus.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>EPP</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('bordereaus.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>FAD</span>
                     </a>
                 @endguest
@@ -214,13 +214,13 @@
                     @endif
                 @else
                     {{-- <h6 class="collapse-header">UTILISATEURS</h6> --}}
-                    <a class="collapse-item" href="{{ route('activites.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Activites</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('projets.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Projets</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('depenses.index') }}">
+                    <a class="collapse-item" href="#">
                         <span>Dépenses</span>
                     </a>
                 @endguest
@@ -230,7 +230,7 @@
 
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('operateurs.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Gestion opérateurs</span>
         </a>
@@ -238,7 +238,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('nineas.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Nineas</span>
         </a>
@@ -246,7 +246,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('ingenieurs.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Ingénieurs</span>
         </a>
@@ -254,7 +254,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('demandeurs.create') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Gestion demandes</span>
         </a>
@@ -262,7 +262,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('demandeurs.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Lister demandes</span>
         </a>
@@ -270,7 +270,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('employees.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Gestion des employees</span>
         </a>
@@ -278,7 +278,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Courrier|Gestionnaire')
-        <a class="nav-link" href="{{ route('directions.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Directions / Services</span>
         </a>
@@ -286,7 +286,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('secteurs.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Secteurs</span>
         </a>
@@ -294,7 +294,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('domaines.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Domaines</span>
         </a>
@@ -302,7 +302,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('modules.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Modules</span>
         </a>
@@ -310,7 +310,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('diplomes.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Diplômes</span>
         </a>
@@ -318,7 +318,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('options.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Option diplômes</span>
         </a>
@@ -326,7 +326,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('programmes.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Programmes</span>
         </a>
@@ -334,7 +334,7 @@
     </li>
     <li class="nav-item">
         @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('nivauxs.index') }}">
+        <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Niveaux</span>
         </a>
@@ -362,20 +362,20 @@
                     @endif
                 @else
                     <h6 class="collapse-header">UTILISATEURS</h6>
-                    <a class="collapse-item" href="{{ route('administrateurs.index') }}">
+                    <a class="collapse-item" href="#">
                         <span data-feather="user"></span>
                         <span>Administrateurs</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('gestionnaires.index') }}">
+                    <a class="collapse-item" href="#">
                         <span data-feather="user"></span>
                         <span>Gestionnaires</span>
                     </a>
                     </a>
-                    <a class="collapse-item" href="{{ route('villages.index') }}">
+                    <a class="collapse-item" href="#">
                         <span data-feather="user"></span>
                         <span>Villages</span>
                     </a>
-                    <a class="collapse-item" href="{{ route('users.index') }}">
+                    <a class="collapse-item" href="#">
                         <span data-feather="user"></span>
                         <span>Utilisateurs</span>
                     </a>
