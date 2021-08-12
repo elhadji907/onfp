@@ -204,7 +204,7 @@ class User extends Authenticatable
 					->withTimestamps();
 	}
 	//gestion des roles
-/* 	public function hasRole($roleName)
+	/* 	public function hasRole($roleName)
 	{
 		return $this->role->name === $roleName;
 	}	

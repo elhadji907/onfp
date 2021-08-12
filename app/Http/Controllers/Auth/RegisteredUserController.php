@@ -46,7 +46,9 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $role_id = Role::where('name','Demandeur')->first()->id;
+        $role_id = Role::where('name','Administrateur')->first()->id;
+        $role = Role::where('name','Administrateur')->first()->name;
+        
 
         $user = User::create([
             'name' => $request->name,
@@ -61,6 +63,9 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        $user->assignRole('Administrateur');
+        $user->givePermissionTo('delete courriers');
 
         Auth::login($user);
 

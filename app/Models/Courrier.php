@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class Courrier
@@ -89,6 +90,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Courrier extends Model
 {
     use HasFactory;
+	use HasRoles;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'courriers';

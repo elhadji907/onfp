@@ -34,12 +34,12 @@ Route::group([
         Route::patch('/profiles/{user}', 'ProfileController@update')->name('profiles.update');
         
         
-        Route::get('/courriers/list', 'CourrierController@list')->name('courriers.list')->middleware('role:Courrier');
+        Route::get('/courriers/list', 'CourrierController@list')->name('courriers.list');
         Route::get('/recues/list', 'RecueController@list')->name('recues.list');
         Route::get('/departs/list', 'DepartController@list')->name('departs.list');
         Route::get('/internes/list', 'InterneController@list')->name('internes.list');
         
-        Route::resource('/courriers', 'CourrierController')->middleware('role:Courrier');
+        Route::resource('/courriers', 'CourrierController');
         Route::resource('/recues', 'RecueController');
         Route::resource('/departs', 'DepartController');
         Route::resource('/internes', 'InterneController');

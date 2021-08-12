@@ -20,20 +20,25 @@ class PermissionsOnfpSeeder extends Seeder
          app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
          // create permissions
-         Permission::create(['name' => 'edit articles']);
-         Permission::create(['name' => 'delete articles']);
-         Permission::create(['name' => 'publish articles']);
-         Permission::create(['name' => 'unpublish articles']);
+         Permission::create(['name' => 'edit courriers']);
+         Permission::create(['name' => 'delete courriers']);
+         Permission::create(['name' => 'publish courriers']);
+         Permission::create(['name' => 'unpublish courriers']);
+
+         Permission::create(['name' => 'edit demandes']);
+         Permission::create(['name' => 'delete demandes']);
+         Permission::create(['name' => 'publish demandes']);
+         Permission::create(['name' => 'unpublish demandes']);
  
          // create roles and assign created permissions
  
          // this can be done as separate statements
          $role = Role::create(['name' => 'writer']);
-         $role->givePermissionTo('edit articles');
+         $role->givePermissionTo('edit courriers', 'delete courriers');
  
          // or may be done by chaining
-         $role = Role::create(['name' => 'moderator'])
-             ->givePermissionTo(['publish articles', 'unpublish articles']);
+         $role = Role::create(['name' => 'Courrier'])
+             ->givePermissionTo(['publish courriers', 'unpublish courriers']);
  
          $role = Role::create(['name' => 'super-admin']);
          $role->givePermissionTo(Permission::all());
@@ -42,12 +47,10 @@ class PermissionsOnfpSeeder extends Seeder
          $role->givePermissionTo(Permission::all());
 
          $role = Role::create(['name' => 'Gestionnaire']);
-         $role->givePermissionTo(Permission::all());
+         $role->givePermissionTo(['edit courriers', 'edit demandes', 'publish demandes', 'publish courriers']);
 
          $role = Role::create(['name' => 'Demandeur']);
-         $role->givePermissionTo(Permission::all());
+         $role->givePermissionTo(['publish demandes', 'unpublish demandes']);
 
-         $role = Role::create(['name' => 'Courrier']);
-         $role->givePermissionTo(Permission::all());
     }
 }

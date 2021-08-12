@@ -13,7 +13,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-
+    @hasrole('Demandeur')
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
        
@@ -22,6 +22,8 @@
             <span>Tableau de bord</span></a>
        
     </li>
+    @else
+    @endhasrole
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
