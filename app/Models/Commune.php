@@ -25,6 +25,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Arrondissement $arrondissement
+ * @property Collection|Agrement[] $agrements
+ * @property Collection|Module[] $modules
+ * @property Collection|Demandeur[] $demandeurs
+ * @property Collection|Etablissement[] $etablissements
+ * @property Collection|Formation[] $formations
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Village[] $villages
  *
@@ -51,6 +56,33 @@ class Commune extends Model
 	public function arrondissement()
 	{
 		return $this->belongsTo(Arrondissement::class, 'arrondissements_id');
+	}
+
+	public function agrements()
+	{
+		return $this->hasMany(Agrement::class, 'communes_id');
+	}
+
+	public function modules()
+	{
+		return $this->belongsToMany(Module::class, 'communes_has_modules', 'communes_id', 'modules_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function demandeurs()
+	{
+		return $this->hasMany(Demandeur::class, 'communes_id');
+	}
+
+	public function etablissements()
+	{
+		return $this->hasMany(Etablissement::class, 'communes_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'communes_id');
 	}
 
 	public function operateurs()

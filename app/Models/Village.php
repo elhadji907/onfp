@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Village
@@ -29,8 +30,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  */
 class Village extends Model
-{
-		use SoftDeletes;
+{	
+    use HasFactory;
+	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'villages';
 

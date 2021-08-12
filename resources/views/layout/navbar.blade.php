@@ -158,13 +158,13 @@
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->firstname }} {{ Auth::user()->name }}</span>
           </a>
-         
-        @roles('Administrateur|Courrier')
+          @hasrole('Administrateur|Courrier')
           <a class="dropdown-item" href="{{ route('courriers.create') }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             {{(" Initier un courrier")}}
           </a>
-          @endroles
+          @else
+          @endhasrole
           {{--  <a class="dropdown-item" href="{{ route('postes.create') }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             {{(" Créer un post")}}

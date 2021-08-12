@@ -55,7 +55,7 @@ class Niveaux extends Model
 	public function operateurs()
 	{
 		return $this->belongsToMany(Operateur::class, 'operateurs_has_niveaux', 'niveaux_id', 'operateurs_id')
-					->withPivot('deleted_at')
+					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 }

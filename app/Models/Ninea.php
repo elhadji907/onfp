@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string $numero
+ * @property string|null $name
  * @property Carbon|null $date
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
@@ -42,6 +43,7 @@ class Ninea extends Model
 	protected $fillable = [
 		'uuid',
 		'numero',
+		'name',
 		'date'
 	];
 

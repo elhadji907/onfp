@@ -24,11 +24,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property float|null $montant2
  * @property float|null $autre_montant
  * @property float|null $total
+ * @property int|null $formations_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|Formation[] $formations
+ * @property Formation|null $formation
  * @property Collection|Reglement[] $reglements
  *
  * @package App\Models
@@ -44,7 +45,8 @@ class Facture extends Model
 		'montant1' => 'float',
 		'montant2' => 'float',
 		'autre_montant' => 'float',
-		'total' => 'float'
+		'total' => 'float',
+		'formations_id' => 'int'
 	];
 
 	protected $dates = [
@@ -59,12 +61,13 @@ class Facture extends Model
 		'montant1',
 		'montant2',
 		'autre_montant',
-		'total'
+		'total',
+		'formations_id'
 	];
 
-	public function formations()
+	public function formation()
 	{
-		return $this->hasMany(Formation::class, 'factures_id');
+		return $this->belongsTo(Formation::class, 'formations_id');
 	}
 
 	public function reglements()

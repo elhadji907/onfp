@@ -62,8 +62,6 @@ class Diplome extends Model
 
 	public function demandeurs()
 	{
-		return $this->belongsToMany(Demandeur::class, 'demandeurs_has_diplomes', 'diplomes_id', 'demandeurs_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Demandeur::class, 'diplomes_id');
 	}
 }

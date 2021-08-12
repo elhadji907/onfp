@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string $name
+ * @property string|null $description
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -35,7 +36,8 @@ class Secteur extends Model
 
 	protected $fillable = [
 		'uuid',
-		'name'
+		'name',
+		'description'
 	];
 
 	public function domaines()

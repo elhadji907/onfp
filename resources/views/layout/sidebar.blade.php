@@ -1,5 +1,5 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    @roles('Administrateur|Courrier|Gestionnaire')
+    @hasrole('Administrateur|Courrier|Gestionnaire|Demandeur')
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -7,18 +7,20 @@
         </div>
         <div class="sidebar-brand-text mx-3">ONFP<sup>{{ __('1') }}</sup></div>
     </a>
-    @endroles
+    @else
+    @endhasrole
+   
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        @roles('Administrateur|Courrier|Gestionnaire')
+       
         <a class="nav-link" href="{{ url('/home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Tableau de bord</span></a>
-        @endroles
+       
     </li>
 
     <!-- Divider -->
@@ -39,21 +41,43 @@
             <span> Gérer mon profil </span>
         </a>
     </h6>
-    @roles('Administrateur|Gestionnaire')
-    <hr class="sidebar-divider my-0">
-    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-white">
+   <class="sidebar-divider my-0">
+  {{--    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-white">
         <a class="nav-link d-flex align-items-center text-white" href="#">
             <span data-feather="settings"></span>
 
             <span data-feather="user"></span>
             <span>Programme PDCEJ </span>
         </a>
-    </h6>
-    @endroles
+    </h6>  --}}
+   
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="" data-toggle="collapse"
+             data-target="#collapsePages_courrier" aria-expanded="true" aria-controls="collapsePages_courrier">
+             <span data-feather="mail"></span>
+             <span>Gestion du courrier</span>
+         </a>
+         <div id="collapsePages_courrier" class="collapse" aria-labelledby="headingPages"
+             data-parent="#accordionSidebar">
+             <div class="bg-white py-2 collapse-inner rounded">
+                 <a class="collapse-item" href="#">
+                     <span>Tous</span>
+                 </a>
+                 <a class="collapse-item" href="#">
+                     <span>Courrier arrivé</span>
+                 </a>
+                 <a class="collapse-item" href="#">
+                     <span>Courrier départ</span>
+                 </a>
+                 <a class="collapse-item" href="#">
+                     <span>Courrier interne</span>
+                 </a>
+             </div>
+         </div>
+     </li>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link collapsed" href="#" data-toggle="collapse"
+       <a class="nav-link collapsed" href="#" data-toggle="collapse"
             data-target="#collapsePages_demande" aria-expanded="true" aria-controls="collapsePages_demande">
             <span data-feather="layers"></span>
             <span>Gestion des demandes</span>
@@ -72,12 +96,11 @@
                 </a>
             </div>
         </div>
-        @endroles
+       
     </li>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link collapsed" href="" data-toggle="collapse"
+       <a class="nav-link collapsed" href="" data-toggle="collapse"
             data-target="#collapsePages_formation" aria-expanded="true" aria-controls="collapsePages_formation">
             <span data-feather="layers"></span>
             <span>Gestion des formations</span>
@@ -96,12 +119,11 @@
                 </a>
             </div>
         </div>
-        @endroles
+       
     </li>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link collapsed" href="" data-toggle="collapse"
+       <a class="nav-link collapsed" href="" data-toggle="collapse"
             data-target="#collapsePages_localite" aria-expanded="true" aria-controls="collapsePages_localite">
             <span data-feather="layers"></span>
             <span>Localités</span>
@@ -117,44 +139,10 @@
                 </a>
             </div>
         </div>
-        @endroles
     </li>
+    <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        @roles('Demandeur')
-        <a class="nav-link" href="#">
-            <span data-feather="users"></span>
-            <span>Demande individuelle</span>
-        </a>
-        @endroles
-    </li>
-    <li class="nav-item">
-        @roles('Demandeur')
-        <a class="nav-link" href="#">
-            <span data-feather="users"></span>
-            <span>Demande collective</span>
-        </a>
-        @endroles
-    </li>
-    <li class="nav-item">
-        @roles('Demandeur')
-        <a class="nav-link" href="#">
-            <span data-feather="users"></span>
-            <span>Devenir opérateur</span>
-        </a>
-        @endroles
-    </li>
-    <li class="nav-item">
-        @roles('Administrateur|Courrier|Gestionnaire')
-        <a class="nav-link" href="#">
-            <span data-feather="mail"></span>
-            <span>Gestion courriers</span>
-        </a>
-        @endroles
-    </li>
-
-    <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_daf"
+       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_daf"
             aria-expanded="true" aria-controls="collapsePages_daf">
             <span data-feather="folder"></span>
             <span>DOSSIERS DAF</span>
@@ -194,16 +182,15 @@
                 @endguest
             </div>
         </div>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_projet"
+       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_projet"
             aria-expanded="true" aria-controls="collapsePages_projet">
             <span data-feather="folder"></span>
             <span>PROJETS</span>
         </a>
-        @endroles
+       
         <div id="collapsePages_projet" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 {{-- <h6 class="collapse-header"></h6> --}}
@@ -229,125 +216,111 @@
     </li>
 
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Gestion opérateurs</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Nineas</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="users"></span>
             <span>Ingénieurs</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Gestion demandes</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Lister demandes</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Gestion des employees</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Courrier|Gestionnaire')
+       
         <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Directions / Services</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Secteurs</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Domaines</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Modules</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Diplômes</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Option diplômes</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Programmes</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link" href="#">
+       <a class="nav-link" href="#">
             <span data-feather="layers"></span>
             <span>Niveaux</span>
         </a>
-        @endroles
+       
     </li>
     <li class="nav-item">
-        @roles('Administrateur|Gestionnaire')
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
             aria-controls="collapsePages">
             <span data-feather="folder"></span>
             <span>Pages</span>
         </a>
-        @endroles
+       
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Écrans de connexion:</h6>

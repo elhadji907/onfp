@@ -14,6 +14,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class User
@@ -31,6 +32,7 @@ use Illuminate\Notifications\Notifiable;
  * @property Carbon|null $date_naissance
  * @property string|null $lieu_naissance
  * @property string|null $situation_familiale
+ * @property string|null $situation_professionnelle
  * @property string|null $adresse
  * @property string|null $bp
  * @property string|null $fax
@@ -40,15 +42,16 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $updated_by
  * @property string|null $deleted_by
  * @property int $roles_id
- * @property string|null $remember_token
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Role $role
  * @property Collection|Administrateur[] $administrateurs
  * @property Collection|Agent[] $agents
  * @property Collection|Beneficiaire[] $beneficiaires
+ * @property Collection|Coment[] $coments
+ * @property Collection|Commentaire[] $commentaires
+ * @property Collection|Commentere[] $commenteres
  * @property Collection|Comment[] $comments
  * @property Collection|Comptable[] $comptables
  * @property Collection|Courrier[] $courriers
@@ -63,8 +66,9 @@ use Illuminate\Notifications\Notifiable;
  * @package App\Models
  */
 class User extends Authenticatable
-{
+{	
     use HasFactory, Notifiable;
+	use HasRoles;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'users';
@@ -79,8 +83,7 @@ class User extends Authenticatable
 	];
 
 	protected $hidden = [
-		'password',
-		'remember_token'
+		'password'
 	];
 
 	protected $fillable = [
@@ -96,6 +99,7 @@ class User extends Authenticatable
 		'date_naissance',
 		'lieu_naissance',
 		'situation_familiale',
+		'situation_professionnelle',
 		'adresse',
 		'bp',
 		'fax',
@@ -104,8 +108,7 @@ class User extends Authenticatable
 		'created_by',
 		'updated_by',
 		'deleted_by',
-		'roles_id',
-		'remember_token'
+		'roles_id'
 	];
 
 	protected static function boot(){
@@ -119,15 +122,6 @@ class User extends Authenticatable
 		});
 	} 
 	
-	public function getRouteKeyName()
-	{
-		return 'username';
-	}
-	public function role()
-	{
-		return $this->belongsTo(Role::class, 'roles_id');
-	}
-
 	public function administrateur()
 	{
 		return $this->hasOne(Administrateur::class, 'users_id');
@@ -143,9 +137,24 @@ class User extends Authenticatable
 		return $this->hasOne(Beneficiaire::class, 'users_id');
 	}
 
-	public function comments()
+	public function coment()
 	{
-		return $this->morphMany('Comment', 'commentable')->latest();
+		return $this->hasOne(Coment::class, 'users_id');
+	}
+
+	public function commentaire()
+	{
+		return $this->hasOne(Commentaire::class, 'users_id');
+	}
+
+	public function commentere()
+	{
+		return $this->hasOne(Commentere::class, 'users_id');
+	}
+
+	public function comment()
+	{
+		return $this->hasOne(Comment::class, 'users_id');
 	}
 
 	public function comptable()
@@ -193,9 +202,9 @@ class User extends Authenticatable
 		return $this->belongsToMany(Imputation::class, 'users_has_imputations', 'users_id', 'imputations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
-	}	
+	}
 	//gestion des roles
-	public function hasRole($roleName)
+/* 	public function hasRole($roleName)
 	{
 		return $this->role->name === $roleName;
 	}	
@@ -205,5 +214,5 @@ class User extends Authenticatable
 	}	
 	public function isAdmin(){
 		return false;
-	}
+	} */
 }

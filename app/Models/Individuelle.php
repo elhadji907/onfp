@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $projet
  * @property string|null $prerequis
  * @property string|null $information
+ * @property float|null $note
  * @property string|null $items1
  * @property Carbon|null $date1
  * @property int $demandeurs_id
@@ -32,6 +34,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Demandeur $demandeur
+ * @property Collection|Formation[] $formations
  *
  * @package App\Models
  */
@@ -44,6 +47,7 @@ class Individuelle extends Model
 
 	protected $casts = [
 		'nbre_pieces' => 'int',
+		'note' => 'float',
 		'demandeurs_id' => 'int'
 	];
 
@@ -61,6 +65,7 @@ class Individuelle extends Model
 		'projet',
 		'prerequis',
 		'information',
+		'note',
 		'items1',
 		'date1',
 		'demandeurs_id'
@@ -69,5 +74,12 @@ class Individuelle extends Model
 	public function demandeur()
 	{
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
+	}
+
+	public function formations()
+	{
+		return $this->belongsToMany(Formation::class, 'individuelles_has_formations', 'individuelles_id', 'formations_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 }

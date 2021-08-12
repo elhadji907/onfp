@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string $cin
+ * @property string|null $cin
  * @property string $name
  * @property string|null $items1
  * @property Carbon|null $date1
@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Demandeur $demandeur
+ * @property Collection|Formation[] $formations
  * @property Collection|Membre[] $membres
  *
  * @package App\Models
@@ -64,6 +65,13 @@ class Collective extends Model
 	public function demandeur()
 	{
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
+	}
+
+	public function formations()
+	{
+		return $this->belongsToMany(Formation::class, 'collectives_has_formations', 'collectives_id', 'formations_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function membres()

@@ -8,16 +8,19 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Notification
  * 
- * @property string $id
- * @property string $type
- * @property string $notifiable_type
- * @property int $notifiable_id
- * @property string $data
+ * @property int $id
+ * @property string $uuid
+ * @property string|null $type
+ * @property int|null $notifiable
+ * @property string|null $data
  * @property Carbon|null $read_at
+ * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
@@ -25,11 +28,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Notification extends Model
 {
+    use HasFactory;
+	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'notifications';
-	public $incrementing = false;
 
 	protected $casts = [
-		'notifiable_id' => 'int'
+		'notifiable' => 'int'
 	];
 
 	protected $dates = [
@@ -37,9 +42,9 @@ class Notification extends Model
 	];
 
 	protected $fillable = [
+		'uuid',
 		'type',
-		'notifiable_type',
-		'notifiable_id',
+		'notifiable',
 		'data',
 		'read_at'
 	];

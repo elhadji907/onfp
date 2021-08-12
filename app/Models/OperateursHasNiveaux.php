@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class OperateursHasNiveaux
  * 
+ * @property int $id
  * @property int $operateurs_id
  * @property int $niveaux_id
  * @property string|null $deleted_at
@@ -31,13 +32,14 @@ class OperateursHasNiveaux extends Model
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'operateurs_has_niveaux';
-	protected $primaryKey = 'operateurs_id';
 
 	protected $casts = [
+		'operateurs_id' => 'int',
 		'niveaux_id' => 'int'
 	];
 
 	protected $fillable = [
+		'operateurs_id',
 		'niveaux_id'
 	];
 

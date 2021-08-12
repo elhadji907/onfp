@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title', 'ONFP - Liste de tous les courriers')
 @section('content')
-@roles('Administrateur|Courrier|Gestionnaire')
+@hasrole('Administrateur|Courrier|Gestionnaire|Demandeur')
 <div class="container-fluid">
     <div class="row">     
         <div class="col-xl-3 col-md-6 mb-4">
@@ -175,7 +175,8 @@
   </div>
 </div>
 <br />
-@endroles
+@else
+@endhasrole
 @endsection
 @push('scripts')
     <script type="text/javascript">

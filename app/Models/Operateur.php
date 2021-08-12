@@ -21,39 +21,50 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $name
  * @property string|null $sigle
  * @property string|null $type_structure
+ * @property Carbon|null $date
+ * @property Carbon|null $date_debut
+ * @property Carbon|null $date_fin
+ * @property Carbon|null $date_renew
  * @property string|null $ninea
  * @property string|null $rccm
  * @property string|null $quitus
+ * @property Carbon|null $debut_quitus
+ * @property Carbon|null $fin_quitus
  * @property string|null $telephone1
  * @property string|null $telephone2
  * @property string|null $fixe
  * @property string|null $email1
  * @property string|null $email2
  * @property string|null $adresse
- * @property int|null $communes_id
+ * @property string|null $nom_responsable
+ * @property string|null $prenom_responsable
+ * @property string|null $cin_responsable
+ * @property string|null $telephone_responsable
+ * @property string|null $email_responsable
+ * @property string|null $fonction_responsable
+ * @property string|null $qualification
  * @property int|null $users_id
  * @property int|null $rccms_id
  * @property int|null $nineas_id
  * @property int|null $types_operateurs_id
- * @property int|null $quitus_id
- * @property int|null $responsables_id
  * @property int|null $specialites_id
  * @property int|null $courriers_id
+ * @property int|null $communes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Commune|null $commune
  * @property Courrier|null $courrier
- * @property Quitu|null $quitu
- * @property Responsable|null $responsable
  * @property Specialite|null $specialite
  * @property TypesOperateur|null $types_operateur
  * @property User|null $user
  * @property Collection|Agrement[] $agrements
+ * @property Collection|Commentere[] $commenteres
  * @property Collection|Formation[] $formations
  * @property Collection|Module[] $modules
  * @property Collection|Niveaux[] $niveauxes
+ * @property Collection|Region[] $regions
  * @property Collection|Traitement[] $traitements
  *
  * @package App\Models
@@ -66,15 +77,22 @@ class Operateur extends Model
 	protected $table = 'operateurs';
 
 	protected $casts = [
-		'communes_id' => 'int',
 		'users_id' => 'int',
 		'rccms_id' => 'int',
 		'nineas_id' => 'int',
 		'types_operateurs_id' => 'int',
-		'quitus_id' => 'int',
-		'responsables_id' => 'int',
 		'specialites_id' => 'int',
-		'courriers_id' => 'int'
+		'courriers_id' => 'int',
+		'communes_id' => 'int'
+	];
+
+	protected $dates = [
+		'date',
+		'date_debut',
+		'date_fin',
+		'date_renew',
+		'debut_quitus',
+		'fin_quitus'
 	];
 
 	protected $fillable = [
@@ -83,24 +101,35 @@ class Operateur extends Model
 		'name',
 		'sigle',
 		'type_structure',
+		'date',
+		'date_debut',
+		'date_fin',
+		'date_renew',
 		'ninea',
 		'rccm',
 		'quitus',
+		'debut_quitus',
+		'fin_quitus',
 		'telephone1',
 		'telephone2',
 		'fixe',
 		'email1',
 		'email2',
 		'adresse',
-		'communes_id',
+		'nom_responsable',
+		'prenom_responsable',
+		'cin_responsable',
+		'telephone_responsable',
+		'email_responsable',
+		'fonction_responsable',
+		'qualification',
 		'users_id',
 		'rccms_id',
 		'nineas_id',
 		'types_operateurs_id',
-		'quitus_id',
-		'responsables_id',
 		'specialites_id',
-		'courriers_id'
+		'courriers_id',
+		'communes_id'
 	];
 
 	public function commune()
@@ -118,19 +147,9 @@ class Operateur extends Model
 		return $this->belongsTo(Ninea::class, 'nineas_id');
 	}
 
-	public function quitu()
-	{
-		return $this->belongsTo(Quitu::class, 'quitus_id');
-	}
-
 	public function rccm()
 	{
 		return $this->belongsTo(Rccm::class, 'rccms_id');
-	}
-
-	public function responsable()
-	{
-		return $this->belongsTo(Responsable::class, 'responsables_id');
 	}
 
 	public function specialite()
@@ -153,6 +172,11 @@ class Operateur extends Model
 		return $this->hasMany(Agrement::class, 'operateurs_id');
 	}
 
+	public function commenteres()
+	{
+		return $this->hasMany(Commentere::class, 'operateurs_id');
+	}
+
 	public function formations()
 	{
 		return $this->hasMany(Formation::class, 'operateurs_id');
@@ -168,7 +192,14 @@ class Operateur extends Model
 	public function niveauxes()
 	{
 		return $this->belongsToMany(Niveaux::class, 'operateurs_has_niveaux', 'operateurs_id')
-					->withPivot('deleted_at')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function regions()
+	{
+		return $this->belongsToMany(Region::class, 'operateurs_has_regions', 'operateurs_id', 'regions_id')
+					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 

@@ -24,21 +24,28 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth'])->name('home');
-Route::get('/profiles/{user}', 'ProfileController@show')->name('profiles.show');
-Route::get('/profiles/{user}/edit', 'ProfileController@edit')->name('profiles.edit');
-Route::patch('/profiles/{user}', 'ProfileController@update')->name('profiles.update');
+Route::group([
+    'middleware' => 'App\Http\Middleware\Auth',
+    ], function()
+    { 
+        Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth'])->name('home');
+        Route::get('/profiles/{user}', 'ProfileController@show')->name('profiles.show');
+        Route::get('/profiles/{user}/edit', 'ProfileController@edit')->name('profiles.edit');
+        Route::patch('/profiles/{user}', 'ProfileController@update')->name('profiles.update');
+        
+        
+        Route::get('/courriers/list', 'CourrierController@list')->name('courriers.list')->middleware('role:Courrier');
+        Route::get('/recues/list', 'RecueController@list')->name('recues.list');
+        Route::get('/departs/list', 'DepartController@list')->name('departs.list');
+        Route::get('/internes/list', 'InterneController@list')->name('internes.list');
+        
+        Route::resource('/courriers', 'CourrierController')->middleware('role:Courrier');
+        Route::resource('/recues', 'RecueController');
+        Route::resource('/departs', 'DepartController');
+        Route::resource('/internes', 'InterneController');
+    });
 
 
-Route::get('/courriers/list', 'CourrierController@list')->name('courriers.list');
-Route::get('/recues/list', 'RecueController@list')->name('recues.list');
-Route::get('/departs/list', 'DepartController@list')->name('departs.list');
-Route::get('/internes/list', 'InterneController@list')->name('internes.list');
-
-Route::resource('/courriers', 'CourrierController');
-Route::resource('/recues', 'RecueController');
-Route::resource('/departs', 'DepartController');
-Route::resource('/internes', 'InterneController');
 
 require __DIR__.'/auth.php';
 

@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
+ * @property string|null $matricule
  * @property string $name
- * @property string|null $sigle
  * @property string|null $telephone
  * @property string|null $email
  * @property string|null $specialite
@@ -46,8 +46,8 @@ class Ingenieur extends Model
 
 	protected $fillable = [
 		'uuid',
+		'matricule',
 		'name',
-		'sigle',
 		'telephone',
 		'email',
 		'specialite',

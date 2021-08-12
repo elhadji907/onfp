@@ -68,6 +68,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Bordereau[] $bordereaus
  * @property Collection|Comment[] $comments
  * @property Collection|Imputation[] $imputations
+ * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Depart[] $departs
  * @property Collection|Direction[] $directions
  * @property Collection|Employee[] $employees
@@ -158,11 +159,7 @@ class Courrier extends Model
 		'projets_id',
 		'traitementcourriers_id'
 	];
-	
-	public function getFile(){
-		$filePath = $this->file ?? 'recues/default.jpg';
-		return "/storage/" . $filePath;
-	}
+
 	public function projet()
 	{
 		return $this->belongsTo(Projet::class, 'projets_id');
@@ -208,6 +205,11 @@ class Courrier extends Model
 		return $this->belongsToMany(Imputation::class, 'courriers_has_imputations', 'courriers_id', 'imputations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
+	}
+
+	public function demandeurs()
+	{
+		return $this->hasMany(Demandeur::class, 'courriers_id');
 	}
 
 	public function departs()

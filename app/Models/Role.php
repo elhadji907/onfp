@@ -9,38 +9,39 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Role
  * 
  * @property int $id
- * @property string $uuid
  * @property string $name
- * @property string|null $deleted_at
+ * @property string $guard_name
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|User[] $users
+ * @property Collection|ModelHasRole[] $model_has_roles
+ * @property Collection|Permission[] $permissions
  *
  * @package App\Models
  */
 class Role extends Model
 {
-    use HasFactory;
-	use SoftDeletes;
-	use \App\Helpers\UuidForKey;
-	
+	use HasFactory;
 	protected $table = 'roles';
 
 	protected $fillable = [
-		'uuid',
-		'name'
+		'name',
+		'guard_name'
 	];
 
-	public function users()
+	public function model_has_roles()
 	{
-		return $this->hasMany(User::class, 'roles_id');
+		return $this->hasMany(ModelHasRole::class);
+	}
+
+	public function permissions()
+	{
+		return $this->belongsToMany(Permission::class, 'role_has_permissions');
 	}
 }

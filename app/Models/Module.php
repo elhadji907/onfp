@@ -19,17 +19,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $uuid
  * @property string|null $name
  * @property string|null $sigle
+ * @property string|null $description
+ * @property string|null $qualification
  * @property int|null $domaines_id
  * @property int|null $specialites_id
- * @property string|null $qualification
+ * @property int|null $statuts_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Domaine|null $domaine
  * @property Specialite|null $specialite
+ * @property Statut|null $statut
+ * @property Collection|Commune[] $communes
  * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Evaluateur[] $evaluateurs
+ * @property Collection|Formation[] $formations
+ * @property Collection|Agrement[] $agrements
  * @property Collection|Niveaux[] $niveauxes
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Programme[] $programmes
@@ -45,16 +51,19 @@ class Module extends Model
 
 	protected $casts = [
 		'domaines_id' => 'int',
-		'specialites_id' => 'int'
+		'specialites_id' => 'int',
+		'statuts_id' => 'int'
 	];
 
 	protected $fillable = [
 		'uuid',
 		'name',
 		'sigle',
+		'description',
+		'qualification',
 		'domaines_id',
 		'specialites_id',
-		'qualification'
+		'statuts_id'
 	];
 
 	public function domaine()
@@ -67,6 +76,18 @@ class Module extends Model
 		return $this->belongsTo(Specialite::class, 'specialites_id');
 	}
 
+	public function statut()
+	{
+		return $this->belongsTo(Statut::class, 'statuts_id');
+	}
+
+	public function communes()
+	{
+		return $this->belongsToMany(Commune::class, 'communes_has_modules', 'modules_id', 'communes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
 	public function demandeurs()
 	{
 		return $this->belongsToMany(Demandeur::class, 'demandeurs_has_modules', 'modules_id', 'demandeurs_id')
@@ -77,6 +98,18 @@ class Module extends Model
 	public function evaluateurs()
 	{
 		return $this->belongsToMany(Evaluateur::class, 'evaluateurs_has_modules', 'modules_id', 'evaluateurs_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'modules_id');
+	}
+
+	public function agrements()
+	{
+		return $this->belongsToMany(Agrement::class, 'modules_has_agrements', 'modules_id', 'agrements_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
