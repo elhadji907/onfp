@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $numero_agrement
  * @property string|null $name
  * @property string|null $sigle
- * @property string|null $type_structure
+ * @property string|null $typestructure
  * @property Carbon|null $date
  * @property Carbon|null $date_debut
  * @property Carbon|null $date_fin
@@ -100,7 +100,7 @@ class Operateur extends Model
 		'numero_agrement',
 		'name',
 		'sigle',
-		'type_structure',
+		'typestructure',
 		'date',
 		'date_debut',
 		'date_fin',

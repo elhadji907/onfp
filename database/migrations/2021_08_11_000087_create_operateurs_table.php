@@ -27,7 +27,7 @@ class CreateOperateursTable extends Migration
             $table->string('numero_agrement', 200)->nullable();
             $table->string('name', 200)->nullable();
             $table->string('sigle', 200)->nullable();
-            $table->string('type_structure', 200)->nullable();
+            $table->string('typestructure', 200)->nullable();
             $table->timestamp('date')->nullable();
             $table->timestamp('date_debut')->nullable();
             $table->timestamp('date_fin')->nullable();
@@ -35,8 +35,8 @@ class CreateOperateursTable extends Migration
             $table->string('ninea', 200)->nullable();
             $table->string('rccm', 200)->nullable();
             $table->string('quitus', 200)->nullable();
-            $table->dateTime('debut_quitus')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->dateTime('fin_quitus')->nullable()->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->dateTime('debut_quitus')->nullable();
+            $table->dateTime('fin_quitus')->nullable();
             $table->string('telephone1', 200)->nullable();
             $table->string('telephone2', 200)->nullable();
             $table->string('fixe', 200)->nullable();
