@@ -28,10 +28,10 @@ Route::group([
     'middleware' => 'App\Http\Middleware\Auth',
     ], function()
     { 
-        Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth'])->name('home');
-        Route::get('/profiles/{user}', 'ProfileController@show')->name('profiles.show');
-        Route::get('/profiles/{user}/edit', 'ProfileController@edit')->name('profiles.edit');
-        Route::patch('/profiles/{user}', 'ProfileController@update')->name('profiles.update');
+        Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+        Route::get('/profiles/{user}', 'App\Http\Controllers\ProfileController@show')->name('profiles.show');
+        Route::get('/profiles/{user}/edit', 'App\Http\Controllers\ProfileController@edit')->name('profiles.edit');
+        Route::patch('/profiles/{user}', 'App\Http\Controllers\ProfileController@update')->name('profiles.update');
         
         
         Route::get('/courriers/list', 'CourrierController@list')->name('courriers.list');

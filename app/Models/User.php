@@ -122,6 +122,11 @@ class User extends Authenticatable
 		});
 	} 
 	
+	public function getRouteKeyName()
+	{
+		return 'username';
+	}
+	
 	public function administrateur()
 	{
 		return $this->hasOne(Administrateur::class, 'users_id');

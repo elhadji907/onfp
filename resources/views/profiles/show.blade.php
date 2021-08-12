@@ -7,7 +7,7 @@
                 <img src="{{ asset(auth::user()->profile->getImage()) }}" class="rounded-circle w-50" />
             </div>
             <div class="col-8">
-                @can('update', $user->profile)
+                {{-- @can('update', $user->profile) --}}
                     <div class="mt-3 d-flex">
                         <div class="mr-1"><b>{{ auth::user()->civilite }}</b></div>
                         <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
@@ -33,12 +33,12 @@
                         <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
                         <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
                     </div>
-                    <a href="{{ route('profiles.edit', ['username' => auth::user()->username]) }}"
-                        class="btn btn-outline-secondary mt-3">Modifier mon profile</a>
-                @endcan
+                    {{-- <a href="{{ route('profiles.edit', ['username' => auth::user()->username]) }}"
+                        class="btn btn-outline-secondary mt-3">Modifier mon profile</a> --}}
+                {{-- @endcan --}}
             </div>
         </div>
-        @roles('Administrateur|Courrier')
+        @hasrole('Administrateur|Courrier')
         <div class="list-group mt-5">
             @foreach ($courriers as $courrier)
                 <div class="list-group-item">
@@ -55,8 +55,9 @@
         <div class="d-flex justify-content-center pt-2">
             {!! $courriers->links() !!}
         </div>
-        @endroles
-        @roles('Demandeur')
+        @else
+        @endhasrole
+        @hasrole('Demandeur')
         @if (isset($user_connect))
             <div class="row mt-5">
                 <div class="col-md-12">
@@ -105,7 +106,7 @@
                                         <tbody>
                                             <?php $i = 1; ?>
                                             @foreach ($demandeurs as $demandeur)
-                                                @can('view', $demandeur)
+                                                {{-- @can('view', $demandeur) --}}
                                                     <tr valign="bottom">
                                                         <td>{!! $demandeur->numero !!}</td>
                                                         <td>{!! $demandeur->user->firstname !!} {{ ' ' }}{!! $demandeur->user->name !!}
@@ -139,7 +140,7 @@
                                                         {!! Form::close() !!} --}}
                                                         </td>
                                                     </tr>
-                                                @endcan
+                                               {{--  @endcan --}}
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -172,6 +173,7 @@
             </div>
         @else
         @endif
-        @endroles
+        @else
+        @endhasrole
     </div>
 @endsection
