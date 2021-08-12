@@ -31,8 +31,8 @@ class BordereauFactory extends Factory
         $nombre = rand(1, 9);
         
         return [
-            'numero' => 'BD'.$this->faker->unique()->numberBetween(0, 100)."".$annee,
-            'numero_mandat' => $this->faker->unique()->numberBetween(0, 100),
+            'numero' => 'BD'.$this->faker->unique(true)->numberBetween(0, 30)."".$annee,
+            'numero_mandat' => $this->faker->unique(true)->numberBetween(0, 30),
             'date_mandat' => $this->faker->dateTime(),
             'designation' => $this->faker->paragraph(1),
             'montant' => $this->faker->randomFloat(),

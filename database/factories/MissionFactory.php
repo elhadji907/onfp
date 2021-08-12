@@ -27,7 +27,7 @@ class MissionFactory extends Factory
         $annee = date('y');
         
         return [
-            'numero' => 'MI'.$this->faker->numberBetween(0, 100)."".$annee,
+            'numero' => 'MI'.$this->faker->unique(true)->numberBetween(0, 30)."".$annee,
             'localites' => $this->faker->word,
             'distance' => $this->faker->randomNumber(),
             'jours' => $this->faker->randomNumber(),

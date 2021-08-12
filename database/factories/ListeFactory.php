@@ -26,7 +26,7 @@ class ListeFactory extends Factory
         $number = $x + 1;
         
         return [
-            'numero' => 'Feuil'.$this->faker->unique()->numberBetween(0, 100)."_".$annee,
+            'numero' => 'Feuil'.$this->faker->unique(true)->numberBetween(0, 30)."_".$annee,
             'destinataire' => $this->faker->name,
             'date' => $this->faker->dateTime(),
             'name' => $this->faker->name,

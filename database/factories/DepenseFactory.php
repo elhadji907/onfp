@@ -29,7 +29,7 @@ class DepenseFactory extends Factory
         $projets_id=Projet::all()->random()->id;
 
         return [
-            'numero' => $this->faker->numberBetween(0, 99),
+            'numero' => $this->faker->unique(true)->numberBetween(0, 30),
             'designation' => $this->faker->paragraph(1),
             'fournisseurs' => SnmG::getFirstName()." ".SnmG::getName(),
             'montant' => $this->faker->randomFloat(),

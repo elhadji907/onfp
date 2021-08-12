@@ -27,7 +27,7 @@ class EtatsPreviFactory extends Factory
         $annee = date('y');
 
         return [
-            'numero' => 'CD'.$this->faker->numberBetween(0, 100)."".$annee,
+            'numero' => 'CD'.$this->faker->unique(true)->numberBetween(0, 30)."".$annee,
             'date_recep' => $this->faker->dateTime(),
             'designation' => $this->faker->text,
             'observation' => $this->faker->text,

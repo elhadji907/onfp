@@ -27,7 +27,7 @@ class FacturesdafFactory extends Factory
         $annee = date('y');
 
         return [
-            'numero' => 'FD'.$this->faker->numberBetween(0, 99)."_"."".$annee,
+            'numero' => 'FD'.$this->faker->unique(true)->numberBetween(0, 30)."_"."".$annee,
             'date_recep' => $this->faker->dateTime(),
             'montant' => $this->faker->randomFloat(),
             'date_depart' => $this->faker->dateTime(),

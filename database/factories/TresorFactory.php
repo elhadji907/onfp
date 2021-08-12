@@ -27,7 +27,7 @@ class TresorFactory extends Factory
         $annee = date('y');
 
         return [
-            'numero' => 'TR'.$this->faker->numberBetween(0, 99)."".$annee,
+            'numero' => 'TR'.$this->faker->unique(true)->numberBetween(0, 30)."".$annee,
             'date_recep' =>$this->faker->dateTime(),
             'designation' =>$this->faker->text,
             'observation' =>$this->faker->text,
