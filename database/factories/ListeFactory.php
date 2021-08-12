@@ -21,8 +21,16 @@ class ListeFactory extends Factory
      */
     public function definition()
     {
+        $annee = date('y');
+        $x = 1;
+        $number = $x + 1;
+        
         return [
-            //
+            'numero' => 'Feuil'.$this->faker->unique()->numberBetween(0, 100)."_".$annee,
+            'destinataire' => $this->faker->name,
+            'date' => $this->faker->dateTime(),
+            'name' => $this->faker->name,
+            'liste' => '',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Lieux;
+use App\Models\Commune;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LieuxFactory extends Factory
@@ -21,8 +22,10 @@ class LieuxFactory extends Factory
      */
     public function definition()
     {
+        $commune=Commune::all()->random()->nom;
+
         return [
-            //
+            'name' => $commune,
         ];
     }
 }

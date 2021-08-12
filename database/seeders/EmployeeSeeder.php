@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Lieux;
+use App\Models\Employee;
 
-class LieuxSeeder extends Seeder
+class EmployeeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class LieuxSeeder extends Seeder
      */
     public function run()
     {
-        Lieux::factory()
+        Employee::factory()
             ->count(30)
             ->create();
     }

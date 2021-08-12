@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Bordereau;
 
 class BordereauSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class BordereauSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Bordereau::factory()
+            ->count(30)
+            ->create();
     }
 }
