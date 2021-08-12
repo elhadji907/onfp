@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class DemandeursHasDisponibilite
+ * Class Demandeursdisponibilite
  * 
  * @property int $id
  * @property int $demandeurs_id
@@ -26,12 +26,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @package App\Models
  */
-class DemandeursHasDisponibilite extends Model
+class Demandeursdisponibilite extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'demandeurs_has_disponibilites';
+	protected $table = 'demandeursdisponibilites';
 
 	protected $casts = [
 		'demandeurs_id' => 'int',

@@ -12,40 +12,38 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class DirectionsHasImputation
+ * Class Employeesimputation
  * 
  * @property int $id
- * @property int $directions_id
+ * @property int $employees_id
  * @property int $imputations_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Direction $direction
+ * @property Employee $employee
  * @property Imputation $imputation
  *
  * @package App\Models
  */
-class DirectionsHasImputation extends Model
+class Employeesimputation extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
-	use \App\Helpers\UuidForKey;
-	protected $table = 'directions_has_imputations';
+	protected $table = 'employeesimputations';
 
 	protected $casts = [
-		'directions_id' => 'int',
+		'employees_id' => 'int',
 		'imputations_id' => 'int'
 	];
 
 	protected $fillable = [
-		'directions_id',
+		'employees_id',
 		'imputations_id'
 	];
 
-	public function direction()
+	public function employee()
 	{
-		return $this->belongsTo(Direction::class, 'directions_id');
+		return $this->belongsTo(Employee::class, 'employees_id');
 	}
 
 	public function imputation()

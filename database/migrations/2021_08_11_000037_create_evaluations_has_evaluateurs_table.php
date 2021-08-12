@@ -10,11 +10,11 @@ class CreateEvaluationsHasEvaluateursTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'evaluations_has_evaluateurs';
+    public $tableName = 'evaluationsevaluateurs';
 
     /**
      * Run the migrations.
-     * @table evaluations_has_evaluateurs
+     * @table evaluationsevaluateurs
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateEvaluationsHasEvaluateursTable extends Migration
             $table->unsignedInteger('evaluations_id');
             $table->unsignedInteger('evaluateurs_id');
 
-            $table->index(["evaluateurs_id"], 'fk_evaluations_has_evaluateurs_evaluateurs1_idx');
+            $table->index(["evaluateurs_id"], 'fk_evaluationsevaluateurs_evaluateurs1_idx');
 
-            $table->index(["evaluations_id"], 'fk_evaluations_has_evaluateurs_evaluations1_idx');
+            $table->index(["evaluations_id"], 'fk_evaluationsevaluateurs_evaluations1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('evaluations_id', 'fk_evaluations_has_evaluateurs_evaluations1_idx')
+            $table->foreign('evaluations_id', 'fk_evaluationsevaluateurs_evaluations1_idx')
                 ->references('id')->on('evaluations')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('evaluateurs_id', 'fk_evaluations_has_evaluateurs_evaluateurs1_idx')
+            $table->foreign('evaluateurs_id', 'fk_evaluationsevaluateurs_evaluateurs1_idx')
                 ->references('id')->on('evaluateurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');

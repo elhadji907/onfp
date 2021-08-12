@@ -10,11 +10,11 @@ class CreateProgrammesHasRegionsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'programmes_has_regions';
+    public $tableName = 'programmesregions';
 
     /**
      * Run the migrations.
-     * @table programmes_has_regions
+     * @table programmesregions
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateProgrammesHasRegionsTable extends Migration
             $table->unsignedInteger('programmes_id');
             $table->unsignedInteger('regions_id');
 
-            $table->index(["regions_id"], 'fk_programmes_has_regions_regions1_idx');
+            $table->index(["regions_id"], 'fk_programmesregions_regions1_idx');
 
-            $table->index(["programmes_id"], 'fk_programmes_has_regions_programmes1_idx');
+            $table->index(["programmes_id"], 'fk_programmesregions_programmes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('programmes_id', 'fk_programmes_has_regions_programmes1_idx')
+            $table->foreign('programmes_id', 'fk_programmesregions_programmes1_idx')
                 ->references('id')->on('programmes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('regions_id', 'fk_programmes_has_regions_regions1_idx')
+            $table->foreign('regions_id', 'fk_programmesregions_regions1_idx')
                 ->references('id')->on('regions')
                 ->onDelete('no action')
                 ->onUpdate('no action');

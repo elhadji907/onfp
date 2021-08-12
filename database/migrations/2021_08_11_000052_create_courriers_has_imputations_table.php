@@ -10,11 +10,11 @@ class CreateCourriersHasImputationsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'courriers_has_imputations';
+    public $tableName = 'courriersimputations';
 
     /**
      * Run the migrations.
-     * @table courriers_has_imputations
+     * @table courriersimputations
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateCourriersHasImputationsTable extends Migration
             $table->unsignedInteger('courriers_id');
             $table->unsignedInteger('imputations_id');
 
-            $table->index(["imputations_id"], 'fk_courriers_has_imputations_imputations1_idx');
+            $table->index(["imputations_id"], 'fk_courriersimputations_imputations1_idx');
 
-            $table->index(["courriers_id"], 'fk_courriers_has_imputations_courriers1_idx');
+            $table->index(["courriers_id"], 'fk_courriersimputations_courriers1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('courriers_id', 'fk_courriers_has_imputations_courriers1_idx')
+            $table->foreign('courriers_id', 'fk_courriersimputations_courriers1_idx')
                 ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('imputations_id', 'fk_courriers_has_imputations_imputations1_idx')
+            $table->foreign('imputations_id', 'fk_courriersimputations_imputations1_idx')
                 ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');

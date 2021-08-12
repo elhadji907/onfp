@@ -12,42 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class BeneficiairesHasFormation
+ * Class Individuellesformation
  * 
- * @property int $beneficiaires_id
+ * @property int $id
+ * @property int $individuelles_id
  * @property int $formations_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Beneficiaire $beneficiaire
  * @property Formation $formation
+ * @property Individuelle $individuelle
  *
  * @package App\Models
  */
-class BeneficiairesHasFormation extends Model
+class Individuellesformation extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'beneficiaires_has_formations';
-	protected $primaryKey = 'beneficiaires_id';
+	protected $table = 'individuellesformations';
 
 	protected $casts = [
+		'individuelles_id' => 'int',
 		'formations_id' => 'int'
 	];
 
 	protected $fillable = [
+		'individuelles_id',
 		'formations_id'
 	];
-
-	public function beneficiaire()
-	{
-		return $this->belongsTo(Beneficiaire::class, 'beneficiaires_id');
-	}
 
 	public function formation()
 	{
 		return $this->belongsTo(Formation::class, 'formations_id');
+	}
+
+	public function individuelle()
+	{
+		return $this->belongsTo(Individuelle::class, 'individuelles_id');
 	}
 }

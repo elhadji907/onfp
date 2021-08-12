@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class FormationsHasEvaluation
+ * Class Formationsevaluation
  * 
  * @property int $id
  * @property int $formations_id
@@ -26,12 +26,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @package App\Models
  */
-class FormationsHasEvaluation extends Model
+class Formationsevaluation extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'formations_has_evaluations';
+	protected $table = 'formationsevaluations';
 
 	protected $casts = [
 		'formations_id' => 'int',

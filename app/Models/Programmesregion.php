@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class DemandeursHasModule
+ * Class Programmesregion
  * 
  * @property int $id
- * @property int $demandeurs_id
- * @property int $modules_id
+ * @property int $programmes_id
+ * @property int $regions_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Demandeur $demandeur
- * @property Module $module
+ * @property Programme $programme
+ * @property Region $region
  *
  * @package App\Models
  */
-class DemandeursHasModule extends Model
+class Programmesregion extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'demandeurs_has_modules';
+	protected $table = 'programmesregions';
 
 	protected $casts = [
-		'demandeurs_id' => 'int',
-		'modules_id' => 'int'
+		'programmes_id' => 'int',
+		'regions_id' => 'int'
 	];
 
 	protected $fillable = [
-		'demandeurs_id',
-		'modules_id'
+		'programmes_id',
+		'regions_id'
 	];
 
-	public function demandeur()
+	public function programme()
 	{
-		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
+		return $this->belongsTo(Programme::class, 'programmes_id');
 	}
 
-	public function module()
+	public function region()
 	{
-		return $this->belongsTo(Module::class, 'modules_id');
+		return $this->belongsTo(Region::class, 'regions_id');
 	}
 }

@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class UsersHasImputation
+ * Class Demandeursmodule
  * 
  * @property int $id
- * @property int $users_id
- * @property int $imputations_id
+ * @property int $demandeurs_id
+ * @property int $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Imputation $imputation
- * @property User $user
+ * @property Demandeur $demandeur
+ * @property Module $module
  *
  * @package App\Models
  */
-class UsersHasImputation extends Model
+class Demandeursmodule extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'users_has_imputations';
+	protected $table = 'demandeursmodules';
 
 	protected $casts = [
-		'users_id' => 'int',
-		'imputations_id' => 'int'
+		'demandeurs_id' => 'int',
+		'modules_id' => 'int'
 	];
 
 	protected $fillable = [
-		'users_id',
-		'imputations_id'
+		'demandeurs_id',
+		'modules_id'
 	];
 
-	public function imputation()
+	public function demandeur()
 	{
-		return $this->belongsTo(Imputation::class, 'imputations_id');
+		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
 	}
 
-	public function user()
+	public function module()
 	{
-		return $this->belongsTo(User::class, 'users_id');
+		return $this->belongsTo(Module::class, 'modules_id');
 	}
 }

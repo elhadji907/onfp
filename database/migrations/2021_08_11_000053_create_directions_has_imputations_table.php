@@ -10,11 +10,11 @@ class CreateDirectionsHasImputationsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'directions_has_imputations';
+    public $tableName = 'directionsimputations';
 
     /**
      * Run the migrations.
-     * @table directions_has_imputations
+     * @table directionsimputations
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateDirectionsHasImputationsTable extends Migration
             $table->unsignedInteger('directions_id');
             $table->unsignedInteger('imputations_id');
 
-            $table->index(["imputations_id"], 'fk_directions_has_imputations_imputations1_idx');
+            $table->index(["imputations_id"], 'fk_directionsimputations_imputations1_idx');
 
-            $table->index(["directions_id"], 'fk_directions_has_imputations_directions1_idx');
+            $table->index(["directions_id"], 'fk_directionsimputations_directions1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('directions_id', 'fk_directions_has_imputations_directions1_idx')
+            $table->foreign('directions_id', 'fk_directionsimputations_directions1_idx')
                 ->references('id')->on('directions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('imputations_id', 'fk_directions_has_imputations_imputations1_idx')
+            $table->foreign('imputations_id', 'fk_directionsimputations_imputations1_idx')
                 ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');

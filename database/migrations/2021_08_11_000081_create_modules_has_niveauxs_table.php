@@ -10,11 +10,11 @@ class CreateModulesHasNiveauxsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modules_has_niveauxs';
+    public $tableName = 'modulesniveauxs';
 
     /**
      * Run the migrations.
-     * @table modules_has_niveauxs
+     * @table modulesniveauxs
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateModulesHasNiveauxsTable extends Migration
             $table->unsignedInteger('modules_id');
             $table->unsignedInteger('niveauxs_id');
 
-            $table->index(["niveauxs_id"], 'fk_modules_has_niveauxs_niveauxs1_idx');
+            $table->index(["niveauxs_id"], 'fk_modulesniveauxs_niveauxs1_idx');
 
-            $table->index(["modules_id"], 'fk_modules_has_niveauxs_modules1_idx');
+            $table->index(["modules_id"], 'fk_modulesniveauxs_modules1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modules_has_niveauxs_modules1_idx')
+            $table->foreign('modules_id', 'fk_modulesniveauxs_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('niveauxs_id', 'fk_modules_has_niveauxs_niveauxs1_idx')
+            $table->foreign('niveauxs_id', 'fk_modulesniveauxs_niveauxs1_idx')
                 ->references('id')->on('niveauxs')
                 ->onDelete('no action')
                 ->onUpdate('no action');

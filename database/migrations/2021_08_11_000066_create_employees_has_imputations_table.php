@@ -10,11 +10,11 @@ class CreateEmployeesHasImputationsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'employees_has_imputations';
+    public $tableName = 'employeesimputations';
 
     /**
      * Run the migrations.
-     * @table employees_has_imputations
+     * @table employeesimputations
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateEmployeesHasImputationsTable extends Migration
             $table->unsignedInteger('employees_id');
             $table->unsignedInteger('imputations_id');
 
-            $table->index(["imputations_id"], 'fk_employees_has_imputations_imputations1_idx');
+            $table->index(["imputations_id"], 'fk_employeesimputations_imputations1_idx');
 
-            $table->index(["employees_id"], 'fk_employees_has_imputations_employees1_idx');
+            $table->index(["employees_id"], 'fk_employeesimputations_employees1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('employees_id', 'fk_employees_has_imputations_employees1_idx')
+            $table->foreign('employees_id', 'fk_employeesimputations_employees1_idx')
                 ->references('id')->on('employees')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('imputations_id', 'fk_employees_has_imputations_imputations1_idx')
+            $table->foreign('imputations_id', 'fk_employeesimputations_imputations1_idx')
                 ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');

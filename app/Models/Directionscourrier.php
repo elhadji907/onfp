@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class ProgrammesHasModule
+ * Class Directionscourrier
  * 
  * @property int $id
- * @property int $programmes_id
- * @property int $modules_id
+ * @property int $directions_id
+ * @property int $courriers_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Module $module
- * @property Programme $programme
+ * @property Courrier $courrier
+ * @property Direction $direction
  *
  * @package App\Models
  */
-class ProgrammesHasModule extends Model
+class Directionscourrier extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'programmes_has_modules';
+	protected $table = 'directionscourriers';
 
 	protected $casts = [
-		'programmes_id' => 'int',
-		'modules_id' => 'int'
+		'directions_id' => 'int',
+		'courriers_id' => 'int'
 	];
 
 	protected $fillable = [
-		'programmes_id',
-		'modules_id'
+		'directions_id',
+		'courriers_id'
 	];
 
-	public function module()
+	public function courrier()
 	{
-		return $this->belongsTo(Module::class, 'modules_id');
+		return $this->belongsTo(Courrier::class, 'courriers_id');
 	}
 
-	public function programme()
+	public function direction()
 	{
-		return $this->belongsTo(Programme::class, 'programmes_id');
+		return $this->belongsTo(Direction::class, 'directions_id');
 	}
 }

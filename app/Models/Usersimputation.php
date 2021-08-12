@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class EmployeesHasImputation
+ * Class Usersimputation
  * 
  * @property int $id
- * @property int $employees_id
+ * @property int $users_id
  * @property int $imputations_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Employee $employee
  * @property Imputation $imputation
+ * @property User $user
  *
  * @package App\Models
  */
-class EmployeesHasImputation extends Model
+class Usersimputation extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'employees_has_imputations';
+	protected $table = 'usersimputations';
 
 	protected $casts = [
-		'employees_id' => 'int',
+		'users_id' => 'int',
 		'imputations_id' => 'int'
 	];
 
 	protected $fillable = [
-		'employees_id',
+		'users_id',
 		'imputations_id'
 	];
-
-	public function employee()
-	{
-		return $this->belongsTo(Employee::class, 'employees_id');
-	}
 
 	public function imputation()
 	{
 		return $this->belongsTo(Imputation::class, 'imputations_id');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
 	}
 }

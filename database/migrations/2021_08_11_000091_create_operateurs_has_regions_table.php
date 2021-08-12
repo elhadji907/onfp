@@ -10,11 +10,11 @@ class CreateOperateursHasRegionsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'operateurs_has_regions';
+    public $tableName = 'operateursregions';
 
     /**
      * Run the migrations.
-     * @table operateurs_has_regions
+     * @table operateursregions
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateOperateursHasRegionsTable extends Migration
             $table->unsignedInteger('operateurs_id');
             $table->unsignedInteger('regions_id');
 
-            $table->index(["regions_id"], 'fk_operateurs_has_regions_regions1_idx');
+            $table->index(["regions_id"], 'fk_operateursregions_regions1_idx');
 
-            $table->index(["operateurs_id"], 'fk_operateurs_has_regions_operateurs1_idx');
+            $table->index(["operateurs_id"], 'fk_operateursregions_operateurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('operateurs_id', 'fk_operateurs_has_regions_operateurs1_idx')
+            $table->foreign('operateurs_id', 'fk_operateursregions_operateurs1_idx')
                 ->references('id')->on('operateurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('regions_id', 'fk_operateurs_has_regions_regions1_idx')
+            $table->foreign('regions_id', 'fk_operateursregions_regions1_idx')
                 ->references('id')->on('regions')
                 ->onDelete('no action')
                 ->onUpdate('no action');

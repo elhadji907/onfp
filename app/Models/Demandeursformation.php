@@ -12,40 +12,40 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class CollectivesHasFormation
+ * Class Demandeursformation
  * 
  * @property int $id
- * @property int $collectives_id
+ * @property int $demandeurs_id
  * @property int $formations_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collective $collective
+ * @property Demandeur $demandeur
  * @property Formation $formation
  *
  * @package App\Models
  */
-class CollectivesHasFormation extends Model
+class Demandeursformation extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'collectives_has_formations';
+	protected $table = 'demandeursformations';
 
 	protected $casts = [
-		'collectives_id' => 'int',
+		'demandeurs_id' => 'int',
 		'formations_id' => 'int'
 	];
 
 	protected $fillable = [
-		'collectives_id',
+		'demandeurs_id',
 		'formations_id'
 	];
 
-	public function collective()
+	public function demandeur()
 	{
-		return $this->belongsTo(Collective::class, 'collectives_id');
+		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
 	}
 
 	public function formation()

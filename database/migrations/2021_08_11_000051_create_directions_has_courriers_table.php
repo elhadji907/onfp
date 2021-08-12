@@ -10,11 +10,11 @@ class CreateDirectionsHasCourriersTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'directions_has_courriers';
+    public $tableName = 'directionscourriers';
 
     /**
      * Run the migrations.
-     * @table directions_has_courriers
+     * @table directionscourriers
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateDirectionsHasCourriersTable extends Migration
             $table->unsignedInteger('directions_id');
             $table->unsignedInteger('courriers_id');
 
-            $table->index(["courriers_id"], 'fk_directions_has_courriers_courriers1_idx');
+            $table->index(["courriers_id"], 'fk_directionscourriers_courriers1_idx');
 
-            $table->index(["directions_id"], 'fk_directions_has_courriers_directions1_idx');
+            $table->index(["directions_id"], 'fk_directionscourriers_directions1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('directions_id', 'fk_directions_has_courriers_directions1_idx')
+            $table->foreign('directions_id', 'fk_directionscourriers_directions1_idx')
                 ->references('id')->on('directions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('courriers_id', 'fk_directions_has_courriers_courriers1_idx')
+            $table->foreign('courriers_id', 'fk_directionscourriers_courriers1_idx')
                 ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');

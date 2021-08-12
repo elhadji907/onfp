@@ -12,35 +12,35 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class EvaluateursHasModule
+ * Class Evaluationsevaluateur
  * 
  * @property int $id
+ * @property int $evaluations_id
  * @property int $evaluateurs_id
- * @property int $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Evaluateur $evaluateur
- * @property Module $module
+ * @property Evaluation $evaluation
  *
  * @package App\Models
  */
-class EvaluateursHasModule extends Model
+class Evaluationsevaluateur extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'evaluateurs_has_modules';
+	protected $table = 'evaluationsevaluateurs';
 
 	protected $casts = [
-		'evaluateurs_id' => 'int',
-		'modules_id' => 'int'
+		'evaluations_id' => 'int',
+		'evaluateurs_id' => 'int'
 	];
 
 	protected $fillable = [
-		'evaluateurs_id',
-		'modules_id'
+		'evaluations_id',
+		'evaluateurs_id'
 	];
 
 	public function evaluateur()
@@ -48,8 +48,8 @@ class EvaluateursHasModule extends Model
 		return $this->belongsTo(Evaluateur::class, 'evaluateurs_id');
 	}
 
-	public function module()
+	public function evaluation()
 	{
-		return $this->belongsTo(Module::class, 'modules_id');
+		return $this->belongsTo(Evaluation::class, 'evaluations_id');
 	}
 }

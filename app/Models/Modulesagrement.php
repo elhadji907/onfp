@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class ProgrammesHasRegion
+ * Class Modulesagrement
  * 
  * @property int $id
- * @property int $programmes_id
- * @property int $regions_id
+ * @property int $modules_id
+ * @property int $agrements_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Programme $programme
- * @property Region $region
+ * @property Agrement $agrement
+ * @property Module $module
  *
  * @package App\Models
  */
-class ProgrammesHasRegion extends Model
+class Modulesagrement extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'programmes_has_regions';
+	protected $table = 'modulesagrements';
 
 	protected $casts = [
-		'programmes_id' => 'int',
-		'regions_id' => 'int'
+		'modules_id' => 'int',
+		'agrements_id' => 'int'
 	];
 
 	protected $fillable = [
-		'programmes_id',
-		'regions_id'
+		'modules_id',
+		'agrements_id'
 	];
 
-	public function programme()
+	public function agrement()
 	{
-		return $this->belongsTo(Programme::class, 'programmes_id');
+		return $this->belongsTo(Agrement::class, 'agrements_id');
 	}
 
-	public function region()
+	public function module()
 	{
-		return $this->belongsTo(Region::class, 'regions_id');
+		return $this->belongsTo(Module::class, 'modules_id');
 	}
 }

@@ -10,11 +10,11 @@ class CreateCollectivesHasFormationsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'collectives_has_formations';
+    public $tableName = 'collectivesformations';
 
     /**
      * Run the migrations.
-     * @table collectives_has_formations
+     * @table collectivesformations
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateCollectivesHasFormationsTable extends Migration
             $table->unsignedInteger('collectives_id');
             $table->unsignedInteger('formations_id');
 
-            $table->index(["formations_id"], 'fk_collectives_has_formations_formations1_idx');
+            $table->index(["formations_id"], 'fk_collectivesformations_formations1_idx');
 
-            $table->index(["collectives_id"], 'fk_collectives_has_formations_collectives1_idx');
+            $table->index(["collectives_id"], 'fk_collectivesformations_collectives1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('collectives_id', 'fk_collectives_has_formations_collectives1_idx')
+            $table->foreign('collectives_id', 'fk_collectivesformations_collectives1_idx')
                 ->references('id')->on('collectives')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('formations_id', 'fk_collectives_has_formations_formations1_idx')
+            $table->foreign('formations_id', 'fk_collectivesformations_formations1_idx')
                 ->references('id')->on('formations')
                 ->onDelete('no action')
                 ->onUpdate('no action');

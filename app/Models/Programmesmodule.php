@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class CommunesHasModule
+ * Class Programmesmodule
  * 
  * @property int $id
- * @property int $communes_id
+ * @property int $programmes_id
  * @property int $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Commune $commune
  * @property Module $module
+ * @property Programme $programme
  *
  * @package App\Models
  */
-class CommunesHasModule extends Model
+class Programmesmodule extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'communes_has_modules';
+	protected $table = 'programmesmodules';
 
 	protected $casts = [
-		'communes_id' => 'int',
+		'programmes_id' => 'int',
 		'modules_id' => 'int'
 	];
 
 	protected $fillable = [
-		'communes_id',
+		'programmes_id',
 		'modules_id'
 	];
-
-	public function commune()
-	{
-		return $this->belongsTo(Commune::class, 'communes_id');
-	}
 
 	public function module()
 	{
 		return $this->belongsTo(Module::class, 'modules_id');
+	}
+
+	public function programme()
+	{
+		return $this->belongsTo(Programme::class, 'programmes_id');
 	}
 }

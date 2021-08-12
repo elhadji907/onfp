@@ -10,11 +10,11 @@ class CreateCommunesHasModulesTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'communes_has_modules';
+    public $tableName = 'communesmodules';
 
     /**
      * Run the migrations.
-     * @table communes_has_modules
+     * @table communesmodules
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateCommunesHasModulesTable extends Migration
             $table->unsignedInteger('communes_id');
             $table->unsignedInteger('modules_id');
 
-            $table->index(["modules_id"], 'fk_communes_has_modules_modules1_idx');
+            $table->index(["modules_id"], 'fk_communesmodules_modules1_idx');
 
-            $table->index(["communes_id"], 'fk_communes_has_modules_communes1_idx');
+            $table->index(["communes_id"], 'fk_communesmodules_communes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('communes_id', 'fk_communes_has_modules_communes1_idx')
+            $table->foreign('communes_id', 'fk_communesmodules_communes1_idx')
                 ->references('id')->on('communes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('modules_id', 'fk_communes_has_modules_modules1_idx')
+            $table->foreign('modules_id', 'fk_communesmodules_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');

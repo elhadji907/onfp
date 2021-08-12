@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class ModulesHasAgrement
+ * Class Modulesoperateur
  * 
  * @property int $id
  * @property int $modules_id
- * @property int $agrements_id
+ * @property int $operateurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Agrement $agrement
  * @property Module $module
+ * @property Operateur $operateur
  *
  * @package App\Models
  */
-class ModulesHasAgrement extends Model
+class Modulesoperateur extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'modules_has_agrements';
+	protected $table = 'modulesoperateurs';
 
 	protected $casts = [
 		'modules_id' => 'int',
-		'agrements_id' => 'int'
+		'operateurs_id' => 'int'
 	];
 
 	protected $fillable = [
 		'modules_id',
-		'agrements_id'
+		'operateurs_id'
 	];
-
-	public function agrement()
-	{
-		return $this->belongsTo(Agrement::class, 'agrements_id');
-	}
 
 	public function module()
 	{
 		return $this->belongsTo(Module::class, 'modules_id');
+	}
+
+	public function operateur()
+	{
+		return $this->belongsTo(Operateur::class, 'operateurs_id');
 	}
 }

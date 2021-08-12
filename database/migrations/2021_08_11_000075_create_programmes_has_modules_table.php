@@ -10,11 +10,11 @@ class CreateProgrammesHasModulesTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'programmes_has_modules';
+    public $tableName = 'programmesmodules';
 
     /**
      * Run the migrations.
-     * @table programmes_has_modules
+     * @table programmesmodules
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateProgrammesHasModulesTable extends Migration
             $table->unsignedInteger('programmes_id');
             $table->unsignedInteger('modules_id');
 
-            $table->index(["modules_id"], 'fk_programmes_has_modules_modules1_idx');
+            $table->index(["modules_id"], 'fk_programmesmodules_modules1_idx');
 
-            $table->index(["programmes_id"], 'fk_programmes_has_modules_programmes1_idx');
+            $table->index(["programmes_id"], 'fk_programmesmodules_programmes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('programmes_id', 'fk_programmes_has_modules_programmes1_idx')
+            $table->foreign('programmes_id', 'fk_programmesmodules_programmes1_idx')
                 ->references('id')->on('programmes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('modules_id', 'fk_programmes_has_modules_modules1_idx')
+            $table->foreign('modules_id', 'fk_programmesmodules_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');

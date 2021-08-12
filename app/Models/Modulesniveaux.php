@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class ModulesHasNiveaux
+ * Class Modulesniveaux
  * 
  * @property int $id
  * @property int $modules_id
@@ -26,12 +26,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @package App\Models
  */
-class ModulesHasNiveaux extends Model
+class Modulesniveaux extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'modules_has_niveauxs';
+	protected $table = 'modulesniveauxs';
 
 	protected $casts = [
 		'modules_id' => 'int',

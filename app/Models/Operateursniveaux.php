@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class OperateursHasNiveaux
+ * Class Operateursniveaux
  * 
  * @property int $id
  * @property int $operateurs_id
@@ -26,12 +26,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *
  * @package App\Models
  */
-class OperateursHasNiveaux extends Model
+class Operateursniveaux extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'operateurs_has_niveaux';
+	protected $table = 'operateursniveaux';
 
 	protected $casts = [
 		'operateurs_id' => 'int',

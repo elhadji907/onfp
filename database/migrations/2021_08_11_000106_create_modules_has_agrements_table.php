@@ -10,11 +10,11 @@ class CreateModulesHasAgrementsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modules_has_agrements';
+    public $tableName = 'modulesagrements';
 
     /**
      * Run the migrations.
-     * @table modules_has_agrements
+     * @table modulesagrements
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateModulesHasAgrementsTable extends Migration
             $table->unsignedInteger('modules_id');
             $table->unsignedInteger('agrements_id');
 
-            $table->index(["agrements_id"], 'fk_modules_has_agrements_agrements1_idx');
+            $table->index(["agrements_id"], 'fk_modulesagrements_agrements1_idx');
 
-            $table->index(["modules_id"], 'fk_modules_has_agrements_modules1_idx');
+            $table->index(["modules_id"], 'fk_modulesagrements_modules1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modules_has_agrements_modules1_idx')
+            $table->foreign('modules_id', 'fk_modulesagrements_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('agrements_id', 'fk_modules_has_agrements_agrements1_idx')
+            $table->foreign('agrements_id', 'fk_modulesagrements_agrements1_idx')
                 ->references('id')->on('agrements')
                 ->onDelete('no action')
                 ->onUpdate('no action');

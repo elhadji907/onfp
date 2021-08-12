@@ -10,11 +10,11 @@ class CreateEmployeesHasCourriersTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'employees_has_courriers';
+    public $tableName = 'employeescourriers';
 
     /**
      * Run the migrations.
-     * @table employees_has_courriers
+     * @table employeescourriers
      *
      * @return void
      */
@@ -26,19 +26,19 @@ class CreateEmployeesHasCourriersTable extends Migration
             $table->unsignedInteger('employees_id');
             $table->unsignedInteger('courriers_id');
 
-            $table->index(["courriers_id"], 'fk_employees_has_courriers_courriers1_idx');
+            $table->index(["courriers_id"], 'fk_employeescourriers_courriers1_idx');
 
-            $table->index(["employees_id"], 'fk_employees_has_courriers_employees1_idx');
+            $table->index(["employees_id"], 'fk_employeescourriers_employees1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('employees_id', 'fk_employees_has_courriers_employees1_idx')
+            $table->foreign('employees_id', 'fk_employeescourriers_employees1_idx')
                 ->references('id')->on('employees')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('courriers_id', 'fk_employees_has_courriers_courriers1_idx')
+            $table->foreign('courriers_id', 'fk_employeescourriers_courriers1_idx')
                 ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');

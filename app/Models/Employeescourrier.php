@@ -10,37 +10,38 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class CourriersHasImputation
+ * Class Employeescourrier
  * 
  * @property int $id
+ * @property int $employees_id
  * @property int $courriers_id
- * @property int $imputations_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Courrier $courrier
- * @property Imputation $imputation
+ * @property Employee $employee
  *
  * @package App\Models
  */
-class CourriersHasImputation extends Model
+class Employeescourrier extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'courriers_has_imputations';
+	protected $table = 'employeescourriers';
 
 	protected $casts = [
-		'courriers_id' => 'int',
-		'imputations_id' => 'int'
+		'employees_id' => 'int',
+		'courriers_id' => 'int'
 	];
 
 	protected $fillable = [
-		'courriers_id',
-		'imputations_id'
+		'employees_id',
+		'courriers_id'
 	];
 
 	public function courrier()
@@ -48,8 +49,8 @@ class CourriersHasImputation extends Model
 		return $this->belongsTo(Courrier::class, 'courriers_id');
 	}
 
-	public function imputation()
+	public function employee()
 	{
-		return $this->belongsTo(Imputation::class, 'imputations_id');
+		return $this->belongsTo(Employee::class, 'employees_id');
 	}
 }

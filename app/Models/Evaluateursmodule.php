@@ -12,44 +12,44 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class OperateursHasRegion
+ * Class Evaluateursmodule
  * 
  * @property int $id
- * @property int $operateurs_id
- * @property int $regions_id
+ * @property int $evaluateurs_id
+ * @property int $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Operateur $operateur
- * @property Region $region
+ * @property Evaluateur $evaluateur
+ * @property Module $module
  *
  * @package App\Models
  */
-class OperateursHasRegion extends Model
+class Evaluateursmodule extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
+	use HasFactory;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'operateurs_has_regions';
+	protected $table = 'evaluateursmodules';
 
 	protected $casts = [
-		'operateurs_id' => 'int',
-		'regions_id' => 'int'
+		'evaluateurs_id' => 'int',
+		'modules_id' => 'int'
 	];
 
 	protected $fillable = [
-		'operateurs_id',
-		'regions_id'
+		'evaluateurs_id',
+		'modules_id'
 	];
 
-	public function operateur()
+	public function evaluateur()
 	{
-		return $this->belongsTo(Operateur::class, 'operateurs_id');
+		return $this->belongsTo(Evaluateur::class, 'evaluateurs_id');
 	}
 
-	public function region()
+	public function module()
 	{
-		return $this->belongsTo(Region::class, 'regions_id');
+		return $this->belongsTo(Module::class, 'modules_id');
 	}
 }
