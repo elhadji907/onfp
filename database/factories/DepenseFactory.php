@@ -24,8 +24,7 @@ class DepenseFactory extends Factory
      */
     public function definition()
     {
-        
-        $activites_id=Activite::all()->random()->id;    
+        $activites_id=Activite::all()->random()->id;
         $projets_id=Projet::all()->random()->id;
 
         return [
@@ -37,10 +36,10 @@ class DepenseFactory extends Factory
             'ir' => $this->faker->randomFloat(),
             'autre_montant' => $this->faker->randomFloat(),
             'total' => $this->faker->randomFloat(),
-            'activites_id' => function () use($activites_id) {
+            'activites_id' => function () use ($activites_id) {
                 return $activites_id;
             },
-            'projets_id' => function () use($projets_id) {
+            'projets_id' => function () use ($projets_id) {
                 return $projets_id;
             },
         ];

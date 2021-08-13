@@ -25,15 +25,15 @@ class RecueFactory extends Factory
      */
     public function definition()
     {
-        $types_courrier_id=TypesCourrier::where('name','Courriers arrives')->first()->id;
+        $types_courrier_id=TypesCourrier::where('name', 'Courriers arrives')->first()->id;
         $annee = date('y');
         $numero_courrier = date('His');
 
         return [
             'numero' => "CA".$numero_courrier."".$annee,
-            'courriers_id' => function () use($types_courrier_id) {
+            'courriers_id' => function () use ($types_courrier_id) {
                 return Courrier::factory()->create(["types_courriers_id"=>$types_courrier_id])->id;
-           },
+            },
         ];
     }
 }

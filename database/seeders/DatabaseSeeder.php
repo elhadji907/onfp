@@ -58,13 +58,13 @@ class DatabaseSeeder extends Seeder
             TypesdemandeSeeder::class,
             TypesFormationSeeder::class,
             IngenieurSeeder::class,
-            // NineaSeeder::class,
-            // IndividuelleSeeder::class,
-            // CollectiveSeeder::class,
-            // FcollectiveSeeder::class,
-            // FindividuelleSeeder::class,
-            // TypesOperateurSeeder::class,
-            // OperateurSeeder::class,
+            NineaSeeder::class,
+            IndividuelleSeeder::class,
+            CollectiveSeeder::class,
+            FcollectiveSeeder::class,
+            FindividuelleSeeder::class,
+            TypesOperateurSeeder::class,
+            OperateurSeeder::class,
         ]);
     }
 }

@@ -24,7 +24,7 @@ class BordereauFactory extends Factory
      */
     public function definition()
     {
-        $types_courrier_id=TypesCourrier::where('name','Bordereau')->first()->id;
+        $types_courrier_id=TypesCourrier::where('name', 'Bordereau')->first()->id;
         $liste_id=Liste::all()->random()->id;
         $annee = date('y');
 
@@ -38,10 +38,10 @@ class BordereauFactory extends Factory
             'montant' => $this->faker->randomFloat(),
             'nombre_de_piece' => $nombre,
             'observation' => $this->faker->paragraph(1),
-            'courriers_id' => function () use($types_courrier_id) {
+            'courriers_id' => function () use ($types_courrier_id) {
                 return Courrier::factory()->create(["types_courriers_id"=>$types_courrier_id])->id;
             },
-            'listes_id' => function () use($liste_id) {
+            'listes_id' => function () use ($liste_id) {
                 return $liste_id;
             },
         ];

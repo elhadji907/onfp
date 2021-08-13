@@ -23,7 +23,7 @@ class BanqueFactory extends Factory
      */
     public function definition()
     {
-        $types_courrier_id=TypesCourrier::where('name','Banques')->first()->id;
+        $types_courrier_id=TypesCourrier::where('name', 'Banques')->first()->id;
         $annee = date('y');
         
         return [
@@ -33,7 +33,7 @@ class BanqueFactory extends Factory
             'date_dg' => $this->faker->dateTime(),
             'date_cg' => $this->faker->dateTime(),
             'date_ac' => $this->faker->dateTime(),
-            'courriers_id' => function () use($types_courrier_id) {
+            'courriers_id' => function () use ($types_courrier_id) {
                 return Courrier::factory()->create(["types_courriers_id"=>$types_courrier_id])->id;
             },
         ];

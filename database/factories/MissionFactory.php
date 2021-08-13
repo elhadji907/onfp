@@ -23,7 +23,7 @@ class MissionFactory extends Factory
      */
     public function definition()
     {
-        $types_courrier_id=TypesCourrier::where('name','Missions')->first()->id;
+        $types_courrier_id=TypesCourrier::where('name', 'Missions')->first()->id;
         $annee = date('y');
         
         return [
@@ -45,7 +45,7 @@ class MissionFactory extends Factory
             'destination' => $this->faker->word,
             'montant' => $this->faker->randomFloat(),
             'reliquat' => $this->faker->randomFloat(),
-            'courriers_id' => function () use($types_courrier_id) {
+            'courriers_id' => function () use ($types_courrier_id) {
                 return Courrier::factory()->create(["types_courriers_id"=>$types_courrier_id])->id;
             },
         ];

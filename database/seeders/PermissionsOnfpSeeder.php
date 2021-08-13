@@ -29,6 +29,11 @@ class PermissionsOnfpSeeder extends Seeder
          Permission::create(['name' => 'delete demandes']);
          Permission::create(['name' => 'publish demandes']);
          Permission::create(['name' => 'unpublish demandes']);
+
+         Permission::create(['name' => 'edit operateurs']);
+         Permission::create(['name' => 'delete operateurs']);
+         Permission::create(['name' => 'publish operateurs']);
+         Permission::create(['name' => 'unpublish operateurs']);
  
          // create roles and assign created permissions
  
@@ -51,6 +56,9 @@ class PermissionsOnfpSeeder extends Seeder
 
          $role = Role::create(['name' => 'Demandeur']);
          $role->givePermissionTo(['publish demandes', 'unpublish demandes']);
+
+         $role = Role::create(['name' => 'Operateur']);
+         $role->givePermissionTo(['publish operateurs', 'unpublish operateurs']);
 
     }
 }

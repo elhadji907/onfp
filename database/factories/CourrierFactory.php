@@ -26,15 +26,15 @@ class CourrierFactory extends Factory
 
     public function definition()
     {
-    $user_id=User::all()->random()->id;
-    $projet_id=Projet::all()->random()->id;
-    $annee = date('y');
-    $numero_courrier = date('His');
+        $user_id=User::all()->random()->id;
+        $projet_id=Projet::all()->random()->id;
+        $annee = date('y');
+        $numero_courrier = date('His');
 
-    $montant = $this->faker->randomFloat();
-    $autre_montant = $this->faker->randomFloat();
+        $montant = $this->faker->randomFloat();
+        $autre_montant = $this->faker->randomFloat();
 
-    $total = $montant + $autre_montant;
+        $total = $montant + $autre_montant;
 
         return [
             'numero' => $numero_courrier."".$annee,
@@ -71,10 +71,10 @@ class CourrierFactory extends Factory
             'montant' => $montant,
             'autres_montant' => $autre_montant,
             'total' => $total,
-            'projets_id' => function ()  use($projet_id) {
+            'projets_id' => function () use ($projet_id) {
                 return $projet_id;
-           },
-            'users_id' => function ()  use($user_id) {
+            },
+            'users_id' => function () use ($user_id) {
                 return $user_id;
             },
         ];

@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Helpers\SnNameGenerator as SnmG;
 use Illuminate\Support\Str;
 
-
 class InterneFactory extends Factory
 {
     /**
@@ -26,16 +25,16 @@ class InterneFactory extends Factory
      */
 
     public function definition()
-    {      
-        $types_courrier_id=TypesCourrier::where('name','Courriers internes')->first()->id;
+    {
+        $types_courrier_id=TypesCourrier::where('name', 'Courriers internes')->first()->id;
         $annee = date('y');
         $numero_courrier = date('His');
 
         return [
             'numero' => "CI".$numero_courrier."".$annee,
-            'courriers_id' => function () use($types_courrier_id) {
+            'courriers_id' => function () use ($types_courrier_id) {
                 return Courrier::factory()->create(["types_courriers_id"=>$types_courrier_id])->id;
-           },
+            },
         ];
     }
 }

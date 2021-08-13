@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'firstname' => SnmG::getFirstName(),
             'name' => SnmG::getName(),
             'username' => Str::random(7),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => $this->faker->unique(true)->safeEmail(),
             'telephone' => $this->faker->e164PhoneNumber,
             'fixe' => $this->faker->phoneNumber,
             'sexe' => SnmG::getSexe(),

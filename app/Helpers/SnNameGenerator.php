@@ -59,6 +59,12 @@ class SnNameGenerator
         "Mme",
     );
 
+    public static $typesstructure = array(
+
+        "Publique",
+        "Privée",
+    );
+
     public static $statut = array(
 
         "GIE",
@@ -1233,6 +1239,13 @@ class SnNameGenerator
         $random_index=random_int(0, (int)$dimension-1);
         return self::$statut[$random_index];
 
+    }
+    
+    static function getTypesstructure()
+    {
+        $dimension=count(self::$typesstructure);
+        $random_index=random_int(0, (int)$dimension-1);
+        return self::$typesstructure[$random_index];
 
     }
 

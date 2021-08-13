@@ -24,11 +24,11 @@ class AdministrateurFactory extends Factory
      */
     public function definition()
     {
-        $role_id=Role::where('name','Administrateur')->first()->id;
-        return [            
+        $role_id=Role::where('name', 'Administrateur')->first()->id;
+        return [
         'matricule' => "ADMIN".$this->faker->word,
-        'users_id' => function () use($role_id) {
-             return User::factory()->create(["roles_id"=>$role_id])->id;
+        'users_id' => function () use ($role_id) {
+            return User::factory()->create(["roles_id"=>$role_id])->id;
         },
         ];
     }
