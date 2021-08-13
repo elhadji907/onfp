@@ -74,6 +74,7 @@ class ProfileController extends Controller
      */
     public function edit(User $user)
     {
+        /* dd('edit'); */
         /* $this->authorize('update', $user->profile); */
 
         $civilites = User::select('civilite')->distinct()->get();
@@ -90,6 +91,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        dd('update');
         /* $this->authorize('update', $user->profile); */
         
         $data = request()->validate([

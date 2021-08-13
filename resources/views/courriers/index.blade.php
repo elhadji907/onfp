@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Liste de tous les courriers')
+@section('title', 'Onfp | Home')
 @section('content')
 @hasrole('Administrateur|Courrier|Gestionnaire|Demandeur')
 <div class="container-fluid">

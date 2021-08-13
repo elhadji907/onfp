@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class OptionSeeder extends Seeder
+class SecteurSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,32 +15,26 @@ class OptionSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('options')->insert([
-            "name"=>"Arabe",
+        DB::table('secteurs')->insert([
+            "name"=>"primaire",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid"=>Str::uuid(),
         ]);
-        DB::table('options')->insert([
-            "name"=>"Lettre moderne",
+        DB::table('secteurs')->insert([
+            "name"=>"secondaire",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid"=>Str::uuid(),
         ]);
-        DB::table('options')->insert([
-            "name"=>"Lettre classique",
+        DB::table('secteurs')->insert([
+            "name"=>"tertiaire",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid"=>Str::uuid(),
         ]);
-        DB::table('options')->insert([
-            "name"=>"Science",
-            'created_at' => now(),
-            'updated_at' => now(),
-            "uuid"=>Str::uuid(),
-        ]);
-        DB::table('options')->insert([
-            "name"=>"Technique",
+        DB::table('secteurs')->insert([
+            "name"=>"quaternaire",
             'created_at' => now(),
             'updated_at' => now(),
             "uuid"=>Str::uuid(),

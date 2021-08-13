@@ -33,8 +33,8 @@
                         <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
                         <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
                     </div>
-                    {{-- <a href="{{ route('profiles.edit', ['username' => auth::user()->username]) }}"
-                        class="btn btn-outline-secondary mt-3">Modifier mon profile</a> --}}
+                    {{--  <a href="{{ route('profiles.edit', ['username' => auth::user()->username]) }}"
+                        class="btn btn-outline-secondary mt-3">Modifier mon profile</a>  --}}
                 {{-- @endcan --}}
             </div>
         </div>

@@ -8,6 +8,7 @@ use App\Models\Recue;
 use App\Models\Interne;
 use App\Models\Depart;
 use App\Models\Courrier;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -31,33 +32,39 @@ class HomeController extends Controller
         $courrier = Courrier::get()->count();
         $demandeurs = Demandeur::get()->count();
 
+
         $courriers = Courrier::all();
+
+
+       // dd($couriers);
+
+        //$operateurs = Operateur::get()->count();
+        //$Personnels = Personnel::get()->count();
+
+
         $chart      = Courrier::all();
 
-   /*      $chart = new Courrierchart;
-        $chart->labels(['Demandeurs', 'Courriers']);
+        /* $chart = new Courrierchart; */
+    /*     $chart->labels(['Demandeurs', 'Courriers']);
         $chart->dataset('STATISTIQUES', 'bar', collect([$demandeurs, $courriers]))->options([
             'backgroundColor'=>["#3e95cd", "#8e5ea2", "#3cba9f", '#ff3838'],
         ]); */
         
-     /*    if (Auth::user()->role->name === "Administrateur" OR Auth::user()->role->name === "Gestionnaire") {
-            return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart'));           
-        } else { */
+        if (Auth::user()->hasRole('Administrateur') OR Auth::user()->hasRole('Gestionnaire')) {
+           /*  return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart'));   */         
+            return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs'));           
+        } else {
             
         $demandeurs = Demandeur::all();
 
-        $user = auth()->user();
+        $user = auth::user();
 
-        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs')); 
-
-       /*  dd($user); */
-
-        /* $user_connect  =  auth::user()->demandeur; */
+        $user_connect  =  auth::user()->demandeur;
 
 
-        return view('profiles.show', compact('user','courriers','demandeurs'));
+        return view('profiles.show', compact('user','courriers','user_connect','demandeurs'));
 
-      /*   } */
+        }
         
     }
 }
