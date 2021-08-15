@@ -8,14 +8,14 @@
                 <div class="card-header">Modifier mon profile</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('profiles.update', ['$user' => $user]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('profiles.update', [$user]) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="form-group row">
                             <label for="civilite" class="col-md-4 col-form-label text-md-right">{{ __('Civilité') }}</label>   
                             <div class="col-md-6">
                                 <select name="civilite" id="civilite" class="form-control">
-                                    <option value="{{ auth::user()->civilite }}">{{ auth::user()->civilite }}</option>
+                                    <option value="{{ Auth::user()->civilite }}">{{ Auth::user()->civilite }}</option>
                                     @foreach($civilites as $civilite)
                                         <option value="{{ $civilite->civilite }}">{{ $civilite->civilite }}</option>
                                     @endforeach
@@ -64,9 +64,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-                        
-
+                        </div>                      
                         <div class="form-group row">
                             <label for="lieu_naissance" class="col-md-4 col-form-label text-md-right">{{ __('Lieu de naissance') }}</label>   
                             <div class="col-md-6">

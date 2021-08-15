@@ -192,9 +192,9 @@ class User extends Authenticatable
 		return $this->hasOne(Operateur::class, 'users_id');
 	}
 
-	public function poste()
+	public function postes()
 	{
-		return $this->hasOne(Poste::class, 'users_id');
+		return $this->hasMany(Poste::class, 'users_id')->orderBy('created_at', 'DESC');
 	}
 
 	public function profile()

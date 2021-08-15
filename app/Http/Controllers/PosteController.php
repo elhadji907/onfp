@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Poste;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
-class UserController extends Controller
+class PosteController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('roles:Administrateur');
     }
     /**
      * Display a listing of the resource.
@@ -19,17 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('dashboards.users.index');
-    }
-
-    
-    public function profile()
-    {
-        return view('dashboards.users.profile');
-    }
-    public function settings()
-    {
-        return view('dashboards.users.settings');
+        //
     }
 
     /**
@@ -39,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('postes.create');
     }
 
     /**
@@ -50,27 +46,44 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            'legende'   =>  ['required', 'string'],
+            'image'     =>  ['required', 'image']
+
+        ]);
+
+        //dd(request('image'));
+        $imagePath = request('image')->store('uplods', 'public');
+
+        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
+        $image->save();
+
+        auth()->user()->postes()->create([
+            'legende' => $data['legende'],
+            'image' => $imagePath
+            ]);
+
+        return redirect()->route('profiles.show', ['user'=>auth()->user()]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Poste  $poste
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Poste $poste)
     {
-        //
+        return view('postes.show', compact('poste'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Poste  $poste
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Poste $poste)
     {
         //
     }
@@ -79,10 +92,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Poste  $poste
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Poste $poste)
     {
         //
     }
@@ -90,10 +103,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Poste  $poste
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Poste $poste)
     {
         //
     }

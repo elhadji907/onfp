@@ -33,6 +33,14 @@ class CreatePchargesTable extends Migration
             $table->unsignedInteger('demandeurs_id')->nullable();
             $table->unsignedInteger('ecoles_id')->nullable();
             $table->integer('annee')->nullable();
+            $table->string('file1', 200)->nullable();
+            $table->string('file2', 200)->nullable();
+            $table->string('file3', 200)->nullable();
+            $table->string('file4', 200)->nullable();
+            $table->string('file5', 200)->nullable();
+            $table->string('file6', 200)->nullable();
+            $table->string('file7', 200)->nullable();
+            $table->string('file8', 200)->nullable();
 
             $table->index(["demandeurs_id"], 'fk_charge_demandeurs1_idx');
 

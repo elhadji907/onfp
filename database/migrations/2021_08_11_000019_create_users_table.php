@@ -39,12 +39,13 @@ class CreateUsersTable extends Migration
             $table->longText('adresse')->nullable();
             $table->string('bp', 200)->nullable();
             $table->string('fax', 200)->nullable();
+            $table->string('image', 200)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('created_by', 200)->nullable();
             $table->string('updated_by', 200)->nullable();
             $table->string('deleted_by', 200)->nullable();
-            $table->unsignedInteger('roles_id');
+            /* $table->unsignedInteger('roles_id'); */
             $table->rememberToken();
 
             $table->unique(["email"], 'email_UNIQUE');

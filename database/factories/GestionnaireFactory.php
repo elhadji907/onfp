@@ -24,13 +24,16 @@ class GestionnaireFactory extends Factory
      */
     public function definition()
     {
-        $role_id=Role::where('name', 'Gestionnaire')->first()->id;
+        /* $role_id=Role::where('name', 'Gestionnaire')->first()->id; */
 
         return [
         'matricule' => "GEST".$this->faker->word,
-        'users_id' => function () use ($role_id) {
-            return User::factory()->create(["roles_id"=>$role_id])->id;
+        'users_id' => function () {
+            return User::factory()->create()->id;
         },
+        /* 'users_id' => function () use ($role_id) {
+            return User::factory()->create(["roles_id"=>$role_id])->id;
+        }, */
         ];
     }
 }

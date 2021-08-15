@@ -34,7 +34,7 @@ class DemandeurFactory extends Factory
     public function definition()
     {
         $annee = date('y');
-        $role_id=Role::where('name', 'Demandeur')->first()->id;
+        /* $role_id=Role::where('name', 'Demandeur')->first()->id; */
         $projet_id=Projet::all()->random()->id;
         $programmes_id=Programme::all()->random()->id;
         $regions_id=Region::all()->random()->id;
@@ -63,10 +63,13 @@ class DemandeurFactory extends Factory
             'nbre_piece' => $nombre,
             'date_depot' => $this->faker->dateTime(),
             'date1' => $this->faker->dateTime(),
-            'date2' => $this->faker->dateTime(),
-            'users_id' => function () use ($role_id) {
-                return User::factory()->create(["roles_id"=>$role_id])->id;
+            'date2' => $this->faker->dateTime(),            
+            'users_id' => function () {
+                return User::factory()->create()->id;
             },
+            /* 'users_id' => function () use ($role_id) {
+                return User::factory()->create(["roles_id"=>$role_id])->id;
+            }, */
             'lieux_id' => function () use ($lieux_id) {
                 return $lieux_id;
             },

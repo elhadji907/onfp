@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Courrier;
 use Illuminate\Http\Request;
+
 use Yajra\Datatables\Datatables;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 use App\Charts\Courrierchart;
@@ -16,9 +17,36 @@ class CourrierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('roles:Administrateur|Gestionnaire|Courrier');
+    }
     public function index()
     {
-        dd("ok");
+
+        $recues = \App\Models\Recue::get()->count();
+        $internes = \App\Models\Interne::get()->count();
+        $departs = \App\Models\Depart::get()->count();
+        $bordereaus = \App\Models\Bordereau::get()->count();
+        $facturesdafs = \App\Models\Facturesdaf::get()->count();
+        $tresors = \App\Models\Tresor::get()->count();
+        $banques = \App\Models\Banque::get()->count();
+
+        $courrier = Courrier::get()->count();
+        
+        $courriers = Courrier::all();
+
+        $chart      = Courrier::all();
+
+        $chart = new Courrierchart;
+        $chart->labels(['Courriers départs', 'Courriers arrivés', 'Courriers internes']);
+        $chart->dataset('STATISTIQUES', 'bar', [$internes, $recues, $departs])->options([
+            'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
+        ]);
+        
+        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart', 'bordereaus','facturesdafs','tresors'));
     }
 
     /**
@@ -28,7 +56,19 @@ class CourrierController extends Controller
      */
     public function create()
     {
-        //
+        $recues = \App\Models\Recue::get()->count();
+        $internes = \App\Models\Interne::get()->count();
+        $departs = \App\Models\Depart::get()->count();       
+        $courriers = Courrier::get()->count();
+        $demandes = \App\Models\Demandeur::get()->count();
+        $bordereaus = \App\Models\Bordereau::get()->count();
+        $facturesdafs = \App\Models\Facturesdaf::get()->count();        
+        $tresors = \App\Models\Tresor::get()->count();
+        $banques = \App\Models\Banque::get()->count();
+
+
+
+        return view('courriers.create', compact('courriers', 'recues', 'demandes', 'internes', 'departs', 'bordereaus','facturesdafs','tresors'));
     }
 
     /**
@@ -49,8 +89,111 @@ class CourrierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Courrier $courrier)
-    {
-        //
+    {        
+        $typescourrier = $courrier->types_courrier->name;
+       // dd($typescourrier); 
+
+        $recues = $courrier->recues;
+        $departs = $courrier->departs;
+        $internes = $courrier->internes;
+        $bordereaus = $courrier->bordereaus;
+        $facturesdafs = $courrier->facturesdafs;        
+        $tresors = $courrier->tresors;
+        $banques = $courrier->banques;
+
+        $chart      = Courrier::all();
+
+        
+        $recue = \App\Models\Recue::get()->count();
+        $interne = \App\Models\Interne::get()->count();
+        $depart = \App\Models\Depart::get()->count();
+
+        $chart = new Courrierchart;
+        $chart->labels(['Départs', 'Arrivés', 'Internes']);
+        $chart->dataset('STATISTIQUES', 'bar', [$interne, $recue, $depart])->options([
+            'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
+        ]);
+        if ($typescourrier == 'Courriers arrives') {            
+        return view('recues.show', compact('recues','courrier','chart'));
+
+        } elseif($typescourrier == 'Courriers departs') {   
+        return view('departs.show', compact('departs','courrier','chart'));
+
+        } elseif($typescourrier == 'Courriers internes') {    
+            return view('internes.show', compact('internes','courrier','chart'));
+
+        } elseif($typescourrier == 'Bordereau') {    
+            return view('bordereaus.show', compact('bordereaus','courrier','chart'));
+
+        } elseif($typescourrier == 'Tresors') {    
+            return view('tresors.show', compact('tresors','courrier','chart'));
+
+        } elseif($typescourrier == 'Factures daf') {    
+            return view('facturesdafs.show', compact('facturesdafs','courrier','chart'));
+
+        }  elseif($typescourrier == 'Banques') {    
+            return view('banques.show', compact('banques','courrier','chart'));
+    
+        }else {
+            return view('courriers.show', compact('courrier','chart'));
+        }
+        
+    }
+
+
+    public function showFromNotification(Courrier $courrier, DatabaseNotification $notification){
+
+        $notification->markAsRead();
+        
+        $typescourrier = $courrier->types_courrier->name;
+        $recues = $courrier->recues;
+        $departs = $courrier->departs;
+        $internes = $courrier->internes;
+        $bordereaus = $courrier->bordereaus;
+        $facturesdafs = $courrier->facturesdafs;
+        $tresors = $courrier->tresors;
+        $banques = $courrier->banques;
+        // $demandes = $courrier->demandeurs;
+        
+        $recue = \App\Models\Recue::get()->count();
+        $interne = \App\Models\Interne::get()->count();
+        $depart = \App\Models\Depart::get()->count();
+
+        $chart      = Courrier::all();
+
+        $chart = new Courrierchart;
+        $chart->labels(['Départs', 'Arrivés', 'Internes']);
+        $chart->dataset('STATISTIQUES', 'bar', [$interne, $recue, $depart])->options([
+            'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
+        ]);
+        // dd($typescourrier);
+        if ($typescourrier == 'Courriers arrives') {            
+            return view('recues.show', compact('recues','courrier','chart'));
+    
+            } elseif($typescourrier == 'Courriers departs') {   
+            return view('departs.show', compact('departs','courrier','chart'));
+    
+            } elseif($typescourrier == 'Courriers internes') {    
+                return view('internes.show', compact('internes','courrier','chart'));
+    
+            }  
+            elseif($typescourrier == 'Bordereau') {    
+                return view('bordereaus.show', compact('bordereaus','courrier','chart'));
+    
+            }  
+            elseif($typescourrier == 'Factures daf') {    
+                return view('facturesdafs.show', compact('facturesdafs','courrier','chart'));
+    
+            }  
+            elseif($typescourrier == 'Tresors') {    
+                return view('tresors.show', compact('tresors','courrier','chart'));
+    
+            }  elseif($typescourrier == 'Banques') {    
+                return view('banques.show', compact('banques','courrier','chart'));
+        
+            }else {
+                return view('courriers.show', compact('courrier','chart'));
+            }
     }
 
     /**
@@ -61,7 +204,54 @@ class CourrierController extends Controller
      */
     public function edit(Courrier $courrier)
     {
-        //
+    //    dd($courrier);
+    $typescourrier = $courrier->types_courrier->name;
+    //dd($typescourrier);
+
+    $recues = $courrier->recues;
+    $departs = $courrier->departs;
+    $internes = $courrier->internes;
+    $bordereaus = $courrier->bordereaus;
+    $facturesdafs = $courrier->facturesdafs;
+    $tresors = $courrier->tresors;
+    $banques = $courrier->banques;
+    
+    $recue = \App\Models\Recue::get()->count();
+    $interne = \App\Models\Interne::get()->count();
+    $depart = \App\Models\Depart::get()->count();
+
+    $chart      = Courrier::all();
+
+    $chart = new Courrierchart;
+    $chart->labels(['Départs', 'Arrivés', 'Internes']);
+    $chart->dataset('STATISTIQUES', 'bar', [$interne, $recue, $depart])->options([
+        'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
+    ]);
+
+    if ($typescourrier == 'Courriers arrives') {            
+    return view('recues.details', compact('recues','courrier','chart'));
+
+    } elseif($typescourrier == 'Courriers departs') {   
+    return view('departs.details', compact('departs','courrier','chart'));
+
+    } elseif($typescourrier == 'Courriers internes') {    
+        return view('internes.details', compact('internes','courrier','chart'));
+
+    }  elseif($typescourrier == 'Bordereau') {    
+        return view('bordereaus.details', compact('bordereaus','courrier','chart'));
+
+    } elseif($typescourrier == 'Factures daf') {    
+        return view('facturesdafs.details', compact('facturesdafs','courrier','chart'));
+
+    }   elseif($typescourrier == 'Tresors') {    
+        return view('tresors.details', compact('tresors','courrier','chart'));
+
+    }   elseif($typescourrier == 'Banques') {    
+        return view('banques.details', compact('banques','courrier','chart'));
+
+    }else {
+        return view('courriers.details', compact('courrier','chart'));
+    }
     }
 
     /**
@@ -73,7 +263,8 @@ class CourrierController extends Controller
      */
     public function update(Request $request, Courrier $courrier)
     {
-        //
+        $this->authorize('update', $courrier);
+        dd($courrier);
     }
 
     /**

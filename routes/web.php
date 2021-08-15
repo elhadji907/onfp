@@ -1,6 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PosteController;
+use App\Http\Controllers\CourrierController;
+use App\Http\Controllers\RecueController;
+use App\Http\Controllers\DepartController;
+use App\Http\Controllers\InterneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,43 +31,49 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
 Route::group([
     'middleware' => 'App\Http\Middleware\Auth',
-    ], function()
-    { 
-        Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-        Route::get('/profiles/{user}', 'App\Http\Controllers\ProfileController@show')->name('profiles.show');
-        Route::get('/profiles/{user}/edit', 'App\Http\Controllers\ProfileController@edit')->name('profiles.edit');
-        Route::patch('/profiles/{user}', 'App\Http\Controllers\ProfileController@update')->name('profiles.update');
+    ], function () {
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles.show');
+        Route::get('/profiles/{user}/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
+        Route::patch('/profiles/{user}', [ProfileController::class, 'update'])->name('profiles.update');
+
         
+        Route::get('postes/create', [PosteController::class, 'create'])->name('postes.create');
+        Route::post('postes', [PosteController::class, 'store'])->name('postes.store');
+        Route::get('postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
         
-        Route::get('/courriers/list', 'CourrierController@list')->name('courriers.list');
-        Route::get('/recues/list', 'RecueController@list')->name('recues.list');
-        Route::get('/departs/list', 'DepartController@list')->name('departs.list');
-        Route::get('/internes/list', 'InterneController@list')->name('internes.list');
+                
+        /* Route::get('/courriers/list', 'App\Http\Controllers\CourrierController@list')->name('courriers.list'); */
         
-        Route::resource('/courriers', 'CourrierController');
+        Route::get('courriers/index', [CourrierController::class, 'index'])->name('courriers.index');
+        Route::get('courriers/create', [CourrierController::class, 'create'])->name('courriers.create');
+        Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');
+        Route::get('/departs/list', [DepartController::class, 'list'])->name('departs.list');
+        Route::get('/internes/list', [InterneController::class, 'list'])->name('internes.list');
+        
+        //Route::resource('/courriers', 'App\Http\Controllers\CourrierController');
         Route::resource('/recues', 'RecueController');
         Route::resource('/departs', 'DepartController');
         Route::resource('/internes', 'InterneController');
     });
 
-
-
 require __DIR__.'/auth.php';
 
 
 //gestion des roles par niveau d'autorisation
-Route::get('loginfor/{rolename?}',function($rolename=null){
-    if(!isset($rolename)){
+Route::get('loginfor/{rolename?}', function ($rolename=null) {
+    if (!isset($rolename)) {
         return view('auth.loginfor');
-    }else{
-        $role=App\Models\Role::where('name',$rolename)->first();
-        if($role){
+    } else {
+        $role=App\Models\Role::where('name', $rolename)->first();
+        if ($role) {
             $user=$role->users()->first();
-            Auth::login($user,true);
+            Auth::login($user, true);
             return redirect()->route('home');
         }
     }
     return redirect()->route('login');
-    })->name('loginfor');
+})->name('loginfor');

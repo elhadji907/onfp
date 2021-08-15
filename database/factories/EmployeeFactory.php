@@ -25,7 +25,7 @@ class EmployeeFactory extends Factory
      */
     public function definition()
     {
-        $role_id=Role::all()->random()->id;
+        /* $role_id=Role::all()->random()->id; */
         /* $directions_id = App\Direction::all()->random()->id; */
         $categories_id = Category::all()->random()->id;
         $fonctions_id = Fonction::all()->random()->id;
@@ -50,9 +50,12 @@ class EmployeeFactory extends Factory
             'date_embauche' => $this->faker->dateTime(),
             'classification' => $this->faker->word,
             'categorie_salaire' => $this->faker->word,
-            'users_id' => function () use ($role_id) {
-                return User::factory()->create(["roles_id"=>$role_id])->id;
+            'users_id' => function () {
+                return User::factory()->create()->id;
             },
+            /* 'users_id' => function () use ($role_id) {
+                return User::factory()->create(["roles_id"=>$role_id])->id;
+            }, */
            /*  'directions_id' => function () use($directions_id) {
                 return $directions_id;
             }, */

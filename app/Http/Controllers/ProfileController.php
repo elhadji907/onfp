@@ -1,61 +1,27 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Models\Courrier;
 use App\Models\Demandeur;
-use Auth;
+use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Auth;
 
 class ProfileController extends Controller
 {
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         /* $this->middleware('auth'); */
         $this->middleware(['auth']);
     }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
+    
+    public function show(User $user){
         
         $demandeurs = Demandeur::all();
 
@@ -63,18 +29,15 @@ class ProfileController extends Controller
 
         $courriers = Courrier::latest()->paginate(5);
 
+        //dd($courriers);
+
         return view('profiles.show', compact('user','courriers','demandeurs','user_connect'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(User $user)
     {
-        /* dd('edit'); */
+
         /* $this->authorize('update', $user->profile); */
 
         $civilites = User::select('civilite')->distinct()->get();
@@ -82,16 +45,9 @@ class ProfileController extends Controller
         return view('profiles.edit', compact('user', 'civilites'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
+
+    public function update(User $user)
     {
-        dd('update');
         /* $this->authorize('update', $user->profile); */
         
         $data = request()->validate([
@@ -140,16 +96,5 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('profiles.show', ['user'=>auth()->user()]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

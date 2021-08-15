@@ -30,7 +30,7 @@ class OperateurFactory extends Factory
         $communes_id=Commune::all()->random()->id;
         $nineas_id=Ninea::all()->random()->id;
         $types_operateurs_id=TypesOperateur::all()->random()->id;
-        $role_id=Role::where('name', 'Operateur')->first()->id;
+        /* $role_id=Role::where('name', 'Operateur')->first()->id; */
         $annee = date('Y');
 
         return [
@@ -50,9 +50,12 @@ class OperateurFactory extends Factory
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
             },
-            'users_id' => function () use ($role_id) {
-                return User::factory()->create(["roles_id"=>$role_id])->id;
+            'users_id' => function () {
+                return User::factory()->create()->id;
             },
+            /* 'users_id' => function () use ($role_id) {
+                return User::factory()->create(["roles_id"=>$role_id])->id;
+            }, */
             /* 'rccms_id' => function () {
                 return factory(App\Rccm::class)->create()->id;
             }, */
