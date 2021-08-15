@@ -59,7 +59,7 @@ class ProfileController extends Controller
             'date_naissance'   => ['required', 'date'],
             'lieu_naissance'   => ['required', 'string', 'max:50'],
             'telephone'        => ['required', 'string', 'max:50'],
-            'image'            => ['sometimes', 'image', 'max:3000']
+            'image'            => ['sometimes', 'file', 'max:2048']
 
         ]);
 
