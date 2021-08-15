@@ -157,9 +157,9 @@ class User extends Authenticatable
 		return $this->hasOne(Commentere::class, 'users_id');
 	}
 
-	public function comment()
+	public function comments()
 	{
-		return $this->hasOne(Comment::class, 'users_id');
+		return $this->morphMany('\App\Comment', 'commentable')->latest();
 	}
 
 	public function comptable()

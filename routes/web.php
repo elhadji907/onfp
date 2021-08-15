@@ -8,6 +8,7 @@ use App\Http\Controllers\CourrierController;
 use App\Http\Controllers\RecueController;
 use App\Http\Controllers\DepartController;
 use App\Http\Controllers\InterneController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,19 +42,20 @@ Route::group([
         Route::patch('/profiles/{user}', [ProfileController::class, 'update'])->name('profiles.update');
 
         
-        Route::get('postes/create', [PosteController::class, 'create'])->name('postes.create');
-        Route::post('postes', [PosteController::class, 'store'])->name('postes.store');
-        Route::get('postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
+        Route::get('/postes/create', [PosteController::class, 'create'])->name('postes.create');
+        Route::post('/postes', [PosteController::class, 'store'])->name('postes.store');
+        Route::get('/postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
+        Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
                 
-        Route::get('courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
-        Route::get('courriers/index', [CourrierController::class, 'index'])->name('courriers.index');
-        Route::get('courriers/create', [CourrierController::class, 'create'])->name('courriers.create');
+        Route::get('/courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
         Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');
-        Route::get('/recues/index', [RecueController::class, 'index'])->name('recues.index');
         Route::get('/departs/list', [DepartController::class, 'list'])->name('departs.list');
         Route::get('/internes/list', [InterneController::class, 'list'])->name('internes.list');
         
-        //Route::resource('/courriers', 'App\Http\Controllers\CourrierController');
+        Route::post('/comments/{courrier}', [CommentController::class, 'store'])->name('comments.store');
+        Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
+        
+        Route::resource('/courriers', CourrierController::class);
         Route::resource('/recues', RecueController::class);
         Route::resource('/departs', DepartController::class);
         Route::resource('/internes', InterneController::class);

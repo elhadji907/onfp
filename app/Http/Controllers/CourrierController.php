@@ -108,34 +108,34 @@ class CourrierController extends Controller
         $interne = \App\Models\Interne::get()->count();
         $depart = \App\Models\Depart::get()->count();
 
-        $chart = new Courrierchart;
+    /*     $chart = new Courrierchart;
         $chart->labels(['Départs', 'Arrivés', 'Internes']);
         $chart->dataset('STATISTIQUES', 'bar', [$interne, $recue, $depart])->options([
             'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-        ]);
+        ]); */
         if ($typescourrier == 'Courriers arrives') {            
-        return view('recues.show', compact('recues','courrier','chart'));
+        return view('recues.show', compact('recues','courrier'));
 
         } elseif($typescourrier == 'Courriers departs') {   
-        return view('departs.show', compact('departs','courrier','chart'));
+        return view('departs.show', compact('departs','courrier'));
 
         } elseif($typescourrier == 'Courriers internes') {    
-            return view('internes.show', compact('internes','courrier','chart'));
+            return view('internes.show', compact('internes','courrier'));
 
         } elseif($typescourrier == 'Bordereau') {    
-            return view('bordereaus.show', compact('bordereaus','courrier','chart'));
+            return view('bordereaus.show', compact('bordereaus','courrier'));
 
         } elseif($typescourrier == 'Tresors') {    
-            return view('tresors.show', compact('tresors','courrier','chart'));
+            return view('tresors.show', compact('tresors','courrier'));
 
         } elseif($typescourrier == 'Factures daf') {    
-            return view('facturesdafs.show', compact('facturesdafs','courrier','chart'));
+            return view('facturesdafs.show', compact('facturesdafs','courrier'));
 
         }  elseif($typescourrier == 'Banques') {    
-            return view('banques.show', compact('banques','courrier','chart'));
+            return view('banques.show', compact('banques','courrier'));
     
         }else {
-            return view('courriers.show', compact('courrier','chart'));
+            return view('courriers.show', compact('courrier'));
         }
         
     }
@@ -161,38 +161,38 @@ class CourrierController extends Controller
 
         $chart      = Courrier::all();
 
-        $chart = new Courrierchart;
+     /*    $chart = new Courrierchart;
         $chart->labels(['Départs', 'Arrivés', 'Internes']);
         $chart->dataset('STATISTIQUES', 'bar', [$interne, $recue, $depart])->options([
             'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-        ]);
+        ]); */
         // dd($typescourrier);
         if ($typescourrier == 'Courriers arrives') {            
-            return view('recues.show', compact('recues','courrier','chart'));
+            return view('recues.show', compact('recues','courrier'));
     
             } elseif($typescourrier == 'Courriers departs') {   
-            return view('departs.show', compact('departs','courrier','chart'));
+            return view('departs.show', compact('departs','courrier'));
     
             } elseif($typescourrier == 'Courriers internes') {    
-                return view('internes.show', compact('internes','courrier','chart'));
+                return view('internes.show', compact('internes','courrier'));
     
             }  
             elseif($typescourrier == 'Bordereau') {    
-                return view('bordereaus.show', compact('bordereaus','courrier','chart'));
+                return view('bordereaus.show', compact('bordereaus','courrier'));
     
             }  
             elseif($typescourrier == 'Factures daf') {    
-                return view('facturesdafs.show', compact('facturesdafs','courrier','chart'));
+                return view('facturesdafs.show', compact('facturesdafs','courrier'));
     
             }  
             elseif($typescourrier == 'Tresors') {    
-                return view('tresors.show', compact('tresors','courrier','chart'));
+                return view('tresors.show', compact('tresors','courrier'));
     
             }  elseif($typescourrier == 'Banques') {    
-                return view('banques.show', compact('banques','courrier','chart'));
+                return view('banques.show', compact('banques','courrier'));
         
             }else {
-                return view('courriers.show', compact('courrier','chart'));
+                return view('courriers.show', compact('courrier'));
             }
     }
 
@@ -222,35 +222,35 @@ class CourrierController extends Controller
 
     $chart      = Courrier::all();
 
-    $chart = new Courrierchart;
+/*     $chart = new Courrierchart;
     $chart->labels(['Départs', 'Arrivés', 'Internes']);
     $chart->dataset('STATISTIQUES', 'bar', [$interne, $recue, $depart])->options([
         'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-    ]);
+    ]); */
 
     if ($typescourrier == 'Courriers arrives') {            
-    return view('recues.details', compact('recues','courrier','chart'));
+    return view('recues.details', compact('recues','courrier'));
 
     } elseif($typescourrier == 'Courriers departs') {   
-    return view('departs.details', compact('departs','courrier','chart'));
+    return view('departs.details', compact('departs','courrier'));
 
     } elseif($typescourrier == 'Courriers internes') {    
-        return view('internes.details', compact('internes','courrier','chart'));
+        return view('internes.details', compact('internes','courrier'));
 
     }  elseif($typescourrier == 'Bordereau') {    
-        return view('bordereaus.details', compact('bordereaus','courrier','chart'));
+        return view('bordereaus.details', compact('bordereaus','courrier'));
 
     } elseif($typescourrier == 'Factures daf') {    
-        return view('facturesdafs.details', compact('facturesdafs','courrier','chart'));
+        return view('facturesdafs.details', compact('facturesdafs','courrier'));
 
     }   elseif($typescourrier == 'Tresors') {    
-        return view('tresors.details', compact('tresors','courrier','chart'));
+        return view('tresors.details', compact('tresors','courrier'));
 
     }   elseif($typescourrier == 'Banques') {    
-        return view('banques.details', compact('banques','courrier','chart'));
+        return view('banques.details', compact('banques','courrier'));
 
     }else {
-        return view('courriers.details', compact('courrier','chart'));
+        return view('courriers.details', compact('courrier'));
     }
     }
 
