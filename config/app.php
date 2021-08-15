@@ -164,6 +164,7 @@ return [
         Reliese\Coders\CodersServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -233,6 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
 
     ],
 

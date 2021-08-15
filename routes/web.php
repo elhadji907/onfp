@@ -69,7 +69,10 @@ Route::get('loginfor/{rolename?}', function ($rolename=null) {
     if (!isset($rolename)) {
         return view('auth.loginfor');
     } else {
-        $role=App\Models\Role::where('name', $rolename)->first();
+        //$role=App\Models\Role::where('name', $rolename)->first();
+
+        $role = \App\Models\Role::findByName($rolename);
+        
         if ($role) {
             $user=$role->users()->first();
             Auth::login($user, true);

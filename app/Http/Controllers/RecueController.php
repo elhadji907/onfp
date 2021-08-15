@@ -13,7 +13,7 @@ use Yajra\Datatables\Datatables;
 
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
-use App\Models\Charts\Courrierchart;
+/* use App\Models\Charts\Courrierchart; */
 
 use App\Models\TypesCourrier;
 
@@ -70,14 +70,14 @@ class RecueController extends Controller
         $date_r = Carbon::now();
 
        /*  dd($date_r); */
-       $chart      = Courrier::all();
+  /*      $chart      = Courrier::all();
        $chart = new Courrierchart;
        $chart->labels(['', '', '']);
        $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
            'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
        ]);
-
-        return view('recues.create',compact('date', 'types', 'directions','imputations', 'date_r', 'chart'));
+ */
+        return view('recues.create',compact('date', 'types', 'directions','imputations', 'date_r'));
     }
 
     /**
@@ -131,9 +131,9 @@ class RecueController extends Controller
             'adresse'            =>      $request->input('adresse'),
             'fax'                =>      $request->input('fax'),
             'bp'                 =>      $request->input('bp'),
-            'date_recep'             =>      $request->input('date_recep'),
-            'date_cores'             =>      $request->input('date_cores'),
-            // 'legende'            =>      $request->input('legende'),
+            'date_recep'         =>      $request->input('date_recep'),
+            'date_cores'         =>      $request->input('date_cores'),
+            //'legende'         =>      $request->input('legende'),
             'types_courriers_id' =>      $types_courrier_id,
             'users_id'           =>      $users_id,
             'file'               =>      ""
@@ -182,17 +182,17 @@ class RecueController extends Controller
         $directions = Direction::pluck('sigle','id');
         $imputations = Imputation::pluck('sigle','id');
 
-        $chart      = Courrier::all();
+        /* $chart      = Courrier::all();
         $chart = new Courrierchart;
         $chart->labels(['', '', '']);
         $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
             'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-        ]);
+        ]); */
 
         //dd($recue);
 
             //dd($directions);
-         return view('recues.update', compact('recue', 'directions', 'imputations', 'chart'));
+         return view('recues.update', compact('recue', 'directions', 'imputations'));
         /*  dd($recue); */
     }
 
@@ -205,7 +205,7 @@ class RecueController extends Controller
      */
     public function update(Request $request, Recue $recue)
     {
-        $this->authorize('update',  $recue->courrier);
+        /* $this->authorize('update',  $recue->courrier); */
 
         $this->validate(
             $request, [
