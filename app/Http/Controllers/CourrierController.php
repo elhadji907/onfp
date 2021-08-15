@@ -21,7 +21,7 @@ class CourrierController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('roles:Administrateur|Gestionnaire|Courrier');
+        /* $this->middleware('roles:Administrateur|Gestionnaire|Courrier'); */
     }
     public function index()
     {
@@ -38,15 +38,15 @@ class CourrierController extends Controller
         
         $courriers = Courrier::all();
 
-        $chart      = Courrier::all();
+     /*    $chart      = Courrier::all();
 
         $chart = new Courrierchart;
         $chart->labels(['Courriers départs', 'Courriers arrivés', 'Courriers internes']);
         $chart->dataset('STATISTIQUES', 'bar', [$internes, $recues, $departs])->options([
             'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-        ]);
+        ]); */
         
-        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart', 'bordereaus','facturesdafs','tresors'));
+        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'bordereaus','facturesdafs','tresors'));
     }
 
     /**

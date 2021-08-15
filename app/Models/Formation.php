@@ -225,14 +225,14 @@ class Formation extends Model
 
 	public function beneficiaires()
 	{
-		return $this->belongsToMany(Beneficiaire::class, 'beneficiaires_has_formations', 'formations_id', 'beneficiaires_id')
+		return $this->belongsToMany(Beneficiaire::class, 'beneficiairesformations', 'formations_id', 'beneficiaires_id')
 					->withPivot('deleted_at')
 					->withTimestamps();
 	}
 
 	public function collectives()
 	{
-		return $this->belongsToMany(Collective::class, 'collectives_has_formations', 'formations_id', 'collectives_id')
+		return $this->belongsToMany(Collective::class, 'collectivesformations', 'formations_id', 'collectives_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
@@ -244,8 +244,9 @@ class Formation extends Model
 
 	public function demandeurs()
 	{
-		return $this->belongsToMany(Demandeur::class, 'demandeurs_has_formations', 'formations_id', 'demandeurs_id')
-					->withPivot('id', 'update_at', 'deleted_at');
+		return $this->belongsToMany(Demandeur::class, 'demandeursformations', 'formations_id', 'demandeurs_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function details()
@@ -255,7 +256,7 @@ class Formation extends Model
 
 	public function employees()
 	{
-		return $this->belongsToMany(Employee::class, 'employees_has_formations', 'formations_id', 'employees_id')
+		return $this->belongsToMany(Employee::class, 'employeesformations', 'formations_id', 'employees_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
@@ -277,14 +278,14 @@ class Formation extends Model
 
 	public function evaluations()
 	{
-		return $this->belongsToMany(Evaluation::class, 'formations_has_evaluations', 'formations_id', 'evaluations_id')
+		return $this->belongsToMany(Evaluation::class, 'formationsevaluations', 'formations_id', 'evaluations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuelles_has_formations', 'formations_id', 'individuelles_id')
+		return $this->belongsToMany(Individuelle::class, 'individuellesformations', 'formations_id', 'individuelles_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

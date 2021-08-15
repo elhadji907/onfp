@@ -65,7 +65,7 @@ class Commune extends Model
 
 	public function modules()
 	{
-		return $this->belongsToMany(Module::class, 'communes_has_modules', 'communes_id', 'modules_id')
+		return $this->belongsToMany(Module::class, 'communesmodules', 'communes_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

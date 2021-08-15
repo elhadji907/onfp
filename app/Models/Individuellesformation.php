@@ -28,8 +28,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Individuellesformation extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
-	use HasFactory;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'individuellesformations';
 

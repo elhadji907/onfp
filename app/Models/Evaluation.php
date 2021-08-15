@@ -59,14 +59,14 @@ class Evaluation extends Model
 
 	public function evaluateurs()
 	{
-		return $this->belongsToMany(Evaluateur::class, 'evaluations_has_evaluateurs', 'evaluations_id', 'evaluateurs_id')
+		return $this->belongsToMany(Evaluateur::class, 'evaluationsevaluateurs', 'evaluations_id', 'evaluateurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function formations()
 	{
-		return $this->belongsToMany(Formation::class, 'formations_has_evaluations', 'evaluations_id', 'formations_id')
+		return $this->belongsToMany(Formation::class, 'formationsevaluations', 'evaluations_id', 'formations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

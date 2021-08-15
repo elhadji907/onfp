@@ -47,14 +47,14 @@ class Niveaux extends Model
 
 	public function modules()
 	{
-		return $this->belongsToMany(Module::class, 'modules_has_niveauxs', 'niveauxs_id', 'modules_id')
+		return $this->belongsToMany(Module::class, 'modulesniveauxs', 'niveauxs_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function operateurs()
 	{
-		return $this->belongsToMany(Operateur::class, 'operateurs_has_niveaux', 'niveaux_id', 'operateurs_id')
+		return $this->belongsToMany(Operateur::class, 'operateursniveaux', 'niveaux_id', 'operateurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

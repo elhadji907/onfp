@@ -42,6 +42,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $nineas_id
  * @property int|null $courriers_id
  * @property int|null $communes_id
+ * @property string|null $file1
+ * @property string|null $file2
+ * @property string|null $file3
+ * @property string|null $file4
+ * @property string|null $file5
+ * @property string|null $file6
+ * @property string|null $file7
+ * @property string|null $file8
+ * @property string|null $file9
+ * @property string|null $file10
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -98,7 +108,17 @@ class Agrement extends Model
 		'rccms_id',
 		'nineas_id',
 		'courriers_id',
-		'communes_id'
+		'communes_id',
+		'file1',
+		'file2',
+		'file3',
+		'file4',
+		'file5',
+		'file6',
+		'file7',
+		'file8',
+		'file9',
+		'file10'
 	];
 
 	public function commune()
@@ -138,7 +158,7 @@ class Agrement extends Model
 
 	public function modules()
 	{
-		return $this->belongsToMany(Module::class, 'modules_has_agrements', 'agrements_id', 'modules_id')
+		return $this->belongsToMany(Module::class, 'modulesagrements', 'agrements_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

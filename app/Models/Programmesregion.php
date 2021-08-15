@@ -28,8 +28,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Programmesregion extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
-	use HasFactory;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'programmesregions';
 

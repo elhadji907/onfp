@@ -12,44 +12,45 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Usersimputation
+ * Class Nouvelle
  * 
  * @property int $id
- * @property int $users_id
- * @property int $imputations_id
+ * @property string $uuid
+ * @property string $items
+ * @property Carbon|null $date
+ * @property int $pcharges_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Imputation $imputation
- * @property User $user
+ * @property Pcharge $pcharge
  *
  * @package App\Models
  */
-class Usersimputation extends Model
+class Nouvelle extends Model
 {
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'usersimputations';
+	protected $table = 'nouvelles';
 
 	protected $casts = [
-		'users_id' => 'int',
-		'imputations_id' => 'int'
+		'pcharges_id' => 'int'
+	];
+
+	protected $dates = [
+		'date'
 	];
 
 	protected $fillable = [
-		'users_id',
-		'imputations_id'
+		'uuid',
+		'items',
+		'date',
+		'pcharges_id'
 	];
 
-	public function imputation()
+	public function pcharge()
 	{
-		return $this->belongsTo(Imputation::class, 'imputations_id');
-	}
-
-	public function user()
-	{
-		return $this->belongsTo(User::class, 'users_id');
+		return $this->belongsTo(Pcharge::class, 'pcharges_id');
 	}
 }

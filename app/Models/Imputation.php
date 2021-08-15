@@ -51,28 +51,28 @@ class Imputation extends Model
 
 	public function courriers()
 	{
-		return $this->belongsToMany(Courrier::class, 'courriers_has_imputations', 'imputations_id', 'courriers_id')
+		return $this->belongsToMany(Courrier::class, 'courriersimputations', 'imputations_id', 'courriers_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function directions()
 	{
-		return $this->belongsToMany(Direction::class, 'directions_has_imputations', 'imputations_id', 'directions_id')
+		return $this->belongsToMany(Direction::class, 'directionsimputations', 'imputations_id', 'directions_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function employees()
 	{
-		return $this->belongsToMany(Employee::class, 'employees_has_imputations', 'imputations_id', 'employees_id')
+		return $this->belongsToMany(Employee::class, 'employeesimputations', 'imputations_id', 'employees_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function users()
 	{
-		return $this->belongsToMany(User::class, 'users_has_imputations', 'imputations_id', 'users_id')
+		return $this->belongsToMany(User::class, 'usersimputations', 'imputations_id', 'users_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

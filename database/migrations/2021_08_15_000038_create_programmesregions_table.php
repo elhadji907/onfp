@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDemandeursHasDisponibilitesTable extends Migration
+class CreateProgrammesregionsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'demandeursdisponibilites';
+    public $tableName = 'programmesregions';
 
     /**
      * Run the migrations.
-     * @table demandeursdisponibilites
+     * @table programmesregions
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateDemandeursHasDisponibilitesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('demandeurs_id');
-            $table->unsignedInteger('disponibilites_id');
+            $table->unsignedInteger('programmes_id');
+            $table->unsignedInteger('regions_id');
 
-            $table->index(["disponibilites_id"], 'fk_demandeursdisponibilites_disponibilites1_idx');
+            $table->index(["regions_id"], 'fk_programmes_has_regions_regions1_idx');
 
-            $table->index(["demandeurs_id"], 'fk_demandeursdisponibilites_demandeurs1_idx');
+            $table->index(["programmes_id"], 'fk_programmes_has_regions_programmes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('demandeurs_id', 'fk_demandeursdisponibilites_demandeurs1_idx')
-                ->references('id')->on('demandeurs')
+            $table->foreign('programmes_id', 'fk_programmes_has_regions_programmes1_idx')
+                ->references('id')->on('programmes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('disponibilites_id', 'fk_demandeursdisponibilites_disponibilites1_idx')
-                ->references('id')->on('disponibilites')
+            $table->foreign('regions_id', 'fk_programmes_has_regions_regions1_idx')
+                ->references('id')->on('regions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

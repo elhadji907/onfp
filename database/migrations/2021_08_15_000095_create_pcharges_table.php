@@ -24,15 +24,18 @@ class CreatePchargesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
+            $table->integer('annee');
             $table->string('cin', 200);
+            $table->string('matricule', 45)->nullable();
+            $table->string('typedemande', 200)->nullable();
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
             $table->integer('duree')->nullable();
+            $table->double('montant')->nullable();
             $table->double('accompt')->nullable();
             $table->double('reliquat')->nullable();
             $table->unsignedInteger('demandeurs_id')->nullable();
-            $table->unsignedInteger('ecoles_id')->nullable();
-            $table->integer('annee')->nullable();
+            $table->unsignedInteger('etablissements_id')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();
@@ -44,7 +47,7 @@ class CreatePchargesTable extends Migration
 
             $table->index(["demandeurs_id"], 'fk_charge_demandeurs1_idx');
 
-            $table->index(["ecoles_id"], 'fk_charge_ecoles1_idx');
+            $table->index(["etablissements_id"], 'fk_pcharges_etablissements1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -54,7 +57,7 @@ class CreatePchargesTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('ecoles_id', 'fk_charge_ecoles1_idx')
+            $table->foreign('etablissements_id', 'fk_pcharges_etablissements1_idx')
                 ->references('id')->on('etablissements')
                 ->onDelete('no action')
                 ->onUpdate('no action');

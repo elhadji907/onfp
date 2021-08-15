@@ -44,20 +44,19 @@ Route::group([
         Route::get('postes/create', [PosteController::class, 'create'])->name('postes.create');
         Route::post('postes', [PosteController::class, 'store'])->name('postes.store');
         Route::get('postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
-        
                 
-        /* Route::get('/courriers/list', 'App\Http\Controllers\CourrierController@list')->name('courriers.list'); */
-        
+        Route::get('courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
         Route::get('courriers/index', [CourrierController::class, 'index'])->name('courriers.index');
         Route::get('courriers/create', [CourrierController::class, 'create'])->name('courriers.create');
         Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');
+        Route::get('/recues/index', [RecueController::class, 'index'])->name('recues.index');
         Route::get('/departs/list', [DepartController::class, 'list'])->name('departs.list');
         Route::get('/internes/list', [InterneController::class, 'list'])->name('internes.list');
         
         //Route::resource('/courriers', 'App\Http\Controllers\CourrierController');
-        Route::resource('/recues', 'RecueController');
-        Route::resource('/departs', 'DepartController');
-        Route::resource('/internes', 'InterneController');
+        Route::resource('/recues', RecueController::class);
+        Route::resource('/departs', DepartController::class);
+        Route::resource('/internes', InterneController::class);
     });
 
 require __DIR__.'/auth.php';

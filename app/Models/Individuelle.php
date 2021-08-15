@@ -78,7 +78,7 @@ class Individuelle extends Model
 
 	public function formations()
 	{
-		return $this->belongsToMany(Formation::class, 'individuelles_has_formations', 'individuelles_id', 'formations_id')
+		return $this->belongsToMany(Formation::class, 'individuellesformations', 'individuelles_id', 'formations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

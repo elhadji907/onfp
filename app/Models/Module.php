@@ -83,21 +83,21 @@ class Module extends Model
 
 	public function communes()
 	{
-		return $this->belongsToMany(Commune::class, 'communes_has_modules', 'modules_id', 'communes_id')
+		return $this->belongsToMany(Commune::class, 'communesmodules', 'modules_id', 'communes_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function demandeurs()
 	{
-		return $this->belongsToMany(Demandeur::class, 'demandeurs_has_modules', 'modules_id', 'demandeurs_id')
+		return $this->belongsToMany(Demandeur::class, 'demandeursmodules', 'modules_id', 'demandeurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function evaluateurs()
 	{
-		return $this->belongsToMany(Evaluateur::class, 'evaluateurs_has_modules', 'modules_id', 'evaluateurs_id')
+		return $this->belongsToMany(Evaluateur::class, 'evaluateursmodules', 'modules_id', 'evaluateurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
@@ -109,28 +109,28 @@ class Module extends Model
 
 	public function agrements()
 	{
-		return $this->belongsToMany(Agrement::class, 'modules_has_agrements', 'modules_id', 'agrements_id')
+		return $this->belongsToMany(Agrement::class, 'modulesagrements', 'modules_id', 'agrements_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function niveauxes()
 	{
-		return $this->belongsToMany(Niveaux::class, 'modules_has_niveauxs', 'modules_id', 'niveauxs_id')
+		return $this->belongsToMany(Niveaux::class, 'modulesniveauxs', 'modules_id', 'niveauxs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function operateurs()
 	{
-		return $this->belongsToMany(Operateur::class, 'modules_has_operateurs', 'modules_id', 'operateurs_id')
+		return $this->belongsToMany(Operateur::class, 'modulesoperateurs', 'modules_id', 'operateurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function programmes()
 	{
-		return $this->belongsToMany(Programme::class, 'programmes_has_modules', 'modules_id', 'programmes_id')
+		return $this->belongsToMany(Programme::class, 'programmesmodules', 'modules_id', 'programmes_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

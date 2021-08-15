@@ -28,8 +28,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Operateursniveaux extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
-	use HasFactory;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'operateursniveaux';
 

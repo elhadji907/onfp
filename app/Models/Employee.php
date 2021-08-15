@@ -120,21 +120,21 @@ class Employee extends Model
 
 	public function courriers()
 	{
-		return $this->belongsToMany(Courrier::class, 'employees_has_courriers', 'employees_id', 'courriers_id')
+		return $this->belongsToMany(Courrier::class, 'employeescourriers', 'employees_id', 'courriers_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function formations()
 	{
-		return $this->belongsToMany(Formation::class, 'employees_has_formations', 'employees_id', 'formations_id')
+		return $this->belongsToMany(Formation::class, 'employeesformations', 'employees_id', 'formations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function imputations()
 	{
-		return $this->belongsToMany(Imputation::class, 'employees_has_imputations', 'employees_id', 'imputations_id')
+		return $this->belongsToMany(Imputation::class, 'employeesimputations', 'employees_id', 'imputations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

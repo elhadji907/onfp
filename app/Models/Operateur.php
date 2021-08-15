@@ -50,6 +50,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $specialites_id
  * @property int|null $courriers_id
  * @property int|null $communes_id
+ * @property int|null $fichiers_id
+ * @property string|null $file1
+ * @property string|null $file2
+ * @property string|null $file3
+ * @property string|null $file4
+ * @property string|null $file5
+ * @property string|null $file6
+ * @property string|null $file7
+ * @property string|null $file8
+ * @property string|null $file9
+ * @property string|null $file10
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -83,7 +94,8 @@ class Operateur extends Model
 		'types_operateurs_id' => 'int',
 		'specialites_id' => 'int',
 		'courriers_id' => 'int',
-		'communes_id' => 'int'
+		'communes_id' => 'int',
+		'fichiers_id' => 'int'
 	];
 
 	protected $dates = [
@@ -129,7 +141,18 @@ class Operateur extends Model
 		'types_operateurs_id',
 		'specialites_id',
 		'courriers_id',
-		'communes_id'
+		'communes_id',
+		'fichiers_id',
+		'file1',
+		'file2',
+		'file3',
+		'file4',
+		'file5',
+		'file6',
+		'file7',
+		'file8',
+		'file9',
+		'file10'
 	];
 
 	public function commune()
@@ -184,21 +207,21 @@ class Operateur extends Model
 
 	public function modules()
 	{
-		return $this->belongsToMany(Module::class, 'modules_has_operateurs', 'operateurs_id', 'modules_id')
+		return $this->belongsToMany(Module::class, 'modulesoperateurs', 'operateurs_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function niveauxes()
 	{
-		return $this->belongsToMany(Niveaux::class, 'operateurs_has_niveaux', 'operateurs_id')
+		return $this->belongsToMany(Niveaux::class, 'operateursniveaux', 'operateurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function regions()
 	{
-		return $this->belongsToMany(Region::class, 'operateurs_has_regions', 'operateurs_id', 'regions_id')
+		return $this->belongsToMany(Region::class, 'operateursregions', 'operateurs_id', 'regions_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

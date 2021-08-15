@@ -63,14 +63,14 @@ class Programme extends Model
 
 	public function modules()
 	{
-		return $this->belongsToMany(Module::class, 'programmes_has_modules', 'programmes_id', 'modules_id')
+		return $this->belongsToMany(Module::class, 'programmesmodules', 'programmes_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function regions()
 	{
-		return $this->belongsToMany(Region::class, 'programmes_has_regions', 'programmes_id', 'regions_id')
+		return $this->belongsToMany(Region::class, 'programmesregions', 'programmes_id', 'regions_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

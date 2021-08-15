@@ -53,14 +53,14 @@ class Region extends Model
 
 	public function operateurs()
 	{
-		return $this->belongsToMany(Operateur::class, 'operateurs_has_regions', 'regions_id', 'operateurs_id')
+		return $this->belongsToMany(Operateur::class, 'operateursregions', 'regions_id', 'operateurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function programmes()
 	{
-		return $this->belongsToMany(Programme::class, 'programmes_has_regions', 'regions_id', 'programmes_id')
+		return $this->belongsToMany(Programme::class, 'programmesregions', 'regions_id', 'programmes_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

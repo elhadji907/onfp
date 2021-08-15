@@ -27,8 +27,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Beneficiairesformation extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
-	use HasFactory;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'beneficiairesformations';
 	protected $primaryKey = 'beneficiaires_id';

@@ -69,7 +69,7 @@ class Collective extends Model
 
 	public function formations()
 	{
-		return $this->belongsToMany(Formation::class, 'collectives_has_formations', 'collectives_id', 'formations_id')
+		return $this->belongsToMany(Formation::class, 'collectivesformations', 'collectives_id', 'formations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

@@ -60,14 +60,14 @@ class Direction extends Model
 
 	public function courriers()
 	{
-		return $this->belongsToMany(Courrier::class, 'directions_has_courriers', 'directions_id', 'courriers_id')
+		return $this->belongsToMany(Courrier::class, 'directionscourriers', 'directions_id', 'courriers_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function imputations()
 	{
-		return $this->belongsToMany(Imputation::class, 'directions_has_imputations', 'directions_id', 'imputations_id')
+		return $this->belongsToMany(Imputation::class, 'directionsimputations', 'directions_id', 'imputations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

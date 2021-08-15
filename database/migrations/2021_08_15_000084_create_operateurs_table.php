@@ -57,6 +57,7 @@ class CreateOperateursTable extends Migration
             $table->unsignedInteger('specialites_id')->nullable();
             $table->unsignedInteger('courriers_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
+            $table->unsignedInteger('fichiers_id')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();

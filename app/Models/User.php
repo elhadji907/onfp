@@ -38,10 +38,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $fax
  * @property Carbon|null $email_verified_at
  * @property string|null $password
+ * @property string|null $image
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
- * @property int $roles_id
+ * @property string|null $remember_token
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -66,16 +67,13 @@ use Spatie\Permission\Traits\HasRoles;
  * @package App\Models
  */
 class User extends Authenticatable
-{	
+{
     use HasFactory, Notifiable;
 	use HasRoles;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'users';
 
-	protected $casts = [
-		'roles_id' => 'int'
-	];
+	protected $table = 'users';
 
 	protected $dates = [
 		'date_naissance',
@@ -83,7 +81,8 @@ class User extends Authenticatable
 	];
 
 	protected $hidden = [
-		'password'
+		'password',
+		'remember_token'
 	];
 
 	protected $fillable = [
@@ -105,10 +104,11 @@ class User extends Authenticatable
 		'fax',
 		'email_verified_at',
 		'password',
+		'image',
 		'created_by',
 		'updated_by',
 		'deleted_by',
-		'roles_id'
+		'remember_token'
 	];
 
 	protected static function boot(){
@@ -121,12 +121,12 @@ class User extends Authenticatable
 			]);
 		});
 	} 
-	
+
 	public function getRouteKeyName()
 	{
 		return 'username';
 	}
-	
+
 	public function administrateur()
 	{
 		return $this->hasOne(Administrateur::class, 'users_id');
@@ -194,7 +194,7 @@ class User extends Authenticatable
 
 	public function postes()
 	{
-		return $this->hasMany(Poste::class, 'users_id')->orderBy('created_at', 'DESC');
+		return $this->hasMany(Poste::class, 'users_id');
 	}
 
 	public function profile()
@@ -204,20 +204,8 @@ class User extends Authenticatable
 
 	public function imputations()
 	{
-		return $this->belongsToMany(Imputation::class, 'users_has_imputations', 'users_id', 'imputations_id')
+		return $this->belongsToMany(Imputation::class, 'usersimputations', 'users_id', 'imputations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
-	//gestion des roles
-	/* 	public function hasRole($roleName)
-	{
-		return $this->role->name === $roleName;
-	}	
-	public function hasAnyRoles($roles)
-	{
-		return in_array($this->role->name, $roles);
-	}	
-	public function isAdmin(){
-		return false;
-	} */
 }

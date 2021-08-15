@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeesHasImputationsTable extends Migration
+class CreateModulesagrementsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'employeesimputations';
+    public $tableName = 'modulesagrements';
 
     /**
      * Run the migrations.
-     * @table employeesimputations
+     * @table modulesagrements
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateEmployeesHasImputationsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('employees_id');
-            $table->unsignedInteger('imputations_id');
+            $table->unsignedInteger('modules_id');
+            $table->unsignedInteger('agrements_id');
 
-            $table->index(["imputations_id"], 'fk_employeesimputations_imputations1_idx');
+            $table->index(["agrements_id"], 'fk_modules_has_agrements_agrements1_idx');
 
-            $table->index(["employees_id"], 'fk_employeesimputations_employees1_idx');
+            $table->index(["modules_id"], 'fk_modules_has_agrements_modules1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('employees_id', 'fk_employeesimputations_employees1_idx')
-                ->references('id')->on('employees')
+            $table->foreign('modules_id', 'fk_modules_has_agrements_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('imputations_id', 'fk_employeesimputations_imputations1_idx')
-                ->references('id')->on('imputations')
+            $table->foreign('agrements_id', 'fk_modules_has_agrements_agrements1_idx')
+                ->references('id')->on('agrements')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

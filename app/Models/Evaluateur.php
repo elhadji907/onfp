@@ -57,14 +57,14 @@ class Evaluateur extends Model
 
 	public function modules()
 	{
-		return $this->belongsToMany(Module::class, 'evaluateurs_has_modules', 'evaluateurs_id', 'modules_id')
+		return $this->belongsToMany(Module::class, 'evaluateursmodules', 'evaluateurs_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function evaluations()
 	{
-		return $this->belongsToMany(Evaluation::class, 'evaluations_has_evaluateurs', 'evaluateurs_id', 'evaluations_id')
+		return $this->belongsToMany(Evaluation::class, 'evaluationsevaluateurs', 'evaluateurs_id', 'evaluations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

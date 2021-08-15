@@ -50,7 +50,7 @@ class Disponibilite extends Model
 
 	public function demandeurs()
 	{
-		return $this->belongsToMany(Demandeur::class, 'demandeurs_has_disponibilites', 'disponibilites_id', 'demandeurs_id')
+		return $this->belongsToMany(Demandeur::class, 'demandeursdisponibilites', 'disponibilites_id', 'demandeurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

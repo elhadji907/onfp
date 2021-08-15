@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationsHasEvaluateursTable extends Migration
+class CreateOperateursniveauxTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'evaluationsevaluateurs';
+    public $tableName = 'operateursniveaux';
 
     /**
      * Run the migrations.
-     * @table evaluationsevaluateurs
+     * @table operateursniveaux
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateEvaluationsHasEvaluateursTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('evaluations_id');
-            $table->unsignedInteger('evaluateurs_id');
+            $table->unsignedInteger('operateurs_id');
+            $table->unsignedInteger('niveaux_id');
 
-            $table->index(["evaluateurs_id"], 'fk_evaluationsevaluateurs_evaluateurs1_idx');
+            $table->index(["niveaux_id"], 'fk_operateurs_has_niveaux_niveaux1_idx');
 
-            $table->index(["evaluations_id"], 'fk_evaluationsevaluateurs_evaluations1_idx');
+            $table->index(["operateurs_id"], 'fk_operateurs_has_niveaux_operateurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('evaluations_id', 'fk_evaluationsevaluateurs_evaluations1_idx')
-                ->references('id')->on('evaluations')
+            $table->foreign('operateurs_id', 'fk_operateurs_has_niveaux_operateurs1_idx')
+                ->references('id')->on('operateurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('evaluateurs_id', 'fk_evaluationsevaluateurs_evaluateurs1_idx')
-                ->references('id')->on('evaluateurs')
+            $table->foreign('niveaux_id', 'fk_operateurs_has_niveaux_niveaux1_idx')
+                ->references('id')->on('niveauxs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -49,12 +49,13 @@ class Profile extends Model
 		'users_id'
 	];
 
-	public function user()
-	{
-		return $this->belongsTo(User::class, 'users_id');
-	}
 	public function getImage(){
 		$imagePath = $this->image ?? 'avatars/default.png';
 		return "/storage/" . $imagePath;
+	}
+	
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
 	}
 }

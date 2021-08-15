@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBeneficiairesHasFormationsTable extends Migration
+class CreateCourriersimputationsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'beneficiairesformations';
+    public $tableName = 'courriersimputations';
 
     /**
      * Run the migrations.
-     * @table beneficiairesformations
+     * @table courriersimputations
      *
      * @return void
      */
@@ -22,23 +22,24 @@ class CreateBeneficiairesHasFormationsTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('beneficiaires_id');
-            $table->unsignedInteger('formations_id');
+            $table->increments('id');
+            $table->unsignedInteger('courriers_id');
+            $table->unsignedInteger('imputations_id');
 
-            $table->index(["formations_id"], 'fk_beneficiairesformations_formations1_idx');
+            $table->index(["imputations_id"], 'fk_courriers_has_imputations_imputations1_idx');
 
-            $table->index(["beneficiaires_id"], 'fk_beneficiairesformations_beneficiaires1_idx');
+            $table->index(["courriers_id"], 'fk_courriers_has_imputations_courriers1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('beneficiaires_id', 'fk_beneficiairesformations_beneficiaires1_idx')
-                ->references('id')->on('beneficiaires')
+            $table->foreign('courriers_id', 'fk_courriers_has_imputations_courriers1_idx')
+                ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('formations_id', 'fk_beneficiairesformations_formations1_idx')
-                ->references('id')->on('formations')
+            $table->foreign('imputations_id', 'fk_courriers_has_imputations_imputations1_idx')
+                ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -80,7 +80,7 @@ class Beneficiaire extends Model
 
 	public function formations()
 	{
-		return $this->belongsToMany(Formation::class, 'beneficiaires_has_formations', 'beneficiaires_id', 'formations_id')
+		return $this->belongsToMany(Formation::class, 'beneficiairesformations', 'beneficiaires_id', 'formations_id')
 					->withPivot('deleted_at')
 					->withTimestamps();
 	}

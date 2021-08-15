@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Traits\HasRoles;
 
 /**
  * Class Courrier
@@ -90,7 +89,6 @@ use Spatie\Permission\Traits\HasRoles;
 class Courrier extends Model
 {
     use HasFactory;
-	use HasRoles;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'courriers';
@@ -204,7 +202,7 @@ class Courrier extends Model
 
 	public function imputations()
 	{
-		return $this->belongsToMany(Imputation::class, 'courriers_has_imputations', 'courriers_id', 'imputations_id')
+		return $this->belongsToMany(Imputation::class, 'courriersimputations', 'courriers_id', 'imputations_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
@@ -221,14 +219,14 @@ class Courrier extends Model
 
 	public function directions()
 	{
-		return $this->belongsToMany(Direction::class, 'directions_has_courriers', 'courriers_id', 'directions_id')
+		return $this->belongsToMany(Direction::class, 'directionscourriers', 'courriers_id', 'directions_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function employees()
 	{
-		return $this->belongsToMany(Employee::class, 'employees_has_courriers', 'courriers_id', 'employees_id')
+		return $this->belongsToMany(Employee::class, 'employeescourriers', 'courriers_id', 'employees_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

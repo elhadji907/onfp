@@ -80,7 +80,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Module[] $modules
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Pcharge[] $pcharges
- * @property Collection|Piece[] $pieces
  * @property Collection|Titre[] $titres
  *
  * @package App\Models
@@ -220,20 +219,21 @@ class Demandeur extends Model
 
 	public function disponibilites()
 	{
-		return $this->belongsToMany(Disponibilite::class, 'demandeurs_has_disponibilites', 'demandeurs_id', 'disponibilites_id')
+		return $this->belongsToMany(Disponibilite::class, 'demandeursdisponibilites', 'demandeurs_id', 'disponibilites_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function formations()
 	{
-		return $this->belongsToMany(Formation::class, 'demandeurs_has_formations', 'demandeurs_id', 'formations_id')
-					->withPivot('id', 'update_at', 'deleted_at');
+		return $this->belongsToMany(Formation::class, 'demandeursformations', 'demandeurs_id', 'formations_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function modules()
 	{
-		return $this->belongsToMany(Module::class, 'demandeurs_has_modules', 'demandeurs_id', 'modules_id')
+		return $this->belongsToMany(Module::class, 'demandeursmodules', 'demandeurs_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
@@ -246,11 +246,6 @@ class Demandeur extends Model
 	public function pcharges()
 	{
 		return $this->hasMany(Pcharge::class, 'demandeurs_id');
-	}
-
-	public function pieces()
-	{
-		return $this->hasMany(Piece::class, 'demandeurs_id');
 	}
 
 	public function titres()

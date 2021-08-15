@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCourriersHasImputationsTable extends Migration
+class CreateDirectionsimputationsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'courriersimputations';
+    public $tableName = 'directionsimputations';
 
     /**
      * Run the migrations.
-     * @table courriersimputations
+     * @table directionsimputations
      *
      * @return void
      */
@@ -23,22 +23,22 @@ class CreateCourriersHasImputationsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('courriers_id');
+            $table->unsignedInteger('directions_id');
             $table->unsignedInteger('imputations_id');
 
-            $table->index(["imputations_id"], 'fk_courriersimputations_imputations1_idx');
+            $table->index(["imputations_id"], 'fk_directions_has_imputations_imputations1_idx');
 
-            $table->index(["courriers_id"], 'fk_courriersimputations_courriers1_idx');
+            $table->index(["directions_id"], 'fk_directions_has_imputations_directions1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('courriers_id', 'fk_courriersimputations_courriers1_idx')
-                ->references('id')->on('courriers')
+            $table->foreign('directions_id', 'fk_directions_has_imputations_directions1_idx')
+                ->references('id')->on('directions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('imputations_id', 'fk_courriersimputations_imputations1_idx')
+            $table->foreign('imputations_id', 'fk_directions_has_imputations_imputations1_idx')
                 ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');

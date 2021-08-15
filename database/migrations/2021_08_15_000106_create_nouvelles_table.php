@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesHasAgrementsTable extends Migration
+class CreateNouvellesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modulesagrements';
+    public $tableName = 'nouvelles';
 
     /**
      * Run the migrations.
-     * @table modulesagrements
+     * @table nouvelles
      *
      * @return void
      */
@@ -23,23 +23,18 @@ class CreateModulesHasAgrementsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('modules_id');
-            $table->unsignedInteger('agrements_id');
+            $table->char('uuid', 36);
+            $table->string('items', 200);
+            $table->dateTime('date')->nullable();
+            $table->unsignedInteger('pcharges_id');
 
-            $table->index(["agrements_id"], 'fk_modulesagrements_agrements1_idx');
-
-            $table->index(["modules_id"], 'fk_modulesagrements_modules1_idx');
+            $table->index(["pcharges_id"], 'fk_nouvelles_pcharges1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modulesagrements_modules1_idx')
-                ->references('id')->on('modules')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('agrements_id', 'fk_modulesagrements_agrements1_idx')
-                ->references('id')->on('agrements')
+            $table->foreign('pcharges_id', 'fk_nouvelles_pcharges1_idx')
+                ->references('id')->on('pcharges')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

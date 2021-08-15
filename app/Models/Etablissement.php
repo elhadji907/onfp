@@ -74,6 +74,6 @@ class Etablissement extends Model
 
 	public function pcharges()
 	{
-		return $this->hasMany(Pcharge::class, 'ecoles_id');
+		return $this->hasMany(Pcharge::class, 'etablissements_id');
 	}
 }

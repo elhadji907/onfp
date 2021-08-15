@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @package App\Models
  */
 class Village extends Model
-{	
+{
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProgrammesHasModulesTable extends Migration
+class CreateCommunesmodulesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'programmesmodules';
+    public $tableName = 'communesmodules';
 
     /**
      * Run the migrations.
-     * @table programmesmodules
+     * @table communesmodules
      *
      * @return void
      */
@@ -23,22 +23,22 @@ class CreateProgrammesHasModulesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('programmes_id');
+            $table->unsignedInteger('communes_id');
             $table->unsignedInteger('modules_id');
 
-            $table->index(["modules_id"], 'fk_programmesmodules_modules1_idx');
+            $table->index(["modules_id"], 'fk_communes_has_modules_modules1_idx');
 
-            $table->index(["programmes_id"], 'fk_programmesmodules_programmes1_idx');
+            $table->index(["communes_id"], 'fk_communes_has_modules_communes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('programmes_id', 'fk_programmesmodules_programmes1_idx')
-                ->references('id')->on('programmes')
+            $table->foreign('communes_id', 'fk_communes_has_modules_communes1_idx')
+                ->references('id')->on('communes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('modules_id', 'fk_programmesmodules_modules1_idx')
+            $table->foreign('modules_id', 'fk_communes_has_modules_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
