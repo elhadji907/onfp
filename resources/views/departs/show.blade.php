@@ -103,7 +103,7 @@
                             <div class="alert alert-info">Aucun commentaire pour ce courrier</div>
                                 
                             @endforelse
-                            <form method="POST" action="{{ route('comments.store', $depart->courrier->id) }}" class="mt-3">
+                            <form method="POST" action="{{ route('comments.store', $depart->courrier) }}" class="mt-3">
                                 @csrf                                                         
                                  <div class="form-group">
                                      <label for="commentaire"><b>Votre commentaire</b></label>                                   

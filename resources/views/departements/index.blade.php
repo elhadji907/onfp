@@ -32,8 +32,8 @@
                                         <th>ID</th>
                                         <th>Département</th>
                                         <th>{!! __('Région') !!}</th>
-                                        <th style="width:10%;">{!! __('Formations') !!}</th>
-                                        <th style="width:10%;">{!! __('Demandeurs') !!}</th>
+                                        {{--  <th style="width:10%;">{!! __('Formations') !!}</th>
+                                        <th style="width:10%;">{!! __('Demandeurs') !!}</th>  --}}
                                         <th style="width:7%;">Action</th>
                                     </tr>
                                 </thead>
@@ -42,8 +42,8 @@
                                         <th>ID</th>
                                         <th>Département</th>
                                         <th>{!! __('Région') !!}</th>
-                                        <th>{!! __('Formations') !!}</th>
-                                        <th>{!! __('Demandeurs') !!}</th>
+                                        {{--  <th>{!! __('Formations') !!}</th>
+                                        <th>{!! __('Demandeurs') !!}</th>  --}}
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -104,14 +104,14 @@
                         data: 'region.nom',
                         name: 'region.nom'
                     },
-                    {
+                 {{--     {
                         data: 'demandeurs_count',
                         name: 'demandeurs_count'
                     },
                     {
                         data: 'formations_count',
                         name: 'formations_count'
-                    },
+                    },  --}}
                     {
                         data: null,
                         orderable: false,
@@ -129,7 +129,7 @@
                             '<div class="btn btn-danger delete btn_delete_departement btn-sm ml-1" title="Supprimer" data-href=' +
                             url_d + '><i class="fas fa-trash-alt"></i></div>';
                     },
-                    "targets": 5
+                    "targets": 3
                 }, ],
 
                 dom: 'lBfrtip',
