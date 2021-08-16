@@ -37,18 +37,19 @@ class RegionController extends Controller
     public function store(Request $request)
     {
         $this->validate(
-            $request, [
+            $request,
+            [
                
                 'nom' =>  'required|string|max:50|unique:regions,nom,NULL,id,deleted_at,NULL',
             ]
         );
-        $region = new region([      
+        $region = new region([
             'nom'           =>      $request->input('nom'),
 
         ]);
         
         $region->save();
-        return redirect()->route('regions.index')->with('success','enregistrement effectué avec succès !');
+        return redirect()->route('regions.index')->with('success', 'enregistrement effectué avec succès !');
     }
 
     /**
@@ -72,7 +73,7 @@ class RegionController extends Controller
     {
         $id = $region->id;
 
-        return view('regions.update', compact('region','id'));
+        return view('regions.update', compact('region', 'id'));
     }
 
     /**
@@ -85,14 +86,15 @@ class RegionController extends Controller
     public function update(Request $request, Region $region)
     {
         $this->validate(
-            $request, 
+            $request,
             [
                 'nom' =>  'required|string|unique:regions,nom,'.$region->id
-            ]); 
+            ]
+        );
 
         $region->nom  =   $request->input('nom');
         $region->save();
-        return redirect()->route('regions.index')->with('success','enregistrement modifié avec succès !');
+        return redirect()->route('regions.index')->with('success', 'enregistrement modifié avec succès !');
     }
 
     /**
@@ -117,11 +119,11 @@ class RegionController extends Controller
 
     public function list(Request $request)
     {
-        $regions=Region::withCount(['departements',
-                                    'demandeurs',
-                                    ])
-        ->with('departements.arrondissements.communes.modules')
-        ->get();
+        $regions=Region::with('departements.arrondissements.communes.modules')
+                        ->withCount([
+                        'departements',
+                        'demandeurs',
+                                    ])->get();
         return Datatables::of($regions)->make(true);
     }
 }

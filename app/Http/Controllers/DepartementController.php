@@ -16,7 +16,8 @@ class DepartementController extends Controller
      */
     public function index()
     {
-        return view('departements.index');
+        $departements = Departement::all();
+        return view('departements.index', compact('departements'));
     }
 
     /**
