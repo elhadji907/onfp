@@ -160,6 +160,11 @@ class Courrier extends Model
 		'traitementcourriers_id'
 	];
 
+	public function getFile(){
+		$filePath = $this->file ?? 'recues/default.jpg';
+		return "/storage/" . $filePath;
+	}
+
 	public function projet()
 	{
 		return $this->belongsTo(Projet::class, 'projets_id');
@@ -197,7 +202,7 @@ class Courrier extends Model
 
 	public function comments()
 	{
-		return $this->hasMany(Comment::class, 'courriers_id');
+		return $this->morphMany(Comment::class, 'commentable')->latest();
 	}
 
 	public function imputations()
