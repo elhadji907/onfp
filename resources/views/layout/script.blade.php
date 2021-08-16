@@ -10,8 +10,6 @@
    {{-- <!-- Page level plugins --> --}}
    <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
 
-   <script src="{{ asset('ijaboCropTool/ijaboCropTool.min.css') }}"></script>
-
    {{-- <!-- Page level custom scripts --> --}}
    <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
    <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
@@ -272,7 +270,6 @@
    <!-- Page level custom scripts -->
    <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
    <script src="{{ asset('js/feather.min.js') }}"></script>
-   <script src="{{ asset('ijaboCropTool/ijaboCropTool.min.js') }}"></script>
    <script>
        feather.replace()
    </script>
