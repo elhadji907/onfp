@@ -31,7 +31,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>{!! __('Région') !!}</th>
-                                        <th style="width:10%;">{!! __('Effectif') !!}</th>
+                                        <th style="width:10%;">{!! __('Nbre dept.') !!}</th>
                                         <th style="width:10%;">Action</th>
                                     </tr>
                                 </thead>
@@ -39,7 +39,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>{!! __('Région') !!}</th>
-                                        <th>{!! __('Effectif') !!}</th>
+                                        <th>{!! __('Nbre dept.') !!}</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -96,8 +96,8 @@
                         name: 'nom'
                     },
                     {
-                        data: 'demandeurs_count',
-                        name: 'demandeurs_count'
+                        data: 'departements_count',
+                        name: 'departements_count'
                     },
                     {
                         data: null,
