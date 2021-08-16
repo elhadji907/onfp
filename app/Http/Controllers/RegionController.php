@@ -104,11 +104,11 @@ class RegionController extends Controller
     public function destroy(Region $region)
     {
         
-        if (isset($region->departements) AND $region->departements != "") {
+     /*    if (isset($region->departements) AND $region->departements != "") {
             dd($region->departements);
         } else {
             dd('ne pas supprimer');
-        }
+        } */
 
         $region->delete();
         $message = $region->nom.' a été supprimé(e)';
