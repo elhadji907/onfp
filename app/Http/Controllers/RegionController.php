@@ -117,7 +117,11 @@ class RegionController extends Controller
 
     public function list(Request $request)
     {
-        $regions=Region::withCount('departements')->withCount('demandeurs')->with('departements.arrondissements.communes.modules')->get();
+        $regions=Region::withCount(['departements',
+                                    'demandeurs',
+                                    ])
+        ->with('departements.arrondissements.communes.modules')
+        ->get();
         return Datatables::of($regions)->make(true);
     }
 }

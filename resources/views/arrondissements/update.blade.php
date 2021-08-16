@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Modification departements')
+@section('title', 'ONFP - Modification arrondissement')
 @section('content')
 <div class="content">
     <div class="container col-8 col-sm-12 col-md-8 col-lg-8 col-xl-8">
@@ -11,17 +11,17 @@
             <div class="card">
                 <div class="card-header card-header-primary text-center">
                     <h3 class="card-title">{{ ("Modification") }}</h3>
-                    <p class="card-category">{{ ("département") }}</p>
+                    <p class="card-category">{{ ("arrondissement") }}</p>
                 </div>
                 <div class="card-body">
                                                
-                        <form method="POST" action="{{ action('App\Http\Controllers\DepartementController@update', $id) }}">
+                        <form method="POST" action="{{ action('App\Http\Controllers\ArrondissementController@update', $id) }}">
                            @csrf
                            <input type="hidden" name="_method" value="PATCH" /> 
                             <div class="form-row">
                             <div class="form-group col col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                <label for="input-nom"><b>{{ __("Nom du département") }}:</b></label>
-                                <input type="text" name="nom" class="form-control" id="input-nom" placeholder="ex: primaire" value="{{ old('nom') ?? $departement->nom }}">
+                                <label for="input-nom"><b>{{ __("Nom du arrondissement") }}:</b></label>
+                                <input type="text" name="nom" class="form-control" id="input-nom" placeholder="ex: Rufisque" value="{{ old('nom') ?? $arrondissement->nom }}">
                                 <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('nom'))
                                         @foreach ($errors->get('nom') as $message)
@@ -32,11 +32,11 @@
                             </div>
                             <div class="form-group col col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __("Région") }}:</b></label>
-                                <select name="region" id="region" class="form-control" data-width="100%">
-                                        <option value="{{ $region->id }}">{{ $region->nom }}</option>
+                                <select name="departement" id="departement" class="form-control" data-width="100%">
+                                        <option value="{{ $departement->id }}">{{ $departement->nom }}</option>
                                         <option value="">{{ __("...sélectionner...") }}</option>
-                                        @foreach($regions as $region)
-                                            <option value="{{ $region->id }}">{{ $region->nom }}</option>
+                                        @foreach($departements as $departement)
+                                            <option value="{{ $departement->id }}">{{ $departement->nom }}</option>
                                         @endforeach
                                     </select>
                                     <small id="emailHelp" class="form-text text-muted">
