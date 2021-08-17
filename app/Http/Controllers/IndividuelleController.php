@@ -297,12 +297,12 @@ class IndividuelleController extends Controller
         $demandeur->modules()->sync($request->input('modules'));
 
         
-        $user_connect  =  auth::user()->demandeur;
+        $user_connect  =  Auth::user()->demandeur;
 
         if (Auth::user()->role === "Administrateur" OR Auth::user()->role === "Gestionnaire") {
             return redirect()->route('individuelles.index')->with('success','demandeur ajouté avec succès !');
         } else {
-            return redirect()->route('profiles.show', compact('user_connect'));
+            return redirect()->route('profiles.show', ['user'=>auth()->user(), 'user_connect'=>auth()->user()->demandeur()]);
         }
         
     }

@@ -380,7 +380,7 @@
                                 {!! Form::textarea('information', null, ['placeholder' => 'Informations complémenaires', 'rows' => 1, 'class' => 'form-control']) !!}
                             </div>
                         </div>
-                        @roles('Administrateur|Gestionnaire')
+                        @hasrole('Administrateur|Gestionnaire')
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
@@ -394,7 +394,8 @@
                                 </small>
                             </div>
                         </div>
-                        @endroles
+                        @else
+                        @endhasrole
                         <div class="bg-gradient-secondary text-center">
                             <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
                         </div>

@@ -87,7 +87,7 @@
                                                 <th style="width:30%;">Module</th>
                                                 <th>Type demande</th>
                                                 <th>Statut</th>
-                                                <th></th>
+                                                <th style="width:08%;"></th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -114,20 +114,20 @@
                                                         <td style="text-align: center;">
                                                             {!! $demandeur->statut !!}
                                                         </td>
-                                                        <td>
-                                                            {{-- <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                        <td class="d-flex align-items-baseline align-content-center">
+                                                            <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">
                                                             <i class="far fa-edit">&nbsp;</i>
                                                         </a>
-                                                        &nbsp; --}}
+                                                        &nbsp;
                                                             <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
                                                                 title="voir">
                                                                 <i class="far fa-eye">&nbsp;</i>
                                                             </a>
-                                                            {{-- &nbsp;
+                                                            &nbsp;
                                                         {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                         {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                        {!! Form::close() !!} --}}
+                                                        {!! Form::close() !!}
                                                         </td>
                                                     </tr>
                                                 @endcan
