@@ -7,38 +7,38 @@
                 <img src="{{ asset(auth::user()->profile->getImage()) }}" class="rounded-circle w-50" />
             </div>
             <div class="col-8">
-                {{--  @can('update', $user->profile)  --}}
-                    <div class="mt-3 d-flex">
-                        <div class="mr-1"><b>{{ auth::user()->civilite }}</b></div>
-                        <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
-                        <div class="mr-1"><b>{{ auth::user()->name }}</b></div>
+                {{-- @can('update', $user->profile) --}}
+                <div class="mt-3 d-flex">
+                    <div class="mr-1"><b>{{ auth::user()->civilite }}</b></div>
+                    <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
+                    <div class="mr-1"><b>{{ auth::user()->name }}</b></div>
 
-                        @if (auth::user()->civilite == 'M.')
-                            <div class="mr-1"><b>né le</b></div>
-                        @endif
-                        @if (auth::user()->civilite == 'Mme')
-                            <div class="mr-1"><b>née le</b></div>
-                        @endif
-                        @if (auth::user()->date_naissance !== null)
-                            <div class="mr-1"><b>{{ auth::user()->date_naissance->format('d M Y') }}</b></div>
-                        @endif
-                        @if (auth::user()->lieu_naissance !== null)
-                            <div class="mr-1"><b>à</b></div>
-                            <div class="mr-1"><b>{{ auth::user()->lieu_naissance }}</b></div>
-                        @endif
-                    </div>
+                    @if (auth::user()->civilite == 'M.')
+                        <div class="mr-1"><b>né le</b></div>
+                    @endif
+                    @if (auth::user()->civilite == 'Mme')
+                        <div class="mr-1"><b>née le</b></div>
+                    @endif
+                    @if (auth::user()->date_naissance !== null)
+                        <div class="mr-1"><b>{{ auth::user()->date_naissance->format('d M Y') }}</b></div>
+                    @endif
+                    @if (auth::user()->lieu_naissance !== null)
+                        <div class="mr-1"><b>à</b></div>
+                        <div class="mr-1"><b>{{ auth::user()->lieu_naissance }}</b></div>
+                    @endif
+                </div>
 
-                    <div class="mt-0">
-                        <div class="mr-3"><b>{{ __("Nom d'utilisateur") }}:</b> {{ auth::user()->username }}</div>
-                        <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
-                        <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
-                    </div>
-                    <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
-                        class="btn btn-outline-secondary mt-3">Modifier mon profile</a>
-               {{--   @endcan  --}}
+                <div class="mt-0">
+                    <div class="mr-3"><b>{{ __("Nom d'utilisateur") }}:</b> {{ auth::user()->username }}</div>
+                    <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
+                    <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
+                </div>
+                <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
+                    class="btn btn-outline-secondary mt-3">Modifier mon profile</a>
+                {{-- @endcan --}}
             </div>
         </div>
-        {{--  @hasrole('Administrateur|Courrier')
+        {{-- @hasrole('Administrateur|Courrier')
         <div class="list-group mt-5">
             @foreach ($courriers as $courrier)
                 <div class="list-group-item">
@@ -56,7 +56,7 @@
             {!! $courriers->links() !!}
         </div>
         @else
-        @endhasrole  --}}
+        @endhasrole --}}
         @hasrole('Demandeur')
         @if (isset($user_connect))
             <div class="row mt-5">
@@ -81,13 +81,18 @@
                                         cellspacing="0" id="table-demandeurs">
                                         <thead class="table-dark">
                                             <tr>
-                                                <th>Numéro</th>
-                                                <th>Prenom et Nom</th>
+                                                <th>N° dossier</th>
+                                                <th>CIN</th>
+                                                <th>Prenom</th>
+                                                <th>Nom</th>
+                                                <th>Date naissance</th>
+                                                <th>Lieu naissance</th>
+                                                <th>Email</th>
                                                 <th>Téléphone</th>
-                                                <th style="width:30%;">Module</th>
+                                                <th style="width:5%;">Module</th>
                                                 <th>Type demande</th>
                                                 <th>Statut</th>
-                                                <th style="width:08%;"></th>
+                                                <th style="width:08%;">Action</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -99,14 +104,18 @@
                                                 @can('view', $demandeur)
                                                     <tr valign="bottom">
                                                         <td>{!! $demandeur->numero !!}</td>
-                                                        <td>{!! $demandeur->user->firstname !!} {{ ' ' }}{!! $demandeur->user->name !!}
-                                                        </td>
-                                                       {{--   <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                        <td>{!! $demandeur->user->lieu_naissance !!}</td>  --}}
+                                                        <td>{!! number_format($demandeur->cin,0, ',', ' ') . ' ' !!}</td>
+                                                        <td>{!! $demandeur->user->firstname !!}</td>
+                                                        <td>{!! $demandeur->user->name !!}</td>
+                                                        <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                        <td>{!! $demandeur->user->lieu_naissance !!}</td>
+                                                        <td>{!! $demandeur->user->email !!}</td>
                                                         <td>{!! $demandeur->user->telephone !!}</td>
-                                                        <td>
+                                                        <td ALIGN="CENTER">
                                                             @foreach ($demandeur->modules as $module)
-                                                                <p>{!! $module->name !!}</p>
+                                                                @if ($loop->last)
+                                                                    {!! $loop->count !!}
+                                                                @endif
                                                             @endforeach
                                                         </td>
                                                         <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
@@ -116,18 +125,18 @@
                                                         </td>
                                                         <td class="d-flex align-items-baseline align-content-center">
                                                             <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                            title="modifier">
-                                                            <i class="far fa-edit">&nbsp;</i>
-                                                        </a>
-                                                        &nbsp;
+                                                                title="modifier">
+                                                                <i class="far fa-edit">&nbsp;</i>
+                                                            </a>
+                                                            &nbsp;
                                                             <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
                                                                 title="voir">
                                                                 <i class="far fa-eye">&nbsp;</i>
                                                             </a>
                                                             &nbsp;
-                                                        {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                        {!! Form::close() !!}
+                                                            {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                            {!! Form::close() !!}
                                                         </td>
                                                     </tr>
                                                 @endcan
@@ -140,30 +149,31 @@
                         </div>
                     @else
                         <div lass="d-flex justify-content-between align-items-center">
-                        <small>
-                            <a href="{{ route('demandeurs.create') }}">
-                                <div class="btn btn-primary mt-3"><i class="fas fa-plus"></i>&nbsp;Cliquez ici pour
-                                    compléter votre demande de formation demandeur</i></div>
-                            </a>
-                        </small>
-                        <small>
-                            <a href="{{ route('operateurs.create') }}">
-                                <div class="btn btn-info mt-3"><i class="fas fa-plus"></i>&nbsp;Devenir opérateur</i></div>
-                            </a>
-                        </small>
-                        <small>
-                            <a href="{{ route('collectives.create') }}">
-                                <div class="btn btn-success mt-3"><i class="fas fa-plus"></i>&nbsp;Cliquez ici pour
-                                    compléter votre demande de formation colective</i></div>
-                            </a>
-                        </small>
-                    </div>
+                            <small>
+                                <a href="{{ route('demandeurs.create') }}">
+                                    <div class="btn btn-primary mt-3"><i class="fas fa-plus"></i>&nbsp;Cliquez ici pour
+                                        compléter votre demande de formation demandeur</i></div>
+                                </a>
+                            </small>
+                            <small>
+                                <a href="{{ route('operateurs.create') }}">
+                                    <div class="btn btn-info mt-3"><i class="fas fa-plus"></i>&nbsp;Devenir opérateur</i>
+                                    </div>
+                                </a>
+                            </small>
+                            <small>
+                                <a href="{{ route('collectives.create') }}">
+                                    <div class="btn btn-success mt-3"><i class="fas fa-plus"></i>&nbsp;Cliquez ici pour
+                                        compléter votre demande de formation colective</i></div>
+                                </a>
+                            </small>
+                        </div>
                     @endif
                 </div>
             </div>
         @else
         @endif
-        @else
+    @else
         @endhasrole
     </div>
 @endsection

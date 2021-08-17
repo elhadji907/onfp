@@ -33,6 +33,15 @@ class DemandeurFactory extends Factory
      */
     public function definition()
     {
+        $nombre1 = rand(1, 2);
+        $nombre2 = rand(100, 999);
+        $nombre3 = rand(1965, 1998);
+        $nombre4 = rand(1, 9);
+        $nombre5 = rand(0, 9);
+        $nombre6 = rand(0, 9);
+        $nombre7 = rand(0, 9);
+        $nombre8 = rand(0, 9);
+        $nombre9 = rand(0, 9);
         $annee = date('y');
         /* $role_id=Role::where('name', 'Demandeur')->first()->id; */
         $projet_id=Projet::all()->random()->id;
@@ -45,9 +54,11 @@ class DemandeurFactory extends Factory
         $domaine=Domaine::all()->random()->name;
         
         $nombre = rand(1, 9);
+        $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8.$nombre9;
 
         return [
             'numero' => $this->faker->unique(true)->numberBetween(100, 999)."".$annee,
+            'cin' => $cin,
             'etablissement' => SnmG::getEtablissement(),
             'niveau_etude' => SnmG::getNiveaux(),
             'qualification' => $this->faker->text,

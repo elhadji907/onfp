@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string $cin
  * @property int|null $nbre_pieces
  * @property string|null $legende
  * @property string|null $reference
@@ -57,7 +56,6 @@ class Individuelle extends Model
 
 	protected $fillable = [
 		'uuid',
-		'cin',
 		'nbre_pieces',
 		'legende',
 		'reference',

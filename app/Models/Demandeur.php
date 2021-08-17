@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $numero
+ * @property string|null $cin
  * @property string|null $numero_courrier
  * @property string|null $etablissement
  * @property string|null $niveau_etude
@@ -114,6 +115,7 @@ class Demandeur extends Model
 	protected $fillable = [
 		'uuid',
 		'numero',
+		'cin',
 		'numero_courrier',
 		'etablissement',
 		'niveau_etude',

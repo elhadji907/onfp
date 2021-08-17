@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property int $annee
- * @property string $cin
  * @property string|null $matricule
  * @property string|null $typedemande
  * @property string|null $items1
@@ -72,7 +71,6 @@ class Pcharge extends Model
 	protected $fillable = [
 		'uuid',
 		'annee',
-		'cin',
 		'matricule',
 		'typedemande',
 		'items1',

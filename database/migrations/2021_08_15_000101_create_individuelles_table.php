@@ -24,7 +24,6 @@ class CreateIndividuellesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('cin', 200);
             $table->integer('nbre_pieces')->nullable();
             $table->longText('legende')->nullable();
             $table->longText('reference')->nullable();

@@ -112,7 +112,7 @@ class IndividuelleController extends Controller
         $this->validate(
             $request, [
                 'sexe'                =>  'required|string|max:10',
-                'cin'                 =>  'required|string|min:13|max:15|unique:individuelles,cin,NULL,id,deleted_at,NULL',
+                'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,NULL,id,deleted_at,NULL',
                 'prenom'              =>  'required|string|max:50',
                 'nom'                 =>  'required|string|max:50',
                 'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -259,6 +259,7 @@ class IndividuelleController extends Controller
 
         $demandeur = new Demandeur([
             'numero'                    =>     $numero,
+            'cin'                       =>     $cin,
             'numero_courrier'           =>     $numero,
             'date_depot'                =>     $request->input('date_depot'),
             'nbre_piece'                =>     $request->input('nombre_de_piece'),
@@ -283,7 +284,6 @@ class IndividuelleController extends Controller
         $demandeur->save();
 
         $individuelle = new Individuelle([
-            'cin'               =>     $cin,
             'experience'        =>     $request->input('experience'),
             'information'       =>     $request->input('information'),
             'nbre_pieces'       =>     $request->input('nombre_de_piece'),
@@ -367,7 +367,7 @@ class IndividuelleController extends Controller
          $this->validate(
         $request, [
             'sexe'                =>  'required|string|max:10',
-            'cin'                 =>  "required|string|min:13|max:15|unique:individuelles,cin,{$individuelle->id},id,deleted_at,NULL",
+            'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$demandeur->id},id,deleted_at,NULL",
             'prenom'              =>  'required|string|max:50',
             'nom'                 =>  'required|string|max:50',
             'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -459,6 +459,7 @@ class IndividuelleController extends Controller
         $utilisateur->save();
 
         $demandeur->numero                      =      $request->input('numero');
+        $demandeur->cin                         =     $cin;
         $demandeur->numero_courrier             =      $request->input('numero_courrier');
         $demandeur->date_depot                  =      $request->input('date_depot');
         $demandeur->nbre_piece                  =      $request->input('nombre_de_piece');
@@ -483,7 +484,6 @@ class IndividuelleController extends Controller
 
         $demandeur->save();
 
-        $individuelle->cin                      =     $cin;
         $individuelle->experience               =     $request->input('experience');
         $individuelle->information              =     $request->input('information');
         $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
