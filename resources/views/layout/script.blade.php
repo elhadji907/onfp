@@ -148,6 +148,10 @@
 </script>
 
 <script type="text/javascript">    
+  $("#moduleup").select2();
+</script>
+
+<script type="text/javascript">    
   $("#regions_op").select2({
         placeholder: "sélectionner régions d'intervention",
         language: "fr",

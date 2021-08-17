@@ -389,7 +389,7 @@
         @endhasrole
     </li>
     <li class="nav-item">
-        @hasrole('Administrateur')
+        @hasrole('Administrateur|Demandeur')
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
             aria-controls="collapsePages">
             <span data-feather="folder"></span>

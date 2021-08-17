@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur']);
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
     }
     /**
      * Display a listing of the resource.
@@ -23,16 +21,6 @@ class UserController extends Controller
     {
         $users = User::orderBy('id','DESC')->get();
         return view('users.index', compact('users'));
-    }
-
-    
-    public function profile()
-    {
-        return view('dashboards.users.profile');
-    }
-    public function settings()
-    {
-        return view('dashboards.users.settings');
     }
 
     /**
@@ -75,7 +63,18 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        dd($user);
+        //$utilisateur = User::find($id);
+        $administrateur = Administrateur::find($id);
+        $utilisateur=$administrateur->user;        
+        //$roles = Role::get();
+        $roles = Role::distinct('name')->get()->pluck('name','name')->unique();
+
+        //dd($roles);
+
+        $civilites = User::distinct('civilite')->get()->pluck('civilite','civilite')->unique();
+        //return $utilisateur;
+        return view('administrateurs.update', compact('administrateur','utilisateur','id','roles','civilites'));
     }
 
     /**

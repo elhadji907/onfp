@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title', 'ONFP - Fiche demande')
 
-    {{-- @section('extra-js')
+{{-- @section('extra-js')
     <script>
         function toggleReplayComment(id)
         {
@@ -15,30 +15,30 @@
     <div class="container">
         <div class="container-fluid">
             <div class="card">
-                <?php $i = 1; ?>
                 @foreach ($individuelles as $individuelle)
                     <div class="card-body">
                         <h1 class="h4 h-100 text-uppercase mb-4"><b><u>Type de demande</u> : {!! $individuelle->demandeur->types_demande->name !!}
                             </b></h1>
                         <h4>
-                            <u>N° du dossier</u> : <span
+                            <b><u>N° du dossier</u></b> : <span
                                 class="font-italic">{{ $individuelle->demandeur->numero ?? 'numéro de dossier introuvable' }}</span>
-                        </h4>
+                        </h4><br />
                         <h4>
-                            <u>Modules demandés </u>:
+                            <?php $i = 1; ?>
+                            <b><u>Modules demandés </u></b>: 
                             @foreach ($individuelle->demandeur->modules as $module)
-                                <small><u>module</u> {!! $i++ !!} </small>:<small class="font-italic">
+                              <small>{!! $i++ !!}</small>)
                                     {!! $module->name ?? 'aucun module demandé' !!}</small>
                             @endforeach
-                        </h4>
+                        </h4><br />
                         <h4>
-                            @if (isset($individuelle->demandeur->programme->sigle))                                
-                            <u>Programmes </u>:
-                            {!! ucwords(strtolower($individuelle->demandeur->programme->sigle)) ?? 'aucun module demandé' !!}</small>
+                            @if (isset($individuelle->demandeur->programme->sigle))
+                                <b><u>Programmes </u></b>:
+                                {!! ucwords(strtolower($individuelle->demandeur->programme->sigle)) ?? 'aucun module demandé' !!}</small>
                             @else
-                                
+
                             @endif
-                        </h4>
+                        </h4><br /><br />
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             {{-- @can('update', $individuelle->demandeur) --}}
                             <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning">

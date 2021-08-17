@@ -76,7 +76,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 {!! Form::label('role') !!}
-                                {!! Form::select('role', $roles, $administrateur->user->role->name, ['placeholder' => 'sélectionner un rôle', 'class' => 'form-control', 'id' => 'role']) !!}
+                                {!! Form::select('role', $roles, $administrateur->user->role, ['placeholder' => 'sélectionner un rôle', 'class' => 'form-control', 'id' => 'role']) !!}
                             </div>
                         </div>
 

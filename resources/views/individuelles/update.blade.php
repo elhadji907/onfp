@@ -24,7 +24,7 @@
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
                                 <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
-                                    name="cin" placeholder="Votre et cin" value="{{ $individuelle->cin ?? old('cin') }}"
+                                    name="cin" placeholder="Votre et cin" value="{{ $individuelle->demandeur->cin ?? old('cin') }}"
                                     autocomplete="cin" autofocus>
                                 @error('cin')
                                     <span class="invalid-feedback" role="alert">
@@ -332,7 +332,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('modules[]', $modules, null, ['multiple' => 'multiple', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
+                                {!! Form::select('modules[]', $modules, null, ['multiple' => 'multiple', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'moduleup']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('modules'))
                                         @foreach ($errors->get('modules') as $message)
@@ -430,7 +430,7 @@
 
 @section('javascripts')
     <script type="text/javascript">
-        $('#module').select2().val({!! json_encode($individuelle->demandeur->modules()->allRelatedIds()) !!}).trigger('change');
+        $('#moduleup').select2().val({!! json_encode($individuelle->demandeur->modules()->allRelatedIds()) !!}).trigger('change');
 
     </script>
 @endsection

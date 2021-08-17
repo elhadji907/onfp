@@ -77,14 +77,11 @@ Route::group([
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles.show');
         Route::get('/profiles/{user}/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
-        Route::patch('/profiles/{user}', [ProfileController::class, 'update'])->name('profiles.update');
-
-        
+        Route::patch('/profiles/{user}', [ProfileController::class, 'update'])->name('profiles.update');        
         Route::get('/postes/create', [PosteController::class, 'create'])->name('postes.create');
         Route::post('/postes', [PosteController::class, 'store'])->name('postes.store');
         Route::get('/postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
-        Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
-                
+        Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');  
         Route::get('/courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
         Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');
         Route::get('/departs/list', [DepartController::class, 'list'])->name('departs.list');
@@ -113,8 +110,7 @@ Route::group([
         Route::get('/operateurs/list', [OperateurController::class, 'list'])->name('operateurs.list');
         Route::get('/programmes/list', [ProgrammeController::class, 'list'])->name('programmes.list');
         Route::get('/nineas/list', [NineaController::class, 'list'])->name('nineas.list');
-        Route::get('/ingenieurs/list', [IngenieurController::class, 'list'])->name('ingenieurs.list');
-        
+        Route::get('/ingenieurs/list', [IngenieurController::class, 'list'])->name('ingenieurs.list');        
         Route::get('/factures/list', [FactureController::class, 'list'])->name('factures.list');
         Route::get('/facturesdafs/list', [FacturesdafController::class, 'list'])->name('facturesdafs.list');
         Route::get('/etats/list', [EtatController::class, 'list'])->name('etats.list');
@@ -129,12 +125,9 @@ Route::group([
         Route::get('/regions/list', [RegionController::class, 'list'])->name('regions.list');
         Route::get('/arrondissements/list', [ArrondissementController::class, 'list'])->name('arrondissements.list');
         Route::get('/communes/list', [CommuneController::class, 'list'])->name('communes.list');
-
         Route::get('/selectdindividuelles/{id_dept}/{id_module}/{id_form}', 'FindividuellesController@selectdindividuelles')->name('findividuelles.selectdindividuelles');
-        
         Route::get('adddindividuelles/{id_ind}/{id_form}', 'FindividuellesController@adddindividuelles')->name('adddindividuelles');
-        Route::get('deleteindividuelles/{id_ind}/{id_form}', 'FindividuellesController@deleteindividuelles')->name('deleteindividuelles');
-        
+        Route::get('deleteindividuelles/{id_ind}/{id_form}', 'FindividuellesController@deleteindividuelles')->name('deleteindividuelles');        
         Route::post('/comments/{courrier}', [CommentController::class, 'store'])->name('comments.store');
         Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
         
@@ -167,7 +160,6 @@ Route::group([
         Route::resource('/programmes', ProgrammeController::class);
         Route::resource('/nineas', NineaController::class);
         Route::resource('/ingenieurs', IngenieurController::class);
-
         Route::resource('/factures', FactureController::class);
         Route::resource('/facturesdafs', FacturesdafController::class);
         Route::resource('/etats', EtatController::class);

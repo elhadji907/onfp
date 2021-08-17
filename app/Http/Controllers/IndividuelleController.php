@@ -383,7 +383,7 @@ class IndividuelleController extends Controller
             'familiale'           =>  'required',
             'professionnelle'     =>  'required',
             'niveau_etude'        =>  'required',
-            'commune'         =>  'required',
+            'commune'             =>  'required',
             'modules'             =>  'exists:modules,id',
             'diplome'             =>  'required',
             'option'              =>  'required',
