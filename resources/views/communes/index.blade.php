@@ -33,8 +33,8 @@
                                     <th>{!! __('Commune') !!}</th>
                                     <th>{!! __('Arrondissement') !!}</th>
                                     <th>{!! __('Département') !!}</th>
-                                    <th>{!! __('Région') !!}</th>
-                                    <th style="width:7%;">Action</th>
+                                    <th width="20px">{!! __('Région') !!}</th>
+                                    <th width="20px">Action</th>
                                 </tr>
                             </thead>
                             <tfoot class="table-dark">
@@ -51,11 +51,11 @@
                                 <?php $i = 1; ?>
                                 @foreach ($communes as $commune)
                                     <tr>
-                                        <td class="align-middle">{!! $i++ !!}</td>
-                                        <td class="align-middle">{!! $commune->nom !!}</td>
-                                        <td class="align-middle">{!! $commune->arrondissement->nom !!}</td>
-                                        <td class="align-middle">{!! $commune->arrondissement->departement->nom !!}</td>
-                                        <td class="align-middle">{!! $commune->arrondissement->departement->region->nom !!}</td>
+                                        <td>{!! $i++ !!}</td>
+                                        <td>{!! $commune->nom !!}</td>
+                                        <td>{!! $commune->arrondissement->nom !!}</td>
+                                        <td>{!! $commune->arrondissement->departement->nom !!}</td>
+                                        <td>{!! $commune->arrondissement->departement->region->nom !!}</td>
                                         <td class="d-flex align-items-center justify-content-center">
 
                                             <a href="{!! url('communes/' . $commune->id . '/edit') !!}" class='btn btn-success btn-sm'

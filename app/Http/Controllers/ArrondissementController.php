@@ -16,7 +16,8 @@ class ArrondissementController extends Controller
      */
     public function index()
     {
-        return view('arrondissements.index');
+        $arrondissements = Arrondissement::all();
+        return view('arrondissements.index', compact('arrondissements'));
     }
 
     /**

@@ -29,11 +29,11 @@
                             id="table-departements">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>{!! __('N°') !!}</th>
+                                    <th width="20px">{!! __('N°') !!}</th>
                                     <th>{!! __('Département') !!}</th>
                                     <th>{!! __('Région') !!}</th>
-                                    <th  style="width:15%;">{!! __('Arrondissement') !!}</th>
-                                    <th style="width:10%;">Action</th>
+                                    <th width="20px">{!! __('Arrondissement') !!}</th>
+                                    <th width="20px">Action</th>
                                 </tr>
                             </thead>
                             <tfoot class="table-dark">
@@ -52,7 +52,7 @@
                                   <td>{!! $i++ !!}</td>
                                   <td>{!! $departement->nom !!}</td>
                                   <td>{!! $departement->region->nom ?? "" !!}</td>
-                                  <td>
+                                  <td ALIGN="CENTER">
                                     @foreach ($departement->arrondissements as $arrondissement)
                                     @if($loop->last)
                                     {!! $loop->count !!}
@@ -74,7 +74,6 @@
                                   </td>
                                 </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>

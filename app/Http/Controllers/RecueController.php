@@ -27,7 +27,7 @@ class RecueController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        /* $this->middleware('roles:Administrateur|Gestionnaire|Courrier'); */
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur','permission:edit courriers|delete courriers|delete demandes']);
     }
     public function index()
     {
@@ -177,7 +177,7 @@ class RecueController extends Controller
     {
 
         
-        $this->authorize('update', $recue->courrier);
+        /* $this->authorize('update', $recue->courrier); */
 
         $directions = Direction::pluck('sigle','id');
         $imputations = Imputation::pluck('sigle','id');
@@ -226,7 +226,10 @@ class RecueController extends Controller
              $filePath = request('file')->store('recues', 'public');
         $courrier = $recue->courrier; 
         $types_courrier_id = TypesCourrier::where('name','Courriers arrives')->first()->id;
-        $user_id           = Auth::user()->id;
+        /* $user_id           = Auth::user()->id; */
+
+        $user_id           = $recue->courrier->user->id; 
+        /* dd($user_id); */
  
         //dd($courrier);
 
@@ -261,7 +264,9 @@ class RecueController extends Controller
  
         $types_courrier_id = TypesCourrier::where('name','Courriers arrives')->first()->id;
 
-        $user_id           = Auth::user()->id;
+        /* $user_id           = Auth::user()->id; */
+        $user_id           = $recue->courrier->user->id; 
+        /* dd($user_id); */
  
         $courrier->objet              =      $request->input('objet');
         $courrier->message            =      $request->input('message');

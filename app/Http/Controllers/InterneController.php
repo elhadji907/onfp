@@ -24,7 +24,7 @@ class InterneController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        /* $this->middleware('roles:Administrateur|Gestionnaire|Courrier'); */
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire','permission:delete courriers|edit courriers']);
     }
     public function index()
     {

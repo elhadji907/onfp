@@ -10,7 +10,7 @@ class AdministrateurController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('roles:Administrateur');
+        $this->middleware(['role:super-admin|Administrateur']);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +19,8 @@ class AdministrateurController extends Controller
      */
     public function index()
     {
-        //
+        $administrateurs = Administrateur::all();
+        return view('administrateurs.index', compact('administrateurs'));
     }
 
     /**

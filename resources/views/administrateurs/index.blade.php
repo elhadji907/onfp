@@ -26,6 +26,7 @@
                         <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-administrateurs">
                           <thead class="table-dark">
                             <tr>
+                              <th>N°</th>
                               <th>Civilité</th>
                               <th>Matricule</th>
                               <th>Prenom</th>
@@ -38,6 +39,7 @@
                           </thead>
                           <tfoot class="table-dark">
                               <tr>
+                                <th>N°</th>
                                 <th>Civilité</th>
                                 <th>Matricule</th>
                                 <th>Prenom</th>
@@ -49,7 +51,32 @@
                               </tr>
                             </tfoot>
                           <tbody>
-                           
+                            <?php $i = 1 ?>
+                            @foreach ($administrateurs as $administrateur)
+                            <tr> 
+                              <td>{!! $i++ !!}</td>
+                              <td>{!! $administrateur->user->civilite !!}</td>
+                              <td>{!! $administrateur->matricule !!}</td>
+                              <td>{!! $administrateur->user->firstname !!}</td>
+                              <td>{!! $administrateur->user->name !!}</td>
+                              <td>{!! $administrateur->user->email !!}</td>
+                              <td>{!! $administrateur->user->username !!}</td>
+                              <td>{!! $administrateur->user->telephone !!}</td>
+                              <td class="d-flex align-items-baseline align-content-center">
+                                  <a href="{!! url('administrateurs/' .$administrateur->id. '/edit') !!}" class= 'btn btn-success btn-sm' title="modifier">
+                                    <i class="far fa-edit">&nbsp;</i>
+                                  </a>
+                                  &nbsp;
+                                  <a href="{!! url('administrateurs/' .$administrateur->id) !!}" class= 'btn btn-primary btn-sm' title="voir la liste">
+                                    <i class="far fa-eye">&nbsp;</i>
+                                  </a>
+                                  &nbsp;
+                                  {!! Form::open(['method'=>'DELETE', 'url'=>'administrateurs/' .$administrateur->id, 'id'=>'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                  {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title'=>"supprimer"] ) !!}
+                                  {!! Form::close() !!}
+                              </td>
+                            </tr>
+                            @endforeach
                           </tbody>
                       </table>                        
                 </div>
@@ -83,77 +110,51 @@
         </form>
       </div>
       @endsection
+  
+@push('scripts')
+<script type="text/javascript">
+  $(document).ready( function () {
+    $('#table-administrateurs').DataTable({
+      dom: 'lBfrtip',
+      buttons: [
+          'copy', 'csv', 'excel', 'pdf', 'print',
+      ],
+      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "Tout"] ],
+      "order": [
+            [ 0, 'asc' ]
+            ],
+            language: {
+              "sProcessing":     "Traitement en cours...",
+              "sSearch":         "Rechercher&nbsp;:",
+              "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+              "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+              "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+              "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+              "sInfoPostFix":    "",
+              "sLoadingRecords": "Chargement en cours...",
+              "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+              "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+              "oPaginate": {
+                  "sFirst":      "Premier",
+                  "sPrevious":   "Pr&eacute;c&eacute;dent",
+                  "sNext":       "Suivant",
+                  "sLast":       "Dernier"
+              },
+              "oAria": {
+                  "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                  "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+              },
+              "select": {
+                      "rows": {
+                          _: "%d lignes séléctionnées",
+                          0: "Aucune ligne séléctionnée",
+                          1: "1 ligne séléctionnée"
+                      }
+              }
+            }
+    });
+} );
+  
+</script>
+@endpush
 
-      @push('scripts')
-      <script type="text/javascript">
-      $(document).ready(function () {
-          $('#table-administrateurs').DataTable( { 
-            "processing": true,
-            "serverSide": true,
-            "ajax": "{{route('administrateurs.list')}}",
-            columns: [
-                    { data: 'user.civilite', name: 'user.civilite' },
-                    { data: 'matricule', name: 'matricule' },
-                    { data: 'user.firstname', name: 'user.firstname' },
-                    { data: 'user.name', name: 'user.name' },
-                    { data: 'user.email', name: 'user.email' },
-                    { data: 'user.username', name: 'user.username' },
-                    { data: 'user.telephone', name: 'user.telephone' },
-                    { data: null ,orderable: false, searchable: false}
-
-                ],
-                "columnDefs": [
-                        {
-                        "data": null,
-                        "render": function (data, type, row) {
-                        url_e =  "{!! route('administrateurs.edit',':id')!!}".replace(':id', data.id);
-                        url_d =  "{!! route('administrateurs.destroy',':id')!!}".replace(':id', data.id);
-                        return '<a href='+url_e+'  class=" btn btn-primary edit btn-sm" title="Modifier"><i class="far fa-edit"></i></a>'+
-                        '<div class="btn btn-danger delete btn_delete_administrateur ml-1 btn-sm" title="Supprimer" data-href='+url_d+'><i class="fas fa-trash-alt"></i></div>';
-                        },
-                        "targets": 7
-                        },
-                ],
-                language: {
-                  "sProcessing":     "Traitement en cours...",
-                  "sSearch":         "Rechercher&nbsp;:",
-                  "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
-                  "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                  "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
-                  "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-                  "sInfoPostFix":    "",
-                  "sLoadingRecords": "Chargement en cours...",
-                  "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                  "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
-                  "oPaginate": {
-                      "sFirst":      "Premier",
-                      "sPrevious":   "Pr&eacute;c&eacute;dent",
-                      "sNext":       "Suivant",
-                      "sLast":       "Dernier"
-                  },
-                  "oAria": {
-                      "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
-                      "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-                  },
-                  "select": {
-                          "rows": {
-                              _: "%d lignes séléctionnées",
-                              0: "Aucune ligne séléctionnée",
-                              1: "1 ligne séléctionnée"
-                          } 
-                  }
-                },
-                order:[[0,'desc'], [0, 'asc']]              
-          });
-
-          
-        $('#table-administrateurs').off('click', '.btn_delete_administrateur').on('click', '.btn_delete_administrateur',
-        function() { 
-          var href=$(this).data('href');
-          $('#form-delete-administrateur').attr('action', href);
-          $('#modal_delete_administrateur').modal();
-        });
-      });
-      
-  </script> 
-  @endpush

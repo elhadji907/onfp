@@ -27,7 +27,7 @@
               <table class="table table-bordered table-striped" id="operateurTable" width="100%" cellspacing="0">
                 <thead class="table-dark">
                   <tr>
-                    <th width="220">Numéro agrément</th>
+                    <th width="220px">Numéro agrément</th>
                     <th width="500px">Opérateur</th>
                     <th width="100px">Sigle</th>
                     <th>E-mail</th>

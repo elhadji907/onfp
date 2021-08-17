@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('roles:Administrateur');
+        $this->middleware(['role:super-admin|Administrateur']);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +21,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('dashboards.users.index');
+        $users = User::orderBy('id','DESC')->get();
+        return view('users.index', compact('users'));
     }
 
     

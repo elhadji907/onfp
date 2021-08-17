@@ -61,7 +61,8 @@
                                             @endforeach
                                         </td>
                                         <td class="d-flex align-items-baseline">
-                                            @can('update', $recue->courrier)
+                                            @can('edit courriers')
+                                           {{--   @can('update', $recue->courrier)  --}}
                                                 <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
@@ -72,7 +73,8 @@
                                                 <i class="far fa-eye">&nbsp;</i>
                                             </a>
                                             &nbsp;
-                                            @can('delete', $recue->courrier)
+                                            @can('edit courriers')
+                                           {{--   @can('delete', $recue->courrier)  --}}
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'recues/' . $recue->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!}

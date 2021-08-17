@@ -24,41 +24,58 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
-                                        <th>Prenom</th>
-                                        <th>Nom</th>
-                                        <th>Date naissance</th>
-                                        <th>Lieu naissance</th>
+                                        <th>Prenom & Nom</th>
+                                        <th>Date et lieu naissance</th>
                                         <th>Téléphone</th>
                                         <th>Email</th>
                                         <th>Username</th>
                                         <th>Role</th>
+                                        <th>Permission</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
-                                        <th>Prenom</th>
-                                        <th>Nom</th>
-                                        <th>Date naissance</th>
-                                        <th>Lieu naissance</th>
+                                        <th>Prenom & Nom</th>
+                                        <th>Date et lieu naissance</th>
                                         <th>Téléphone</th>
                                         <th>Email</th>
                                         <th>Username</th>
                                         <th>Role</th>
+                                        <th>Permission</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                   @foreach ($users as $user)
                                       <tr>
                                           <td>{!! $user->civilite !!}</td>
-                                          <td>{!! ucwords(strtolower($user->firstname)) !!}</td>
-                                          <td>{!! mb_strtoupper($user->name, 'UTF-8') !!}</td>
-                                          <td>{!! $user->date_naissance->format('d/m/Y') !!}</td>
-                                          <td>{!! mb_strtoupper($user->lieu_naissance) !!}</td>
+                                          <td>{!! ucwords(strtolower($user->firstname)) !!} {!! mb_strtoupper($user->name, 'UTF-8') !!}</td>
+                                          <td>
+                                            @if ($user->civilite == 'M.')
+                                            né le
+                                            @endif
+                                            @if ($user->civilite == 'Mme')
+                                                née le
+                                            @endif
+                                              {!! $user->date_naissance->format('d/m/Y') !!} {{ __('à')}} {!! mb_strtoupper($user->lieu_naissance) !!}
+                                            </td>
                                           <td>{!! $user->telephone !!}</td>
                                           <td>{!! $user->email !!}</td>
                                           <td>{!! mb_strtolower($user->username) !!}</td>
-                                          <td>{!! ucwords(strtolower($user->role->name)) !!}</td>
+                                          <td>
+                                            @if(!empty($user->getRoleNames()))
+                                            @foreach($user->getRoleNames() as $v)
+                                               <label class="badge badge-success">{{ $v }}</label>
+                                            @endforeach
+                                          @endif
+                                        </td>
+                                          <td>
+                                            @if(!empty($user->getPermissionNames()))
+                                            @foreach($user->getPermissionNames() as $v)
+                                               <label class="badge badge-success">{{ $v }}</label>
+                                            @endforeach
+                                          @endif
+                                        </td>
                                       </tr>
                                   @endforeach
                                 </tbody>
