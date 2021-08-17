@@ -1,5 +1,5 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    @hasrole('Administrateur|Courrier')
+    @hasrole('Administrateur|Gestionnaire')
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        @hasrole('Administrateur|Courrier')
+        @hasrole('Administrateur|Gestionnaire')
         <a class="nav-link" href="{{ url('/home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Tableau de bord</span></a>
@@ -36,12 +36,12 @@
         <a class="nav-link d-flex align-items-center text-white"
             href="{{ route('profiles.show', ['user' => auth()->user()]) }}">
             {{-- <span data-feather="settings"></span> --}}
-
             <span data-feather="user"></span>
             <span> Gérer mon profil </span>
         </a>
     </h6>
     <li class="nav-item">
+        @hasrole('Administrateur|Gestionnaire|Courrier|ACourrier')
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_courrier"
             aria-expanded="true" aria-controls="collapsePages_courrier">
             <span data-feather="mail"></span>
@@ -64,6 +64,8 @@
                 </a>
             </div>
         </div>
+        @else
+        @endhasrole
     </li>
     {{-- @hasrole('Administrateur')
     <hr class="sidebar-divider my-0">
@@ -79,7 +81,7 @@
     @endhasrole --}}
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        @hasrole('Administrateur')
+        @hasrole('Administrateur|Gestionnaire')
         <a class="nav-link collapsed" href="{{ route('demandeurs.index') }}" data-toggle="collapse"
             data-target="#collapsePages_demande" aria-expanded="true" aria-controls="collapsePages_demande">
             <span data-feather="layers"></span>
@@ -103,7 +105,7 @@
     </li>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        @hasrole('Administrateur')
+        @hasrole('Administrateur|Gestionnaire')
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_formation"
             aria-expanded="true" aria-controls="collapsePages_formation">
             <span data-feather="layers"></span>
@@ -128,7 +130,7 @@
     </li>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        @hasrole('Administrateur')
+        @hasrole('Administrateur|Gestionnaire|Courrier|ACourrier')
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_localite"
             aria-expanded="true" aria-controls="collapsePages_localite">
             <span data-feather="layers"></span>

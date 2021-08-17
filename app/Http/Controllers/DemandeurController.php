@@ -8,12 +8,13 @@ use App\Models\Role;
 use App\Models\Objet;
 use App\Models\User;
 use App\Models\Courrier;
-use App\Models\Departement;
+use App\Models\Commune;
 use App\Models\Typesdemande;
 use App\Models\Programme;
 use Auth;
 use App\Models\Module;
 use App\Models\Localite;
+use App\Models\Niveaux;
 use DB;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -24,11 +25,17 @@ use App\Models\Charts\Courrierchart;
 
 class DemandeurController extends Controller
 {
+ /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('roles:Administrateur|Gestionnaire|Demandeur');
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
     }
     /**
      * Display a listing of the resource.
@@ -132,9 +139,9 @@ class DemandeurController extends Controller
         $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('sigle','id')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name','id')->unique();
-        $departements = Departement::distinct('nom')->get()->pluck('nom','id')->unique();
+        $communes = commune::distinct('nom')->get()->pluck('nom','id')->unique();
       
-        return view('demandeurs.create',compact('roles', 'departements', 'diplomes', 'civilites', 'modules','programmes'));
+        return view('demandeurs.create',compact('roles', 'communes', 'diplomes', 'civilites', 'modules','programmes'));
 
     }
 
@@ -166,7 +173,7 @@ class DemandeurController extends Controller
                 'niveaux'             =>  'required',
                 'diplomes'            =>  'exists:diplomes,id',
                 'modules'             =>  'exists:modules,id',
-                'departements'        =>  'exists:departements,id',
+                'communes'        =>  'exists:communes,id',
             ],
             [
                 'password.min'  =>  'Pour des raisons de sécurité, votre mot de passe doit faire au moins :min caractères.'
@@ -270,14 +277,15 @@ class DemandeurController extends Controller
         $diplomes = Diplome::distinct('name')->get()->pluck('name','id')->unique();
         $types_demandes = Typesdemande::distinct('name')->get()->pluck('name','name')->unique();
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
-        $departements = Departement::distinct('nom')->get()->pluck('nom','id')->unique();
+        $niveaux = Niveaux::distinct('name')->get()->pluck('name','name')->unique();
+        $communes = commune::distinct('nom')->get()->pluck('nom','id')->unique();
 
         if ($typesdemande === "Individuelle") {
-            return view('individuelles.show', compact('individuelles', 'departements','niveaux', 'modules',
-            'types_demandes', 'programmes','diplomes','utilisateurs', 'roles', 'id', 'civilites'));
+            return view('individuelles.show', compact('individuelles', 'communes','niveaux', 'modules',
+            'types_demandes', 'programmes','diplomes','utilisateurs', 'roles', 'civilites'));
         }elseif ($typesdemande === "Collective") {
-            return view('collectives.show', compact('collectives', 'departements','niveaux', 'modules',
-            'types_demandes', 'programmes','diplomes','utilisateurs', 'roles', 'id', 'civilites'));
+            return view('collectives.show', compact('collectives', 'communes','niveaux', 'modules',
+            'types_demandes', 'programmes','diplomes','utilisateurs', 'roles', 'civilites'));
         }else {
             return back();
         }
@@ -305,7 +313,8 @@ class DemandeurController extends Controller
         $diplomes = Diplome::distinct('name')->get()->pluck('name','id')->unique();
         $types_demandes = Typesdemande::distinct('name')->get()->pluck('name','name')->unique();
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
-        $departements = Departement::distinct('nom')->get()->pluck('nom','id')->unique();
+        $communes = commune::distinct('nom')->get()->pluck('nom','id')->unique();
+        $niveaux = Niveaux::distinct('name')->get()->pluck('name','name')->unique();
 
         if ($typesdemande == 'Individuelle') {            
             return view('individuelles.details', compact('individuelles','demandeur'));
@@ -314,8 +323,8 @@ class DemandeurController extends Controller
             return view('collectives.details', compact('collectives','demandeur'));
         
             }else {
-                return view('demandeurs.update', compact('demandeurs', 'departements','niveaux', 'modules',
-                'types_demandes', 'programmes','localites','diplomes','utilisateurs', 'roles', 'id',
+                return view('demandeurs.update', compact('demandeurs', 'communes','niveaux', 'modules',
+                'types_demandes', 'programmes','localites','diplomes','utilisateurs', 'roles',
                 'civilites', 'objets'));
             }
 
@@ -351,7 +360,7 @@ class DemandeurController extends Controller
                 'niveaux'             =>  'required',
                 'diplomes'            =>  'exists:diplomes,id',
                 'modules'             =>  'exists:modules,id',
-                'departements'        =>  'exists:departements,id',
+                'communes'        =>  'exists:communes,id',
             ]
         );
 

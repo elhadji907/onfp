@@ -26,7 +26,8 @@ class DepartController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire','permission:delete courriers|edit courriers']);
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
     }
     public function index()
     {
