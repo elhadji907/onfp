@@ -20,7 +20,9 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
-                              <a href="{{ route('users.create') }}"><div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div></a>
+                                <a href="{{ route('users.create') }}">
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                </a>
                             </div>
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-users">
@@ -28,74 +30,81 @@
                                     <tr>
                                         <th>Civilité</th>
                                         <th>Prenom & Nom</th>
-                                        <th>Date et lieu naissance</th>
-                                        <th>Téléphone</th>
+                                        {{-- <th>Date et lieu naissance</th> --}}
                                         <th>Email</th>
-                                        <th>Username</th>
+                                        <th>Téléphone</th>
+                                        {{-- <th>Username</th> --}}
                                         <th>Role</th>
                                         <th width="200px">Permission</th>
-                                        <th>Action</th>
+                                        <th width="50px">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
                                         <th>Prenom & Nom</th>
-                                        <th>Date et lieu naissance</th>
-                                        <th>Téléphone</th>
+                                        {{-- <th>Date et lieu naissance</th> --}}
                                         <th>Email</th>
-                                        <th>Username</th>
+                                        <th>Téléphone</th>
+                                        {{-- <th>Username</th> --}}
                                         <th>Role</th>
                                         <th>Permission</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                  @foreach ($users as $user)
-                                      <tr>
-                                          <td>{!! $user->civilite !!}</td>
-                                          <td>{!! ucwords(strtolower($user->firstname)) !!} {!! mb_strtoupper($user->name, 'UTF-8') !!}</td>
-                                          <td>
-                                            @if ($user->civilite == 'M.')
-                                            né le
-                                            @endif
-                                            @if ($user->civilite == 'Mme')
-                                                née le
-                                            @endif
-                                              {!! $user->date_naissance->format('d/m/Y') !!} {{ __('à')}} {!! mb_strtoupper($user->lieu_naissance) !!}
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td style="text-align: center; vertical-align: middle;">{!! $user->civilite !!}
                                             </td>
-                                          <td>{!! $user->telephone !!}</td>
-                                          <td>{!! $user->email !!}</td>
-                                          <td>{!! mb_strtolower($user->username) !!}</td>
-                                          <td>
-                                            @if(!empty($user->getRoleNames()))
-                                            @foreach($user->getRoleNames() as $v)
-                                               <label class="badge badge-success">{{ $v }}</label>
-                                            @endforeach
-                                          @endif
-                                        </td>
-                                          <td>
-                                            @if(!empty($user->getPermissionNames()))
-                                            @foreach($user->getPermissionNames() as $v)
-                                               <label class="badge badge-success">{{ $v }}</label>
-                                            @endforeach
-                                          @endif
-                                        </td>  
-                                        <td class="d-flex align-items-baseline align-content-center">
-                                            <a href="{!! url('users/' .$user->id. '/edit') !!}" class= 'btn btn-success btn-sm' title="modifier">
-                                              <i class="far fa-edit">&nbsp;</i>
-                                            </a>
-                                            &nbsp;
-                                            <a href="{!! url('users/' .$user->id) !!}" class= 'btn btn-primary btn-sm' title="voir la liste">
-                                              <i class="far fa-eye">&nbsp;</i>
-                                            </a>
-                                            &nbsp;
-                                            {!! Form::open(['method'=>'DELETE', 'url'=>'users/' .$user->id, 'id'=>'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title'=>"supprimer"] ) !!}
-                                            {!! Form::close() !!}
-                                        </td>
-                                      </tr>
-                                  @endforeach
+                                            <td style="text-align: center; vertical-align: middle;">{!! ucwords(strtolower($user->firstname)) !!}
+                                                {!! mb_strtoupper($user->name, 'UTF-8') !!}</td>
+                                            {{-- <td style="text-align: center; vertical-align: middle;">
+                                                @if ($user->civilite == 'M.')
+                                                    né le
+                                                @endif
+                                                @if ($user->civilite == 'Mme')
+                                                    née le
+                                                @endif
+                                                {!! $user->date_naissance->format('d/m/Y') !!} {{ __('à') }} {!! mb_strtoupper($user->lieu_naissance) !!}
+                                            </td> --}}
+                                            <td style="text-align: center; vertical-align: middle;">{!! $user->email !!}
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">{!! $user->telephone !!}
+                                            </td>
+                                            {{-- <td style="text-align: center; vertical-align: middle;">{!! mb_strtolower($user->username) !!}</td> --}}
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                @if (!empty($user->getRoleNames()))
+                                                    @foreach ($user->getRoleNames() as $v)
+                                                        <label class="badge badge-success">{{ $v }}</label>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                @if (!empty($user->getPermissionNames()))
+                                                    @foreach ($user->getPermissionNames() as $v)
+                                                        <label class="badge badge-success"> {{ '<' }}
+                                                            {{ $v }} {{ '>' }}</label>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td class="d-flex align-items-baseline align-middle">
+                                                <a href="{!! url('users/' . $user->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                    title="modifier">
+                                                    <i class="far fa-edit">&nbsp;</i>
+                                                </a>
+                                                &nbsp;
+                                                <a href="{!! url('users/' . $user->id) !!}" class='btn btn-primary btn-sm'
+                                                    title="voir la liste">
+                                                    <i class="far fa-eye">&nbsp;</i>
+                                                </a>
+                                                &nbsp;
+                                                {!! Form::open(['method' => 'DELETE', 'url' => 'users/' . $user->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                {!! Form::close() !!}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -166,10 +166,10 @@
           </a>
           @else
           @endhasrole
-          {{--  <a class="dropdown-item" href="{{ route('postes.create') }}">
+           <a class="dropdown-item" href="{{ route('postes.create') }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             {{(" Créer un post")}}
-          </a>  --}}
+          </a> 
        
           <a class="dropdown-item" href="{{ route('profiles.show', ['user'=>auth()->user()]) }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>

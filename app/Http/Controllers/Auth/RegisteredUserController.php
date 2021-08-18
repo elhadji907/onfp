@@ -65,8 +65,9 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         $user->assignRole('Demandeur');
-        $user->givePermissionTo(Permission::all());
-        /* $user->givePermissionTo('edit demandes|delete demandes'); */
+        /* $user->givePermissionTo(Permission::all()); */
+        $user->givePermissionTo('edit demandes');
+        $user->givePermissionTo('delete demandes');
 
         Auth::login($user);
 

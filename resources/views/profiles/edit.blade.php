@@ -13,6 +13,17 @@
                             @csrf
                             @method('PATCH')
                             <div class="form-group row">
+                                <label for="firstname"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+                                <div class="col-md-6">
+                                    @if (!empty($user->getRoleNames()))
+                                    @foreach ($user->getRoleNames() as $v)
+                                        <label class="badge badge-success">{{ $v }}</label>
+                                    @endforeach
+                                @endif
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label for="civilite"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Civilité') }}</label>
                                 <div class="col-md-6">
