@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Permission;
 
 class RegisteredUserController extends Controller
 {
@@ -64,7 +65,8 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         $user->assignRole('Demandeur');
-        $user->givePermissionTo('edit demandes|delete demandes');
+        $user->givePermissionTo(Permission::all());
+        /* $user->givePermissionTo('edit demandes|delete demandes'); */
 
         Auth::login($user);
 
