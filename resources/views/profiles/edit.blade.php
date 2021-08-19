@@ -1,9 +1,9 @@
 @extends('layout.default')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+    <div class="container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="container-fluid">
+            <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">Modifier mon profile</div>
 
@@ -12,7 +12,7 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
                                 <label for="firstname"
                                     class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
                                 <div class="col-md-6">
@@ -22,16 +22,17 @@
                                     @endforeach
                                 @endif
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="civilite"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Civilité') }}</label>
-                                <div class="col-md-6">
-                                    <select name="civilite" id="civilite" class="form-control @error('civilite') is-invalid @enderror">
+                            </div> --}}
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="civilite">{{ __('Civilité') }}</label>
+                                    <select name="civilite" id="civilite"
+                                        class="form-control @error('civilite') is-invalid @enderror">
                                         <option value="{{ Auth::user()->civilite }}">{{ Auth::user()->civilite }}
                                         </option>
                                         @foreach ($civilites as $civilite)
-                                            <option value="{{ $civilite->civilite }}">{{ $civilite->civilite }}</option>
+                                            <option value="{{ $civilite->civilite }}">{{ $civilite->civilite }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('civilite')
@@ -40,11 +41,10 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="firstname"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
-                                <div class="col-md-6">
+
+                                <div class="form-group col-md-4">
+                                    <label for="firstname">{{ __('Prénom') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
                                     <input id="firstname" type="text"
                                         class="form-control form-control-user @error('firstname') is-invalid @enderror"
                                         name="firstname" placeholder="Votre prénom"
@@ -55,11 +55,12 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    {{-- </div> --}}
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
-                                <div class="col-md-6">
+
+                                <div class="form-group col-md-4">
+                                    <label for="name">{{ __('Nom') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
                                     <input id="name" type="text"
                                         class="form-control form-control-user @error('name') is-invalid @enderror"
                                         name="name" placeholder="Votre nom"
@@ -69,12 +70,15 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    {{-- </div> --}}
                                 </div>
+
                             </div>
-                            <div class="form-group row">
-                                <label for="date_naissance"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Date de naissance') }}</label>
-                                <div class="col-md-6">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="date_naissance">{{ __('Date de naissance') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
 
                                     @if (Auth::user()->date_naissance !== null)
                                         <input id="date_naissance" type="date"
@@ -94,12 +98,11 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    {{-- </div> --}}
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="lieu_naissance"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Lieu de naissance') }}</label>
-                                <div class="col-md-6">
+                                <div class="form-group col-md-4">
+                                    <label for="lieu_naissance">{{ __('Lieu de naissance') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
                                     <input id="lieu_naissance" type="text"
                                         class="form-control form-control-user @error('lieu_naissance') is-invalid @enderror"
                                         name="lieu_naissance" placeholder="Votre lieu de naissance"
@@ -110,12 +113,11 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    {{-- </div> --}}
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="telephone"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Téléphone') }}</label>
-                                <div class="col-md-6">
+                                <div class="form-group col-md-4">
+                                    <label for="telephone">{{ __('Téléphone') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
                                     <input id="telephone" type="text"
                                         class="form-control form-control-user @error('telephone') is-invalid @enderror"
                                         name="telephone" placeholder="Votre numéro de téléphone"
@@ -126,22 +128,33 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    {{-- </div> --}}
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="image"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Photo de profil') }}</label>
-                                <div class="custom-file col-md-6">
-                                    <input type="file" class="custom-file-input @error('image') is-invalid @enderror"
-                                        name="image" value="{{ old('image') }}" id="validatedCustomFile">
-                                    <label class="custom-file-label" for="validatedCustomFile">Chisir une image...</label>
-                                    <img class="pt-1" src="{{ asset(Auth::user()->profile->getImage()) }}" width="50"
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupFileAddon01">Télécharger</span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" name="image" value="{{ old('image') }}"
+                                                class="custom-file-input @error('image') is-invalid @enderror"
+                                                id="validatedCustomFile" aria-describedby="inputGroupFileAddon01">
+                                            <label class="custom-file-label" for="validatedCustomFile">Choisir image de
+                                                profil</label>
+
+                                            @error('image')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="pt-2">
+                                    <img class="rounded-circle w-25 border border-secondary" src="{{ asset(Auth::user()->profile->getImage()) }}" width="50"
                                         height="auto">
-                                    @error('image')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">

@@ -23,8 +23,6 @@
                         <p class="card-category">administrateur</p>
                     </div>
                     <div class="card-body">
-
-
                         {!! Form::open(['url' => 'administrateurs/' . $administrateur->id, 'method' => 'PATCH', 'files' => true]) !!}
                         <div class="form-row">
                             <div class="form-group col-md-12">
