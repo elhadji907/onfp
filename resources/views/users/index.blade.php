@@ -89,17 +89,17 @@
                                                 @endif
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                                <a href="{!! url('users/' . $user->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                <a href="{!! url('users/' . $user->username . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                <a href="{!! url('users/' . $user->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir la liste">
+                                                <button data-id="{{$user}}" class='btn btn-primary btn-sm'
+                                                    title="voir la liste" data-toggle="modal" data-target="#userModal" data-whatever="@mdo">
                                                     <i class="far fa-eye">&nbsp;</i>
-                                                </a>
+                                                </button>
                                                 &nbsp;
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'users/' . $user->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                {!! Form::open(['method' => 'DELETE', 'url' => 'users/' . $user->username, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!}
                                             </td>
@@ -113,6 +113,34 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="userModalLabel">{{ __("Informations complètes")}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="firstname" class="col-form-label">Prénom : {!! $user !!} </label>
+                  {{-- <input type="text" class="form-control" id="firstname"> --}}
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Message:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              {{-- <button type="button" class="btn btn-primary">Send message</button> --}}
+            </div>
+          </div>
+        </div>
+      </div>
 @endsection
 
 @push('scripts')
