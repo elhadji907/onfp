@@ -76,14 +76,14 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <label for="input-name"><b>{{ __('Créé le ') }}:</b> {{ $user->created_at->format('d/m/Y') }} </label>
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __("Créé par ") }}:</b> {{ $user->created_by }}
                                 </label>
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Modifié par ') }}:</b> {{ $user->updated_by }} </label>
-                            </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="input-name"><b>{{ __('Supprimé par ') }}:</b> {{ $user->deleted_by }} </label>
                             </div>
                         </div>
                         <div class="form-row">
