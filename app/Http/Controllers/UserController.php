@@ -34,7 +34,7 @@ class UserController extends Controller
     {
         $civilites = User::select('civilite')->distinct()->get();
         $roles = Role::distinct()->get();
-        dd($roles); 
+        /* dd($roles);  */
         return view('users.create',compact('civilites'));
     }
 
@@ -89,7 +89,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+      return view('users.show', compact('user'));
     }
 
     /**
@@ -100,10 +100,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        dd($user);
-        //$utilisateur = User::find($id);
-        $administrateur = Administrateur::find($id);
-        $utilisateur=$administrateur->user;        
+        /* dd($user); */
+        //$utilisateur = User::find($id);    
         //$roles = Role::get();
         $roles = Role::distinct('name')->get()->pluck('name','name')->unique();
 
@@ -111,7 +109,7 @@ class UserController extends Controller
 
         $civilites = User::distinct('civilite')->get()->pluck('civilite','civilite')->unique();
         //return $utilisateur;
-        return view('administrateurs.update', compact('administrateur','utilisateur','id','roles','civilites'));
+        return view('users.update', compact('roles','civilites'));
     }
 
     /**
