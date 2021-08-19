@@ -148,8 +148,8 @@ class SnNameGenerator
     public static $familiale = array(
 
         "Célibataire",
-        "Marié(e)",
-        "Divorcé(e)",
+        "Marié",
+        "Divorcé",
     );
 
     public static $lieunaissance = array(

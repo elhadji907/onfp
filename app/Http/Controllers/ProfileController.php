@@ -118,6 +118,14 @@ class ProfileController extends Controller
 
         ]);
 
+        if ($request->input('civilite') == "M.") {
+            $sexe = "M";
+            }elseif ($request->input('civilite') == "Mme") {
+                $sexe = "F";
+            }else {
+                $sexe = "";
+            }
+
          if (request('image')) {   
         $imagePath = request('image')->store('avatars', 'public');
         
@@ -146,6 +154,7 @@ class ProfileController extends Controller
 
             auth()->user()->update([
                 'civilite'                      =>       $data['civilite'],
+                'sexe'                          =>       $sexe,
                 'firstname'                     =>       $data['firstname'],
                 'name'                          =>       $data['name'],
                 'date_naissance'                =>       $data['date_naissance'],
@@ -164,6 +173,7 @@ class ProfileController extends Controller
 
             auth()->user()->update([
                 'civilite'                      =>       $data['civilite'],
+                'sexe'                          =>       $sexe,
                 'firstname'                     =>       $data['firstname'],
                 'name'                          =>       $data['name'],
                 'date_naissance'                =>       $data['date_naissance'],

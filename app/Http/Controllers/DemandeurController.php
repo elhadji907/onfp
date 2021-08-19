@@ -201,9 +201,18 @@ class DemandeurController extends Controller
        $telephone = str_replace(' ', '', $telephone);
        $telephone = str_replace(' ', '', $telephone);
        $telephone = str_replace(' ', '', $telephone);
+       
+       if ($request->input('civilite') == "M.") {
+        $sexe = "M";
+        }elseif ($request->input('civilite') == "Mme") {
+            $sexe = "F";
+        }else {
+            $sexe = "";
+        }
 
         $utilisateur = new User([      
             'civilite'                  =>      $request->input('civilite'),      
+            'sexe'                      =>      $sexe,      
             'firstname'                 =>      $request->input('prenom'),
             'name'                      =>      $request->input('nom'),
             'email'                     =>      $request->input('email'),
@@ -378,8 +387,16 @@ class DemandeurController extends Controller
        $telephone = str_replace(' ', '', $telephone);
        $telephone = str_replace(' ', '', $telephone);
 
+       if ($request->input('civilite') == "M.") {
+        $sexe = "M";
+        }elseif ($request->input('civilite') == "Mme") {
+            $sexe = "F";
+        }else {
+            $sexe = "";
+        }
 
         $utilisateurs->civilite                  =      $request->input('civilite');
+        $utilisateurs->sexe                      =      $sexe;
         $utilisateurs->firstname                 =      $request->input('prenom');
         $utilisateurs->name                      =      $request->input('nom');
         $utilisateurs->email                     =      $request->input('email');
