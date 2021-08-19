@@ -82,8 +82,10 @@ class ProfileController extends Controller
         /* $this->authorize('update', $user->profile); */
 
         $civilites = User::select('civilite')->distinct()->get();
+        $professionnelles = User::select('situation_professionnelle')->distinct()->get();
+        $familiales = User::select('situation_familiale')->distinct()->get();
         //dd($civilites);
-        return view('profiles.edit', compact('user', 'civilites'));
+        return view('profiles.edit', compact('user', 'civilites', 'professionnelles', 'familiales'));
     }
 
     /**
@@ -98,15 +100,21 @@ class ProfileController extends Controller
         /* $this->authorize('update', $user->profile); */
         
         $data = request()->validate([
-            'civilite'        => ['required', 'string', 'max:50'],
-            'firstname'        => ['required', 'string', 'max:50'],
-            'name'             => ['required', 'string', 'max:50'],
-            'username'         => ['string', 'min:5', 'max:10', 'unique:users'],
-            'email'            => ['string', 'email', 'max:255', 'unique:users'],
-            'date_naissance'   => ['required', 'date'],
-            'lieu_naissance'   => ['required', 'string', 'max:50'],
-            'telephone'        => ['required', 'string', 'max:50'],
-            'image'            => ['sometimes', 'file', 'max:2048']
+            'civilite'              =>       ['required', 'string', 'max:50'],
+            'firstname'             =>       ['required', 'string', 'max:50'],
+            'name'                  =>       ['required', 'string', 'max:50'],
+            'username'              =>       ['string', 'min:5', 'max:10', 'unique:users'],
+            'email'                 =>       ['string', 'email', 'max:255', 'unique:users'],
+            'date_naissance'        =>       ['required', 'date'],
+            'fixe'                  =>       ['required'],
+            'bp'                    =>       ['sometimes'],
+            'fax'                   =>       ['sometimes'],
+            'professionnelle'       =>       ['sometimes'],
+            'familiale'             =>       ['sometimes'],
+            'adresse'               =>       ['sometimes'],
+            'lieu_naissance'        =>       ['required', 'string', 'max:50'],
+            'telephone'             =>       ['required', 'string', 'max:50'],
+            'image'                 =>       ['sometimes', 'file', 'max:2048']
 
         ]);
 
@@ -137,24 +145,36 @@ class ProfileController extends Controller
             ]);
 
             auth()->user()->update([
-            'civilite' => $data['civilite'],
-            'firstname' => $data['firstname'],
-            'name' => $data['name'],
-            'date_naissance' => $data['date_naissance'],
-            'lieu_naissance' => $data['lieu_naissance'],
-            'telephone' => $data['telephone']
+                'civilite'                      =>       $data['civilite'],
+                'firstname'                     =>       $data['firstname'],
+                'name'                          =>       $data['name'],
+                'date_naissance'                =>       $data['date_naissance'],
+                'lieu_naissance'                =>       $data['lieu_naissance'],
+                'telephone'                     =>       $data['telephone'],
+                'fixe'                          =>       $data['fixe'],
+                'bp'                            =>       $data['bp'],
+                'adresse'                       =>       $data['adresse'],
+                'situation_familiale'           =>       $data['familiale'],
+                'situation_professionnelle'     =>       $data['professionnelle'],
+                'fax'                           =>       $data['fax']
             ]);
 
         }  else {
             auth()->user()->profile->update($data);
 
             auth()->user()->update([
-                'civilite' => $data['civilite'],
-                'firstname' => $data['firstname'],
-                'name' => $data['name'],
-                'date_naissance' => $data['date_naissance'],
-                'lieu_naissance' => $data['lieu_naissance'],
-                'telephone' => $data['telephone']
+                'civilite'                      =>       $data['civilite'],
+                'firstname'                     =>       $data['firstname'],
+                'name'                          =>       $data['name'],
+                'date_naissance'                =>       $data['date_naissance'],
+                'lieu_naissance'                =>       $data['lieu_naissance'],
+                'telephone'                     =>       $data['telephone'],
+                'fixe'                          =>       $data['fixe'],
+                'bp'                            =>       $data['bp'],
+                'adresse'                       =>       $data['adresse'],
+                'situation_familiale'           =>       $data['familiale'],
+                'situation_professionnelle'     =>       $data['professionnelle'],
+                'fax'                           =>       $data['fax']
                 ]);
         }
 

@@ -33,8 +33,13 @@
                     <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
                     <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
                 </div>
-                <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
-                    class="btn btn-outline-secondary mt-3">Modifier mon profile</a>
+                @if (auth::user()->civilite == null or auth::user()->fixe == null)
+                    <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
+                        class="btn btn-outline-danger mt-3">Compléter votre profil</a>
+                @else
+                    <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
+                        class="btn btn-outline-secondary mt-3">Modifier mon profil</a>
+                @endif
                 {{-- @endcan --}}
             </div>
         </div>
@@ -104,7 +109,7 @@
                                                 @can('view', $demandeur)
                                                     <tr valign="bottom">
                                                         <td>{!! $demandeur->numero !!}</td>
-                                                        <td>{!! number_format($demandeur->cin,0, ',', ' ') . ' ' !!}</td>
+                                                        <td>{!! number_format($demandeur->cin, 0, ',', ' ') . ' ' !!}</td>
                                                         <td>{!! $demandeur->user->firstname !!}</td>
                                                         <td>{!! $demandeur->user->name !!}</td>
                                                         <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>

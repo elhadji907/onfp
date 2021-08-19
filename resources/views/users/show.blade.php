@@ -51,7 +51,7 @@
                                 <label for="input-name"><b>{{ __('Lieu naissance ') }}:</b> {{ $user->lieu_naissance }} </label>
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="input-name"><b>{{ __('Situation familiale ') }}:</b> {{ $user->situation_naissance }} </label>
+                                <label for="input-name"><b>{{ __('Situation familiale ') }}:</b> {{ $user->situation_familiale }} </label>
                             </div>
                         </div>
                         <div class="form-row">

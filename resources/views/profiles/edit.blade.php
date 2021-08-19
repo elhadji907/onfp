@@ -5,8 +5,7 @@
         <div class="container-fluid">
             <div class="col-md-12 col-lg-12">
                 <div class="card">
-                    <div class="card-header">Modifier mon profile</div>
-
+                    <div class="card-header">Modifier mon profil</div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('profiles.update', [$user]) }}"
                             enctype="multipart/form-data">
@@ -41,7 +40,6 @@
                                         </span>
                                     @enderror
                                 </div>
-
                                 <div class="form-group col-md-4">
                                     <label for="firstname">{{ __('Prénom') }}</label>
                                     {{-- <div class="col-md-6"> --}}
@@ -57,7 +55,6 @@
                                     @enderror
                                     {{-- </div> --}}
                                 </div>
-
                                 <div class="form-group col-md-4">
                                     <label for="name">{{ __('Nom') }}</label>
                                     {{-- <div class="col-md-6"> --}}
@@ -72,14 +69,11 @@
                                     @enderror
                                     {{-- </div> --}}
                                 </div>
-
                             </div>
-
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="date_naissance">{{ __('Date de naissance') }}</label>
                                     {{-- <div class="col-md-6"> --}}
-
                                     @if (Auth::user()->date_naissance !== null)
                                         <input id="date_naissance" type="date"
                                             class="form-control form-control-user @error('date_naissance') is-invalid @enderror"
@@ -133,6 +127,100 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
+                                    <label for="fixe">{{ __('Fixe') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
+                                    <input id="fixe" type="text"
+                                        class="form-control form-control-user @error('fixe') is-invalid @enderror"
+                                        name="fixe" placeholder="Votre téléphone"
+                                        value="{{ old('fixe') ?? Auth::user()->fixe }}" autocomplete="fixe">
+                                    @error('fixe')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    {{-- </div> --}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="bp">{{ __('BP') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
+                                    <input id="bp" type="text"
+                                        class="form-control form-control-user @error('bp') is-invalid @enderror" name="bp"
+                                        placeholder="Votre boite postale" value="{{ old('bp') ?? Auth::user()->bp }}"
+                                        autocomplete="bp">
+                                    @error('bp')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    {{-- </div> --}}
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="fax">{{ __('Fax') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
+                                    <input id="fax" type="text"
+                                        class="form-control form-control-user @error('fax') is-invalid @enderror" name="fax"
+                                        placeholder="Votre numéro de fax" value="{{ old('fax') ?? Auth::user()->fax }}"
+                                        autocomplete="fax">
+                                    @error('fax')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    {{-- </div> --}}
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="adresse">{{ __('Adresse') }}</label>
+                                    {{-- <div class="col-md-6"> --}}
+                                    <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
+                                        id="adresse" rows="1"
+                                        placeholder="Votre adresse complète">{{ old('adresse') ?? Auth::user()->adresse }}</textarea>
+                                    {{-- </div> --}}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="professionnelle">{{ __('Situation professionnelle') }}</label>
+                                    <select name="professionnelle" id="professionnelle"
+                                        class="form-control @error('professionnelle') is-invalid @enderror">
+                                        <option value="{{ Auth::user()->situation_professionnelle }}">
+                                            {{ Auth::user()->situation_professionnelle }}
+                                        </option>
+                                        @foreach ($professionnelles as $professionnelle)
+                                            <option value="{{ $professionnelle->situation_professionnelle }}">
+                                                {{ $professionnelle->situation_professionnelle }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('professionnelle')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="familiale">{{ __('Situation familiale') }}</label>
+                                    <select name="familiale" id="familiale"
+                                        class="form-control @error('familiale') is-invalid @enderror">
+                                        <option value="{{ Auth::user()->situation_familiale }}">{{ Auth::user()->situation_familiale }}
+                                        </option>
+                                        @foreach ($familiales as $familiale)
+                                            <option value="{{ $familiale->situation_familiale }}">
+                                                {{ $familiale->situation_familiale }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('familiale')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroupFileAddon01">Télécharger</span>
@@ -143,7 +231,6 @@
                                                 id="validatedCustomFile" aria-describedby="inputGroupFileAddon01">
                                             <label class="custom-file-label" for="validatedCustomFile">Choisir image de
                                                 profil</label>
-
                                             @error('image')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -152,14 +239,17 @@
                                         </div>
                                     </div>
                                     <div class="pt-2">
-                                    <img class="rounded-circle w-25 border border-secondary" src="{{ asset(Auth::user()->profile->getImage()) }}" width="50"
-                                        height="auto">
+                                        <img class="rounded-circle w-25 border border-secondary"
+                                            src="{{ asset(Auth::user()->profile->getImage()) }}" width="50"
+                                            height="auto">
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">
-                                Modifier mon profile
-                            </button>
+                            <div class="col text-center">
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="far fa-save">&nbsp;&nbsp;Modifier mon profil</i>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

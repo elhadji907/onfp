@@ -77,8 +77,8 @@ class SnNameGenerator
 
     public static $situation = array(
         "Elève",
-        "Etudiant(e)",
-        "Employé(e)",
+        "Etudiant",
+        "Employé",
         "Recherche d'emploi",
 
     );
