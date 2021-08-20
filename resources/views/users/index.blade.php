@@ -83,8 +83,8 @@
                                             <td style="text-align: center; vertical-align: middle;">
                                                 @if (!empty($user->getPermissionNames()))
                                                     @foreach ($user->getPermissionNames() as $v)
-                                                        <label class="badge badge-success"> {{ '<' }}
-                                                            {{ $v }} {{ '>' }}</label>
+                                                        <label class="badge badge-success">
+                                                            {{ $v }}</label>
                                                     @endforeach
                                                 @endif
                                             </td>

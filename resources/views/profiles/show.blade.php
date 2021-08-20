@@ -6,13 +6,14 @@
             <div class="col-4 text-center">
                 <img src="{{ asset(auth::user()->profile->getImage()) }}" class="rounded-circle w-50" />
             </div>
-            <div class="col-8">
+            <div class="col-4">
                 {{-- @can('update', $user->profile) --}}
                 <div class="mt-3 d-flex">
                     <div class="mr-1"><b>{{ auth::user()->civilite }}</b></div>
                     <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
                     <div class="mr-1"><b>{{ auth::user()->name }}</b></div>
-
+                </div>
+                <div class="mt-0 d-flex">                    
                     @if (auth::user()->civilite == 'M.')
                         <div class="mr-1"><b>né le</b></div>
                     @endif
@@ -20,14 +21,13 @@
                         <div class="mr-1"><b>née le</b></div>
                     @endif
                     @if (auth::user()->date_naissance !== null)
-                        <div class="mr-1"><b>{{ auth::user()->date_naissance->format('d M Y') }}</b></div>
+                        <div class="mr-1">{{ auth::user()->date_naissance->format('d/m/Y') }}</div>
                     @endif
                     @if (auth::user()->lieu_naissance !== null)
-                        <div class="mr-1"><b>à</b></div>
-                        <div class="mr-1"><b>{{ auth::user()->lieu_naissance }}</b></div>
+                        <div class="mr-1">à</div>
+                        <div class="mr-1">{{ auth::user()->lieu_naissance }}</div>
                     @endif
                 </div>
-
                 <div class="mt-0">
                     <div class="mr-3"><b>{{ __("Nom d'utilisateur") }}:</b> {{ auth::user()->username }}</div>
                     <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
@@ -40,6 +40,38 @@
                     <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
                         class="btn btn-outline-secondary mt-3">Modifier mon profil</a>
                 @endif
+                {{-- @endcan --}}
+            </div>
+            <div class="col-4">
+                {{-- @can('update', $user->profile) --}}
+                <div class="mt-3 d-flex">
+                    @if (isset($user_connect))
+                    <table class="table table-bordered" id="table-tresors" width="100%" cellspacing="0">
+                      <thead class="bg-gradient-success text-white">
+                        <tr>
+                          <th style="width:5%;">N°</th>
+                          <th style="width:75%;">TYPE</th>
+                          <th style="width:20%;">STATUT</th>
+                        </tr>
+                      </thead>
+                      <tfoot class="table-dark">
+                      </tfoot>
+                      <tbody>              
+                        <?php $i = 1 ?>
+                        @foreach ($demandeurs as $demandeur)
+                        @can('view', $demandeur)
+                        <tr>
+                           <td class="align-middle">{!! $i++ !!}</td>
+                          <td class="align-middle">{!! $demandeur->types_demande->name ?? ' ' !!}</td>
+                          <td class="align-middle">{!! $demandeur->statut !!}</td>
+                        </tr>
+                        @endcan
+                        @endforeach  
+                      </tbody>                
+                    </table>
+                    @else
+                    @endif            
+                </div>
                 {{-- @endcan --}}
             </div>
         </div>
@@ -86,14 +118,14 @@
                                         cellspacing="0" id="table-demandeurs">
                                         <thead class="table-dark">
                                             <tr>
-                                                <th>N° dossier</th>
+                                                <th>N° Dossier</th>
                                                 <th style="width:12%;">CIN</th>
-                                                <th>Prenom</th>
+                                                {{--  <th>Prenom</th>
                                                 <th>Nom</th>
-                                                <th>Date naissance</th>
-                                                <th>Lieu naissance</th>
+                                                <th>Date nais.</th>
+                                                <th>Lieu nais.</th>
                                                 <th>Email</th>
-                                                <th>Téléphone</th>
+                                                <th>Téléphone</th>  --}}
                                                 <th style="width:5%;">Module</th>
                                                 <th>Type demande</th>
                                                 <th>Statut</th>
@@ -110,12 +142,12 @@
                                                     <tr valign="bottom">
                                                         <td>{!! $demandeur->numero !!}</td>
                                                         <td>{!! number_format($demandeur->cin, 0, ',', ' ') . ' ' !!}</td>
-                                                        <td>{!! $demandeur->user->firstname !!}</td>
+                                                        {{--  <td>{!! $demandeur->user->firstname !!}</td>
                                                         <td>{!! $demandeur->user->name !!}</td>
                                                         <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                         <td>{!! $demandeur->user->lieu_naissance !!}</td>
                                                         <td>{!! $demandeur->user->email !!}</td>
-                                                        <td>{!! $demandeur->user->telephone !!}</td>
+                                                        <td>{!! $demandeur->user->telephone !!}</td>  --}}
                                                         <td ALIGN="CENTER">
                                                             @foreach ($demandeur->modules as $module)
                                                                 @if ($loop->last)

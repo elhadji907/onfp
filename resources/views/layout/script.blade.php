@@ -232,10 +232,15 @@ $("#type_structure").select2({
         allowClear: true
     });
 </script>
-<script type="text/javascript">
-  
+<script type="text/javascript">  
   $("#diplome").select2({
         placeholder: "vos diplômes",
+        allowClear: true
+    });
+</script>
+<script type="text/javascript">  
+  $("#role").select2({
+        placeholder: "Roles",
         allowClear: true
     });
 </script>

@@ -220,7 +220,7 @@ class IndividuelleController extends Controller
             'date_naissance'            =>      $request->input('date_naiss'),
             'lieu_naissance'            =>      $request->input('lieu_naissance'),
             'adresse'                   =>      $request->input('adresse'),
-            'password'                  =>      Hash::make($request->input('email')),
+            /* 'password'                  =>      Hash::make($request->input('email')), */
             'created_by'                =>      $created_by,
             'updated_by'                =>      $created_by
 
@@ -251,7 +251,7 @@ class IndividuelleController extends Controller
             $user->date_naissance            =      $request->input('date_naiss');
             $user->lieu_naissance            =      $request->input('lieu_naissance');
             $user->adresse                   =      $request->input('adresse');
-            $user->password                  =      Hash::make($request->input('email'));
+            /* $user->password                  =      Hash::make($request->input('email')); */
             $user->updated_by                =      $updated_by;
     
             $user->save();
@@ -453,7 +453,7 @@ class IndividuelleController extends Controller
         $utilisateur->date_naissance            =      $request->input('date_naiss');
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
-        $utilisateur->password                  =      Hash::make($request->input('email'));
+        /* $utilisateur->password                  =      Hash::make($request->input('email')); */
         $utilisateurs->updated_by               =      $updated_by;
 
         $utilisateur->save();

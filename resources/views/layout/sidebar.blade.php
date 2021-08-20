@@ -428,6 +428,10 @@
                         <span data-feather="user"></span>
                         <span>Utilisateurs</span>
                     </a>
+                    <a class="collapse-item" href="{{ route('roles.index') }}">
+                        <span data-feather="user"></span>
+                        <span>Roles</span>
+                    </a>
                 @endguest
             </div>
         </div>

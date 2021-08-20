@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Arr;
+use DB;
 
 class UserController extends Controller
 {
@@ -21,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users      =   User::all();
         return view('users.index', compact('users'));
     }
 
@@ -32,10 +35,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        $civilites = User::select('civilite')->distinct()->get();
-        $roles = Role::distinct()->get();
-        /* dd($roles);  */
-        return view('users.create',compact('civilites'));
+        $civilites      =   User::select('civilite')->distinct()->get();
+        $roles          =   Role::pluck('name','name')->all();
+        return view('users.create',compact('civilites', 'roles'));
     }
 
     /**
@@ -50,8 +52,8 @@ class UserController extends Controller
             $request, [
                 'civilite'      =>  'required|string|max:10',
                 'matricule'     =>  'required|string|max:50',
-                'prenom'        =>  'required|string|max:50',
-                'nom'           =>  'required|string|max:50',
+                'firstname'     =>  'required|string|max:50',
+                'name'          =>  'required|string|max:50',
                 'telephone'     =>  'required|string|max:50',
                 'email'         =>  'required|email|max:255|unique:users,email',
                 'username'      =>  'required|string|max:255|unique:users,username',
@@ -66,13 +68,13 @@ class UserController extends Controller
         );
 
         $utilisateur = new User([      
-            'civilite'      =>      $request->input('civilite'),      
-            'firstname'      =>      $request->input('prenom'),
-            'name'           =>      $request->input('nom'),
-            'email'          =>      $request->input('email'),
-            'username'       =>      $request->input('username'),
-            'telephone'      =>      $request->input('telephone'),
-            'password'       =>      Hash::make($request->input('password')),
+            'civilite'          =>      $request->input('civilite'),      
+            'firstname'         =>      $request->input('prenom'),
+            'name'              =>      $request->input('nom'),
+            'email'             =>      $request->input('email'),
+            'username'          =>      $request->input('username'),
+            'telephone'         =>      $request->input('telephone'),
+            'password'          =>      Hash::make($request->input('password')),
 
         ]);
         
@@ -100,16 +102,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        /* dd($user); */
-        //$utilisateur = User::find($id);    
-        //$roles = Role::get();
-        $roles = Role::distinct('name')->get()->pluck('name','name')->unique();
-
-        //dd($roles);
-
-        $civilites = User::distinct('civilite')->get()->pluck('civilite','civilite')->unique();
-        //return $utilisateur;
-        return view('users.update', compact('roles','civilites'));
+        /* $roles = Role::pluck('name','name')->all(); */
+        $userRole = $user->roles->pluck('name','name')->all();
+        $roles = Role::distinct('name')->pluck('name','name')->unique();
+        $civilites = User::distinct('civilite')->pluck('civilite','civilite')->unique();
+       
+        return view('users.update', compact('roles', 'civilites', 'userRole', 'user'));
     }
 
     /**

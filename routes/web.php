@@ -47,6 +47,7 @@ use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\CommuneController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -173,6 +174,7 @@ Route::group([
         Route::resource('/regions', RegionController::class);
         Route::resource('/arrondissements', ArrondissementController::class);
         Route::resource('/communes', CommuneController::class);
+        Route::resource('/roles', RoleController::class);
     });
 
 require __DIR__.'/auth.php';
