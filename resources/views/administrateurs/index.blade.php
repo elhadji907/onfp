@@ -34,7 +34,7 @@
                               <th>Email</th>
                               <th>Username</th>
                               <th>Téléphone</th>
-                              <th style="width:10%;">Action</th>
+                              <th style="width:10%;"></th>
                             </tr>
                           </thead>
                           <tfoot class="table-dark">
@@ -47,7 +47,7 @@
                                 <th>Email</th>
                                 <th>Username</th>
                                 <th>Téléphone</th>
-                                <th>Action</th>
+                                <th></th>
                               </tr>
                             </tfoot>
                           <tbody>
@@ -102,7 +102,7 @@
                 cliquez sur close pour annuler
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                 <button type="submit" class="btn btn-danger"><i class="fas fa-times">&nbsp;Delete</i></button>
               </div>
             </div>
@@ -117,8 +117,38 @@
     $('#table-administrateurs').DataTable({
       dom: 'lBfrtip',
       buttons: [
-          'copy', 'csv', 'excel', 'pdf', 'print',
-      ],
+            {
+                extend: 'copyHtml5',
+                text: '<i class="fas fa-copy"></i> Copy',
+                titleAttr: 'Copy'
+            },
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fas fa-file-excel"></i> Excel',
+                titleAttr: 'Excel'
+            },
+            {
+                extend: 'csvHtml5',
+                text: '<i class="fas fa-file-csv"></i> CSV',
+                titleAttr: 'CSV'
+            },
+            {
+                extend: 'pdfHtml5',
+                text: '<i class="fas fa-file-pdf"></i> PDF',
+                titleAttr: 'PDF'
+            },
+            {
+                extend: 'print',
+                text: '<i class="fas fa-print"></i> Print',
+                titleAttr: 'Print'
+            },
+            {
+              extend: 'pdfHtml5',
+              orientation: 'landscape',
+              pageSize: 'LEGAL'
+          } 
+        ],
+        
       "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "Tout"] ],
       "order": [
             [ 0, 'asc' ]
