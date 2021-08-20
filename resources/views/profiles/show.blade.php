@@ -87,7 +87,7 @@
                                         <thead class="table-dark">
                                             <tr>
                                                 <th>N° dossier</th>
-                                                <th style="width:20%;">CIN</th>
+                                                <th style="width:12%;">CIN</th>
                                                 <th>Prenom</th>
                                                 <th>Nom</th>
                                                 <th>Date naissance</th>
