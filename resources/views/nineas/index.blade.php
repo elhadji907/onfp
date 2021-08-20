@@ -76,7 +76,33 @@
             $('#table-nineas').DataTable({
                 dom: 'lBfrtip',
                 buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print',
+                  {
+                      extend: 'copyHtml5',
+                      text: '<i class="fas fa-copy"></i> Copy',
+                      titleAttr: 'Copy'
+                  },
+                  {
+                      extend: 'excelHtml5',
+                      text: '<i class="fas fa-file-excel"></i> Excel',
+                      titleAttr: 'Excel'
+                  },
+                  {
+                      extend: 'csvHtml5',
+                      text: '<i class="fas fa-file-csv"></i> CSV',
+                      titleAttr: 'CSV'
+                  },
+                  {
+                    extend: 'pdfHtml5',
+                    text: '<i class="fas fa-file-pdf"></i> PDF',
+                    orientation : 'landscape',
+                    pageSize : 'RA4',
+                    titleAttr: 'PDF'
+                  },
+                  {
+                      extend: 'print',
+                      text: '<i class="fas fa-print"></i> Print',
+                      titleAttr: 'Print'
+                  }
                 ],
                 "lengthMenu": [
                     [10, 25, 50, 100, -1],

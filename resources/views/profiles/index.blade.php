@@ -145,12 +145,7 @@
                         extend: 'print',
                         text: '<i class="fas fa-print"></i> Print',
                         titleAttr: 'Print'
-                    },
-                    {
-                      extend: 'pdfHtml5',
-                      orientation: 'landscape',
-                      pageSize: 'LEGAL'
-                  } 
+                    }
                 ],
                 "lengthMenu": [
                     [10, 25, 50, 100, -1],
