@@ -17,6 +17,7 @@
         "h4cc/wkhtmltopdf-i386": "0.12.x",
         "hnhdigital-os/laravel-number-converter": "^1.4",
         "intervention/image": "^2.6",
+        "josiasmontag/laravel-recaptchav3": "^0.6.0",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
