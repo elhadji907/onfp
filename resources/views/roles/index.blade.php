@@ -1,11 +1,11 @@
 @extends('layout.default')
 @section('content')
     <div class="container-fluid">
-        @if (session()->has('success'))
-            <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-        @endif
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @if (session()->has('success'))
+                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+                @endif
                 @if (session('message'))
                     <div class="alert alert-success">
                         {{ session('message') }}
@@ -28,8 +28,8 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th  width="5px">N°</th>
-                                        <th  width="800px">Name</th>
-                                        <th width="15px">Action</th>
+                                        <th  width="500px">Name</th>
+                                        <th width="20px">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -51,10 +51,10 @@
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ route('roles.edit', $role->id) }}"><i class="far fa-edit">&nbsp;</i></a>
-                                                @endcan
+                                                @endcan&nbsp;
                                                 @can('role-delete')
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline']) !!}
-                                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                     {!! Form::close() !!}
                                                 @endcan
                                             </td>

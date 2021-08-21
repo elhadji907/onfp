@@ -4,19 +4,21 @@
     <div class="content">
         <div class="container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div class="container-fluid">
-                @if (session()->has('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
-                <div class="row p-5">
+                <div class="row p-2">
                     <div class="col-4 mx-auto">
                         <img src="{{ asset($user->profile->getImage()) }}" class="rounded-circle w-50" />
                     </div>
                 </div>
+                <div class="row justify-content-center pb-2">
+                    <div class="col-lg-12 margin-tb">
+                        <a class="btn btn-outline-success" href="{{ route('users.index') }}"> <i
+                                class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                    </div>
+                </div>
                 <div class="card border-success">
-                    <div class="card card-header text-center bg-gradient-success">
-                        <h1 class="h4 card-title text-center text-white h-100 text-uppercase mb-0"><b></b><span
+                    <div class="card card-header text-center bg-gradient-default border-success">
+                        <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
                                 class="font-italic">INFORMATIONS</span></h1>
-    
                     </div>
                     <div class="card-body">
                         <div class="form-row">

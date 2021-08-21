@@ -16,11 +16,15 @@
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
-                <div class="row pt-5"></div>
-                <div class="card">
-                    <div class="card-header card-header-primary text-center">
-                        <h3 class="card-title">Modification</h3>
-                        <p class="card-category">user</p>
+                <div class="row justify-content-center pb-2">
+                    <div class="col-lg-12 margin-tb">
+                        <a class="btn btn-outline-success" href="{{ route('users.index') }}"> <i
+                                class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                    </div>
+                </div>
+                <div class="card border-success">
+                    <div class="card-header card-header-primary text-center border-success">
+                        <h3 class="card-title">Modification utilisateur</h3>
                     </div>
                     <div class="card-body">
                         {!! Form::open(['url' => 'users/' . $user->id, 'method' => 'PATCH', 'files' => true]) !!}
@@ -28,12 +32,6 @@
                             <div class="form-group col-md-12">
                                 {!! Form::label('civilite') !!}
                                 {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], $user->civilite, ['placeholder' => '', 'class' => 'form-control', 'id' => 'civilite']) !!}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                {!! Form::label('matricule') !!}
-                                {!! Form::text('matricule', $user->matricule, ['placeholder' => 'Votre matricule', 'class' => 'form-control', 'id' => 'matricule']) !!}
                             </div>
                         </div>
                         <div class="form-row">
