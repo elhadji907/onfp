@@ -44,6 +44,31 @@ class PermissionsOnfpSeeder extends Seeder
         Permission::create(['name' => 'role-create']);
         Permission::create(['name' => 'role-edit']);
         Permission::create(['name' => 'role-delete']);
+ 
+        Permission::create(['name' => 'user-list']);
+        Permission::create(['name' => 'user-create']);
+        Permission::create(['name' => 'user-edit']);
+        Permission::create(['name' => 'user-delete']);
+ 
+        Permission::create(['name' => 'comment-list']);
+        Permission::create(['name' => 'comment-create']);
+        Permission::create(['name' => 'comment-edit']);
+        Permission::create(['name' => 'comment-delete']);
+ 
+        Permission::create(['name' => 'coment-list']);
+        Permission::create(['name' => 'coment-create']);
+        Permission::create(['name' => 'coment-edit']);
+        Permission::create(['name' => 'coment-delete']);
+ 
+        Permission::create(['name' => 'commentaire-list']);
+        Permission::create(['name' => 'commentaire-create']);
+        Permission::create(['name' => 'commentaire-edit']);
+        Permission::create(['name' => 'commentaire-delete']);
+ 
+        Permission::create(['name' => 'commentere-list']);
+        Permission::create(['name' => 'commentere-create']);
+        Permission::create(['name' => 'commentere-edit']);
+        Permission::create(['name' => 'commentere-delete']);
         
         Permission::create(['name' => 'demandeur-list']);
         Permission::create(['name' => 'demandeur-create']);
