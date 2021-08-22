@@ -21,9 +21,14 @@ class CourrierController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur']);
-        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur|ACourrier']);
+        $this->middleware('permission:courrier-list|courrier-create|courrier-edit|courrier-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:courrier-create', ['only' => ['create','store']]);
+        $this->middleware('permission:courrier-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:courrier-delete', ['only' => ['destroy']]);
+
     }
+
     public function index()
     {
 

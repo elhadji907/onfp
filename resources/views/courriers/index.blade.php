@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title', 'Onfp | Home')
 @section('content')
-@hasrole('Administrateur|Courrier|Gestionnaire|Demandeur')
+@hasrole('Administrateur|Courrier|Gestionnaire|Demandeur|ACourrier')
 <div class="container-fluid">
     <div class="row">     
         <div class="col-xl-3 col-md-6 mb-4">
@@ -99,20 +99,20 @@
                 <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-courriers">
                     <thead class="table-dark">
                       <tr>
-                        <th style="width:5%;">N°</th>
-                        <th style="width:10%;">N° Courrier</th>
-                        <th style="width:30%;">Objet</th>
-                        <th style="width:20%;">Expediteur</th>
+                        {{-- <th style="width:5%;">N°</th> --}}
+                        <th style="width:8%;">N°</th>
+                        <th>Objet</th>
+                        <th style="width:10%;">Expediteur</th>
                         <th style="width:11%;">Email</th>
                         <th style="width:11%;">Telephone</th>
-                        <th style="width:13%;">Type de courrier</th>
+                        <th style="width:12%;">Type de courrier</th>
                        {{--<th style="width:5%;">Action</th>--}}
                       </tr>
                     </thead>
                     <tfoot class="table-dark">
                         <tr>
+                          {{-- <th>N°</th> --}}
                           <th>N°</th>
-                          <th>N° Courrier</th>
                           <th>Objet</th>
                           <th>Expediteur</th>
                           <th>Email</th>
@@ -125,7 +125,7 @@
                       <?php $i = 1 ?>
                       @foreach ($courriers as $courrier)
                       <tr> 
-                        <td>{!! $i++ !!}</td>
+                        {{-- <td>{!! $i++ !!}</td> --}}
                         <td>
                           <a style="color: darkorange; text-decoration: none;"
                            href="{!! url('courriers/'.$courrier->id) !!}" class="view" title="voir" target="_blank">

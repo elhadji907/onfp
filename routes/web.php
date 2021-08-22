@@ -84,6 +84,7 @@ Route::group([
         Route::get('/postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
         Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');  
         Route::get('/courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
+        Route::get('/roles/list', [RoleController::class, 'list'])->name('roles.list');
         Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');
         Route::get('/departs/list', [DepartController::class, 'list'])->name('departs.list');
         Route::get('/internes/list', [InterneController::class, 'list'])->name('internes.list');

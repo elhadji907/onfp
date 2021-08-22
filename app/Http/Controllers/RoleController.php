@@ -7,6 +7,9 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use DB;
 
+use Yajra\Datatables\Datatables;
+
+
 class RoleController extends Controller
 {
     /**
@@ -17,7 +20,7 @@ class RoleController extends Controller
     public function __construct()
     {
          $this->middleware('auth');
-         $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+         $this->middleware(['role:super-admin|Administrateur|Gestionnaire']);
          $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
          $this->middleware('permission:role-create', ['only' => ['create','store']]);
          $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
@@ -53,6 +56,10 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $id = $request->query('id');
+
+        dd($id);
+
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
@@ -126,5 +133,11 @@ class RoleController extends Controller
         DB::table("roles")->where('id', $id)->delete();
         return redirect()->route('roles.index')
 ->with('success', 'Role deleted successfully');
+    }
+
+    public function list(Request $request)
+    {
+        $roles=Role::get();
+        return Datatables::of($roles)->make(true);
     }
 }

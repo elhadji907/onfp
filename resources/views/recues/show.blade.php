@@ -56,7 +56,7 @@
                 <h3 class="card-title text-center">Commentaires</h3>
                 @forelse ($recue->courrier->comments as $comment)
                     <div class="card mt-2">
-                        <div class="card-body d-flex">
+                        <div class="card-body">
                             <div>{!! $comment->content !!}
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <small>Posté le {!! Carbon\Carbon::parse($comment->created_at)->format('d/m/Y à H:i:s') !!}</small>

@@ -29,9 +29,8 @@
                         <table class="table table-bordered table-striped" id="table-recus" width="100%" cellspacing="0">
                             <thead class="table-dark">
                                 <tr>
-                                    <th style="width:5%;">ID</th>
                                     <th style="width:10%;">Numero</th>
-                                    <th style="width:40%;">Objet</th>
+                                    <th>Objet</th>
                                     <th style="width:15%;">Expéditeur</th>
                                     <th style="width:20%;">Imputation</th>
                                     <th style="width:10%;">Action</th>
@@ -39,7 +38,6 @@
                             </thead>
                             <tfoot class="table-dark">
                                 <tr>
-                                    <th>ID</th>
                                     <th>Numero</th>
                                     <th>Objet</th>
                                     <th>Expéditeur</th>
@@ -51,7 +49,6 @@
                                 <?php $i = 1; ?>
                                 @foreach ($recues as $recue)
                                     <tr>
-                                        <td>{!! $i++ !!}</td>
                                         <td>{!! $recue->numero !!}</td>
                                         <td>{!! $recue->courrier->objet !!}</td>
                                         <td>{!! $recue->courrier->expediteur !!}</td>
@@ -61,8 +58,7 @@
                                             @endforeach
                                         </td>
                                         <td class="d-flex align-items-baseline">
-                                            @can('edit courriers')
-                                           {{--   @can('update', $recue->courrier)  --}}
+                                            @can('courrier-edit')
                                                 <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
@@ -72,9 +68,7 @@
                                                 title="voir">
                                                 <i class="far fa-eye">&nbsp;</i>
                                             </a>
-                                            &nbsp;
-                                            @can('edit courriers')
-                                           {{--   @can('delete', $recue->courrier)  --}}
+                                            &nbsp;@can('courrier-delete')
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'recues/' . $recue->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!}
