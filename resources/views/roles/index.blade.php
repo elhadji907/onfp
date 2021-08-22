@@ -19,9 +19,11 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
+                                @can('role-create')
                                 <a href="{{ route('roles.create') }}">
                                     <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
                                 </a>
+                                @endcan
                             </div>
                             <br />
                             <table class="table table-bordered" id="table-roles">
@@ -51,7 +53,8 @@
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ route('roles.edit', $role->id) }}"><i class="far fa-edit">&nbsp;</i></a>
-                                                @endcan&nbsp;
+                                                @endcan
+                                                &nbsp;
                                                 @can('role-delete')
                                                     {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}

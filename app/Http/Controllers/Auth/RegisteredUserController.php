@@ -59,17 +59,26 @@ class RegisteredUserController extends Controller
             'telephone'         =>      $request->telephone,
             'email'             =>      $request->email,
             'password'          =>      Hash::make($request->password),
-            'created_by'        =>      $request->firstname.' '.$request->name.' ('.$request->username.' )',
-            'updated_by'        =>      $request->firstname.' '.$request->name.' ('.$request->username.' )',
+            'created_by'        =>      $request->firstname.' '.$request->name.' ('.$request->username.')',
+            'updated_by'        =>      $request->firstname.' '.$request->name.' ('.$request->username.')',
             /* 'roles_id'  => $role_id, */
         ]);
 
         event(new Registered($user));
 
         $user->assignRole('Demandeur');
-        /* $user->givePermissionTo(Permission::all()); */
-        /* $user->givePermissionTo('edit demandes');
-        $user->givePermissionTo('delete demandes'); */
+
+        /* $user->givePermissionTo('role-list');
+
+        $user->givePermissionTo('demandeur-list');
+        $user->givePermissionTo('demandeur-create');
+        $user->givePermissionTo('demandeur-edit');
+        $user->givePermissionTo('demandeur-delete');
+        
+        $user->givePermissionTo('operateur-list');
+        $user->givePermissionTo('operateur-create');
+        $user->givePermissionTo('operateur-edit');
+        $user->givePermissionTo('operateur-delete'); */
 
         Auth::login($user);
 

@@ -15,7 +15,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur']);
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
     }
     /**
      * Display a listing of the resource.
@@ -53,7 +53,7 @@ class UserController extends Controller
                 'firstname'     =>  'required|string|max:50',
                 'name'          =>  'required|string|max:50',
                 'telephone'     =>  'required|string|max:50',
-                'email'         =>  'required|email|max:255|unique:users,email',
+                'email'         =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
                 'username'      =>  'required|string|max:255|unique:users,username,NULL,id,deleted_at,NULL',
                 'password'      =>  'required|same:confirm-password',
                 'roles'         =>  'required'
