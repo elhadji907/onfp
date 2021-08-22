@@ -35,7 +35,7 @@
                                         <th>Téléphone</th>
                                         {{-- <th>Username</th> --}}
                                         <th>Role</th>
-                                        <th width="200px">Permission</th>
+                                        {{--  <th width="200px">Permission</th>  --}}
                                         <th width="50px">Action</th>
                                     </tr>
                                 </thead>
@@ -48,18 +48,18 @@
                                         <th>Téléphone</th>
                                         {{-- <th>Username</th> --}}
                                         <th>Role</th>
-                                        <th>Permission</th>
+                                        {{--  <th>Permission</th>  --}}
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td style="text-align: center; vertical-align: middle;">{!! $user->civilite !!}
+                                            <td>{!! $user->civilite !!}
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle;">{!! ucwords(strtolower($user->firstname)) !!}
+                                            <td>{!! ucwords(strtolower($user->firstname)) !!}
                                                 {!! mb_strtoupper($user->name, 'UTF-8') !!}</td>
-                                            {{-- <td style="text-align: center; vertical-align: middle;">
+                                            {{-- <td>
                                                 @if ($user->civilite == 'M.')
                                                     né le
                                                 @endif
@@ -68,26 +68,26 @@
                                                 @endif
                                                 {!! $user->date_naissance->format('d/m/Y') !!} {{ __('à') }} {!! mb_strtoupper($user->lieu_naissance) !!}
                                             </td> --}}
-                                            <td style="text-align: center; vertical-align: middle;">{!! $user->email !!}
+                                            <td>{!! $user->email !!}
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle;">{!! $user->telephone !!}
+                                            <td>{!! $user->telephone !!}
                                             </td>
-                                            {{-- <td style="text-align: center; vertical-align: middle;">{!! mb_strtolower($user->username) !!}</td> --}}
-                                            <td style="text-align: center; vertical-align: middle;">
+                                            {{-- <td>{!! mb_strtolower($user->username) !!}</td> --}}
+                                            <td>
                                                 @if (!empty($user->getRoleNames()))
                                                     @foreach ($user->getRoleNames() as $v)
                                                         <label class="badge badge-success">{{ $v }}</label>
                                                     @endforeach
                                                 @endif
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle;">
+                                            {{--  <td>
                                                 @if (!empty($user->getPermissionNames()))
                                                     @foreach ($user->getPermissionNames() as $v)
                                                         <label class="badge badge-success">
                                                             {{ $v }}</label>
                                                     @endforeach
                                                 @endif
-                                            </td>
+                                            </td>  --}}
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a href="{!! url('users/' . $user->username . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">

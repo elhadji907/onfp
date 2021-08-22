@@ -45,10 +45,10 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="input-name"><b>{{ __("Date naissance ") }}:</b> {{ $user->date_naissance->format('d/m/Y') }}
+                            {{--  <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <label for="input-name"><b>{{ __("Date naissance ") }}:</b> {{ $user->date_naissance->format('d/m/Y') ?? ' ' }}
                                 </label>
-                            </div>
+                            </div>  --}}
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Lieu naissance ') }}:</b> {{ $user->lieu_naissance }} </label>
                             </div>
@@ -100,10 +100,10 @@
                             </div>
                             <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Permission ') }}:</b>
-                                    @if (!empty($user->getPermissionNames()))
-                                        @foreach ($user->getPermissionNames() as $v)
-                                            <label class="badge badge-success"> {{ '<' }}
-                                                {{ $v }} {{ '>' }}</label>
+                                    @if (!empty($user->getPermissionsViaRoles()))
+                                        @foreach ($user->getPermissionsViaRoles()->pluck('name') as $v)
+                                            <label class="badge badge-success">
+                                                {{ $v }} </label>
                                         @endforeach
                                     @endif
                                 </label>

@@ -13,7 +13,7 @@
                     <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
                     <div class="mr-1"><b>{{ auth::user()->name }}</b></div>
                 </div>
-                <div class="mt-0 d-flex">                    
+                <div class="mt-0 d-flex">
                     @if (auth::user()->civilite == 'M.')
                         <div class="mr-1"><b>né le</b></div>
                     @endif
@@ -46,35 +46,39 @@
                 {{-- @can('update', $user->profile) --}}
                 <div class="mt-3 d-flex">
                     @if (isset($user_connect))
-                    <table class="table table-bordered" id="table-tresors" width="100%" cellspacing="0">
-                      <thead class="bg-gradient-success text-white">
-                        <tr>
-                          <th style="width:5%;">N°</th>
-                          <th style="width:75%;">TYPE</th>
-                          <th style="width:20%;">STATUT</th>
-                        </tr>
-                      </thead>
-                      <tfoot class="table-dark">
-                      </tfoot>
-                      <tbody>              
-                        <?php $i = 1 ?>
-                        @foreach ($demandeurs as $demandeur)
-                        @can('view', $demandeur)
-                        <tr>
-                           <td class="align-middle">{!! $i++ !!}</td>
-                          <td class="align-middle">{!! $demandeur->types_demande->name ?? ' ' !!}</td>
-                          <td class="align-middle">{!! $demandeur->statut !!}</td>
-                        </tr>
-                        @endcan
-                        @endforeach  
-                      </tbody>                
-                    </table>
+                        <table class="table table-bordered" id="table-tresors" width="100%" cellspacing="0">
+                            <thead class="bg-gradient-success text-white">
+                                <tr>
+                                    <th style="width:5%;">N°</th>
+                                    <th style="width:75%;">TYPE</th>
+                                    <th style="width:20%;">STATUT</th>
+                                </tr>
+                            </thead>
+                            <tfoot class="table-dark">
+                            </tfoot>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($demandeurs as $demandeur)
+                                    @can('view', $demandeur)
+                                        <tr>
+                                            <td class="align-middle">{!! $i++ !!}</td>
+                                            <td class="align-middle">{!! $demandeur->types_demande->name ?? ' ' !!}</td>
+                                            <td class="align-middle">{!! $demandeur->statut !!}</td>
+                                        </tr>
+                                    @endcan
+                                @endforeach
+                            </tbody>
+                        </table>
                     @else
-                    @endif            
+                    @endif
                 </div>
                 {{-- @endcan --}}
             </div>
         </div>
+    </div>
+
+    <div class="container-fluid">
+
         {{-- @hasrole('Administrateur|Courrier')
         <div class="list-group mt-5">
             @foreach ($courriers as $courrier)
@@ -97,7 +101,7 @@
         @hasrole('Demandeur')
         @if (isset($user_connect))
             <div class="row mt-5">
-                <div class="col-md-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
                     @if (session()->has('success'))
                         <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                     @endif
@@ -110,7 +114,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fas fa-table"></i>
-                                Mon dossier de demande de formation
+                                Mon dossier
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -118,18 +122,18 @@
                                         cellspacing="0" id="table-demandeurs">
                                         <thead class="table-dark">
                                             <tr>
-                                                <th>N° Dossier</th>
-                                                <th style="width:12%;">CIN</th>
-                                                {{--  <th>Prenom</th>
+                                                <th width="120px">N°</th>
+                                                <th width="100px">CIN</th>
+                                                <th>Prenom</th>
                                                 <th>Nom</th>
                                                 <th>Date nais.</th>
                                                 <th>Lieu nais.</th>
                                                 <th>Email</th>
-                                                <th>Téléphone</th>  --}}
-                                                <th style="width:5%;">Module</th>
-                                                <th>Type demande</th>
+                                                <th>Téléphone</th>
+                                                <th width="20px">Module</th>
+                                                <th width="130px">Type demande</th>
                                                 <th>Statut</th>
-                                                <th style="width:08%;">Action</th>
+                                                <th width="130px">Action</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -141,13 +145,13 @@
                                                 @can('view', $demandeur)
                                                     <tr valign="bottom">
                                                         <td>{!! $demandeur->numero !!}</td>
-                                                        <td>{!! number_format($demandeur->cin, 0, ',', ' ') . ' ' !!}</td>
-                                                        {{--  <td>{!! $demandeur->user->firstname !!}</td>
+                                                        <td>{!! $demandeur->cin !!}</td>
+                                                        <td>{!! $demandeur->user->firstname !!}</td>
                                                         <td>{!! $demandeur->user->name !!}</td>
                                                         <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                         <td>{!! $demandeur->user->lieu_naissance !!}</td>
                                                         <td>{!! $demandeur->user->email !!}</td>
-                                                        <td>{!! $demandeur->user->telephone !!}</td>  --}}
+                                                        <td>{!! $demandeur->user->telephone !!}</td>
                                                         <td ALIGN="CENTER">
                                                             @foreach ($demandeur->modules as $module)
                                                                 @if ($loop->last)
