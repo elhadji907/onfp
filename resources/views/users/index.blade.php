@@ -31,10 +31,10 @@
                                         <th>Civilité</th>
                                         <th>Prenom & Nom</th>
                                         {{-- <th>Date et lieu naissance</th> --}}
-                                        <th>Email</th>
+                                        <th width="50px">Email</th>
                                         <th>Téléphone</th>
                                         {{-- <th>Username</th> --}}
-                                        <th>Role</th>
+                                        <th width="300px">Role</th>
                                         {{--  <th width="200px">Permission</th>  --}}
                                         <th width="50px">Action</th>
                                     </tr>

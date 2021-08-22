@@ -15,7 +15,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        $this->middleware(['role:super-admin|Administrateur']);
     }
     /**
      * Display a listing of the resource.
