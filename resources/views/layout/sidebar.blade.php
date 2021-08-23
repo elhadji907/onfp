@@ -7,24 +7,24 @@
         </div>
         <div class="sidebar-brand-text mx-3">ONFP<sup>{{ __('1') }}</sup></div>
     </a>
-@else
-    @endhasrole
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
+    @else
+        @endhasrole
 
     <!-- Nav Item - Dashboard -->
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item active">
-        @hasrole('super-admin|Administrateur|Gestionnaire')
         <a class="nav-link" href="{{ url('/home') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Tableau de bord</span></a>
-    @else
-        @endhasrole
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
+    @else
+        @endhasrole
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/home') }}">
             <span data-feather="home"></span>
@@ -39,8 +39,8 @@
             <span> Gérer mon profil </span>
         </a>
     </h6>
+    @hasrole('super-admin|Administrateur|Gestionnaire|Courrier|ACourrier')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire|Courrier|ACourrier')
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_courrier"
             aria-expanded="true" aria-controls="collapsePages_courrier">
             <span data-feather="mail"></span>
@@ -63,12 +63,12 @@
                 </a>
             </div>
         </div>
-    @else
-        @endhasrole
     </li>
     <hr class="sidebar-divider my-0">
+    @else
+        @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|ADIOF')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|ADIOF')
         <a class="nav-link collapsed" href="{{ route('demandeurs.index') }}" data-toggle="collapse"
             data-target="#collapsePages_demande" aria-expanded="true" aria-controls="collapsePages_demande">
             <span data-feather="layers"></span>
@@ -87,12 +87,12 @@
                 </a>
             </div>
         </div>
+    </li>
     @else
         @endhasrole
-    </li>
     <hr class="sidebar-divider my-0">
+    @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|DEC|ADEC|ADIOF')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|DEC|ADEC|ADIOF')
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_formation"
             aria-expanded="true" aria-controls="collapsePages_formation">
             <span data-feather="layers"></span>
@@ -112,12 +112,22 @@
                 </a>
             </div>
         </div>
+    </li>
     @else
         @endhasrole
+    <hr class="sidebar-divider my-0">
+    @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('operateurs.index') }}">
+            <span data-feather="users"></span>
+            <span>Gestion opérateurs</span>
+        </a>
     </li>
     <hr class="sidebar-divider my-0">
+    @else
+        @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire')
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_localite"
             aria-expanded="true" aria-controls="collapsePages_localite">
             <span data-feather="layers"></span>
@@ -140,39 +150,39 @@
                 </a>
             </div>
         </div>
+    </li>
     @else
         @endhasrole
-    </li>
+    @hasrole('Demandeur')
     <li class="nav-item">
-        @hasrole('Demandeur')
         <a class="nav-link" href="{{ route('individuelles.create') }}">
             <span data-feather="users"></span>
             <span>Demande individuelle</span>
         </a>
+    </li>
     @else
         @endhasrole
-    </li>
+    @hasrole('Demandeur')
     <li class="nav-item">
-        @hasrole('Demandeur')
         <a class="nav-link" href="{{ route('collectives.index') }}">
             <span data-feather="users"></span>
             <span>Demande collective</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('Demandeur')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('operateurs.index') }}">
             <span data-feather="users"></span>
             <span>Devenir opérateur</span>
         </a>
+    </li>
     @else
         @endhasrole
-    </li>
-
+    @hasrole('super-admin|Administrateur|DAF|FDAF|RHDAF|LOGDAF')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|DAF|FDAF|RHDAF|LOGDAF')
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_daf"
             aria-expanded="true" aria-controls="collapsePages_daf">
             <span data-feather="folder"></span>
@@ -213,11 +223,12 @@
                 @endguest
             </div>
         </div>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|DAF|DPP|ADPP|PRDPP|PLDPP')
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_projet"
             aria-expanded="true" aria-controls="collapsePages_projet">
             <span data-feather="folder"></span>
@@ -245,120 +256,122 @@
                 @endguest
             </div>
         </div>
-        @else
-            @endhasrole
     </li>
-
-    <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire')
-        <a class="nav-link" href="{{ route('operateurs.index') }}">
-            <span data-feather="users"></span>
-            <span>Gestion opérateurs</span>
-        </a>
     @else
         @endhasrole
-    </li>
+    <hr class="sidebar-divider my-0">
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire')
         <a class="nav-link" href="{{ route('nineas.index') }}">
             <span data-feather="users"></span>
             <span>Nineas</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire')
         <a class="nav-link" href="{{ route('ingenieurs.index') }}">
             <span data-feather="users"></span>
             <span>Ingénieurs</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|DAF|RHDAF')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('employees.index') }}">
             <span data-feather="layers"></span>
             <span>Gestion des employees</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur|Gestionnaire')
         <a class="nav-link" href="{{ route('directions.index') }}">
             <span data-feather="layers"></span>
             <span>Directions / Services</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('secteurs.index') }}">
             <span data-feather="layers"></span>
             <span>Secteurs</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('domaines.index') }}">
             <span data-feather="layers"></span>
             <span>Domaines</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('modules.index') }}">
             <span data-feather="layers"></span>
             <span>Modules</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('diplomes.index') }}">
             <span data-feather="layers"></span>
             <span>Diplômes</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('options.index') }}">
             <span data-feather="layers"></span>
             <span>Option diplômes</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|Gestionnaire|DIOF')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('programmes.index') }}">
             <span data-feather="layers"></span>
             <span>Programmes</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
-    <li class="nav-item">
         @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('nivauxs.index') }}">
             <span data-feather="layers"></span>
             <span>Niveaux</span>
         </a>
+    </li>
+    <hr class="sidebar-divider my-0">
     @else
         @endhasrole
-    </li>
+        {{--  @hasrole('super-admin|Administrateur')  --}}
     <li class="nav-item">
-        @hasrole('super-admin|Administrateur')
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
             aria-controls="collapsePages">
             <span data-feather="folder"></span>
@@ -402,9 +415,9 @@
                 @endguest
             </div>
         </div>
-        @else
-            @endhasrole
     </li>
+   {{--   @else
+        @endhasrole  --}}
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

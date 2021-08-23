@@ -11,8 +11,7 @@
                 <div class="alert alert-success">
                     {{ session('message') }}
                 </div>
-                @endif
-              
+                @endif              
               <div class="card"> 
                   <div class="card-header">
                       <i class="fas fa-table"></i>
@@ -27,28 +26,28 @@
                         <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-collectives">
                           <thead class="table-dark">
                             <tr>
-                              <th>Numéro</th>
-                              <th style="width:25%;">Nom du groupement</th>
-                              <th>Dépot</th>
-                              <th style="width:15%;">Type structure</th>
-                              <th style="width:10%;">Responsable</th>
-                              <th>Module</th>
+                              <th width="50px">N°</th>
+                              <th width="300px">Raison sociale</th>
+                              <th width="30px">Dépot</th>
+                              <th width="50px">Type</th>
+                              <th width="120px">Responsable</th>
+                              <th width="30px">Module</th>
                               <th>Localité</th>
                               <th>Etat</th>
-                              <th style="width:08%;">Action</th>
+                              <th width="80px"></th>
                             </tr>
                           </thead>
                           <tfoot class="table-dark">
                               <tr>
-                              <th>Numéro</th>
-                              <th>Nom du groupement</th>
+                              <th>N°</th>
+                              <th>Raison sociale</th>
                               <th>Dépot</th>
-                              <th>Type structure</th>
+                              <th>Type</th>
                               <th>Responsable</th>
                               <th>Module</th>
                               <th>Localité</th>
                               <th>Etat</th>
-                              <th>Action</th>
+                              <th></th>
                               </tr>
                             </tfoot>
                           <tbody>

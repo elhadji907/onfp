@@ -48,7 +48,7 @@ class DemandeurController extends Controller
       /*   $date = Carbon::today()->toDateString();
         dd($date); */
 
-        $user_role  =   Auth::user()->role->name;
+        $roles  =   Auth::user()->role;
         
         $demandeurs = Demandeur::all();
         

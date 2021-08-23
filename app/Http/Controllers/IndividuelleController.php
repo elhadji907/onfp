@@ -67,25 +67,30 @@ class IndividuelleController extends Controller
         $civilites = User::pluck('civilite','civilite');
 
         $date_depot = Carbon::now();
-
-        if (isset(auth::user()->demandeur)) {
-        $demandeurs = auth::user()->demandeur;
-        $individuelles = $demandeurs->individuelles;
-        
-        foreach ($individuelles as $individuelle) {
+        $user = Auth::user();
+        if (isset($user->demandeur->individuelles) && $user->hasRole('Demandeur') && !$user->hasRole('Administrateur') && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
+            $demandeurs = $user->demandeur;
+            $individuelles = $demandeurs->individuelles;
+            
+            foreach ($individuelles as $individuelle) {
+            }        
+            $utilisateurs = $demandeurs->user;
+            $civilites = User::pluck('civilite','civilite');
+            $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
+            $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
+            $diplomes = Diplome::distinct('name')->get()->pluck('name','name')->unique();
+            $communes = Commune::distinct('nom')->get()->pluck('nom','nom')->unique();    
+            $date_depot = Carbon::now();
+            return view('individuelles.update',compact('civilites', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+        }
+        elseif($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')){
+            $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
+            $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
+            $diplomes = Diplome::distinct('name')->get()->pluck('name','name')->unique();
+            $communes = Commune::distinct('nom')->get()->pluck('nom','nom')->unique();
+        return view('individuelles.create',compact('civilites', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         }        
-        $utilisateurs = $demandeurs->user;
-        $civilites = User::pluck('civilite','civilite');
-        $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name','name')->unique();
-        $communes = Commune::distinct('nom')->get()->pluck('nom','nom')->unique();
-
-        $date_depot = Carbon::now();
-
-        return view('individuelles.update',compact('civilites', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
-
-        } else {
+        else {
             $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
             $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
             $diplomes = Diplome::distinct('name')->get()->pluck('name','name')->unique();
@@ -107,8 +112,6 @@ class IndividuelleController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth::user();
-
         $this->validate(
             $request, [
                 'sexe'                =>  'required|string|max:10',
@@ -124,7 +127,7 @@ class IndividuelleController extends Controller
                 'adresse'             =>  'required|string|max:100',
                 'prerequis'           =>  'required|string|max:1500',
                 'motivation'          =>  'required|string|max:1500',
-                'email'               =>  'required|email|max:255|unique:users,email,'.$user->id,
+                'email'               =>     'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
                 'familiale'           =>  'required',
                 'professionnelle'     =>  'required',
                 'niveau_etude'        =>  'required',
@@ -135,7 +138,6 @@ class IndividuelleController extends Controller
             ]
         );
 
-       $roles_id            =   Role::where('name','Demandeur')->first()->id;
        $user_id             =   User::latest('id')->first()->id;
        $demandeurs_id       =   Demandeur::latest('id')->first()->id;
        $username            =   strtolower($request->input('nom').$user_id);
@@ -162,9 +164,11 @@ class IndividuelleController extends Controller
       /*  $region = $commune->region->nom;
        $region_id = $commune->region->id; */
 
-       $created_by1 = Auth::user()->firstname;
-       $created_by2 = Auth::user()->name;
-       $created_by3 = Auth::user()->username;
+       $user = Auth::user();
+
+       $created_by1 = $user->firstname;
+       $created_by2 = $user->name;
+       $created_by3 = $user->username;
 
        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
 
@@ -172,27 +176,25 @@ class IndividuelleController extends Controller
 
        $telephone = $request->input('telephone');
        $telephone = str_replace(' ', '', $telephone);
-       $telephone = str_replace(' ', '', $telephone);
-       $telephone = str_replace(' ', '', $telephone);
 
        $fixe = $request->input('fixe');
-       $fixe = str_replace(' ', '', $fixe);
-       $fixe = str_replace(' ', '', $fixe);
        $fixe = str_replace(' ', '', $fixe);
 
        $autre_tel = $request->input('autre_tel');
        $autre_tel = str_replace(' ', '', $autre_tel);
-       $autre_tel = str_replace(' ', '', $autre_tel);
-       $autre_tel = str_replace(' ', '', $autre_tel);
        
+       if ($request->input('programme') !== null) {
+        $programme_id = Programme::where('sigle',$request->input('programme'))->first()->id;
+    }
+    else{
+        $programme_id = null;
+    }
+
        $diplome_id = Diplome::where('name',$request->input('diplome'))->first()->id;
-       $programme_id = Programme::where('sigle',$request->input('programme'))->first()->id;
        $commune_id = Commune::where('nom',$request->input('commune'))->first()->id;
        //$modules = Module::where('id',$request->input('modules'))->first()->name;
         $cin = $request->input('cin');
-        $cin = str_replace(' ', '', $cin);
-        $cin = str_replace(' ', '', $cin);
-        $cin = str_replace(' ', '', $cin);     
+        $cin = str_replace(' ', '', $cin);   
 
         $types_demandes_id = TypesDemande::where('name','Individuelle')->first()->id;    
         
@@ -203,8 +205,8 @@ class IndividuelleController extends Controller
         }else {
             $civilite = "";
         }
-        if (isset(auth::user()->demandeur)) {
-        $utilisateur = new User([          
+        if (!$user->hasRole('Demandeur')) {
+        $user = new User([          
             'sexe'                      =>      $request->input('sexe'),      
             'civilite'                  =>      $civilite,      
             'firstname'                 =>      $request->input('prenom'),
@@ -220,19 +222,20 @@ class IndividuelleController extends Controller
             'date_naissance'            =>      $request->input('date_naiss'),
             'lieu_naissance'            =>      $request->input('lieu_naissance'),
             'adresse'                   =>      $request->input('adresse'),
-            /* 'password'                  =>      Hash::make($request->input('email')), */
+            'password'                  =>      Hash::make($request->input('email')),
             'created_by'                =>      $created_by,
             'updated_by'                =>      $created_by
 
         ]);
     
-        $utilisateur->save();
+        $user->save();
+        $user->assignRole('Demandeur');
 
         } else {
             
-            $updated_by1 = Auth::user()->firstname;
-            $updated_by2 = Auth::user()->name;
-            $updated_by3 = Auth::user()->username;
+            $updated_by1 = $user->firstname;
+            $updated_by2 = $user->name;
+            $updated_by3 = $user->username;
 
             $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
             
@@ -251,7 +254,6 @@ class IndividuelleController extends Controller
             $user->date_naissance            =      $request->input('date_naiss');
             $user->lieu_naissance            =      $request->input('lieu_naissance');
             $user->adresse                   =      $request->input('adresse');
-            /* $user->password                  =      Hash::make($request->input('email')); */
             $user->updated_by                =      $updated_by;
     
             $user->save();
@@ -294,15 +296,15 @@ class IndividuelleController extends Controller
 
         $individuelle->save();
 
-        $demandeur->modules()->sync($request->input('modules'));
+        $individuelle->demandeur->modules()->sync($request->input('modules'));
 
         
-        $user_connect  =  Auth::user()->demandeur;
+        $user_connect  =  $user->demandeur;
 
-        if (Auth::user()->role === "Administrateur" OR Auth::user()->role === "Gestionnaire") {
+        if (!$user->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success','demandeur ajouté avec succès !');
         } else {
-            return redirect()->route('profiles.show', ['user'=>auth()->user(), 'user_connect'=>auth()->user()->demandeur()]);
+            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
         }
         
     }
@@ -327,10 +329,10 @@ class IndividuelleController extends Controller
     public function edit(Individuelle $individuelle)
     {
 
-        if (auth::user()->role == "Administrateur" OR auth::user()->role == "Gestionnaire") {
+       /*  if (auth::user()->role == "Administrateur" OR auth::user()->role == "Gestionnaire") {
         }else {            
             $this->authorize('update',  $individuelle);
-        }
+        } */
 
         $demandeurs = $individuelle->demandeur;
         $utilisateurs = $demandeurs->user;
@@ -356,10 +358,10 @@ class IndividuelleController extends Controller
      */
     public function update(Request $request, Individuelle $individuelle)
     {
-        if (auth::user()->role == "Administrateur" OR auth::user()->role == "Gestionnaire") {
+       /*  if (auth::user()->role == "Administrateur" OR auth::user()->role == "Gestionnaire") {
         }else {            
             $this->authorize('update',  $individuelle);
-        }
+        } */
         
         $demandeur = $individuelle->demandeur;
         $utilisateur = $demandeur->user;
@@ -392,9 +394,11 @@ class IndividuelleController extends Controller
 
         $utilisateurs   =   $individuelle->demandeur->user;
 
-        $updated_by1 = Auth::user()->firstname;
-        $updated_by2 = Auth::user()->name;
-        $updated_by3 = Auth::user()->username;
+        $user = Auth::user();
+
+        $updated_by1 = $user->firstname;
+        $updated_by2 = $user->name;
+        $updated_by3 = $user->username;
 
         $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
 
@@ -418,7 +422,12 @@ class IndividuelleController extends Controller
         $cin = str_replace(' ', '', $cin);
         $cin = str_replace(' ', '', $cin);
         $cin = str_replace(' ', '', $cin);      
-        $programmes_id = Programme::where('sigle',$request->input('programme'))->first()->id;
+        if ($request->input('programme') !== null) {
+            $programme_id = Programme::where('sigle',$request->input('programme'))->first()->id;
+        }
+        else{
+            $programme_id = "";
+        }
 
         if ($request->input('sexe') == "M") {
             $civilite = "M.";
@@ -428,7 +437,6 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-        $programme_id = Programme::where('sigle',$request->input('programme'))->first()->id;
         $diplome_id = Diplome::where('name',$request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom',$request->input('commune'))->first()->id;
         $types_demandes_id = TypesDemande::where('name','Individuelle')->first()->id;    
@@ -453,7 +461,6 @@ class IndividuelleController extends Controller
         $utilisateur->date_naissance            =      $request->input('date_naiss');
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
-        /* $utilisateur->password                  =      Hash::make($request->input('email')); */
         $utilisateurs->updated_by               =      $updated_by;
 
         $utilisateur->save();
@@ -467,7 +474,7 @@ class IndividuelleController extends Controller
         $demandeur->etablissement               =      $request->input('etablissement');
         $demandeur->telephone                   =      $autre_tel;
         $demandeur->fixe                        =      $fixe;
-        if (Auth::user()->role == "Administrateur" OR Auth::user()->role == "Gestionnaire") {
+        if (!$user->hasRole('Demandeur')) {
         $demandeur->statut                      =      $request->input('statut');
         }
         $demandeur->option                      =      $request->input('option');
@@ -477,7 +484,9 @@ class IndividuelleController extends Controller
         $demandeur->experience                  =      $request->input('experience');
         $demandeur->qualification               =      $request->input('qualification');
         $demandeur->communes_id                 =      $commune_id;
-        $demandeur->programmes_id               =      $programme_id;
+        if ($request->input('programme') !== null) {
+            $demandeur->programmes_id           =      $programme_id;
+        }
         $demandeur->types_demandes_id           =      $types_demandes_id;
         $demandeur->diplomes_id                 =      $diplome_id;
         $demandeur->users_id                    =      $utilisateur->id;
@@ -495,7 +504,7 @@ class IndividuelleController extends Controller
 
         $demandeur->modules()->sync($request->input('modules'));        
 
-        if (Auth::user()->role === "Administrateur" OR Auth::user()->role === "Gestionnaire") {
+        if (!$user->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success','demande modifiée avec succès !');
         } else {
             return redirect()->route('profiles.show', ['user'=>auth()->user()])->with('success','votre demande modifiée avec succès !');
@@ -511,11 +520,11 @@ class IndividuelleController extends Controller
      */
     public function destroy(Individuelle $individuelle)
     {
-        if (Auth::user()->role === "Administrateur") {
+       /*  if (Auth::user()->role === "Administrateur") {
 
         }else {
             $this->authorize('delete',  $individuelle);
-        }
+        } */
 
         $utilisateurs   =   $individuelle->demandeur->user;
 
@@ -529,7 +538,7 @@ class IndividuelleController extends Controller
 
         $utilisateurs->save();
        
-        if (Auth::user()->role === "Administrateur") {
+        if (Auth::user()->hasRole('super-admin') OR Auth::user()->hasRole('Administrateur')) {
             $individuelle->demandeur->user->delete();
             $individuelle->demandeur->delete();
         } else {

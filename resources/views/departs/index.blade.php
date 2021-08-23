@@ -27,7 +27,6 @@
               <table class="table table-bordered table-striped" id="table-departs" width="100%" cellspacing="0">
                 <thead class="table-dark">
                   <tr>
-                    <th style="width:5%;">ID</th>
                     <th style="width:10%;">Numero</th>
                     <th style="width:40%;">Objet</th>
                     <th style="width:15%;">Expéditeur</th>
@@ -37,7 +36,6 @@
                 </thead>
                 <tfoot class="table-dark">
                   <tr>
-                    <th>Id</th>
                     <th>Numero</th>
                     <th>Objet</th>
                     <th>Expéditeur</th>
@@ -48,8 +46,7 @@
                 <tbody>
                   <?php $i = 1 ?>
                   @foreach ($departs as $depart)
-                  <tr> 
-                    <td>{!! $i++ !!}</td>
+                  <tr>
                     <td>{!! $depart->numero !!}</td>
                     <td>{!! $depart->courrier->objet !!}</td>
                     <td>{!! $depart->courrier->expediteur !!}</td>
@@ -85,7 +82,6 @@
     </div>
   </div>
 @endsection
-
 
 @push('scripts')
 <script type="text/javascript">

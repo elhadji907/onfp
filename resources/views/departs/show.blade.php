@@ -14,6 +14,9 @@
 @section('content')
         <div class="container">
             <div class="container-fluid">
+                @if (session()->has('success'))
+                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+                @endif
                 <div class="card">
                     @foreach ($departs as $depart)  
                     <div class="card-body">

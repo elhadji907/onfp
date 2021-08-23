@@ -1,7 +1,6 @@
 @extends('layout.default')
 @section('title', 'ONFP - Liste des courriers internes')
 @section('content')
-    @can('courrier-list')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -31,9 +30,8 @@
                                     cellspacing="0">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:5%;">ID</th>
                                             <th style="width:10%;">Numero</th>
-                                            <th style="width:40%;">Objet</th>
+                                            <th>Objet</th>
                                             <th style="width:15%;">Expéditeur</th>
                                             <th style="width:20%;">Imputation</th>
                                             <th style="width:10%;">Action</th>
@@ -41,7 +39,6 @@
                                     </thead>
                                     <tfoot class="table-dark">
                                         <tr>
-                                            <th>ID</th>
                                             <th>Numero</th>
                                             <th>Objet</th>
                                             <th>Expéditeur</th>
@@ -53,7 +50,6 @@
                                         <?php $i = 1; ?>
                                         @foreach ($internes as $interne)
                                             <tr>
-                                                <td>{!! $i++ !!}</td>
                                                 <td>{!! $interne->numero !!}</td>
                                                 <td>{!! $interne->courrier->objet !!}</td>
                                                 <td>{!! $interne->courrier->expediteur !!}</td>
@@ -90,9 +86,7 @@
                 </div>
             </div>
         </div>
-    @endcan
 @endsection
-
 
 @push('scripts')
     <script type="text/javascript">

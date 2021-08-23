@@ -106,7 +106,7 @@
                         <th style="width:11%;">Email</th>
                         <th style="width:11%;">Telephone</th>
                         <th style="width:12%;">Type de courrier</th>
-                       {{--<th style="width:5%;">Action</th>--}}
+                       <th style="width:5%;"></th>
                       </tr>
                     </thead>
                     <tfoot class="table-dark">
@@ -118,7 +118,7 @@
                           <th>Email</th>
                           <th>Telephone</th>
                           <th>Type de courrier</th>
-                       {{--<th>Action</th>--}}
+                          <th></th>
                         </tr>
                       </tfoot>
                     <tbody>
@@ -139,13 +139,13 @@
                         <td>
                             <b>{!! $courrier->types_courrier->name !!}</b>
                          </td>
-                        {{--
-                          <td class="d-flex align-items-baseline align-content-center">
+                          <td class="d-flex align-items-baseline align-content-center">    
+                            @can('courrier-edit')
                             <a href="{!! url('courriers/'.$courrier->id) !!}" class= 'btn btn-primary btn-sm' title="voir">
                               <i class="far fa-eye"></i>
                             </a>
+                            @endcan 
                         </td>
-                        --}}
                       </tr>
                       @endforeach
                     </tbody>

@@ -382,7 +382,7 @@
                                 {!! Form::textarea('information', $individuelle->information, ['placeholder' => 'Informations complémenaires', 'rows' => 1, 'class' => 'form-control']) !!}
                             </div>
                         </div>
-                        @hasrole('Administrateur|Gestionnaire')
+                        @can('demandeur-list')
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
@@ -396,15 +396,15 @@
                                 </small>
                             </div>
                         </div>
-                        @else
-                        @endhasrole
+                        @endcan
+                        @can('demandeur-list')
                         <div class="bg-gradient-secondary text-center">
                             <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
-                        </div>
+                        </div>                        
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('programme', $programmes, $individuelle->demandeur->programme->sigle, ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
+                                {!! Form::select('programme', $programmes, $individuelle->demandeur->programme->sigle ?? " ", ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('programme'))
                                         @foreach ($errors->get('programme') as $message)
@@ -414,6 +414,7 @@
                                 </small>
                             </div>
                         </div>
+                        @endcan
                         {!! Form::hidden('username', $individuelle->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
                         {!! Form::hidden('numero', $individuelle->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
                         <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"

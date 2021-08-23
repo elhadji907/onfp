@@ -38,9 +38,9 @@
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
-                                        <th>Département</th>
+                                        <th>Commune</th>
                                         <th>Région</th>
-                                        <th style="width:08%;">Action</th>
+                                        <th width="70px"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -53,9 +53,9 @@
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
-                                        <th>Département</th>
+                                        <th>Commune</th>
                                         <th>Région</th>
-                                        <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -63,15 +63,15 @@
                                     @foreach ($individuelles as $individuelle)
                                         <tr>
                                             <td>{!! $individuelle->demandeur->numero !!}</td>
-                                            <td>{!! $individuelle->cin !!}</td>
+                                            <td>{!! $individuelle->demandeur->cin !!}</td>
                                             <td>{!! $individuelle->demandeur->user->civilite !!}</td>
                                             <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                             <td>{!! $individuelle->demandeur->user->name !!} </td>
                                             <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                             <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                            <td>{!! $individuelle->demandeur->departement->nom !!}</td>                                           
-                                            <td>{!! $individuelle->demandeur->departement->region->nom !!}</td>                                           
+                                            <td>{!! $individuelle->demandeur->commune->nom !!}</td>                                           
+                                            <td>{!! $individuelle->demandeur->commune->arrondissement->departement->region->sigle !!}</td>                                           
                                             <td class="d-flex align-items-baseline text-center-row">
                                                     <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                         title="modifier">

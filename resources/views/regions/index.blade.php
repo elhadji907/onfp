@@ -29,18 +29,20 @@
                                 id="table-regions">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th width="20px">ID</th>
+                                        <th style="width:5%;">N°</th>
                                         <th>{!! __('Région') !!}</th>
-                                        <th width="20px">{!! __('Departement') !!}</th>
-                                        <th width="20px">Action</th>
+                                        <th style="width:10%;">{!! __('Code') !!}</th>
+                                        <th style="width:10%;">{!! __('Departement') !!}</th>
+                                        <th style="width:15%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
-                                        <th>ID</th>
+                                        <th>N°</th>
                                         <th>{!! __('Région') !!}</th>
+                                        <th>{!! __('Code') !!}</th>
                                         <th>{!! __('Departement') !!}</th>
-                                        <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -49,6 +51,7 @@
                                     <tr> 
                                       <td>{!! $i++ !!}</td>
                                       <td>{!! $region->nom !!}</td>
+                                      <td>{!! $region->sigle !!}</td>
                                       <td ALIGN="CENTER">
                                         @foreach ($region->departements as $departement)
                                         @if($loop->last)
@@ -140,7 +143,9 @@
             titleAttr: 'Print'
         }
       ],
-      "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "Tout"] ],
+      "lengthMenu": [ [5, 10, 25, 50, 100, -1], 
+                      [5, 10, 25, 50, 100, "Tout"] 
+                    ],
       "order": [
             [ 0, 'asc' ]
             ],

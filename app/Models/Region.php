@@ -38,7 +38,8 @@ class Region extends Model
 
 	protected $fillable = [
 		'uuid',
-		'nom'
+		'nom',
+		'sigle'
 	];
 
 	public function demandeurs()

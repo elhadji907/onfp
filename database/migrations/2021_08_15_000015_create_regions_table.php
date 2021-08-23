@@ -25,6 +25,7 @@ class CreateRegionsTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('nom', 200)->nullable();
+            $table->string('sigle', 10)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });

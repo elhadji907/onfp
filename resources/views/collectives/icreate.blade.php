@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Modification demandeur individuelle')
+@section('title', 'ONFP - Modification demandeur collective')
 @section('content')
     <div class="content mb-5">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
@@ -10,11 +10,11 @@
                 <div class="row pt-0"></div>
                 <div class="card">
                     <div class="card-header bg-gradient-info text-center">
-                        <h1 class="h4 text-white mb-0"><span data-feather="info"></span>compléter ma demande individuelle</h1>
+                        <h1 class="h4 text-white mb-0"><span data-feather="info"></span>compléter ma demande collective</h1>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires
-                        <form method="POST" action="{{ url('individuelles') }}">
+                        <form method="POST" action="{{ url('collectives') }}">
                         @csrf
                         <div class="bg-gradient-secondary text-center">
                             <p class="h4 text-white mb-2 mt-0">IDENTIFICATION</p>
@@ -399,8 +399,6 @@
                         <div class="bg-gradient-secondary text-center">
                             <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
                         </div>
-
-                        @can('demandeur-list')
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
@@ -414,8 +412,6 @@
                                 </small>
                             </div>
                         </div>
-                        @endcan
-
                         {!! Form::hidden('username', $user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
                         {!! Form::hidden('numero', null, ['placeholder' => '', 'class' => 'form-control']) !!}
                         <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"

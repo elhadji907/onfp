@@ -18,6 +18,7 @@ use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\DemandeurController;
 use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\FindividuelleController;
+use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\FcollectiveController;
 use App\Http\Controllers\BeneficiaireController;
 use App\Http\Controllers\DomaineController;
@@ -147,8 +148,8 @@ Route::group([
         Route::resource('/demandeurs', DemandeurController::class);
         Route::resource('/individuelles', IndividuelleController::class);
         Route::resource('/findividuelles', FindividuelleController::class);
-        Route::resource('/collectives', FcollectiveController::class);
-        Route::resource('/fcollectives', BeneficiaireController::class);
+        Route::resource('/collectives', CollectiveController::class);
+        Route::resource('/fcollectives', FcollectiveController::class);
         Route::resource('/domaines', DomaineController::class);
         Route::resource('/diplomes', DiplomeController::class);
         Route::resource('/modules', ModuleController::class);
