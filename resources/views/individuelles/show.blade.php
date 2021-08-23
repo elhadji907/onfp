@@ -40,23 +40,16 @@
                             @endif
                         </h4><br /><br />
                         <div class="d-flex justify-content-between align-items-center mt-3">
-                            {{-- @can('update', $individuelle->demandeur) --}}
                             <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning">
                                 <i class="far fa-edit">&nbsp;Modifier</i>
                             </a>
-                            {{-- @endcan --}}
-                            <a href="{!! url('demandeurs/' . $individuelle->demandeur->id . '/edit') !!}" title="voir les d&eacute;tails du courrier"
+                            <a href="{!! url('individuelles/' . $individuelle->demandeur->id . '/edit') !!}" title="voir les d&eacute;tails du courrier"
                                 class="btn btn-outline-primary">
                                 <i class="far fa-eye">&nbsp;D&eacute;tails</i>
                             </a>
-                            {{-- <a href="{!! url('courriers/' .$individuelle->demandeur->id. '/edit') !!}" title="supprimer" class="btn btn-outline-danger">
-                                <i class="far fa-edit">&nbsp;Supprimer</i>
-                            </a> --}}
-                            @can('delete', $individuelle)
                                 {!! Form::open(['method' => 'DELETE', 'url' => 'individuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                 {!! Form::button('<i class="fa fa-trash">&nbsp;Supprimer</i>', ['type' => 'submit', 'class' => 'btn btn-outline-danger', 'title' => 'supprimer']) !!}
                                 {!! Form::close() !!}
-                            @endcan
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-5">
                             <small>Déposée depuis le {!! Carbon\Carbon::parse($individuelle->demandeur->created_at)->format('d/m/Y à H:i:s') !!}</small>

@@ -47,7 +47,7 @@
                 <div class="mt-3 d-flex">
                     @if (isset($user_connect))
                         <table class="table table-bordered" id="table-tresors" width="100%" cellspacing="0">
-                            <thead class="bg-gradient-success text-white">
+                            <thead class=" bg-info text-dark">
                                 <tr>
                                     <th style="width:5%;">N°</th>
                                     <th style="width:75%;">TYPE</th>
@@ -63,7 +63,13 @@
                                         <tr>
                                             <td class="align-middle">{!! $i++ !!}</td>
                                             <td class="align-middle">{!! $demandeur->types_demande->name ?? ' ' !!}</td>
-                                            <td class="align-middle">{!! $demandeur->statut !!}</td>
+                                            <td style="text-align: center;">
+                                                @if ($demandeur->modules == "[]")                                                                
+                                                    <label class="badge badge-danger">Invalide</label>
+                                                @else
+                                                <label class="badge badge-success">{{ $demandeur->statut }} </label>          
+                                            @endif
+                                            </td>
                                         </tr>
                                     @endcan
                                 @endforeach
@@ -98,18 +104,19 @@
         </div>
         @else
         @endhasrole --}}
+
+        @if (session()->has('success'))
+            <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+        @endif
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
         @hasrole('Demandeur')
         @if (isset($user_connect))
             <div class="row mt-5">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
-                    @if (session()->has('success'))
-                        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                    @endif
-                    @if (session('message'))
-                        <div class="alert alert-success">
-                            {{ session('message') }}
-                        </div>
-                    @endif
                     @if (isset($demandeurs))
                         <div class="card">
                             <div class="card-header">
@@ -160,24 +167,27 @@
                                                             @endforeach
                                                         </td>
                                                         <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
-                                                        {{-- <td>{!! $demandeur->departement->nom !!}</td> --}}
                                                         <td style="text-align: center;">
-                                                            {!! $demandeur->statut !!}
+                                                            @if ($demandeur->modules == "[]")                                                                
+                                                                <label class="badge badge-danger">Invalide</label>
+                                                            @else
+                                                            <label class="badge badge-success">{{ $demandeur->statut }} </label>          
+                                                        @endif
                                                         </td>
                                                         <td class="d-flex align-items-baseline align-content-center">
-                                                            {{--  <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            {{-- <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                                 title="modifier">
                                                                 <i class="far fa-edit">&nbsp;</i>
                                                             </a>
-                                                            &nbsp;  --}}
+                                                            &nbsp; --}}
                                                             <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
                                                                 title="voir">
                                                                 <i class="far fa-eye">&nbsp;</i>
                                                             </a>
                                                             &nbsp;
-                                                            {{--  {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                            {{-- {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                            {!! Form::close() !!}  --}}
+                                                            {!! Form::close() !!} --}}
                                                         </td>
                                                     </tr>
                                                 @endcan

@@ -35,7 +35,6 @@ class DemandeurController extends Controller
     {
         $this->middleware('auth');
         $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur']);
-        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
     }
     /**
      * Display a listing of the resource.

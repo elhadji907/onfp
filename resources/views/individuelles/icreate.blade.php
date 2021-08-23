@@ -149,7 +149,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Situation familiale :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('familiale', ['Célibataire' => 'Célibataire', 'Divorcé(e)' => 'Divorcé(e)'], $user->situation_familiale, ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                {!! Form::select('familiale', ['Célibataire' => 'Célibataire', 'Divorcé' => 'Divorcé'], $user->situation_familiale, ['placeholder' => 'sélectionner  Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('familiale'))
                                         @foreach ($errors->get('familiale') as $message)
@@ -159,19 +159,18 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="input-name"><b>{{ __('Situation familiale') }}:</b></label>
-                                <select name="professionnelle" id="professionnelle" class="form-control" data-width="100%">
-                                    <option value="{{ $user->situation_professionnelle }}">
-                                        {{ $user->situation_professionnelle }}</option>
-                                    <option value="">{{ __('...sélectionner...') }}</option>
-                                    <option value="{{ 'Salarié CDD' }}">{{ 'Salarié CDD' }}</option>
-                                    <option value="{{ 'Salarié CDI' }}">{{ 'Salarié CDI' }}</option>
-                                    <option value="{{ 'Élève' }}">{{ 'Élève' }}</option>
-                                    <option value="{{ 'Étudiant(e)' }}">{{ 'Étudiant(e)' }}</option>
-                                    <option value="{{ 'Sans activité' }}">{{ 'Sans activité' }}</option>
-                                    <option value="{{ 'En stage' }}">{{ 'En stage' }}</option>
-                                    <option value="{{ 'Autre' }}">{{ 'Autre' }}</option>
-                                </select>
+                                {!! Form::label('Situation professionnelle :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('professionnelle', 
+                                [
+                                'Salarié CDD' => 'Salarié CDD', 
+                                'Salarié CDI' => 'Salarié CDI',
+                                'Élève' => 'Élève',
+                                'Étudiant' => 'Étudiant',
+                                'Sans activité' => 'En stage',
+                                'En stage' => 'Salarié CDI',
+                                'Recherche d\'emploi' => 'Recherche d\'emploi'
+                                ],
+                                 $user->professionnelle, ['placeholder' => 'sélectionner situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('professionnelle'))
                                         @foreach ($errors->get('professionnelle') as $message)
