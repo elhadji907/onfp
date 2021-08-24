@@ -10,8 +10,8 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
+@else
+    @endhasrole
 
     <!-- Nav Item - Dashboard -->
     @hasrole('super-admin|Administrateur|Gestionnaire')
@@ -23,14 +23,15 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
+@else
+    @endhasrole
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/home') }}">
             <span data-feather="home"></span>
             <span>Accueil</span></a>
     </li>
     <!-- Divider -->
+    @unlessrole('Nologin')
     <hr class="sidebar-divider my-0">
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-white">
         <a class="nav-link d-flex align-items-center text-white"
@@ -39,6 +40,15 @@
             <span> Gérer mon profil </span>
         </a>
     </h6>
+    @else
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-white">
+        <a class="nav-link d-flex align-items-center text-white"
+            href="{{ url('/home') }}">
+            <span data-feather="user"></span>
+            <span> Gérer mon profil </span>
+        </a>
+    </h6>
+        @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire|Courrier|ACourrier')
     <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_courrier"
@@ -65,8 +75,8 @@
         </div>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
+@else
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|ADIOF')
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('demandeurs.index') }}" data-toggle="collapse"
@@ -88,8 +98,8 @@
             </div>
         </div>
     </li>
-    @else
-        @endhasrole
+@else
+    @endhasrole
     <hr class="sidebar-divider my-0">
     @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|DEC|ADEC|ADIOF')
     <li class="nav-item">
@@ -113,8 +123,8 @@
             </div>
         </div>
     </li>
-    @else
-        @endhasrole
+@else
+    @endhasrole
     <hr class="sidebar-divider my-0">
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
@@ -124,8 +134,8 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
+@else
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_localite"
@@ -151,8 +161,8 @@
             </div>
         </div>
     </li>
-    @else
-        @endhasrole
+@else
+    @endhasrole
     @hasrole('Demandeur')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('individuelles.create') }}">
@@ -160,8 +170,8 @@
             <span>Demande individuelle</span>
         </a>
     </li>
-    @else
-        @endhasrole
+@else
+    @endhasrole
     @hasrole('Demandeur')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('collectives.index') }}">
@@ -170,17 +180,17 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('Demandeur')
+@else
+    @endhasrole
+    @hasrole('Demandeur')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('operateurs.index') }}">
             <span data-feather="users"></span>
             <span>Devenir opérateur</span>
         </a>
     </li>
-    @else
-        @endhasrole
+@else
+    @endhasrole
     @hasrole('super-admin|Administrateur|DAF|FDAF|RHDAF|LOGDAF')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_daf"
@@ -225,9 +235,9 @@
         </div>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|DAF|DPP|ADPP|PRDPP|PLDPP')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|DAF|DPP|ADPP|PRDPP|PLDPP')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_projet"
             aria-expanded="true" aria-controls="collapsePages_projet">
@@ -257,8 +267,8 @@
             </div>
         </div>
     </li>
-    @else
-        @endhasrole
+@else
+    @endhasrole
     <hr class="sidebar-divider my-0">
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
@@ -268,8 +278,8 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
+@else
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('ingenieurs.index') }}">
@@ -278,9 +288,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|DAF|RHDAF')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|DAF|RHDAF')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('employees.index') }}">
             <span data-feather="layers"></span>
@@ -288,8 +298,8 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
+@else
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('directions.index') }}">
@@ -298,9 +308,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|Gestionnaire')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('secteurs.index') }}">
             <span data-feather="layers"></span>
@@ -308,9 +318,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|Gestionnaire')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('domaines.index') }}">
             <span data-feather="layers"></span>
@@ -318,9 +328,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|Gestionnaire')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('modules.index') }}">
             <span data-feather="layers"></span>
@@ -328,9 +338,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|Gestionnaire')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('diplomes.index') }}">
             <span data-feather="layers"></span>
@@ -338,9 +348,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|Gestionnaire')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('options.index') }}">
             <span data-feather="layers"></span>
@@ -348,9 +358,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|Gestionnaire|DIOF')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire|DIOF')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('programmes.index') }}">
             <span data-feather="layers"></span>
@@ -358,9 +368,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        @hasrole('super-admin|Administrateur|Gestionnaire')
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('nivauxs.index') }}">
             <span data-feather="layers"></span>
@@ -368,9 +378,9 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
-    @else
-        @endhasrole
-        {{--  @hasrole('super-admin|Administrateur')  --}}
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
             aria-controls="collapsePages">
@@ -400,10 +410,6 @@
                         <span>Gestionnaires</span>
                     </a>
                     </a>
-                    {{-- <a class="collapse-item" href="{{ route('villages.index') }}">
-                        <span data-feather="user"></span>
-                        <span>Villages</span>
-                    </a> --}}
                     <a class="collapse-item" href="{{ route('users.index') }}">
                         <span data-feather="user"></span>
                         <span>Utilisateurs</span>
@@ -416,8 +422,8 @@
             </div>
         </div>
     </li>
-   {{--   @else
-        @endhasrole  --}}
+@else
+    @endhasrole
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

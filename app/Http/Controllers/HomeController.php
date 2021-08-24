@@ -51,7 +51,10 @@ class HomeController extends Controller
         if ($user->hasRole('Demandeur')) { 
             $courriers = $user->courriers;
         return view('profiles.show', compact('user','courriers','user_connect','demandeurs'));         
-        } else {
+        } elseif ($user->hasRole('Nologin')) {
+            return view('layout.404'); 
+        }
+        else {
         $courriers = Courrier::all();
     /*  return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart'));   */    
         return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs'));      

@@ -25,6 +25,8 @@ class PermissionsOnfpSeeder extends Seeder
         Permission::create(['name' => 'courrier-edit']);
         Permission::create(['name' => 'courrier-delete']);
 
+        Permission::create(['name' => 'profil-list']);
+
         Permission::create(['name' => 'facture-list']);
         Permission::create(['name' => 'facture-create']);
         Permission::create(['name' => 'facture-edit']);

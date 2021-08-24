@@ -153,11 +153,17 @@
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
             
-
+          @hasrole('super-admin|Administrateur|Gestionnaire')
           <a class="dropdown-item" href="{{ route('profiles.show', ['user'=>auth()->user()]) }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->firstname }} {{ Auth::user()->name }}</span>
           </a>
+          @else
+          <a class="dropdown-item" href="{{ url('/home') }}">
+          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->firstname }} {{ Auth::user()->name }}</span>
+        </a>
+          @endhasrole 
          
         @hasrole('Administrateur|Courrier')
           <a class="dropdown-item" href="{{ route('courriers.create') }}">
@@ -166,11 +172,14 @@
           </a>
           @else
           @endhasrole
+          @hasrole('super-admin|Administrateur|Gestionnaire')
            <a class="dropdown-item" href="{{ route('postes.create') }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
             {{(" Créer un post")}}
           </a> 
-       
+          @else
+          @endhasrole 
+          @hasrole('super-admin|Administrateur|Gestionnaire')
           <a class="dropdown-item" href="{{ route('profiles.show', ['user'=>auth()->user()]) }}">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
            {{(" Profil")}}
@@ -183,6 +192,8 @@
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
             {{ "Journal d'activité" }}
           </a>
+          @else
+          @endhasrole 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
