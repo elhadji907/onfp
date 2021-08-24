@@ -25,11 +25,11 @@ use App\Models\Charts\Courrierchart;
 
 class DemandeurController extends Controller
 {
- /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /**
+        * Display a listing of the resource.
+        *
+        * @return \Illuminate\Http\Response
+        */
 
     public function __construct()
     {
@@ -51,12 +51,12 @@ class DemandeurController extends Controller
         
         $demandeurs = Demandeur::all();
         
-        return view('demandeurs.index',compact('roles','demandeurs'));
+        return view('demandeurs.index', compact('roles', 'demandeurs'));
 
         /* dd($demandeurs); */
 
       /*  $localites = Localite::with('demandeurs.localite')->get();
-      
+
         $ziguinchor = Demandeur::with('user.demandeur.localite')
         ->get()->where('user.demandeur.localite.name','Ziguinchor')
         ->pluck('user.demandeur.localite.name','id')->count();
@@ -88,10 +88,10 @@ class DemandeurController extends Controller
         $caissier = "0";
 
         if ($user_role == "Administrateur") {
-            return view('demandeurs.index', 
+            return view('demandeurs.index',
             compact('ziguinchor', 'localites',
-            'dakar', 
-            'saintlouis', 
+            'dakar',
+            'saintlouis',
             'kaolack',
             'thies',
             'total',
@@ -104,10 +104,10 @@ class DemandeurController extends Controller
             'caissier',
             'pompiste'));
         } else {
-            return view('demandeurs.index2', 
+            return view('demandeurs.index2',
             compact('ziguinchor', 'localites',
-            'dakar', 
-            'saintlouis', 
+            'dakar',
+            'saintlouis',
             'kaolack',
             'thies',
             'total',
@@ -129,19 +129,34 @@ class DemandeurController extends Controller
      */
     public function create()
     {
-        $roles = Role::get();
-        /* $civilites = User::select('civilite')->distinct()->get(); */
-        $civilites = User::distinct('civilite')->get()->pluck('civilite','civilite')->unique();
-        
-        //$objets = Objet::distinct('name')->get()->pluck('name','id')->unique();
-        
-        $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
-        $programmes = Programme::distinct('name')->get()->pluck('sigle','id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name','id')->unique();
-        $communes = commune::distinct('nom')->get()->pluck('nom','id')->unique();
-      
-        return view('demandeurs.create',compact('roles', 'communes', 'diplomes', 'civilites', 'modules','programmes'));
+        $user = auth::user();
+       
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $civilites = User::pluck('civilite', 'civilite');
+        $familiale = User::pluck('situation_familiale', 'situation_familiale');
+        $date_depot = Carbon::now();
 
+        dd($user->demandeur->types_demande->name);
+
+        if (isset($user->demandeur) && $user->hasRole('Demandeur') && !$user->hasRole('Administrateur') && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
+            $demandeurs = $user->demandeur;
+            $collectives = $demandeurs->collectives;
+            $utilisateurs = $demandeurs->user;
+            if (isset($collectives)) {
+                foreach ($collectives as $collective) {
+                    return view('collectives.update', compact('civilites', 'collective', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+                }
+            } else {
+                # code...
+            }
+        } elseif ($user->hasRole(!'Demandeur')) {
+            return view('collectives.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+        } else {
+            return view('collectives.icreate', compact('civilites', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+        }
     }
 
     /**
@@ -153,7 +168,8 @@ class DemandeurController extends Controller
     public function store(Request $request)
     {
         $this->validate(
-            $request, [
+            $request,
+            [
                 'civilite'            =>  'required|string|max:10',
                 'cin'                 =>  'required|string|min:12|max:18|unique:demandeurs,cin',
                 'prenom'              =>  'required|string|max:50',
@@ -182,36 +198,36 @@ class DemandeurController extends Controller
             ]
         );
 
-        $roles_id = Role::where('name','Demandeur')->first()->id;
+        $roles_id = Role::where('name', 'Demandeur')->first()->id;
         
         $user_id = User::latest('id')->first()->id;
         $username   =   strtolower($request->input('nom').$user_id);
 
-       /*  dd($username); */
+        /*  dd($username); */
 
        
-       $created_by1 = Auth::user()->firstname;
-       $created_by2 = Auth::user()->name;
-       $created_by3 = Auth::user()->username;
+        $created_by1 = Auth::user()->firstname;
+        $created_by2 = Auth::user()->name;
+        $created_by3 = Auth::user()->username;
 
-       $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
+        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
 
-       $telephone = $request->input('telephone');
-       $telephone = str_replace(' ', '', $telephone);
-       $telephone = str_replace(' ', '', $telephone);
-       $telephone = str_replace(' ', '', $telephone);
+        $telephone = $request->input('telephone');
+        $telephone = str_replace(' ', '', $telephone);
+        $telephone = str_replace(' ', '', $telephone);
+        $telephone = str_replace(' ', '', $telephone);
        
-       if ($request->input('civilite') == "M.") {
-        $sexe = "M";
-        }elseif ($request->input('civilite') == "Mme") {
+        if ($request->input('civilite') == "M.") {
+            $sexe = "M";
+        } elseif ($request->input('civilite') == "Mme") {
             $sexe = "F";
-        }else {
+        } else {
             $sexe = "";
         }
 
-        $utilisateur = new User([      
-            'civilite'                  =>      $request->input('civilite'),      
-            'sexe'                      =>      $sexe,      
+        $utilisateur = new User([
+            'civilite'                  =>      $request->input('civilite'),
+            'sexe'                      =>      $sexe,
             'firstname'                 =>      $request->input('prenom'),
             'name'                      =>      $request->input('nom'),
             'email'                     =>      $request->input('email'),
@@ -231,15 +247,15 @@ class DemandeurController extends Controller
         
         $utilisateur->save();
 
-        $objets_id = Objet::where('name','Demande de formation')->first()->id;
+        $objets_id = Objet::where('name', 'Demande de formation')->first()->id;
         
-        $diplomes = Diplome::where('id',$request->input('diplomes'))->first()->name;
-        $modules = Module::where('id',$request->input('modules'))->first()->name;
+        $diplomes = Diplome::where('id', $request->input('diplomes'))->first()->name;
+        $modules = Module::where('id', $request->input('modules'))->first()->name;
 
-       $cin = $request->input('cin');
-       $cin = str_replace(' ', '', $cin);
-       $cin = str_replace(' ', '', $cin);
-       $cin = str_replace(' ', '', $cin);
+        $cin = $request->input('cin');
+        $cin = str_replace(' ', '', $cin);
+        $cin = str_replace(' ', '', $cin);
+        $cin = str_replace(' ', '', $cin);
 
         $demandeurs = new Demandeur([
             'cin'               =>     $cin,
@@ -260,7 +276,7 @@ class DemandeurController extends Controller
 
         $demandeurs->modules()->sync($request->modules);
 
-        return redirect()->route('demandeurs.create')->with('success','demandeur ajouté avec succès !');
+        return redirect()->route('demandeurs.create')->with('success', 'demandeur ajouté avec succès !');
     }
 
     /**
@@ -275,26 +291,46 @@ class DemandeurController extends Controller
         $individuelles = $demandeur->individuelles;
         $collectives = $demandeur->collectives;
 
-       /*  if (Auth::user()->role->name == "Administrateur") { */
+        /*  if (Auth::user()->role->name == "Administrateur") { */
 
         $utilisateurs = $demandeur->user;
 
         $roles = Role::get();
-        $civilites = User::pluck('civilite','civilite');
-        $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name','id')->unique();
-        $types_demandes = Typesdemande::distinct('name')->get()->pluck('name','name')->unique();
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
-        $niveaux = Niveaux::distinct('name')->get()->pluck('name','name')->unique();
-        $communes = commune::distinct('nom')->get()->pluck('nom','id')->unique();
+        $civilites = User::pluck('civilite', 'civilite');
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
+        $types_demandes = Typesdemande::distinct('name')->get()->pluck('name', 'name')->unique();
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
+        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
 
         if ($typesdemande === "Individuelle") {
-            return view('individuelles.show', compact('individuelles', 'communes','niveaux', 'modules',
-            'types_demandes', 'programmes','diplomes','utilisateurs', 'roles', 'civilites'));
-        }elseif ($typesdemande === "Collective") {
-            return view('collectives.show', compact('collectives', 'communes','niveaux', 'modules',
-            'types_demandes', 'programmes','diplomes','utilisateurs', 'roles', 'civilites'));
-        }else {
+            return view('individuelles.show', compact(
+                'individuelles',
+                'communes',
+                'niveaux',
+                'modules',
+                'types_demandes',
+                'programmes',
+                'diplomes',
+                'utilisateurs',
+                'roles',
+                'civilites'
+            ));
+        } elseif ($typesdemande === "Collective") {
+            return view('collectives.show', compact(
+                'collectives',
+                'communes',
+                'niveaux',
+                'modules',
+                'types_demandes',
+                'programmes',
+                'diplomes',
+                'utilisateurs',
+                'roles',
+                'civilites'
+            ));
+        } else {
             return back();
         }
     }
@@ -306,7 +342,7 @@ class DemandeurController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Demandeur $demandeur)
-    {          
+    {
         /* $this->authorize('update',  $demandeur); */
 
         $typesdemande = $demandeur->types_demande->name;
@@ -316,27 +352,34 @@ class DemandeurController extends Controller
         $utilisateurs = $demandeur->user;
 
         $roles = Role::get();
-        $civilites = User::pluck('civilite','civilite');
-        $modules = Module::distinct('name')->get()->pluck('name','id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name','id')->unique();
-        $types_demandes = Typesdemande::distinct('name')->get()->pluck('name','name')->unique();
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
-        $communes = commune::distinct('nom')->get()->pluck('nom','id')->unique();
-        $niveaux = Niveaux::distinct('name')->get()->pluck('name','name')->unique();
+        $civilites = User::pluck('civilite', 'civilite');
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
+        $types_demandes = Typesdemande::distinct('name')->get()->pluck('name', 'name')->unique();
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        if ($typesdemande == 'Individuelle') {            
-            return view('individuelles.details', compact('individuelles','demandeur'));
-        
-            } elseif($typesdemande == 'Collective') {   
-            return view('collectives.details', compact('collectives','demandeur'));
-        
-            }else {
-                return view('demandeurs.update', compact('demandeurs', 'communes','niveaux', 'modules',
-                'types_demandes', 'programmes','localites','diplomes','utilisateurs', 'roles',
-                'civilites', 'objets'));
-            }
-
- 
+        if ($typesdemande == 'Individuelle') {
+            return view('individuelles.details', compact('individuelles', 'demandeur'));
+        } elseif ($typesdemande == 'Collective') {
+            return view('collectives.details', compact('collectives', 'demandeur'));
+        } else {
+            return view('demandeurs.update', compact(
+                'demandeurs',
+                'communes',
+                'niveaux',
+                'modules',
+                'types_demandes',
+                'programmes',
+                'localites',
+                'diplomes',
+                'utilisateurs',
+                'roles',
+                'civilites',
+                'objets'
+            ));
+        }
     }
 
     /**
@@ -349,7 +392,8 @@ class DemandeurController extends Controller
     public function update(Request $request, Demandeur $demandeur)
     {
         $this->validate(
-            $request, [
+            $request,
+            [
                 'civilite'            =>  'required|string|max:10',
                 'cin'                 =>  'required|string|min:12|max:18|unique:demandeurs,cin,'.$demandeur->id,
                 'prenom'              =>  'required|string|max:50',
@@ -381,16 +425,16 @@ class DemandeurController extends Controller
         $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
 
         
-       $telephone = $request->input('telephone');
-       $telephone = str_replace(' ', '', $telephone);
-       $telephone = str_replace(' ', '', $telephone);
-       $telephone = str_replace(' ', '', $telephone);
+        $telephone = $request->input('telephone');
+        $telephone = str_replace(' ', '', $telephone);
+        $telephone = str_replace(' ', '', $telephone);
+        $telephone = str_replace(' ', '', $telephone);
 
-       if ($request->input('civilite') == "M.") {
-        $sexe = "M";
-        }elseif ($request->input('civilite') == "Mme") {
+        if ($request->input('civilite') == "M.") {
+            $sexe = "M";
+        } elseif ($request->input('civilite') == "Mme") {
             $sexe = "F";
-        }else {
+        } else {
             $sexe = "";
         }
 
@@ -413,19 +457,19 @@ class DemandeurController extends Controller
         $utilisateurs->save();
 
         
-        $objets_id = Objet::where('name','Demande de formation')->first()->id;
+        $objets_id = Objet::where('name', 'Demande de formation')->first()->id;
 
-        $types_demandes_id = Typesdemande::where('name',$request->input('type_demande'))->first()->id;
+        $types_demandes_id = Typesdemande::where('name', $request->input('type_demande'))->first()->id;
         /* $objets_id = Objet::where('name',$request->input('objet'))->first()->id; */
-        $localites_id = Localite::where('name',$request->input('localite'))->first()->id;
-        $programmes_id = Programme::where('sigle',$request->input('programme'))->first()->id;
-        $diplomes = Diplome::where('id',$request->input('diplomes'))->first()->name;
-        $modules = Module::where('id',$request->input('modules'))->first()->name;
+        $localites_id = Localite::where('name', $request->input('localite'))->first()->id;
+        $programmes_id = Programme::where('sigle', $request->input('programme'))->first()->id;
+        $diplomes = Diplome::where('id', $request->input('diplomes'))->first()->name;
+        $modules = Module::where('id', $request->input('modules'))->first()->name;
         
-       $cin = $request->input('cin');
-       $cin = str_replace(' ', '', $cin);
-       $cin = str_replace(' ', '', $cin);
-       $cin = str_replace(' ', '', $cin);
+        $cin = $request->input('cin');
+        $cin = str_replace(' ', '', $cin);
+        $cin = str_replace(' ', '', $cin);
+        $cin = str_replace(' ', '', $cin);
 
         $demandeur->cin               =     $cin;
         $demandeur->numero_courrier   =     $request->input('numero_courrier');
@@ -445,7 +489,7 @@ class DemandeurController extends Controller
         $demandeur->modules()->sync($request->input('modules'));
 
 
-        return redirect()->route('demandeurs.index')->with('success','demandeur modifié avec succès !');
+        return redirect()->route('demandeurs.index')->with('success', 'demandeur modifié avec succès !');
     }
 
     /**
@@ -491,8 +535,7 @@ class DemandeurController extends Controller
         
         $jour6 = "2020-09-10";
 
-        $demandeurs = Demandeur::with('user.demandeur.modules','user.demandeur.localite')->whereDate('created_at','>=', $jour)->whereDate('created_at','<=', $jour)->get();
+        $demandeurs = Demandeur::with('user.demandeur.modules', 'user.demandeur.localite')->whereDate('created_at', '>=', $jour)->whereDate('created_at', '<=', $jour)->get();
         return Datatables::of($demandeurs)->make(true);
-
     }
 }

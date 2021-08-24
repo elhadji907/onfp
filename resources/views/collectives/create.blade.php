@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Enregistrement demandeurs')
+@section('title', 'ONFP - Enregistrement demande collectives')
 @section('content')
     <div class="content">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
@@ -10,14 +10,14 @@
                 <div class="row pt-0"></div>
                 <div class="card">
                     <div class="card-header card-header-primary text-center">
-                        <h3 class="card-title">Enregistrement demandeurs</h3>
+                        <h3 class="card-title">Enregistrement demande collectives</h3>
                     </div>
                     <div class="card-body">
                        <b> NB </b> : Les champs<span class="text-danger"> <b>*</b> </span>sont obligatoires
                         <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2 mt-0">IDENTIFICATION</p>
+                            <p class="h4 text-white mb-2 mt-0">IDENTIFICATION RESPONSABLE</p>
                         </div>
-                        <form method="POST" action="{{ url('demandeurs') }}">
+                        <form method="POST" action="{{ url('collectives') }}">
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-md-4">
@@ -66,8 +66,8 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    {!! Form::label("Département :") !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::select('departements[]', $departements, null, ['placeholder' => '', 'class' =>
+                                    {!! Form::label("Commune :") !!}<span class="text-danger"> <b>*</b> </span>
+                                    {!! Form::select('communes[]', $communes, null, ['placeholder' => '', 'class' =>
                                     'form-control', 'id' => 'departement']) !!}
                                 </div>
                             </div>

@@ -174,7 +174,7 @@
     @endhasrole
     @hasrole('Demandeur')
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('collectives.index') }}">
+        <a class="nav-link" href="{{ route('collectives.create') }}">
             <span data-feather="users"></span>
             <span>Demande collective</span>
         </a>

@@ -9,21 +9,21 @@
                 @endif
                 <div class="row pt-0"></div>
                 <div class="card">
-                    <div class="card-header bg-gradient-info text-center">
-                        <h1 class="h4 text-white mb-0"><span data-feather="info"></span>compléter ma demande individuelle</h1>
+                    <div class="card-header bg-secondary text-center">
+                        <h1 class="h4 bg-secondary text-white mb-0"><span data-feather="info"></span>Compléter ma demande individuelle</h1>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires
                         <form method="POST" action="{{ url('individuelles') }}">
                         @csrf
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2 mt-0">IDENTIFICATION</p>
+                        <div class="text-center">
+                            <p class="h4 bg-secondary text-white mb-2 mt-0">IDENTIFICATION</p>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
                                 <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
-                                    name="cin" placeholder="Votre et cin" value="{{ old('cin') }}"
+                                    name="cin" placeholder="Votre et cin" value="{{ $user->demandeur->cin ?? old('cin') }}"
                                     autocomplete="cin" autofocus>
                                 @error('cin')
                                     <span class="invalid-feedback" role="alert">
@@ -229,8 +229,8 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2">DEMANDE</p>
+                        <div class="text-center">
+                            <p class="h4 bg-secondary text-white mb-2">DEMANDE</p>
                         </div>
                         {{-- <div class="form-row"> --}}
                         {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
@@ -395,11 +395,11 @@
                         </div>
                         @else
                         @endhasrole
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
+                        @can('demandeur-list')
+                        <div class="text-center">
+                            <p class="h4 bg-secondary text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
                         </div>
 
-                        @can('demandeur-list')
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)

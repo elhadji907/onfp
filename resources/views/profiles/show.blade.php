@@ -13,6 +13,7 @@
                     <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
                     <div class="mr-1"><b>{{ auth::user()->name }}</b></div>
                 </div>
+                @if (auth::user()->date_naissance !== null)
                 <div class="mt-0 d-flex">
                     @if (auth::user()->civilite == 'M.')
                         <div class="mr-1"><b>né le</b></div>
@@ -20,14 +21,13 @@
                     @if (auth::user()->civilite == 'Mme')
                         <div class="mr-1"><b>née le</b></div>
                     @endif
-                    @if (auth::user()->date_naissance !== null)
                         <div class="mr-1">{{ auth::user()->date_naissance->format('d/m/Y') }}</div>
-                    @endif
                     @if (auth::user()->lieu_naissance !== null)
                         <div class="mr-1">à</div>
                         <div class="mr-1">{{ auth::user()->lieu_naissance }}</div>
                     @endif
                 </div>
+                @endif
                 <div class="mt-0">
                     <div class="mr-3"><b>{{ __("Nom d'utilisateur") }}:</b> {{ auth::user()->username }}</div>
                     <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
@@ -47,7 +47,7 @@
                 <div class="mt-3 d-flex">
                     @if (isset($user_connect))
                         <table class="table table-bordered" id="table-tresors" width="100%" cellspacing="0">
-                            <thead class=" bg-info text-dark">
+                            <thead class="bg-info text-dark">
                                 <tr>
                                     <th style="width:5%;">N°</th>
                                     <th style="width:75%;">TYPE</th>
@@ -142,7 +142,6 @@
                                             </tr>
                                         </thead>
                                         <tfoot>
-
                                         </tfoot>
                                         <tbody>
                                             <?php $i = 1; ?>

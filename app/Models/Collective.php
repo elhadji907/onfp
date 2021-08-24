@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string|null $cin
  * @property string $name
  * @property string|null $items1
  * @property Carbon|null $date1
@@ -52,7 +51,6 @@ class Collective extends Model
 
 	protected $fillable = [
 		'uuid',
-		'cin',
 		'name',
 		'items1',
 		'date1',

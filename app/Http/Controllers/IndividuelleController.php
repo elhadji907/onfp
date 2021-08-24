@@ -59,9 +59,9 @@ class IndividuelleController extends Controller
     public function create()
     {
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-        $programmes = Programme::distinct('name')->get()->pluck('sigle', 'id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
-        $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         
         $date_depot = Carbon::now();
 
@@ -70,33 +70,20 @@ class IndividuelleController extends Controller
         $civilites = User::pluck('civilite', 'civilite');
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
-        $date_depot = Carbon::now();
-        $user = Auth::user();
-        if (isset($user->demandeur->individuelles) && $user->hasRole('Demandeur') && !$user->hasRole('Administrateur') && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
+        $types_demande = $user->demandeur->types_demande->name;
+        
+        if (isset($user->demandeur->individuelles) && $types_demande ==="Individuelle"
+        && $user->hasRole('Demandeur') && !$user->hasRole('Administrateur')
+        && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
             $demandeurs = $user->demandeur;
             $individuelles = $demandeurs->individuelles;
-            
             foreach ($individuelles as $individuelle) {
             }
             $utilisateurs = $demandeurs->user;
-            $civilites = User::pluck('civilite', 'civilite');
-            $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-            $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-            $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
-            $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
-            $date_depot = Carbon::now();
             return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
         } elseif ($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')) {
-            $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-            $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-            $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
-            $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
             return view('individuelles.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         } else {
-            $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-            $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-            $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
-            $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
             return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         }
     }
