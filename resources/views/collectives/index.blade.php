@@ -65,7 +65,7 @@
                       {!! $module->name !!}
                       @endforeach
                     </td>
-                    <td>{!! $collective->demandeur->lieux->name !!}</td>
+                    <td>{!! $collective->demandeur->commune->nom ?? '' !!}</td>
                     <td style="text-align: center;">
                       @if ($collective->demandeur->status == "Retenue")
                       <i class="fa fa-check text-success" title="Retenue" aria-hidden="true"></i>
@@ -80,7 +80,7 @@
                           <i class="far fa-edit">&nbsp;</i>
                         </a>
                         &nbsp;
-                        <a href="{!! url('collectives/' .$collective->id) !!}" class= 'btn btn-primary btn-sm' title="voir">
+                        <a href="{!! url('demandeurs/' .$collective->demandeur->id) !!}" class= 'btn btn-primary btn-sm' title="voir">
                           <i class="far fa-eye">&nbsp;</i>
                         </a>
                         &nbsp;

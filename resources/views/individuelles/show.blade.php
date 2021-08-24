@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Fiche demande')
+@section('title', 'ONFP - Fiche demande individuelle')
 
 {{-- @section('extra-js')
     <script>

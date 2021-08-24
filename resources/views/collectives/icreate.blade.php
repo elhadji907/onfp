@@ -24,8 +24,8 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
                                     <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
-                                        name="cin" placeholder="Votre et cin" value="{{ $user->demandeur->cin ?? old('cin') }}"
-                                        autocomplete="cin">
+                                        name="cin" placeholder="Votre et cin"
+                                        value="{{ $user->demandeur->cin ?? old('cin') }}" autocomplete="cin">
                                     @error('cin')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -145,7 +145,8 @@
                                             {{ $user->situation_professionnelle }}</option>
                                         <option value="">{{ __('...sélectionner...') }}</option>
                                         <option value="{{ 'Salarié CDD' }}">{{ 'Salarié CDD' }}</option>
-                                        <option value="{{ 'Recherche d\'emploi' }}">{{ 'Recherche d\'emploi' }}</option>
+                                        <option value="{{ 'Recherche d\'emploi' }}">{{ 'Recherche d\'emploi' }}
+                                        </option>
                                         <option value="{{ 'Salarié CDI' }}">{{ 'Salarié CDI' }}</option>
                                         <option value="{{ 'Élève' }}">{{ 'Élève' }}</option>
                                         <option value="{{ 'Étudiant(e)' }}">{{ 'Étudiant(e)' }}</option>
@@ -209,8 +210,9 @@
                                     <label for="structure_fixe">{{ __('Fixe structure') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="structure_fixe" type="text"
-                                        class="form-control @error('structure_fixe') is-invalid @enderror" name="structure_fixe"
-                                        placeholder="3x xxx xx xx" value="{{ old('structure_fixe') }}" autocomplete="structure_fixe">
+                                        class="form-control @error('structure_fixe') is-invalid @enderror"
+                                        name="structure_fixe" placeholder="3x xxx xx xx"
+                                        value="{{ old('structure_fixe') }}" autocomplete="structure_fixe">
                                     @error('structure_fixe')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -331,8 +333,8 @@
                                         @endif
                                     </small>
                                 </div>
-                                @else
-                                    @endhasrole
+                            @else
+                                @endhasrole
                             </div>
                             {!! Form::hidden('username', $user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
                             {!! Form::hidden('numero', null, ['placeholder' => '', 'class' => 'form-control']) !!}

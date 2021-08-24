@@ -277,7 +277,6 @@ class CollectiveController extends Controller
             'statut'                        =>     $statut,
             'programmes_id'                 =>     $programme_id,
             'adresse'                       =>     $request->input('structure_adresse'),
-            'description'                   =>     $request->input('description'),
             'experience'                    =>     $request->input('experience'),
             'communes_id'                   =>     $commune_id,
             'types_demandes_id'             =>     $types_demandes_id,
@@ -288,6 +287,7 @@ class CollectiveController extends Controller
 
         $collectives = new Collective([
             'name'              =>     $request->input('name'),
+            'description'       =>     $request->input('description'),
             'statut'            =>     $statut,
             'demandeurs_id'     =>     $demandeur->id
         ]);
@@ -324,7 +324,20 @@ class CollectiveController extends Controller
      */
     public function edit(Collective $collective)
     {
-        //
+        /* $this->authorize('update',  $collective); */
+       
+        $demandeurs = $collective->demandeur;
+        $utilisateurs = $demandeurs->user;
+
+        $civilites = User::pluck('civilite', 'civilite');
+
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+
+        $date_depot = Carbon::now();
+
+        return view('collectives.update', compact('civilites', 'collective', 'communes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
     }
 
     /**
@@ -336,7 +349,155 @@ class CollectiveController extends Controller
      */
     public function update(Request $request, Collective $collective)
     {
-        //
+        $demandeur = $collective->demandeur;
+        $utilisateur = $demandeur->user;
+        $user = Auth::user();
+        $user_connect = Auth::user();
+
+        if (!$user->hasRole('Demandeur')) {
+            $this->validate(
+                $request,
+                [
+               'sexe'                =>  'required|string|max:10',
+               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$collective->demandeur->id},id,deleted_at,NULL",
+               'name'                =>  "required|string",
+               'prenom'              =>  'required|string|max:50',
+               'nom'                 =>  'required|string|max:50',
+               'date_naiss'          =>  'required|date_format:Y-m-d',
+               'date_depot'          =>  'required|date_format:Y-m-d',
+               'lieu_naissance'      =>  'required|string|max:50',
+               'telephone'           =>  'required|string|min:7|max:30',
+               'fixe'                =>  'required|string|min:7|max:30',
+               'adresse'             =>  'required|string|max:100',
+               'description'         =>  'required|string|min:10|max:1500',
+               'email'               =>  'required|email|max:255|unique:users,email,'.$collective->demandeur->user->id,
+               'professionnelle'     =>  'required',
+               'commune'             =>  'required',
+               'modules'             =>  'exists:modules,id',
+
+               ]
+            );
+        } else {
+            $this->validate(
+                $request,
+                [
+               'sexe'                =>  'required|string|max:10',
+               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$collective->demandeur->id},id,deleted_at,NULL",
+               'name'                =>  "required|string|unique:collectives,name,{$collective->id},id,deleted_at,NULL",
+               'prenom'              =>  'required|string|max:50',
+               'nom'                 =>  'required|string|max:50',
+               'date_naiss'          =>  'required|date_format:Y-m-d',
+               'date_depot'          =>  'required|date_format:Y-m-d',
+               'lieu_naissance'      =>  'required|string|max:50',
+               'telephone'           =>  'required|string|min:7|max:30',
+               'fixe'                =>  'required|string|min:7|max:30',
+               'structure_fixe'      =>  'required|string|min:7|max:18',
+               'adresse'             =>  'required|string|max:100',
+               'structure_adresse'   =>  'required|string|max:200',
+               'description'         =>  'required|string|min:10|max:1500',
+               'email'               =>  'required|email|max:255',
+               'professionnelle'     =>  'required',
+               'commune'             =>  'required',
+               'modules'             =>  'exists:modules,id',
+
+               ]
+            );
+        }
+
+
+        $utilisateurs   =   $collective->demandeur->user;
+
+        $updated_by1 = $user->firstname;
+        $updated_by2 = $user->name;
+        $updated_by3 = $user->username;
+
+        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
+
+
+        $telephone = $request->input('telephone');
+        $telephone = str_replace(' ', '', $telephone);
+ 
+        $fixe = $request->input('fixe');
+        $fixe = str_replace(' ', '', $fixe);
+ 
+        $autre_tel = $request->input('autre_tel');
+        $autre_tel = str_replace(' ', '', $autre_tel);
+ 
+        $cin = $request->input('cin');
+        $cin = str_replace(' ', '', $cin);
+
+        $structure_fixe = $request->input('structure_fixe');
+        $structure_fixe = str_replace(' ', '', $structure_fixe);
+
+        if ($request->input('programme') !== null) {
+            $programme_id = Programme::where('sigle', $request->input('programme'))->first()->id;
+        } else {
+            $programme_id = "";
+        }
+
+        if ($request->input('sexe') == "M") {
+            $civilite = "M.";
+        } elseif ($request->input('sexe') == "F") {
+            $civilite = "Mme";
+        } else {
+            $civilite = "";
+        }
+
+        $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
+        $types_demandes_id = TypesDemande::where('name', 'Collective')->first()->id;
+
+        $utilisateur->sexe                      =      $request->input('sexe');
+        $utilisateur->civilite                  =      $civilite;
+        $utilisateur->firstname                 =      $request->input('prenom');
+        $utilisateur->name                      =      $request->input('nom');
+        $utilisateur->email                     =      $request->input('email');
+        $utilisateur->username                  =      $request->input('username');
+        $utilisateur->telephone                 =      $telephone;
+        $utilisateur->fixe                      =      $fixe;
+        $utilisateur->bp                        =      $request->input('bp');
+        $utilisateur->fax                       =      $request->input('fax');
+        $utilisateur->situation_professionnelle =      $request->input('professionnelle');
+        $utilisateur->date_naissance            =      $request->input('date_naiss');
+        $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
+        $utilisateur->adresse                   =      $request->input('adresse');
+        $utilisateurs->updated_by               =      $updated_by;
+
+        $utilisateur->save();
+
+        $demandeur->numero                      =      $request->input('numero');
+        $demandeur->cin                         =      $cin;
+        $demandeur->numero_courrier             =      $request->input('numero_courrier');
+        $demandeur->date_depot                  =      $request->input('date_depot');
+        $demandeur->fixe                        =      $structure_fixe;
+        if (!$user->hasRole('Demandeur')) {
+            $demandeur->statut                      =      $request->input('statut');
+        }
+        $demandeur->adresse                     =      $request->input('structure_adresse');
+        $demandeur->autres_diplomes             =      $request->input('autres_diplomes');
+        $demandeur->experience                  =      $request->input('experience');
+        $demandeur->qualification               =      $request->input('qualification');
+        $demandeur->communes_id                 =      $commune_id;
+        if ($request->input('programme') !== null) {
+            $demandeur->programmes_id           =      $programme_id;
+        }
+        $demandeur->types_demandes_id           =      $types_demandes_id;
+        $demandeur->users_id                    =      $utilisateur->id;
+
+        $demandeur->save();
+
+        $collective->name                     =     $request->input('name');
+        $collective->description              =     $request->input('description');
+        $collective->demandeurs_id            =     $demandeur->id;
+
+        $collective->save();
+
+        $demandeur->modules()->sync($request->input('modules'));
+
+        if (!$user->hasRole('Demandeur')) {
+            return redirect()->route('collectives.index')->with('success', 'demande modifiée avec succès !');
+        } else {
+            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');
+        }
     }
 
     /**
@@ -347,6 +508,34 @@ class CollectiveController extends Controller
      */
     public function destroy(Collective $collective)
     {
-        //
+        $user = Auth::user();
+        $utilisateurs   =   $collective->demandeur->user;
+
+        $deleted_by1 = $user->firstname;
+        $deleted_by2 = $user->name;
+        $deleted_by3 = $user->username;
+
+        $deleted_by = $deleted_by1.' '.$deleted_by2.' ('.$deleted_by3.')';
+
+        $utilisateurs->deleted_by      =      $deleted_by;
+
+        $utilisateurs->save();
+       
+        if ($user->hasRole('super-admin') || $user->hasRole('Administrateur')) {
+            $collective->demandeur->user->delete();
+            $collective->demandeur->delete();
+        } else {
+            $collective->demandeur->delete();
+        }
+        
+        $collective->delete();
+
+        $message = $collective->demandeur->user->firstname.' '.$collective->demandeur->user->name.' a été supprimé(e)';
+
+        if (!$user->hasRole('Demandeur')) {
+            return redirect()->route('collectives.index')->with('success', $message);
+        }else {
+            return redirect()->route('profiles.show', ['user'=>$user])->with('success', $message);
+        }
     }
 }

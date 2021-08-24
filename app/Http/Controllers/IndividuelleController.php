@@ -109,7 +109,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                     'sexe'                =>  'required|string|max:10',
-                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,NULL,id,deleted_at,NULL',
+                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,'.$user->demandeur->id,
                     'prenom'              =>  'required|string|max:50',
                     'nom'                 =>  'required|string|max:50',
                     'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -136,7 +136,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                     'sexe'                =>  'required|string|max:10',
-                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,NULL,id,deleted_at,NULL',
+                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,'.$user->demandeur->id,
                     'prenom'              =>  'required|string|max:50',
                     'nom'                 =>  'required|string|max:50',
                     'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -382,7 +382,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$individuelle->demandeur->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -409,7 +409,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$individuelle->demandeur->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -444,22 +444,14 @@ class IndividuelleController extends Controller
 
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
-        $telephone = str_replace(' ', '', $telephone);
-        $telephone = str_replace(' ', '', $telephone);
  
         $fixe = $request->input('fixe');
-        $fixe = str_replace(' ', '', $fixe);
-        $fixe = str_replace(' ', '', $fixe);
         $fixe = str_replace(' ', '', $fixe);
  
         $autre_tel = $request->input('autre_tel');
         $autre_tel = str_replace(' ', '', $autre_tel);
-        $autre_tel = str_replace(' ', '', $autre_tel);
-        $autre_tel = str_replace(' ', '', $autre_tel);
  
         $cin = $request->input('cin');
-        $cin = str_replace(' ', '', $cin);
-        $cin = str_replace(' ', '', $cin);
         $cin = str_replace(' ', '', $cin);
         if ($request->input('programme') !== null) {
             $programme_id = Programme::where('sigle', $request->input('programme'))->first()->id;
@@ -478,11 +470,6 @@ class IndividuelleController extends Controller
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
-
-        $cin = $request->input('cin');
-        $cin = str_replace(' ', '', $cin);
-        $cin = str_replace(' ', '', $cin);
-        $cin = str_replace(' ', '', $cin);
 
         $utilisateur->sexe                      =      $request->input('sexe');
         $utilisateur->civilite                  =      $civilite;
@@ -534,7 +521,6 @@ class IndividuelleController extends Controller
         $individuelle->experience               =     $request->input('experience');
         $individuelle->information              =     $request->input('information');
         $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
-        $individuelle->information              =     $request->input('information');
         $individuelle->prerequis                =     $request->input('prerequis');
         $individuelle->demandeurs_id            =     $demandeur->id;
 
@@ -578,8 +564,13 @@ class IndividuelleController extends Controller
         
         $individuelle->delete();
 
-        $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été supprimé(e)';
-        return redirect()->route('profiles.show', ['user'=>$user])->with('success', 'votre demande supprimée avec succès !');
+        $message = $collective->demandeur->user->firstname.' '.$collective->demandeur->user->name.' a été supprimé(e)';
+
+        if (!$user->hasRole('Demandeur')) {
+            return redirect()->route('individuelles.index')->with('success', $message);
+        }else {
+            return redirect()->route('profiles.show', ['user'=>$user])->with('success', $message);
+        }
     }
 
     public function list(Request $request)
