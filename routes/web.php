@@ -83,7 +83,8 @@ Route::group([
         Route::get('/postes/create', [PosteController::class, 'create'])->name('postes.create');
         Route::post('/postes', [PosteController::class, 'store'])->name('postes.store');
         Route::get('/postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
-        Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');  
+        Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
+        Route::get('/directions.selectemployees', function() { return view('directions.selectemployees'); })->name('directions.selectemployees');
         Route::get('/courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
         Route::get('/roles/list', [RoleController::class, 'list'])->name('roles.list');
         Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');

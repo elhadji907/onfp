@@ -30,28 +30,28 @@
                                 id="table-employees">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:5%;">Matricule</th>
-                                        <th style="width:5%;">Civilité</th>
-                                        <th>Prenom</th>
-                                        <th>Nom</th>
-                                        <th style="width:8%;">Date Nais.</th>
-                                        <th>Lieu Nais.</th>
-                                        <th>Email</th>
+                                        <th>Matricule</th>
+                                        <th width="150px">Nom</th>
+                                        {{--  <th>Prenom</th>
+                                        <th>Nom</th>  --}}
+                                        <th width="200px">Date et lieu nais.</th>
+                                        {{--  <th>Lieu Nais.</th>  --}}
+                                        {{--  <th>Email</th>  --}}
                                         <th>Telephone</th>
-                                        <th style="width:15%;">Fonction</th>
+                                        <th width="300px">Fonction</th>
                                         <th>Direction</th>
-                                        <th style="width:10%;">Action</th>
+                                        <th width="100px">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Matricule</th>
-                                        <th>Civilité</th>
-                                        <th>Prenom</th>
                                         <th>Nom</th>
-                                        <th>Date Nais.</th>
-                                        <th>Lieu Nais.</th>
-                                        <th>Email</th>
+                                        {{--  <th>Prenom</th>
+                                        <th>Nom</th>  --}}
+                                        <th>Date et lieu nais.</th>
+                                        {{--  <th>Lieu Nais.</th>  --}}
+                                        {{--  <th>Email</th>  --}}
                                         <th>Telephone</th>
                                         <th>Fonction</th>
                                         <th>Direction</th>
@@ -62,12 +62,19 @@
                                     @foreach ($employees as $employee)
                                         <tr>
                                             <td>{!! $employee->matricule !!}</td>
-                                            <td>{!! $employee->user->civilite !!}</td>
-                                            <td>{!! $employee->user->firstname !!}</td>
-                                            <td>{!! $employee->user->name !!}</td>
-                                            <td>{!! $employee->user->date_naissance->format('d/m/Y') !!}</td>
-                                            <td>{!! $employee->user->lieu_naissance !!}</td>
-                                            <td>{!! $employee->user->email !!}</td>
+                                            <td>{!! $employee->user->civilite !!} {!! $employee->user->firstname !!} {!! mb_strtoupper($employee->user->name) !!}</td>
+                                            {{--  <td></td>
+                                            <td></td>  --}}
+                                            <td>
+                                                @if ($employee->user->civilite == 'M.')
+                                                    né le
+                                                @endif
+                                                @if ($employee->user->civilite == 'Mme')
+                                                    née le
+                                                @endif
+                                                {!! $employee->user->date_naissance->format('d/m/Y') !!} à {!! $employee->user->lieu_naissance !!}</td>
+                                            {{--  <td></td>  --}}
+                                            {{--  <td>{!! $employee->user->email !!}</td>  --}}
                                             <td>{!! $employee->user->telephone !!}</td>
                                             <td>{!! $employee->fonction->name !!}</td>
                                             <td>

@@ -7,7 +7,7 @@
                 <img src="{{ asset(auth::user()->profile->getImage()) }}" class="rounded-circle w-50" />
             </div>
             <div class="col-4">
-                {{-- @can('update', $user->profile) --}}
+                @can('update', $user->profile)
                 <div class="mt-3 d-flex">
                     <div class="mr-1"><b>{{ auth::user()->civilite }}</b></div>
                     <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
@@ -40,10 +40,10 @@
                     <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
                         class="btn btn-outline-secondary mt-3">Modifier mon profil</a>
                 @endif
-                {{-- @endcan --}}
+                @endcan
             </div>
+            @unlessrole('Demandeur')
             <div class="col-4">
-                {{-- @can('update', $user->profile) --}}
                 <div class="mt-3 d-flex">
                     @if (isset($user_connect))
                         <table class="table table-bordered" id="table-tresors" width="100%" cellspacing="0">
@@ -78,14 +78,13 @@
                     @else
                     @endif
                 </div>
-                {{-- @endcan --}}
             </div>
+            @else
+            @endunlessrole
         </div>
     </div>
-
     <div class="container-fluid">
-
-        {{-- @hasrole('Administrateur|Courrier')
+        @unlessrole('Demandeur')
         <div class="list-group mt-5">
             @foreach ($courriers as $courrier)
                 <div class="list-group-item">
@@ -98,13 +97,12 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-        <div class="d-flex justify-content-center pt-2">
-            {!! $courriers->links() !!}
+            {{--  <div class="d-flex justify-content-center pt-2">
+                {!! $courriers->links() !!}
+            </div>  --}}
         </div>
         @else
-        @endhasrole --}}
-
+        @endunlessrole
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
@@ -140,7 +138,7 @@
                                                 <th width="20px">Module</th>
                                                 <th width="130px">Type demande</th>
                                                 <th>Statut</th>
-                                                <th width="50px">Action</th>
+                                                <th width="130px"></th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -175,19 +173,19 @@
                                                         @endif
                                                         </td>
                                                         <td class="d-flex align-items-baseline align-content-center">
-                                                            {{-- <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                                 title="modifier">
                                                                 <i class="far fa-edit">&nbsp;</i>
                                                             </a>
-                                                            &nbsp; --}}
+                                                            &nbsp;
                                                             <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
                                                                 title="voir">
                                                                 <i class="far fa-eye">&nbsp;</i>
                                                             </a>
                                                             &nbsp;
-                                                            {{-- {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                            {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                            {!! Form::close() !!} --}}
+                                                            {!! Form::close() !!}
                                                         </td>
                                                     </tr>
                                                 @endcan

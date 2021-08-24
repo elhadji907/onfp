@@ -231,13 +231,13 @@
                                                 id="validatedCustomFile" aria-describedby="inputGroupFileAddon01">
                                             <label class="custom-file-label" for="validatedCustomFile">Choisir image de
                                                 profil</label>
-                                            @error('image')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
                                         </div>
                                     </div>
+                                    @error('image')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                     <div class="pt-2">
                                         <img class="rounded-circle w-25 border border-secondary"
                                             src="{{ asset(Auth::user()->profile->getImage()) }}" width="50"

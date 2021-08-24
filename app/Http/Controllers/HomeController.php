@@ -32,15 +32,10 @@ class HomeController extends Controller
         $courrier = Courrier::get()->count();
         $demandeurs = Demandeur::get()->count();
 
-
-        $courriers = Courrier::all();
-
-
        // dd($couriers);
 
         //$operateurs = Operateur::get()->count();
         //$Personnels = Personnel::get()->count();
-
 
         $chart      = Courrier::all();
 
@@ -49,20 +44,17 @@ class HomeController extends Controller
         $chart->dataset('STATISTIQUES', 'bar', collect([$demandeurs, $courriers]))->options([
             'backgroundColor'=>["#3e95cd", "#8e5ea2", "#3cba9f", '#ff3838'],
         ]); */
-        
-        if (Auth::user()->hasRole('Administrateur') OR Auth::user()->hasRole('Gestionnaire')) {
-           /*  return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart'));   */         
-            return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs'));           
-        } else {
-            
+        $user = Auth::user();
         $demandeurs = Demandeur::all();
+        $user_connect  =  $user->demandeur;
 
-        $user = auth::user();
-
-        $user_connect  =  auth::user()->demandeur;
-
-
-        return view('profiles.show', compact('user','courriers','user_connect','demandeurs'));
+        if ($user->hasRole('Demandeur')) { 
+            $courriers = $user->courriers;
+        return view('profiles.show', compact('user','courriers','user_connect','demandeurs'));         
+        } else {
+        $courriers = Courrier::all();
+    /*  return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart'));   */    
+        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs'));      
 
         }
         

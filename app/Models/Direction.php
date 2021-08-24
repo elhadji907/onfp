@@ -79,6 +79,11 @@ class Direction extends Model
 
 	public function employees()
 	{
-		return $this->hasMany(Employee::class, 'directions_id');
+		return $this->hasMany(Employee::class, 'directions_id')->latest();
+	}
+
+	public function chef()
+	{
+		return $this->belongsTo(Employee::class, 'chef_id');
 	}
 }

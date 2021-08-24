@@ -90,7 +90,7 @@ class Employee extends Model
 
 	public function direction()
 	{
-		return $this->belongsTo(Direction::class, 'directions_id');
+		return $this->belongsTo(Direction::class, 'directions_id')->latest();
 	}
 
 	public function fonction()

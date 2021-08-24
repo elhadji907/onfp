@@ -62,11 +62,12 @@ class ProfileController extends Controller
     {
         $demandeurs = Demandeur::all();
 
-        $user_connect  =  auth::user()->demandeur;
-
-        $courriers = Courrier::latest()->paginate(5);
-
+        $user = Auth::user();
+        $user_connect  =  $user->demandeur;
+        /* $courriers = Courrier::latest()->paginate(5); */
         //dd($courriers);
+        
+        $courriers = $user->courriers;
 
         return view('profiles.show', compact('user','courriers','demandeurs','user_connect'));
     }

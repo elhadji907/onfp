@@ -263,7 +263,6 @@ class IndividuelleController extends Controller
     
             $user->save();
             $user->assignRole('Demandeur');
-
         } else {
             $updated_by1 = $user->firstname;
             $updated_by2 = $user->name;
@@ -332,7 +331,6 @@ class IndividuelleController extends Controller
 
         
         $user_connect  =  $user->demandeur;
-
         if (!$user->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
         } else {
@@ -390,6 +388,7 @@ class IndividuelleController extends Controller
         $demandeur = $individuelle->demandeur;
         $utilisateur = $demandeur->user;
         $user = Auth::user();
+        $user_connect = Auth::user();
 
         if (!$user->hasRole('Demandeur')) {
             $this->validate(
@@ -555,11 +554,10 @@ class IndividuelleController extends Controller
         $individuelle->save();
 
         $demandeur->modules()->sync($request->input('modules'));
-
         if (!$user->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success', 'demande modifiée avec succès !');
         } else {
-            return redirect()->route('profiles.show', ['user'=>auth()->user()])->with('success', 'votre demande modifiée avec succès !');
+            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');
         }
     }
 
@@ -594,7 +592,7 @@ class IndividuelleController extends Controller
         $individuelle->delete();
 
         $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été supprimé(e)';
-        return redirect()->route('profiles.show', ['user'=>auth()->user()])->with('success', 'votre demande supprimée avec succès !');
+        return redirect()->route('profiles.show', ['user'=>$user])->with('success', 'votre demande supprimée avec succès !');
     }
 
     public function list(Request $request)
