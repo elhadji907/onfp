@@ -70,17 +70,20 @@ class IndividuelleController extends Controller
         $civilites = User::pluck('civilite', 'civilite');
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
-        $types_demande = $user->demandeur->types_demande->name;
-        
-        if (isset($user->demandeur->individuelles) && $types_demande ==="Individuelle"
-        && $user->hasRole('Demandeur') && !$user->hasRole('Administrateur')
-        && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
-            $demandeurs = $user->demandeur;
-            $individuelles = $demandeurs->individuelles;
-            foreach ($individuelles as $individuelle) {
+        if (isset($user->demandeur) !== false) {
+            $types_demande = $user->demandeur->types_demande->name;
+            if (isset($user->demandeur->individuelles) !== false
+           && $types_demande ==="Individuelle"
+           && $user->hasRole('Demandeur')
+           && !$user->hasRole('Administrateur')
+           && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
+                $demandeurs = $user->demandeur;
+                $individuelles = $demandeurs->individuelles;
+                foreach ($individuelles as $individuelle) {
+                }
+                $utilisateurs = $demandeurs->user;
+                return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
             }
-            $utilisateurs = $demandeurs->user;
-            return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
         } elseif ($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')) {
             return view('individuelles.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         } else {
@@ -105,11 +108,40 @@ class IndividuelleController extends Controller
         $user = auth::user();
         
         if (!$user->hasRole('Demandeur')) {
+            if (isset($user->demandeur) !== false) {
+                $this->validate(
+                    $request,
+                    [
+                        'sexe'                =>  'required|string|max:10',
+                        'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,'.$user->demandeur->id,
+                        'prenom'              =>  'required|string|max:50',
+                        'nom'                 =>  'required|string|max:50',
+                        'date_naiss'          =>  'required|date_format:Y-m-d',
+                        'date_depot'          =>  'required|date_format:Y-m-d',
+                        'lieu_naissance'      =>  'required|string|max:50',
+                        'telephone'           =>  'required|string|min:7|max:18',
+                        'fixe'                =>  'required|string|min:7|max:18',
+                        'etablissement'       =>  'required|string|max:100',
+                        'adresse'             =>  'required|string|max:100',
+                        'prerequis'           =>  'required|string|max:1500',
+                        'motivation'          =>  'required|string|max:1500',
+                        'email'               =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
+                        'familiale'           =>  'required',
+                        'professionnelle'     =>  'required',
+                        'niveau_etude'        =>  'required',
+                        'commune'             =>  'required',
+                        'modules'             =>  'exists:modules,id',
+                        'diplome'             =>  'required',
+                        'option'              =>  'required',
+                    ]
+                );
+            }else {
+                
             $this->validate(
                 $request,
                 [
                     'sexe'                =>  'required|string|max:10',
-                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,'.$user->demandeur->id,
+                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs',
                     'prenom'              =>  'required|string|max:50',
                     'nom'                 =>  'required|string|max:50',
                     'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -131,6 +163,7 @@ class IndividuelleController extends Controller
                     'option'              =>  'required',
                 ]
             );
+            }
         } else {
             $this->validate(
                 $request,
@@ -568,7 +601,7 @@ class IndividuelleController extends Controller
 
         if (!$user->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success', $message);
-        }else {
+        } else {
             return redirect()->route('profiles.show', ['user'=>$user])->with('success', $message);
         }
     }

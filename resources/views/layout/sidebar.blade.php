@@ -95,6 +95,9 @@
                 <a class="collapse-item" href="{{ route('collectives.index') }}">
                     <span>collectives</span>
                 </a>
+                <a class="collapse-item" href="#">
+                    <span>Prise en charge</span>
+                </a>
             </div>
         </div>
     </li>
