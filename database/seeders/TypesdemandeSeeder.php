@@ -30,5 +30,12 @@ class TypesdemandeSeeder extends Seeder
             'updated_at' => now(),
             'uuid' => Str::uuid(),
         ]);
+
+        DB::table('types_demandes')->insert([
+            "name"=>"Prise en charge",
+            'created_at' => now(),
+            'updated_at' => now(),
+            'uuid' => Str::uuid(),
+        ]);
     }
 }

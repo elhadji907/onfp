@@ -58,7 +58,7 @@
                     <td>{!! $operateur->sigle !!}</td>    
                     <td>{!! $operateur->email1 !!}</td>        
                     <td>{!! $operateur->telephone1 !!}</td>
-                    <td>{!! $operateur->type_structure !!}</td>        
+                    <td>{!! $operateur->typestructure !!}</td>        
                     <td class="d-flex align-items-baseline align-content-center">
                       {{--  @can('update', $operateur)  --}}
                         <a href="{!! url('operateurs/' .$operateur->id. '/edit') !!}" class= 'btn btn-success btn-sm' title="modifier">

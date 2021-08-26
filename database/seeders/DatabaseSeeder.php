@@ -65,6 +65,8 @@ class DatabaseSeeder extends Seeder
             FindividuelleSeeder::class,
             TypesOperateurSeeder::class,
             OperateurSeeder::class,
+            EtablissementSeeder::class,
+            PchargeSeeder::class,
         ]);
     }
 }

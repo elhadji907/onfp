@@ -19,6 +19,7 @@ use App\Http\Controllers\DemandeurController;
 use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\FindividuelleController;
 use App\Http\Controllers\CollectiveController;
+use App\Http\Controllers\PchargeController;
 use App\Http\Controllers\FcollectiveController;
 use App\Http\Controllers\BeneficiaireController;
 use App\Http\Controllers\DomaineController;
@@ -49,6 +50,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\EtablissementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +102,8 @@ Route::group([
         Route::get('/individuelles/list', [IndividuelleController::class, 'list'])->name('individuelles.list');
         Route::get('/findividuelles/list', [FindividuelleController::class, 'list'])->name('findividuelles.list');
         Route::get('/collectives/list', [CollectiveController::class, 'list'])->name('collectives.list');
+        Route::get('/pcharges/list', [PchargeController::class, 'list'])->name('pcharges.list');
+        Route::get('/etablissements/list', [EtablissementController::class, 'list'])->name('etablissements.list');
         Route::get('/fcollectives/list', [FcollectiveController::class, 'list'])->name('fcollectives.list');
         Route::get('/beneficiaires/list', [BeneficiaireController::class, 'list'])->name('beneficiaires.list');
         Route::get('/domaines/list', [DomaineController::class, 'list'])->name('domaines.list');
@@ -150,6 +154,7 @@ Route::group([
         Route::resource('/individuelles', IndividuelleController::class);
         Route::resource('/findividuelles', FindividuelleController::class);
         Route::resource('/collectives', CollectiveController::class);
+        Route::resource('/pcharges', PchargeController::class);
         Route::resource('/fcollectives', FcollectiveController::class);
         Route::resource('/domaines', DomaineController::class);
         Route::resource('/diplomes', DiplomeController::class);
@@ -178,6 +183,7 @@ Route::group([
         Route::resource('/arrondissements', ArrondissementController::class);
         Route::resource('/communes', CommuneController::class);
         Route::resource('/roles', RoleController::class);
+        Route::resource('/etablissements', EtablissementController::class);
     });
 
 require __DIR__.'/auth.php';

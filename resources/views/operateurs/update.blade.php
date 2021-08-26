@@ -4,6 +4,16 @@
     <div class="content">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
+                @if (count($errors) > 0)
+                <div class="alert alert-danger mt-2">
+                    <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -74,7 +84,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('type structure :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('type_structure', ['Publique' => 'Publique', 'Privé' => 'Privé'], $operateur->type_structure, ['placeholder' => 'sélectionner type structure', 'class' => 'form-control', 'id' => 'type_structure', 'data-width' => '100%']) !!}
+                                {!! Form::select('type_structure', ['Publique' => 'Publique', 'Privé' => 'Privé'], $operateur->typestructure, ['placeholder' => 'sélectionner type structure', 'class' => 'form-control', 'id' => 'type_structure', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('type_structure'))
                                         @foreach ($errors->get('type_structure') as $message)
@@ -95,11 +105,11 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                {!! Form::label('Département :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('departement', $departements, $operateur->departement->nom ?? "", ['placeholder' => 'sélectionner régions de résidence', 'class' => 'form-control', 'id' => 'departement', 'data-width' => '100%']) !!}
+                                {!! Form::label('Commune :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('commune', $communes, $operateur->commune->nom ?? "", ['placeholder' => 'sélectionner régions de résidence', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('departement'))
-                                        @foreach ($errors->get('departement') as $message)
+                                    @if ($errors->has('commune'))
+                                        @foreach ($errors->get('commune') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
@@ -183,10 +193,24 @@
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Ninéa :') !!}<span class="text-danger"> <b>*</b> </span>
                                 {!! Form::text('ninea', $operateur->ninea, ['placeholder' => 'Le ninea de votre structure', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('ninea'))
+                                        @foreach ($errors->get('ninea') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Régistre de commerce:') !!}
                                 {!! Form::text('registre', $operateur->rccm, ['placeholder' => 'Le registre de commerce de votre établissement', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('registre'))
+                                        @foreach ($errors->get('registre') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
                             </div>
                         </div>
                         <div class="form-row">

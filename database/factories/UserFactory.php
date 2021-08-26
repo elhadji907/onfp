@@ -23,18 +23,18 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $firstName = SnmG::getFirstName();
+       /*  $firstName = SnmG::getFirstName();
         $name = SnmG::getFirstName();
         $uniqueSuffix = $this->faker->unique()->numberBetween(1,99);
         $domain = 'gmail.com';
-        $uniqueFakeEmail = "$firstName.$name.$uniqueSuffix@$domain";
+        $uniqueFakeEmail = "$firstName.$name.$uniqueSuffix@$domain"; */
         
         return [
             'civilite' => SnmG::getCivilite(),
             'firstname' => SnmG::getFirstName(),
             'name' => SnmG::getName(),
             'username' => Str::random(7),
-            'email' => $uniqueFakeEmail,
+            'email' => $this->faker->unique()->safeEmail(),
             'telephone' => $this->faker->e164PhoneNumber,
             'fixe' => $this->faker->phoneNumber,
             'sexe' => SnmG::getSexe(),

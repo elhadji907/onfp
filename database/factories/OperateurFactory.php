@@ -32,21 +32,34 @@ class OperateurFactory extends Factory
         $types_operateurs_id=TypesOperateur::all()->random()->id;
         /* $role_id=Role::where('name', 'Operateur')->first()->id; */
         $annee = date('Y');
+     /*    $firstName = SnmG::getFirstName();
+        $name = SnmG::getFirstName();
+        $uniqueSuffix = $this->faker->unique()->numberBetween(1,99);
+        $domain1 = 'gmail.com';
+        $domain2 = 'yahoo.fr';
+        $uniqueFakeEmail1 = "$firstName.$name.$uniqueSuffix@$domain1";
+        $uniqueFakeEmail2 = "$firstName.$name.$uniqueSuffix@$domain2"; */
 
         return [
             'numero_agrement' => $this->faker->unique(true)->numberBetween(1000, 9999).'/ONFP/DG/DEC/'.$annee,
-            'name' => $this->faker->name,
-            'sigle' => "",
+            'name' => SnmG::getEtablissement(),
+            'sigle' => $this->faker->word,
             'typestructure' => SnmG::getTypesstructure(),
             'ninea' => $this->faker->word,
             'rccm' => $this->faker->word,
             'quitus' => $this->faker->word,
-            'telephone1' => $this->faker->word,
-            'telephone2' => $this->faker->word,
+            'telephone1' => $this->faker->e164PhoneNumber,
+            'telephone2' => $this->faker->e164PhoneNumber,
             'fixe' => $this->faker->word,
-            'email1' => $this->faker->word,
-            'email2' => $this->faker->word,
+            'email1' => $this->faker->unique()->safeEmail(),
+            'email2' => $this->faker->unique()->safeEmail(),
             'adresse' => $this->faker->word,
+            'debut_quitus' => $this->faker->dateTime(),
+            'fin_quitus' => $this->faker->dateTime(),
+            'date' => $this->faker->dateTime(),
+            'date_debut' => $this->faker->dateTime(),
+            'date_fin' => $this->faker->dateTime(),
+            'date_renew' => $this->faker->dateTime(),
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
             },

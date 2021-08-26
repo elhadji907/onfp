@@ -95,7 +95,7 @@
                 <a class="collapse-item" href="{{ route('collectives.index') }}">
                     <span>collectives</span>
                 </a>
-                <a class="collapse-item" href="#">
+                <a class="collapse-item" href="{{ route('pcharges.index') }}">
                     <span>Prise en charge</span>
                 </a>
             </div>
@@ -187,7 +187,16 @@
     @endhasrole
     @hasrole('Demandeur')
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('operateurs.index') }}">
+        <a class="nav-link" href="{{ route('pcharges.create') }}">
+            <span data-feather="users"></span>
+            <span>Demande prise en charge</span>
+        </a>
+    </li>
+@else
+    @endhasrole
+    @hasrole('Demandeur')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('operateurs.create') }}">
             <span data-feather="users"></span>
             <span>Devenir opérateur</span>
         </a>
@@ -293,10 +302,20 @@
     <hr class="sidebar-divider my-0">
 @else
     @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('etablissements.index') }}">
+            <span data-feather="layers"></span>
+            <span>Etablissements</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+@else
+    @endhasrole
     @hasrole('super-admin|Administrateur|DAF|RHDAF')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('employees.index') }}">
-            <span data-feather="layers"></span>
+            <span data-feather="users"></span>
             <span>Gestion des employees</span>
         </a>
     </li>
