@@ -122,22 +122,26 @@
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-users">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:5%;">Civilité</th>
-                                        <th>Prenom & Nom</th>
-                                        <th>Date et lieu naissance</th>
-                                        <th style="width:18%;">Email</th>
-                                        <th style="width:8%;">Téléphone</th>
-                                        <th>Etablissement</th>
+                                        <th>Civilité</th>
+                                        <th>Prénom</th>
+                                        <th>Nom</th>
+                                        <th style="width:9%;">Date nais.</th>
+                                        <th style="width:9%;">Lieu nais.</th>
+                                       {{--   <th style="width:5%;">Email</th>  --}}
+                                        <th style="width:5%;">Téléphone</th>
+                                        <th style="width:40%;">Etablissement</th>
                                         <th style="width:5%;">Année</th>
-                                        <th style="width:9%;"></th>
+                                        <th style="width:12%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
-                                        <th>Prenom & Nom</th>
-                                        <th>Date et lieu naissance</th>
-                                        <th>Email</th>
+                                        <th>Prénom</th>
+                                        <th>Nom</th>
+                                        <th>Date nais.</th>
+                                        <th>Lieu nais.</th>
+                                      {{--    <th>Email</th>  --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
                                         <th>Année</th>
@@ -147,27 +151,15 @@
                                 <tbody>
                                     @foreach ($pcharges as $pcharge)
                                         <tr>
-                                            <td>{!! $pcharge->demandeur->user->civilite !!}
-                                            </td>
-                                            <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!}
-                                                {!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
-                                            <td>
-                                                @if ($pcharge->demandeur->user->civilite == 'M.')
-                                                    né le
-                                                @endif
-                                                @if ($pcharge->demandeur->user->civilite == 'Mme')
-                                                    née le
-                                                @endif
-                                                {!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!} {{ __('à') }} {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}
-                                            </td>
-                                            <td>{!! $pcharge->demandeur->user->email !!}
-                                            </td>
-                                            <td>{!! $pcharge->demandeur->user->telephone !!}
-                                            </td>
-                                            <td>{!! $pcharge->etablissement->name !!}
-                                            </td>
-                                            <td>{!! $pcharge->annee !!}
-                                            </td>
+                                            <td>{!! $pcharge->demandeur->user->civilite !!}</td>
+                                            <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!}</td>
+                                            <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
+                                            <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                            <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>
+                                           {{--   <td>{!! $pcharge->demandeur->user->email !!}</td>  --}}
+                                            <td>{!! $pcharge->demandeur->user->telephone !!}</td>
+                                            <td>{!! $pcharge->etablissement->name !!}</td>
+                                            <td>{!! $pcharge->annee !!}</td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a href="{!! url('pcharges/' . $pcharge->demandeur->user->username . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
