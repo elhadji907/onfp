@@ -135,7 +135,7 @@ class DemandeurController extends Controller
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
-        $civilites = User::pluck('civilite', 'civilite');
+        $civilites = User::distinct('civilite')->pluck('civilite', 'civilite');
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
         $date_depot = Carbon::now();
 

@@ -40,15 +40,14 @@
             <span> Gérer mon profil </span>
         </a>
     </h6>
-    @else
+@else
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-white">
-        <a class="nav-link d-flex align-items-center text-white"
-            href="{{ url('/home') }}">
+        <a class="nav-link d-flex align-items-center text-white" href="{{ url('/home') }}">
             <span data-feather="user"></span>
             <span> Gérer mon profil </span>
         </a>
     </h6>
-        @endhasrole
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire|Courrier|ACourrier')
     <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_courrier"
@@ -102,6 +101,31 @@
         </div>
     </li>
 @else
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('individuelles.create') }}">
+            <span data-feather="users"></span>
+            <span>Demande individuelle</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('collectives.create') }}">
+            <span data-feather="users"></span>
+            <span>Demande collective</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pcharges.create') }}">
+            <span data-feather="users"></span>
+            <span>Demande prise en charge</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('operateurs.create') }}">
+            <span data-feather="users"></span>
+            <span>Devenir opérateur</span>
+        </a>
+    </li>
     @endhasrole
     <hr class="sidebar-divider my-0">
     @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|DEC|ADEC|ADIOF')
@@ -128,6 +152,22 @@
     </li>
 @else
     @endhasrole
+
+
+    @hasrole('super-admin|Administrateur|Gestionnaire|Courrier|ACourrier')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pcharges.index') }}">
+            <span data-feather="folder"></span>
+            <span>Prises en charge</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+@else
+    @endhasrole
+
+
+
+
     <hr class="sidebar-divider my-0">
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
@@ -163,43 +203,6 @@
                 </a>
             </div>
         </div>
-    </li>
-@else
-    @endhasrole
-    @hasrole('Demandeur')
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('individuelles.create') }}">
-            <span data-feather="users"></span>
-            <span>Demande individuelle</span>
-        </a>
-    </li>
-@else
-    @endhasrole
-    @hasrole('Demandeur')
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('collectives.create') }}">
-            <span data-feather="users"></span>
-            <span>Demande collective</span>
-        </a>
-    </li>
-    <hr class="sidebar-divider my-0">
-@else
-    @endhasrole
-    @hasrole('Demandeur')
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('pcharges.create') }}">
-            <span data-feather="users"></span>
-            <span>Demande prise en charge</span>
-        </a>
-    </li>
-@else
-    @endhasrole
-    @hasrole('Demandeur')
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('operateurs.create') }}">
-            <span data-feather="users"></span>
-            <span>Devenir opérateur</span>
-        </a>
     </li>
 @else
     @endhasrole

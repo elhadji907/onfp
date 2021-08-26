@@ -2,6 +2,100 @@
 @section('title', 'ONFP - Liste des prises en charge')
 @section('content')
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ 'Prises en charge (TOTAL)' }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ 'Année (2019)' }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2019 }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ 'Année (2020)' }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2020 }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ 'Année (2021)' }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2021 }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-6 mb-4">
+                <div class="card border-left-secondary shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ 'Année (2022)' }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2022 }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
@@ -20,7 +114,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
-                                <a href="{{ route('users.create') }}">
+                                <a href="{{ route('pcharges.create') }}">
                                     <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
                                 </a>
                             </div>
@@ -163,8 +257,8 @@
                     }
                 ],
                 "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "Tout"]
+                    [5, 10, 25, 50, 100, -1],
+                    [-5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
                     [1, 'asc']

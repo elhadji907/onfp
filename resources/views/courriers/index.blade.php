@@ -39,8 +39,7 @@
               </div>
               </a>
             </div>
-          </div>
-        
+          </div>        
           <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                  <a class="nav-link" href="{{ route('departs.index') }}" target="_blank">

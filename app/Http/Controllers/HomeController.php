@@ -8,6 +8,7 @@ use App\Models\Recue;
 use App\Models\Interne;
 use App\Models\Depart;
 use App\Models\Courrier;
+use App\Models\Pcharge;
 use Auth;
 
 class HomeController extends Controller
@@ -32,18 +33,7 @@ class HomeController extends Controller
         $courrier = Courrier::get()->count();
         $demandeurs = Demandeur::get()->count();
 
-       // dd($couriers);
-
-        //$operateurs = Operateur::get()->count();
-        //$Personnels = Personnel::get()->count();
-
         $chart      = Courrier::all();
-
-        /* $chart = new Courrierchart; */
-    /*     $chart->labels(['Demandeurs', 'Courriers']);
-        $chart->dataset('STATISTIQUES', 'bar', collect([$demandeurs, $courriers]))->options([
-            'backgroundColor'=>["#3e95cd", "#8e5ea2", "#3cba9f", '#ff3838'],
-        ]); */
         $user = Auth::user();
         $demandeurs = Demandeur::all();
         $user_connect  =  $user->demandeur;
@@ -56,8 +46,8 @@ class HomeController extends Controller
         }
         else {
         $courriers = Courrier::all();
-    /*  return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs','chart'));   */    
-        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs'));      
+        $annees = Pcharge::distinct('annee')->pluck('annee', 'annee'); 
+        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'annees'));      
 
         }
         

@@ -14,8 +14,17 @@ class PchargeController extends Controller
      */
     public function index()
     {
+        $annees = Pcharge::distinct('annee')->pluck('annee', 'annee');
+
+        $an2019 = Pcharge::where('annee','2019')->count();
+        $an2020 = Pcharge::where('annee','2020')->count();
+        $an2021 = Pcharge::where('annee','2021')->count();
+        $an2022 = Pcharge::where('annee','2022')->count();
+
+        $total = Pcharge::get()->count();
+
         $pcharges      =   Pcharge::all();
-        return view('pcharges.index', compact('pcharges'));
+        return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'an2022'));
     }
 
     /**
@@ -25,7 +34,7 @@ class PchargeController extends Controller
      */
     public function create()
     {
-        //
+        return view('pcharges.create');
     }
 
     /**
