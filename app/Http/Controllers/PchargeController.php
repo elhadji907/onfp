@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class PchargeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        /* $this->middleware(['role:super-admin|Administrateur|Gestionnaire']); */
+      /*   $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:user-create', ['only' => ['create','store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]); */
+    }
     /**
      * Display a listing of the resource.
      *

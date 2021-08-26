@@ -15,7 +15,7 @@ class PchargeSeeder extends Seeder
     public function run()
     {
         Pcharge::factory()
-            ->count(555)
+            ->count(55)
             ->create();
     }
 }
