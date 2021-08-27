@@ -72,10 +72,10 @@ class PermissionsOnfpSeeder extends Seeder
         Permission::create(['name' => 'commentere-edit']);
         Permission::create(['name' => 'commentere-delete']);
         
-        Permission::create(['name' => 'demandeur-list']);
-        Permission::create(['name' => 'demandeur-create']);
-        Permission::create(['name' => 'demandeur-edit']);
-        Permission::create(['name' => 'demandeur-delete']);
+        Permission::create(['name' => 'demande-list']);
+        Permission::create(['name' => 'demande-create']);
+        Permission::create(['name' => 'demande-edit']);
+        Permission::create(['name' => 'demande-delete']);
         
         Permission::create(['name' => 'operateur-list']);
         Permission::create(['name' => 'operateur-create']);
@@ -116,11 +116,11 @@ class PermissionsOnfpSeeder extends Seeder
  
         // this can be done as separate statements
         $role = Role::create(['name' => 'Beneficiaire']);
-        $role->givePermissionTo('demandeur-list', 'demandeur-edit', 'demandeur-delete', 'module-list');
+        $role->givePermissionTo('demande-list', 'demande-edit', 'demande-delete', 'module-list');
  
         // or may be done by chaining
         $role = Role::create(['name' => 'Courrier']);
-        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demandeur-list',  'demandeur-create', 'demandeur-edit', 'module-list']);
+        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list',  'demande-create', 'demande-edit', 'module-list']);
 
         $role = Role::create(['name' => 'ACourrier']);
         $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'module-list']);
@@ -132,7 +132,7 @@ class PermissionsOnfpSeeder extends Seeder
         $role->givePermissionTo(Permission::all());
 
         $role = Role::create(['name' => 'Gestionnaire']);
-        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demandeur-list',  'demandeur-create', 'demandeur-list', 'demandeur-edit', 'demandeur-delete', 'module-list']);
+        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list',  'demande-create', 'demande-list', 'demande-edit', 'demande-delete', 'module-list']);
 
         $role = Role::create(['name' => 'Demandeur']);
 
@@ -172,16 +172,16 @@ class PermissionsOnfpSeeder extends Seeder
         $role->givePermissionTo('formation-list', 'projet-list', 'module-list', 'module-list');
 
         $role = Role::create(['name' => 'DAF']);
-        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demandeur-list', 'employee-list',  'employee-create', 'employee-edit', 'employee-delete', 'projet-list', 'pcharge-list', 'module-list']);
+        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list', 'employee-list',  'employee-create', 'employee-edit', 'employee-delete', 'projet-list', 'pcharge-list', 'module-list']);
 
         $role = Role::create(['name' => 'FDAF']);
-        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demandeur-list'], 'module-list');
+        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list'], 'module-list');
 
         $role = Role::create(['name' => 'RHDAF']);
-        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demandeur-list', 'employee-list',  'employee-create', 'employee-edit', 'employee-delete', 'module-list']);
+        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list', 'employee-list',  'employee-create', 'employee-edit', 'employee-delete', 'module-list']);
 
         $role = Role::create(['name' => 'LOGDAF']);
-        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demandeur-list'], 'module-list');
+        $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list'], 'module-list');
 
         
         $role = Role::create(['name' => 'DPP']);

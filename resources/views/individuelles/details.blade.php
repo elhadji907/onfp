@@ -223,11 +223,9 @@
                     </table>
 
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        @can('update', $individuelle)
                             <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning mt-0">
                                 <i class="far fa-edit">&nbsp;Modifier</i>
                             </a>
-                        @endcan
                         <a href="{!! route('demandeurs.show', $individuelle->demandeur->id) !!}" title="modifier" class="btn btn-outline-primary mt-0">
                             <i class="far fa-eye">&nbsp;M&eacute;ssage</i>
                         </a>

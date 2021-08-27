@@ -440,7 +440,7 @@ class CollectiveController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$collective->demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15",
                'name'                =>  "required|string",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
@@ -463,7 +463,7 @@ class CollectiveController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$collective->demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15",
                'name'                =>  "required|string|unique:collectives,name,{$collective->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',

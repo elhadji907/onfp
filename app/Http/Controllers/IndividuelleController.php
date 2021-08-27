@@ -478,7 +478,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$user->demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -505,7 +505,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$user->demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
