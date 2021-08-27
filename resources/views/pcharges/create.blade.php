@@ -156,7 +156,7 @@
                             </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Etablissement') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('etablissement', $etablissements, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'etablissement']) !!}
+                                {!! Form::select('etablissement', $etablissements, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'etablissements']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('etablissement'))
                                         @foreach ($errors->get('etablissement') as $message)

@@ -34,7 +34,7 @@
 </script>  
 <script type="text/javascript">
 
-      $("#etablissement").select2({
+      $("#etablissements").select2({
             placeholder: "choisir établissement",
             allowClear: true
         });

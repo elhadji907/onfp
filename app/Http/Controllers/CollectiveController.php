@@ -71,7 +71,33 @@ class CollectiveController extends Controller
         $civilites = User::pluck('civilite', 'civilite');
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
-        if (isset($user->demandeur) !== false) {
+        if ($user->hasRole('Demandeur')) {
+            if (isset($user->demandeur)) {
+                $types_demande = $user->demandeur->types_demande->name;
+                $demandeurs = $user->demandeur;
+                $collectives = $demandeurs->collectives;
+                $utilisateurs = $user;
+                if ($types_demande === "Collective") {
+                    foreach ($collectives as $collective) {
+                    }
+                    return view('collectives.update', compact('civilites', 'familiale', 'collective', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+                } elseif($types_demande === "Collective") {
+                    return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+                } elseif($types_demande === "Prise en charge") {
+                    return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+                }else {
+                    dd("Erreur, merci de contacter l'administrateur");
+                }
+                
+            } else {
+                return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+            }
+        } else {
+            return view('collectives.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+        }
+
+
+      /*   if (isset($user->demandeur) !== false) {
             $types_demande = $user->demandeur->types_demande->name;
             if (isset($user->demandeur->collectives) !== false
            && $types_demande ==="Collective"
@@ -84,12 +110,14 @@ class CollectiveController extends Controller
                 }
                 $utilisateurs = $demandeurs->user;
                 return view('collectives.update', compact('civilites', 'familiale', 'collective', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+            }else {                
+                return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
             }
         } elseif ($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')) {
             return view('collectives.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         } else {
             return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-        }
+        } */
     }
 
     /**
@@ -127,9 +155,10 @@ class CollectiveController extends Controller
                         'modules'             =>  'exists:modules,id',
                     ]
                 );
-            }else {   $this->validate(
-                $request,
-                [
+            } else {
+                $this->validate(
+                    $request,
+                    [
                     'sexe'                =>  'required|string|max:10',
                     'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs',
                     'name'                =>  'required|string|unique:collectives,name,NULL,id,deleted_at,NULL',
@@ -149,14 +178,38 @@ class CollectiveController extends Controller
                     'commune'             =>  'required',
                     'modules'             =>  'exists:modules,id',
                 ]
-            );
+                );
             }
-        } else {
+        } elseif (isset($user->demandeur) !== false) {
             $this->validate(
                 $request,
                 [
                     'sexe'                =>  'required|string|max:10',
                     'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,'.$user->demandeur->id,
+                    'name'                =>  'required|string|unique:collectives,name,NULL,id,deleted_at,NULL',
+                    'prenom'              =>  'required|string|max:50',
+                    'nom'                 =>  'required|string|max:50',
+                    'date_naiss'          =>  'required|date_format:Y-m-d',
+                    'date_depot'          =>  'required|date_format:Y-m-d',
+                    'lieu_naissance'      =>  'required|string|max:50',
+                    'telephone'           =>  'required|string|min:7|max:18',
+                    'fixe'                =>  'required|string|min:7|max:18',
+                    'structure_fixe'      =>  'required|string|min:7|max:18',
+                    'adresse'             =>  'required|string|max:200',
+                    'structure_adresse'   =>  'required|string|max:200',
+                    'description'         =>  'required|string|min:1|max:1500',
+                    'email'               =>  'required|string|email|max:255|unique:users,email,'.$user->id,
+                    'professionnelle'     =>  'required',
+                    'commune'             =>  'required',
+                    'modules'             =>  'exists:modules,id',
+                ]
+            );
+        } else {
+            $this->validate(
+                $request,
+                [
+                    'sexe'                =>  'required|string|max:10',
+                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin',
                     'name'                =>  'required|string|unique:collectives,name,NULL,id,deleted_at,NULL',
                     'prenom'              =>  'required|string|max:50',
                     'nom'                 =>  'required|string|max:50',
@@ -450,7 +503,7 @@ class CollectiveController extends Controller
  
         $autre_tel = $request->input('autre_tel');
         $autre_tel = str_replace(' ', '', $autre_tel);
- 
+
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
 
@@ -497,6 +550,7 @@ class CollectiveController extends Controller
         $demandeur->numero_courrier             =      $request->input('numero_courrier');
         $demandeur->date_depot                  =      $request->input('date_depot');
         $demandeur->fixe                        =      $structure_fixe;
+        $demandeur->telephone                   =      $autre_tel;
         if (!$user->hasRole('Demandeur')) {
             $demandeur->statut                      =      $request->input('statut');
         }
@@ -562,7 +616,7 @@ class CollectiveController extends Controller
 
         if (!$user->hasRole('Demandeur')) {
             return redirect()->route('collectives.index')->with('success', $message);
-        }else {
+        } else {
             return redirect()->route('profiles.show', ['user'=>$user])->with('success', $message);
         }
     }

@@ -44,8 +44,8 @@ class RegisteredUserController extends Controller
             'username'        =>     'required|string|min:5|max:10|unique:users,username,NULL,id,deleted_at,NULL',
             'email'           =>     'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
             'telephone'       =>     'required|string|max:50',
-            /* 'password'        =>     'required|confirmed', Rules\Password::defaults(), */
-            'password'        =>      ['required', 'string', 'confirmed', new isValidPassword()],
+            'password'        =>     'required|confirmed', Rules\Password::defaults(),
+            /* 'password'        =>      ['required', 'string', 'confirmed', new isValidPassword()], */
         ]);
 
        /*  $role_id = Role::where('name','Administrateur')->first()->id;

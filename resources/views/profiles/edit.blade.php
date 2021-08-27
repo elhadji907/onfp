@@ -127,11 +127,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="fixe">{{ __('Fixe') }}</label>
+                                    <label for="fixe">{{ __('Téléphone secondaire') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="fixe" type="text"
                                         class="form-control form-control-user @error('fixe') is-invalid @enderror"
-                                        name="fixe" placeholder="Votre téléphone"
+                                        name="fixe" placeholder="Votre téléphone secondaire"
                                         value="{{ old('fixe') ?? Auth::user()->fixe }}" autocomplete="fixe">
                                     @error('fixe')
                                         <span class="invalid-feedback" role="alert">

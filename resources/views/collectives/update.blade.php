@@ -118,10 +118,10 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="autre_tel">{{ __('Téléphone secondaire') }}</label>
+                                <label for="autre_tel">{{ __('Téléphone') }}</label>
                                 <input id="autre_tel" type="text"
                                     class="form-control @error('autre_tel') is-invalid @enderror" name="autre_tel"
-                                    placeholder="7x xxx xx xx" value="{{ old('autre_tel') }}" autocomplete="autre_tel">
+                                    placeholder="7x xxx xx xx" value="{{ $collective->demandeur->telephone ?? old('autre_tel') }}" autocomplete="autre_tel">
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)

@@ -70,25 +70,62 @@ class IndividuelleController extends Controller
         $civilites = User::pluck('civilite', 'civilite');
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
-        if (isset($user->demandeur) !== false) {
+
+        if ($user->hasRole('Demandeur')) {
+            if (isset($user->demandeur)) {
+                $types_demande = $user->demandeur->types_demande->name;
+                $demandeurs = $user->demandeur;
+                $individuelles = $demandeurs->individuelles;
+                $utilisateurs = $user;
+                if ($types_demande === "Individuelle") {
+                    foreach ($individuelles as $individuelle) {
+                    }
+                    return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+                } elseif($types_demande === "Collective") {
+                    return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+                } elseif($types_demande === "Prise en charge") {
+                    return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+                }else {
+                    dd("Erreur, merci de contacter l'administrateur");
+                }
+                
+            } else {
+                return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+            }
+        } else {
+            return view('individuelles.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+        }
+        
+
+
+
+
+      /*   if (isset($user->demandeur) !== false) {
+
             $types_demande = $user->demandeur->types_demande->name;
+            $demandeurs = $user->demandeur;
+            $individuelles = $demandeurs->individuelles;
+            $collectives = $demandeurs->collectives;
             if (isset($user->demandeur->individuelles) !== false
            && $types_demande ==="Individuelle"
            && $user->hasRole('Demandeur')
            && !$user->hasRole('Administrateur')
-           && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
-                $demandeurs = $user->demandeur;
-                $individuelles = $demandeurs->individuelles;
+           && !$user->hasRole('Gestionnaire') 
+           && !$user->hasRole('super-admin')) {
                 foreach ($individuelles as $individuelle) {
                 }
                 $utilisateurs = $demandeurs->user;
                 return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+            }else {
+                return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
             }
-        } elseif ($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')) {
+        } 
+        
+        elseif ($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')) {
             return view('individuelles.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         } else {
             return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-        }
+        } */
     }
 
     public function findNomDept(Request $request)
@@ -135,11 +172,10 @@ class IndividuelleController extends Controller
                         'option'              =>  'required',
                     ]
                 );
-            }else {
-                
-            $this->validate(
-                $request,
-                [
+            } else {
+                $this->validate(
+                    $request,
+                    [
                     'sexe'                =>  'required|string|max:10',
                     'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs',
                     'prenom'              =>  'required|string|max:50',
@@ -162,9 +198,9 @@ class IndividuelleController extends Controller
                     'diplome'             =>  'required',
                     'option'              =>  'required',
                 ]
-            );
+                );
             }
-        } else {
+        } elseif (isset($user->demandeur) !== false) {
             $this->validate(
                 $request,
                 [
@@ -190,6 +226,33 @@ class IndividuelleController extends Controller
                     'diplome'             =>  'required',
                     'option'              =>  'required',
                 ]
+            );
+        } else {
+            $this->validate(
+                $request,
+                [
+                'sexe'                =>  'required|string|max:10',
+                'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin',
+                'prenom'              =>  'required|string|max:50',
+                'nom'                 =>  'required|string|max:50',
+                'date_naiss'          =>  'required|date_format:Y-m-d',
+                'date_depot'          =>  'required|date_format:Y-m-d',
+                'lieu_naissance'      =>  'required|string|max:50',
+                'telephone'           =>  'required|string|min:7|max:18',
+                'fixe'                =>  'required|string|min:7|max:18',
+                'etablissement'       =>  'required|string|max:100',
+                'adresse'             =>  'required|string|max:100',
+                'prerequis'           =>  'required|string|max:1500',
+                'motivation'          =>  'required|string|max:1500',
+                'email'               =>  'required|string|email|max:255|unique:users,email,'.$user->id,
+                'familiale'           =>  'required',
+                'professionnelle'     =>  'required',
+                'niveau_etude'        =>  'required',
+                'commune'             =>  'required',
+                'modules'             =>  'exists:modules,id',
+                'diplome'             =>  'required',
+                'option'              =>  'required',
+            ]
             );
         }
 
@@ -415,7 +478,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$individuelle->demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$user->demandeur->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -442,7 +505,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$individuelle->demandeur->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15|unique:demandeurs,cin,{$user->demandeur->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
