@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pcharge;
+use App\Models\Etablissement;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
 class PchargeController extends Controller
@@ -42,8 +44,11 @@ class PchargeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('pcharges.create');
+    {        
+        $etablissements = Etablissement::distinct('name')->get()->pluck('name', 'name')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        return view('pcharges.create', compact('etablissements', 'modules'));
     }
 
     /**
@@ -54,7 +59,16 @@ class PchargeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+                'civilite'              =>  'required|string|max:10',
+                'firstname'             =>  'required|string|max:50',
+                'name'                  =>  'required|string|max:50',
+                'telephone'             =>  'required|string|max:50',
+                'email'                 =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
+                'adresse'               =>  'required|string',
+                'fixe'                  =>  'required|string|max:50',
+                'lieu_naissance'        =>  'required|string|max:50',
+            ]);
     }
 
     /**

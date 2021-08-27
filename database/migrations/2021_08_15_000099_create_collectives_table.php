@@ -27,18 +27,26 @@ class CreateCollectivesTable extends Migration
             $table->longText('name');
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
-            $table->unsignedInteger('demandeurs_id');
             $table->string('sigle', 100)->nullable();
             $table->string('statut', 100)->nullable();
             $table->longText('description')->nullable();
+            $table->unsignedInteger('demandeurs_id');
+            $table->unsignedInteger('ingenieurs_id')->nullable();
 
             $table->index(["demandeurs_id"], 'fk_collectives_demandeurs1_idx');
+
+            $table->index(["ingenieurs_id"], 'fk_collectives_ingenieurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
             $table->foreign('demandeurs_id', 'fk_collectives_demandeurs1_idx')
                 ->references('id')->on('demandeurs')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('ingenieurs_id', 'fk_collectives_ingenieurs1_idx')
+                ->references('id')->on('ingenieurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

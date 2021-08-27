@@ -34,6 +34,13 @@
 </script>  
 <script type="text/javascript">
 
+      $("#etablissement").select2({
+            placeholder: "choisir établissement",
+            allowClear: true
+        });
+</script>  
+<script type="text/javascript">
+
       $("#convention").select2({
             placeholder: "choisir convention",
             allowClear: true
