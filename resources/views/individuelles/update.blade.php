@@ -24,8 +24,9 @@
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
                                 <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
-                                    name="cin" placeholder="Votre et cin" value="{{ $individuelle->demandeur->cin ?? old('cin') }}"
-                                    autocomplete="cin" autofocus>
+                                    name="cin" placeholder="Votre et cin"
+                                    value="{{ $individuelle->cin ?? old('cin') }}" autocomplete="cin"
+                                    autofocus>
                                 @error('cin')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -91,8 +92,7 @@
                                         class="text-danger">*</span>)</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" placeholder="Votre adresse e-mail"
-                                    value="{{ $individuelle->demandeur->user->email ?? old('email') }}"
-                                    autocomplete="email">
+                                    value="{{ $individuelle->demandeur->user->email ?? '' }}" autocomplete="email">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -107,7 +107,7 @@
                                 <input id="telephone" type="text"
                                     class="form-control @error('telephone') is-invalid @enderror" name="telephone"
                                     placeholder="7x xxx xx xx"
-                                    value="{{ $individuelle->demandeur->user->telephone ?? old('telephone') }}"
+                                    value="{{ $individuelle->demandeur->user->telephone ?? '' }}"
                                     autocomplete="telephone" autofocus>
                                 @error('telephone')
                                     <span class="invalid-feedback" role="alert">
@@ -119,7 +119,7 @@
                                 <label for="fixe">{{ __('Fixe') }}(<span class="text-danger">*</span>)</label>
                                 <input id="fixe" type="text" class="form-control @error('fixe') is-invalid @enderror"
                                     name="fixe" placeholder="3x xxx xx xx"
-                                    value="{{ $individuelle->demandeur->user->fixe ?? old('fixe') }}" autocomplete="fixe"
+                                    value="{{ $individuelle->demandeur->user->fixe ?? '' }}" autocomplete="fixe"
                                     autofocus>
                                 @error('fixe')
                                     <span class="invalid-feedback" role="alert">
@@ -131,15 +131,14 @@
                                 <label for="autre_tel">{{ __('Téléphone secondaire') }}</label>
                                 <input id="autre_tel" type="text"
                                     class="form-control @error('autre_tel') is-invalid @enderror" name="autre_tel"
-                                    placeholder="7x xxx xx xx"
-                                    value="{{ $individuelle->demandeur->telephone ?? old('autre_tel') }}"
+                                    placeholder="7x xxx xx xx" value="{{ $individuelle->demandeur->telephone ?? '' }}"
                                     autocomplete="autre_tel" autofocus>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], $individuelle->demandeur->user->sexe, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
+                                {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], $individuelle->demandeur->user->sexe ?? '', ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('sexe'))
                                         @foreach ($errors->get('sexe') as $message)
@@ -150,7 +149,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Situation familiale :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('familiale', ['Célibataire' => 'Célibataire', 'Divorcé(e)' => 'Divorcé(e)'], $individuelle->demandeur->user->situation_familiale, ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                {!! Form::select('familiale', ['Célibataire' => 'Célibataire', 'Divorcé(e)' => 'Divorcé(e)'], $individuelle->demandeur->user->situation_familiale ?? '', ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('familiale'))
                                         @foreach ($errors->get('familiale') as $message)
@@ -163,7 +162,7 @@
                                 <label for="input-name"><b>{{ __('Situation familiale') }}:</b></label>
                                 <select name="professionnelle" id="professionnelle" class="form-control" data-width="100%">
                                     <option value="{{ $individuelle->demandeur->user->situation_professionnelle }}">
-                                        {{ $individuelle->demandeur->user->situation_professionnelle }}</option>
+                                        {{ $individuelle->demandeur->user->situation_professionnelle ?? '' }}</option>
                                     <option value="">{{ __('...sélectionner...') }}</option>
                                     <option value="{{ 'Salarié CDD' }}">{{ 'Salarié CDD' }}</option>
                                     <option value="{{ 'Salarié CDI' }}">{{ 'Salarié CDI' }}</option>
@@ -185,8 +184,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('commune', $communes, $individuelle->demandeur->commune->nom, 
-                                ['placeholder' => 'Choir une commune', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
+                                {!! Form::select('commune', $communes, $individuelle->demandeur->commune->nom ?? '', ['placeholder' => 'Choir une commune', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('commune'))
                                         @foreach ($errors->get('commune') as $message)
@@ -199,8 +197,7 @@
                                 <label for="bp">{{ __('Boite postale') }}</label>
                                 <input id="bp" type="text" class="form-control @error('bp') is-invalid @enderror" name="bp"
                                     placeholder="Votre adresse postale"
-                                    value="{{ $individuelle->demandeur->user->bp ?? old('bp') }}" autocomplete="bp"
-                                    autofocus>
+                                    value="{{ $individuelle->demandeur->user->bp ?? '' }}" autocomplete="bp" autofocus>
                                 @error('bp')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -211,8 +208,7 @@
                                 <label for="fax">{{ __('Téléphone fax') }}</label>
                                 <input id="fax" type="text" class="form-control @error('fax') is-invalid @enderror"
                                     name="fax" placeholder="Votre numero de fax"
-                                    value="{{ $individuelle->demandeur->user->fax ?? old('fax') }}" autocomplete="fax"
-                                    autofocus>
+                                    value="{{ $individuelle->demandeur->user->fax ?? '' }}" autocomplete="fax" autofocus>
                                 @error('fax')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -226,7 +222,7 @@
                                         class="text-danger">*</span>)</label>
                                 <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
                                     id="adresse" rows="2"
-                                    placeholder="Votre adresse complète">{{ $individuelle->demandeur->user->adresse ?? old('adresse') }}</textarea>
+                                    placeholder="Votre adresse complète">{{ $individuelle->demandeur->user->adresse ?? '' }}</textarea>
                                 @error('adresse')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -284,7 +280,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Diplômes :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('diplome', $diplomes, $individuelle->demandeur->diplome->name, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'diplome']) !!}
+                                {!! Form::select('diplome', $diplomes, $individuelle->demandeur->diplome->name ?? '', ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'diplome']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('diplome'))
                                         @foreach ($errors->get('diplome') as $message)
@@ -314,7 +310,7 @@
                                         class="text-danger">*</span>)</label>
                                 <textarea class="form-control  @error('etablissement') is-invalid @enderror"
                                     name="etablissement" id="etablissement" rows="1"
-                                    placeholder="Votre etablissement complète">{{ $individuelle->demandeur->etablissement ?? old('etablissement') }}</textarea>
+                                    placeholder="Votre etablissement complète">{{ $individuelle->demandeur->etablissement ?? '' }}</textarea>
                                 @error('etablissement')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -383,37 +379,37 @@
                             </div>
                         </div>
                         @can('demandeur-list')
-                        <div class="form-row">
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $individuelle->demandeur->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('statut'))
-                                        @foreach ($errors->get('statut') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
+                            <div class="form-row">
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $individuelle->demandeur->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('statut'))
+                                            @foreach ($errors->get('statut') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
                             </div>
-                        </div>
                         @endcan
                         @can('demandeur-list')
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
-                        </div>                        
-                        <div class="form-row">
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('programme', $programmes, $individuelle->demandeur->programme->sigle ?? " ", ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('programme'))
-                                        @foreach ($errors->get('programme') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
+                            <div class="bg-gradient-secondary text-center">
+                                <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
                             </div>
-                        </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('programme', $programmes, $individuelle->demandeur->programme->sigle ?? ' ', ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('programme'))
+                                            @foreach ($errors->get('programme') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
                         @endcan
                         {!! Form::hidden('username', $individuelle->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
                         {!! Form::hidden('numero', $individuelle->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
@@ -432,6 +428,5 @@
 @section('javascripts')
     <script type="text/javascript">
         $('#moduleup').select2().val({!! json_encode($individuelle->demandeur->modules()->allRelatedIds()) !!}).trigger('change');
-
     </script>
 @endsection

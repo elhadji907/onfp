@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Role;
+use App\Models\Demandeur;
+use App\Models\Individuelle;
+use App\Models\Collective;
+use App\Models\Pcharge;
+use App\Models\TypesDemande;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -47,10 +51,26 @@ class RegisteredUserController extends Controller
             'password'        =>     'required|confirmed', Rules\Password::defaults(),
             /* 'password'        =>      ['required', 'string', 'confirmed', new isValidPassword()], */
         ]);
-
-       /*  $role_id = Role::where('name','Administrateur')->first()->id;
-        $role = Role::where('name','Administrateur')->first()->name; */
         
+        $annee = date('y');
+        $user_id             =      User::latest('id')->first()->id;
+        $longueur            =      strlen($user_id);
+
+        if ($longueur <= 1) {
+            $numero   =   strtolower($annee."000000".$user_id);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero   =   strtolower($annee."00000".$user_id);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero   =   strtolower($annee."0000".$user_id);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero   =   strtolower($annee."000".$user_id);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numero   =   strtolower($annee."00".$user_id);
+        } elseif ($longueur >= 6 && $longueur < 7) {
+            $numero   =   strtolower($annee."0".$user_id);
+        } else {
+            $numero   =   "I".strtolower($annee.$user_id);
+        }
 
         $user = User::create([
             'name'              =>      $request->name,
@@ -66,21 +86,59 @@ class RegisteredUserController extends Controller
             /* 'roles_id'  => $role_id, */
         ]);
 
+        $user->assignRole('Demandeur');
+        
+        $demandeur = Demandeur::create([
+            'numero'            =>      $numero,
+            'users_id'          =>      $user->id,
+        ]);
+
+        $individuelle = Individuelle::create([
+            'demandeurs_id'     =>      $demandeur->id,
+        ]);
+
+        $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
+        $demandeur->numero                    =     "I".$numero;
+        $demandeur->statut                    =     "Attente";
+        $demandeur->types_demandes_id         =     $types_demandes_id;
+
+        $demandeur->save();
+
+        $demandeur = Demandeur::create([
+            'numero'            =>      $numero,
+            'users_id'          =>      $user->id,
+        ]);
+
+        $collective = Collective::create([
+            'demandeurs_id'     =>      $demandeur->id,
+        ]);
+
+        $types_demandes_id = TypesDemande::where('name', 'Collective')->first()->id;
+        $demandeur->numero                    =     "C".$numero;
+        $demandeur->statut                    =     "Attente";
+        $demandeur->types_demandes_id         =     $types_demandes_id;
+
+        $demandeur->save();
+
+        $demandeur = Demandeur::create([
+            'numero'            =>      $numero,
+            'users_id'          =>      $user->id,
+        ]);
+
+        $pcharge = Pcharge::create([
+            'demandeurs_id'     =>      $demandeur->id,
+        ]);
+        
+        $types_demandes_id = TypesDemande::where('name', 'Prise en charge')->first()->id;
+        $demandeur->numero                    =     "P".$numero;
+        $demandeur->statut                    =     "Attente";
+        $demandeur->types_demandes_id         =     $types_demandes_id;
+
+        $demandeur->save();
+
         event(new Registered($user));
 
-        $user->assignRole('Demandeur');
-
-        /* $user->givePermissionTo('role-list');
-
-        $user->givePermissionTo('demandeur-list');
-        $user->givePermissionTo('demandeur-create');
-        $user->givePermissionTo('demandeur-edit');
-        $user->givePermissionTo('demandeur-delete');
-        
-        $user->givePermissionTo('operateur-list');
-        $user->givePermissionTo('operateur-create');
-        $user->givePermissionTo('operateur-edit');
-        $user->givePermissionTo('operateur-delete'); */
+        /* $user->givePermissionTo('role-list');*/
 
         Auth::login($user);
 

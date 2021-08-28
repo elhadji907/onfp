@@ -24,7 +24,7 @@ class CreatePchargesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->integer('annee');
+            $table->integer('annee')->nullable();
             $table->string('matricule', 45)->nullable();
             $table->string('typedemande', 200)->nullable();
             $table->string('items1', 200)->nullable();

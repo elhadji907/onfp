@@ -130,7 +130,7 @@
                                     <tr>
                                         <td>
                                             <h3>{{ __('INFORMATIONS PERSONNELLES') }}</h3>
-                                            <b>CIN:</b> {{ $individuelle->demandeur->cin }}<br>
+                                            <b>CIN:</b> {{ $individuelle->cin }}<br>
                                             <b>Prénom:</b> {{ $individuelle->demandeur->user->firstname }}&nbsp;&nbsp;
                                             <b>Nom :</b>{{ $individuelle->demandeur->user->name }}<br>
                                             <b>Date et lieu de naissance:</b>

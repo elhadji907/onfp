@@ -70,7 +70,6 @@ class IndividuelleController extends Controller
         $civilites = User::pluck('civilite', 'civilite');
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
-
         if ($user->hasRole('Demandeur')) {
             if (isset($user->demandeur)) {
                 $types_demande = $user->demandeur->types_demande->name;
@@ -81,51 +80,19 @@ class IndividuelleController extends Controller
                     foreach ($individuelles as $individuelle) {
                     }
                     return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
-                } elseif($types_demande === "Collective") {
+                } elseif ($types_demande === "Collective") {
                     return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-                } elseif($types_demande === "Prise en charge") {
+                } elseif ($types_demande === "Prise en charge") {
                     return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-                }else {
+                } else {
                     dd("Erreur, merci de contacter l'administrateur");
                 }
-                
             } else {
                 return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
             }
         } else {
             return view('individuelles.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         }
-        
-
-
-
-
-      /*   if (isset($user->demandeur) !== false) {
-
-            $types_demande = $user->demandeur->types_demande->name;
-            $demandeurs = $user->demandeur;
-            $individuelles = $demandeurs->individuelles;
-            $collectives = $demandeurs->collectives;
-            if (isset($user->demandeur->individuelles) !== false
-           && $types_demande ==="Individuelle"
-           && $user->hasRole('Demandeur')
-           && !$user->hasRole('Administrateur')
-           && !$user->hasRole('Gestionnaire') 
-           && !$user->hasRole('super-admin')) {
-                foreach ($individuelles as $individuelle) {
-                }
-                $utilisateurs = $demandeurs->user;
-                return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
-            }else {
-                return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-            }
-        } 
-        
-        elseif ($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')) {
-            return view('individuelles.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-        } else {
-            return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-        } */
     }
 
     public function findNomDept(Request $request)
@@ -142,15 +109,21 @@ class IndividuelleController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth::user();
+        $user_connect = Auth::user();
+        $demandeur = $individuelle->demandeur;
+        $utilisateur = $user_connect;
         
-        if (!$user->hasRole('Demandeur')) {
-            if (isset($user->demandeur) !== false) {
+        $individuelles = $user_connect->demandeur->individuelles;
+        foreach ($individuelles as $individuelle) {
+
+        }
+        
+        if (!$user_connect->hasRole('Demandeur')) {
                 $this->validate(
                     $request,
                     [
                         'sexe'                =>  'required|string|max:10',
-                        'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,'.$user->demandeur->id,
+                        'cin'                 =>  'required|string|min:13|max:15|unique:individuelles,cin,NULL,id,deleted_at,NULL',
                         'prenom'              =>  'required|string|max:50',
                         'nom'                 =>  'required|string|max:50',
                         'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -172,12 +145,12 @@ class IndividuelleController extends Controller
                         'option'              =>  'required',
                     ]
                 );
-            } else {
-                $this->validate(
-                    $request,
-                    [
+        }else {
+            $this->validate(
+                $request,
+                [
                     'sexe'                =>  'required|string|max:10',
-                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs',
+                    'cin'                 =>  "required|string|min:13|max:15|unique:individuelles,cin,{$individuelle->id},id,deleted_at,NULL",
                     'prenom'              =>  'required|string|max:50',
                     'nom'                 =>  'required|string|max:50',
                     'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -198,66 +171,10 @@ class IndividuelleController extends Controller
                     'diplome'             =>  'required',
                     'option'              =>  'required',
                 ]
-                );
-            }
-        } elseif (isset($user->demandeur) !== false) {
-            $this->validate(
-                $request,
-                [
-                    'sexe'                =>  'required|string|max:10',
-                    'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin,'.$user->demandeur->id,
-                    'prenom'              =>  'required|string|max:50',
-                    'nom'                 =>  'required|string|max:50',
-                    'date_naiss'          =>  'required|date_format:Y-m-d',
-                    'date_depot'          =>  'required|date_format:Y-m-d',
-                    'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|string|min:7|max:18',
-                    'fixe'                =>  'required|string|min:7|max:18',
-                    'etablissement'       =>  'required|string|max:100',
-                    'adresse'             =>  'required|string|max:100',
-                    'prerequis'           =>  'required|string|max:1500',
-                    'motivation'          =>  'required|string|max:1500',
-                    'email'               =>  'required|string|email|max:255|unique:users,email,'.$user->id,
-                    'familiale'           =>  'required',
-                    'professionnelle'     =>  'required',
-                    'niveau_etude'        =>  'required',
-                    'commune'             =>  'required',
-                    'modules'             =>  'exists:modules,id',
-                    'diplome'             =>  'required',
-                    'option'              =>  'required',
-                ]
-            );
-        } else {
-            $this->validate(
-                $request,
-                [
-                'sexe'                =>  'required|string|max:10',
-                'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin',
-                'prenom'              =>  'required|string|max:50',
-                'nom'                 =>  'required|string|max:50',
-                'date_naiss'          =>  'required|date_format:Y-m-d',
-                'date_depot'          =>  'required|date_format:Y-m-d',
-                'lieu_naissance'      =>  'required|string|max:50',
-                'telephone'           =>  'required|string|min:7|max:18',
-                'fixe'                =>  'required|string|min:7|max:18',
-                'etablissement'       =>  'required|string|max:100',
-                'adresse'             =>  'required|string|max:100',
-                'prerequis'           =>  'required|string|max:1500',
-                'motivation'          =>  'required|string|max:1500',
-                'email'               =>  'required|string|email|max:255|unique:users,email,'.$user->id,
-                'familiale'           =>  'required',
-                'professionnelle'     =>  'required',
-                'niveau_etude'        =>  'required',
-                'commune'             =>  'required',
-                'modules'             =>  'exists:modules,id',
-                'diplome'             =>  'required',
-                'option'              =>  'required',
-            ]
             );
         }
 
         $user_id             =   User::latest('id')->first()->id;
-        $demandeurs_id       =   Demandeur::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
 
         $annee = date('y');
@@ -282,9 +199,9 @@ class IndividuelleController extends Controller
         /*  $region = $commune->region->nom;
          $region_id = $commune->region->id; */
 
-        $created_by1 = $user->firstname;
-        $created_by2 = $user->name;
-        $created_by3 = $user->username;
+        $created_by1 = $user_connect->firstname;
+        $created_by2 = $user_connect->name;
+        $created_by3 = $user_connect->username;
 
         $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
 
@@ -321,7 +238,7 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-        if (!$user->hasRole('Demandeur')) {
+        if (!$user_connect->hasRole('Demandeur')) {
             $user = new User([
             'sexe'                      =>      $request->input('sexe'),
             'civilite'                  =>      $civilite,
@@ -346,79 +263,148 @@ class IndividuelleController extends Controller
     
             $user->save();
             $user->assignRole('Demandeur');
-        } else {
-            $updated_by1 = $user->firstname;
-            $updated_by2 = $user->name;
-            $updated_by3 = $user->username;
+
+            
+            $demandeur = new Demandeur([
+                'numero'                    =>     $numero,
+                'date_depot'                =>     $request->input('date_depot'),
+                'nbre_piece'                =>     $request->input('nombre_de_piece'),
+                'niveau_etude'              =>     $request->input('niveau_etude'),
+                'etablissement'             =>     $request->input('etablissement'),
+                'telephone'                 =>     $autre_tel,
+                'fixe'                      =>     $fixe,
+                'statut'                    =>     $statut,
+                'programmes_id'             =>     $programme_id,
+                'option'                    =>     $request->input('option'),
+                'adresse'                   =>     $request->input('adresse'),
+                'motivation'                =>     $request->input('motivation'),
+                'autres_diplomes'           =>     $request->input('autres_diplomes'),
+                'experience'                =>     $request->input('experience'),
+                'qualification'             =>     $request->input('qualification'),
+                'communes_id'               =>     $commune_id,
+                'types_demandes_id'         =>     $types_demandes_id,
+                'diplomes_id'               =>     $diplome_id,
+                'users_id'                  =>     $user_connect->id
+            ]);
+    
+            $demandeur->save();
+    
+            $individuelle = new Individuelle([
+                'cin'               =>     $cin,
+                'experience'        =>     $request->input('experience'),
+                'information'       =>     $request->input('information'),
+                'nbre_pieces'       =>     $request->input('nombre_de_piece'),
+                'information'       =>     $request->input('information'),
+                'prerequis'         =>     $request->input('prerequis'),
+                'demandeurs_id'     =>     $demandeur->id
+            ]);
+    
+            $individuelle->save();
+            
+            return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
+        } elseif ($user_connect->hasRole('Demandeur') && isset($user_connect->demandeur) && $user_connect->demandeur->types_demande->name === 'Individuelle') {
+            $updated_by1 = $user_connect->firstname;
+            $updated_by2 = $user_connect->name;
+            $updated_by3 = $user_connect->username;
+
+            $demandeur = $user_connect->demandeur;
+            $individuelle = $demandeur->individuelles;
 
             $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
             
-            $user->sexe                      =      $request->input('sexe');
-            $user->civilite                  =      $civilite;
-            $user->firstname                 =      $request->input('prenom');
-            $user->name                      =      $request->input('nom');
-            $user->email                     =      $request->input('email');
-            $user->username                  =      $request->input('username');
-            $user->telephone                 =      $telephone;
-            $user->fixe                      =      $fixe;
-            $user->bp                        =      $request->input('bp');
-            $user->fax                       =      $request->input('fax');
-            $user->situation_familiale       =      $request->input('familiale');
-            $user->situation_professionnelle =      $request->input('professionnelle');
-            $user->date_naissance            =      $request->input('date_naiss');
-            $user->lieu_naissance            =      $request->input('lieu_naissance');
-            $user->adresse                   =      $request->input('adresse');
-            $user->updated_by                =      $updated_by;
+            $user_connect->sexe                      =      $request->input('sexe');
+            $user_connect->civilite                  =      $civilite;
+            $user_connect->firstname                 =      $request->input('prenom');
+            $user_connect->name                      =      $request->input('nom');
+            $user_connect->email                     =      $request->input('email');
+            $user_connect->username                  =      $request->input('username');
+            $user_connect->telephone                 =      $telephone;
+            $user_connect->fixe                      =      $fixe;
+            $user_connect->bp                        =      $request->input('bp');
+            $user_connect->fax                       =      $request->input('fax');
+            $user_connect->situation_familiale       =      $request->input('familiale');
+            $user_connect->situation_professionnelle =      $request->input('professionnelle');
+            $user_connect->date_naissance            =      $request->input('date_naiss');
+            $user_connect->lieu_naissance            =      $request->input('lieu_naissance');
+            $user_connect->adresse                   =      $request->input('adresse');
+            $user_connect->updated_by                =      $updated_by;
     
-            $user->save();
+            $user_connect->save();
+
+            $demandeur->numero                    =     $numero;
+            $demandeur->date_depot                =     $request->input('date_depot');
+            $demandeur->nbre_piece                =     $request->input('nombre_de_piece');
+            $demandeur->niveau_etude              =     $request->input('niveau_etude');
+            $demandeur->etablissement             =     $request->input('etablissement');
+            $demandeur->telephone                 =     $autre_tel;
+            $demandeur->fixe                      =     $fixe;
+            $demandeur->statut                    =     $statut;
+            $demandeur->programmes_id             =     $programme_id;
+            $demandeur->option                    =     $request->input('option');
+            $demandeur->adresse                   =     $request->input('adresse');
+            $demandeur->motivation                =     $request->input('motivation');
+            $demandeur->autres_diplomes           =     $request->input('autres_diplomes');
+            $demandeur->experience                =     $request->input('experience');
+            $demandeur->qualification             =     $request->input('qualification');
+            $demandeur->communes_id               =     $commune_id;
+            $demandeur->types_demandes_id         =     $types_demandes_id;
+            $demandeur->diplomes_id               =     $diplome_id;
+            $demandeur->users_id                  =     $user_connect->id;
+
+            $demandeur->save();
+
+            $individuelle->cin                    =     $cin;
+            $individuelle->experience             =     $request->input('experience');
+            $individuelle->information            =     $request->input('information');
+            $individuelle->nbre_pieces            =     $request->input('nombre_de_piece');
+            $individuelle->information            =     $request->input('information');
+            $individuelle->prerequis              =     $request->input('prerequis');
+            $individuelle->demandeurs_id          =     $demandeur->id;
+
+            $individuelle->save();
+                        
+            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
+        } else {
+            $demandeur = new Demandeur([
+                'numero'                    =>     $numero,
+                'date_depot'                =>     $request->input('date_depot'),
+                'nbre_piece'                =>     $request->input('nombre_de_piece'),
+                'niveau_etude'              =>     $request->input('niveau_etude'),
+                'etablissement'             =>     $request->input('etablissement'),
+                'telephone'                 =>     $autre_tel,
+                'fixe'                      =>     $fixe,
+                'statut'                    =>     $statut,
+                'programmes_id'             =>     $programme_id,
+                'option'                    =>     $request->input('option'),
+                'adresse'                   =>     $request->input('adresse'),
+                'motivation'                =>     $request->input('motivation'),
+                'autres_diplomes'           =>     $request->input('autres_diplomes'),
+                'experience'                =>     $request->input('experience'),
+                'qualification'             =>     $request->input('qualification'),
+                'communes_id'               =>     $commune_id,
+                'types_demandes_id'         =>     $types_demandes_id,
+                'diplomes_id'               =>     $diplome_id,
+                'users_id'                  =>     $user_connect->id
+            ]);
+    
+            $demandeur->save();
+    
+            $individuelle = new Individuelle([
+                'cin'               =>     $cin,
+                'experience'        =>     $request->input('experience'),
+                'information'       =>     $request->input('information'),
+                'nbre_pieces'       =>     $request->input('nombre_de_piece'),
+                'information'       =>     $request->input('information'),
+                'prerequis'         =>     $request->input('prerequis'),
+                'demandeurs_id'     =>     $demandeur->id
+            ]);
+    
+            $individuelle->save();
         }
-
-        $demandeur = new Demandeur([
-            'numero'                    =>     $numero,
-            'cin'                       =>     $cin,
-            'numero_courrier'           =>     $numero,
-            'date_depot'                =>     $request->input('date_depot'),
-            'nbre_piece'                =>     $request->input('nombre_de_piece'),
-            'niveau_etude'              =>     $request->input('niveau_etude'),
-            'etablissement'             =>     $request->input('etablissement'),
-            'telephone'                 =>     $autre_tel,
-            'fixe'                      =>     $fixe,
-            'statut'                    =>     $statut,
-            'programmes_id'             =>     $programme_id,
-            'option'                    =>     $request->input('option'),
-            'adresse'                   =>     $request->input('adresse'),
-            'motivation'                =>     $request->input('motivation'),
-            'autres_diplomes'           =>     $request->input('autres_diplomes'),
-            'experience'                =>     $request->input('experience'),
-            'qualification'             =>     $request->input('qualification'),
-            'communes_id'               =>     $commune_id,
-            'types_demandes_id'         =>     $types_demandes_id,
-            'diplomes_id'               =>     $diplome_id,
-            'users_id'                  =>     $user->id
-        ]);
-
-        $demandeur->save();
-
-        $individuelle = new Individuelle([
-            'experience'        =>     $request->input('experience'),
-            'information'       =>     $request->input('information'),
-            'nbre_pieces'       =>     $request->input('nombre_de_piece'),
-            'information'       =>     $request->input('information'),
-            'prerequis'         =>     $request->input('prerequis'),
-            'demandeurs_id'     =>     $demandeur->id
-        ]);
-
-        $individuelle->save();
 
         $individuelle->demandeur->modules()->sync($request->input('modules'));
-
-        
-        $user_connect  =  $user->demandeur;
-        if (!$user->hasRole('Demandeur')) {
-            return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
-        } else {
-            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
-        }
+     
+        return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
     }
 
     /**
@@ -466,19 +452,23 @@ class IndividuelleController extends Controller
      */
     public function update(Request $request, Individuelle $individuelle)
     {
-        /* $this->authorize('update',  $individuelle); */
-      
-        $demandeur = $individuelle->demandeur;
-        $utilisateur = $demandeur->user;
-        $user = Auth::user();
         $user_connect = Auth::user();
+        $demandeur = $individuelle->demandeur;
+        $utilisateur = $user_connect;
+        
+        $individuelles = $user_connect->demandeur->individuelles;
+        foreach ($individuelles as $individuelle) {
 
-        if (!$user->hasRole('Demandeur')) {
+        }
+
+        /* $this->authorize('update',  $individuelle); */
+
+        if (!$user_connect->hasRole('Demandeur')) {
             $this->validate(
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15",
+               'cin'                 =>  "required|string|min:13|max:15|unique:individuelles,cin,{$individuelle->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -505,7 +495,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15",
+               'cin'                 =>  "required|string|min:13|max:15|unique:individuelles,cin,{$individuelle->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -531,9 +521,9 @@ class IndividuelleController extends Controller
 
         $utilisateurs   =   $individuelle->demandeur->user;
 
-        $updated_by1 = $user->firstname;
-        $updated_by2 = $user->name;
-        $updated_by3 = $user->username;
+        $updated_by1 = $user_connect->firstname;
+        $updated_by2 = $user_connect->name;
+        $updated_by3 = $user_connect->username;
 
         $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
 
@@ -587,15 +577,13 @@ class IndividuelleController extends Controller
         $utilisateur->save();
 
         $demandeur->numero                      =      $request->input('numero');
-        $demandeur->cin                         =      $cin;
-        $demandeur->numero_courrier             =      $request->input('numero_courrier');
         $demandeur->date_depot                  =      $request->input('date_depot');
         $demandeur->nbre_piece                  =      $request->input('nombre_de_piece');
         $demandeur->niveau_etude                =      $request->input('niveau_etude');
         $demandeur->etablissement               =      $request->input('etablissement');
         $demandeur->telephone                   =      $autre_tel;
         $demandeur->fixe                        =      $fixe;
-        if (!$user->hasRole('Demandeur')) {
+        if (!$user_connect->hasRole('Demandeur')) {
             $demandeur->statut                      =      $request->input('statut');
         }
         $demandeur->option                      =      $request->input('option');
@@ -614,6 +602,7 @@ class IndividuelleController extends Controller
 
         $demandeur->save();
 
+        $individuelle->cin                      =      $cin;
         $individuelle->experience               =     $request->input('experience');
         $individuelle->information              =     $request->input('information');
         $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
@@ -623,10 +612,10 @@ class IndividuelleController extends Controller
         $individuelle->save();
 
         $demandeur->modules()->sync($request->input('modules'));
-        if (!$user->hasRole('Demandeur')) {
+        if (!$user_connect->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success', 'demande modifiée avec succès !');
         } else {
-            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');
+            return redirect()->route('profiles.show', ['user'=>$user_connect, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');
         }
     }
 
@@ -650,17 +639,10 @@ class IndividuelleController extends Controller
         $utilisateurs->deleted_by      =      $deleted_by;
 
         $utilisateurs->save();
-       
-        if ($user->hasRole('super-admin') || $user->hasRole('Administrateur')) {
-            $individuelle->demandeur->user->delete();
-            $individuelle->demandeur->delete();
-        } else {
-            $individuelle->demandeur->delete();
-        }
         
         $individuelle->delete();
 
-        $message = $collective->demandeur->user->firstname.' '.$collective->demandeur->user->name.' a été supprimé(e)';
+        $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été supprimé(e)';
 
         if (!$user->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success', $message);

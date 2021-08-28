@@ -1,5 +1,4 @@
 @extends('layout.default')
-
 @section('content')
     <div class="container-fluid">
         <div class="row mt-4">
@@ -8,38 +7,38 @@
             </div>
             <div class="col-4">
                 @can('update', $user->profile)
-                <div class="mt-3 d-flex">
-                    <div class="mr-1"><b>{{ auth::user()->civilite }}</b></div>
-                    <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
-                    <div class="mr-1"><b>{{ auth::user()->name }}</b></div>
-                </div>
-                @if (auth::user()->date_naissance !== null)
-                <div class="mt-0 d-flex">
-                    @if (auth::user()->civilite == 'M.')
-                        <div class="mr-1"><b>né le</b></div>
+                    <div class="mt-3 d-flex">
+                        <div class="mr-1"><b>{{ auth::user()->civilite }}</b></div>
+                        <div class="mr-1"><b>{{ auth::user()->firstname }}</b></div>
+                        <div class="mr-1"><b>{{ auth::user()->name }}</b></div>
+                    </div>
+                    @if (auth::user()->date_naissance !== null)
+                        <div class="mt-0 d-flex">
+                            @if (auth::user()->civilite == 'M.')
+                                <div class="mr-1"><b>né le</b></div>
+                            @endif
+                            @if (auth::user()->civilite == 'Mme')
+                                <div class="mr-1"><b>née le</b></div>
+                            @endif
+                            <div class="mr-1">{{ auth::user()->date_naissance->format('d/m/Y') }}</div>
+                            @if (auth::user()->lieu_naissance !== null)
+                                <div class="mr-1">à</div>
+                                <div class="mr-1">{{ auth::user()->lieu_naissance }}</div>
+                            @endif
+                        </div>
                     @endif
-                    @if (auth::user()->civilite == 'Mme')
-                        <div class="mr-1"><b>née le</b></div>
+                    <div class="mt-0">
+                        <div class="mr-3"><b>{{ __("Nom d'utilisateur") }}:</b> {{ auth::user()->username }}</div>
+                        <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
+                        <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
+                    </div>
+                    @if (auth::user()->civilite == null or auth::user()->fixe == null)
+                        <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
+                            class="btn btn-outline-danger mt-3">Compléter votre profil</a>
+                    @else
+                        <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
+                            class="btn btn-outline-secondary mt-3">Modifier mon profil</a>
                     @endif
-                        <div class="mr-1">{{ auth::user()->date_naissance->format('d/m/Y') }}</div>
-                    @if (auth::user()->lieu_naissance !== null)
-                        <div class="mr-1">à</div>
-                        <div class="mr-1">{{ auth::user()->lieu_naissance }}</div>
-                    @endif
-                </div>
-                @endif
-                <div class="mt-0">
-                    <div class="mr-3"><b>{{ __("Nom d'utilisateur") }}:</b> {{ auth::user()->username }}</div>
-                    <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
-                    <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
-                </div>
-                @if (auth::user()->civilite == null or auth::user()->fixe == null)
-                    <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
-                        class="btn btn-outline-danger mt-3">Compléter votre profil</a>
-                @else
-                    <a href="{{ route('profiles.edit', [auth::user()->username]) }}"
-                        class="btn btn-outline-secondary mt-3">Modifier mon profil</a>
-                @endif
                 @endcan
             </div>
             @unlessrole('Demandeur')
@@ -64,11 +63,11 @@
                                             <td class="align-middle">{!! $i++ !!}</td>
                                             <td class="align-middle">{!! $demandeur->types_demande->name ?? ' ' !!}</td>
                                             <td style="text-align: center;">
-                                                @if ($demandeur->modules == "[]")                                                                
+                                                @if ($demandeur->modules == '[]')
                                                     <label class="badge badge-danger">Invalide</label>
                                                 @else
-                                                <label class="badge badge-success">{{ $demandeur->statut }} </label>          
-                                            @endif
+                                                    <label class="badge badge-success">{{ $demandeur->statut }} </label>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endcan
@@ -79,7 +78,7 @@
                     @endif
                 </div>
             </div>
-            @else
+        @else
             @endunlessrole
         </div>
     </div>
@@ -97,11 +96,11 @@
                     </div>
                 </div>
             @endforeach
-            {{--  <div class="d-flex justify-content-center pt-2">
+            {{-- <div class="d-flex justify-content-center pt-2">
                 {!! $courriers->links() !!}
-            </div>  --}}
+            </div> --}}
         </div>
-        @else
+    @else
         @endunlessrole
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
@@ -128,7 +127,6 @@
                                         <thead class="table-dark">
                                             <tr>
                                                 <th width="120px">N°</th>
-                                                <th width="100px">CIN</th>
                                                 <th>Prenom</th>
                                                 <th>Nom</th>
                                                 <th>Date nais.</th>
@@ -138,7 +136,7 @@
                                                 <th width="20px">Module</th>
                                                 <th width="130px">Type demande</th>
                                                 <th>Statut</th>
-                                                <th width="130px"></th>
+                                                <th width="100px"></th>
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -148,8 +146,10 @@
                                             @foreach ($demandeurs as $demandeur)
                                                 @can('view', $demandeur)
                                                     <tr valign="bottom">
-                                                        <td>{!! $demandeur->numero !!}</td>
-                                                        <td>{!! $demandeur->cin !!}</td>
+                                                        <td>
+                                                            <h5><a href="#" class="badge badge-info">{!! $demandeur->numero !!}</a>
+                                                            </h5>
+                                                        </td>
                                                         <td>{!! $demandeur->user->firstname !!}</td>
                                                         <td>{!! $demandeur->user->name !!}</td>
                                                         <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
@@ -165,11 +165,13 @@
                                                         </td>
                                                         <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
                                                         <td style="text-align: center;">
-                                                            @if ($demandeur->modules == "[]")                                                                
-                                                                <label class="badge badge-danger">Invalide</label>
+                                                            @if ($demandeur->modules == '[]')
+                                                                <h5><label class="badge badge-danger">Invalide</label></h5>
                                                             @else
-                                                            <label class="badge badge-success">{{ $demandeur->statut }} </label>          
-                                                        @endif
+                                                                <h5><label
+                                                                        class="badge badge-success">{{ $demandeur->statut }}
+                                                                    </label></h5>
+                                                            @endif
                                                         </td>
                                                         <td class="d-flex align-items-baseline align-content-center">
                                                             <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
