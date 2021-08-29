@@ -127,6 +127,7 @@ class UserController extends Controller
         }
         
         $user->update($input);
+        
         DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('roles'));
         return redirect()->route('users.index')

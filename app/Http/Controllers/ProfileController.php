@@ -59,26 +59,68 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        $demandeurs = Demandeur::all();
-        $user_connect = Auth::user();
-        $user_demandeur  =  $user_connect->demandeur;
+        $demandeurs                 =      Demandeur::all();
 
-        $individuelle_demandeurs  =  $user_demandeur->individuelles;
-        $collective_demandeurs  =  $user_demandeur->collectives;
-        $pcharge_demandeurs  =  $user_demandeur->pcharges;
+        $individuelle_demandeurs    =      $user->demandeur->individuelles;
+        $collective_demandeurs      =      $user->demandeur->collectives;
+        $pcharge_demandeurs         =      $user->demandeur->pcharges;
+
+        $individuelle_users         =      $user->demandeur->individuelles;
+        $collective_users           =      $user->demandeur->collectives;
+        $pcharge_users              =      $user->demandeur->pcharges;
 
         foreach ($individuelle_demandeurs as $key => $individuelle_demandeur) {
         }
-
+        if(isset($individuelle_demandeur)){
+            $individuelle_demandeur = $individuelle_demandeur;
+        }else {
+            $individuelle_demandeur = "";
+        }
         foreach ($collective_demandeurs as $key => $collective_demandeur) {
+        }
+        if(isset($collective_demandeur)){
+            $collective_demandeur = $collective_demandeur;
+        }else {
+            $collective_demandeur = "";
         }
 
         foreach ($pcharge_demandeurs as $key => $pcharge_demandeur) {
         }
+        if(isset($pcharge_demandeur)){
+            $pcharge_demandeur = $pcharge_demandeur;
+        }else {
+            $pcharge_demandeur = "";
+        }
 
-        $courriers = $user_connect->courriers;
 
-        return view('profiles.show', compact('user', 'user_connect', 'courriers', 'demandeurs', 'user_demandeur', 'individuelle_demandeur', 'collective_demandeur', 'pcharge_demandeur'));
+        foreach ($individuelle_users as $key => $individuelle_user) {
+        }
+        if(isset($individuelle_user)){
+            $individuelle_user = $individuelle_user;
+        }else {
+            $individuelle_user = "";
+        }
+
+        foreach ($collective_users as $key => $collective_user) {
+        }
+        if(isset($collective_user)){
+            $collective_user = $collective_user;
+        }else {
+            $collective_user = "";
+        }
+
+        foreach ($pcharge_users as $key => $pcharge_user) {
+        }
+        if(isset($pcharge_user)){
+            $pcharge_user = $pcharge_user;
+        }else {
+            $pcharge_user = "";
+        }
+
+        $courriers = $user->courriers;
+
+        return view('profiles.show', 
+        compact('user', 'courriers', 'demandeurs', 'individuelle_demandeur', 'collective_demandeur', 'pcharge_demandeur', 'individuelle_user', 'collective_user', 'pcharge_user'));
     }
 
     /**

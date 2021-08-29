@@ -35,8 +35,6 @@
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
-                                        <th>Module</th>
-                                        <th>Type demande</th>
                                         <th>Localité</th>
                                         <th></th>
                                     </tr>
@@ -48,8 +46,6 @@
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
-                                        <th>Module</th>
-                                        <th>Type demande</th>
                                         <th>Localité</th>
                                         <th></th>
                                     </tr>
@@ -63,15 +59,9 @@
                                             <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td>{!! mb_strtoupper($demandeur->user->lieu_naissance, 'UTF-8') !!}</td>
                                             <td>{!! $demandeur->user->telephone !!}</td>
+                                            <td>{!! $demandeur->commune->nom ?? ' ' !!}</td>
                                             <td>
-                                                @foreach ($demandeur->modules as $module)
-                                                    {!! $module->name !!}
-                                                @endforeach
-                                            </td>
-                                            <td>{!! $demandeur->types_demande->name !!}</td>
-                                            <td>{!! $demandeur->departement->nom ?? ' ' !!}</td>
-                                            <td>
-                                                <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
+                                                <a href="{{ route('profiles.show', ['user' => $demandeur->user]) }}" class='btn btn-primary btn-sm'
                                                     title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>

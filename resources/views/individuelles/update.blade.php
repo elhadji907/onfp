@@ -26,7 +26,7 @@
                                 <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
                                     name="cin" placeholder="Votre et cin"
                                     value="{{ $individuelle->cin ?? old('cin') }}" autocomplete="cin"
-                                    autofocus>
+                                    >
                                 @error('cin')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -38,7 +38,7 @@
                                 <input id="prenom" type="text" class="form-control @error('prenom') is-invalid @enderror"
                                     name="prenom" placeholder="Votre et prenom"
                                     value="{{ $individuelle->demandeur->user->firstname ?? old('prenom') }}"
-                                    autocomplete="prenom" autofocus>
+                                    autocomplete="prenom" >
                                 @error('prenom')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -50,7 +50,7 @@
                                 <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror"
                                     name="nom" placeholder="Votre et nom"
                                     value="{{ $individuelle->demandeur->user->name ?? old('nom') }}" autocomplete="nom"
-                                    autofocus>
+                                    >
                                 @error('nom')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -66,7 +66,7 @@
                                     class="form-control @error('date_naiss') is-invalid @enderror" name="date_naiss"
                                     placeholder="Votre date de naissance"
                                     value="{{ $individuelle->demandeur->user->date_naissance->format('Y-m-d') ?? old('date_naiss') }}"
-                                    autocomplete="username" autofocus>
+                                    autocomplete="username" >
                                 @error('date_naiss')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -108,7 +108,7 @@
                                     class="form-control @error('telephone') is-invalid @enderror" name="telephone"
                                     placeholder="7x xxx xx xx"
                                     value="{{ $individuelle->demandeur->user->telephone ?? '' }}"
-                                    autocomplete="telephone" autofocus>
+                                    autocomplete="telephone" >
                                 @error('telephone')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -120,7 +120,7 @@
                                 <input id="fixe" type="text" class="form-control @error('fixe') is-invalid @enderror"
                                     name="fixe" placeholder="3x xxx xx xx"
                                     value="{{ $individuelle->demandeur->user->fixe ?? '' }}" autocomplete="fixe"
-                                    autofocus>
+                                    >
                                 @error('fixe')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -132,7 +132,7 @@
                                 <input id="autre_tel" type="text"
                                     class="form-control @error('autre_tel') is-invalid @enderror" name="autre_tel"
                                     placeholder="7x xxx xx xx" value="{{ $individuelle->demandeur->telephone ?? '' }}"
-                                    autocomplete="autre_tel" autofocus>
+                                    autocomplete="autre_tel" >
                             </div>
                         </div>
                         <div class="form-row">
@@ -197,7 +197,7 @@
                                 <label for="bp">{{ __('Boite postale') }}</label>
                                 <input id="bp" type="text" class="form-control @error('bp') is-invalid @enderror" name="bp"
                                     placeholder="Votre adresse postale"
-                                    value="{{ $individuelle->demandeur->user->bp ?? '' }}" autocomplete="bp" autofocus>
+                                    value="{{ $individuelle->demandeur->user->bp ?? '' }}" autocomplete="bp" >
                                 @error('bp')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -208,7 +208,7 @@
                                 <label for="fax">{{ __('Téléphone fax') }}</label>
                                 <input id="fax" type="text" class="form-control @error('fax') is-invalid @enderror"
                                     name="fax" placeholder="Votre numero de fax"
-                                    value="{{ $individuelle->demandeur->user->fax ?? '' }}" autocomplete="fax" autofocus>
+                                    value="{{ $individuelle->demandeur->user->fax ?? '' }}" autocomplete="fax" >
                                 @error('fax')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -326,9 +326,9 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('modules[]', $modules, null, ['multiple' => 'multiple', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'moduleup']) !!}
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                {!! Form::label('Module') !!} 
+                                {!! Form::select('modules[]', $modules, null, ['class' => 'form-control', 'multiple', 'id' => 'moduleup']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('modules'))
                                         @foreach ($errors->get('modules') as $message)
@@ -427,6 +427,6 @@
 
 @section('javascripts')
     <script type="text/javascript">
-        $('#moduleup').select2().val({!! json_encode($individuelle->demandeur->modules()->allRelatedIds()) !!}).trigger('change');
+        $('#moduleup').select2().val({!! json_encode($individuelle->modules()->allRelatedIds()) !!}).trigger('change');
     </script>
 @endsection

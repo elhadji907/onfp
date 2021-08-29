@@ -117,8 +117,8 @@ class IndividuelleController extends Controller
                         'date_naiss'          =>  'required|date_format:Y-m-d',
                         'date_depot'          =>  'required|date_format:Y-m-d',
                         'lieu_naissance'      =>  'required|string|max:50',
-                        'telephone'           =>  'required|string|min:7|max:18',
-                        'fixe'                =>  'required|string|min:7|max:18',
+                        'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+                        'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
                         'etablissement'       =>  'required|string|max:100',
                         'adresse'             =>  'required|string|max:100',
                         'prerequis'           =>  'required|string|max:1500',
@@ -144,8 +144,8 @@ class IndividuelleController extends Controller
                     'date_naiss'          =>  'required|date_format:Y-m-d',
                     'date_depot'          =>  'required|date_format:Y-m-d',
                     'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|string|min:7|max:18',
-                    'fixe'                =>  'required|string|min:7|max:18',
+                    'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+                    'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
                     'etablissement'       =>  'required|string|max:100',
                     'adresse'             =>  'required|string|max:100',
                     'prerequis'           =>  'required|string|max:1500',
@@ -343,14 +343,16 @@ class IndividuelleController extends Controller
 
         $civilites = User::pluck('civilite', 'civilite');
 
-        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $modules = Module::distinct('name')->pluck('name', 'id')->unique();
+        $moduleIndividuelle = $individuelle->modules->pluck('name', 'name')->all();
+        /* dd($moduleIndividuelle); */
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
 
         $date_depot = Carbon::now();
 
-        return view('individuelles.update', compact('civilites', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+        return view('individuelles.update', compact('civilites', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
     }
 
     /**
@@ -364,12 +366,7 @@ class IndividuelleController extends Controller
     {
         $user_connect = Auth::user();
         $demandeur = $individuelle->demandeur;
-        $utilisateur = $user_connect;
-        
-        $individuelles = $user_connect->demandeur->individuelles;
-        foreach ($individuelles as $individuelle) {
-
-        }
+        $utilisateur   =   $demandeur->user;
 
         /* $this->authorize('update',  $individuelle); */
 
@@ -384,8 +381,8 @@ class IndividuelleController extends Controller
                'date_naiss'          =>  'required|date_format:Y-m-d',
                'date_depot'          =>  'required|date_format:Y-m-d',
                'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|string|min:7|max:30',
-               'fixe'                =>  'required|string|min:7|max:30',
+               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+               'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
                'etablissement'       =>  'required|string|max:100',
                'adresse'             =>  'required|string|max:100',
                'prerequis'           =>  'required|string|max:1500',
@@ -395,7 +392,7 @@ class IndividuelleController extends Controller
                'professionnelle'     =>  'required',
                'niveau_etude'        =>  'required',
                'commune'             =>  'required',
-               'modules'             =>  'exists:modules,id',
+               'modules'             =>  'required',
                'diplome'             =>  'required',
                'option'              =>  'required',
                ]
@@ -411,8 +408,8 @@ class IndividuelleController extends Controller
                'date_naiss'          =>  'required|date_format:Y-m-d',
                'date_depot'          =>  'required|date_format:Y-m-d',
                'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|string|min:7|max:30',
-               'fixe'                =>  'required|string|min:7|max:30',
+               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+               'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
                'etablissement'       =>  'required|string|max:100',
                'adresse'             =>  'required|string|max:100',
                'prerequis'           =>  'required|string|max:1500',
@@ -422,14 +419,12 @@ class IndividuelleController extends Controller
                'professionnelle'     =>  'required',
                'niveau_etude'        =>  'required',
                'commune'             =>  'required',
-               'modules'             =>  'exists:modules,id',
+               'modules'             =>  'required',
                'diplome'             =>  'required',
                'option'              =>  'required',
                ]
             );
         }
-
-        $utilisateurs   =   $individuelle->demandeur->user;
 
         $updated_by1 = $user_connect->firstname;
         $updated_by2 = $user_connect->name;
@@ -455,9 +450,10 @@ class IndividuelleController extends Controller
             $programme_id = "";
         }
 
-        if ($request->input('sexe') == "M") {
+        $sexe = $request->input('sexe');
+        if ($sexe == "M") {
             $civilite = "M.";
-        } elseif ($request->input('sexe') == "F") {
+        } elseif ($sexe == "F") {
             $civilite = "Mme";
         } else {
             $civilite = "";
@@ -469,7 +465,7 @@ class IndividuelleController extends Controller
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
 
-        $utilisateur->sexe                      =      $request->input('sexe');
+        $utilisateur->sexe                      =      $sexe;
         $utilisateur->civilite                  =      $civilite;
         $utilisateur->firstname                 =      $request->input('prenom');
         $utilisateur->name                      =      $request->input('nom');
@@ -484,7 +480,7 @@ class IndividuelleController extends Controller
         $utilisateur->date_naissance            =      $request->input('date_naiss');
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
-        $utilisateurs->updated_by               =      $updated_by;
+        $utilisateur->updated_by               =      $updated_by;
 
         $utilisateur->save();
 

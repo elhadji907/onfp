@@ -15,7 +15,6 @@
     <div class="container">
         <div class="container-fluid">
             <div class="card">
-                @foreach ($collectives as $collective)
                     <div class="card-body">
                         <h1 class="h4 h-100 text-uppercase mb-4"><b><u>Type de demande</u> : {!! $collective->demandeur->types_demande->name !!}
                             </b></h1>
@@ -56,7 +55,6 @@
                             <span class="badge badge-primary">{!! $collective->demandeur->user->firstname !!}&nbsp;{!! $collective->demandeur->user->name !!}</span>
                         </div>
                     </div>
-                @endforeach
             </div>
 
             <hr>

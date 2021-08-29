@@ -56,7 +56,6 @@
                                     {!! Form::label('Téléphone :') !!}<span class="text-danger"> <b>*</b> </span>
                                     {!! Form::text('telephone', null, ['placeholder' => 'Numero de telephone', 'class' => 'form-control']) !!}
                                 </div>
-
                                 <div class="form-group col-md-4">
                                     {!! Form::label('Commune :') !!}<span class="text-danger"> <b>*</b> </span>
                                     {!! Form::select('communes[]', $communes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'departement']) !!}
@@ -79,7 +78,22 @@
                             <div class="bg-gradient-secondary text-center">
                                 <p class="h4 text-white mb-2">DEMANDE</p>
                             </div>
-                            <div class="form-row">
+                            <div class="form-row">                                
+                                <div class="form-group col-md-4">
+                                    {!! Form::label('Region :') !!}<span class="text-danger"> <b>*</b> </span>
+                                    {!! Form::select('region', $regions, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'region']) !!}
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                    {!! Form::label('Module') !!} 
+                                    {!! Form::select('modules[]', $modules, null, ['class' => 'form-control', 'multiple', 'id' => 'moduleup']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('modules'))
+                                            @foreach ($errors->get('modules') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
                                 <div class="form-group col-md-6">
                                     {!! Form::label('Numéro courrier :') !!}<span class="text-danger"> <b>*</b> </span>
                                     {!! Form::text('numero_courrier', null, ['placeholder' => 'Le numéro du courrier', 'class' => 'form-control']) !!}
@@ -95,10 +109,6 @@
                                     {!! Form::select('type_demande', $types_demandes, null, ['placeholder' => '--sélectionnez--', 'class' =>
                                     'form-control', 'id' => 'type_demande']) !!}
                                 </div> --}}
-                                <div class="form-group col-md-6">
-                                    {!! Form::label('module :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::select('modules', $modules, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'module']) !!}
-                                </div>
 
                             </div>
                             <div class="form-row">
