@@ -36,6 +36,7 @@ class PchargeFactory extends Factory
             'montant' => $this->faker->randomFloat(),
             'accompt' => $this->faker->randomFloat(),
             'reliquat' => $this->faker->randomFloat(),
+            'statut' => "Attente",
             'file1' => "",
             'file2' => "",
             'file3' => "",

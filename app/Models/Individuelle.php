@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property Demandeur $demandeur
  * @property Collection|Formation[] $formations
+ * @property Collection|Module[] $modules
  *
  * @package App\Models
  */
@@ -66,6 +67,7 @@ class Individuelle extends Model
 		'prerequis',
 		'information',
 		'note',
+		'statut',
 		'items1',
 		'date1',
 		'demandeurs_id'
@@ -79,6 +81,13 @@ class Individuelle extends Model
 	public function formations()
 	{
 		return $this->belongsToMany(Formation::class, 'individuellesformations', 'individuelles_id', 'formations_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function modules()
+	{
+		return $this->belongsToMany(Module::class, 'individuellesmodules', 'individuelles_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

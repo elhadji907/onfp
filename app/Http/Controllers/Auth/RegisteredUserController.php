@@ -69,7 +69,7 @@ class RegisteredUserController extends Controller
         } elseif ($longueur >= 6 && $longueur < 7) {
             $numero   =   strtolower($annee."0".$user_id);
         } else {
-            $numero   =   "I".strtolower($annee.$user_id);
+            $numero   =   strtolower($annee.$user_id);
         }
 
         $user = User::create([
@@ -97,44 +97,13 @@ class RegisteredUserController extends Controller
             'demandeurs_id'     =>      $demandeur->id,
         ]);
 
-        $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
-        $demandeur->numero                    =     "I".$numero;
-        $demandeur->statut                    =     "Attente";
-        $demandeur->types_demandes_id         =     $types_demandes_id;
-
-        $demandeur->save();
-
-        $demandeur = Demandeur::create([
-            'numero'            =>      $numero,
-            'users_id'          =>      $user->id,
-        ]);
-
         $collective = Collective::create([
             'demandeurs_id'     =>      $demandeur->id,
-        ]);
-
-        $types_demandes_id = TypesDemande::where('name', 'Collective')->first()->id;
-        $demandeur->numero                    =     "C".$numero;
-        $demandeur->statut                    =     "Attente";
-        $demandeur->types_demandes_id         =     $types_demandes_id;
-
-        $demandeur->save();
-
-        $demandeur = Demandeur::create([
-            'numero'            =>      $numero,
-            'users_id'          =>      $user->id,
         ]);
 
         $pcharge = Pcharge::create([
             'demandeurs_id'     =>      $demandeur->id,
         ]);
-        
-        $types_demandes_id = TypesDemande::where('name', 'Prise en charge')->first()->id;
-        $demandeur->numero                    =     "P".$numero;
-        $demandeur->statut                    =     "Attente";
-        $demandeur->types_demandes_id         =     $types_demandes_id;
-
-        $demandeur->save();
 
         event(new Registered($user));
 

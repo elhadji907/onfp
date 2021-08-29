@@ -60,15 +60,25 @@ class ProfileController extends Controller
     public function show(User $user)
     {
         $demandeurs = Demandeur::all();
+        $user_connect = Auth::user();
+        $user_demandeur  =  $user_connect->demandeur;
 
-        $user = Auth::user();
-        $user_connect  =  $user->demandeur;
-        /* $courriers = Courrier::latest()->paginate(5); */
-        //dd($courriers);
-        
-        $courriers = $user->courriers;
+        $individuelle_demandeurs  =  $user_demandeur->individuelles;
+        $collective_demandeurs  =  $user_demandeur->collectives;
+        $pcharge_demandeurs  =  $user_demandeur->pcharges;
 
-        return view('profiles.show', compact('user','courriers','demandeurs','user_connect'));
+        foreach ($individuelle_demandeurs as $key => $individuelle_demandeur) {
+        }
+
+        foreach ($collective_demandeurs as $key => $collective_demandeur) {
+        }
+
+        foreach ($pcharge_demandeurs as $key => $pcharge_demandeur) {
+        }
+
+        $courriers = $user_connect->courriers;
+
+        return view('profiles.show', compact('user', 'user_connect', 'courriers', 'demandeurs', 'user_demandeur', 'individuelle_demandeur', 'collective_demandeur', 'pcharge_demandeur'));
     }
 
     /**

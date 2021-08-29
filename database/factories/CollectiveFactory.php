@@ -34,7 +34,7 @@ class CollectiveFactory extends Factory
                 return Demandeur::factory()->create(["types_demandes_id"=>$types_demande_id])->id;
             },
             'sigle' => $this->faker->word,
-            'statut' => SnmG::getStatut(),
+            'statut' => "Attente",
             'description' => $this->faker->text,
         ];
     }

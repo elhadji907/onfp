@@ -17,7 +17,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property int $annee
+ * @property string|null $cin
+ * @property int|null $annee
  * @property string|null $matricule
  * @property string|null $typedemande
  * @property string|null $items1
@@ -26,8 +27,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property float|null $montant
  * @property float|null $accompt
  * @property float|null $reliquat
- * @property int|null $demandeurs_id
- * @property int|null $etablissements_id
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
@@ -36,12 +35,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file6
  * @property string|null $file7
  * @property string|null $file8
+ * @property int|null $demandeurs_id
+ * @property int|null $etablissements_id
+ * @property int|null $filieres_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Demandeur|null $demandeur
  * @property Etablissement|null $etablissement
+ * @property Filiere|null $filiere
  * @property Collection|Nouvelle[] $nouvelles
  * @property Collection|Renouvellement[] $renouvellements
  *
@@ -61,7 +64,8 @@ class Pcharge extends Model
 		'accompt' => 'float',
 		'reliquat' => 'float',
 		'demandeurs_id' => 'int',
-		'etablissements_id' => 'int'
+		'etablissements_id' => 'int',
+		'filieres_id' => 'int'
 	];
 
 	protected $dates = [
@@ -70,6 +74,7 @@ class Pcharge extends Model
 
 	protected $fillable = [
 		'uuid',
+		'cin',
 		'annee',
 		'matricule',
 		'typedemande',
@@ -79,8 +84,7 @@ class Pcharge extends Model
 		'montant',
 		'accompt',
 		'reliquat',
-		'demandeurs_id',
-		'etablissements_id',
+		'statut',
 		'file1',
 		'file2',
 		'file3',
@@ -88,7 +92,10 @@ class Pcharge extends Model
 		'file5',
 		'file6',
 		'file7',
-		'file8'
+		'file8',
+		'demandeurs_id',
+		'etablissements_id',
+		'filieres_id'
 	];
 
 	public function demandeur()
@@ -99,6 +106,11 @@ class Pcharge extends Model
 	public function etablissement()
 	{
 		return $this->belongsTo(Etablissement::class, 'etablissements_id');
+	}
+
+	public function filiere()
+	{
+		return $this->belongsTo(Filiere::class, 'filieres_id');
 	}
 
 	public function nouvelles()

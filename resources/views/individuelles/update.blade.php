@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header bg-gradient-info text-center">
                         <h1 class="h4 text-white mb-0"><span data-feather="info"></span>Modification demande
-                            individuelle</h1>
+                            individuelle [{!! $individuelle->demandeur->numero !!}]</h1>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires

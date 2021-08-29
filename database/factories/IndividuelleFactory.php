@@ -47,6 +47,7 @@ class IndividuelleFactory extends Factory
             'prerequis' => $this->faker->text,
             'information' => $this->faker->text,
             'items1' => $this->faker->word,
+            'statut' => "Attente",
             'date1' => $this->faker->dateTime(),
             'demandeurs_id' => function () use ($types_demande_id) {
                 return Demandeur::factory()->create(["types_demandes_id"=>$types_demande_id])->id;

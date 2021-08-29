@@ -82,26 +82,7 @@
             @endunlessrole
         </div>
     </div>
-    <div class="container-fluid">
-        @unlessrole('Demandeur')
-        <div class="list-group mt-5">
-            @foreach ($courriers as $courrier)
-                <div class="list-group-item">
-                    <h4><a href="{!! route('courriers.show', $courrier->id) !!}">{!! $courrier->objet !!}</a></h4>
-                    <p>{!! $courrier->message !!}</p>
-                    <p><strong>Type de courrier : </strong> {!! $courrier->types_courrier->name !!}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <small>Posté le {!! $courrier->created_at->format('d/m/Y à H:m') !!}</small>
-                        <span class="badge badge-primary">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name !!}</span>
-                    </div>
-                </div>
-            @endforeach
-            {{-- <div class="d-flex justify-content-center pt-2">
-                {!! $courriers->links() !!}
-            </div> --}}
-        </div>
-    @else
-        @endunlessrole
+    <div class="mt-5">
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
@@ -110,120 +91,102 @@
                 {{ session('message') }}
             </div>
         @endif
-        @hasrole('Demandeur')
-        @if (isset($user_connect))
-            <div class="row mt-5">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-xl-12">
-                    @if (isset($demandeurs))
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="fas fa-table"></i>
-                                Mon dossier
-                            </div>
+    </div>
+    @hasrole('Demandeur')
+    <div class="container-fluid">
+        <div class="row mt-5">
+            @if (isset($individuelle_demandeur->cin))
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-3">
+                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_demandeur->id) !!}" target="_blank">
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table border="1" height="100" class="table table-bordered table-striped" width="100%"
-                                        cellspacing="0" id="table-demandeurs">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th width="120px">N°</th>
-                                                <th>Prenom</th>
-                                                <th>Nom</th>
-                                                <th>Date nais.</th>
-                                                <th>Lieu nais.</th>
-                                                <th>Email</th>
-                                                <th>Téléphone</th>
-                                                <th width="20px">Module</th>
-                                                <th width="130px">Type demande</th>
-                                                <th>Statut</th>
-                                                <th width="100px"></th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                        </tfoot>
-                                        <tbody>
-                                            <?php $i = 1; ?>
-                                            @foreach ($demandeurs as $demandeur)
-                                                @can('view', $demandeur)
-                                                    <tr valign="bottom">
-                                                        <td>
-                                                            <h5><a href="#" class="badge badge-info">{!! $demandeur->numero !!}</a>
-                                                            </h5>
-                                                        </td>
-                                                        <td>{!! $demandeur->user->firstname !!}</td>
-                                                        <td>{!! $demandeur->user->name !!}</td>
-                                                        <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                        <td>{!! $demandeur->user->lieu_naissance !!}</td>
-                                                        <td>{!! $demandeur->user->email !!}</td>
-                                                        <td>{!! $demandeur->user->telephone !!}</td>
-                                                        <td ALIGN="CENTER">
-                                                            @foreach ($demandeur->modules as $module)
-                                                                @if ($loop->last)
-                                                                    {!! $loop->count !!}
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                        <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
-                                                        <td style="text-align: center;">
-                                                            @if ($demandeur->modules == '[]')
-                                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                            @else
-                                                                <h5><label
-                                                                        class="badge badge-success">{{ $demandeur->statut }}
-                                                                    </label></h5>
-                                                            @endif
-                                                        </td>
-                                                        <td class="d-flex align-items-baseline align-content-center">
-                                                            <a href="{!! url('demandeurs/' . $demandeur->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                                title="modifier">
-                                                                <i class="far fa-edit">&nbsp;</i>
-                                                            </a>
-                                                            &nbsp;
-                                                            <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
-                                                                title="voir">
-                                                                <i class="far fa-eye">&nbsp;</i>
-                                                            </a>
-                                                            &nbsp;
-                                                            {!! Form::open(['method' => 'DELETE', 'url' => 'demandeurs/' . $demandeur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                            {!! Form::close() !!}
-                                                        </td>
-                                                    </tr>
-                                                @endcan
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ 'Demande (Individuelle)' }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            @foreach ($individuelle_demandeur->modules as $module_individuelle)
                                             @endforeach
-                                        </tbody>
-                                    </table>
+                                            @if (isset($module_individuelle->name))
+                                                <h5><label
+                                                        class="badge badge-success">{{ $individuelle_demandeur->statut }}</label>
+                                                </h5>
+                                            @else
+                                                <h5><label class="badge badge-danger">Invalide</label></h5>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
+                                    </div>
                                 </div>
                             </div>
-
-                        </div>
-                    @else
-                        <div lass="d-flex justify-content-between align-items-center">
-                            <small>
-                                <a href="{{ route('demandeurs.create') }}">
-                                    <div class="btn btn-primary mt-3"><i class="fas fa-plus"></i>&nbsp;Cliquez ici pour
-                                        compléter votre demande de formation demandeur</i></div>
-                                </a>
-                            </small>
-                            <small>
-                                <a href="{{ route('operateurs.create') }}">
-                                    <div class="btn btn-info mt-3"><i class="fas fa-plus"></i>&nbsp;Devenir opérateur</i>
-                                    </div>
-                                </a>
-                            </small>
-                            <small>
-                                <a href="{{ route('collectives.create') }}">
-                                    <div class="btn btn-success mt-3"><i class="fas fa-plus"></i>&nbsp;Cliquez ici pour
-                                        compléter votre demande de formation colective</i></div>
-                                </a>
-                            </small>
-                        </div>
-                    @endif
+                        </a>
+                    </div>
                 </div>
-            </div>
-        @else
-        @endif
-    @else
-        @endhasrole
+            @endif
+            @if (isset($collective_demandeur->name))
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-3">
+                        <a class="nav-link" href="{{ route('courriers.index') }}" target="_blank">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ 'Demande (Collective)' }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            @foreach ($collective_demandeur->modules as $module_collective)
+                                            @endforeach
+                                            @if (isset($module_collective->name))
+                                                <h5><label
+                                                        class="badge badge-success">{{ $collective_demandeur->statut }}</label>
+                                                </h5>
+                                            @else
+                                                <h5><label class="badge badge-danger">Invalide</label></h5>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            @endif
+            @if (isset($pcharge_demandeur->annee))
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-3">
+                        <a class="nav-link" href="{{ route('courriers.index') }}" target="_blank">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ 'Demande (prise en charge)' }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            @foreach ($pcharge_demandeur->modules as $module)
+                                            @endforeach
+                                            @if (isset($module->name))
+                                                <h5><label
+                                                        class="badge badge-success">{{ $pcharge_demandeur->statut }}</label>
+                                                </h5>
+                                            @else
+                                                <h5><label class="badge badge-danger">Invalide</label></h5>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            @endif
+        </div>
     </div>
+@else
+    @endhasrole
 @endsection

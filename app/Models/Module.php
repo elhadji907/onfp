@@ -31,10 +31,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Domaine|null $domaine
  * @property Specialite|null $specialite
  * @property Statut|null $statut
+ * @property Collection|Collective[] $collectives
  * @property Collection|Commune[] $communes
  * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Evaluateur[] $evaluateurs
  * @property Collection|Formation[] $formations
+ * @property Collection|Individuelle[] $individuelles
  * @property Collection|Agrement[] $agrements
  * @property Collection|Niveaux[] $niveauxes
  * @property Collection|Operateur[] $operateurs
@@ -81,6 +83,13 @@ class Module extends Model
 		return $this->belongsTo(Statut::class, 'statuts_id');
 	}
 
+	public function collectives()
+	{
+		return $this->belongsToMany(Collective::class, 'collectivesmodules', 'modules_id', 'collectives_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
 	public function communes()
 	{
 		return $this->belongsToMany(Commune::class, 'communesmodules', 'modules_id', 'communes_id')
@@ -105,6 +114,13 @@ class Module extends Model
 	public function formations()
 	{
 		return $this->hasMany(Formation::class, 'modules_id');
+	}
+
+	public function individuelles()
+	{
+		return $this->belongsToMany(Individuelle::class, 'individuellesmodules', 'modules_id', 'individuelles_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function agrements()

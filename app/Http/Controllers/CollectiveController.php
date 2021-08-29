@@ -72,51 +72,16 @@ class CollectiveController extends Controller
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
         if ($user->hasRole('Demandeur')) {
-            if (isset($user->demandeur)) {
-                $types_demande = $user->demandeur->types_demande->name;
+            foreach ($user->demandeur->collectives as $key => $collective) {
+            }
                 $demandeurs = $user->demandeur;
                 $collectives = $demandeurs->collectives;
                 $utilisateurs = $user;
-                if ($types_demande === "Collective") {
-                    foreach ($collectives as $collective) {
-                    }
-                    return view('collectives.update', compact('civilites', 'familiale', 'collective', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
-                } elseif ($types_demande === "Collective") {
-                    return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-                } elseif ($types_demande === "Prise en charge") {
-                    return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-                } else {
-                    dd("Erreur, merci de contacter l'administrateur");
-                }
-            } else {
-                return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-            }
+                return view('collectives.update', compact('civilites', 'familiale', 'collective', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+          
         } else {
             return view('collectives.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         }
-
-
-        /*   if (isset($user->demandeur) !== false) {
-              $types_demande = $user->demandeur->types_demande->name;
-              if (isset($user->demandeur->collectives) !== false
-             && $types_demande ==="Collective"
-             && $user->hasRole('Demandeur')
-             && !$user->hasRole('Administrateur')
-             && !$user->hasRole('Gestionnaire') && !$user->hasRole('super-admin')) {
-                  $demandeurs = $user->demandeur;
-                  $collectives = $demandeurs->collectives;
-                  foreach ($collectives as $collective) {
-                  }
-                  $utilisateurs = $demandeurs->user;
-                  return view('collectives.update', compact('civilites', 'familiale', 'collective', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
-              }else {
-                  return view('individuelles.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-              }
-          } elseif ($user->hasRole('super-admin') || $user->hasRole('Administrateur') || $user->hasRole('Gestionnaire')) {
-              return view('collectives.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-          } else {
-              return view('collectives.icreate', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-          } */
     }
 
     /**
@@ -127,10 +92,15 @@ class CollectiveController extends Controller
      */
     public function store(Request $request)
     {
-        $user = auth::user();
+        $user_connect = Auth::user();
+        $utilisateur = $user_connect;
+        
+        $collectives = $user_connect->demandeur->collectives;
+        foreach ($collectives as $collective) {
+
+        }
         
         if (!$user->hasRole('Demandeur')) {
-            if (isset($user->demandeur) !== false) {
                 $this->validate(
                     $request,
                     [
@@ -153,36 +123,13 @@ class CollectiveController extends Controller
                         'modules'             =>  'exists:modules,id',
                     ]
                 );
-            } else {
-                $this->validate(
-                    $request,
-                    [
-                    'sexe'                =>  'required|string|max:10',
-                    'name'                =>  'required|string|unique:collectives,name,NULL,id,deleted_at,NULL',
-                    'prenom'              =>  'required|string|max:50',
-                    'nom'                 =>  'required|string|max:50',
-                    'date_naiss'          =>  'required|date_format:Y-m-d',
-                    'date_depot'          =>  'required|date_format:Y-m-d',
-                    'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|string|min:7|max:18',
-                    'fixe'                =>  'required|string|min:7|max:18',
-                    'structure_fixe'      =>  'required|string|min:7|max:18',
-                    'adresse'             =>  'required|string|max:200',
-                    'structure_adresse'   =>  'required|string|max:200',
-                    'description'         =>  'required|string|min:1000|max:1500',
-                    'email'               =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
-                    'professionnelle'     =>  'required',
-                    'commune'             =>  'required',
-                    'modules'             =>  'exists:modules,id',
-                ]
-                );
-            }
-        } elseif (isset($user->demandeur) !== false) {
+            } 
+            else {
             $this->validate(
                 $request,
                 [
                     'sexe'                =>  'required|string|max:10',
-                    'name'                =>  'required|string|unique:collectives,name,NULL,id,deleted_at,NULL',
+                    'name'                =>  "required|string|unique:collectives,name,{$collective->id},id,deleted_at,NULL",
                     'prenom'              =>  'required|string|max:50',
                     'nom'                 =>  'required|string|max:50',
                     'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -194,30 +141,7 @@ class CollectiveController extends Controller
                     'adresse'             =>  'required|string|max:200',
                     'structure_adresse'   =>  'required|string|max:200',
                     'description'         =>  'required|string|min:1|max:1500',
-                    'email'               =>  'required|string|email|max:255|unique:users,email,'.$user->id,
-                    'professionnelle'     =>  'required',
-                    'commune'             =>  'required',
-                    'modules'             =>  'exists:modules,id',
-                ]
-            );
-        } else {
-            $this->validate(
-                $request,
-                [
-                    'sexe'                =>  'required|string|max:10',
-                    'name'                =>  'required|string|unique:collectives,name,NULL,id,deleted_at,NULL',
-                    'prenom'              =>  'required|string|max:50',
-                    'nom'                 =>  'required|string|max:50',
-                    'date_naiss'          =>  'required|date_format:Y-m-d',
-                    'date_depot'          =>  'required|date_format:Y-m-d',
-                    'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|string|min:7|max:18',
-                    'fixe'                =>  'required|string|min:7|max:18',
-                    'structure_fixe'      =>  'required|string|min:7|max:18',
-                    'adresse'             =>  'required|string|max:200',
-                    'structure_adresse'   =>  'required|string|max:200',
-                    'description'         =>  'required|string|min:1|max:1500',
-                    'email'               =>  'required|string|email|max:255|unique:users,email,'.$user->id,
+                    'email'               =>  "required|string|email|max:255|unique:users,email,{$user_connect->id},id,deleted_at,NULL",
                     'professionnelle'     =>  'required',
                     'commune'             =>  'required',
                     'modules'             =>  'exists:modules,id',
@@ -226,30 +150,26 @@ class CollectiveController extends Controller
         }
 
         $user_id             =   User::latest('id')->first()->id;
-        $demandeurs_id       =   Demandeur::latest('id')->first()->id;
         $username            =   $user->username;
         
         $annee = date('y');
-        $demandeurs_id = Demandeur::latest('id')->first()->id;
-        $longueur = strlen($demandeurs_id);
+        $longueur = strlen($user_id);
 
         if ($longueur <= 1) {
-            $numero   =   "C".strtolower($annee."0000".$demandeurs_id);
+            $numero   =   "C".strtolower($annee."000000".$user_id);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero   =   "C".strtolower($annee."000".$demandeurs_id);
+            $numero   =   "C".strtolower($annee."00000".$user_id);
         } elseif ($longueur >= 3 && $longueur < 4) {
-            $numero   =   "C".strtolower($annee."00".$demandeurs_id);
+            $numero   =   "C".strtolower($annee."0000".$user_id);
         } elseif ($longueur >= 4 && $longueur < 5) {
-            $numero   =   "C".strtolower($annee."0".$demandeurs_id);
-        } elseif ($longueur >= 5) {
-            $numero   =   "C".strtolower($annee.$demandeurs_id);
+            $numero   =   "C".strtolower($annee."000".$user_id);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numero   =   "C".strtolower($annee."00".$user_id);
+        } elseif ($longueur >= 6 && $longueur < 7) {
+            $numero   =   "C".strtolower($annee."0".$user_id);
         } else {
-            $numero   =   "C".strtolower($annee.$demandeurs_id);
+            $numero   =   "C".strtolower($annee.$user_id);
         }
-       
-        //$commune = commune::find($request->input('commune'));
-        /*  $region = $commune->region->nom;
-         $region_id = $commune->region->id; */
 
         $created_by1 = $user->firstname;
         $created_by2 = $user->name;
@@ -291,7 +211,7 @@ class CollectiveController extends Controller
         }
 
         if (!$user->hasRole('Demandeur')) {
-            $user = new User([
+        $user = new User([
             'sexe'                          =>      $request->input('sexe'),
             'civilite'                      =>      $civilite,
             'firstname'                     =>      $request->input('prenom'),
@@ -314,39 +234,14 @@ class CollectiveController extends Controller
     
             $user->save();
             $user->assignRole('Demandeur');
-        } else {
-            $updated_by1 = $user->firstname;
-            $updated_by2 = $user->name;
-            $updated_by3 = $user->username;
 
-            $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
-            
-            $user->sexe                      =      $request->input('sexe');
-            $user->civilite                  =      $civilite;
-            $user->firstname                 =      $request->input('prenom');
-            $user->name                      =      $request->input('nom');
-            $user->email                     =      $request->input('email');
-            $user->username                  =      $request->input('username');
-            $user->telephone                 =      $telephone;
-            $user->fixe                      =      $fixe;
-            $user->bp                        =      $request->input('bp');
-            $user->fax                       =      $request->input('fax');
-            $user->situation_professionnelle =      $request->input('professionnelle');
-            $user->date_naissance            =      $request->input('date_naiss');
-            $user->lieu_naissance            =      $request->input('lieu_naissance');
-            $user->adresse                   =      $request->input('adresse');
-            $user->updated_by                =      $updated_by;
-    
-            $user->save();
-        }
+        } 
 
         $demandeur = new Demandeur([
             'numero'                        =>     $numero,
-            'numero_courrier'               =>     $numero,
             'date_depot'                    =>     $request->input('date_depot'),
             'telephone'                     =>     $autre_tel,
             'fixe'                          =>     $autre_tel,
-            'statut'                        =>     $statut,
             'programmes_id'                 =>     $programme_id,
             'adresse'                       =>     $request->input('structure_adresse'),
             'experience'                    =>     $request->input('experience'),
@@ -365,11 +260,8 @@ class CollectiveController extends Controller
         ]);
 
         $collectives->save();
+        $collectives->modules()->sync($request->input('modules'));
 
-        $collectives->demandeur->modules()->sync($request->input('modules'));
-
-        
-        $user_connect  =  $user->demandeur;
         if (!$user->hasRole('Demandeur')) {
             return redirect()->route('collectives.index')->with('success', 'demandeur ajouté avec succès !');
         } else {
@@ -421,17 +313,21 @@ class CollectiveController extends Controller
      */
     public function update(Request $request, Collective $collective)
     {
-        $demandeur = $collective->demandeur;
-        $utilisateur = $demandeur->user;
-        $user = Auth::user();
         $user_connect = Auth::user();
+        $demandeur = $collective->demandeur;
+        $utilisateur = $user_connect;
+        
+        $collectives = $user_connect->demandeur->collectives;
+        foreach ($collectives as $collective) {
 
-        if (!$user->hasRole('Demandeur')) {
+        }
+
+        if (!$user_connect->hasRole('Demandeur')) {
             $this->validate(
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'name'                =>  "required|string",
+               'name'                 =>  "required|string|min:13|max:15|unique:collectives,name,{$collective->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -477,9 +373,9 @@ class CollectiveController extends Controller
 
         $utilisateurs   =   $collective->demandeur->user;
 
-        $updated_by1 = $user->firstname;
-        $updated_by2 = $user->name;
-        $updated_by3 = $user->username;
+        $updated_by1 = $user_connect->firstname;
+        $updated_by2 = $user_connect->name;
+        $updated_by3 = $user_connect->username;
 
         $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
 
@@ -509,6 +405,8 @@ class CollectiveController extends Controller
         } else {
             $civilite = "";
         }
+        
+        $statut = "Attente";
 
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $types_demandes_id = TypesDemande::where('name', 'Collective')->first()->id;
@@ -532,13 +430,9 @@ class CollectiveController extends Controller
         $utilisateur->save();
 
         $demandeur->numero                      =      $request->input('numero');
-        $demandeur->numero_courrier             =      $request->input('numero_courrier');
         $demandeur->date_depot                  =      $request->input('date_depot');
         $demandeur->fixe                        =      $structure_fixe;
         $demandeur->telephone                   =      $autre_tel;
-        if (!$user->hasRole('Demandeur')) {
-            $demandeur->statut                      =      $request->input('statut');
-        }
         $demandeur->adresse                     =      $request->input('structure_adresse');
         $demandeur->autres_diplomes             =      $request->input('autres_diplomes');
         $demandeur->experience                  =      $request->input('experience');
@@ -552,18 +446,21 @@ class CollectiveController extends Controller
 
         $demandeur->save();
 
+        if (!$user_connect->hasRole('Demandeur')) {
+        $collective->statut                   =      $request->input('statut');
+        }
+        $collective->statut                   =      $statut;
         $collective->name                     =     $request->input('name');
         $collective->description              =     $request->input('description');
         $collective->demandeurs_id            =     $demandeur->id;
 
         $collective->save();
+        $collective->modules()->sync($request->input('modules'));
 
-        $demandeur->modules()->sync($request->input('modules'));
-
-        if (!$user->hasRole('Demandeur')) {
+        if (!$user_connect->hasRole('Demandeur')) {
             return redirect()->route('collectives.index')->with('success', 'demande modifiée avec succès !');
         } else {
-            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');
+            return redirect()->route('profiles.show', ['user'=>$user_connect, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');
         }
     }
 

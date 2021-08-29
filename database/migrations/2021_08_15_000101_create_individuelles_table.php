@@ -35,6 +35,7 @@ class CreateIndividuellesTable extends Migration
             $table->double('note')->nullable();
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
+            $table->string('statut', 45)->nullable();
             $table->unsignedInteger('demandeurs_id');
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');

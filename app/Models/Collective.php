@@ -17,19 +17,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string $name
+ * @property string|null $name
  * @property string|null $items1
  * @property Carbon|null $date1
- * @property int $demandeurs_id
  * @property string|null $sigle
  * @property string|null $statut
  * @property string|null $description
+ * @property int $demandeurs_id
+ * @property int|null $ingenieurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Demandeur $demandeur
+ * @property Ingenieur|null $ingenieur
  * @property Collection|Formation[] $formations
+ * @property Collection|Module[] $modules
  * @property Collection|Membre[] $membres
  *
  * @package App\Models
@@ -42,7 +45,8 @@ class Collective extends Model
 	protected $table = 'collectives';
 
 	protected $casts = [
-		'demandeurs_id' => 'int'
+		'demandeurs_id' => 'int',
+		'ingenieurs_id' => 'int'
 	];
 
 	protected $dates = [
@@ -54,10 +58,11 @@ class Collective extends Model
 		'name',
 		'items1',
 		'date1',
-		'demandeurs_id',
 		'sigle',
 		'statut',
-		'description'
+		'description',
+		'demandeurs_id',
+		'ingenieurs_id'
 	];
 
 	public function demandeur()
@@ -65,9 +70,21 @@ class Collective extends Model
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
 	}
 
+	public function ingenieur()
+	{
+		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
+	}
+
 	public function formations()
 	{
 		return $this->belongsToMany(Formation::class, 'collectivesformations', 'collectives_id', 'formations_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function modules()
+	{
+		return $this->belongsToMany(Module::class, 'collectivesmodules', 'collectives_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

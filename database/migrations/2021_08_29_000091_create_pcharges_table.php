@@ -24,6 +24,7 @@ class CreatePchargesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
+            $table->string('cin', 45)->nullable();
             $table->integer('annee')->nullable();
             $table->string('matricule', 45)->nullable();
             $table->string('typedemande', 200)->nullable();
@@ -33,8 +34,6 @@ class CreatePchargesTable extends Migration
             $table->double('montant')->nullable();
             $table->double('accompt')->nullable();
             $table->double('reliquat')->nullable();
-            $table->unsignedInteger('demandeurs_id')->nullable();
-            $table->unsignedInteger('etablissements_id')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();
@@ -43,10 +42,16 @@ class CreatePchargesTable extends Migration
             $table->string('file6', 200)->nullable();
             $table->string('file7', 200)->nullable();
             $table->string('file8', 200)->nullable();
+            $table->string('statut', 45)->nullable();
+            $table->unsignedInteger('demandeurs_id')->nullable();
+            $table->unsignedInteger('etablissements_id')->nullable();
+            $table->unsignedInteger('filieres_id')->nullable();
 
             $table->index(["demandeurs_id"], 'fk_charge_demandeurs1_idx');
 
             $table->index(["etablissements_id"], 'fk_pcharges_etablissements1_idx');
+
+            $table->index(["filieres_id"], 'fk_pcharges_filieres1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -58,6 +63,11 @@ class CreatePchargesTable extends Migration
 
             $table->foreign('etablissements_id', 'fk_pcharges_etablissements1_idx')
                 ->references('id')->on('etablissements')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('filieres_id', 'fk_pcharges_filieres1_idx')
+                ->references('id')->on('filieres')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

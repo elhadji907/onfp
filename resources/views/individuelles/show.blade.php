@@ -15,9 +15,8 @@
     <div class="container">
         <div class="container-fluid">
             <div class="card">
-                @foreach ($individuelles as $individuelle)
                     <div class="card-body">
-                        <h1 class="h4 h-100 text-uppercase mb-4"><b><u>Type de demande</u> : {!! $individuelle->demandeur->types_demande->name !!}
+                        <h1 class="h4 h-100 text-uppercase mb-4"><b><u>Type de demande</u> : {!! __('Individuelle') !!}
                             </b></h1>
                         <h4>
                             <b><u>N° du dossier</u></b> : <span
@@ -26,7 +25,7 @@
                         <h4>
                             <?php $i = 1; ?>
                             <b><u>Modules demandés </u></b>: 
-                            @foreach ($individuelle->demandeur->modules as $module)
+                            @foreach ($individuelle->modules as $module)
                               <small>{!! $i++ !!}</small>)
                                     {!! $module->name ?? 'aucun module demandé' !!}</small>
                             @endforeach
@@ -56,7 +55,6 @@
                             <span class="badge badge-primary">{!! $individuelle->demandeur->user->firstname !!}&nbsp;{!! $individuelle->demandeur->user->name !!}</span>
                         </div>
                     </div>
-                @endforeach
             </div>
 
             <hr>

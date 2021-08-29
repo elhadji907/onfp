@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header bg-gradient-info text-center">
                         <h1 class="h4 text-white mb-0"><span data-feather="info"></span>Modification demande
-                            collective</h1>
+                            collective [{!! $collective->demandeur->numero !!}]</h1>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires
@@ -21,17 +21,6 @@
                         {!! Form::open(['url' => 'collectives/' . $collective->id, 'method' => 'PATCH', 'files' => true]) !!}
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
-                                <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
-                                    name="cin" placeholder="Votre et cin"
-                                    value="{{ $collective->demandeur->cin ?? old('cin') }}" autocomplete="cin">
-                                @error('cin')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="prenom">{{ __('Prénom') }}(<span class="text-danger">*</span>)</label>
                                 <input id="prenom" type="text" class="form-control @error('prenom') is-invalid @enderror"
@@ -98,7 +87,7 @@
                                 <label for="telephone">{{ __('Telephone') }}(<span class="text-danger">*</span>)</label>
                                 <input id="telephone" type="text"
                                     class="form-control @error('telephone') is-invalid @enderror" name="telephone"
-                                    placeholder="7x xxx xx xx" value="{{ $collective->demandeur->user->telephone ?? '' }}"
+                                    placeholder="N° de téléphone" value="{{ $collective->demandeur->user->telephone ?? '' }}"
                                     autocomplete="telephone">
                                 @error('telephone')
                                     <span class="invalid-feedback" role="alert">
@@ -107,9 +96,9 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="fixe">{{ __('Fixe') }}(<span class="text-danger">*</span>)</label>
+                                <label for="fixe">{{ __('Téléphone secondaire') }}(<span class="text-danger">*</span>)</label>
                                 <input id="fixe" type="text" class="form-control @error('fixe') is-invalid @enderror"
-                                    name="fixe" placeholder="3x xxx xx xx" value="{{ $collective->demandeur->user->fixe ?? '' }}"
+                                    name="fixe" placeholder="Second n° de téléphone" value="{{ $collective->demandeur->user->fixe ?? old('fixe') }}"
                                     autocomplete="fixe">
                                 @error('fixe')
                                     <span class="invalid-feedback" role="alert">
@@ -117,15 +106,19 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="autre_tel">{{ __('Téléphone') }}</label>
-                                <input id="autre_tel" type="text"
-                                    class="form-control @error('autre_tel') is-invalid @enderror" name="autre_tel"
-                                    placeholder="7x xxx xx xx" value="{{ $collective->demandeur->telephone ?? old('autre_tel') }}" autocomplete="autre_tel">
+                            <div class="form-group col-md-8 col-lg-8 col-xs-8 col-sm-12">
+                                <label for="adresse">{{ __('Adresse de résidence') }}(<span
+                                        class="text-danger">*</span>)</label>
+                                <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
+                                    id="adresse" rows="1"
+                                    placeholder="Votre adresse complète">{{ $collective->demandeur->user->adresse ?? old('adresse') }}</textarea>
+                                @error('adresse')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], $collective->demandeur->user->sexe, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
+                                {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], $collective->demandeur->user->sexe ?? old('sexe'), ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('sexe'))
                                         @foreach ($errors->get('sexe') as $message)
@@ -135,21 +128,20 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                <label for="input-name">{{ __('Situation professionnelle') }}:</label>
-                                <select name="professionnelle" id="professionnelle" class="form-control" data-width="100%">
-                                    <option value="{{ $collective->demandeur->user->situation_professionnelle }}">
-                                        {{ $collective->demandeur->user->situation_professionnelle }}</option>
-                                    <option value="">{{ __('...sélectionner...') }}</option>
-                                    <option value="{{ 'Salarié CDD' }}">{{ 'Salarié CDD' }}</option>
-                                    <option value="{{ 'Recherche d\'emploi' }}">{{ 'Recherche d\'emploi' }}
-                                    </option>
-                                    <option value="{{ 'Salarié CDI' }}">{{ 'Salarié CDI' }}</option>
-                                    <option value="{{ 'Élève' }}">{{ 'Élève' }}</option>
-                                    <option value="{{ 'Étudiant(e)' }}">{{ 'Étudiant(e)' }}</option>
-                                    <option value="{{ 'Sans activité' }}">{{ 'Sans activité' }}</option>
-                                    <option value="{{ 'En stage' }}">{{ 'En stage' }}</option>
-                                    <option value="{{ 'Autre' }}">{{ 'Autre' }}</option>
-                                </select>
+                                {!! Form::label('Situation professionnelle :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('professionnelle', 
+                                [
+                                    'Salarié CDD' => 'Salarié CDD', 
+                                    'Recherche d\'emploi' => 'Recherche d\'emploi',
+                                    'Salarié CDI' => 'Salarié CDI',
+                                    'Élève' => 'Élève',
+                                    'Étudiant' => 'Étudiant',
+                                    'Sans activité' => 'Sans activité',
+                                    'En stage' => 'En stage',
+                                    'Autre' => 'Autre'
+                                ], 
+                                $collective->demandeur->user->situation_professionnelle ?? old('professionnelle'), 
+                                ['placeholder' => 'sélectionner situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('professionnelle'))
                                         @foreach ($errors->get('professionnelle') as $message)
@@ -157,16 +149,6 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                <label for="adresse">{{ __('Adresse de résidence') }}(<span
-                                        class="text-danger">*</span>)</label>
-                                <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
-                                    id="adresse" rows="1"
-                                    placeholder="Votre adresse complète">{{ $collective->demandeur->user->adresse ?? old('adresse') }}</textarea>
-                                @error('adresse')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 <div class="text-center">
@@ -183,7 +165,7 @@
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('commune', $communes, $collective->demandeur->commune->nom, ['placeholder' => 'Choir une commune', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
+                                {!! Form::select('commune', $communes, $collective->demandeur->commune->nom ?? old('commune'), ['placeholder' => 'Choir une commune', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('commune'))
                                         @foreach ($errors->get('commune') as $message)
