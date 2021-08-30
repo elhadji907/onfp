@@ -52,12 +52,12 @@ class EtablissementController extends Controller
                 'name'                         =>      $request->input('etablissement'),
                 'telephone1'                   =>      $request->input('telephone_1'),
                 'telephone2'                   =>      $request->input('telephone_2'),
+                'fixe'                         =>      $request->input('fixe'),
                 'email'                        =>      $request->input('email'),
                 'adresse'                      =>      $request->input('adresse'),
                 'name'                         =>      $request->input('etablissement'),
                 'sigle'                        =>      $request->input('sigle'),
                 'communes_id'                  =>      $request->input('commune')
-    
             ]);
     
             $etablissement->save();
@@ -72,7 +72,8 @@ class EtablissementController extends Controller
      */
     public function show(Etablissement $etablissement)
     {
-        //
+        $communes = Commune::all();
+        return view('etablissements.show', compact('etablissement', 'communes'));
     }
 
     /**
@@ -83,7 +84,9 @@ class EtablissementController extends Controller
      */
     public function edit(Etablissement $etablissement)
     {
-        //
+        /* $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique(); */
+        $communes = Commune::all();
+        return view('etablissements.update', compact('etablissement', 'communes'));
     }
 
     /**
@@ -95,7 +98,30 @@ class EtablissementController extends Controller
      */
     public function update(Request $request, Etablissement $etablissement)
     {
-        //
+        $this->validate($request, [
+            'etablissement'         =>  "required|string|unique:etablissements,name,{$etablissement->id},id,deleted_at,NULL",
+            'telephone_1'           =>  'required|string|max:17',
+            'telephone_2'           =>  'required|string|max:17',
+            'email'                 =>  "required|string|email|max:255|unique:etablissements,email,{$etablissement->id},id,deleted_at,NULL",
+            'adresse'               =>  'required|string',
+            'fixe'                  =>  'required|string|max:50',
+            'commune'               =>  'required|string'
+        ]);
+
+        $communes_id = Commune::where('nom', $request->input('commune'))->first()->id;
+
+        $etablissement->name                         =      $request->input('etablissement');
+        $etablissement->telephone1                   =      $request->input('telephone_1');
+        $etablissement->telephone2                   =      $request->input('telephone_2');
+        $etablissement->fixe                         =      $request->input('fixe');
+        $etablissement->email                        =      $request->input('email');
+        $etablissement->adresse                      =      $request->input('adresse');
+        $etablissement->name                         =      $request->input('etablissement');
+        $etablissement->sigle                        =      $request->input('sigle');
+        $etablissement->communes_id                  =      $communes_id;
+
+        $etablissement->save();
+        return redirect()->route('etablissements.index')->with('success','modification effectué avec succès !');
     }
 
     /**
@@ -106,7 +132,10 @@ class EtablissementController extends Controller
      */
     public function destroy(Etablissement $etablissement)
     {
-        //
+
+        $etablissement->delete();
+        $message = $etablissement->name.' ['.$etablissement->sigle.'] a été supprimé';        
+        return redirect()->route('etablissements.index')->with('success', $message);
     }
     
 }

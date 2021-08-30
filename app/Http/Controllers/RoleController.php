@@ -58,8 +58,6 @@ class RoleController extends Controller
     {
         $id = $request->query('id');
 
-        dd($id);
-
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
             'permission' => 'required',

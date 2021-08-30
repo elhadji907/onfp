@@ -2,7 +2,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -30,7 +30,8 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:5%;">N°</th>
-                                        <th style="width:50%;">Name</th>
+                                        <th>Name</th>
+                                        <th style="width:10%;">Sigle</th>
                                         <th style="width:8%;">Effectif</th>
                                         <th style="width:12%;"></th>
                                     </tr>
@@ -39,6 +40,7 @@
                                     <tr>
                                         <th>N°</th>
                                         <th>Name</th>
+                                        <th style="width:10%;">Sigle</th>
                                         <th>Effectif</th>
                                         <th></th>
                                     </tr>
@@ -49,6 +51,7 @@
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $etablissement->name }}</td>
+                                            <td>{{ $etablissement->sigle }}</td>
                                             <td>
                                                 @foreach ($etablissement->pcharges as $pcharge)
                                                 @if ($loop->last)
