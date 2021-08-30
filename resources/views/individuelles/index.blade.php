@@ -63,20 +63,20 @@
                                     @foreach ($individuelles as $individuelle)
                                         <tr>
                                             <td>{!! $individuelle->demandeur->numero !!}</td>
-                                            <td>{!! $individuelle->demandeur->cin !!}</td>
+                                            <td>{!! $individuelle->cin !!}</td>
                                             <td>{!! $individuelle->demandeur->user->civilite !!}</td>
                                             <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                             <td>{!! $individuelle->demandeur->user->name !!} </td>
                                             <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                             <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                            <td>{!! $individuelle->demandeur->commune->nom !!}</td>                                           
-                                            <td>{!! $individuelle->demandeur->commune->arrondissement->departement->region->sigle !!}</td>                                           
+                                            <td>{!! $individuelle->demandeur->commune->nom !!}</td>
+                                            <td>{!! $individuelle->demandeur->commune->arrondissement->departement->region->sigle !!}</td>
                                             <td class="d-flex align-items-baseline text-center-row">
-                                                    <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                        title="modifier">
-                                                        <i class="far fa-edit">&nbsp;</i>
-                                                    </a>
+                                                <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                    title="modifier">
+                                                    <i class="far fa-edit">&nbsp;</i>
+                                                </a>
                                                 &nbsp;
                                                 <a href="{!! url('demandeurs/' . $individuelle->demandeur->id) !!}" class='btn btn-primary btn-sm'
                                                     title="voir">
@@ -104,8 +104,7 @@
         $(document).ready(function() {
             $('#table-individuelles').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -123,8 +122,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {

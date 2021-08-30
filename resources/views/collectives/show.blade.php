@@ -15,46 +15,48 @@
     <div class="container">
         <div class="container-fluid">
             <div class="card">
-                    <div class="card-body">
-                        <h1 class="h4 h-100 text-uppercase mb-4"><b><u>Type de demande</u> : {!! $collective->demandeur->types_demande->name !!}
-                            </b></h1>
-                        <h4>
-                            <b><u>N° du dossier</u></b> : <span
-                                class="font-italic">{{ $collective->demandeur->numero ?? 'numéro de dossier introuvable' }}</span>
-                        </h4><br />
-                        <h4>
-                            <?php $i = 1; ?>
-                            <b><u>Modules demandés </u></b>: 
-                            @foreach ($collective->demandeur->modules as $module)
-                              <small>{!! $i++ !!}</small>)
-                                    {!! $module->name ?? 'aucun module demandé' !!}</small>
-                            @endforeach
-                        </h4><br />
-                        <h4>
-                            @if (isset($collective->demandeur->programme->sigle))
-                                <b><u>Programmes </u></b>:
-                                {!! ucwords(strtolower($collective->demandeur->programme->sigle)) ?? 'aucun module demandé' !!}</small>
-                            @else
+                <div class="card-body">
+                    <h1 class="h4 h-100 text-uppercase mb-4"><b><u>Type de demande</u> : {!! $collective->demandeur->types_demande->name !!}
+                        </b></h1>
+                    <h4>
+                        <b><u>N° du dossier</u></b> : <span
+                            class="font-italic">{{ $collective->demandeur->numero ?? 'numéro de dossier introuvable' }}</span>
+                    </h4><br />
+                    <h4>
+                        <?php $i = 1; ?>
+                        <b><u>Modules demandés </u></b>:
+                        @foreach ($collective->demandeur->modules as $module)
+                            <small>{!! $i++ !!}</small>)
+                            {!! $module->name ?? 'aucun module demandé' !!}</small>
+                        @endforeach
+                    </h4><br />
+                    <h4>
+                        @if (isset($collective->demandeur->programme->sigle))
+                            <b><u>Programmes </u></b>:
+                            {!! ucwords(strtolower($collective->demandeur->programme->sigle)) ?? 'aucun module demandé' !!}</small>
+                        @else
 
-                            @endif
-                        </h4><br /><br />
-                        <div class="d-flex justify-content-between align-items-center mt-3">
-                            <a href="{!! url('collectives/' . $collective->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning">
-                                <i class="far fa-edit">&nbsp;Modifier</i>
-                            </a>
-                            <a href="{!! url('collectives/' . $collective->demandeur->id . '/edit') !!}" title="voir les d&eacute;tails du courrier"
-                                class="btn btn-outline-primary">
-                                <i class="far fa-eye">&nbsp;D&eacute;tails</i>
-                            </a>
-                                {!! Form::open(['method' => 'DELETE', 'url' => 'collectives/' . $collective->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                {!! Form::button('<i class="fa fa-trash">&nbsp;Supprimer</i>', ['type' => 'submit', 'class' => 'btn btn-outline-danger', 'title' => 'supprimer']) !!}
-                                {!! Form::close() !!}
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center mt-5">
-                            <small>Déposée depuis le {!! Carbon\Carbon::parse($collective->demandeur->created_at)->format('d/m/Y à H:i:s') !!}</small>
-                            <span class="badge badge-primary">{!! $collective->demandeur->user->firstname !!}&nbsp;{!! $collective->demandeur->user->name !!}</span>
-                        </div>
+                        @endif
+                    </h4><br /><br />
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <a href="{!! url('collectives/' . $collective->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning">
+                            <i class="far fa-edit">&nbsp;Modifier</i>
+                        </a>
+                        <a href="{!! url('collectives/' . $collective->demandeur->id . '/edit') !!}" title="voir les d&eacute;tails du courrier"
+                            class="btn btn-outline-primary">
+                            <i class="far fa-eye">&nbsp;D&eacute;tails</i>
+                        </a>
+                        @can('user-delete')
+                            {!! Form::open(['method' => 'DELETE', 'url' => 'collectives/' . $collective->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                            {!! Form::button('<i class="fa fa-trash">&nbsp;Supprimer</i>', ['type' => 'submit', 'class' => 'btn btn-outline-danger', 'title' => 'supprimer']) !!}
+                            {!! Form::close() !!}
+                        @endcan
                     </div>
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                        <small>Déposée depuis le {!! Carbon\Carbon::parse($collective->demandeur->created_at)->format('d/m/Y à H:i:s') !!}</small>
+                        <span class="badge badge-primary">{!! $collective->demandeur->user->firstname !!}&nbsp;{!! $collective->demandeur->user->name !!}</span>
+                    </div>
+                </div>
             </div>
 
             <hr>

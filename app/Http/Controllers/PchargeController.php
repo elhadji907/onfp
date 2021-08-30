@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pcharge;
 use App\Models\Etablissement;
+use App\Models\Filiere;
 use App\Models\Module;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class PchargeController extends Controller
 {
@@ -35,7 +37,12 @@ class PchargeController extends Controller
         $total = Pcharge::get()->count();
 
         $pcharges      =   Pcharge::all();
-        return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'an2022'));
+        
+        $depart = "2018";
+
+        $enCours = date('Y');
+
+        return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'an2022', 'depart', 'enCours'));
     }
 
     /**
@@ -48,7 +55,9 @@ class PchargeController extends Controller
         $etablissements = Etablissement::distinct('name')->get()->pluck('name', 'name')->unique();
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
 
-        return view('pcharges.create', compact('etablissements', 'modules'));
+        $enCours = date('Y');
+
+        return view('pcharges.create', compact('etablissements', 'modules', 'enCours'));
     }
 
     /**
@@ -60,7 +69,8 @@ class PchargeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-                'civilite'              =>  'required|string|max:10',
+                'annee'                 =>  'required|string|min:4|max:4',
+                'civilite'              =>  'required|string',
                 'firstname'             =>  'required|string|max:50',
                 'name'                  =>  'required|string|max:50',
                 'telephone'             =>  'required|string|max:50',
@@ -68,6 +78,9 @@ class PchargeController extends Controller
                 'adresse'               =>  'required|string',
                 'fixe'                  =>  'required|string|max:50',
                 'lieu_naissance'        =>  'required|string|max:50',
+                'etablissement'         =>  'required|string',
+                'filiere'               =>  'required|string',
+                'autre_filiere'         =>  'sometimes',
             ]);
     }
 
@@ -114,5 +127,17 @@ class PchargeController extends Controller
     public function destroy(Pcharge $pcharge)
     {
         //
+    }
+    
+    public function list(Request $request)
+    {
+        $etablissements=Etablissement::with('etablissement')->get();
+        return Datatables::of($etablissements)->make(true);
+    }
+    
+    public function liste(Request $request)
+    {
+        $filieres=Filiere::with('filiere')->get();
+        return Datatables::of($filieres)->make(true);
     }
 }

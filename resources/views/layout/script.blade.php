@@ -55,6 +55,13 @@
 </script>  
 <script type="text/javascript">
 
+      $("#filiere").select2({
+            placeholder: "choisir filière",
+            allowClear: true
+        });
+</script>  
+<script type="text/javascript">
+
       $("#projet-sigle").select2({
             placeholder: "choisir sigle",
             allowClear: true

@@ -103,20 +103,9 @@
                                             class="text-danger">*</span>)</label>
                                     <input id="telephone" type="text"
                                         class="form-control @error('telephone') is-invalid @enderror" name="telephone"
-                                        placeholder="7x xxx xx xx" value="{{ old('telephone') }}"
+                                        placeholder="+221 .. ... .. .." value="{{ old('telephone') }}"
                                         autocomplete="telephone" autofocus>
                                     @error('telephone')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <label for="fixe">{{ __('Fixe') }}(<span class="text-danger">*</span>)</label>
-                                    <input id="fixe" type="text" class="form-control @error('fixe') is-invalid @enderror"
-                                        name="fixe" placeholder="3x xxx xx xx" value="{{ old('fixe') }}"
-                                        autocomplete="fixe" autofocus>
-                                    @error('fixe')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -126,12 +115,22 @@
                                     <label for="autre_tel">{{ __('Téléphone secondaire') }}</label>
                                     <input id="autre_tel" type="text"
                                         class="form-control @error('autre_tel') is-invalid @enderror" name="autre_tel"
-                                        placeholder="7x xxx xx xx" value="{{ old('autre_tel') }}"
+                                        placeholder="+221 .. ... .. .." value="{{ old('autre_tel') }}"
                                         autocomplete="autre_tel" autofocus>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="adresse">{{ __('Adresse de résidence') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
+                                        id="adresse" rows="1"
+                                        placeholder="Votre adresse complète">{{ old('adresse') }}</textarea>
+                                    @error('adresse')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -142,7 +141,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation familiale :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('familiale', ['Marié(e)' => 'Marié(e)', 'Célibataire' => 'Célibataire'], null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -153,7 +152,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation professionnelle :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('professionnelle', ['Demandeur d\'emploi actif' => 'Demandeur d\'emploi actif', 'Salarié CDD' => 'Salarié CDD', 'Salarié CDI' => 'Salarié CDI', 'Élève' => 'Élève', 'Étudiant(e)' => 'Étudiant(e)', 'Sans activité' => 'Sans activité', 'En stage' => 'En stage', 'Autre' => 'Autre'], null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -164,9 +163,7 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('commune', $communes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -176,40 +173,6 @@
                                             @endforeach
                                         @endif
                                     </small>
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <label for="bp">{{ __('Boite postale') }}</label>
-                                    <input id="bp" type="text" class="form-control @error('bp') is-invalid @enderror"
-                                        name="bp" placeholder="Votre adresse postale" value="{{ old('bp') }}"
-                                        autocomplete="bp" autofocus>
-                                    @error('bp')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <label for="fax">{{ __('Téléphone fax') }}</label>
-                                    <input id="fax" type="text" class="form-control @error('fax') is-invalid @enderror"
-                                        name="fax" placeholder="Votre numero de fax" value="{{ old('fax') }}"
-                                        autocomplete="fax" autofocus>
-                                    @error('fax')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label for="adresse">{{ __('Adresse de résidence') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
-                                        id="adresse" rows="1"
-                                        placeholder="Votre adresse complète">{{ old('adresse') }}</textarea>
-                                    @error('adresse')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="bg-gradient-secondary text-center">
@@ -251,7 +214,7 @@
                                 </div> --}}
                             {{-- </div> --}}
                             <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('niveau_etude', ['Aucun' => 'Aucun', 'Elémentaire' => 'Elémentaire', 'Moyen' => 'Moyen', 'Secondaire' => 'Secondaire', 'Supérieur' => 'Supérieur', 'Arabe' => 'Arabe'], null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'niveau_etude', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -262,7 +225,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Diplômes :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -272,11 +235,15 @@
                                             @endforeach
                                         @endif
                                     </small>
-                                </div><div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="Option">{{ __('Option du diplôme') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <input id="option" type="option" class="form-control @error('option') is-invalid @enderror"
-                                        name="option" placeholder="Ex: Gestion finance" value="{{ old('option') }}"
+                                    <input id="option" type="option"
+                                        class="form-control @error('option') is-invalid @enderror" name="option"
+                                        placeholder="Ex: Gestion finance" value="{{ old('option') }}"
                                         autocomplete="option">
                                     @error('option')
                                         <span class="invalid-feedback" role="alert">
@@ -284,6 +251,25 @@
                                         </span>
                                     @enderror
                                     </small>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="autres_diplomes">{{ __('Autres diplomes') }}</label>
+                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
+                                        name="autres_diplomes" id="autres_diplomes" rows="1"
+                                        placeholder="Si vous possédez d'autres diplômes">{{ old('autres_diplomes') }}</textarea>
+                                    @error('autres_diplomes')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <textarea class="form-control  @error('etablissement') is-invalid @enderror"
+                                        name="etablissement" id="etablissement" rows="1"
+                                        placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
+                                    @error('etablissement')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-row">
@@ -297,27 +283,6 @@
                                             @endforeach
                                         @endif
                                     </small>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="autres_diplomes">{{ __('Autres diplomes') }}</label>
-                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
-                                        name="autres_diplomes" id="autres_diplomes" rows="1"
-                                        placeholder="Si vous possédez d'autres diplômes">{{ old('autres_diplomes') }}</textarea>
-                                    @error('autres_diplomes')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('etablissement') is-invalid @enderror"
-                                        name="etablissement" id="etablissement" rows="1"
-                                        placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
-                                    @error('etablissement')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="form-row">

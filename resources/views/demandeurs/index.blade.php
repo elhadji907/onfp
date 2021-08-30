@@ -62,7 +62,7 @@
                                             <td>{!! $demandeur->commune->nom ?? ' ' !!}</td>
                                             <td>
                                                 <a href="{{ route('profiles.show', ['user' => $demandeur->user]) }}" class='btn btn-primary btn-sm'
-                                                    title="voir">
+                                                    title="voir" target='_blank'>
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                             </td>

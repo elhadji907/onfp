@@ -51,6 +51,9 @@ use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\EtablissementController;
+use App\Http\Controllers\FiliereController;
+use App\Http\Controllers\FilierespecialiteController;
+use App\Http\Controllers\SpecialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,11 +136,17 @@ Route::group([
         Route::get('/regions/list', [RegionController::class, 'list'])->name('regions.list');
         Route::get('/arrondissements/list', [ArrondissementController::class, 'list'])->name('arrondissements.list');
         Route::get('/communes/list', [CommuneController::class, 'list'])->name('communes.list');
+        Route::get('/filieres/list', [FiliereController::class, 'list'])->name('filieres.list');
+        Route::get('/filierespecialites/list', [FilierespecialiteController::class, 'list'])->name('filierespecialites.list');
+        Route::get('/specialites/list', [SpecialiteController::class, 'list'])->name('specialites.list');
         Route::get('/selectdindividuelles/{id_dept}/{id_module}/{id_form}', 'FindividuellesController@selectdindividuelles')->name('findividuelles.selectdindividuelles');
         Route::get('adddindividuelles/{id_ind}/{id_form}', 'FindividuellesController@adddindividuelles')->name('adddindividuelles');
         Route::get('deleteindividuelles/{id_ind}/{id_form}', 'FindividuellesController@deleteindividuelles')->name('deleteindividuelles');        
         Route::post('/comments/{courrier}', [CommentController::class, 'store'])->name('comments.store');
         Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
+        
+        Route::get('/pcharges.selectetablissements', function() { return view('pcharges.selectetablissements'); })->name('pcharges.selectetablissements');
+        Route::get('/pcharges.selectefilieres', function() { return view('pcharges.selectefilieres'); })->name('pcharges.selectefilieres');
         
         Route::resource('/courriers', CourrierController::class);
         Route::resource('/recues', RecueController::class);
@@ -184,6 +193,9 @@ Route::group([
         Route::resource('/communes', CommuneController::class);
         Route::resource('/roles', RoleController::class);
         Route::resource('/etablissements', EtablissementController::class);
+        Route::resource('/filieres', FiliereController::class);
+        Route::resource('/filierespecialites', FilierespecialiteController::class);
+        Route::resource('/specialites', SpecialiteController::class);
     });
 
 require __DIR__.'/auth.php';

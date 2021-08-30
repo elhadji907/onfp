@@ -117,8 +117,7 @@ class IndividuelleController extends Controller
                         'date_naiss'          =>  'required|date_format:Y-m-d',
                         'date_depot'          =>  'required|date_format:Y-m-d',
                         'lieu_naissance'      =>  'required|string|max:50',
-                        'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
-                        'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+                        'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                         'etablissement'       =>  'required|string|max:100',
                         'adresse'             =>  'required|string|max:100',
                         'prerequis'           =>  'required|string|max:1500',
@@ -144,8 +143,7 @@ class IndividuelleController extends Controller
                     'date_naiss'          =>  'required|date_format:Y-m-d',
                     'date_depot'          =>  'required|date_format:Y-m-d',
                     'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
-                    'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+                    'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                     'etablissement'       =>  'required|string|max:100',
                     'adresse'             =>  'required|string|max:100',
                     'prerequis'           =>  'required|string|max:1500',
@@ -199,9 +197,6 @@ class IndividuelleController extends Controller
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
 
-        $fixe = $request->input('fixe');
-        $fixe = str_replace(' ', '', $fixe);
-
         $autre_tel = $request->input('autre_tel');
         $autre_tel = str_replace(' ', '', $autre_tel);
        
@@ -235,7 +230,6 @@ class IndividuelleController extends Controller
             'email'                     =>      $request->input('email'),
             'username'                  =>      $username,
             'telephone'                 =>      $telephone,
-            'fixe'                      =>      $fixe,
             'bp'                        =>      $request->input('bp'),
             'fax'                       =>      $request->input('fax'),
             'situation_familiale'       =>      $request->input('familiale'),
@@ -259,13 +253,11 @@ class IndividuelleController extends Controller
                 'niveau_etude'              =>     $request->input('niveau_etude'),
                 'etablissement'             =>     $request->input('etablissement'),
                 'telephone'                 =>     $autre_tel,
-                'fixe'                      =>     $fixe,
                 'programmes_id'             =>     $programme_id,
                 'option'                    =>     $request->input('option'),
                 'adresse'                   =>     $request->input('adresse'),
                 'motivation'                =>     $request->input('motivation'),
                 'autres_diplomes'           =>     $request->input('autres_diplomes'),
-                'experience'                =>     $request->input('experience'),
                 'qualification'             =>     $request->input('qualification'),
                 'communes_id'               =>     $commune_id,
                 'types_demandes_id'         =>     $types_demandes_id,
@@ -313,7 +305,7 @@ class IndividuelleController extends Controller
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
-        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
 
         
         return view('individuelles.show', compact(
@@ -381,8 +373,7 @@ class IndividuelleController extends Controller
                'date_naiss'          =>  'required|date_format:Y-m-d',
                'date_depot'          =>  'required|date_format:Y-m-d',
                'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
-               'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                'etablissement'       =>  'required|string|max:100',
                'adresse'             =>  'required|string|max:100',
                'prerequis'           =>  'required|string|max:1500',
@@ -408,8 +399,7 @@ class IndividuelleController extends Controller
                'date_naiss'          =>  'required|date_format:Y-m-d',
                'date_depot'          =>  'required|date_format:Y-m-d',
                'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
-               'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12',
+               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                'etablissement'       =>  'required|string|max:100',
                'adresse'             =>  'required|string|max:100',
                'prerequis'           =>  'required|string|max:1500',
@@ -435,9 +425,6 @@ class IndividuelleController extends Controller
 
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
- 
-        $fixe = $request->input('fixe');
-        $fixe = str_replace(' ', '', $fixe);
  
         $autre_tel = $request->input('autre_tel');
         $autre_tel = str_replace(' ', '', $autre_tel);
@@ -472,7 +459,6 @@ class IndividuelleController extends Controller
         $utilisateur->email                     =      $request->input('email');
         $utilisateur->username                  =      $request->input('username');
         $utilisateur->telephone                 =      $telephone;
-        $utilisateur->fixe                      =      $fixe;
         $utilisateur->bp                        =      $request->input('bp');
         $utilisateur->fax                       =      $request->input('fax');
         $utilisateur->situation_familiale       =      $request->input('familiale');
@@ -490,12 +476,10 @@ class IndividuelleController extends Controller
         $demandeur->niveau_etude                =      $request->input('niveau_etude');
         $demandeur->etablissement               =      $request->input('etablissement');
         $demandeur->telephone                   =      $autre_tel;
-        $demandeur->fixe                        =      $fixe;
         $demandeur->option                      =      $request->input('option');
         $demandeur->adresse                     =      $request->input('adresse');
         $demandeur->motivation                  =      $request->input('motivation');
         $demandeur->autres_diplomes             =      $request->input('autres_diplomes');
-        $demandeur->experience                  =      $request->input('experience');
         $demandeur->qualification               =      $request->input('qualification');
         $demandeur->communes_id                 =      $commune_id;
         if ($request->input('programme') !== null) {

@@ -116,9 +116,9 @@ class CollectiveController extends Controller
                         'date_naiss'          =>  'required|date_format:Y-m-d',
                         'date_depot'          =>  'required|date_format:Y-m-d',
                         'lieu_naissance'      =>  'required|string|max:50',
-                        'telephone'           =>  'required|string|min:7|max:18',
-                        'fixe'                =>  'required|string|min:7|max:18',
-                        'structure_fixe'      =>  'required|string|min:7|max:18',
+                        'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+                        'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+                        'structure_fixe'      =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                         'adresse'             =>  'required|string|max:200',
                         'structure_adresse'   =>  'required|string|max:200',
                         'description'         =>  'required|string|min:1000|max:1500',
@@ -140,9 +140,9 @@ class CollectiveController extends Controller
                     'date_naiss'          =>  'required|date_format:Y-m-d',
                     'date_depot'          =>  'required|date_format:Y-m-d',
                     'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|string|min:7|max:18',
-                    'fixe'                =>  'required|string|min:7|max:18',
-                    'structure_fixe'      =>  'required|string|min:7|max:18',
+                    'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+                    'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+                    'structure_fixe'      =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                     'adresse'             =>  'required|string|max:200',
                     'structure_adresse'   =>  'required|string|max:200',
                     'description'         =>  'required|string|min:1|max:1500',
@@ -343,25 +343,21 @@ class CollectiveController extends Controller
         $user_connect = Auth::user();
         $demandeur = $collective->demandeur;
         $utilisateur = $user_connect;
-        
-        $collectives = $user_connect->demandeur->collectives;
-        foreach ($collectives as $collective) {
-
-        }
 
         if (!$user_connect->hasRole('Demandeur')) {
             $this->validate(
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'name'                 =>  "required|string|min:13|max:15|unique:collectives,name,{$collective->id},id,deleted_at,NULL",
+               'name'                =>  "required|string|unique:collectives,name,{$collective->id},id,deleted_at,NULL",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
                'date_depot'          =>  'required|date_format:Y-m-d',
                'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|string|min:7|max:30',
-               'fixe'                =>  'required|string|min:7|max:30',
+               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+               'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+               'structure_fixe'      =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                'adresse'             =>  'required|string|max:100',
                'description'         =>  'required|string|min:10|max:1500',
                'email'               =>  'required|email|max:255|unique:users,email,'.$collective->demandeur->user->id,
@@ -382,9 +378,9 @@ class CollectiveController extends Controller
                'date_naiss'          =>  'required|date_format:Y-m-d',
                'date_depot'          =>  'required|date_format:Y-m-d',
                'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|string|min:7|max:30',
-               'fixe'                =>  'required|string|min:7|max:30',
-               'structure_fixe'      =>  'required|string|min:7|max:18',
+               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+               'fixe'                =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+               'structure_fixe'      =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                'adresse'             =>  'required|string|max:100',
                'structure_adresse'   =>  'required|string|max:200',
                'description'         =>  'required|string|min:10|max:1500',
@@ -397,9 +393,6 @@ class CollectiveController extends Controller
                ]
             );
         }
-
-
-        $utilisateurs   =   $collective->demandeur->user;
 
         $updated_by1 = $user_connect->firstname;
         $updated_by2 = $user_connect->name;
@@ -454,7 +447,7 @@ class CollectiveController extends Controller
         $utilisateur->date_naissance            =      $request->input('date_naiss');
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
-        $utilisateurs->updated_by               =      $updated_by;
+        $utilisateur->updated_by               =      $updated_by;
 
         $utilisateur->save();
 

@@ -67,8 +67,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ 'Demande (Individuelle)' }}</div>
-                                        <div
-                                            class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             @foreach ($individuelle_demandeur->modules as $module_individuelle)
                                                 @if ($loop->last)
                                                     {!! $loop->count !!}
@@ -102,8 +101,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ 'Demande (Collective)' }}</div>
-                                        <div
-                                            class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             @foreach ($collective_demandeur->modules as $module_collective)
                                                 @if ($loop->last)
                                                     {!! $loop->count !!}
@@ -137,8 +135,7 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ 'Demande (prise en charge)' }}</div>
-                                        <div
-                                            class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             @foreach ($pcharge_demandeur->modules as $module)
                                                 @if ($loop->last)
                                                     {!! $loop->count !!}
@@ -168,134 +165,138 @@
         <div class="row mt-5">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="mt-3">
-                    <a class="btn btn-outline-primary btn-block" href="{!! url('individuelles/' . $individuelle_demandeur->id . '/edit') !!}"><span
+                    <a class="btn btn-outline-primary btn-block" href="{!! url('individuelles/' . $individuelle_demandeur->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Ajouter demande individuelle</a>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="mt-3">
-                    <a class="btn btn-outline-success btn-block" href="{!! url('collectives/' . $collective_demandeur->id . '/edit') !!}"><span
+                    <a class="btn btn-outline-success btn-block" href="{!! url('collectives/' . $collective_demandeur->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Ajouter demande collective</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="mt-3">
+                    <a class="btn btn-outline-info btn-block" href="{!! url('pcharges/' . $pcharge_demandeur->id . '/edit') !!}" target="_blank"><span
+                            data-feather="book-open"></span>Ajouter prise en charge</a>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="mt-3">
-                    <a class="btn btn-outline-info btn-block" href="{!! url('pcharges/' . $pcharge_demandeur->id . '/edit') !!}"><span
-                            data-feather="book-open"></span>Ajouter prise en charge</a>
+                    <a class="btn btn-outline-secondary btn-block" href="{!! url('pcharges/' . $pcharge_demandeur->id . '/edit') !!}" target="_blank"><span
+                            data-feather="book-open"></span>Devenir opérateur</a>
                 </div>
             </div>
         </div>
     </div>
 @else
-
-<div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-    <div class="row mt-5">
-        @if (isset($individuelle_user->cin))
-            <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <a class="nav-link" href="{!! url('individuelles/' . $individuelle_user->id) !!}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Demande (Individuelle)' }}</div>
-                                    <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">
-                                        @foreach ($individuelle_user->modules as $module_individuelle)
-                                            @if ($loop->last)
-                                                {!! $loop->count !!}
+    <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+        <div class="row mt-5">
+            @if (isset($individuelle_user->cin))
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_user->id) !!}">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ 'Demande (Individuelle)' }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            @foreach ($individuelle_user->modules as $module_individuelle)
+                                                @if ($loop->last)
+                                                    {!! $loop->count !!}
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span>
+                                            @if (isset($module_individuelle->name))
+                                                <h5><label
+                                                        class="badge badge-success">{{ $individuelle_user->statut }}</label>
+                                                </h5>
+                                            @else
+                                                <h5><label class="badge badge-danger">Invalide</label></h5>
                                             @endif
-                                        @endforeach
+                                        </span>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <span>
-                                        @if (isset($module_individuelle->name))
-                                            <h5><label
-                                                    class="badge badge-success">{{ $individuelle_user->statut }}</label>
-                                            </h5>
-                                        @else
-                                            <h5><label class="badge badge-danger">Invalide</label></h5>
-                                        @endif
-                                    </span>
-                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        @endif
-        @if (isset($collective_user->name))
-            <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <a class="nav-link" href="{!! url('collectives/' . $collective_user->id) !!}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Demande (Collective)' }}</div>
-                                    <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">
-                                        @foreach ($collective_user->modules as $module_collective)
-                                            @if ($loop->last)
-                                                {!! $loop->count !!}
+            @endif
+            @if (isset($collective_user->name))
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <a class="nav-link" href="{!! url('collectives/' . $collective_user->id) !!}">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ 'Demande (Collective)' }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            @foreach ($collective_user->modules as $module_collective)
+                                                @if ($loop->last)
+                                                    {!! $loop->count !!}
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span>
+                                            @if (isset($module_collective->name))
+                                                <h5><label
+                                                        class="badge badge-success">{{ $collective_user->statut }}</label>
+                                                </h5>
+                                            @else
+                                                <h5><label class="badge badge-danger">Invalide</label></h5>
                                             @endif
-                                        @endforeach
+                                        </span>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <span>
-                                        @if (isset($module_collective->name))
-                                            <h5><label
-                                                    class="badge badge-success">{{ $collective_user->statut }}</label>
-                                            </h5>
-                                        @else
-                                            <h5><label class="badge badge-danger">Invalide</label></h5>
-                                        @endif
-                                    </span>
-                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        @endif
-        @if (isset($pcharge_user->annee))
-            <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Demande (prise en charge)' }}</div>
-                                    <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">
-                                        @foreach ($pcharge_user->modules as $module)
-                                            @if ($loop->last)
-                                                {!! $loop->count !!}
+            @endif
+            @if (isset($pcharge_user->annee))
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ 'Demande (prise en charge)' }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            @foreach ($pcharge_user->modules as $module)
+                                                @if ($loop->last)
+                                                    {!! $loop->count !!}
+                                                @endif
+                                            @endforeach
+                                            @if (isset($module->name))
+                                                <h5><label
+                                                        class="badge badge-success">{{ $pcharge_user->statut }}</label>
+                                                </h5>
+                                            @else
+                                                <h5><label class="badge badge-danger">Invalide</label></h5>
                                             @endif
-                                        @endforeach
-                                        @if (isset($module->name))
-                                            <h5><label
-                                                    class="badge badge-success">{{ $pcharge_user->statut }}</label>
-                                            </h5>
-                                        @else
-                                            <h5><label class="badge badge-danger">Invalide</label></h5>
-                                        @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
     </div>
-</div>
     @endhasrole
 
 @endsection

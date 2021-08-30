@@ -23,10 +23,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $typedemande
  * @property string|null $items1
  * @property Carbon|null $date1
- * @property int|null $duree
+ * @property float|null $inscription
  * @property float|null $montant
  * @property float|null $accompt
  * @property float|null $reliquat
+ * @property int|null $duree
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
@@ -80,10 +81,11 @@ class Pcharge extends Model
 		'typedemande',
 		'items1',
 		'date1',
-		'duree',
+		'inscription',
 		'montant',
 		'accompt',
 		'reliquat',
+		'duree',
 		'statut',
 		'file1',
 		'file2',

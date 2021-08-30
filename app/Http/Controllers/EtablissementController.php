@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Etablissement;
+use App\Models\Commune;
 use Illuminate\Http\Request;
 
 class EtablissementController extends Controller
@@ -25,7 +26,8 @@ class EtablissementController extends Controller
      */
     public function create()
     {
-        //
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        return view('etablissements.create', compact('communes'));
     }
 
     /**
@@ -36,7 +38,30 @@ class EtablissementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+                'etablissement'         =>  'required|string|unique:etablissements,name,NULL,id,deleted_at,NULL',
+                'telephone_1'           =>  'required|string|max:17',
+                'telephone_2'           =>  'required|string|max:17',
+                'email'                 =>  'required|string|email|max:255|unique:etablissements,email,NULL,id,deleted_at,NULL',
+                'adresse'               =>  'required|string',
+                'fixe'                  =>  'required|string|max:50',
+                'commune'               =>  'required|string'
+            ]);
+
+            $etablissement = new Etablissement([      
+                'name'                         =>      $request->input('etablissement'),
+                'telephone1'                   =>      $request->input('telephone_1'),
+                'telephone2'                   =>      $request->input('telephone_2'),
+                'email'                        =>      $request->input('email'),
+                'adresse'                      =>      $request->input('adresse'),
+                'name'                         =>      $request->input('etablissement'),
+                'sigle'                        =>      $request->input('sigle'),
+                'communes_id'                  =>      $request->input('commune')
+    
+            ]);
+    
+            $etablissement->save();
+            return redirect()->route('etablissements.index')->with('success','enregistrement effectué avec succès !');
     }
 
     /**
@@ -83,4 +108,5 @@ class EtablissementController extends Controller
     {
         //
     }
+    
 }

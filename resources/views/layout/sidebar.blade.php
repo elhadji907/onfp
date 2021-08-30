@@ -24,13 +24,12 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 @else
+<li class="nav-item">
+    <a class="nav-link" href="{{ url('/') }}">
+        <span data-feather="home"></span>
+        <span>Accueil</span></a>
+</li>
     @endhasrole
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('/home') }}">
-            <span data-feather="home"></span>
-            <span>Accueil</span></a>
-    </li>
-    <!-- Divider -->
     @unlessrole('Nologin')
     <hr class="sidebar-divider my-0">
     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-white">
@@ -101,7 +100,7 @@
         </div>
     </li>
 @else
-    <li class="nav-item">
+{{--      <li class="nav-item">
         <a class="nav-link" href="{{ route('individuelles.create') }}">
             <span data-feather="users"></span>
             <span>Demande individuelle</span>
@@ -125,9 +124,9 @@
             <span data-feather="users"></span>
             <span>Devenir opérateur</span>
         </a>
-    </li>
-    @endhasrole
+    </li>  --}}
     <hr class="sidebar-divider my-0">
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|DEC|ADEC|ADIOF')
     <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_formation"
@@ -164,11 +163,6 @@
     <hr class="sidebar-divider my-0">
 @else
     @endhasrole
-
-
-
-
-    <hr class="sidebar-divider my-0">
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('operateurs.index') }}">
@@ -282,9 +276,9 @@
             </div>
         </div>
     </li>
+    <hr class="sidebar-divider my-0">
 @else
     @endhasrole
-    <hr class="sidebar-divider my-0">
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('nineas.index') }}">
@@ -310,6 +304,20 @@
         <a class="nav-link" href="{{ route('etablissements.index') }}">
             <span data-feather="layers"></span>
             <span>Etablissements</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('filieres.index') }}">
+            <span data-feather="layers"></span>
+            <span>Filières</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('filierespecialites.index') }}">
+            <span data-feather="layers"></span>
+            <span>Filières spécialités</span>
         </a>
     </li>
     <hr class="sidebar-divider my-0">
@@ -400,6 +408,13 @@
         <a class="nav-link" href="{{ route('nivauxs.index') }}">
             <span data-feather="layers"></span>
             <span>Niveaux</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('specialites.index') }}">
+            <span data-feather="layers"></span>
+            <span>Spécialités</span>
         </a>
     </li>
     <hr class="sidebar-divider my-0">

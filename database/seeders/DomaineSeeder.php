@@ -278,5 +278,95 @@ class DomaineSeeder extends Seeder
             'updated_at' => now(),
             "uuid"=>Str::uuid(),
         ]);
+
+        DB::table('domaines')->insert([
+            "name"=>"FROID/CLIMATISATION",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"GENIE CIVIL",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"GENIE ELECTRIQUE",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"HETELLERIE / RESTAURATION",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"INFORMATIQUE",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"MANAGEMENT",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"MECANIQUE AUTOMOBILE",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"FABRICATION MACANIQUE",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"STRUCTURE METALLIQUE",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"MENUISERIE BOIS",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+        DB::table('domaines')->insert([
+            "name"=>"SANTE",
+            "secteurs_id"=>"3",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+        
+
     }
 }

@@ -26,8 +26,8 @@ class CourrierFactory extends Factory
 
     public function definition()
     {
-        $user_id=User::all()->random()->id;
-        $projet_id=Projet::all()->random()->id;
+        $user_id = User::all()->random()->id;
+        $projet_id = Projet::all()->random()->id;
         $annee = date('y');
         $numero_courrier = date('His');
 

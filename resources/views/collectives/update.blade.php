@@ -87,7 +87,7 @@
                                 <label for="telephone">{{ __('Telephone') }}(<span class="text-danger">*</span>)</label>
                                 <input id="telephone" type="text"
                                     class="form-control @error('telephone') is-invalid @enderror" name="telephone"
-                                    placeholder="N° de téléphone" value="{{ $collective->demandeur->user->telephone ?? '' }}"
+                                    placeholder="+221 .. ... .. .." value="{{ $collective->demandeur->user->telephone ?? '' }}"
                                     autocomplete="telephone">
                                 @error('telephone')
                                     <span class="invalid-feedback" role="alert">
@@ -98,7 +98,7 @@
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="fixe">{{ __('Téléphone secondaire') }}(<span class="text-danger">*</span>)</label>
                                 <input id="fixe" type="text" class="form-control @error('fixe') is-invalid @enderror"
-                                    name="fixe" placeholder="Second n° de téléphone" value="{{ $collective->demandeur->user->fixe ?? old('fixe') }}"
+                                    name="fixe" placeholder="+221 .. ... .. .." value="{{ $collective->demandeur->user->fixe ?? old('fixe') }}"
                                     autocomplete="fixe">
                                 @error('fixe')
                                     <span class="invalid-feedback" role="alert">
@@ -200,7 +200,7 @@
                                         class="text-danger">*</span>)</label>
                                 <input id="structure_fixe" type="text"
                                     class="form-control @error('structure_fixe') is-invalid @enderror" name="structure_fixe"
-                                    placeholder="3x xxx xx xx" value="{{ $collective->demandeur->fixe ?? old('structure_fixe') }}"
+                                    placeholder="+221 .. ... .. .." value="{{ $collective->demandeur->fixe ?? old('structure_fixe') }}"
                                     autocomplete="structure_fixe">
                                 @error('structure_fixe')
                                     <span class="invalid-feedback" role="alert">

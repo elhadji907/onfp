@@ -127,7 +127,7 @@
                                         <th>Nom</th>
                                         <th style="width:9%;">Date nais.</th>
                                         <th style="width:9%;">Lieu nais.</th>
-                                       {{--   <th style="width:5%;">Email</th>  --}}
+                                        {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:40%;">Etablissement</th>
                                         <th style="width:5%;">Année</th>
@@ -141,7 +141,7 @@
                                         <th>Nom</th>
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
-                                      {{--    <th>Email</th>  --}}
+                                        {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
                                         <th>Année</th>
@@ -156,9 +156,9 @@
                                             <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
                                             <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>
-                                           {{--   <td>{!! $pcharge->demandeur->user->email !!}</td>  --}}
+                                            {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
-                                            <td>{!! $pcharge->etablissement->name !!}</td>
+                                            <td>{!! $pcharge->etablissement->name ?? '' !!}</td>
                                             <td>{!! $pcharge->annee !!}</td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a href="{!! url('pcharges/' . $pcharge->demandeur->user->username . '/edit') !!}" class='btn btn-success btn-sm'
