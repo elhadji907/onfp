@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Demandeur;
+use App\Models\Individuelle;
+use App\Models\Collective;
+use App\Models\Pcharge;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -67,6 +71,45 @@ class UserController extends Controller
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
+
+        $annee = date('y');
+        $user_id             =      User::latest('id')->first()->id;
+        $longueur            =      strlen($user_id);
+
+        if ($longueur <= 1) {
+            $numero   =   strtolower($annee."000000".$user_id);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero   =   strtolower($annee."00000".$user_id);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero   =   strtolower($annee."0000".$user_id);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero   =   strtolower($annee."000".$user_id);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numero   =   strtolower($annee."00".$user_id);
+        } elseif ($longueur >= 6 && $longueur < 7) {
+            $numero   =   strtolower($annee."0".$user_id);
+        } else {
+            $numero   =   strtolower($annee.$user_id);
+        }
+        
+        $demandeur = Demandeur::create([
+            'numero'            =>      $numero,
+            'users_id'          =>      $user->id,
+        ]);
+
+        $individuelle = Individuelle::create([
+            'demandeurs_id'     =>      $demandeur->id,
+        ]);
+
+        $collective = Collective::create([
+            'demandeurs_id'     =>      $demandeur->id,
+        ]);
+
+        $pcharge = Pcharge::create([
+            'demandeurs_id'     =>      $demandeur->id,
+        ]);
+
+
         return redirect()->route('users.index')
             ->with('success', 'Utilisateur créé avec succès');
     }
