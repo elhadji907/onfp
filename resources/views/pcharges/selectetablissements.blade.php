@@ -1,42 +1,39 @@
 @extends('layout.default')
 @section('content')
     <div class="container-fluid">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Selectionner établissement
+                        {{ __("Sélectionner votre établissement ou cliquez sur ajouter pour l'ajouter") }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
+                                <a href="{{ route('etablissements.create') }}" target="_blank">
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                </a>
                             </div>
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
-                                id="table-employees" style="height: 100px;">
+                                id="table-etablissements" style="height: 100px;">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Matricule</th>
-                                        <th>Prenom</th>
-                                        <th>Nom</th>
-                                        <th>Email</th>
-                                        <th>Téléphone</th>
-                                        <th>Fonction</th>
-                                        <th style="width:2%;">Choisir</th>
+                                        <th style="width:5%;">N°</th>
+                                        <th>Établissement</th>
+                                        <th style="width:10%;">Sigle</th>
+                                        <th style="width:15%;">Commune</th>
+                                        <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Matricule</th>
-                                        <th>Prenom</th>
-                                        <th>Nom</th>
-                                        <th>Email</th>
-                                        <th>Téléphone</th>
-                                        <th>Fonction</th>
-                                        <th>Choisir</th>
+                                        <th>N°</th>
+                                        <th>Établissement</th>
+                                        <th>Commune</th>
+                                        <th>Sigle</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -53,37 +50,25 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#table-employees').DataTable({
+            $('#table-etablissements').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ route('employees.list') }}",
+                "ajax": "{{ route('etablissements.list') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'user.employee.matricule',
-                        name: 'user.employee.matricule'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
-                        data: 'user.firstname',
-                        name: 'user.firstname'
+                        data: 'sigle',
+                        name: 'sigle'
                     },
                     {
-                        data: 'user.name',
-                        name: 'user.name'
-                    },
-                    {
-                        data: 'user.email',
-                        name: 'user.email'
-                    },
-                    {
-                        data: 'user.telephone',
-                        name: 'user.telephone'
-                    },
-                    {
-                        data: 'user.employee.fonction.sigle',
-                        name: 'user.employee.fonction.sigle'
+                        data: 'commune.nom',
+                        name: 'commune.nom'
                     },
                     {
                         data: null,
@@ -95,23 +80,20 @@
                 "columnDefs": [{
                         "data": null,
                         "render": function(data, type, row) {
-                            url_e = "{!! route('directions.create', 'employee=:id') !!}".replace(':id', data.id);
+                            url_e = "{!! route('pcharges.create', 'etablissement=:id') !!}".replace(':id', data.id);
                             return '<a href=' + url_e +
                                 '  class="btn btn-outline-primary" ><i class="fa fa-check" aria-hidden="true"></i>';
                         },
-                        "targets": 7
+                        "targets": 4
                     },
-
                 ],
-
                 dom: 'lBfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print',
                 ],
-
                 "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "Tout"]
+                    [5, 10, 25, 50, 100, -1],
+                    [5, 10, 25, 50, 100, "Tout"]
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

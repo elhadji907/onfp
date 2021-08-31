@@ -87,7 +87,7 @@ class FilierespecialiteController extends Controller
 
     public function list(Request $request)
     {
-        $filierespecialites=Filierespecialite::withCount('filiere')->get();
+        $filierespecialites=Filierespecialite::withCount('filiere')->with('filiere')->get();
         return Datatables::of($filierespecialites)->make(true);
     }
 }

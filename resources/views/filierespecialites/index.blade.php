@@ -3,7 +3,7 @@
 @section('content')
         <div class="container-fluid">
           <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 @if (session()->has('success'))
                   <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif 
@@ -27,16 +27,16 @@
                           <thead class="table-dark">
                             <tr>
                               <th style="width:10%;">ID</th>
-                               <th>{!! __("Filière spécialité") !!}</th>
-                               <th style="width:20%;">{!! __("Filières") !!}</th>
+                               <th>{!! __("Spécialité") !!}</th>
+                               <th style="width:20%;">{!! __("Filière") !!}</th>
                               <th style="width:10%;">Action</th>
                             </tr>
                           </thead>
                           <tfoot class="table-dark">
                               <tr>
                                 <th>ID</th>
-                                 <th>{!! __("Filière spécialité") !!}</th>
-                                 <th>{!! __("Filières") !!}</th>
+                                 <th>{!! __("Spécialité") !!}</th>
+                                 <th>{!! __("Filière") !!}</th>
                                 <th>Action</th>
                               </tr>
                             </tfoot>
@@ -85,7 +85,7 @@
             columns: [
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
-                    { data: 'filiere_count', name: 'filiere_count' },
+                    { data: 'filiere.name', name: 'filiere.name' },
                     { data: null ,orderable: false, searchable: false}
 
                 ],

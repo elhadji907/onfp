@@ -181,10 +181,6 @@ class IndividuelleController extends Controller
         } else {
             $numero   =   "I".strtolower($annee.$user_id);
         }
-       
-        //$commune = commune::find($request->input('commune'));
-        /*  $region = $commune->region->nom;
-         $region_id = $commune->region->id; */
 
         $created_by1 = $user_connect->firstname;
         $created_by2 = $user_connect->name;
@@ -208,7 +204,6 @@ class IndividuelleController extends Controller
 
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        //$modules = Module::where('id',$request->input('modules'))->first()->name;
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
 
@@ -262,7 +257,7 @@ class IndividuelleController extends Controller
                 'communes_id'               =>     $commune_id,
                 'types_demandes_id'         =>     $types_demandes_id,
                 'diplomes_id'               =>     $diplome_id,
-                'users_id'                  =>     $user_connect->id
+                'users_id'                  =>     $user->id
             ]);
     
             $demandeur->save();

@@ -20,7 +20,7 @@
                         <div class="table-responsive">
                             <div align="right">
                                 @can('role-create')
-                                <a href="{{ route('etablissements.create') }}">
+                                <a href="{{ route('etablissements.selectefilieres') }}">
                                     <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
                                 </a>
                                 @endcan

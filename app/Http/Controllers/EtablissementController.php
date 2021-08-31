@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Etablissement;
 use App\Models\Commune;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class EtablissementController extends Controller
 {
@@ -136,6 +137,12 @@ class EtablissementController extends Controller
         $etablissement->delete();
         $message = $etablissement->name.' ['.$etablissement->sigle.'] a été supprimé';        
         return redirect()->route('etablissements.index')->with('success', $message);
+    }
+
+    public function list(Request $request)
+    {
+        $etablissements=Etablissement::withCount('pcharges')->with('commune')->get();
+        return Datatables::of($etablissements)->make(true);
     }
     
 }

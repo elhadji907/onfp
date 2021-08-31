@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation familiale :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('familiale', ['Marié(e)' => 'Marié(e)', 'Célibataire' => 'Célibataire'], null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                    {!! Form::select('familiale', ['Marié' => 'Marié', 'Célibataire' => 'Célibataire'], null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('familiale'))
                                             @foreach ($errors->get('familiale') as $message)
@@ -154,7 +154,9 @@
                                 </div>
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation professionnelle :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('professionnelle', ['Demandeur d\'emploi actif' => 'Demandeur d\'emploi actif', 'Salarié CDD' => 'Salarié CDD', 'Salarié CDI' => 'Salarié CDI', 'Élève' => 'Élève', 'Étudiant(e)' => 'Étudiant(e)', 'Sans activité' => 'Sans activité', 'En stage' => 'En stage', 'Autre' => 'Autre'], null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                    {!! Form::select('professionnelle', ['Demandeur d\'emploi actif' => 'Demandeur d\'emploi actif', 'Salarié CDD' => 'Salarié CDD', 
+                                    'Salarié CDI' => 'Salarié CDI', 'Élève' => 'Élève', 'Étudiant' => 'Étudiant', 'Sans activité' => 'Sans activité', 'En stage' => 'En stage', 
+                                    'Autre' => 'Autre'], null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('professionnelle'))
                                             @foreach ($errors->get('professionnelle') as $message)

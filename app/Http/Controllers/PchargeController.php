@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Pcharge;
 use App\Models\Etablissement;
 use App\Models\Filiere;
+use App\Models\Filierespecialite;
+use App\Models\TypesDemande;
+use App\Models\Commune;
+use App\Models\Diplome;
 use App\Models\Module;
+use App\Models\User;
+use App\Models\Demandeur;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use Auth;
 
 class PchargeController extends Controller
 {
@@ -29,10 +38,10 @@ class PchargeController extends Controller
     {
         $annees = Pcharge::distinct('annee')->pluck('annee', 'annee');
 
-        $an2019 = Pcharge::where('annee','2019')->count();
-        $an2020 = Pcharge::where('annee','2020')->count();
-        $an2021 = Pcharge::where('annee','2021')->count();
-        $an2022 = Pcharge::where('annee','2022')->count();
+        $an2019 = Pcharge::where('annee', '2019')->count();
+        $an2020 = Pcharge::where('annee', '2020')->count();
+        $an2021 = Pcharge::where('annee', '2021')->count();
+        $an2022 = Pcharge::where('annee', '2022')->count();
 
         $total = Pcharge::get()->count();
 
@@ -50,14 +59,21 @@ class PchargeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {        
+    public function create(Request $request)
+    {
+        $etablissement_id = $request->input('etablissement');
+        
+        $etablissement = Etablissement::find($etablissement_id);
+
         $etablissements = Etablissement::distinct('name')->get()->pluck('name', 'name')->unique();
-        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $filieres = Filiere::distinct('name')->get()->pluck('name', 'id')->unique();
+        $filierespecialites = Filierespecialite::distinct('name')->get()->pluck('name', 'id')->unique();
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $enCours = date('Y');
+        $date_depot = Carbon::now();
 
-        return view('pcharges.create', compact('etablissements', 'modules', 'enCours'));
+        return view('pcharges.create', compact('etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes'));
     }
 
     /**
@@ -68,8 +84,14 @@ class PchargeController extends Controller
      */
     public function store(Request $request)
     {
+        $user_connect = Auth::user();
+        $utilisateur = $user_connect;
+        
+        $pcharges = $user_connect->demandeur->pcharges;
+
         $this->validate($request, [
                 'annee'                 =>  'required|string|min:4|max:4',
+                'cin'                   =>  'required|string|min:12|max:14',
                 'civilite'              =>  'required|string',
                 'firstname'             =>  'required|string|max:50',
                 'name'                  =>  'required|string|max:50',
@@ -77,11 +99,138 @@ class PchargeController extends Controller
                 'email'                 =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
                 'adresse'               =>  'required|string',
                 'fixe'                  =>  'required|string|max:50',
+                'date'                  =>  'required|date',
                 'lieu_naissance'        =>  'required|string|max:50',
-                'etablissement'         =>  'required|string',
-                'filiere'               =>  'required|string',
-                'autre_filiere'         =>  'sometimes',
+                'etablissement'         =>  'required|exists:etablissements,id',
+                'filiere'               =>  'required|exists:filieres,id',
+                'familiale'             =>  'required',
+                'professionnelle'       =>  'required',
+                'niveau_etude'          =>  'required',
+                'inscription'           =>  'required|regex:/^\d+(\.\d{1,2})?$/',
+                'montant'               =>  'required|regex:/^\d+(\.\d{1,2})?$/',
+                'duree'                 =>  'required|min:1|max:1',
+                'niveauentree'          =>  'required',
+                'niveausortie'          =>  'required',
+                'motivation'            =>  'required',
+                'diplome'               =>  'required',
             ]);
+
+        $etablissement_id = $request->input('etablissement');
+        $etablissement = Etablissement::find($etablissement_id);
+
+        $user_id             =   User::latest('id')->first()->id;
+        if (!$user_connect->hasRole('Demandeur')) {
+            $username            =   strtolower($request->input('name').$user_id);
+        } else {
+            $username            =   $user_connect->username;
+        }
+
+        $annee = date('y');
+        $longueur = strlen($user_id);
+    
+        if ($longueur <= 1) {
+            $numero   =   "I".strtolower($annee."000000".$user_id);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero   =   "I".strtolower($annee."00000".$user_id);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero   =   "I".strtolower($annee."0000".$user_id);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero   =   "I".strtolower($annee."000".$user_id);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numero   =   "I".strtolower($annee."00".$user_id);
+        } elseif ($longueur >= 6 && $longueur < 7) {
+            $numero   =   "I".strtolower($annee."0".$user_id);
+        } else {
+            $numero   =   "I".strtolower($annee.$user_id);
+        }
+    
+        $created_by1 = $user_connect->firstname;
+        $created_by2 = $user_connect->name;
+        $created_by3 = $user_connect->username;
+    
+        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
+    
+        $statut = "Attente";
+    
+        $telephone = $request->input('telephone');
+        $telephone = str_replace(' ', '', $telephone);
+    
+        $fixe = $request->input('fixe');
+        $fixe = str_replace(' ', '', $fixe);
+            
+        $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
+        $commune_id = $etablissement->commune->id;
+        $cin = $request->input('cin');
+        $cin = str_replace(' ', '', $cin);
+
+        $types_demandes_id = TypesDemande::where('name', 'Prise en charge')->first()->id;
+        
+        if ($request->input('civilite') == "M.") {
+            $sexe = "M";
+        } elseif ($request->input('civilite') == "Mme") {
+            $sexe = "F";
+        } else {
+            $sexe = "";
+        }
+
+        $user = new User([
+            'sexe'                      =>      $sexe,
+            'civilite'                  =>      $request->input('civilite'),
+            'firstname'                 =>      $request->input('firstname'),
+            'name'                      =>      $request->input('name'),
+            'email'                     =>      $request->input('email'),
+            'username'                  =>      $username,
+            'telephone'                 =>      $telephone,
+            'fixe'                      =>      $fixe,
+            'bp'                        =>      $request->input('bp'),
+            'fax'                       =>      $request->input('fax'),
+            'situation_familiale'       =>      $request->input('familiale'),
+            'situation_professionnelle' =>      $request->input('professionnelle'),
+            'date_naissance'            =>      $request->input('date'),
+            'lieu_naissance'            =>      $request->input('lieu_naissance'),
+            'adresse'                   =>      $request->input('adresse'),
+            'password'                  =>      Hash::make($request->input('email')),
+            'created_by'                =>      $created_by,
+            'updated_by'                =>      $created_by
+
+        ]);
+    
+        $user->save();
+        $user->assignRole('Demandeur');
+            
+        $demandeur = new Demandeur([
+                'numero'                    =>     $numero,
+                'date_depot'                =>     $request->input('date_depot'),
+                'nbre_piece'                =>     $request->input('nombre_de_piece'),
+                'niveau_etude'              =>     $request->input('niveau_etude'),
+                'telephone'                 =>     $telephone,
+                'fixe'                      =>     $fixe,
+                'adresse'                   =>     $request->input('adresse'),
+                'motivation'                =>     $request->input('motivation'),
+                'communes_id'               =>     $commune_id,
+                'types_demandes_id'         =>     $types_demandes_id,
+                'diplomes_id'               =>     $diplome_id,
+                'users_id'                  =>     $user->id
+            ]);
+    
+        $demandeur->save();
+    
+        $pcharge = new Pcharge([
+                'annee'                     =>      $request->input('annee'),
+                'cin'                       =>      $request->input('cin'),
+                'duree'                     =>      $request->input('duree'),
+                'inscription'               =>      $request->input('inscription'),
+                'montant'                   =>      $request->input('montant'),
+                'niveauentree'              =>      $request->input('niveauentree'),
+                'niveausortie'              =>      $request->input('niveausortie'),
+                'etablissements_id'         =>      $request->input('etablissement'),
+                'demandeurs_id'             =>      $demandeur->id
+    
+            ]);
+    
+        $pcharge->save();
+    
+        return redirect()->route('pcharges.index')->with('success', 'enregistrement effectué avec succès !');
     }
 
     /**

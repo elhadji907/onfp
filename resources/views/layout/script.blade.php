@@ -138,6 +138,13 @@
         });
 </script>
 <script type="text/javascript">
+
+      $("#filierespecialite").select2({
+            placeholder: "sélectionner une spécialité",
+            allowClear: true
+        });
+</script>
+<script type="text/javascript">
   
   $("#type_demande").select2({
         placeholder: "sélectionner type de demande",
@@ -248,7 +255,7 @@ $("#type_structure").select2({
 </script>
 <script type="text/javascript">  
   $("#diplome").select2({
-        placeholder: "vos diplômes",
+        placeholder: "Dernier diplôme",
         allowClear: true
     });
 </script>

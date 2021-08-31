@@ -70,8 +70,8 @@
                                             <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                             <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                            <td>{!! $individuelle->demandeur->commune->nom !!}</td>
-                                            <td>{!! $individuelle->demandeur->commune->arrondissement->departement->region->sigle !!}</td>
+                                            <td>{!! $individuelle->demandeur->commune->nom ?? '' !!}</td>
+                                            <td>{!! $individuelle->demandeur->commune->arrondissement->departement->region->sigle ?? '' !!}</td>
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">

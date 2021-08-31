@@ -146,7 +146,7 @@ Route::group([
         Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
         
         Route::get('/pcharges.selectetablissements', function() { return view('pcharges.selectetablissements'); })->name('pcharges.selectetablissements');
-        Route::get('/pcharges.selectefilieres', function() { return view('pcharges.selectefilieres'); })->name('pcharges.selectefilieres');
+        Route::get('/etablissements.selectefilieres', function() { return view('etablissements.selectefilieres'); })->name('etablissements.selectefilieres');
         
         Route::resource('/courriers', CourrierController::class);
         Route::resource('/recues', RecueController::class);

@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Filierespecialite
@@ -28,7 +29,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Filierespecialite extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'filierespecialites';
 
 	protected $casts = [
