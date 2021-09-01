@@ -87,6 +87,10 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->assignRole('Demandeur');
+        $user->assignRole('Individuelle');
+        $user->assignRole('Collective');
+        $user->assignRole('Pcharge');
+        $user->assignRole('Operateur');
         
         $demandeur = Demandeur::create([
             'numero'            =>      $numero,

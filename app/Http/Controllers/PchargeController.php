@@ -17,6 +17,7 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Auth;
+use DB;
 
 class PchargeController extends Controller
 {
@@ -43,13 +44,18 @@ class PchargeController extends Controller
         $an2021 = Pcharge::where('annee', '2021')->count();
         $an2022 = Pcharge::where('annee', '2022')->count();
 
-        $total = Pcharge::get()->count();
+        /* $total = Pcharge::get()->count(); */
 
-        $pcharges      =   Pcharge::all();
-        
+        $total = DB::table('pcharges')->whereBetween('annee', array(2018, 2021))->get()->count();
+
+        /* dd($total); */
+
         $depart = "2018";
-
         $enCours = date('Y');
+
+        $pcharges      =   Pcharge::whereBetween('annee', array($depart, $enCours))->get();
+
+        /* dd($pcharges); */
 
         return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'an2022', 'depart', 'enCours'));
     }
@@ -89,7 +95,7 @@ class PchargeController extends Controller
         
         $pcharges = $user_connect->demandeur->pcharges;
 
-      /*   $this->validate($request, [
+        $this->validate($request, [
                 'annee'                 =>  'required|string|min:4|max:4',
                 'cin'                   =>  'required|string|min:12|max:14',
                 'civilite'              =>  'required|string',
@@ -114,7 +120,7 @@ class PchargeController extends Controller
                 'motivation'            =>  'required',
                 'diplome'               =>  'required',
                 'typedemande'           =>  'required',
-            ]); */
+            ]);
 
         $etablissement_id = $request->input('etablissement');
         $etablissement = Etablissement::find($etablissement_id);
@@ -177,8 +183,7 @@ class PchargeController extends Controller
         $typedemande = $request->input('typedemande');
 
         if ($typedemande !== "Renouvellement") {
-           
-        $user = new User([
+            $user = new User([
             'sexe'                      =>      $sexe,
             'civilite'                  =>      $request->input('civilite'),
             'firstname'                 =>      $request->input('firstname'),
@@ -200,10 +205,10 @@ class PchargeController extends Controller
 
         ]);
     
-        $user->save();
-        $user->assignRole('Pcharge');
+            $user->save();
+            $user->assignRole('Pcharge');
             
-        $demandeur = new Demandeur([
+            $demandeur = new Demandeur([
                 'numero'                    =>     $numero,
                 'date_depot'                =>     $request->input('date_depot'),
                 'nbre_piece'                =>     $request->input('nombre_de_piece'),
@@ -218,9 +223,9 @@ class PchargeController extends Controller
                 'users_id'                  =>     $user->id
             ]);
     
-        $demandeur->save();
+            $demandeur->save();
     
-        $pcharge = new Pcharge([
+            $pcharge = new Pcharge([
                 'annee'                     =>      $request->input('annee'),
                 'cin'                       =>      $request->input('cin'),
                 'duree'                     =>      $request->input('duree'),
@@ -237,12 +242,10 @@ class PchargeController extends Controller
     
             ]);
     
-        $pcharge->save();
+            $pcharge->save();
 
-        return redirect()->route('pcharges.index')->with('success', 'renouvellement enregistré avec succès !');
-    
+            return redirect()->route('pcharges.index')->with('success', 'renouvellement enregistré avec succès !');
         } else {
-            
             $user_connect = Auth::user();
             $demandeur = $user_connect->demandeur;
             $statut = "Attente";
@@ -266,7 +269,7 @@ class PchargeController extends Controller
             $user_connect->created_by                   =      $created_by;
             $user_connect->updated_by                   =      $created_by;
 
-            $user_connect->save();    
+            $user_connect->save();
                 
             $demandeur->numero                          =     $numero;
             $demandeur->nbre_piece                      =     $request->input('nombre_de_piece');
@@ -300,9 +303,8 @@ class PchargeController extends Controller
     
             ]);
             
-        return redirect()->route('pcharges.index')->with('success', 'nouvelle demande enregistrée avec succès !');
+            return redirect()->route('pcharges.index')->with('success', 'nouvelle demande enregistrée avec succès !');
         }
-        
     }
 
     /**
