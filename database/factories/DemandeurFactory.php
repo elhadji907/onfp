@@ -61,7 +61,6 @@ class DemandeurFactory extends Factory
             'statut' => "Attente",
             'motivation' => $this->faker->paragraph(3),
             'nbre_piece' => $nombre,
-            'date_depot' => $this->faker->dateTime(),
             'date1' => $this->faker->dateTime(),
             'date2' => $this->faker->dateTime(),            
             'users_id' => function () {

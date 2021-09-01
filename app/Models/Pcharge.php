@@ -70,7 +70,8 @@ class Pcharge extends Model
 	];
 
 	protected $dates = [
-		'date1'
+		'date1',
+		'date_depot'
 	];
 
 	protected $fillable = [
@@ -81,6 +82,7 @@ class Pcharge extends Model
 		'typedemande',
 		'items1',
 		'date1',
+		'date_depot',
 		'inscription',
 		'montant',
 		'montantaccorde',

@@ -30,6 +30,7 @@ class CreatePchargesTable extends Migration
             $table->string('typedemande', 200)->nullable();
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
+            $table->timestamp('date_depot')->nullable();
             $table->integer('duree')->nullable();
             $table->string('niveauentree', 200)->nullable();
             $table->string('niveausortie', 200)->nullable();

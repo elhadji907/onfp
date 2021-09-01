@@ -50,7 +50,8 @@ class Collective extends Model
 	];
 
 	protected $dates = [
-		'date1'
+		'date1',
+		'date_depot'
 	];
 
 	protected $fillable = [
@@ -58,6 +59,7 @@ class Collective extends Model
 		'name',
 		'items1',
 		'date1',
+		'date_depot',
 		'sigle',
 		'statut',
 		'description',

@@ -44,6 +44,7 @@ class IndividuelleFactory extends Factory
             'reference' => $this->faker->text,
             'experience' => $this->faker->text,
             'projet' => $this->faker->text,
+            'date_depot' => $this->faker->dateTime(),
             'prerequis' => $this->faker->text,
             'information' => $this->faker->text,
             'items1' => $this->faker->word,

@@ -53,7 +53,8 @@ class Individuelle extends Model
 	];
 
 	protected $dates = [
-		'date1'
+		'date1',
+		'date_depot'
 	];
 
 	protected $fillable = [
@@ -70,6 +71,7 @@ class Individuelle extends Model
 		'statut',
 		'items1',
 		'date1',
+		'date_depot',
 		'demandeurs_id'
 	];
 

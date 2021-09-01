@@ -27,6 +27,7 @@ class CreateCollectivesTable extends Migration
             $table->longText('name')->nullable();
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
+            $table->timestamp('date_depot')->nullable();
             $table->string('sigle', 100)->nullable();
             $table->string('statut', 100)->nullable();
             $table->longText('description')->nullable();

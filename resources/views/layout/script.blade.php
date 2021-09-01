@@ -247,6 +247,13 @@ $("#type_structure").select2({
 </script>
 
 <script type="text/javascript">
+  $("#typedemande").select2({
+        placeholder: "sélectionner type de demande",
+        allowClear: true
+    });
+</script>
+
+<script type="text/javascript">
   
   $("#familiale").select2({
         placeholder: "Votre situation familiale",

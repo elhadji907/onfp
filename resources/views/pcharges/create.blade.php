@@ -41,8 +41,19 @@
                             
                             {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
 
-                        <div class="form-row">
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-row">                     
+                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'typedemande']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('typedemande'))
+                                        @foreach ($errors->get('typedemande') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Filière') !!}
                                 {!! Form::select('filiere', $filieres, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'filiere']) !!}
                                 <small id="emailHelp"
@@ -57,7 +68,7 @@
                                     @endif
                                 </small>
                             </div>
-                         {{--     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                         {{--     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('spécialité') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('specialite', $filierespecialites, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'filierespecialite']) !!}
                                 <small id="emailHelp"
@@ -72,7 +83,7 @@
                                     @endif
                                 </small>
                             </div>  --}}
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Spécialité') !!}(<span class="text-danger">*</span>)
                                 {!! Form::text('specialite', null, ['placeholder' => 'La spécialité de la filière choisie', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">

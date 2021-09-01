@@ -41,7 +41,6 @@ class CreateDemandeursTable extends Migration
             $table->longText('motivation')->nullable();
             $table->string('items1', 200)->nullable();
             $table->string('items2', 200)->nullable();
-            $table->dateTime('date_depot')->nullable();
             $table->longText('motif')->nullable();
             $table->timestamp('date1')->nullable();
             $table->timestamp('date2')->nullable();

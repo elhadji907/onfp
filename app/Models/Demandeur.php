@@ -105,7 +105,6 @@ class Demandeur extends Model
 	];
 
 	protected $dates = [
-		'date_depot',
 		'date1',
 		'date2'
 	];
@@ -129,7 +128,6 @@ class Demandeur extends Model
 		'motivation',
 		'items1',
 		'items2',
-		'date_depot',
 		'motif',
 		'date1',
 		'date2',

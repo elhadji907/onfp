@@ -244,7 +244,6 @@ class CollectiveController extends Controller
 
         $demandeur = new Demandeur([
             'numero'                        =>     $numero,
-            'date_depot'                    =>     $request->input('date_depot'),
             'telephone'                     =>     $autre_tel,
             'fixe'                          =>     $autre_tel,
             'programmes_id'                 =>     $programme_id,
@@ -260,6 +259,7 @@ class CollectiveController extends Controller
         $collectives = new Collective([
             'name'              =>     $request->input('name'),
             'description'       =>     $request->input('description'),
+            'date_depot'        =>     $request->input('date_depot'),
             'statut'            =>     $statut,
             'demandeurs_id'     =>     $demandeur->id
         ]);
@@ -452,7 +452,6 @@ class CollectiveController extends Controller
         $utilisateur->save();
 
         $demandeur->numero                      =      $request->input('numero');
-        $demandeur->date_depot                  =      $request->input('date_depot');
         $demandeur->fixe                        =      $structure_fixe;
         $demandeur->telephone                   =      $autre_tel;
         $demandeur->adresse                     =      $request->input('structure_adresse');
@@ -474,6 +473,7 @@ class CollectiveController extends Controller
         }
         $collective->statut                   =      $statut;
         $collective->name                     =     $request->input('name');
+        $demandeur->date_depot                =      $request->input('date_depot');
         $collective->description              =     $request->input('description');
         $collective->demandeurs_id            =     $demandeur->id;
 

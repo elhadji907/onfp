@@ -89,7 +89,7 @@ class PchargeController extends Controller
         
         $pcharges = $user_connect->demandeur->pcharges;
 
-        $this->validate($request, [
+      /*   $this->validate($request, [
                 'annee'                 =>  'required|string|min:4|max:4',
                 'cin'                   =>  'required|string|min:12|max:14',
                 'civilite'              =>  'required|string',
@@ -113,7 +113,8 @@ class PchargeController extends Controller
                 'niveausortie'          =>  'required',
                 'motivation'            =>  'required',
                 'diplome'               =>  'required',
-            ]);
+                'typedemande'           =>  'required',
+            ]); */
 
         $etablissement_id = $request->input('etablissement');
         $etablissement = Etablissement::find($etablissement_id);
@@ -173,6 +174,10 @@ class PchargeController extends Controller
             $sexe = "";
         }
 
+        $typedemande = $request->input('typedemande');
+
+        if ($typedemande !== "Renouvellement") {
+           
         $user = new User([
             'sexe'                      =>      $sexe,
             'civilite'                  =>      $request->input('civilite'),
@@ -224,6 +229,7 @@ class PchargeController extends Controller
                 'niveauentree'              =>      $request->input('niveauentree'),
                 'niveausortie'              =>      $request->input('niveausortie'),
                 'specialisation'            =>      $request->input('specialite'),
+                'typedemande'               =>      $request->input('typedemande'),
                 'statut'                    =>      "Attente",
                 'etablissements_id'         =>      $request->input('etablissement'),
                 'filieres_id'               =>      $request->input('filiere'),
@@ -232,8 +238,71 @@ class PchargeController extends Controller
             ]);
     
         $pcharge->save();
+
+        return redirect()->route('pcharges.index')->with('success', 'renouvellement enregistré avec succès !');
     
-        return redirect()->route('pcharges.index')->with('success', 'enregistrement effectué avec succès !');
+        } else {
+            
+            $user_connect = Auth::user();
+            $demandeur = $user_connect->demandeur;
+            $statut = "Attente";
+           
+            $user_connect->sexe                         =      $sexe;
+            $user_connect->civilite                     =      $request->input('civilite');
+            $user_connect->firstname                    =      $request->input('firstname');
+            $user_connect->name                         =      $request->input('name');
+            $user_connect->email                        =      $request->input('email');
+            $user_connect->username                     =      $username;
+            $user_connect->telephone                    =      $telephone;
+            $user_connect->fixe                         =      $fixe;
+            $user_connect->bp                           =      $request->input('bp');
+            $user_connect->fax                          =      $request->input('fax');
+            $user_connect->situation_familiale          =      $request->input('familiale');
+            $user_connect->situation_professionnelle    =      $request->input('professionnelle');
+            $user_connect->date_naissance               =      $request->input('date');
+            $user_connect->lieu_naissance               =      $request->input('lieu_naissance');
+            $user_connect->adresse                      =      $request->input('adresse');
+            $user_connect->password                     =      Hash::make($request->input('email'));
+            $user_connect->created_by                   =      $created_by;
+            $user_connect->updated_by                   =      $created_by;
+
+            $user_connect->save();    
+                
+            $demandeur->numero                          =     $numero;
+            $demandeur->nbre_piece                      =     $request->input('nombre_de_piece');
+            $demandeur->niveau_etude                    =     $request->input('niveau_etude');
+            $demandeur->telephone                       =     $telephone;
+            $demandeur->fixe                            =     $fixe;
+            $demandeur->adresse                         =     $request->input('adresse');
+            $demandeur->motivation                      =     $request->input('motivation');
+            $demandeur->communes_id                     =     $commune_id;
+            $demandeur->types_demandes_id               =     $types_demandes_id;
+            $demandeur->diplomes_id                     =     $diplome_id;
+            $demandeur->users_id                        =     $user_connect->id;
+
+            $demandeur->save();
+
+            $pcharge = new Pcharge([
+                'annee'                     =>      $request->input('annee'),
+                'cin'                       =>      $request->input('cin'),
+                'duree'                     =>      $request->input('duree'),
+                'inscription'               =>      $request->input('inscription'),
+                'montant'                   =>      $request->input('montant'),
+                'niveauentree'              =>      $request->input('niveauentree'),
+                'niveausortie'              =>      $request->input('niveausortie'),
+                'specialisation'            =>      $request->input('specialite'),
+                'typedemande'               =>      $request->input('typedemande'),
+                'date_depot'                =>      $request->input('date_depot'),
+                'statut'                    =>      "Attente",
+                'etablissements_id'         =>      $request->input('etablissement'),
+                'filieres_id'               =>      $request->input('filiere'),
+                'demandeurs_id'             =>      $demandeur->id
+    
+            ]);
+            
+        return redirect()->route('pcharges.index')->with('success', 'nouvelle demande enregistrée avec succès !');
+        }
+        
     }
 
     /**

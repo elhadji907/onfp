@@ -43,6 +43,7 @@ class PchargeFactory extends Factory
             'matricule' => "PC".$this->faker->word,
             'items1' => $this->faker->word,
             'date1' => $this->faker->dateTime(),
+            'date_depot' => $this->faker->dateTime(),
             'duree' => $this->faker->numberBetween(1, 3),
             'montant' => $this->faker->randomFloat(),
             'accompt' => $this->faker->randomFloat(),

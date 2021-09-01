@@ -243,7 +243,6 @@ class IndividuelleController extends Controller
             
             $demandeur = new Demandeur([
                 'numero'                    =>     $numero,
-                'date_depot'                =>     $request->input('date_depot'),
                 'nbre_piece'                =>     $request->input('nombre_de_piece'),
                 'niveau_etude'              =>     $request->input('niveau_etude'),
                 'etablissement'             =>     $request->input('etablissement'),
@@ -266,6 +265,7 @@ class IndividuelleController extends Controller
                 'cin'               =>     $cin,
                 'experience'        =>     $request->input('experience'),
                 'information'       =>     $request->input('information'),
+                'date_depot'        =>     $request->input('date_depot'),
                 'nbre_pieces'       =>     $request->input('nombre_de_piece'),
                 'information'       =>     $request->input('information'),
                 'prerequis'         =>     $request->input('prerequis'),
@@ -461,12 +461,11 @@ class IndividuelleController extends Controller
         $utilisateur->date_naissance            =      $request->input('date_naiss');
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
-        $utilisateur->updated_by               =      $updated_by;
+        $utilisateur->updated_by                =      $updated_by;
 
         $utilisateur->save();
 
         $demandeur->numero                      =      $request->input('numero');
-        $demandeur->date_depot                  =      $request->input('date_depot');
         $demandeur->nbre_piece                  =      $request->input('nombre_de_piece');
         $demandeur->niveau_etude                =      $request->input('niveau_etude');
         $demandeur->etablissement               =      $request->input('etablissement');
@@ -495,6 +494,7 @@ class IndividuelleController extends Controller
         $individuelle->information              =     $request->input('information');
         $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
         $individuelle->prerequis                =     $request->input('prerequis');
+        $demandeur->date_depot                  =      $request->input('date_depot');
         $individuelle->demandeurs_id            =     $demandeur->id;
 
         $individuelle->save();

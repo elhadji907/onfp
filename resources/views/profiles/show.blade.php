@@ -165,13 +165,13 @@
         <div class="row mt-5">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="mt-3">
-                    <a class="btn btn-outline-primary btn-block" href="{!! url('individuelles/' . $individuelle_demandeur->id . '/edit') !!}" target="_blank"><span
+                    <a class="btn btn-outline-primary btn-block" href="{!! url('individuelles/' . $individuelle_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Ajouter demande individuelle</a>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="mt-3">
-                    <a class="btn btn-outline-success btn-block" href="{!! url('collectives/' . $collective_demandeur->id . '/edit') !!}" target="_blank"><span
+                    <a class="btn btn-outline-success btn-block" href="{!! url('collectives/' . $collective_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Ajouter demande collective</a>
                 </div>
             </div>
@@ -179,13 +179,13 @@
         <div class="row mt-2">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="mt-3">
-                    <a class="btn btn-outline-info btn-block" href="{!! url('pcharges/' . $pcharge_demandeur->id . '/edit') !!}" target="_blank"><span
+                    <a class="btn btn-outline-info btn-block" href="{!! url('pcharges/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Ajouter prise en charge</a>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="mt-3">
-                    <a class="btn btn-outline-secondary btn-block" href="{!! url('pcharges/' . $pcharge_demandeur->id . '/edit') !!}" target="_blank"><span
+                    <a class="btn btn-outline-secondary btn-block" href="{!! url('pcharges/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Devenir opérateur</a>
                 </div>
             </div>
