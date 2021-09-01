@@ -36,6 +36,7 @@ class CreatePchargesTable extends Migration
             $table->double('inscription')->nullable();
             $table->double('montant')->nullable();
             $table->double('montantaccorde')->nullable();
+            $table->string('specialisation')->nullable();
             $table->double('accompt')->nullable();
             $table->double('reliquat')->nullable();
             $table->string('file1', 200)->nullable();

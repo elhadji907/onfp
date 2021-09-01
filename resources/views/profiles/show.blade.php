@@ -272,14 +272,14 @@
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ 'Demande (prise en charge)' }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($pcharge_user->modules as $module)
+                                            {{--  @foreach ($pcharge_user->modules as $module)
                                                 @if ($loop->last)
                                                     {!! $loop->count !!}
                                                 @endif
-                                            @endforeach
-                                            @if (isset($module->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $pcharge_user->statut }}</label>
+                                            @endforeach  --}}
+                                            <label class="badge badge-info">{{$pcharge_user->filiere->name}}</label>
+                                            @if (isset($pcharge_user->filiere->name))
+                                                <h5><label class="badge badge-success">{{ $pcharge_user->statut }}</label>
                                                 </h5>
                                             @else
                                                 <h5><label class="badge badge-danger">Invalide</label></h5>

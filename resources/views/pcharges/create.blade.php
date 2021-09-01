@@ -19,8 +19,8 @@
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
                     <a class="btn btn-outline-primary" href="{{ route('filieres.create') }}" target="_blank"> <i
                             class="fas fa-plus"></i>&nbsp;Ajouter filière</i></a>
-                    <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
-                            class="fas fa-plus"></i>&nbsp;Ajouter spécialité</i></a>
+                   {{--   <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
+                            class="fas fa-plus"></i>&nbsp;Ajouter spécialité</i></a>  --}}
 
                 </div>
                 <div class="card border-success">
@@ -43,7 +43,7 @@
 
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                {!! Form::label('Filière') !!}(<span class="text-danger">*</span>)
+                                {!! Form::label('Filière') !!}
                                 {!! Form::select('filiere', $filieres, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'filiere']) !!}
                                 <small id="emailHelp"
                                     class="form-text text-muted">{{ __("Merci de ") }}
@@ -57,7 +57,7 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                         {{--     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 {!! Form::label('spécialité') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('specialite', $filierespecialites, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'filierespecialite']) !!}
                                 <small id="emailHelp"
@@ -67,6 +67,17 @@
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('filiere'))
                                         @foreach ($errors->get('filiere') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>  --}}
+                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                {!! Form::label('Spécialité') !!}(<span class="text-danger">*</span>)
+                                {!! Form::text('specialite', null, ['placeholder' => 'La spécialité de la filière choisie', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('specialite'))
+                                        @foreach ($errors->get('specialite') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif

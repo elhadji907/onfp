@@ -138,6 +138,12 @@ class PermissionsOnfpSeeder extends Seeder
 
         $role = Role::create(['name' => 'Operateur']);
 
+        $role = Role::create(['name' => 'Individuelle']);
+
+        $role = Role::create(['name' => 'Collective']);
+        
+        $role = Role::create(['name' => 'Pcharge']);
+
         $role = Role::create(['name' => 'Comptable']);
         $role->givePermissionTo('facture-list', 'facture-create', 'facture-edit', 'facture-delete', 'formation-list', 'operateur-list', 'module-list');
 
@@ -182,7 +188,6 @@ class PermissionsOnfpSeeder extends Seeder
 
         $role = Role::create(['name' => 'LOGDAF']);
         $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list'], 'module-list');
-
         
         $role = Role::create(['name' => 'DPP']);
         $role->givePermissionTo('formation-list', 'operateur-list', 'projet-list', 'projet-create', 'projet-edit', 'projet-delete', 'etablissement-list', 'module-list');
@@ -204,6 +209,12 @@ class PermissionsOnfpSeeder extends Seeder
 
         $role = Role::create(['name' => 'EVDEC']);
         $role->givePermissionTo('formation-list', 'operateur-list', 'module-list');
+
+        $role = Role::create(['name' => 'SAOS']);
+        $role->givePermissionTo('pcharge-list', 'pcharge-create', 'pcharge-edit', 'pcharge-delete');
+
+        $role = Role::create(['name' => 'ASAOS']);
+        $role->givePermissionTo('pcharge-list', 'pcharge-create', 'pcharge-edit');
 
         $role = Role::create(['name' => 'Nologin']);
     }

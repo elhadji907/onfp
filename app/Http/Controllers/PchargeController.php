@@ -196,7 +196,7 @@ class PchargeController extends Controller
         ]);
     
         $user->save();
-        $user->assignRole('Demandeur');
+        $user->assignRole('Pcharge');
             
         $demandeur = new Demandeur([
                 'numero'                    =>     $numero,
@@ -223,7 +223,10 @@ class PchargeController extends Controller
                 'montant'                   =>      $request->input('montant'),
                 'niveauentree'              =>      $request->input('niveauentree'),
                 'niveausortie'              =>      $request->input('niveausortie'),
+                'specialisation'            =>      $request->input('specialite'),
+                'statut'                    =>      "Attente",
                 'etablissements_id'         =>      $request->input('etablissement'),
+                'filieres_id'               =>      $request->input('filiere'),
                 'demandeurs_id'             =>      $demandeur->id
     
             ]);

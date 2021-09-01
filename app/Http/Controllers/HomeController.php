@@ -38,26 +38,46 @@ class HomeController extends Controller
         $demandeurs = Demandeur::all();
 
         $user_connect = Auth::user();
-        $user_demandeur  =  $user_connect->demandeur;
-
-        $individuelle_demandeurs  =  $user_demandeur->individuelles;
-        $collective_demandeurs  =  $user_demandeur->collectives;
-        $pcharge_demandeurs  =  $user_demandeur->pcharges;
-
-        foreach ($individuelle_demandeurs as $key => $individuelle_demandeur) {
-        }
-
-        foreach ($collective_demandeurs as $key => $collective_demandeur) {
-        }
-
-        foreach ($pcharge_demandeurs as $key => $pcharge_demandeur) {
-        }
-
+        $user_user  =  $user_connect->demandeur;
+        $courriers = $user->courriers;
 
         if ($user->hasRole('Demandeur')) { 
-            $courriers = $user->courriers;
-        return view('profiles.show', compact('user', 'courriers', 'demandeurs', 'individuelle_demandeur', 'collective_demandeur', 'pcharge_demandeur'));         
-        } elseif ($user->hasRole('Nologin')) {
+
+        $individuelle_users  =  $user_user->individuelles;
+        $collective_users  =  $user_user->collectives;
+        $pcharge_users  =  $user_user->pcharges;
+
+
+        foreach ($individuelle_users as $key => $individuelle_user) {
+        }
+
+        foreach ($collective_users as $key => $collective_user) {
+        }
+
+        foreach ($pcharge_users as $key => $pcharge_user) {
+        }
+
+        return view('profiles.show', compact('user', 'courriers', 'demandeurs', 'individuelle_user', 'collective_user', 'pcharge_user'));         
+        } 
+        elseif ($user->hasRole('Individuelle')) {
+            $individuelle_users  =  $user_user->individuelles;
+            foreach ($individuelle_users as $key => $individuelle_user) {
+            }
+            return view('profiles.show', compact('user', 'courriers', 'demandeurs', 'individuelle_user'));  
+        }
+        elseif ($user->hasRole('Collective')) {
+            $collective_users  =  $user_user->collectives;
+            foreach ($collective_users as $key => $collective_user) {
+            }
+            return view('profiles.show', compact('user', 'courriers', 'demandeurs', 'collective_user'));  
+        }
+        elseif ($user->hasRole('Pcharge')) {
+            $pcharge_users  =  $user_user->pcharges;
+            foreach ($pcharge_users as $key => $pcharge_user) {
+            }
+            return view('profiles.show', compact('user', 'courriers', 'demandeurs', 'pcharge_user'));  
+        }
+        elseif ($user->hasRole('Nologin')) {
             return view('layout.404'); 
         }
         else {

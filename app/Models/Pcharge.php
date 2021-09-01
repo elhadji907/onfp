@@ -89,6 +89,7 @@ class Pcharge extends Model
 		'duree',
 		'niveauentree',
 		'niveausortie',
+		'specialisation',
 		'statut',
 		'file1',
 		'file2',
