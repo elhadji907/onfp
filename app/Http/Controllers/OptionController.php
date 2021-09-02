@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Option;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class OptionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class OptionController extends Controller
      */
     public function index()
     {
-        //
+        return view('options.index');
     }
 
     /**
@@ -24,7 +31,7 @@ class OptionController extends Controller
      */
     public function create()
     {
-        //
+        return view('options.create');
     }
 
     /**
@@ -35,7 +42,20 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $this->validate(
+            $request, [
+               
+                'name' =>  'required|string|max:50|unique:options,name',
+            ]
+        );
+        $option = new Option([      
+            'name'           =>      $request->input('name'),
+
+        ]);
+        
+        $option->save();
+        return redirect()->route('options.index')->with('success','enregistrement effectué avec succès !');
     }
 
     /**
@@ -55,9 +75,10 @@ class OptionController extends Controller
      * @param  \App\Models\Option  $option
      * @return \Illuminate\Http\Response
      */
-    public function edit(Option $option)
+    public function edit($id)
     {
-        //
+        $option = Option::find($id);
+        return view('options.update', compact('option','id'));
     }
 
     /**
@@ -67,9 +88,17 @@ class OptionController extends Controller
      * @param  \App\Models\Option  $option
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Option $option)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate(
+        $request, 
+        [
+            'name' =>  'required|string|max:50'
+        ]);   
+    $option = Option::find($id);
+    $option->name  =   $request->input('name');
+    $option->save();
+    return redirect()->route('options.index')->with('success','enregistrement modifié avec succès !');
     }
 
     /**
@@ -80,6 +109,14 @@ class OptionController extends Controller
      */
     public function destroy(Option $option)
     {
-        //
+        $option->delete();
+        $message = $option->name.' a été supprimé(e)';
+        return redirect()->route('options.index')->with(compact('message'));
+    }
+
+    public function list(Request $request)
+    {
+        $options=Option::get();
+        return Datatables::of($options)->make(true);
     }
 }

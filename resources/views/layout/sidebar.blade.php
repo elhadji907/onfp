@@ -405,7 +405,7 @@
     @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('nivauxs.index') }}">
+        <a class="nav-link" href="{{ route('niveauxs.index') }}">
             <span data-feather="layers"></span>
             <span>Niveaux</span>
         </a>

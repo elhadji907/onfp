@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Niveaux;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class NiveauxController extends Controller
 {
@@ -14,7 +15,7 @@ class NiveauxController extends Controller
      */
     public function index()
     {
-        //
+        return view('niveauxs.index');
     }
 
     /**
@@ -24,7 +25,7 @@ class NiveauxController extends Controller
      */
     public function create()
     {
-        //
+        return view('niveauxs.create');
     }
 
     /**
@@ -35,7 +36,19 @@ class NiveauxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request, [
+               
+                'name' =>  'required|string|max:50|unique:niveauxs,name',
+            ]
+        );
+        $niveaux = new Niveaux([      
+            'name'           =>      $request->input('name'),
+
+        ]);
+        
+        $nivaux->save();
+        return redirect()->route('niveauxs.index')->with('success','enregistrement effectué avec succès !');
     }
 
     /**
@@ -57,7 +70,7 @@ class NiveauxController extends Controller
      */
     public function edit(Niveaux $niveaux)
     {
-        //
+        return view('niveauxs.update', compact('niveaux'));
     }
 
     /**
@@ -69,7 +82,15 @@ class NiveauxController extends Controller
      */
     public function update(Request $request, Niveaux $niveaux)
     {
-        //
+        $this->validate(
+            $request, 
+            [
+                'name' =>  'required|string|max:50'
+            ]);   
+
+        $niveaux->name  =   $request->input('name');
+        $niveaux->save();
+        return redirect()->route('niveauxs.index')->with('success','enregistrement modifié avec succès !');
     }
 
     /**
@@ -80,6 +101,14 @@ class NiveauxController extends Controller
      */
     public function destroy(Niveaux $niveaux)
     {
-        //
+        $niveaux->delete();
+        $message = $niveaux->name.' a été supprimé(e)';
+        return redirect()->route('niveauxs.index')->with(compact('message'));
+    }
+
+    public function list(Request $request)
+    {
+        $niveaux=Niveaux::get();
+        return Datatables::of($niveaux)->make(true);
     }
 }

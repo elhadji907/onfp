@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Operateur;
+use App\Models\Programme;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class ProgrammeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,9 @@ class ProgrammeController extends Controller
      */
     public function index()
     {
-        //
+        $programmes = Programme::with('demandeurs.programme')->get();
+       /*  dd($programmes); */
+        return view('programmes.index', compact('programmes'));
     }
 
     /**
@@ -24,7 +33,7 @@ class ProgrammeController extends Controller
      */
     public function create()
     {
-        //
+        return view('programmes.create');
     }
 
     /**
@@ -35,16 +44,31 @@ class ProgrammeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request, [
+                'name'      =>  'required|string|unique:programmes,name',
+                'sigle'     =>  'required|string|unique:programmes,sigle',
+                'effectif'  =>  'required|string',
+            ]
+        );
+        $programme = new Programme([      
+            'name'           =>      $request->input('name'),
+            'sigle'          =>      $request->input('sigle'),
+            'effectif'       =>      $request->input('effectif'),
+
+        ]);
+        
+        $programme->save();
+        return redirect()->route('programmes.index')->with('success','enregistrement effectué avec succès !');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Operateur  $operateur
+     * @param  \App\Models\Programme  $programme
      * @return \Illuminate\Http\Response
      */
-    public function show(Operateur $operateur)
+    public function show(Programme $programme)
     {
         //
     }
@@ -52,34 +76,58 @@ class ProgrammeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Operateur  $operateur
+     * @param  \App\Models\Programme  $programme
      * @return \Illuminate\Http\Response
      */
-    public function edit(Operateur $operateur)
+    public function edit($id)
     {
-        //
+        $programme = Programme::find($id);
+        return view('programmes.update', compact('programme','id'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Operateur  $operateur
+     * @param  \App\Models\Programme  $programme
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Operateur $operateur)
+    public function update(Request $request, $id)
     {
-        //
+        $programme = Programme::find($id);
+
+        $this->validate(
+            $request, 
+            [
+                'name'      =>  'required|string|unique:programmes,name,'.$programme->id,
+                'sigle'     =>  'required|string|unique:programmes,sigle,'.$programme->id,
+                'effectif'  =>  'required|string',
+            ]);   
+        $programme              = Programme::find($id);
+        $programme->name        =   $request->input('name');
+        $programme->sigle       =   $request->input('sigle');
+        $programme->effectif    =   $request->input('effectif');
+
+        $programme->save();
+        return redirect()->route('programmes.index')->with('success','enregistrement modifié avec succès !');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Operateur  $operateur
+     * @param  \App\Models\Programme  $programme
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Operateur $operateur)
+    public function destroy(Programme $programme)
     {
-        //
+        $programme->delete();
+        $message = $programme->sigle.' a été supprimé(e)';
+        return redirect()->route('programmes.index')->with(compact('message'));
+    }
+
+    public function list(Request $request)
+    {
+        $programmes=Programme::get();
+        return Datatables::of($programmes)->make(true);
     }
 }

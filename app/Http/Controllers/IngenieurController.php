@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingenieur;
+use App\Models\Formation;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class IngenieurController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,9 @@ class IngenieurController extends Controller
      */
     public function index()
     {
-        //
+        $ingenieurs = Ingenieur::all();
+
+        return view('ingenieurs.index', compact('ingenieurs'));
     }
 
     /**
@@ -24,7 +34,7 @@ class IngenieurController extends Controller
      */
     public function create()
     {
-        //
+        return view('ingenieurs.create');
     }
 
     /**
@@ -35,7 +45,24 @@ class IngenieurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request, [
+                'matricule'     =>  'required|string|min:3|max:5|unique:ingenieurs,matricule',
+                'name'          =>  'required|string|max:100',
+                'email'         =>  'required|email|max:255|unique:ingenieurs,email',
+                'telephone'     =>  'required|string|max:255|unique:ingenieurs,email',
+            ]
+        );
+        $ingenieur = new Ingenieur([      
+            'matricule'           =>      $request->input('matricule'),
+            'name'                =>      $request->input('name'),
+            'email'               =>      $request->input('email'),
+            'telephone'           =>      $request->input('telephone'),
+
+        ]);
+        
+        $ingenieur->save();
+        return redirect()->route('ingenieurs.index')->with('success','enregistrement effectué avec succès !');
     }
 
     /**
@@ -57,7 +84,8 @@ class IngenieurController extends Controller
      */
     public function edit(Ingenieur $ingenieur)
     {
-        //
+        $id = $ingenieur->id;
+        return view('ingenieurs.update', compact('ingenieur','id'));
     }
 
     /**
@@ -68,8 +96,22 @@ class IngenieurController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Ingenieur $ingenieur)
-    {
-        //
+    {     
+        $this->validate(
+            $request, 
+            [
+                'matricule'     =>  'required|string|min:3|max:5|unique:ingenieurs,matricule,'.$ingenieur->id,
+                'name'          =>  'required|string|max:100',
+                'email'         =>  'required|email|max:255|unique:ingenieurs,email,'.$ingenieur->id,
+                'telephone'     =>  'required|string|max:255|unique:ingenieurs,telephone,'.$ingenieur->id,
+            ]);   
+
+        $ingenieur->matricule  =   $request->input('matricule');
+        $ingenieur->name  =   $request->input('name');
+        $ingenieur->email  =   $request->input('email');
+        $ingenieur->telephone  =   $request->input('telephone');
+        $ingenieur->save();
+        return redirect()->route('ingenieurs.index')->with('success','enregistrement modifié avec succès !');
     }
 
     /**
@@ -80,6 +122,14 @@ class IngenieurController extends Controller
      */
     public function destroy(Ingenieur $ingenieur)
     {
-        //
+        $ingenieur->delete();
+        $message = $ingenieur->name.' a été supprimé(e)';
+        return redirect()->route('ingenieurs.index')->with(compact('message'));
+    }
+
+    public function list(Request $request)
+    {
+        $ingenieurs=Ingenieur::withCount('formations')->get();
+        return Datatables::of($ingenieurs)->make(true);
     }
 }

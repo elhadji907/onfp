@@ -246,6 +246,7 @@ class PchargeController extends Controller
 
             return redirect()->route('pcharges.index')->with('success', 'renouvellement enregistré avec succès !');
         } else {
+            
             $user_connect = Auth::user();
             $demandeur = $user_connect->demandeur;
             $statut = "Attente";

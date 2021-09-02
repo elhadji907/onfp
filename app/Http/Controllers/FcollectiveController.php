@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class FcollectiveController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,11 @@ class FcollectiveController extends Controller
      */
     public function index()
     {
-        //
+        $fcollectives = Fcollective::all();
+
+       /*  dd($fcollectives); */
+
+        return view('fcollectives.index', compact('fcollectives'));
     }
 
     /**

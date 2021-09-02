@@ -23,8 +23,6 @@
                     <p class="card-category">gestionnaire</p>
                 </div>
                 <div class="card-body">
-
-
                     {!! Form::open(['url'=>'gestionnaires/'.$gestionnaire->id, 'method'=>"PATCH", 'files' => true]) !!}
                         <div class="form-row">
                             <div class="form-group col-md-12">
@@ -74,13 +72,6 @@
                                 {!! Form::label('Telephone') !!}                    
                                 {!! Form::text('telephone', $gestionnaire->user->telephone, ['placeholder'=>'Numero de telephone', 'class'=>'form-control']) !!}                    
                             </div> 
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                {!! Form::label('role') !!}                    
-                                {!! Form::select('role', $roles, $gestionnaire->user->role->name, ['placeholder'=>'sélectionner un rôle', 'class'=>'form-control', 'id'=>'role']) !!}                    
-                            </div>
                         </div>
                         
                         {!! Form::submit('Modifier', ['class'=>'btn btn-outline-primary pull-right', ]) !!}

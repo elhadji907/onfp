@@ -23,10 +23,11 @@ class DepartController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+ 
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur']);
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
         /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
     }
     public function index()

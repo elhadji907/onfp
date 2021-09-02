@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Liste des nivauxs')
+@section('title', 'ONFP - Liste des niveauxs')
 @section('content')
         <div class="container-fluid">
           <div class="row justify-content-center">
@@ -15,27 +15,27 @@
               <div class="card"> 
                   <div class="card-header">
                       <i class="fas fa-table"></i>
-                      Liste des nivauxs
+                      Liste des niveauxs
                   </div>              
                 <div class="card-body">
                       <div class="table-responsive">
                           <div align="right">
-                            <a href="{{route('nivauxs.create')}}"><div class="btn btn-success btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div></a>
+                            <a href="{{route('niveauxs.create')}}"><div class="btn btn-success btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div></a>
                           </div>
                           <br />
-                        <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-nivauxs">
+                        <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-niveauxs">
                           <thead class="table-dark">
                             <tr>
-                              <th>ID</th>
+                              <th style="width:10%;">ID</th>
                                <th>{!! __("nivaux") !!}</th>
-                              <th style="width:20%;">Action</th>
+                              <th style="width:10%;"></th>
                             </tr>
                           </thead>
                           <tfoot class="table-dark">
                               <tr>
                                 <th>ID</th>
                                  <th>{!! __("nivaux") !!}</th>
-                                <th style="width:20%;">Action</th>
+                                <th></th>
                               </tr>
                             </tfoot>
                           <tbody>
@@ -76,10 +76,10 @@
       @push('scripts')
       <script type="text/javascript">
       $(document).ready(function () {
-          $('#table-nivauxs').DataTable( { 
+          $('#table-niveauxs').DataTable( { 
             "processing": true,
             "serverSide": true,
-            "ajax": "{{route('nivauxs.list')}}",
+            "ajax": "{{route('niveauxs.list')}}",
             columns: [
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
@@ -90,8 +90,8 @@
                         {
                         "data": null,
                         "render": function (data, type, row) {
-                        url_e =  "{!! route('nivauxs.edit',':id')!!}".replace(':id', data.id);
-                        url_d =  "{!! route('nivauxs.destroy',':id')!!}".replace(':id', data.id);
+                        url_e =  "{!! route('niveauxs.edit',':id')!!}".replace(':id', data.id);
+                        url_d =  "{!! route('niveauxs.destroy',':id')!!}".replace(':id', data.id);
                         return '<a href='+url_e+'  class=" btn btn-primary edit btn-sm" title="Modifier"><i class="far fa-edit"></i></a>'+
                         '<div class="btn btn-danger delete btn_delete_nivaux btn-sm ml-1" title="Supprimer" data-href='+url_d+'><i class="fas fa-trash-alt"></i></div>';
                         },
@@ -163,7 +163,7 @@
           });
 
           
-        $('#table-nivauxs').off('click', '.btn_delete_nivaux').on('click', '.btn_delete_nivaux',
+        $('#table-niveauxs').off('click', '.btn_delete_nivaux').on('click', '.btn_delete_nivaux',
         function() { 
           var href=$(this).data('href');
           $('#form-delete-nivaux').attr('action', href);

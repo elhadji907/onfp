@@ -3,7 +3,7 @@
 @section('content')
         <div class="container-fluid">
           <div class="row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 @if (session()->has('success'))
                   <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif 
@@ -26,11 +26,11 @@
                         <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-programmes">
                           <thead class="table-dark">
                             <tr>
-                              <th>N°</th>
+                              <th style="width:5%;">N°</th>
                                <th>{!! __("programme") !!}</th>
-                               <th>{!! __("sigle") !!}</th>
-                               <th>{!! __("effectif") !!}</th>
-                              <th style="width:20%;">Action</th>
+                               <th style="width:20%;">{!! __("sigle") !!}</th>
+                               <th style="width:10%;">{!! __("effectif") !!}</th>
+                              <th style="width:8%;">Action</th>
                             </tr>
                           </thead>
                           <tfoot class="table-dark">
@@ -39,7 +39,7 @@
                                 <th>{!! __("programme") !!}</th>
                                 <th>{!! __("sigle") !!}</th>
                                 <th>{!! __("effectif") !!}</th>
-                               <th style="width:20%;">Action</th>
+                               <th>Action</th>
                               </tr>
                             </tfoot>
                           <tbody>
@@ -49,7 +49,7 @@
                               <td>{!! $i++ !!}</td>
                               <td>{!! $programme->name !!}</td>
                               <td>
-                                <a href="{{ route('localites.pdcej') }}">
+                                <a href="#">
                                 {!! $programme->sigle!!}
                                 </a>
                               </td>

@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class FormationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,16 @@ class FormationController extends Controller
      */
     public function index()
     {
-        //
+        $formations = Formation::all();
+
+        /* dd($formations); */
+        
+        $findividuelles = \App\Models\Findividuelle::get()->count();
+        $fcollectives = \App\Models\Fcollective::get()->count();
+
+        $all_formations = Formation::get()->count();
+
+        return view('formations.index', compact('formations','findividuelles','fcollectives','all_formations'));
     }
 
     /**
@@ -46,7 +61,19 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
-        //
+        $type_formation = $formation->types_formation->name;
+        $findividuelles = $formation->findividuelles;
+        $fcollectives = $formation->fcollectives;
+
+        $id_form = $formation->id;
+        
+        if ($type_formation == "Individuelle") {
+            return view('findividuelles.details', compact('formation','findividuelles','id_form'));
+        } elseif ($type_formation == "Collective") {
+            return view('fcollectives.details', compact('formation','fcollectives','id_form'));
+        } else {
+            return view('formations.show', compact('formation','id_form'));
+        }
     }
 
     /**
@@ -80,6 +107,22 @@ class FormationController extends Controller
      */
     public function destroy(Formation $formation)
     {
-        //
+        $type_formation = $formation->types_formation->name;
+        $findividuelles = $formation->formations_individuelles;
+        $fcollectives = $formation->formations_collectives;
+
+        if ($type_formation == "Individuelle") {
+            $findividuelles->delete();
+        } elseif ($type_formation == "Collective") {
+            $fcollectives->delete();
+        } else {
+            $formation->delete();
+        }
+
+        $formation->delete();
+
+        $message = $type_formation.' a été supprimé(e)';
+        return back()->with(compact('message'));
+
     }
 }

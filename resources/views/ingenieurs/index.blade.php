@@ -3,7 +3,7 @@
 @section('content')
         <div class="container-fluid">
           <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
               @if (session()->has('success'))
                   <div class="alert alert-success" role="alert">{{ session('success') }}</div>
               @endif 
@@ -31,7 +31,7 @@
                               <th>{!! __("Email") !!}</th>
                               <th>{!! __("Téléphone") !!}</th>
                               <th  style="width:10%;">{!! __("Formations") !!}</th>
-                              <th style="width:10%;">Action</th>
+                              <th style="width:12%;"></th>
                             </tr>
                           </thead>
                           <tfoot class="table-dark">
@@ -42,7 +42,7 @@
                                 <th>{!! __("Email") !!}</th>
                                 <th>{!! __("Téléphone") !!}</th>
                                 <th>{!! __("Formations") !!}</th>
-                                <th style="width:10%;">Action</th>
+                                <th></th>
                               </tr>
                             </tfoot>
                           <tbody>
@@ -61,7 +61,7 @@
                                 @endif
                                 @endforeach
                               </td>   
-                              <td class="d-flex align-items-center justify-content-center">
+                              <td class="d-flex align-items-baseline text-center-row">
                                   <a href="{!! url('ingenieurs/' .$ingenieur->id. '/edit') !!}" class= 'btn btn-success btn-sm' title="modifier">
                                     <i class="far fa-edit"></i>
                                   </a>

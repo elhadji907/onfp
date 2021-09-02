@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Modification nivauxs')
+@section('title', 'ONFP - Modification niveauxs')
 @section('content')
 <div class="content">
     <div class="container col-8 col-sm-12 col-md-8 col-lg-8 col-xl-8">
@@ -11,17 +11,16 @@
             <div class="card">
                 <div class="card-header card-header-primary text-center">
                     <h3 class="card-title">{{ ("Modification") }}</h3>
-                    <p class="card-category">{{ ("nivaux") }}</p>
+                    <p class="card-category">{{ ("niveaux") }}</p>
                 </div>
-                <div class="card-body">
-                                               
-                        <form method="POST" action="{{ action('NivauxsController@update', $id) }}">
+                <div class="card-body">                                               
+                        <form method="POST" action="{{ action('App\Http\Controllers\NiveauxController@update', $niveaux->id) }}">
                            @csrf
                            <input type="hidden" name="_method" value="PATCH" /> 
                             <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="input-name"><b>{{ __("Nom du nivaux") }}:</b></label>
-                                <input type="text" name="name" class="form-control" id="input-name" placeholder="ex: primaire" value="{{ old('name') ?? $nivaux->name }}">
+                                <label for="input-name"><b>{{ __("Nom du niveaux") }}:</b></label>
+                                <input type="text" name="name" class="form-control" id="input-name" placeholder="ex: primaire" value="{{ old('name') ?? $niveaux->name }}">
                                 <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('name'))
                                         @foreach ($errors->get('name') as $message)

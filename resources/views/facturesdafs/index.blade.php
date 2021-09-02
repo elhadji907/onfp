@@ -33,7 +33,7 @@
                     <th style="width:8%;">Visa CG</th>
                     <th style="width:9%;">Mandat DG</th>
                     <th style="width:8%;">Date AC</th>
-                    <th style="width:10%;">Action</th>
+                    <th style="width:10%;"></th>
                   </tr>
                 </thead>
                 <tfoot class="table-dark">
@@ -46,7 +46,7 @@
                     <th>Visa CG</th>
                     <th>Mandat DG</th>
                     <th>Date AC</th>
-                    <th>Action</th>
+                    <th></th>
                   </tr>
                 </tfoot>
                 <tbody>              
@@ -62,7 +62,7 @@
                     <td class="align-middle">{!! Carbon\Carbon::parse($facturesdaf->date_cg)->format('d/m/Y') !!}</td>
                     <td class="align-middle">{!! Carbon\Carbon::parse($facturesdaf->date_dg)->format('d/m/Y') !!}</td>        
                     <td class="align-middle">{!! Carbon\Carbon::parse($facturesdaf->date_ac)->format('d/m/Y') !!}</td>        
-                    <td class="d-flex align-items-center justify-content-center">
+                    <td class="d-flex align-items-baseline text-center-row">
                       {{--  @can('update', $facturesdaf->courrier)  --}}
                         <a href="{!! url('facturesdafs/' .$facturesdaf->id. '/edit') !!}" class= 'btn btn-success btn-sm' title="modifier">
                           <i class="far fa-edit"></i>

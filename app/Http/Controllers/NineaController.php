@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Ninea;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class NineaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,11 @@ class NineaController extends Controller
      */
     public function index()
     {
-        //
+        $nineas = Ninea::get();
+
+        /* dd($nineas); */
+
+        return view('nineas.index', compact('nineas'));
     }
 
     /**
@@ -24,7 +35,7 @@ class NineaController extends Controller
      */
     public function create()
     {
-        //
+        return view('nineas.create');
     }
 
     /**
@@ -35,7 +46,22 @@ class NineaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request, [
+                'numero'        =>  'required|string|max:50|unique:nineas,numero',
+                'name'          =>  'required|string'
+            ]
+        );
+
+        
+        $ninea = new Ninea([      
+            'numero'           =>      $request->input('numero'),
+            'name'             =>     $request->input('name')
+
+        ]);
+       
+        $ninea->save();
+        return redirect()->route('nineas.index')->with('success','enregistrement effectué avec succès !');
     }
 
     /**
@@ -57,7 +83,7 @@ class NineaController extends Controller
      */
     public function edit(Ninea $ninea)
     {
-        //
+        return view('nineas.update', compact('ninea'));
     }
 
     /**
@@ -69,7 +95,19 @@ class NineaController extends Controller
      */
     public function update(Request $request, Ninea $ninea)
     {
-        //
+        $this->validate(
+            $request, [
+                'numero'        =>  'required|string|max:50|unique:nineas,numero,'.$ninea->id,
+                'name'          =>  'required|string'
+            ]
+        );
+        
+        $ninea->numero          =   $request->input('numero');
+        $ninea->name            =   $request->input('name');
+
+        $ninea->save();
+        return redirect()->route('nineas.index')->with('success','enregistrement modifié avec succès !');
+
     }
 
     /**
@@ -79,7 +117,14 @@ class NineaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Ninea $ninea)
+    { 
+        $ninea->delete();
+        $message = $ninea->numero.' a été supprimé(e)';
+        return redirect()->route('nineas.index')->with(compact('message'));
+    }
+    public function list(Request $request)
     {
-        //
+        $nineas=Ninea::with('operateur')->get();
+        return Datatables::of($nineas)->make(true);
     }
 }
