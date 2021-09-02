@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDemandeursmodulesTable extends Migration
+class CreateFilierespecialitesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'demandeursmodules';
+    public $tableName = 'filierespecialites';
 
     /**
      * Run the migrations.
-     * @table demandeursmodules
+     * @table filierespecialites
      *
      * @return void
      */
@@ -23,23 +23,18 @@ class CreateDemandeursmodulesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('demandeurs_id');
-            $table->unsignedInteger('modules_id');
+            $table->char('uuid', 36);
+            $table->string('name', 200);
+            $table->string('domaine', 200)->nullable();
+            $table->unsignedInteger('filieres_id')->nullable();
 
-            $table->index(["modules_id"], 'fk_demandeurs_has_modules_modules1_idx');
-
-            $table->index(["demandeurs_id"], 'fk_demandeurs_has_modules_demandeurs1_idx');
+            $table->index(["filieres_id"], 'fk_filierespecialites_filieres1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('demandeurs_id', 'fk_demandeurs_has_modules_demandeurs1_idx')
-                ->references('id')->on('demandeurs')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('modules_id', 'fk_demandeurs_has_modules_modules1_idx')
-                ->references('id')->on('modules')
+            $table->foreign('filieres_id', 'fk_filierespecialites_filieres1_idx')
+                ->references('id')->on('filieres')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             /* RoleSeeder::class, */
             PermissionsOnfpSeeder::class,
+            FamilialeSeeder::class,
+            ProfessionnelleSeeder::class,
             AdministrateurSeeder::class,
             GestionnaireSeeder::class,
             TypeCourrierSeeder::class,

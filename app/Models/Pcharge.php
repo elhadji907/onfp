@@ -23,11 +23,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $typedemande
  * @property string|null $items1
  * @property Carbon|null $date1
+ * @property Carbon|null $date_depot
  * @property float|null $inscription
  * @property float|null $montant
  * @property float|null $accompt
  * @property float|null $reliquat
  * @property int|null $duree
+ * @property string|null $niveauentree
+ * @property string|null $niveausortie
+ * @property string|null $specialisation
+ * @property string|null $statut
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
@@ -39,11 +44,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $demandeurs_id
  * @property int|null $etablissements_id
  * @property int|null $filieres_id
+ * @property int|null $communes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Demandeur|null $demandeur
+ * @property Commune|null $commune
  * @property Etablissement|null $etablissement
  * @property Filiere|null $filiere
  * @property Collection|Nouvelle[] $nouvelles
@@ -60,13 +67,15 @@ class Pcharge extends Model
 
 	protected $casts = [
 		'annee' => 'int',
-		'duree' => 'int',
+		'inscription' => 'float',
 		'montant' => 'float',
 		'accompt' => 'float',
 		'reliquat' => 'float',
+		'duree' => 'int',
 		'demandeurs_id' => 'int',
 		'etablissements_id' => 'int',
-		'filieres_id' => 'int'
+		'filieres_id' => 'int',
+		'communes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -85,7 +94,6 @@ class Pcharge extends Model
 		'date_depot',
 		'inscription',
 		'montant',
-		'montantaccorde',
 		'accompt',
 		'reliquat',
 		'duree',
@@ -103,12 +111,18 @@ class Pcharge extends Model
 		'file8',
 		'demandeurs_id',
 		'etablissements_id',
-		'filieres_id'
+		'filieres_id',
+		'communes_id'
 	];
 
 	public function demandeur()
 	{
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
+	}
+
+	public function commune()
+	{
+		return $this->belongsTo(Commune::class, 'communes_id');
 	}
 
 	public function etablissement()

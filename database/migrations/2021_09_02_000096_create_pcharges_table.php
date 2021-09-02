@@ -31,15 +31,15 @@ class CreatePchargesTable extends Migration
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
             $table->timestamp('date_depot')->nullable();
-            $table->integer('duree')->nullable();
-            $table->string('niveauentree', 200)->nullable();
-            $table->string('niveausortie', 200)->nullable();
             $table->double('inscription')->nullable();
             $table->double('montant')->nullable();
-            $table->double('montantaccorde')->nullable();
-            $table->string('specialisation')->nullable();
             $table->double('accompt')->nullable();
             $table->double('reliquat')->nullable();
+            $table->integer('duree')->nullable();
+            $table->string('niveauentree', 200)->nullable();
+            $table->string('niveausortie', 45)->nullable();
+            $table->string('specialisation', 200)->nullable();
+            $table->string('statut', 45)->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();
@@ -48,16 +48,18 @@ class CreatePchargesTable extends Migration
             $table->string('file6', 200)->nullable();
             $table->string('file7', 200)->nullable();
             $table->string('file8', 200)->nullable();
-            $table->string('statut', 45)->nullable();
             $table->unsignedInteger('demandeurs_id')->nullable();
             $table->unsignedInteger('etablissements_id')->nullable();
             $table->unsignedInteger('filieres_id')->nullable();
+            $table->unsignedInteger('communes_id')->nullable();
 
             $table->index(["demandeurs_id"], 'fk_charge_demandeurs1_idx');
 
             $table->index(["etablissements_id"], 'fk_pcharges_etablissements1_idx');
 
             $table->index(["filieres_id"], 'fk_pcharges_filieres1_idx');
+
+            $table->index(["communes_id"], 'fk_pcharges_communes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -74,6 +76,11 @@ class CreatePchargesTable extends Migration
 
             $table->foreign('filieres_id', 'fk_pcharges_filieres1_idx')
                 ->references('id')->on('filieres')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('communes_id', 'fk_pcharges_communes1_idx')
+                ->references('id')->on('communes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

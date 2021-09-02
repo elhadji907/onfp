@@ -76,10 +76,19 @@ class SnNameGenerator
     );
 
     public static $situation = array(
-        "Elève",
-        "Etudiant",
+        "Agriculteur exploitant",
+        "Salarié de l’agriculture",
+        "Industriel, artisan ou commerçant",
+        "Profession libérale",
+        "Cadre moyen ou supérieur",
         "Employé",
-        "Recherche d'emploi",
+        "Ouvrier",
+        "Personnel de services",
+        "Retraité(e)",
+        "Sans activité professionnelle",
+        "En recherche d'emploi",
+        "Etudiant",
+        "Élève",       
 
     );
 
@@ -148,8 +157,9 @@ class SnNameGenerator
     public static $familiale = array(
 
         "Célibataire",
-        "Marié",
-        "Divorcé",
+        "Marié(e)",
+        "Veuf(ve)",
+        "Divorcé(e)",
     );
 
     public static $lieunaissance = array(

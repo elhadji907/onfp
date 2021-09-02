@@ -25,6 +25,7 @@ class CreateDemandeursTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('numero', 200)->nullable();
+            $table->string('numero_courrier', 200)->nullable();
             $table->string('etablissement', 200)->nullable();
             $table->string('niveau_etude', 200)->nullable();
             $table->longText('qualification')->nullable();
@@ -59,11 +60,9 @@ class CreateDemandeursTable extends Migration
             $table->unsignedInteger('items_id')->nullable();
             $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('programmes_id')->nullable();
-            $table->unsignedInteger('regions_id')->nullable();
             $table->unsignedInteger('diplomes_id')->nullable();
             $table->unsignedInteger('types_demandes_id')->nullable();
             $table->unsignedInteger('courriers_id')->nullable();
-            $table->unsignedInteger('communes_id')->nullable();
 
             $table->index(["users_id"], 'fk_demandeurs_users1_idx');
 
@@ -75,15 +74,11 @@ class CreateDemandeursTable extends Migration
 
             $table->index(["programmes_id"], 'fk_demandeurs_programmes1_idx');
 
-            $table->index(["regions_id"], 'fk_demandeurs_regions1_idx');
-
             $table->index(["diplomes_id"], 'fk_demandeurs_diplomes1_idx');
 
             $table->index(["types_demandes_id"], 'fk_demandeurs_types_demandes1_idx');
 
             $table->index(["courriers_id"], 'fk_demandeurs_courriers1_idx');
-
-            $table->index(["communes_id"], 'fk_demandeurs_communes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -113,11 +108,6 @@ class CreateDemandeursTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('regions_id', 'fk_demandeurs_regions1_idx')
-                ->references('id')->on('regions')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
             $table->foreign('diplomes_id', 'fk_demandeurs_diplomes1_idx')
                 ->references('id')->on('diplomes')
                 ->onDelete('no action')
@@ -130,11 +120,6 @@ class CreateDemandeursTable extends Migration
 
             $table->foreign('courriers_id', 'fk_demandeurs_courriers1_idx')
                 ->references('id')->on('courriers')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('communes_id', 'fk_demandeurs_communes1_idx')
-                ->references('id')->on('communes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

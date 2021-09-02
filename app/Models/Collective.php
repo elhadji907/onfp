@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $name
+ * @property Carbon|null $date_depot
  * @property string|null $items1
  * @property Carbon|null $date1
  * @property string|null $sigle
@@ -25,13 +26,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $description
  * @property int $demandeurs_id
  * @property int|null $ingenieurs_id
+ * @property int|null $formations_id
+ * @property int|null $communes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Commune|null $commune
  * @property Demandeur $demandeur
+ * @property Formation|null $formation
  * @property Ingenieur|null $ingenieur
- * @property Collection|Formation[] $formations
  * @property Collection|Module[] $modules
  * @property Collection|Membre[] $membres
  *
@@ -46,42 +50,49 @@ class Collective extends Model
 
 	protected $casts = [
 		'demandeurs_id' => 'int',
-		'ingenieurs_id' => 'int'
+		'ingenieurs_id' => 'int',
+		'formations_id' => 'int',
+		'communes_id' => 'int'
 	];
 
 	protected $dates = [
-		'date1',
-		'date_depot'
+		'date_depot',
+		'date1'
 	];
 
 	protected $fillable = [
 		'uuid',
 		'name',
+		'date_depot',
 		'items1',
 		'date1',
-		'date_depot',
 		'sigle',
 		'statut',
 		'description',
 		'demandeurs_id',
-		'ingenieurs_id'
+		'ingenieurs_id',
+		'formations_id',
+		'communes_id'
 	];
+
+	public function commune()
+	{
+		return $this->belongsTo(Commune::class, 'communes_id');
+	}
 
 	public function demandeur()
 	{
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
 	}
 
+	public function formation()
+	{
+		return $this->belongsTo(Formation::class, 'formations_id');
+	}
+
 	public function ingenieur()
 	{
 		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
-	}
-
-	public function formations()
-	{
-		return $this->belongsToMany(Formation::class, 'collectivesformations', 'collectives_id', 'formations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
 	}
 
 	public function modules()

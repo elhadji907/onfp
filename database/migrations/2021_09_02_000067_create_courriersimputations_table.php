@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesagrementsTable extends Migration
+class CreateCourriersimputationsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modulesagrements';
+    public $tableName = 'courriersimputations';
 
     /**
      * Run the migrations.
-     * @table modulesagrements
+     * @table courriersimputations
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateModulesagrementsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('modules_id');
-            $table->unsignedInteger('agrements_id');
+            $table->unsignedInteger('courriers_id');
+            $table->unsignedInteger('imputations_id');
 
-            $table->index(["agrements_id"], 'fk_modules_has_agrements_agrements1_idx');
+            $table->index(["imputations_id"], 'fk_courriersimputations_imputations1_idx');
 
-            $table->index(["modules_id"], 'fk_modules_has_agrements_modules1_idx');
+            $table->index(["courriers_id"], 'fk_courriersimputations_courriers1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modules_has_agrements_modules1_idx')
-                ->references('id')->on('modules')
+            $table->foreign('courriers_id', 'fk_courriersimputations_courriers1_idx')
+                ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('agrements_id', 'fk_modules_has_agrements_agrements1_idx')
-                ->references('id')->on('agrements')
+            $table->foreign('imputations_id', 'fk_courriersimputations_imputations1_idx')
+                ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

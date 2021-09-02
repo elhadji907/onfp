@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Individuelle;
 use App\Models\Demandeur;
 use App\Models\TypesDemande;
+use App\Models\Commune;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IndividuelleFactory extends Factory
@@ -34,6 +35,7 @@ class IndividuelleFactory extends Factory
         $nombre9 = rand(0, 9);
         $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8.$nombre9;
         $types_demande_id=TypesDemande::where('name', 'Individuelle')->first()->id;
+        $communes_id=Commune::all()->random()->id;
             
         $nombre = rand(1, 9);
         
@@ -50,6 +52,9 @@ class IndividuelleFactory extends Factory
             'items1' => $this->faker->word,
             'statut' => "Attente",
             'date1' => $this->faker->dateTime(),
+            'communes_id' => function () use ($communes_id) {
+                return $communes_id;
+            },
             'demandeurs_id' => function () use ($types_demande_id) {
                 return Demandeur::factory()->create(["types_demandes_id"=>$types_demande_id])->id;
             },

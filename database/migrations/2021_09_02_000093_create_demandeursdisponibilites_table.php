@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollectivesTable extends Migration
+class CreateDemandeursdisponibilitesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'collectives';
+    public $tableName = 'demandeursdisponibilites';
 
     /**
      * Run the migrations.
-     * @table collectives
+     * @table demandeursdisponibilites
      *
      * @return void
      */
@@ -23,31 +23,23 @@ class CreateCollectivesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->char('uuid', 36);
-            $table->longText('name')->nullable();
-            $table->string('items1', 200)->nullable();
-            $table->timestamp('date1')->nullable();
-            $table->timestamp('date_depot')->nullable();
-            $table->string('sigle', 100)->nullable();
-            $table->string('statut', 100)->nullable();
-            $table->longText('description')->nullable();
             $table->unsignedInteger('demandeurs_id');
-            $table->unsignedInteger('ingenieurs_id')->nullable();
+            $table->unsignedInteger('disponibilites_id');
 
-            $table->index(["demandeurs_id"], 'fk_collectives_demandeurs1_idx');
+            $table->index(["disponibilites_id"], 'fk_demandeursdisponibilites_disponibilites1_idx');
 
-            $table->index(["ingenieurs_id"], 'fk_collectives_ingenieurs1_idx');
+            $table->index(["demandeurs_id"], 'fk_demandeursdisponibilites_demandeurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('demandeurs_id', 'fk_collectives_demandeurs1_idx')
+            $table->foreign('demandeurs_id', 'fk_demandeursdisponibilites_demandeurs1_idx')
                 ->references('id')->on('demandeurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('ingenieurs_id', 'fk_collectives_ingenieurs1_idx')
-                ->references('id')->on('ingenieurs')
+            $table->foreign('disponibilites_id', 'fk_demandeursdisponibilites_disponibilites1_idx')
+                ->references('id')->on('disponibilites')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

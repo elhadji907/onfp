@@ -26,11 +26,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property Arrondissement $arrondissement
  * @property Collection|Agrement[] $agrements
+ * @property Collection|Collective[] $collectives
  * @property Collection|Module[] $modules
- * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Etablissement[] $etablissements
  * @property Collection|Formation[] $formations
+ * @property Collection|Individuelle[] $individuelles
  * @property Collection|Operateur[] $operateurs
+ * @property Collection|Pcharge[] $pcharges
  * @property Collection|Village[] $villages
  *
  * @package App\Models
@@ -63,16 +65,16 @@ class Commune extends Model
 		return $this->hasMany(Agrement::class, 'communes_id');
 	}
 
+	public function collectives()
+	{
+		return $this->hasMany(Collective::class, 'communes_id');
+	}
+
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'communesmodules', 'communes_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
-	}
-
-	public function demandeurs()
-	{
-		return $this->hasMany(Demandeur::class, 'communes_id');
 	}
 
 	public function etablissements()
@@ -85,9 +87,19 @@ class Commune extends Model
 		return $this->hasMany(Formation::class, 'communes_id');
 	}
 
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'communes_id');
+	}
+
 	public function operateurs()
 	{
 		return $this->hasMany(Operateur::class, 'communes_id');
+	}
+
+	public function pcharges()
+	{
+		return $this->hasMany(Pcharge::class, 'communes_id');
 	}
 
 	public function villages()

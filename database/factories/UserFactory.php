@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Professionnelle;
+use App\Models\Familiale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Helpers\SnNameGenerator as SnmG;
@@ -23,12 +25,9 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-       /*  $firstName = SnmG::getFirstName();
-        $name = SnmG::getFirstName();
-        $uniqueSuffix = $this->faker->unique()->numberBetween(1,99);
-        $domain = 'gmail.com';
-        $uniqueFakeEmail = "$firstName.$name.$uniqueSuffix@$domain"; */
-        
+        $professionnelles_id = Professionnelle::all()->random()->id;
+        $familiales_id = Familiale::all()->random()->id;
+
         return [
             'civilite' => SnmG::getCivilite(),
             'firstname' => SnmG::getFirstName(),
@@ -40,8 +39,6 @@ class UserFactory extends Factory
             'sexe' => SnmG::getSexe(),
             'date_naissance' => $this->faker->dateTime(),
             'lieu_naissance' => SnmG::getLieunaissance(),
-            'situation_familiale' => SnmG::getFamiliale(),
-            'situation_professionnelle' => SnmG::getSituation(),
             'adresse' => $this->faker->address,
             'bp' => $this->faker->postcode,
             'fax' => $this->faker->e164PhoneNumber,
@@ -52,6 +49,12 @@ class UserFactory extends Factory
             'deleted_by' => " ",
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
+            'professionnelles_id' => function () use ($professionnelles_id) {
+                return $professionnelles_id;
+            },
+            'familiales_id' => function () use ($familiales_id) {
+                return $familiales_id;
+            },
         ];
     }
 

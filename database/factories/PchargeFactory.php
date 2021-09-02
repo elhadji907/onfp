@@ -6,6 +6,7 @@ use App\Models\Pcharge;
 use App\Models\Etablissement;
 use App\Models\TypesDemande;
 use App\Models\Demandeur;
+use App\Models\Commune;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PchargeFactory extends Factory
@@ -36,6 +37,7 @@ class PchargeFactory extends Factory
         $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8.$nombre9;
         $etablissements_id=Etablissement::all()->random()->id;
         $types_demande_id=TypesDemande::where('name', 'Prise en charge')->first()->id;
+        $communes_id=Commune::all()->random()->id;
 
         return [
             'cin' => $cin,
@@ -57,6 +59,9 @@ class PchargeFactory extends Factory
             'file6' => "",
             'file7' => "",
             'file8' => "",
+            'communes_id' => function () use ($communes_id) {
+                return $communes_id;
+            },
             'demandeurs_id' => function () use ($types_demande_id) {
                 return Demandeur::factory()->create(["types_demandes_id"=>$types_demande_id])->id;
             },

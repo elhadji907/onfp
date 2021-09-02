@@ -18,11 +18,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $nom
+ * @property string|null $sigle
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Departement[] $departements
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Programme[] $programmes
@@ -41,11 +41,6 @@ class Region extends Model
 		'nom',
 		'sigle'
 	];
-
-	public function demandeurs()
-	{
-		return $this->hasMany(Demandeur::class, 'regions_id');
-	}
 
 	public function departements()
 	{

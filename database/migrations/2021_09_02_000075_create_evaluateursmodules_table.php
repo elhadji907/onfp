@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationsevaluateursTable extends Migration
+class CreateEvaluateursmodulesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'evaluationsevaluateurs';
+    public $tableName = 'evaluateursmodules';
 
     /**
      * Run the migrations.
-     * @table evaluationsevaluateurs
+     * @table evaluateursmodules
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateEvaluationsevaluateursTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('evaluations_id');
             $table->unsignedInteger('evaluateurs_id');
+            $table->unsignedInteger('modules_id');
 
-            $table->index(["evaluateurs_id"], 'fk_evaluations_has_evaluateurs_evaluateurs1_idx');
+            $table->index(["modules_id"], 'fk_evaluateursmodules_modules1_idx');
 
-            $table->index(["evaluations_id"], 'fk_evaluations_has_evaluateurs_evaluations1_idx');
+            $table->index(["evaluateurs_id"], 'fk_evaluateursmodules_evaluateurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('evaluations_id', 'fk_evaluations_has_evaluateurs_evaluations1_idx')
-                ->references('id')->on('evaluations')
+            $table->foreign('evaluateurs_id', 'fk_evaluateursmodules_evaluateurs1_idx')
+                ->references('id')->on('evaluateurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('evaluateurs_id', 'fk_evaluations_has_evaluateurs_evaluateurs1_idx')
-                ->references('id')->on('evaluateurs')
+            $table->foreign('modules_id', 'fk_evaluateursmodules_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

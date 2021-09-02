@@ -25,16 +25,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $projet
  * @property string|null $prerequis
  * @property string|null $information
+ * @property Carbon|null $date_depot
  * @property float|null $note
  * @property string|null $items1
  * @property Carbon|null $date1
+ * @property string|null $statut
  * @property int $demandeurs_id
+ * @property int|null $formations_id
+ * @property int|null $communes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Commune|null $commune
  * @property Demandeur $demandeur
- * @property Collection|Formation[] $formations
+ * @property Formation|null $formation
  * @property Collection|Module[] $modules
  *
  * @package App\Models
@@ -49,12 +54,14 @@ class Individuelle extends Model
 	protected $casts = [
 		'nbre_pieces' => 'int',
 		'note' => 'float',
-		'demandeurs_id' => 'int'
+		'demandeurs_id' => 'int',
+		'formations_id' => 'int',
+		'communes_id' => 'int'
 	];
 
 	protected $dates = [
-		'date1',
-		'date_depot'
+		'date_depot',
+		'date1'
 	];
 
 	protected $fillable = [
@@ -67,24 +74,29 @@ class Individuelle extends Model
 		'projet',
 		'prerequis',
 		'information',
+		'date_depot',
 		'note',
-		'statut',
 		'items1',
 		'date1',
-		'date_depot',
-		'demandeurs_id'
+		'statut',
+		'demandeurs_id',
+		'formations_id',
+		'communes_id'
 	];
+
+	public function commune()
+	{
+		return $this->belongsTo(Commune::class, 'communes_id');
+	}
 
 	public function demandeur()
 	{
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
 	}
 
-	public function formations()
+	public function formation()
 	{
-		return $this->belongsToMany(Formation::class, 'individuellesformations', 'individuelles_id', 'formations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->belongsTo(Formation::class, 'formations_id');
 	}
 
 	public function modules()

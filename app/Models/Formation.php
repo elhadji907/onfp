@@ -223,9 +223,7 @@ class Formation extends Model
 
 	public function collectives()
 	{
-		return $this->belongsToMany(Collective::class, 'collectivesformations', 'formations_id', 'collectives_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Collective::class, 'formations_id');
 	}
 
 	public function coments()
@@ -276,8 +274,6 @@ class Formation extends Model
 
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuellesformations', 'formations_id', 'individuelles_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Individuelle::class, 'formations_id');
 	}
 }

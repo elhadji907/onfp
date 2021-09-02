@@ -34,8 +34,6 @@ class CreateUsersTable extends Migration
             $table->string('sexe', 200)->nullable();
             $table->dateTime('date_naissance')->nullable();
             $table->string('lieu_naissance', 200)->nullable();
-            $table->string('situation_familiale', 200)->nullable();
-            $table->string('situation_professionnelle', 200)->nullable();
             $table->longText('adresse')->nullable();
             $table->string('bp', 200)->nullable();
             $table->string('fax', 200)->nullable();
@@ -45,11 +43,28 @@ class CreateUsersTable extends Migration
             $table->string('created_by', 200)->nullable();
             $table->string('updated_by', 200)->nullable();
             $table->string('deleted_by', 200)->nullable();
+            $table->unsignedInteger('professionnelles_id')->nullable();
+            $table->unsignedInteger('familiales_id')->nullable();
             $table->rememberToken();
 
             $table->unique(["email"], 'email_UNIQUE');
+
+            $table->index(["professionnelles_id"], 'fk_users_professionnelles1_idx');
+
+            $table->index(["familiales_id"], 'fk_users_familiales1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
+
+
+            $table->foreign('professionnelles_id', 'fk_users_professionnelles1_idx')
+                ->references('id')->on('professionnelles')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('familiales_id', 'fk_users_familiales1_idx')
+                ->references('id')->on('familiales')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 

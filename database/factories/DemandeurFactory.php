@@ -36,8 +36,6 @@ class DemandeurFactory extends Factory
         /* $role_id=Role::where('name', 'Demandeur')->first()->id; */
         $projet_id=Projet::all()->random()->id;
         $programmes_id=Programme::all()->random()->id;
-        $regions_id=Region::all()->random()->id;
-        $communes_id=Commune::all()->random()->id;
         $lieux_id=Lieux::all()->random()->id;
         $diplomes_id=Diplome::all()->random()->id;
         $types_demandes_id=TypesDemande::all()->random()->id;
@@ -77,12 +75,6 @@ class DemandeurFactory extends Factory
             },
             'programmes_id' => function () use ($programmes_id) {
                 return $programmes_id;
-            },
-            'regions_id' => function () use ($regions_id) {
-                return $regions_id;
-            },
-            'communes_id' => function () use ($communes_id) {
-                return $communes_id;
             },
             'diplomes_id' => function () use ($diplomes_id) {
                 return $diplomes_id;

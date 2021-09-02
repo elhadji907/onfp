@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBeneficiairesformationsTable extends Migration
+class CreateModulesoperateursTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'beneficiairesformations';
+    public $tableName = 'modulesoperateurs';
 
     /**
      * Run the migrations.
-     * @table beneficiairesformations
+     * @table modulesoperateurs
      *
      * @return void
      */
@@ -22,23 +22,24 @@ class CreateBeneficiairesformationsTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('beneficiaires_id');
-            $table->unsignedInteger('formations_id');
+            $table->increments('id');
+            $table->unsignedInteger('modules_id');
+            $table->unsignedInteger('operateurs_id');
 
-            $table->index(["formations_id"], 'fk_beneficiaires_has_formations_formations1_idx');
+            $table->index(["operateurs_id"], 'fk_modulesoperateurs_operateurs1_idx');
 
-            $table->index(["beneficiaires_id"], 'fk_beneficiaires_has_formations_beneficiaires1_idx');
+            $table->index(["modules_id"], 'fk_modulesoperateurs_modules1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('beneficiaires_id', 'fk_beneficiaires_has_formations_beneficiaires1_idx')
-                ->references('id')->on('beneficiaires')
+            $table->foreign('modules_id', 'fk_modulesoperateurs_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('formations_id', 'fk_beneficiaires_has_formations_formations1_idx')
-                ->references('id')->on('formations')
+            $table->foreign('operateurs_id', 'fk_modulesoperateurs_operateurs1_idx')
+                ->references('id')->on('operateurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

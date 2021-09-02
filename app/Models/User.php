@@ -31,8 +31,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $sexe
  * @property Carbon|null $date_naissance
  * @property string|null $lieu_naissance
- * @property string|null $situation_familiale
- * @property string|null $situation_professionnelle
  * @property string|null $adresse
  * @property string|null $bp
  * @property string|null $fax
@@ -42,11 +40,15 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
+ * @property int|null $professionnelles_id
+ * @property int|null $familiales_id
  * @property string|null $remember_token
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Familiale|null $familiale
+ * @property Professionnelle|null $professionnelle
  * @property Collection|Administrateur[] $administrateurs
  * @property Collection|Agent[] $agents
  * @property Collection|Beneficiaire[] $beneficiaires
@@ -72,8 +74,12 @@ class User extends Authenticatable
 	use HasRoles;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-
 	protected $table = 'users';
+
+	protected $casts = [
+		'professionnelles_id' => 'int',
+		'familiales_id' => 'int'
+	];
 
 	protected $dates = [
 		'date_naissance',
@@ -97,8 +103,6 @@ class User extends Authenticatable
 		'sexe',
 		'date_naissance',
 		'lieu_naissance',
-		'situation_familiale',
-		'situation_professionnelle',
 		'adresse',
 		'bp',
 		'fax',
@@ -108,6 +112,8 @@ class User extends Authenticatable
 		'created_by',
 		'updated_by',
 		'deleted_by',
+		'professionnelles_id',
+		'familiales_id',
 		'remember_token'
 	];
 
@@ -125,6 +131,16 @@ class User extends Authenticatable
 	public function getRouteKeyName()
 	{
 		return 'username';
+	}
+
+	public function familiale()
+	{
+		return $this->belongsTo(Familiale::class, 'familiales_id');
+	}
+
+	public function professionnelle()
+	{
+		return $this->belongsTo(Professionnelle::class, 'professionnelles_id');
 	}
 
 	public function administrateur()
@@ -159,7 +175,7 @@ class User extends Authenticatable
 
 	public function comments()
 	{
-		return $this->morphMany('\App\Comment', 'commentable')->latest();
+		return $this->morphMany(Comment::class, 'commentable')->latest();
 	}
 
 	public function comptable()

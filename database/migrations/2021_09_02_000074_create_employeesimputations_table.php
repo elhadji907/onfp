@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIndividuellesformationsTable extends Migration
+class CreateEmployeesimputationsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'individuellesformations';
+    public $tableName = 'employeesimputations';
 
     /**
      * Run the migrations.
-     * @table individuellesformations
+     * @table employeesimputations
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateIndividuellesformationsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('individuelles_id');
-            $table->unsignedInteger('formations_id');
+            $table->unsignedInteger('employees_id');
+            $table->unsignedInteger('imputations_id');
 
-            $table->index(["formations_id"], 'fk_individuelles_has_formations_formations1_idx');
+            $table->index(["imputations_id"], 'fk_employeesimputations_imputations1_idx');
 
-            $table->index(["individuelles_id"], 'fk_individuelles_has_formations_individuelles1_idx');
+            $table->index(["employees_id"], 'fk_employeesimputations_employees1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('individuelles_id', 'fk_individuelles_has_formations_individuelles1_idx')
-                ->references('id')->on('individuelles')
+            $table->foreign('employees_id', 'fk_employeesimputations_employees1_idx')
+                ->references('id')->on('employees')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('formations_id', 'fk_individuelles_has_formations_formations1_idx')
-                ->references('id')->on('formations')
+            $table->foreign('imputations_id', 'fk_employeesimputations_imputations1_idx')
+                ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
