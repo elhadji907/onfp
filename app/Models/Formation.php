@@ -48,7 +48,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $courriers_id
  * @property int|null $statuts_id
  * @property int|null $types_formations_id
- * @property int|null $modules_id
  * @property int|null $communes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
@@ -60,7 +59,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Courrier|null $courrier
  * @property Detf|null $detf
  * @property Ingenieur|null $ingenieur
- * @property Module|null $module
  * @property Niveaux|null $niveaux
  * @property Operateur|null $operateur
  * @property Programme|null $programme
@@ -106,7 +104,6 @@ class Formation extends Model
 		'courriers_id' => 'int',
 		'statuts_id' => 'int',
 		'types_formations_id' => 'int',
-		'modules_id' => 'int',
 		'communes_id' => 'int'
 	];
 
@@ -149,7 +146,6 @@ class Formation extends Model
 		'courriers_id',
 		'statuts_id',
 		'types_formations_id',
-		'modules_id',
 		'communes_id'
 	];
 
@@ -181,11 +177,6 @@ class Formation extends Model
 	public function ingenieur()
 	{
 		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
-	}
-
-	public function module()
-	{
-		return $this->belongsTo(Module::class, 'modules_id');
 	}
 
 	public function niveaux()

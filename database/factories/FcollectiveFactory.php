@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Fcollective;
 use App\Models\TypesFormation;
 use App\Models\Formation;
+use App\Models\Module;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FcollectiveFactory extends Factory
@@ -26,10 +27,14 @@ class FcollectiveFactory extends Factory
         $annee = date('y');
     
         $types_formation_id=TypesFormation::where('name', 'Collective')->first()->id;
+        $modules_id=Module::all()->random()->id;
 
         return [
             'code' => 'C'."".$annee.$this->faker->unique(true)->numberBetween(0, 300),
             'categorie' => $this->faker->word,
+            'modules_id' => function () use ($modules_id) {
+                return $modules_id;
+            },
             'formations_id' => function () use ($types_formation_id) {
                 return Formation::factory()->create(["types_formations_id"=>$types_formation_id])->id;
             },

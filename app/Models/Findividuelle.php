@@ -19,10 +19,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $code
  * @property string|null $categorie
  * @property int $formations_id
+ * @property int|null $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Module|null $module
  * @property Formation $formation
  *
  * @package App\Models
@@ -35,15 +37,22 @@ class Findividuelle extends Model
 	protected $table = 'findividuelles';
 
 	protected $casts = [
-		'formations_id' => 'int'
+		'formations_id' => 'int',
+		'modules_id' => 'int'
 	];
 
 	protected $fillable = [
 		'uuid',
 		'code',
 		'categorie',
-		'formations_id'
+		'formations_id',
+		'modules_id'
 	];
+
+	public function module()
+	{
+		return $this->belongsTo(Module::class, 'modules_id');
+	}
 
 	public function formation()
 	{

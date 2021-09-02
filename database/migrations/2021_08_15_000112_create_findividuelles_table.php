@@ -27,14 +27,22 @@ class CreateFindividuellesTable extends Migration
             $table->string('code', 200);
             $table->string('categorie', 200)->nullable();
             $table->unsignedInteger('formations_id');
+            $table->unsignedInteger('modules_id')->nullable();
 
             $table->index(["formations_id"], 'fk_formations_individuelles_formations1_idx');
+
+            $table->index(["modules_id"], 'fk_findividuelles_modules1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
             $table->foreign('formations_id', 'fk_formations_individuelles_formations1_idx')
                 ->references('id')->on('formations')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('modules_id', 'fk_findividuelles_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

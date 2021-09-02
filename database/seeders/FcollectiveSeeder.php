@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Fcollective;
 
 class FcollectiveSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class FcollectiveSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Fcollective::factory()
+            ->count(30)
+            ->create();
     }
 }

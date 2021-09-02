@@ -6,13 +6,13 @@ use App\Models\Findividuelle;
 use App\Models\Individuelle;
 use App\Models\Ingenieur;
 use App\Models\Module;
-use App\Models\Departement;
+use App\Models\Commune;
 use Carbon\Carbon;
 use App\Models\Programme;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 
-class FindividuellesController extends Controller
+class FindividuelleController extends Controller
 {
     public function __construct()
     {
@@ -29,23 +29,30 @@ class FindividuellesController extends Controller
     {
         $findividuelles = Findividuelle::all();
 
-       /*  dd($findividuelles); */
-
         return view('findividuelles.index', compact('findividuelles'));
     }
 
-    public function selectdindividuelles($id_dept, $id_module, $id_form)
+    public function selectdindividuelles($id_commune, $id_module, $id_form)
     {
-        $departements = Departement::find($id_dept);
+        $communes = Commune::find($id_commune);
+
         $modules = Module::find($id_module);
+
         $nom_module = $modules->name;
-        $nom_departement = $departements->nom;
-        $nom_region = $departements->region->nom;
+
+        $nom_commune = $communes->nom;
+
+        $nom_region = $communes->arrondissement->departement->region->nom;
+
         $nom_formation = Formation::find($id_form);
 
-        $individuelles = Individuelle::all()->load(['demandeur'])->where('demandeur.departement.region.nom','==',$nom_region);
+        $individuelles = Individuelle::all()->load(['demandeur'])
+        ->where('demandeur.commune.arrondissement.departement.region.nom','=',$nom_region)
+        ->where('module', '=', $nom_module)
+        ->where('cin', '>', 0);
+
                 
-        return view('findividuelles.selectdindividuelles', compact('individuelles','departements','modules','nom_module','nom_departement','nom_region','nom_formation','id_form'));
+        return view('findividuelles.selectdindividuelles', compact('individuelles','communes','modules','nom_module','nom_commune','nom_region','nom_formation','id_form'));
     }
 
     public function adddindividuelles($id_ind, $id_form)
@@ -83,12 +90,12 @@ class FindividuellesController extends Controller
        
        $modules = Module::distinct('name')->get()->pluck('name','id')->unique();       
        $programmes = Programme::distinct('name')->get()->pluck('sigle','id')->unique();
-       $departements = Departement::distinct('nom')->get()->pluck('nom','id')->unique();
+       $communes = Commune::distinct('nom')->get()->pluck('nom','id')->unique();
        
        $date_debut = Carbon::now();
        $date_fin = Carbon::now()->addMonth();
 
-        return view('findividuelles.create', compact('ingenieur','modules','departements','date_debut','date_fin','programmes'));
+        return view('findividuelles.create', compact('ingenieur','modules','communes','date_debut','date_fin','programmes'));
     }
 
     /**

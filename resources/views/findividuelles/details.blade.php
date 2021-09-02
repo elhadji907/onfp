@@ -141,6 +141,7 @@
                                         <tr>
                                             <td>
                                                 <h3>{{ __('INFORMATIONS') }}</h3>
+                                                <b>Commune:</b> {{ $findividuelle->formation->commune->nom }}<br>
 
                                             </td>
 
@@ -164,7 +165,7 @@
 
                             <tr class="details">
                                 <td>
-                                    {{ $findividuelle->formation->module->name }}
+                                    {{ $findividuelle->module->name }}
                                 </td>
                                 <td>
 
@@ -178,8 +179,9 @@
                                 </td>
                                 <td>
                                     <a
-                                        href="{{ route('findividuelles.selectdindividuelles', ['$id_dept' => $findividuelle->formation->departement, '$id_module' => $findividuelle->formation->module, 'id_form' => $findividuelle->formation->id]) }}">
-                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                        href="{{ url('selectdindividuelles', 
+                                        ['$id_commune' => $findividuelle->formation->commune, '$id_module' => $findividuelle->module, 'id_form' => $findividuelle->formation->id]) }}">
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter bénéficiaires</i>
                                         </div>
                                     </a>
                                 </td>
@@ -233,7 +235,7 @@
                                             <td>{{ $individuelle->demandeur->user->telephone }}</td>
                                             <td>{{ $individuelle->demandeur->statut }}</td>
                                             <td>
-                                                <a href="{{ route('deleteindividuelles', ['$id_ind' => $individuelle->id, '$id_form' => $id_form]) }}"
+                                                <a href="{{ url('deleteindividuelles', ['$id_ind' => $individuelle->id, '$id_form' => $id_form]) }}"
                                                     title="Enlever" class="btn btn-outline-danger btn-sm mt-0">
                                                     <i class="fas fa-trash-alt">&nbsp;Enlever</i>
                                                 </a>

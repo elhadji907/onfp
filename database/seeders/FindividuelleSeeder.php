@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Findividuelle;
 
 class FindividuelleSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class FindividuelleSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Findividuelle::factory()
+            ->count(30)
+            ->create();
     }
 }

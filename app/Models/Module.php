@@ -35,7 +35,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Commune[] $communes
  * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Evaluateur[] $evaluateurs
- * @property Collection|Formation[] $formations
+ * @property Collection|Fcollective[] $fcollectives
+ * @property Collection|Findividuelle[] $findividuelles
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Agrement[] $agrements
  * @property Collection|Niveaux[] $niveauxes
@@ -111,9 +112,14 @@ class Module extends Model
 					->withTimestamps();
 	}
 
-	public function formations()
+	public function fcollectives()
 	{
-		return $this->hasMany(Formation::class, 'modules_id');
+		return $this->hasMany(Fcollective::class, 'modules_id');
+	}
+
+	public function findividuelles()
+	{
+		return $this->hasMany(Findividuelle::class, 'modules_id');
 	}
 
 	public function individuelles()

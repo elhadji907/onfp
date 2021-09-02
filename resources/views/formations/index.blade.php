@@ -112,7 +112,7 @@
                                         <th>Localité</th>
                                         <th>Adresse</th>
                                         <th style="width:15%;">Période</th>
-                                        <th>Formation</th>
+                                        <th style="width:12%;">Type de formation</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -122,7 +122,7 @@
                                         <th>Localité</th>
                                         <th>Adresse</th>
                                         <th>Période</th>
-                                        <th>Formation</th>
+                                        <th>Type de formation</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -131,7 +131,7 @@
                                         <tr>
                                             <td>{!! $formation->code !!}</td>
                                             <td>{!! $formation->beneficiaires !!}</td>
-                                            <td>{!! $formation->departement->nom ?? ' ' !!}</td>
+                                            <td>{!! $formation->commune->nom ?? ' ' !!}</td>
                                             <td>{!! $formation->adresse ?? ' ' !!}</td>
                                             <td>{!! $formation->date_debut->format('d/m/Y') !!}&nbsp;au&nbsp;{!! $formation->date_fin->format('d/m/Y') !!}</td>
                                             <td>{!! $formation->types_formation->name !!}</td>

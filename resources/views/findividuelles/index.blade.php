@@ -34,12 +34,12 @@
                                         <th>Module</th>
                                         <th>Bénéficiares</th>
                                         <th>Localité</th>
-                                        <th>Adresse</th>
-                                        <th>Effectif</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
+                                        {{--  <th>Adresse</th>  --}}
+                                        <th style="width:5%;">Effectif</th>
+                                        <th style="width:08%;">Début</th>
+                                        <th style="width:08%;">Fin</th>
                                         <th>Ingénieur</th>
-                                        <th style="width:08%;">Action</th>
+                                        <th style="width:10%;">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -48,7 +48,7 @@
                                         <th>Module</th>
                                         <th>Bénéficiares</th>
                                         <th>Localité</th>
-                                        <th>Adresse</th>
+                                       {{--   <th>Adresse</th>  --}}
                                         <th>Effectif</th>
                                         <th>Début</th>
                                         <th>Fin</th>
@@ -61,10 +61,10 @@
                                     @foreach ($findividuelles as $findividuelle)
                                         <tr>
                                             <td>{!! $findividuelle->code !!}</td>
-                                            <td>{!! $findividuelle->formation->module->name !!}</td>
+                                            <td>{!! $findividuelle->module->name !!}</td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
-                                            <td>{!! $findividuelle->formation->departement->nom ?? ' ' !!}</td>
-                                            <td>{!! $findividuelle->formation->adresse ?? ' ' !!}</td>
+                                            <td>{!! $findividuelle->formation->commune->nom ?? ' ' !!}</td>
+                                           {{--   <td>{!! $findividuelle->formation->adresse ?? ' ' !!}</td>  --}}
                                             <td class="text-center">
                                                 @foreach ($findividuelle->formation->individuelles as $individuelle)
                                                     @if ($loop->last)

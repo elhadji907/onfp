@@ -84,12 +84,17 @@ Route::group([
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/profiles/{user}', [ProfileController::class, 'show'])->name('profiles.show');
         Route::get('/profiles/{user}/edit', [ProfileController::class, 'edit'])->name('profiles.edit');
-        Route::patch('/profiles/{user}', [ProfileController::class, 'update'])->name('profiles.update');        
+        Route::patch('/profiles/{user}', [ProfileController::class, 'update'])->name('profiles.update');
         Route::get('/postes/create', [PosteController::class, 'create'])->name('postes.create');
         Route::post('/postes', [PosteController::class, 'store'])->name('postes.store');
         Route::get('/postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
         Route::get('/showFromNotification/{courrier}/{notification}', [CourrierController::class, 'showFromNotification'])->name('courriers.showFromNotification');
-        Route::get('/directions.selectemployees', function() { return view('directions.selectemployees'); })->name('directions.selectemployees');
+        Route::get('/directions.selectemployees', function () {
+            return view('directions.selectemployees');
+        })->name('directions.selectemployees');
+        Route::get('/findividuelles.selectingenieurs', function () {
+            return view('findividuelles.selectingenieurs');
+        })->name('findividuelles.selectingenieurs');
         Route::get('/courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
         Route::get('/roles/list', [RoleController::class, 'list'])->name('roles.list');
         Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');
@@ -98,12 +103,15 @@ Route::group([
         Route::get('/administrateurs/list', [AdministrateurController::class, 'list'])->name('administrateurs.list');
         Route::get('/formations/list', [FormationController::class, 'list'])->name('formations.list');
         Route::get('/users/list', [UserController::class, 'list'])->name('users.list');
-        Route::get('/employees/list', [EmployeeController::class, 'list'])->name('employees.list');        
+        Route::get('/employees/list', [EmployeeController::class, 'list'])->name('employees.list');
         Route::get('/gestionnaires/list', [GestionnaireController::class ,'list'])->name('gestionnaires.list');
         Route::get('/directions/list', [DirectionController::class, 'list'])->name('directions.list');
         Route::get('/demandeurs/list', [DemandeurController::class, 'list'])->name('demandeurs.list');
         Route::get('/individuelles/list', [IndividuelleController::class, 'list'])->name('individuelles.list');
         Route::get('/findividuelles/list', [FindividuelleController::class, 'list'])->name('findividuelles.list');
+        Route::get('/selectdindividuelles/{id_commune}/{id_module}/{id_form}', [FindividuelleController::class, 'selectdindividuelles'])->name('findividuelles.selectdindividuelles');
+        Route::get('adddindividuelles/{id_ind}/{id_form}', [FindividuelleController::class, 'adddindividuelles'])->name('adddindividuelles');
+        Route::get('deleteindividuelles/{id_ind}/{id_form}', [FindividuelleController::class, 'deleteindividuelles'])->name('deleteindividuelles');
         Route::get('/collectives/list', [CollectiveController::class, 'list'])->name('collectives.list');
         Route::get('/pcharges/list', [PchargeController::class, 'list'])->name('pcharges.list');
         Route::get('/etablissements/list', [EtablissementController::class, 'list'])->name('etablissements.list');
@@ -121,7 +129,7 @@ Route::group([
         Route::get('/operateurs/list', [OperateurController::class, 'list'])->name('operateurs.list');
         Route::get('/programmes/list', [ProgrammeController::class, 'list'])->name('programmes.list');
         Route::get('/nineas/list', [NineaController::class, 'list'])->name('nineas.list');
-        Route::get('/ingenieurs/list', [IngenieurController::class, 'list'])->name('ingenieurs.list');        
+        Route::get('/ingenieurs/list', [IngenieurController::class, 'list'])->name('ingenieurs.list');
         Route::get('/factures/list', [FactureController::class, 'list'])->name('factures.list');
         Route::get('/facturesdafs/list', [FacturedafController::class, 'list'])->name('facturesdafs.list');
         Route::get('/etats/list', [EtatController::class, 'list'])->name('etats.list');
@@ -139,14 +147,15 @@ Route::group([
         Route::get('/filieres/list', [FiliereController::class, 'list'])->name('filieres.list');
         Route::get('/filierespecialites/list', [FilierespecialiteController::class, 'list'])->name('filierespecialites.list');
         Route::get('/specialites/list', [SpecialiteController::class, 'list'])->name('specialites.list');
-        Route::get('/selectdindividuelles/{id_dept}/{id_module}/{id_form}', 'FindividuellesController@selectdindividuelles')->name('findividuelles.selectdindividuelles');
-        Route::get('adddindividuelles/{id_ind}/{id_form}', 'FindividuellesController@adddindividuelles')->name('adddindividuelles');
-        Route::get('deleteindividuelles/{id_ind}/{id_form}', 'FindividuellesController@deleteindividuelles')->name('deleteindividuelles');        
         Route::post('/comments/{courrier}', [CommentController::class, 'store'])->name('comments.store');
         Route::post('/commentReply/{comment}', [CommentController::class, 'storeCommentReply'])->name('comments.storeReply');
         
-        Route::get('/pcharges.selectetablissements', function() { return view('pcharges.selectetablissements'); })->name('pcharges.selectetablissements');
-        Route::get('/etablissements.selectefilieres', function() { return view('etablissements.selectefilieres'); })->name('etablissements.selectefilieres');
+        Route::get('/pcharges.selectetablissements', function () {
+            return view('pcharges.selectetablissements');
+        })->name('pcharges.selectetablissements');
+        Route::get('/etablissements.selectefilieres', function () {
+            return view('etablissements.selectefilieres');
+        })->name('etablissements.selectefilieres');
         
         Route::resource('/courriers', CourrierController::class);
         Route::resource('/recues', RecueController::class);

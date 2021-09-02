@@ -67,6 +67,8 @@ class FormationController extends Controller
 
         $id_form = $formation->id;
         
+        /* dd($formation); */
+
         if ($type_formation == "Individuelle") {
             return view('findividuelles.details', compact('formation','findividuelles','id_form'));
         } elseif ($type_formation == "Collective") {
