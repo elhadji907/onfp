@@ -14,7 +14,8 @@ use App\Models\Module;
 use App\Models\Programme;
 use App\Models\TypesDemande;
 use App\Models\User;
-use App\Models\Role;
+use App\Models\Professionnelle;
+use App\Models\Familiale;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -65,6 +66,8 @@ class CollectiveController extends Controller
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
 
         $date_depot = Carbon::now();
 
@@ -82,10 +85,10 @@ class CollectiveController extends Controller
                 
                 $CollectiveModules = $collective->modules->pluck('name', 'name')->all();
 
-                return view('collectives.update', compact('civilites', 'familiale', 'collective', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'CollectiveModules', 'regions'));
+                return view('collectives.update', compact('civilites', 'familiale', 'collective', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'CollectiveModules', 'regions'));
           
         } else {
-            return view('collectives.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'regions'));
+            return view('collectives.create', compact('civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'regions'));
         }
     }
 
@@ -227,7 +230,8 @@ class CollectiveController extends Controller
             'fixe'                          =>      $fixe,
             'bp'                            =>      $request->input('bp'),
             'fax'                           =>      $request->input('fax'),
-            'situation_professionnelle'     =>      $request->input('professionnelle'),
+            'professionnelles_id'           =>      $professionnelle_id,
+            /* 'familiales_id'                 =>      $familiale_id, */
             'date_naissance'                =>      $request->input('date_naiss'),
             'lieu_naissance'                =>      $request->input('lieu_naissance'),
             'adresse'                       =>      $request->input('adresse'),
@@ -290,6 +294,8 @@ class CollectiveController extends Controller
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
 
         
         return view('collectives.show', compact(
@@ -297,6 +303,8 @@ class CollectiveController extends Controller
             'communes',
             'niveaux',
             'modules',
+            'familiale',
+            'professionnelle',
             'programmes',
             'diplomes',
             'utilisateurs',
@@ -318,6 +326,8 @@ class CollectiveController extends Controller
         $utilisateurs = $demandeurs->user;
 
         $civilites = User::pluck('civilite', 'civilite');
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
 
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $CollectiveModules = $collective->modules->pluck('name', 'name')->all();
@@ -328,7 +338,7 @@ class CollectiveController extends Controller
 
         $date_depot = Carbon::now();
 
-        return view('collectives.update', compact('civilites', 'collective', 'communes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'regions'));
+        return view('collectives.update', compact('civilites', 'collective', 'familiale', 'professionnelle', 'communes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'regions'));
     }
 
     /**
@@ -432,6 +442,8 @@ class CollectiveController extends Controller
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $region_id = Region::where('nom', $request->input('region'))->first()->id;
         $types_demandes_id = TypesDemande::where('name', 'Collective')->first()->id;
+        $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
+        $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
 
         $utilisateur->sexe                      =      $request->input('sexe');
         $utilisateur->civilite                  =      $civilite;
@@ -443,11 +455,11 @@ class CollectiveController extends Controller
         $utilisateur->fixe                      =      $fixe;
         $utilisateur->bp                        =      $request->input('bp');
         $utilisateur->fax                       =      $request->input('fax');
-        $utilisateur->situation_professionnelle =      $request->input('professionnelle');
+        $utilisateur->professionnelles_id       =      $professionnelle_id;
         $utilisateur->date_naissance            =      $request->input('date_naiss');
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
-        $utilisateur->updated_by               =      $updated_by;
+        $utilisateur->updated_by                =      $updated_by;
 
         $utilisateur->save();
 

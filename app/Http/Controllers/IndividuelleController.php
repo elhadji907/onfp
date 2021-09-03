@@ -13,8 +13,9 @@ use App\Models\Demandeur;
 use App\Models\Module;
 use App\Models\Programme;
 use App\Models\TypesDemande;
+use App\Models\Professionnelle;
+use App\Models\Familiale;
 use App\Models\User;
-use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -63,13 +64,14 @@ class IndividuelleController extends Controller
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
         
         $date_depot = Carbon::now();
 
         $user = auth::user();
         
         $civilites = User::pluck('civilite', 'civilite');
-        $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
         if ($user->hasRole('Demandeur')) {
             foreach ($user->demandeur->individuelles as $key => $individuelle) {
@@ -77,10 +79,10 @@ class IndividuelleController extends Controller
                 $demandeurs = $user->demandeur;
                 $individuelles = $demandeurs->individuelles;
                 $utilisateurs = $user;
-                return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
+                return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
           
         } else {
-            return view('individuelles.create', compact('civilites', 'familiale', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+            return view('individuelles.create', compact('civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         }
     }
 
@@ -204,6 +206,8 @@ class IndividuelleController extends Controller
 
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
+        $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
+        $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
 
@@ -227,12 +231,12 @@ class IndividuelleController extends Controller
             'telephone'                 =>      $telephone,
             'bp'                        =>      $request->input('bp'),
             'fax'                       =>      $request->input('fax'),
-            'situation_familiale'       =>      $request->input('familiale'),
-            'situation_professionnelle' =>      $request->input('professionnelle'),
             'date_naissance'            =>      $request->input('date_naiss'),
             'lieu_naissance'            =>      $request->input('lieu_naissance'),
             'adresse'                   =>      $request->input('adresse'),
             'password'                  =>      Hash::make($request->input('email')),
+            'professionnelles_id'       =>      $professionnelle_id,
+            'familiales_id'             =>      $familiale_id,
             'created_by'                =>      $created_by,
             'updated_by'                =>      $created_by
 
@@ -301,12 +305,16 @@ class IndividuelleController extends Controller
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
 
         
         return view('individuelles.show', compact(
             'individuelle',
             'communes',
             'niveaux',
+            'familiale',
+            'professionnelle',
             'modules',
             'programmes',
             'diplomes',
@@ -329,6 +337,8 @@ class IndividuelleController extends Controller
         $utilisateurs = $demandeurs->user;
 
         $civilites = User::pluck('civilite', 'civilite');
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
 
         $modules = Module::distinct('name')->pluck('name', 'id')->unique();
         $moduleIndividuelle = $individuelle->modules->pluck('name', 'name')->all();
@@ -339,7 +349,7 @@ class IndividuelleController extends Controller
 
         $date_depot = Carbon::now();
 
-        return view('individuelles.update', compact('civilites', 'individuelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
+        return view('individuelles.update', compact('civilites', 'individuelle', 'communes', 'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
     }
 
     /**
@@ -446,6 +456,8 @@ class IndividuelleController extends Controller
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
+        $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
+        $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
 
         $utilisateur->sexe                      =      $sexe;
         $utilisateur->civilite                  =      $civilite;
@@ -456,11 +468,11 @@ class IndividuelleController extends Controller
         $utilisateur->telephone                 =      $telephone;
         $utilisateur->bp                        =      $request->input('bp');
         $utilisateur->fax                       =      $request->input('fax');
-        $utilisateur->situation_familiale       =      $request->input('familiale');
-        $utilisateur->situation_professionnelle =      $request->input('professionnelle');
         $utilisateur->date_naissance            =      $request->input('date_naiss');
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
+        $utilisateur->familiales_id             =      $familiale_id;
+        $utilisateur->professionnelles_id       =      $professionnelle_id;
         $utilisateur->updated_by                =      $updated_by;
 
         $utilisateur->save();
