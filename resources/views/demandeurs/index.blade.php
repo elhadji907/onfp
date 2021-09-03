@@ -30,21 +30,25 @@
                                 id="table-demandeurs">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Civilité</th>
-                                        <th>Prenom & Nom</th>
-                                        <th>Date nais.</th>
-                                        <th>Lieu nais.</th>
+                                        <th style="width:4%;">Civilité</th>
+                                        <th>Prenom</th>
+                                        <th>Nom</th>
+                                        <th>Date naissance</th>
+                                        <th>Lieu naissance</th>
+                                        <th style="width:18%;">Email</th>
                                         <th>Téléphone</th>
                                         <th>Type demande</th>
-                                        <th></th>
+                                        <th style="width:4%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
-                                        <th>Prenom & Nom</th>
-                                        <th>Date nais.</th>
-                                        <th>Lieu nais.</th>
+                                        <th>Prenom</th>
+                                        <th>Nom</th>
+                                        <th>Date naissance</th>
+                                        <th>Lieu naissance</th>
+                                        <th>Email</th>
                                         <th>Téléphone</th>
                                         <th>Type demande</th>
                                         <th></th>
@@ -55,9 +59,11 @@
                                     @foreach ($demandeurs as $demandeur)
                                         <tr>
                                             <td>{!! $demandeur->user->civilite !!}</td>
-                                            <td>{!! ucwords($demandeur->user->firstname) . '&nbsp;&nbsp;' . mb_strtoupper($demandeur->user->name, 'UTF-8') !!}</td>
+                                            <td>{!! ucwords($demandeur->user->firstname) !!}</td>
+                                            <td>{!! mb_strtoupper($demandeur->user->name, 'UTF-8') !!}</td>
                                             <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td>{!! mb_strtoupper($demandeur->user->lieu_naissance, 'UTF-8') !!}</td>
+                                            <td>{!! $demandeur->user->email !!}</td>
                                             <td>{!! $demandeur->user->telephone !!}</td>
                                             <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
                                             <td>

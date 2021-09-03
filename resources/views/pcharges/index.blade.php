@@ -122,7 +122,7 @@
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-users">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Civilité</th>
+                                        <th style="width:4%;">Civilité</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
                                         {{--  <th style="width:9%;">Date nais.</th>
@@ -130,7 +130,7 @@
                                         {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:30%;">Etablissement</th>
-                                        <th style="width:5%;">Année</th>
+                                        <th style="width:5%;">Scolarité</th>
                                         <th style="width:12%;">Type demande</th>
                                         <th style="width:10%;"></th>
                                     </tr>
@@ -145,7 +145,7 @@
                                         {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
-                                        <th>Année</th>
+                                        <th>Scolarité</th>
                                         <th>Type demande</th>
                                         <th></th>
                                     </tr>
@@ -161,20 +161,20 @@
                                             {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
                                             <td>{!! $pcharge->etablissement->name ?? '' !!}</td>
-                                            <td>{!! $pcharge->annee !!}</td>
+                                            <td>{!! $pcharge->scolarite->annee ?? '' !!}</td>
                                             <td>{!! $pcharge->typedemande !!}</td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                                <a href="{!! url('pcharges/' . $pcharge->demandeur->user->username . '/edit') !!}" class='btn btn-success btn-sm'
+                                                <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                <a href="{!! url('pcharges/' . $pcharge->demandeur->user->username) !!}" class='btn btn-primary btn-sm'
+                                                <a href="{!! url('pcharges/' . $pcharge->id) !!}" class='btn btn-primary btn-sm'
                                                     title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->demandeur->user->username, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!}
                                             </td>

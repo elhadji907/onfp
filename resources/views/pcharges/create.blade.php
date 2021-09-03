@@ -41,7 +41,18 @@
                             
                             {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
 
-                        <div class="form-row">                     
+                        <div class="form-row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                {!! Form::label('Scolarité') !!}
+                                {!! Form::select('scolarite', $scolarites, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'scolarite']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('scolarite'))
+                                        @foreach ($errors->get('scolarite') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>                     
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'typedemande']) !!}
@@ -84,7 +95,7 @@
                                 </small>
                             </div>  --}}
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                {!! Form::label('Spécialité') !!}(<span class="text-danger">*</span>)
+                                {!! Form::label('Spécialité') !!}
                                 {!! Form::text('specialite', null, ['placeholder' => 'La spécialité de la filière choisie', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('specialite'))
@@ -126,6 +137,28 @@
                                         @endforeach
                                     @endif
                                 </small>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                {!! Form::label('Date naissance') !!}(<span class="text-danger">*</span>)
+                                {!! Form::date('date', null, ['placeholder' => 'Votre date de naissance', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('date'))
+                                        @foreach ($errors->get('date') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                {!! Form::label('Lieu naissance') !!}(<span class="text-danger">*</span>)
+                                {!! Form::text('lieu_naissance', null, ['placeholder' => 'Votre lieu de naissance', 'class' => 'form-control', 'id' => 'lieu_naissance']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('lieu_naissance'))
+                                        @foreach ($errors->get('lieu_naissance') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
                             </div>                            
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('civilite') !!}(<span class="text-danger">*</span>)
@@ -155,28 +188,6 @@
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('professionnelle'))
                                         @foreach ($errors->get('professionnelle') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
-                            </div>
-                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                {!! Form::label('Date naissance') !!}(<span class="text-danger">*</span>)
-                                {!! Form::date('date', null, ['placeholder' => 'Votre date de naissance', 'class' => 'form-control']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('date'))
-                                        @foreach ($errors->get('date') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
-                            </div>
-                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                {!! Form::label('Lieu naissance') !!}(<span class="text-danger">*</span>)
-                                {!! Form::text('lieu_naissance', null, ['placeholder' => 'Votre lieu de naissance', 'class' => 'form-control', 'id' => 'lieu_naissance']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('lieu_naissance'))
-                                        @foreach ($errors->get('lieu_naissance') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif

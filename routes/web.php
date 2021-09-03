@@ -144,6 +144,9 @@ Route::group([
         Route::get('/regions/list', [RegionController::class, 'list'])->name('regions.list');
         Route::get('/arrondissements/list', [ArrondissementController::class, 'list'])->name('arrondissements.list');
         Route::get('/communes/list', [CommuneController::class, 'list'])->name('communes.list');
+
+        Route::get('create-pdf-file', [PchargeController::class, 'index']);
+
         Route::get('/filieres/list', [FiliereController::class, 'list'])->name('filieres.list');
         Route::get('/filierespecialites/list', [FilierespecialiteController::class, 'list'])->name('filierespecialites.list');
         Route::get('/specialites/list', [SpecialiteController::class, 'list'])->name('specialites.list');

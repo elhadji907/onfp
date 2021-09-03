@@ -13,6 +13,7 @@ use App\Models\Module;
 use App\Models\User;
 use App\Models\Demandeur;
 use App\Models\Professionnelle;
+use App\Models\Scolarite;
 use App\Models\Familiale;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Auth;
 use DB;
+use PDF;
 
 class PchargeController extends Controller
 {
@@ -39,6 +41,18 @@ class PchargeController extends Controller
      */
     public function index()
     {
+        /* $data = [
+            'title' => 'Welcome to Tutsmake.com',
+            'date' => date('m/d/Y')
+        ];
+           
+        $pdf = PDF::loadView('/pcharges/testPDF', $data);
+    
+        dd($pdf);
+
+        return $pdf->download('tutsmake.pdf'); */
+
+
         $annees = Pcharge::distinct('annee')->pluck('annee', 'annee');
 
         $an2019 = DB::table('pcharges')->whereBetween('annee', array('2019', '2019'))->get()->count();
@@ -78,11 +92,12 @@ class PchargeController extends Controller
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $scolarites = Scolarite::distinct('annee')->get()->pluck('annee', 'id')->unique();
 
         $enCours = date('Y');
         $date_depot = Carbon::now();
 
-        return view('pcharges.create', compact('etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes', 'professionnelle', 'familiale'));
+        return view('pcharges.create', compact('etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes', 'professionnelle', 'familiale', 'scolarites'));
     }
 
     /**
@@ -123,6 +138,7 @@ class PchargeController extends Controller
                 'motivation'            =>  'required',
                 'diplome'               =>  'required',
                 'typedemande'           =>  'required',
+                'scolarite'             =>  'required',
             ]);
 
         $etablissement_id = $request->input('etablissement');
@@ -170,6 +186,7 @@ class PchargeController extends Controller
             
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $professionnelle_id = $request->input('professionnelle');
+        $scolarite_id = $request->input('scolarite');
         $familiale_id = $request->input('familiale');
         $commune_id = $etablissement->commune->id;
         $cin = $request->input('cin');
@@ -243,6 +260,7 @@ class PchargeController extends Controller
                 'statut'                    =>      "Attente",
                 'etablissements_id'         =>      $request->input('etablissement'),
                 'filieres_id'               =>      $request->input('filiere'),
+                'scolarites_id'             =>      $scolarite_id,
                 'demandeurs_id'             =>      $demandeur->id
     
             ]);

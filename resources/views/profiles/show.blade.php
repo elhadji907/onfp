@@ -352,7 +352,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="pchargesTitle">Informations concernant un opérateur</h5>
+              <h5 class="modal-title" id="pchargesTitle">Informations concernant les prises en charge</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -371,7 +371,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="operateursTitle">Informations concernant une demande individuelle</h5>
+              <h5 class="modal-title" id="operateursTitle">Informations concernant les opérateurs</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

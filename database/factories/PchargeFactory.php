@@ -7,6 +7,7 @@ use App\Models\Etablissement;
 use App\Models\TypesDemande;
 use App\Models\Demandeur;
 use App\Models\Commune;
+use App\Models\Scolarite;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PchargeFactory extends Factory
@@ -36,6 +37,7 @@ class PchargeFactory extends Factory
         $nombre9 = rand(0, 9);
         $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8.$nombre9;
         $etablissements_id=Etablissement::all()->random()->id;
+        $scolarites_id=Scolarite::all()->random()->id;
         $types_demande_id=TypesDemande::where('name', 'Prise en charge')->first()->id;
         $communes_id=Commune::all()->random()->id;
 
@@ -59,7 +61,11 @@ class PchargeFactory extends Factory
             'file6' => "",
             'file7' => "",
             'file8' => "",
+            'avis_dg' => $this->faker->randomElement($array = array ('Favorable','Non favorable')),
             'typedemande' => $this->faker->randomElement($array = array ('Nouvelle demande','Renouvellement')),
+            'scolarites_id' => function () use ($scolarites_id) {
+                return $scolarites_id;
+            },
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
             },
