@@ -69,6 +69,7 @@ class Collective extends Model
 		'sigle',
 		'statut',
 		'description',
+		'type',
 		'demandeurs_id',
 		'ingenieurs_id',
 		'formations_id',

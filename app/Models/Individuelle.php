@@ -79,6 +79,7 @@ class Individuelle extends Model
 		'items1',
 		'date1',
 		'statut',
+		'type',
 		'demandeurs_id',
 		'formations_id',
 		'communes_id'

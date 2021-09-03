@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
                         <div class="card-body">
@@ -21,7 +21,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-xl-2 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
                         <div class="card-body">
@@ -39,7 +39,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-xl-2 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
                         <div class="card-body">
@@ -57,7 +57,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-xl-2 col-md-6 mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
                         <div class="card-body">
@@ -75,7 +75,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-xl-2 col-md-6 mb-4">
+           {{--   <div class="col-xl-2 col-md-6 mb-4">
                 <div class="card border-left-secondary shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
                         <div class="card-body">
@@ -92,7 +92,7 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </div>  --}}
         </div>
     </div>
     <div class="container-fluid">
@@ -132,7 +132,7 @@
                                         <th style="width:30%;">Etablissement</th>
                                         <th style="width:5%;">Année</th>
                                         <th style="width:12%;">Type demande</th>
-                                        <th style="width:12%;"></th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">

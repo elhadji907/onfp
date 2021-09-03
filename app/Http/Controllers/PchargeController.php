@@ -12,6 +12,8 @@ use App\Models\Diplome;
 use App\Models\Module;
 use App\Models\User;
 use App\Models\Demandeur;
+use App\Models\Professionnelle;
+use App\Models\Familiale;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
@@ -39,25 +41,24 @@ class PchargeController extends Controller
     {
         $annees = Pcharge::distinct('annee')->pluck('annee', 'annee');
 
-        $an2019 = Pcharge::where('annee', '2019')->count();
-        $an2020 = Pcharge::where('annee', '2020')->count();
-        $an2021 = Pcharge::where('annee', '2021')->count();
-        $an2022 = Pcharge::where('annee', '2022')->count();
+        $an2019 = DB::table('pcharges')->whereBetween('annee', array('2019', '2019'))->get()->count();
+        $an2020 = DB::table('pcharges')->whereBetween('annee', array('2020', '2020'))->get()->count();
+        $an2021 = DB::table('pcharges')->whereBetween('annee', array('2021', '2021'))->get()->count();
+        /* $an2022 = DB::table('pcharges')->whereBetween('annee', array('2022', '2022'))->get()->count(); */
 
         /* $total = Pcharge::get()->count(); */
+        $depart = "2019";
+        $enCours = date('Y');
 
-        $total = DB::table('pcharges')->whereBetween('annee', array(2018, 2021))->get()->count();
+        $total = DB::table('pcharges')->whereBetween('annee', array($depart, $enCours))->get()->count();
 
         /* dd($total); */
-
-        $depart = "2018";
-        $enCours = date('Y');
 
         $pcharges      =   Pcharge::whereBetween('annee', array($depart, $enCours))->get();
 
         /* dd($pcharges); */
 
-        return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'an2022', 'depart', 'enCours'));
+        return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'depart', 'enCours'));
     }
 
     /**
@@ -75,11 +76,13 @@ class PchargeController extends Controller
         $filieres = Filiere::distinct('name')->get()->pluck('name', 'id')->unique();
         $filierespecialites = Filierespecialite::distinct('name')->get()->pluck('name', 'id')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
 
         $enCours = date('Y');
         $date_depot = Carbon::now();
 
-        return view('pcharges.create', compact('etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes'));
+        return view('pcharges.create', compact('etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes', 'professionnelle', 'familiale'));
     }
 
     /**
@@ -166,6 +169,8 @@ class PchargeController extends Controller
         $fixe = str_replace(' ', '', $fixe);
             
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
+        $professionnelle_id = $request->input('professionnelle');
+        $familiale_id = $request->input('familiale');
         $commune_id = $etablissement->commune->id;
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
@@ -194,8 +199,8 @@ class PchargeController extends Controller
             'fixe'                      =>      $fixe,
             'bp'                        =>      $request->input('bp'),
             'fax'                       =>      $request->input('fax'),
-            'situation_familiale'       =>      $request->input('familiale'),
-            'situation_professionnelle' =>      $request->input('professionnelle'),
+            'professionnelles_id'       =>      $professionnelle_id,
+            'familiales_id'             =>      $familiale_id,
             'date_naissance'            =>      $request->input('date'),
             'lieu_naissance'            =>      $request->input('lieu_naissance'),
             'adresse'                   =>      $request->input('adresse'),
@@ -261,8 +266,8 @@ class PchargeController extends Controller
             $user_connect->fixe                         =      $fixe;
             $user_connect->bp                           =      $request->input('bp');
             $user_connect->fax                          =      $request->input('fax');
-            $user_connect->situation_familiale          =      $request->input('familiale');
-            $user_connect->situation_professionnelle    =      $request->input('professionnelle');
+            $utilisateur->familiales_id                 =      $familiale_id;
+            $utilisateur->professionnelles_id           =      $professionnelle_id;
             $user_connect->date_naissance               =      $request->input('date');
             $user_connect->lieu_naissance               =      $request->input('lieu_naissance');
             $user_connect->adresse                      =      $request->input('adresse');

@@ -33,6 +33,7 @@ class CollectiveFactory extends Factory
             'name' => SnmG::getEtablissement(),
             'date1' => $this->faker->dateTime(),
             'date_depot' => $this->faker->dateTime(),
+            'type' => $this->faker->randomElement($array = array ('Nouvelle demande','Renouvellement')),
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
             },

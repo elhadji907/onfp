@@ -35,7 +35,7 @@
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
-                                        <th>Localité</th>
+                                        <th>Type demande</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -46,7 +46,7 @@
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
-                                        <th>Localité</th>
+                                        <th>Type demande</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -59,7 +59,7 @@
                                             <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td>{!! mb_strtoupper($demandeur->user->lieu_naissance, 'UTF-8') !!}</td>
                                             <td>{!! $demandeur->user->telephone !!}</td>
-                                            <td>{!! $demandeur->commune->nom ?? ' ' !!}</td>
+                                            <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
                                             <td>
                                                 <a href="{{ route('profiles.show', ['user' => $demandeur->user]) }}" class='btn btn-primary btn-sm'
                                                     title="voir" target='_blank'>

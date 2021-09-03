@@ -51,6 +51,7 @@ class IndividuelleFactory extends Factory
             'information' => $this->faker->text,
             'items1' => $this->faker->word,
             'statut' => "Attente",
+            'type' => $this->faker->randomElement($array = array ('Nouvelle demande','Renouvellement')),
             'date1' => $this->faker->dateTime(),
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;

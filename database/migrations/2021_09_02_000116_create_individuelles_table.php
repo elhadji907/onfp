@@ -37,6 +37,7 @@ class CreateIndividuellesTable extends Migration
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
             $table->string('statut', 45)->nullable();
+            $table->string('type', 45)->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();

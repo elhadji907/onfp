@@ -14,34 +14,31 @@ class FamilialeSeeder extends Seeder
      * @return void
      */
     public function run()
-    {  
+    {
          
         DB::table('familiales')->insert([
-            'name' => "Primaire",
+            'name' => "Célibataire",
+            'created_at' => now(),
+            'updated_at' => now(),
+            'uuid' => Str::uuid(),
+        ]);
+         
+        DB::table('familiales')->insert([
+            'name' => "Marié(e)",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
         ]);
         
-         
         DB::table('familiales')->insert([
-            'name' => "Collège",
+            'name' => "Veuf(ve)",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
         ]);
         
-         
         DB::table('familiales')->insert([
-            'name' => "Secondaire",
-            'created_at' => now(),
-            'updated_at' => now(),
-            'uuid' => Str::uuid(),
-        ]);
-        
-         
-        DB::table('familiales')->insert([
-            'name' => "Supérieur",
+            'name' => "Divorcé(e)",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),

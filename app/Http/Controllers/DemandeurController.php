@@ -49,8 +49,10 @@ class DemandeurController extends Controller
 
         $roles  =   Auth::user()->role;
         
-        $demandeurs = Demandeur::all();
+        /* $demandeurs = Demandeur::all(); */
         
+        $demandeurs      =   Demandeur::whereNotNull('types_demandes_id')->get();
+
         return view('demandeurs.index', compact('roles', 'demandeurs'));
 
         /* dd($demandeurs); */

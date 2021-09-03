@@ -164,29 +164,41 @@
     <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
         <div class="row mt-5">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3">
+                <div class="mt-3 d-flex align-items-baseline align-middle">
                     <a class="btn btn-outline-primary btn-block" href="{!! url('individuelles/' . $individuelle_user->id . '/edit') !!}" target="_blank"><span
-                            data-feather="book-open"></span>Ajouter demande individuelle</a>
+                            data-feather="book-open"></span>Ajouter demande individuelle</a> 
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#individuelles">
+                                <i class="far fa-eye"></i>
+                              </button>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3">
+                <div class="mt-3 d-flex align-items-baseline align-middle">
                     <a class="btn btn-outline-success btn-block" href="{!! url('collectives/' . $collective_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Ajouter demande collective</a>
+                            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#collectives">
+                                <i class="far fa-eye"></i>
+                              </button>
                 </div>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3">
+                <div class="mt-3 d-flex align-items-baseline align-middle">
                     <a class="btn btn-outline-info btn-block" href="{!! url('pcharges/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Ajouter prise en charge</a>
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#pcharges">
+                                <i class="far fa-eye"></i>
+                              </button>
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3">
-                    <a class="btn btn-outline-secondary btn-block" href="{!! url('pcharges/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
+                <div class="mt-3 d-flex align-items-baseline align-middle">
+                    <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Devenir opérateur</a>
+                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#operateurs">
+                                <i class="far fa-eye"></i>
+                              </button>
                 </div>
             </div>
         </div>
@@ -298,5 +310,80 @@
         </div>
     </div>
     @endhasrole
-
+    <div class="modal fade" id="individuelles" tabindex="-1" role="dialog" aria-labelledby="individuellesTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="individuellesTitle">Informations concernant une demande individuelle</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              {{--  <button type="button" class="btn btn-primary">Save changes</button>  --}}
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="modal fade" id="collectives" tabindex="-1" role="dialog" aria-labelledby="collectivesTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="collectivesTitle">Informations concernant une demande collective</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              {{--  <button type="button" class="btn btn-primary">Save changes</button>  --}}
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="modal fade" id="pcharges" tabindex="-1" role="dialog" aria-labelledby="pchargesTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="pchargesTitle">Informations concernant un opérateur</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              {{--  <button type="button" class="btn btn-primary">Save changes</button>  --}}
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="modal fade" id="operateurs" tabindex="-1" role="dialog" aria-labelledby="operateursTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="operateursTitle">Informations concernant une demande individuelle</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              {{--  <button type="button" class="btn btn-primary">Save changes</button>  --}}
+            </div>
+          </div>
+        </div>
+      </div>
 @endsection

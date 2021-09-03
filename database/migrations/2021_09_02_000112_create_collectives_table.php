@@ -31,6 +31,7 @@ class CreateCollectivesTable extends Migration
             $table->string('sigle', 100)->nullable();
             $table->string('statut', 100)->nullable();
             $table->longText('description')->nullable();
+            $table->string('type', 45)->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('formations_id')->nullable();

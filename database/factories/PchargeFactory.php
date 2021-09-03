@@ -59,6 +59,7 @@ class PchargeFactory extends Factory
             'file6' => "",
             'file7' => "",
             'file8' => "",
+            'typedemande' => $this->faker->randomElement($array = array ('Nouvelle demande','Renouvellement')),
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
             },
