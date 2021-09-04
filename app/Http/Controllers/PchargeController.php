@@ -23,6 +23,11 @@ use Auth;
 use DB;
 use PDF;
 
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Buyer;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+
 class PchargeController extends Controller
 {
     public function __construct()
@@ -41,18 +46,6 @@ class PchargeController extends Controller
      */
     public function index()
     {
-        /* $data = [
-            'title' => 'Welcome to Tutsmake.com',
-            'date' => date('m/d/Y')
-        ];
-           
-        $pdf = PDF::loadView('/pcharges/testPDF', $data);
-    
-        dd($pdf);
-
-        return $pdf->download('tutsmake.pdf'); */
-
-
         $annees = Pcharge::distinct('annee')->pluck('annee', 'annee');
 
         $an2019 = DB::table('pcharges')->whereBetween('annee', array('2019', '2019'))->get()->count();
@@ -92,11 +85,14 @@ class PchargeController extends Controller
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
-        $scolarites = Scolarite::distinct('annee')->get()->pluck('annee', 'id')->unique();
+        $scolarites = Scolarite::distinct('annee')
+                                ->where('statut', '!=', 'Fermé')
+                                ->get()
+                                ->pluck('annee', 'id')
+                                ->unique();
 
         $enCours = date('Y');
         $date_depot = Carbon::now();
-
         return view('pcharges.create', compact('etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes', 'professionnelle', 'familiale', 'scolarites'));
     }
 

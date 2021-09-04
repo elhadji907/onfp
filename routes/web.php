@@ -54,6 +54,7 @@ use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\FilierespecialiteController;
 use App\Http\Controllers\SpecialiteController;
+use App\Http\Controllers\ScolariteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -145,7 +146,7 @@ Route::group([
         Route::get('/arrondissements/list', [ArrondissementController::class, 'list'])->name('arrondissements.list');
         Route::get('/communes/list', [CommuneController::class, 'list'])->name('communes.list');
 
-        Route::get('create-pdf-file', [PchargeController::class, 'index']);
+        Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
         Route::get('/filieres/list', [FiliereController::class, 'list'])->name('filieres.list');
         Route::get('/filierespecialites/list', [FilierespecialiteController::class, 'list'])->name('filierespecialites.list');
@@ -208,6 +209,7 @@ Route::group([
         Route::resource('/filieres', FiliereController::class);
         Route::resource('/filierespecialites', FilierespecialiteController::class);
         Route::resource('/specialites', SpecialiteController::class);
+        Route::resource('/scolarites', ScolariteController::class);
     });
 
 require __DIR__.'/auth.php';

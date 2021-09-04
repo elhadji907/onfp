@@ -18,7 +18,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string $annee
- * @property Carbon|null $date
+ * @property Carbon|null $date_debut
+ * @property Carbon|null $date_fin
+ * @property string|null $statut
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -35,13 +37,16 @@ class Scolarite extends Model
 	protected $table = 'scolarites';
 
 	protected $dates = [
-		'date'
+		'date_debut',
+		'date_fin'
 	];
 
 	protected $fillable = [
 		'uuid',
 		'annee',
-		'date'
+		'date_debut',
+		'date_fin',
+		'statut'
 	];
 
 	public function pcharges()

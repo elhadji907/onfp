@@ -25,7 +25,9 @@ class CreateScolaritesTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('annee', 200);
-            $table->dateTime('date')->nullable();
+            $table->dateTime('date_debut')->nullable();
+            $table->dateTime('date_fin')->nullable();
+            $table->string('statut', 45)->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });
