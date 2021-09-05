@@ -107,7 +107,9 @@ class DomaineController extends Controller
                 'name'      =>  'required|string|max:50',
                 'secteur'   =>  'required|string'
             ]);   
+            
         $domaine = Domaine::find($id);
+
         $domaine->name          =   $request->input('name');
         $domaine->secteurs_id   =   $request->input('secteur');
         $domaine->save();

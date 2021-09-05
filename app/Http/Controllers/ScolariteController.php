@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Scolarite;
+use App\Models\Pcharge;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -123,5 +124,46 @@ class ScolariteController extends Controller
         $scolarite->delete();
         $message = $scolarite->annee.' a été supprimé(e)';
         return redirect()->route('scolarites.index')->with(compact('message'));
+    }
+
+    public function countscolarite($annee){
+        
+        $pcharges = Pcharge::get()->where('scolarite.annee','=',$annee);
+        $effectif = Pcharge::get()->where('scolarite.annee','=',$annee)->count();
+
+        return view('scolarites.countscolarite', compact('annee','pcharges', 'effectif'));
+    }
+
+    public function countype($type, $annee, $effectif){
+
+        $pcharges = Pcharge::get()->where('typedemande','=',$type)->where('scolarite.annee','=',$annee);
+
+        $count = Pcharge::get()->where('typedemande','=',$type)->where('scolarite.annee','=',$annee)->count();
+
+        return view('scolarites.countype', compact('annee','pcharges', 'effectif', 'type', 'count'));
+    }
+
+    public function accord($pcharge, $statut){
+
+        $pcharge = Pcharge::find($pcharge);
+        
+        $pcharge->statut    =   $statut;
+        
+        $pcharge->save();
+        
+        $message = "La demande de prise en charge de " .$pcharge->demandeur->user->firstname.' '.$pcharge->demandeur->user->name.' a été accordée';
+        return back()->with(compact('message'));
+    }
+
+    public function nonaccord($pcharge, $statut){
+
+        $pcharge = Pcharge::find($pcharge);
+
+        $pcharge->statut    =   $statut;
+        
+        $pcharge->save();
+        
+        $message = "La demande de prise en charge de " .$pcharge->demandeur->user->firstname.' '.$pcharge->demandeur->user->name.' a été rejetée';
+        return back()->with(compact('message'));
     }
 }

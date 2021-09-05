@@ -47,15 +47,15 @@
                                     <input id="date_debut" type="date"
                                         class="form-control form-control-user @error('date_debut') is-invalid @enderror"
                                         name="date_debut" placeholder="date de début"
-                                        value="{{ $scolarite->date_debut->format('Y-m-d') ?? old('date_debut') }}"
+                                        value="{{ date('d/m/Y', strtotime($scolarite->date_fin)) ?? old('date_debut') }}"
                                         autocomplete="date_debut">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="input-name"><b>{{ __('Date fin') }}:</b></label>
                                     <input id="date_fin" type="date"
-                                        class="form-control form-control-user @error('date_fin') is-invalid @enderror"
+                                        class="form-control form-control-user @error('date_debut') is-invalid @enderror"
                                         name="date_fin" placeholder="date de fin"
-                                        value="{{ $scolarite->date_fin->format('Y-m-d') ?? old('date_fin') }}"
+                                        value="{{ date('d/m/Y', strtotime($scolarite->date_fin)) ?? old('date_fin') }}"
                                         autocomplete="date_fin">
                                 </div>
                             </div>

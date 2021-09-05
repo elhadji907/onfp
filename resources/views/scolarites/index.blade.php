@@ -30,7 +30,7 @@
                                 cellspacing="0">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>{!! __('Scolarité') !!}</th>
+                                        <th style="width:15%;">{!! __('Scolarité') !!}</th>
                                         <th>{!! __('Date début') !!}</th>
                                         <th>{!! __('Date fin') !!}</th>
                                         <th style="width:10%;">{!! __('Effectif') !!}</th>
@@ -52,8 +52,13 @@
                                     <?php $i = 1; ?>
                                     @foreach ($scolarites as $scolarite)
                                         <tr>
-                                            <td>{!! $scolarite->annee !!}</td>
-                                            <td>{!! $scolarite->date_debut->format('d/m/Y') ?? '' !!}</td>
+                                            <td>
+                                                <a href="{{ url('countscolarite', ['$nombre' => $scolarite->annee]) }}"
+                                                    class="btn btn-outline-info btn-md">
+                                                    {!! $scolarite->annee !!}
+                                                </a>
+                                            </td>
+                                            <td>{!! date('d/m/Y', strtotime($scolarite->date_debut)) ?? '' !!}</td>
                                             <td>{!! date('d/m/Y', strtotime($scolarite->date_fin)) ?? '' !!}</td>
                                             <td>
                                                 @foreach ($scolarite->pcharges as $charge)
