@@ -40,9 +40,9 @@
                                         <th style="width:9%;">Lieu nais.</th>
                                         {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
-                                        <th style="width:30%;">Etablissement</th>
+                                        <th style="width:25%;">Etablissement</th>
                                         <th style="width:9%;">Appréciation</th>
-                                        <th style="width:9%;"></th>
+                                        <th style="width:12%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
