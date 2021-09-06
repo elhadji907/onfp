@@ -114,7 +114,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
-                                <a href="{{ route('pcharges.selectetablissements') }}" target="_blank">
+                                <a href="{{ route('pcharges.selectetablissements') }}">
                                     <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
                                 </a>
                             </div>

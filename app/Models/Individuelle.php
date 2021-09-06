@@ -30,15 +30,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $items1
  * @property Carbon|null $date1
  * @property string|null $statut
+ * @property string|null $type
  * @property int $demandeurs_id
  * @property int|null $formations_id
  * @property int|null $communes_id
+ * @property int|null $etudes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Commune|null $commune
  * @property Demandeur $demandeur
+ * @property Etude|null $etude
  * @property Formation|null $formation
  * @property Collection|Module[] $modules
  *
@@ -56,7 +59,8 @@ class Individuelle extends Model
 		'note' => 'float',
 		'demandeurs_id' => 'int',
 		'formations_id' => 'int',
-		'communes_id' => 'int'
+		'communes_id' => 'int',
+		'etudes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -82,7 +86,8 @@ class Individuelle extends Model
 		'type',
 		'demandeurs_id',
 		'formations_id',
-		'communes_id'
+		'communes_id',
+		'etudes_id'
 	];
 
 	public function commune()
@@ -93,6 +98,11 @@ class Individuelle extends Model
 	public function demandeur()
 	{
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
+	}
+
+	public function etude()
+	{
+		return $this->belongsTo(Etude::class, 'etudes_id');
 	}
 
 	public function formation()

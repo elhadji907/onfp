@@ -16,6 +16,7 @@ use App\Models\TypesDemande;
 use App\Models\Professionnelle;
 use App\Models\Familiale;
 use App\Models\User;
+use App\Models\Etude;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,8 @@ class IndividuelleController extends Controller
      */
     public function index()
     {
-        $individuelles = Individuelle::all();
+        $individuelles = Individuelle::where('cin', '>', 0)->get();
+
         $user = Auth::user();
         $user_connect = $user;
         $countries = DB::table('regions')->pluck("nom", "id");
@@ -66,6 +68,7 @@ class IndividuelleController extends Controller
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
         $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+        $etude = Etude::distinct('name')->get()->pluck('name', 'id')->unique();
         
         $date_depot = Carbon::now();
 
@@ -76,13 +79,12 @@ class IndividuelleController extends Controller
         if ($user->hasRole('Demandeur')) {
             foreach ($user->demandeur->individuelles as $key => $individuelle) {
             }
-                $demandeurs = $user->demandeur;
-                $individuelles = $demandeurs->individuelles;
-                $utilisateurs = $user;
-                return view('individuelles.update', compact('civilites', 'familiale', 'individuelle', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
-          
+            $demandeurs = $user->demandeur;
+            $individuelles = $demandeurs->individuelles;
+            $utilisateurs = $user;
+            return view('individuelles.update', compact('etude', 'civilites', 'familiale', 'individuelle', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
         } else {
-            return view('individuelles.create', compact('civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
+            return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
         }
     }
 
@@ -101,40 +103,11 @@ class IndividuelleController extends Controller
     public function store(Request $request)
     {
         $user_connect = Auth::user();
-        $utilisateur = $user_connect;
         
         $individuelles = $user_connect->demandeur->individuelles;
         foreach ($individuelles as $individuelle) {
-
         }
         
-        if (!$user_connect->hasRole('Demandeur')) {
-                $this->validate(
-                    $request,
-                    [
-                        'sexe'                =>  'required|string|max:10',
-                        'cin'                 =>  'required|string|min:13|max:15|unique:individuelles,cin,NULL,id,deleted_at,NULL',
-                        'prenom'              =>  'required|string|max:50',
-                        'nom'                 =>  'required|string|max:50',
-                        'date_naiss'          =>  'required|date_format:Y-m-d',
-                        'date_depot'          =>  'required|date_format:Y-m-d',
-                        'lieu_naissance'      =>  'required|string|max:50',
-                        'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
-                        'etablissement'       =>  'required|string|max:100',
-                        'adresse'             =>  'required|string|max:100',
-                        'prerequis'           =>  'required|string|max:1500',
-                        'motivation'          =>  'required|string|max:1500',
-                        'email'               =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
-                        'familiale'           =>  'required',
-                        'professionnelle'     =>  'required',
-                        'niveau_etude'        =>  'required',
-                        'commune'             =>  'required',
-                        'modules'             =>  'exists:modules,id',
-                        'diplome'             =>  'required',
-                        'option'              =>  'required',
-                    ]
-                );
-        }else {
             $this->validate(
                 $request,
                 [
@@ -153,14 +126,13 @@ class IndividuelleController extends Controller
                     'email'               =>  "required|string|email|max:255|unique:users,email,{$user_connect->id},id,deleted_at,NULL",
                     'familiale'           =>  'required',
                     'professionnelle'     =>  'required',
-                    'niveau_etude'        =>  'required',
+                    'etude'               =>  'required',
                     'commune'             =>  'required',
-                    'modules'             =>  'exists:modules,id',
+                    'modules'             =>  'required',
                     'diplome'             =>  'required',
                     'option'              =>  'required',
                 ]
             );
-        }
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
@@ -190,8 +162,6 @@ class IndividuelleController extends Controller
 
         $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
 
-        $statut = "Attente";
-
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
 
@@ -206,8 +176,9 @@ class IndividuelleController extends Controller
 
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
-        $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
+        $professionnelle_id = $request->input('professionnelle');
+        $familiale_id = $request->input('familiale');
+        $etude_id = $request->input('etude');
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
 
@@ -242,10 +213,10 @@ class IndividuelleController extends Controller
 
         ]);
     
-            $user->save();
-            $user->assignRole('Demandeur');
+        $user->save();
+        $user->assignRole('Demandeur');
             
-            $demandeur = new Demandeur([
+        $demandeur = new Demandeur([
                 'numero'                    =>     $numero,
                 'nbre_piece'                =>     $request->input('nombre_de_piece'),
                 'niveau_etude'              =>     $request->input('niveau_etude'),
@@ -257,15 +228,14 @@ class IndividuelleController extends Controller
                 'motivation'                =>     $request->input('motivation'),
                 'autres_diplomes'           =>     $request->input('autres_diplomes'),
                 'qualification'             =>     $request->input('qualification'),
-                'communes_id'               =>     $commune_id,
                 'types_demandes_id'         =>     $types_demandes_id,
                 'diplomes_id'               =>     $diplome_id,
                 'users_id'                  =>     $user->id
             ]);
     
-            $demandeur->save();
+        $demandeur->save();
     
-            $individuelle = new Individuelle([
+        $individuelle = new Individuelle([
                 'cin'               =>     $cin,
                 'experience'        =>     $request->input('experience'),
                 'information'       =>     $request->input('information'),
@@ -273,20 +243,20 @@ class IndividuelleController extends Controller
                 'nbre_pieces'       =>     $request->input('nombre_de_piece'),
                 'information'       =>     $request->input('information'),
                 'prerequis'         =>     $request->input('prerequis'),
-                'statut'            =>     $statut,
+                'statut'            =>     'Attente',
+                'etudes_id'         =>     $etude_id,
+                'communes_id'       =>     $commune_id,
                 'demandeurs_id'     =>     $demandeur->id
             ]);
     
-            $individuelle->save();
-            $individuelle->modules()->sync($request->input('modules'));
+        $individuelle->save();
+        $individuelle->modules()->sync($request->input('modules'));
 
         if (!$user_connect->hasRole('Demandeur')) {
             return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
         } else {
             return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
         }
-        
-     
     }
 
     /**
@@ -337,8 +307,9 @@ class IndividuelleController extends Controller
         $utilisateurs = $demandeurs->user;
 
         $civilites = User::pluck('civilite', 'civilite');
-        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
-        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'name')->unique();
+        $etude = Etude::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $modules = Module::distinct('name')->pluck('name', 'id')->unique();
         $moduleIndividuelle = $individuelle->modules->pluck('name', 'name')->all();
@@ -349,7 +320,7 @@ class IndividuelleController extends Controller
 
         $date_depot = Carbon::now();
 
-        return view('individuelles.update', compact('civilites', 'individuelle', 'communes', 'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
+        return view('individuelles.update', compact('etude', 'civilites', 'individuelle', 'communes', 'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
     }
 
     /**
@@ -458,6 +429,7 @@ class IndividuelleController extends Controller
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
         $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
         $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
+        $etude_id     = Etude::where('name', $request->input('etude'))->first()->id;
 
         $utilisateur->sexe                      =      $sexe;
         $utilisateur->civilite                  =      $civilite;
@@ -487,7 +459,6 @@ class IndividuelleController extends Controller
         $demandeur->motivation                  =      $request->input('motivation');
         $demandeur->autres_diplomes             =      $request->input('autres_diplomes');
         $demandeur->qualification               =      $request->input('qualification');
-        $demandeur->communes_id                 =      $commune_id;
         if ($request->input('programme') !== null) {
             $demandeur->programmes_id           =      $programme_id;
         }
@@ -498,7 +469,7 @@ class IndividuelleController extends Controller
         $demandeur->save();
 
         if (!$user_connect->hasRole('Demandeur')) {
-        $individuelle->statut                  =      $request->input('statut');
+            $individuelle->statut                  =      $request->input('statut');
         }
         $individuelle->statut                   =     $statut;
         $individuelle->cin                      =     $cin;
@@ -506,7 +477,8 @@ class IndividuelleController extends Controller
         $individuelle->information              =     $request->input('information');
         $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
         $individuelle->prerequis                =     $request->input('prerequis');
-        $demandeur->date_depot                  =     $request->input('date_depot');
+        $individuelle->date_depot               =     $request->input('date_depot');
+        $individuelle->communes_id              =      $commune_id;
         $individuelle->demandeurs_id            =     $demandeur->id;
 
         $individuelle->save();

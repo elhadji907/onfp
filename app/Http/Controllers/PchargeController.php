@@ -87,6 +87,7 @@ class PchargeController extends Controller
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
         $etude = Etude::distinct('name')->get()->pluck('name', 'id')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        
         $scolarites = Scolarite::distinct('annee')
                                 ->where('statut', '!=', 'Fermé')
                                 ->get()
@@ -95,8 +96,9 @@ class PchargeController extends Controller
 
         $enCours = date('Y');
         $date_depot = Carbon::now();
-        return view('pcharges.create', compact('communes','etude', 'etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes', 'professionnelle', 'familiale', 'scolarites'));
+        return view('pcharges.create', compact('communes', 'etude', 'etablissements', 'filieres', 'enCours', 'etablissement', 'date_depot', 'filierespecialites', 'diplomes', 'professionnelle', 'familiale', 'scolarites'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -218,7 +220,7 @@ class PchargeController extends Controller
         $scolarite_id = $request->input('scolarite');
         $familiale_id = $request->input('familiale');
         $etude_id = $request->input('etude');
-        $commune_id = $etablissement->commune->id;
+        $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
 
@@ -233,6 +235,7 @@ class PchargeController extends Controller
         }
 
         if (isset($typedemande) && $typedemande != "Renouvellement") {
+            /* Nouvelle prise en charge */
             $user = new User([
             'sexe'                      =>      $sexe,
             'civilite'                  =>      $request->input('civilite'),
@@ -249,6 +252,7 @@ class PchargeController extends Controller
             'date_naissance'            =>      $request->input('date'),
             'lieu_naissance'            =>      $request->input('lieu_naissance'),
             'adresse'                   =>      $request->input('adresse'),
+            'password'                  =>      Hash::make($request->input('email')),
             'updated_by'                =>      $created_by
 
         ]);
@@ -264,7 +268,6 @@ class PchargeController extends Controller
                 'fixe'                      =>     $fixe,
                 'adresse'                   =>     $request->input('adresse'),
                 'motivation'                =>     $request->input('motivation'),
-                'communes_id'               =>     $commune_id,
                 'types_demandes_id'         =>     $types_demandes_id,
                 'diplomes_id'               =>     $diplome_id,
                 'users_id'                  =>     $user->id
@@ -286,6 +289,7 @@ class PchargeController extends Controller
                 'etablissements_id'         =>      $request->input('etablissement'),
                 'etudes_id'                 =>      $request->input('etude'),
                 'filieres_id'               =>      $request->input('filiere'),
+                'communes_id'               =>      $commune_id,
                 'scolarites_id'             =>      $scolarite_id,
                 'demandeurs_id'             =>      $demandeur->id
     
@@ -295,12 +299,11 @@ class PchargeController extends Controller
 
             return redirect()->route('pcharges.index')->with('success', 'nouvelle demande enregistrée avec succès !');
         } else {
-           
+            /* Renouvellement */
             $user_connect->sexe                         =      $sexe;
             $user_connect->civilite                     =      $request->input('civilite');
             $user_connect->firstname                    =      $request->input('firstname');
             $user_connect->name                         =      $request->input('name');
-            $user_connect->email                        =      $request->input('email');
             $user_connect->username                     =      $username;
             $user_connect->telephone                    =      $telephone;
             $user_connect->fixe                         =      $fixe;
@@ -311,7 +314,6 @@ class PchargeController extends Controller
             $user_connect->date_naissance               =      $request->input('date');
             $user_connect->lieu_naissance               =      $request->input('lieu_naissance');
             $user_connect->adresse                      =      $request->input('adresse');
-            $user_connect->password                     =      Hash::make($request->input('email'));
             $user_connect->created_by                   =      $created_by;
             $user_connect->updated_by                   =      $created_by;
 
@@ -344,11 +346,14 @@ class PchargeController extends Controller
                 'etablissements_id'         =>      $request->input('etablissement'),
                 'filieres_id'               =>      $request->input('filiere'),
                 'communes_id'               =>      $commune_id,
+                'scolarites_id'             =>      $scolarite_id,
                 'etudes_id'                 =>      $request->input('etude'),
                 'demandeurs_id'             =>      $demandeur->id
     
             ]);
             
+            $pcharge->save();
+
             return redirect()->route('pcharges.index')->with('success', 'renouvellement prise en compte !');
         }
     }

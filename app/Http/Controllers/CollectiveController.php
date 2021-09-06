@@ -43,7 +43,9 @@ class CollectiveController extends Controller
      */
     public function index()
     {
-        $collectives = Collective::all();
+        
+        $collectives = Collective::where('communes_id', '>', 0)->get();
+
         $user = Auth::user();
         $user_connect = $user;
         $countries = DB::table('regions')->pluck("nom", "id");

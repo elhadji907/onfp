@@ -26,19 +26,19 @@ class CreateIndividuellesmodulesTable extends Migration
             $table->unsignedInteger('individuelles_id');
             $table->unsignedInteger('modules_id');
 
-            $table->index(["modules_id"], 'fk_individuellesmodules_modules1_idx');
+            $table->index(["modules_id"], 'fk_individuelles_has_modules_modules1_idx');
 
-            $table->index(["individuelles_id"], 'fk_individuellesmodules_individuelles1_idx');
+            $table->index(["individuelles_id"], 'fk_individuelles_has_modules_individuelles1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('individuelles_id', 'fk_individuellesmodules_individuelles1_idx')
+            $table->foreign('individuelles_id', 'fk_individuelles_has_modules_individuelles1_idx')
                 ->references('id')->on('individuelles')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('modules_id', 'fk_individuellesmodules_modules1_idx')
+            $table->foreign('modules_id', 'fk_individuelles_has_modules_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');

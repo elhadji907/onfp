@@ -55,20 +55,20 @@
             @endif
         </div>
     </div>
-    @hasrole('Demandeur')
+    @hasrole('user')
     <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
         <div class="row mt-5">
-            @if (isset($individuelle_demandeur->cin))
+            @if (isset($individuelle_user->cin))
                 <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_demandeur->id) !!}" target="_blank">
+                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_user->id) !!}" target="_blank">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ 'Demande (Individuelle)' }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($individuelle_demandeur->modules as $module_individuelle)
+                                            @foreach ($individuelle_user->modules as $module_individuelle)
                                                 @if ($loop->last)
                                                     {!! $loop->count !!}
                                                 @endif
@@ -79,7 +79,7 @@
                                         <span>
                                             @if (isset($module_individuelle->name))
                                                 <h5><label
-                                                        class="badge badge-success">{{ $individuelle_demandeur->statut }}</label>
+                                                        class="badge badge-success">{{ $individuelle_user->statut }}</label>
                                                 </h5>
                                             @else
                                                 <h5><label class="badge badge-danger">Invalide</label></h5>
@@ -92,17 +92,17 @@
                     </div>
                 </div>
             @endif
-            @if (isset($collective_demandeur->name))
+            @if (isset($collective_user->name))
                 <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('collectives/' . $collective_demandeur->id) !!}" target="_blank">
+                        <a class="nav-link" href="{!! url('collectives/' . $collective_user->id) !!}" target="_blank">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ 'Demande (Collective)' }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($collective_demandeur->modules as $module_collective)
+                                            @foreach ($collective_user->modules as $module_collective)
                                                 @if ($loop->last)
                                                     {!! $loop->count !!}
                                                 @endif
@@ -113,7 +113,7 @@
                                         <span>
                                             @if (isset($module_collective->name))
                                                 <h5><label
-                                                        class="badge badge-success">{{ $collective_demandeur->statut }}</label>
+                                                        class="badge badge-success">{{ $collective_user->statut }}</label>
                                                 </h5>
                                             @else
                                                 <h5><label class="badge badge-danger">Invalide</label></h5>
@@ -126,24 +126,24 @@
                     </div>
                 </div>
             @endif
-            @if (isset($pcharge_demandeur->scolarites_id))
+            @if (isset($pcharge_user->scolarites_id))
                 <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('pcharges/' . $pcharge_demandeur->id) !!}" target="_blank">
+                        <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}" target="_blank">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ 'Demande (prise en charge)' }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($pcharge_demandeur->modules as $module)
+                                            @foreach ($pcharge_user->modules as $module)
                                                 @if ($loop->last)
                                                     {!! $loop->count !!}
                                                 @endif
                                             @endforeach
                                             @if (isset($module->name))
                                                 <h5><label
-                                                        class="badge badge-success">{{ $pcharge_demandeur->statut }}</label>
+                                                        class="badge badge-success">{{ $pcharge_user->statut }}</label>
                                                 </h5>
                                             @else
                                                 <h5><label class="badge badge-danger">Invalide</label></h5>
@@ -159,48 +159,6 @@
                     </div>
                 </div>
             @endif
-        </div>
-    </div>
-    <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-        <div class="row mt-5">
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3 d-flex align-items-baseline align-middle">
-                    <a class="btn btn-outline-primary btn-block" href="{!! url('individuelles/' . $individuelle_user->id . '/edit') !!}" target="_blank"><span
-                            data-feather="book-open"></span>Ajouter demande individuelle</a> 
-                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#individuelles">
-                                <i class="far fa-eye"></i>
-                              </button>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3 d-flex align-items-baseline align-middle">
-                    <a class="btn btn-outline-success btn-block" href="{!! url('collectives/' . $collective_user->id . '/edit') !!}" target="_blank"><span
-                            data-feather="book-open"></span>Ajouter demande collective</a>
-                            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#collectives">
-                                <i class="far fa-eye"></i>
-                              </button>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3 d-flex align-items-baseline align-middle">
-                    <a class="btn btn-outline-info btn-block" href="{!! url('pcharges/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
-                            data-feather="book-open"></span>Ajouter prise en charge</a>
-                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#pcharges">
-                                <i class="far fa-eye"></i>
-                              </button>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="mt-3 d-flex align-items-baseline align-middle">
-                    <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
-                            data-feather="book-open"></span>Devenir opérateur</a>
-                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#operateurs">
-                                <i class="far fa-eye"></i>
-                              </button>
-                </div>
-            </div>
         </div>
     </div>
 @else
@@ -310,6 +268,49 @@
         </div>
     </div>
     @endhasrole
+    <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+        <div class="row mt-5">
+            
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="mt-3 d-flex align-items-baseline align-middle">
+                    <a class="btn btn-outline-primary btn-block" href="{!! url('individuelles/' . $individuelle_user->id . '/edit') !!}" target="_blank"><span
+                            data-feather="book-open"></span>Ajouter demande individuelle</a> 
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#individuelles">
+                                <i class="far fa-eye"></i>
+                              </button>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="mt-3 d-flex align-items-baseline align-middle">
+                    <a class="btn btn-outline-success btn-block" href="{!! url('collectives/' . $collective_user->id . '/edit') !!}" target="_blank"><span
+                            data-feather="book-open"></span>Ajouter demande collective</a>
+                            <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#collectives">
+                                <i class="far fa-eye"></i>
+                              </button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="mt-3 d-flex align-items-baseline align-middle">
+                    <a class="btn btn-outline-info btn-block" href="{!! url('pcharges/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
+                            data-feather="book-open"></span>Ajouter prise en charge</a>
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#pcharges">
+                                <i class="far fa-eye"></i>
+                              </button>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="mt-3 d-flex align-items-baseline align-middle">
+                    <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
+                            data-feather="book-open"></span>Devenir opérateur</a>
+                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#operateurs">
+                                <i class="far fa-eye"></i>
+                              </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="individuelles" tabindex="-1" role="dialog" aria-labelledby="individuellesTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">

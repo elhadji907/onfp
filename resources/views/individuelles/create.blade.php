@@ -7,11 +7,11 @@
                 @if (count($errors) > 0)
                     <div class="alert alert-danger mt-2">
                         <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                        {{-- <ul>
+                        <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
-                        </ul> --}}
+                        </ul>
                     </div>
                 @endif
                 @if (session()->has('success'))
@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation familiale :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('familiale', ['Marié' => 'Marié', 'Célibataire' => 'Célibataire'], null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                    {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('familiale'))
                                             @foreach ($errors->get('familiale') as $message)
@@ -164,9 +164,7 @@
                                 </div>
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation professionnelle :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('professionnelle', ['Demandeur d\'emploi actif' => 'Demandeur d\'emploi actif', 'Salarié CDD' => 'Salarié CDD', 
-                                    'Salarié CDI' => 'Salarié CDI', 'Élève' => 'Élève', 'Étudiant' => 'Étudiant', 'Sans activité' => 'Sans activité', 'En stage' => 'En stage', 
-                                    'Autre' => 'Autre'], null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                    {!! Form::select('professionnelle', $professionnelle, null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('professionnelle'))
                                             @foreach ($errors->get('professionnelle') as $message)
@@ -226,18 +224,29 @@
                                 </div> --}}
                             {{-- </div> --}}
                             <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('niveau_etude', ['Aucun' => 'Aucun', 'Elémentaire' => 'Elémentaire', 'Moyen' => 'Moyen', 'Secondaire' => 'Secondaire', 'Supérieur' => 'Supérieur', 'Arabe' => 'Arabe'], null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'niveau_etude', 'data-width' => '100%']) !!}
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('modules', $modules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('niveau_etude'))
-                                            @foreach ($errors->get('niveau_etude') as $message)
+                                        @if ($errors->has('modules'))
+                                            @foreach ($errors->get('modules') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('etude'))
+                                            @foreach ($errors->get('etude') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Diplômes :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -265,15 +274,6 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <label for="autres_diplomes">{{ __('Autres diplomes') }}</label>
-                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
-                                        name="autres_diplomes" id="autres_diplomes" rows="1"
-                                        placeholder="Si vous possédez d'autres diplômes">{{ old('autres_diplomes') }}</textarea>
-                                    @error('autres_diplomes')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <textarea class="form-control  @error('etablissement') is-invalid @enderror"
@@ -283,18 +283,14 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('modules[]', $modules, null, ['multiple' => 'multiple', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('modules'))
-                                            @foreach ($errors->get('modules') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="autres_diplomes">{{ __('Autres diplomes') }}</label>
+                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
+                                        name="autres_diplomes" id="autres_diplomes" rows="1"
+                                        placeholder="Si vous possédez d'autres diplômes">{{ old('autres_diplomes') }}</textarea>
+                                    @error('autres_diplomes')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-row">

@@ -59,6 +59,18 @@ class HomeController extends Controller
 
         return view('profiles.show', compact('user', 'courriers', 'demandeurs', 'individuelle_user', 'collective_user', 'pcharge_user'));         
         } 
+        elseif ($user->hasRole('Individuelle') && $user->hasRole('Collective') && $user->hasRole('Pcharge')) {
+            $individuelle_users  =  $user_user->individuelles;
+            foreach ($individuelle_users as $key => $individuelle_user) {
+            }
+            $collective_users  =  $user_user->collectives;
+            foreach ($collective_users as $key => $collective_user) {
+            }
+            $pcharge_users  =  $user_user->pcharges;
+            foreach ($pcharge_users as $key => $pcharge_user) {
+            }
+            return view('profiles.show', compact('user', 'courriers', 'demandeurs', 'individuelle_user', 'collective_user', 'pcharge_user'));  
+        }
         elseif ($user->hasRole('Individuelle')) {
             $individuelle_users  =  $user_user->individuelles;
             foreach ($individuelle_users as $key => $individuelle_user) {

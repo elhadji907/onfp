@@ -26,19 +26,19 @@ class CreateCollectivesmodulesTable extends Migration
             $table->unsignedInteger('collectives_id');
             $table->unsignedInteger('modules_id');
 
-            $table->index(["modules_id"], 'fk_collectivesmodules_modules1_idx');
+            $table->index(["modules_id"], 'fk_collectives_has_modules_modules1_idx');
 
-            $table->index(["collectives_id"], 'fk_collectivesmodules_collectives1_idx');
+            $table->index(["collectives_id"], 'fk_collectives_has_modules_collectives1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('collectives_id', 'fk_collectivesmodules_collectives1_idx')
+            $table->foreign('collectives_id', 'fk_collectives_has_modules_collectives1_idx')
                 ->references('id')->on('collectives')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('modules_id', 'fk_collectivesmodules_modules1_idx')
+            $table->foreign('modules_id', 'fk_collectives_has_modules_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');

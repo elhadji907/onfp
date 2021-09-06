@@ -57,11 +57,11 @@
                     {{-- <td>{!! $i++ !!}</td> --}}
                     <td>{!! $collective->demandeur->numero !!}</td>
                     <td>{!! $collective->name !!}</td>
-                    <td>{!! $collective->demandeur->date_depot->format('d/m/Y') !!}</td>
+                    <td>{!! $collective->date_depot->format('d/m/Y') ?? '' !!}</td>
                     <td>{!! $collective->statut!!}</td>
                     <td>{!! $collective->demandeur->user->firstname !!} {{" "}} {!! $collective->demandeur->user->name !!}</td>
                     <td>
-                      @foreach ($collective->demandeur->modules as $module)
+                      @foreach ($collective->modules as $module)
                       {!! $module->name !!}
                       @endforeach
                     </td>

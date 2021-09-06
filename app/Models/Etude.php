@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Collection|Collective[] $collectives
+ * @property Collection|Individuelle[] $individuelles
  * @property Collection|Pcharge[] $pcharges
  *
  * @package App\Models
@@ -37,6 +39,16 @@ class Etude extends Model
 		'uuid',
 		'name'
 	];
+
+	public function collectives()
+	{
+		return $this->hasMany(Collective::class, 'etudes_id');
+	}
+
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'etudes_id');
+	}
 
 	public function pcharges()
 	{
