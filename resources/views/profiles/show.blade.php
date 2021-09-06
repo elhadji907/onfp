@@ -126,7 +126,7 @@
                     </div>
                 </div>
             @endif
-            @if (isset($pcharge_demandeur->annee))
+            @if (isset($pcharge_demandeur->scolarites_id))
                 <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
                         <a class="nav-link" href="{!! url('pcharges/' . $pcharge_demandeur->id) !!}" target="_blank">
@@ -274,7 +274,7 @@
                     </div>
                 </div>
             @endif
-            @if (isset($pcharge_user->annee))
+            @if (isset($pcharge_user->scolarites_id))
                 <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
                         <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}">
@@ -352,7 +352,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="pchargesTitle">Informations concernant un opérateur</h5>
+              <h5 class="modal-title" id="pchargesTitle">Informations concernant les prises en charge</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -371,7 +371,7 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="operateursTitle">Informations concernant une demande individuelle</h5>
+              <h5 class="modal-title" id="operateursTitle">Informations concernant les opérateurs</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

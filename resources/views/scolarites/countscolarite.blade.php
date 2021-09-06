@@ -2,100 +2,6 @@
 @section('title', 'ONFP - Liste des prises en charge')
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-           {{--   <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Prises en charge (TOTAL)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2019)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2019 }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2020)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2020 }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2021)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2021 }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>  --}}
-           {{--   <div class="col-xl-2 col-md-6 mb-4">
-                <div class="card border-left-secondary shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2022)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2022 }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>  --}}
-        </div>
-    </div>
-    <div class="container-fluid">
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
@@ -109,13 +15,18 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des prises en charge
+                        @if (isset($annee))
+                            Liste des prises en charge pour la scolarité <label
+                                class="badge badge-info">{{ $annee }}</label> avec un effectif de <label
+                                class="badge badge-info">{{ $effectif }}</label>
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
                                 <a href="{{ route('pcharges.selectetablissements') }}" target="_blank">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                    </div>
                                 </a>
                             </div>
                             <br />
@@ -125,12 +36,11 @@
                                         <th style="width:4%;">Civilité</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-                                        {{--  <th style="width:9%;">Date nais.</th>
-                                        <th style="width:9%;">Lieu nais.</th>  --}}
+                                        <th style="width:9%;">Date nais.</th>
+                                        <th style="width:9%;">Lieu nais.</th>
                                         {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:30%;">Etablissement</th>
-                                        <th style="width:5%;">Scolarité</th>
                                         <th style="width:12%;">Type demande</th>
                                         <th style="width:10%;"></th>
                                     </tr>
@@ -140,12 +50,11 @@
                                         <th>Civilité</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-                                        {{--  <th>Date nais.</th>
-                                        <th>Lieu nais.</th>  --}}
+                                        <th>Date nais.</th>
+                                        <th>Lieu nais.</th>
                                         {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
-                                        <th>Scolarité</th>
                                         <th>Type demande</th>
                                         <th></th>
                                     </tr>
@@ -156,13 +65,17 @@
                                             <td>{!! $pcharge->demandeur->user->civilite !!}</td>
                                             <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!}</td>
                                             <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
-                                            {{--  <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                            <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>  --}}
+                                            <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                            <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>
                                             {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
                                             <td>{!! $pcharge->etablissement->name ?? '' !!}</td>
-                                            <td>{!! $pcharge->scolarite->annee ?? '' !!}</td>
-                                            <td>{!! $pcharge->typedemande !!}</td>
+                                            <td>
+                                                <a href="{{ url('countype', ['$type' => $pcharge->typedemande, '$annee' => $annee, '$effectif' => $effectif]) }}"
+                                                    class="btn btn-outline-info btn-sm">
+                                                    {!! $pcharge->typedemande !!}
+                                                </a>
+                                            </td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
@@ -252,8 +165,8 @@
                     }
                 ],
                 "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "Tout"]
+                    [5, 10, 25, 50, 100, -1],
+                    [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
                     [1, 'asc']

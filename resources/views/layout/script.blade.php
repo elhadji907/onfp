@@ -125,6 +125,20 @@
 </script>  
 <script type="text/javascript">
 
+  $("#etablissements").select2({
+        placeholder: "sélectionner établissement",
+        allowClear: true
+    });
+</script>  
+<script type="text/javascript">
+
+  $("#scolarite").select2({
+        placeholder: "sélectionner la scolarité",
+        allowClear: true
+    });
+</script>  
+<script type="text/javascript">
+
   $("#region_id").select2({
         placeholder: "sélectionner region",
         allowClear: true

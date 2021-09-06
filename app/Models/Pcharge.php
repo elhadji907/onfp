@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
+ * @property string|null $scolarite
  * @property string|null $cin
  * @property int|null $annee
  * @property string|null $matricule
@@ -45,6 +46,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $etablissements_id
  * @property int|null $filieres_id
  * @property int|null $communes_id
+ * @property int|null $scolarites_id
+ * @property string|null $avis_dg
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -75,7 +78,8 @@ class Pcharge extends Model
 		'demandeurs_id' => 'int',
 		'etablissements_id' => 'int',
 		'filieres_id' => 'int',
-		'communes_id' => 'int'
+		'communes_id' => 'int',
+		'scolarites_id' => 'int'
 	];
 
 	protected $dates = [
@@ -85,6 +89,7 @@ class Pcharge extends Model
 
 	protected $fillable = [
 		'uuid',
+		'scolarite',
 		'cin',
 		'annee',
 		'matricule',
@@ -112,7 +117,9 @@ class Pcharge extends Model
 		'demandeurs_id',
 		'etablissements_id',
 		'filieres_id',
-		'communes_id'
+		'communes_id',
+		'scolarites_id',
+		'avis_dg'
 	];
 
 	public function demandeur()
@@ -133,6 +140,11 @@ class Pcharge extends Model
 	public function filiere()
 	{
 		return $this->belongsTo(Filiere::class, 'filieres_id');
+	}
+
+	public function scolarite()
+	{
+		return $this->belongsTo(Scolarite::class, 'scolarites_id');
 	}
 
 	public function nouvelles()

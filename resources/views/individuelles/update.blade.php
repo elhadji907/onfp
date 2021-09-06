@@ -7,11 +7,11 @@
                 @if (count($errors) > 0)
                     <div class="alert alert-danger mt-2">
                         <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                        <ul>
+                        {{-- <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
-                        </ul>
+                        </ul> --}}
                     </div>
                 @endif
                 @if (session()->has('success'))

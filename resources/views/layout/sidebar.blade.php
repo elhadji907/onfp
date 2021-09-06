@@ -160,6 +160,12 @@
             <span>Prises en charge</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('scolarites.index') }}">
+            <span data-feather="folder"></span>
+            <span>Scolarité</span>
+        </a>
+    </li>
     <hr class="sidebar-divider my-0">
 @else
     @endhasrole

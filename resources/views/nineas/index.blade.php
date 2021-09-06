@@ -29,7 +29,7 @@
                   <tr>
                      <th>{!! __("Ninea") !!}</th>
                      <th>{!! __("Nom ou Raison sociale") !!}</th>
-                    <th  style="width:5%;">Action</th>
+                    <th  style="width:8%;">Action</th>
                   </tr>
                 </thead>
                 <tfoot class="table-dark">
