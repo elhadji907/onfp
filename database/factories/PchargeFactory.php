@@ -8,6 +8,7 @@ use App\Models\TypesDemande;
 use App\Models\Demandeur;
 use App\Models\Commune;
 use App\Models\Scolarite;
+use App\Models\Filiere;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PchargeFactory extends Factory
@@ -38,18 +39,20 @@ class PchargeFactory extends Factory
         $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8.$nombre9;
         $etablissements_id=Etablissement::all()->random()->id;
         $scolarites_id=Scolarite::all()->random()->id;
+        $filieres_id=Filiere::all()->random()->id;
+        $scolarite=Scolarite::all()->random()->name;
         $types_demande_id=TypesDemande::where('name', 'Prise en charge')->first()->id;
         $communes_id=Commune::all()->random()->id;
 
         return [
             'cin' => $cin,
-            'annee' => $this->faker->numberBetween(2019, 2022),
+            'annee' => $this->faker->numberBetween(2018, 2022),
             'matricule' => "PC".$this->faker->word,
             'items1' => $this->faker->word,
             'date1' => $this->faker->dateTime(),
             'date_depot' => $this->faker->dateTime(),
             'duree' => $this->faker->numberBetween(1, 3),
-            'montant' => $this->faker->randomFloat(),
+            'montant' => $this->faker->numberBetween(250000, 1500000),
             'accompt' => $this->faker->randomFloat(),
             'reliquat' => $this->faker->randomFloat(),
             'statut' => "Attente",
@@ -61,8 +64,13 @@ class PchargeFactory extends Factory
             'file6' => "",
             'file7' => "",
             'file8' => "",
-            'avis_dg' => $this->faker->randomElement($array = array ('Favorable','Non favorable')),
-            'typedemande' => $this->faker->randomElement($array = array ('Nouvelle demande','Renouvellement')),
+
+            'avis_dg' => $this->faker->randomElement($array = array('0','0')),
+            'typedemande' => $this->faker->randomElement($array = array('Nouvelle demande','Renouvellement')),
+
+            'filieres_id' => function () use ($filieres_id) {
+                return $filieres_id;
+            },
             'scolarites_id' => function () use ($scolarites_id) {
                 return $scolarites_id;
             },

@@ -16,20 +16,38 @@ class ScolariteSeeder extends Seeder
     public function run()
     {
         DB::table('scolarites')->insert([
-            'annee' => "2021-2022",
+            'annee' => "2018-2019",
             'statut' => "Fermé",
-            'date_debut' => "2021-05-04",
-            'date_fin' => "2021-06-04",
+            'date_debut' => "2018-08-04",
+            'date_fin' => "2018-09-04",
+            'created_at' => now(),
+            'updated_at' => now(),
+            'uuid' => Str::uuid(),
+        ]);
+        DB::table('scolarites')->insert([
+            'annee' => "2019-2020",
+            'statut' => "Fermé",
+            'date_debut' => "2019-08-04",
+            'date_fin' => "2019-09-04",
+            'created_at' => now(),
+            'updated_at' => now(),
+            'uuid' => Str::uuid(),
+        ]);
+        DB::table('scolarites')->insert([
+            'annee' => "2020-2021",
+            'statut' => "Fermé",
+            'date_debut' => "2020-08-04",
+            'date_fin' => "2020-09-04",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
         ]);
 
         DB::table('scolarites')->insert([
-            'annee' => "2022-2023",
+            'annee' => "2021-2022",
             'statut' => "Fermé",
-            'date_debut' => "2022-05-04",
-            'date_fin' => "2022-06-04",
+            'date_debut' => "2021-08-04",
+            'date_fin' => "2021-09-04",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),

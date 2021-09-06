@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Modification scolarites')
+@section('title', 'ONFP - Changement montant accordé')
 @section('content')
     <div class="content">
         <div class="container col-8 col-sm-12 col-md-8 col-lg-8 col-xl-8">
@@ -10,53 +10,37 @@
                 <div class="row pt-5"></div>
                 <div class="card">
                     <div class="card-header card-header-primary text-center">
-                        <h3 class="card-title">{{ 'Modification' }}</h3>
-                        <p class="card-category">{{ 'scolarite' }}</p>
+                        <h3 class="card-title">{{ 'Changement' }}</h3>
+                        <p class="card-category">{{ 'montant accordé' }}</p>
                     </div>
                     <div class="card-body">
-
-                        <form method="POST" action="{{ route('scolarites.update', [$scolarite->id]) }}">
+                        <form method="POST" action="{{ url('change.montant', ['$pcharge' => $pcharge]) }}">
                             @csrf
-                            <input type="hidden" name="_method" value="PATCH" />
+                            <input type="hidden" name="_method" value="PATCH" />                     
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="input-name"><b>{{ __('scolarite') }}:</b></label>
-                                    <input type="text" name="annee" class="form-control" id="input-annee"
-                                        placeholder="Scolarité" value="{{ old('annee') ?? $scolarite->annee }}">
+                                    <label for="input-name"><b>{{ __('Montant demandé') }}:</b></label>
+                                    <input type="text" name="montant" class="form-control" id="input-montant"
+                                        placeholder="Scolarité" value="{{ old('montant') ?? $pcharge->montant }}">
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('annee'))
-                                            @foreach ($errors->get('annee') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    {!! Form::label('Statut') !!}
-                                    {!! Form::select('statut', ['Fermé' => 'Fermé', 'Ouvert' => 'Ouvert'], $scolarite->statut, ['placeholder' => '', 'class' => 'form-control', 'id' => 'statut']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('statut'))
-                                            @foreach ($errors->get('statut') as $message)
+                                        @if ($errors->has('montant'))
+                                            @foreach ($errors->get('montant') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
                                     </small>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="input-name"><b>{{ __('Date début') }}:</b></label>
-                                    <input id="date_debut" type="date"
-                                        class="form-control form-control-user @error('date_debut') is-invalid @enderror"
-                                        name="date_debut" placeholder="date de début"
-                                        value="{{ $scolarite->date_debut->format('Y-m-d') ?? old('date_debut') }}"
-                                        autocomplete="date_debut">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="input-name"><b>{{ __('Date fin') }}:</b></label>
-                                    <input id="date_fin" type="date"
-                                        class="form-control form-control-user @error('date_fin') is-invalid @enderror"
-                                        name="date_fin" placeholder="date de fin"
-                                        value="{{ $scolarite->date_fin->format('Y-m-d') ?? old('date_fin') }}"
-                                        autocomplete="date_fin">
+                                    <label for="input-name"><b>{{ __('Montant accordé') }}:</b></label>
+                                    <input type="text" name="avis_dg" class="form-control" id="input-avis_dg"
+                                        placeholder="Scolarité" value="{{ old('avis_dg') ?? $pcharge->avis_dg }}">
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('avis_dg'))
+                                            @foreach ($errors->get('avis_dg') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary"><i

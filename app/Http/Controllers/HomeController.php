@@ -82,8 +82,9 @@ class HomeController extends Controller
         }
         else {
         $courriers = Courrier::all();
-        $annees = Pcharge::distinct('annee')->pluck('annee', 'annee'); 
-        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'annees'));      
+
+        $pcharges = Pcharge::distinct('scolarites_id')->pluck('annee', 'annee'); 
+        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'pcharges'));      
 
         }
         

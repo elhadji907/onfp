@@ -40,9 +40,10 @@
                                         <th style="width:9%;">Lieu nais.</th>
                                         {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
-                                        <th style="width:25%;">Etablissement</th>
+                                        <th style="width:30%;">Etablissement</th>
+                                        <th style="width:5%;">Montant</th>
                                         <th style="width:9%;">Appréciation</th>
-                                        <th style="width:12%;"></th>
+                                        <th style="width:7%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -55,6 +56,7 @@
                                         {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
+                                        <th>Montant</th>
                                         <th>Appréciation</th>
                                         <th></th>
                                     </tr>
@@ -67,8 +69,10 @@
                                             <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
                                             <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>
-                                            <td>{!! $pcharge->demandeur->user->email !!}</td>
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
+                                            <td>{!! $pcharge->etablissement->name !!}</td>
+                                            <td>{!! number_format($pcharge->montant,0, ',', ' ') . ' ' !!}</td>
+                                            {{--  <td>{!! $pcharge->demandeur->user->email !!}</td>  --}}
                                             <td>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     @if (isset($pcharge->statut) && $pcharge->statut == "Accordée")
@@ -76,7 +80,7 @@
                                                     @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
                                                     <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
                                                     @else
-                                                    <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée']) }}"
+                                                    <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
                                                         title="ajouter" class="btn btn-outline-primary btn-sm mt-0">
                                                         <i class="fas fa-check-circle">&nbsp;Oui</i>
                                                     </a>&nbsp;
@@ -93,15 +97,16 @@
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
+                                                </a>
                                                 &nbsp;
                                                 <a href="{!! url('pcharges/' . $pcharge->id) !!}" class='btn btn-primary btn-sm'
                                                     title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
-                                                &nbsp;
+                                                {{--  &nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                {!! Form::close() !!}
+                                                {!! Form::close() !!}  --}}
                                             </td>
                                         </tr>
                                     @endforeach

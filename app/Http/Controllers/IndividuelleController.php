@@ -500,16 +500,17 @@ class IndividuelleController extends Controller
         if (!$user_connect->hasRole('Demandeur')) {
         $individuelle->statut                  =      $request->input('statut');
         }
-        $individuelle->statut                   =      $statut;
+        $individuelle->statut                   =     $statut;
         $individuelle->cin                      =     $cin;
         $individuelle->experience               =     $request->input('experience');
         $individuelle->information              =     $request->input('information');
         $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
         $individuelle->prerequis                =     $request->input('prerequis');
-        $demandeur->date_depot                  =      $request->input('date_depot');
+        $demandeur->date_depot                  =     $request->input('date_depot');
         $individuelle->demandeurs_id            =     $demandeur->id;
 
         $individuelle->save();
+        
         $individuelle->modules()->sync($request->input('modules'));
 
         if (!$user_connect->hasRole('Demandeur')) {

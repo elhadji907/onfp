@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
+           {{--   <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
                         <div class="card-body">
@@ -74,7 +74,7 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </div>  --}}
            {{--   <div class="col-xl-2 col-md-6 mb-4">
                 <div class="card border-left-secondary shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
@@ -252,8 +252,8 @@
                     }
                 ],
                 "lengthMenu": [
-                    [5, 10, 25, 50, 100, -1],
-                    [5, 10, 25, 50, 100, "Tout"]
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
                     [1, 'asc']

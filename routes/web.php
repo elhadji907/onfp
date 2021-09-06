@@ -147,7 +147,7 @@ Route::group([
         Route::get('/communes/list', [CommuneController::class, 'list'])->name('communes.list');
         Route::get('countscolarite/{annee}', [ScolariteController::class, 'countscolarite'])->name('countscolarite');
         Route::get('countype/{type}/{annee}/{effectif}', [ScolariteController::class, 'countype'])->name('countype');
-        Route::get('accord/{pcharge}/{statut}', [ScolariteController::class, 'accord'])->name('accord');
+        Route::get('accord/{pcharge}/{statut}/{avis_dg}', [ScolariteController::class, 'accord'])->name('accord');
         Route::get('nonaccord/{pcharge}/{statut}', [ScolariteController::class, 'nonaccord'])->name('nonaccord');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');

@@ -125,6 +125,13 @@
 </script>  
 <script type="text/javascript">
 
+  $("#etablissements").select2({
+        placeholder: "sélectionner établissement",
+        allowClear: true
+    });
+</script>  
+<script type="text/javascript">
+
   $("#scolarite").select2({
         placeholder: "sélectionner la scolarité",
         allowClear: true

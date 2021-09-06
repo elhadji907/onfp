@@ -143,11 +143,12 @@ class ScolariteController extends Controller
         return view('scolarites.countype', compact('annee','pcharges', 'effectif', 'type', 'count'));
     }
 
-    public function accord($pcharge, $statut){
+    public function accord($pcharge, $statut, $avis_dg){
 
         $pcharge = Pcharge::find($pcharge);
         
         $pcharge->statut    =   $statut;
+        $pcharge->avis_dg   =   $avis_dg;
         
         $pcharge->save();
         
@@ -160,6 +161,7 @@ class ScolariteController extends Controller
         $pcharge = Pcharge::find($pcharge);
 
         $pcharge->statut    =   $statut;
+        $pcharge->avis_dg   =   '0';
         
         $pcharge->save();
         

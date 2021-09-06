@@ -46,26 +46,26 @@ class PchargeController extends Controller
      */
     public function index()
     {
-        $annees = Pcharge::distinct('annee')->pluck('annee', 'annee');
+        /* $annees = Pcharge::distinct('annee')->pluck('annee', 'annee'); */
 
-        $an2019 = DB::table('pcharges')->whereBetween('annee', array('2019', '2019'))->get()->count();
+        /* $an2019 = DB::table('pcharges')->whereBetween('annee', array('2019', '2019'))->get()->count();
         $an2020 = DB::table('pcharges')->whereBetween('annee', array('2020', '2020'))->get()->count();
-        $an2021 = DB::table('pcharges')->whereBetween('annee', array('2021', '2021'))->get()->count();
+        $an2021 = DB::table('pcharges')->whereBetween('annee', array('2021', '2021'))->get()->count(); */
         /* $an2022 = DB::table('pcharges')->whereBetween('annee', array('2022', '2022'))->get()->count(); */
 
         /* $total = Pcharge::get()->count(); */
-        $depart = "2019";
-        $enCours = date('Y');
+        /* $depart = "2019";
+        $enCours = date('Y'); */
 
-        $total = DB::table('pcharges')->whereBetween('annee', array($depart, $enCours))->get()->count();
+        /* $total = DB::table('pcharges')->whereBetween('annee', array($depart, $enCours))->get()->count(); */
 
-        /* dd($total); */
+        /* $pcharges      =   Pcharge::whereBetween('annee', array($depart, $enCours))->get(); */
 
-        $pcharges      =   Pcharge::whereBetween('annee', array($depart, $enCours))->get();
-
-        /* dd($pcharges); */
-
-        return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'depart', 'enCours'));
+        /* return view('pcharges.index', compact('pcharges', 'annees', 'total', 'an2019', 'an2020', 'an2021', 'depart', 'enCours')); */
+        
+        $pcharges = Pcharge::get()->where('scolarites_id','>=',1);
+        return view('pcharges.index', compact('pcharges'));
+        
     }
 
     /**
@@ -280,8 +280,8 @@ class PchargeController extends Controller
             $user_connect->fixe                         =      $fixe;
             $user_connect->bp                           =      $request->input('bp');
             $user_connect->fax                          =      $request->input('fax');
-            $utilisateur->familiales_id                 =      $familiale_id;
-            $utilisateur->professionnelles_id           =      $professionnelle_id;
+            $user_connect->familiales_id                =      $familiale_id;
+            $user_connect->professionnelles_id          =      $professionnelle_id;
             $user_connect->date_naissance               =      $request->input('date');
             $user_connect->lieu_naissance               =      $request->input('lieu_naissance');
             $user_connect->adresse                      =      $request->input('adresse');
@@ -346,7 +346,23 @@ class PchargeController extends Controller
      */
     public function edit(Pcharge $pcharge)
     {
-        //
+
+        $etablissements = Etablissement::distinct('name')->get()->pluck('name', 'name')->unique();
+        $filieres = Filiere::distinct('name')->get()->pluck('name', 'id')->unique();
+        $filierespecialites = Filierespecialite::distinct('name')->get()->pluck('name', 'id')->unique();
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $scolarites = Scolarite::distinct('annee')
+                                ->where('statut', '!=', 'Fermé')
+                                ->get()
+                                ->pluck('annee', 'id')
+                                ->unique();
+
+        $date_depot = Carbon::now();
+
+        return view('pcharges.update', compact('communes', 'etablissements', 'filieres', 'date_depot', 'filierespecialites', 'diplomes', 'professionnelle', 'familiale', 'scolarites', 'pcharge'));
     }
 
     /**
@@ -357,8 +373,125 @@ class PchargeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Pcharge $pcharge)
-    {
-        //
+    {        
+        $user_connect   =   $pcharge->demandeur->user;
+        $utilisateur    =   $user_connect;
+        $demandeur      =   $pcharge->demandeur; 
+
+        $this->validate($request, [
+            'cin'                   =>  "required|string|min:13|max:15|unique:pcharges,cin,{$pcharge->id},id,deleted_at,NULL",
+            'civilite'              =>  'required|string',
+            'firstname'             =>  'required|string|max:50',
+            'name'                  =>  'required|string|max:50',
+            'telephone'             =>  'required|string|max:50',
+            'email'                 =>  'required|email|max:255|unique:users,email,'.$pcharge->demandeur->user->id,
+            'adresse'               =>  'required|string',
+            'fixe'                  =>  'required|string|max:50',
+            'date'                  =>  'required|date',
+            'lieu_naissance'        =>  'required|string|max:50',
+            'etablissement'         =>  'required|string',
+            'filiere'               =>  'required|exists:filieres,id',
+            'familiale'             =>  'required',
+            'professionnelle'       =>  'required',
+            'niveau_etude'          =>  'required',
+            'inscription'           =>  'required|regex:/^\d+(\.\d{1,2})?$/',
+            'montant'               =>  'required|regex:/^\d+(\.\d{1,2})?$/',
+            'duree'                 =>  'required|min:1|max:1',
+            'niveauentree'          =>  'required',
+            'niveausortie'          =>  'required',
+            'motivation'            =>  'required',
+            'diplome'               =>  'required',
+            'commune'               =>  'required',
+            'typedemande'           =>  'required',
+            'scolarite'             =>  'required',
+            'avis_dg'               =>  'required',
+            'montant'               =>  'required',
+        ]);
+
+        $created_by1 = $user_connect->firstname;
+        $created_by2 = $user_connect->name;
+        $created_by3 = $user_connect->username;
+    
+        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
+    
+        $telephone = $request->input('telephone');
+        $telephone = str_replace(' ', '', $telephone);
+
+        $fixe = $request->input('fixe');
+        $fixe = str_replace(' ', '', $fixe);
+
+        $diplome_id     = Diplome::where('name', $request->input('diplome'))->first()->id;
+        $commune_id     = Commune::where('nom', $request->input('commune'))->first()->id;
+        $etablissement_id     = Etablissement::where('name', $request->input('etablissement'))->first()->id;
+
+        $cin = $request->input('cin');
+        $cin = str_replace(' ', '', $cin);
+
+        $types_demandes_id = TypesDemande::where('name', 'Prise en charge')->first()->id;
+        
+        if ($request->input('civilite') == "M.") {
+            $sexe = "M";
+        } elseif ($request->input('civilite') == "Mme") {
+            $sexe = "F";
+        } else {
+            $sexe = "";
+        }
+
+        $user_connect->sexe                 =      $sexe;
+        $user_connect->civilite             =      $request->input('civilite');
+        $user_connect->firstname            =      $request->input('firstname');
+        $user_connect->name                 =      $request->input('name');
+        $user_connect->email                =      $request->input('email');
+        $user_connect->username             =      $request->input('username');
+        $user_connect->telephone            =      $telephone;
+        $user_connect->fixe                 =      $fixe;
+        $user_connect->bp                   =      $request->input('bp');
+        $user_connect->fax                  =      $request->input('fax');
+        $user_connect->familiales_id        =      $request->input('familiale');
+        $user_connect->professionnelles_id  =      $request->input('professionnelle');
+        $user_connect->date_naissance       =      $request->input('date');
+        $user_connect->lieu_naissance       =      $request->input('lieu_naissance');
+        $user_connect->adresse              =      $request->input('adresse');
+        $user_connect->password             =      Hash::make($request->input('email'));
+        $user_connect->created_by           =      $created_by;
+        $user_connect->updated_by           =      $created_by;
+
+        $user_connect->save();
+                
+        $demandeur->numero                  =     $request->input('numero');
+        $demandeur->nbre_piece              =     $request->input('nombre_de_piece');
+        $demandeur->niveau_etude            =     $request->input('niveau_etude');
+        $demandeur->telephone               =     $telephone;
+        $demandeur->fixe                    =     $fixe;
+        $demandeur->adresse                 =     $request->input('adresse');
+        $demandeur->motivation              =     $request->input('motivation');
+        $demandeur->types_demandes_id       =     $types_demandes_id;
+        $demandeur->diplomes_id             =     $diplome_id;
+        $demandeur->users_id                =     $user_connect->id;
+
+        $demandeur->save();
+
+        $pcharge->annee                     =      $request->input('annee');
+        $pcharge->cin                       =      $request->input('cin');
+        $pcharge->duree                     =      $request->input('duree');
+        $pcharge->inscription               =      $request->input('inscription');
+        $pcharge->montant                   =      $request->input('montant');
+        $pcharge->niveauentree              =      $request->input('niveauentree');
+        $pcharge->niveausortie              =      $request->input('niveausortie');
+        $pcharge->specialisation            =      $request->input('specialite');
+        $pcharge->typedemande               =      $request->input('typedemande');
+        $pcharge->date_depot                =      $request->input('date_depot');
+        $pcharge->statut                    =      $request->input('statut');
+        $pcharge->etablissements_id         =      $etablissement_id;
+        $pcharge->filieres_id               =      $request->input('filiere');
+        $pcharge->communes_id               =      $commune_id;
+        $pcharge->scolarites_id             =      $request->input('scolarite');
+        $pcharge->demandeurs_id             =      $demandeur->id;
+
+        $pcharge->save();
+            
+        return redirect()->route('pcharges.index')->with('success', 'demande modifiée avec succès !');
+
     }
 
     /**

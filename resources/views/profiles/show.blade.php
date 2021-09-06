@@ -126,7 +126,7 @@
                     </div>
                 </div>
             @endif
-            @if (isset($pcharge_demandeur->annee))
+            @if (isset($pcharge_demandeur->scolarites_id))
                 <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
                         <a class="nav-link" href="{!! url('pcharges/' . $pcharge_demandeur->id) !!}" target="_blank">
@@ -274,7 +274,7 @@
                     </div>
                 </div>
             @endif
-            @if (isset($pcharge_user->annee))
+            @if (isset($pcharge_user->scolarites_id))
                 <div class="col-xl-4 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
                         <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}">
