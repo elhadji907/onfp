@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->statut, ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
+                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->typedemande, ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('typedemande'))
                                             @foreach ($errors->get('typedemande') as $message)
@@ -193,8 +193,8 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Situation familiale :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('familiale', $familiale, $pcharge->demandeur->user->situation_familiale, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                    {!! Form::label('Situation familiale :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('familiale', $familiale, $pcharge->demandeur->user->familiale->name ?? old('familiale'), ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('familiale'))
                                             @foreach ($errors->get('familiale') as $message)
@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('professionnelle', $professionnelle, $pcharge->demandeur->user->situation_professionnelle, ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                    {!! Form::select('professionnelle', $professionnelle, $pcharge->demandeur->user->professionnelle->name, ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('professionnelle'))
                                             @foreach ($errors->get('professionnelle') as $message)
@@ -347,11 +347,11 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('niveau_etude', ['Aucun' => 'Aucun', 'Elémentaire' => 'Elémentaire', 'Moyen' => 'Moyen', 'Secondaire' => 'Secondaire', 'Supérieur' => 'Supérieur'], $pcharge->niveau_etude, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'niveau_etude', 'data-width' => '100%']) !!}
+                                    {!! Form::label('Niveau étude:') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('etude', $etude, $pcharge->etude->name, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('niveau_etude'))
-                                            @foreach ($errors->get('niveau_etude') as $message)
+                                        @if ($errors->has('etude'))
+                                            @foreach ($errors->get('etude') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif

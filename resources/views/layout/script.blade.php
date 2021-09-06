@@ -104,7 +104,7 @@
 </script>  
 <script type="text/javascript">
 
-  $("#niveau_etude").select2({
+  $("#etude").select2({
         placeholder: "Niveau d'étude",
         allowClear: true
     });

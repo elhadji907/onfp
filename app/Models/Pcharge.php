@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string|null $scolarite
  * @property string|null $cin
  * @property int|null $annee
  * @property string|null $matricule
@@ -42,12 +41,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file6
  * @property string|null $file7
  * @property string|null $file8
+ * @property string|null $avis_dg
  * @property int|null $demandeurs_id
  * @property int|null $etablissements_id
  * @property int|null $filieres_id
  * @property int|null $communes_id
  * @property int|null $scolarites_id
- * @property string|null $avis_dg
+ * @property int|null $etudes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -55,7 +55,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Demandeur|null $demandeur
  * @property Commune|null $commune
  * @property Etablissement|null $etablissement
+ * @property Etude|null $etude
  * @property Filiere|null $filiere
+ * @property Scolarite|null $scolarite
  * @property Collection|Nouvelle[] $nouvelles
  * @property Collection|Renouvellement[] $renouvellements
  *
@@ -79,7 +81,8 @@ class Pcharge extends Model
 		'etablissements_id' => 'int',
 		'filieres_id' => 'int',
 		'communes_id' => 'int',
-		'scolarites_id' => 'int'
+		'scolarites_id' => 'int',
+		'etudes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -89,7 +92,6 @@ class Pcharge extends Model
 
 	protected $fillable = [
 		'uuid',
-		'scolarite',
 		'cin',
 		'annee',
 		'matricule',
@@ -114,12 +116,13 @@ class Pcharge extends Model
 		'file6',
 		'file7',
 		'file8',
+		'avis_dg',
 		'demandeurs_id',
 		'etablissements_id',
 		'filieres_id',
 		'communes_id',
 		'scolarites_id',
-		'avis_dg'
+		'etudes_id'
 	];
 
 	public function demandeur()
@@ -135,6 +138,11 @@ class Pcharge extends Model
 	public function etablissement()
 	{
 		return $this->belongsTo(Etablissement::class, 'etablissements_id');
+	}
+
+	public function etude()
+	{
+		return $this->belongsTo(Etude::class, 'etudes_id');
 	}
 
 	public function filiere()

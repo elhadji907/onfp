@@ -69,6 +69,7 @@ class DatabaseSeeder extends Seeder
             OperateurSeeder::class,
             EtablissementSeeder::class,
             ScolariteSeeder::class,
+            EtudeSeeder::class,
             FiliereSeeder::class,
             PchargeSeeder::class,
             FilierespecialiteSeeder::class,
