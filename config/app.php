@@ -166,7 +166,6 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
 
         /*
          * Package Service Providers...
