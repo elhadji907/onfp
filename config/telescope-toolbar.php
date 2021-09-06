@@ -1,6 +1,10 @@
 <?php
 
 use Laravel\Telescope\EntryType;
+// Add this conditional before the existing return statement
+if (! class_exists(EntryType::class)) {
+    return [];
+}
 
 return [
 
