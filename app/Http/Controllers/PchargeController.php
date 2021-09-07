@@ -559,4 +559,13 @@ class PchargeController extends Controller
         $filieres=Filiere::with('filiere')->get();
         return Datatables::of($filieres)->make(true);
     }
+    
+    public function countscolaritenbre($cin)
+    {
+        
+        $pcharges = Pcharge::get()->where('cin','=',$cin);
+        $effectif = Pcharge::get()->where('cin','=',$cin)->count();
+
+        return view('pcharges.countscolaritenbre', compact('cin','pcharges', 'effectif'));
+    }
 }
