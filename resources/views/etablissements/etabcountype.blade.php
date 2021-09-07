@@ -81,16 +81,17 @@
                                                         <i class="fas fa-times"></i>
                                                     </a>   
                                                     @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
-                                                    <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
+                                                    <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
                                                     <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
                                                         title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
                                                         <i class="fas fa-times"></i>
                                                     </a> 
                                                     @else
+                                                    <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
                                                     <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
                                                         title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
                                                         <i class="fas fa-check-circle"></i>
-                                                    </a>&nbsp;
+                                                    </a>
                                                     <a href="{{ url('nonaccord', ['$$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
                                                         title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
                                                         <i class="fas fa-times"></i>
