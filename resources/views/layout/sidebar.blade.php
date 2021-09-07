@@ -161,6 +161,12 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('etablissements.index') }}">
+            <span data-feather="layers"></span>
+            <span>Etablissements</span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('scolarites.index') }}">
             <span data-feather="folder"></span>
             <span>Scolarité</span>
@@ -306,13 +312,6 @@
 @else
     @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('etablissements.index') }}">
-            <span data-feather="layers"></span>
-            <span>Etablissements</span>
-        </a>
-    </li>
-    <hr class="sidebar-divider my-0">
     <li class="nav-item">
         <a class="nav-link" href="{{ route('filieres.index') }}">
             <span data-feather="layers"></span>

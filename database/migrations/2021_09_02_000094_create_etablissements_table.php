@@ -36,10 +36,13 @@ class CreateEtablissementsTable extends Migration
             $table->string('adresse', 200)->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('filieres_id')->nullable();
+            $table->unsignedInteger('users_id')->nullable();
 
             $table->index(["communes_id"], 'fk_etablissements_communes1_idx');
 
             $table->index(["filieres_id"], 'fk_etablissements_filieres1_idx');
+
+            $table->index(["users_id"], 'fk_etablissements_users1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -51,6 +54,11 @@ class CreateEtablissementsTable extends Migration
 
             $table->foreign('filieres_id', 'fk_etablissements_filieres1_idx')
                 ->references('id')->on('filieres')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('users_id', 'fk_etablissements_users1_idx')
+                ->references('id')->on('users')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

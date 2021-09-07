@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Etablissement;
 use App\Models\Commune;
+use App\Models\Pcharge;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -149,6 +150,26 @@ class EtablissementController extends Controller
     {
         $etablissements=Etablissement::withCount('pcharges')->with('commune')->get();
         return Datatables::of($etablissements)->make(true);
+    }
+
+    public function countpcharge($etablissement)
+    {
+        $etablissement = Etablissement::where('id', $etablissement)->first()->name;
+        
+        $pcharges = Pcharge::get()->where('etablissement.name','=',$etablissement);
+        $effectif = Pcharge::get()->where('etablissement.name','=',$etablissement)->count();
+
+        return view('etablissements.countpcharge', compact('etablissement','pcharges', 'effectif'));
+    }
+
+    public function etabcountype($type, $etablissement, $effectif)
+    {
+
+        $pcharges = Pcharge::get()->where('typedemande','=',$type)->where('etablissement.name','=',$etablissement);
+
+        $count = Pcharge::get()->where('typedemande','=',$type)->where('etablissement.name','=',$etablissement)->count();
+
+        return view('etablissements.etabcountype', compact('etablissement','pcharges', 'effectif', 'type', 'count'));
     }
     
 }

@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use App\Models\Etablissement;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EtablissementSeeder extends Seeder
 {
@@ -13,8 +15,15 @@ class EtablissementSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+     public function run()
     {
+
+        
+        Etablissement::factory()
+            ->count(11)
+            ->create();
+
+        /*
          DB::table('etablissements')->insert([
         'name' => "LES COURS DU SUD",
         'communes_id' => "525",
@@ -3413,6 +3422,6 @@ class EtablissementSeeder extends Seeder
         'created_at' => now(),
         'updated_at' => now(),
         'uuid' => Str::uuid(),
-    ]);
+    ]); */
     }
 }

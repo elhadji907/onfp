@@ -55,7 +55,7 @@
                                             <td>
                                                 @foreach ($etablissement->pcharges as $pcharge)
                                                 @if ($loop->last)
-                                                    {!! $loop->count !!}
+                                                    <a href="{{ url('countpcharge', ['$nombre' => $pcharge->etablissement]) }}" class="btn btn-outline-info btn-md">{!! $loop->count !!}</a>
                                                 @endif
                                             @endforeach
                                             </td>

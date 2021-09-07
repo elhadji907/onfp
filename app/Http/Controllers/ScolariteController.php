@@ -126,7 +126,8 @@ class ScolariteController extends Controller
         return redirect()->route('scolarites.index')->with(compact('message'));
     }
 
-    public function countscolarite($annee){
+    public function countscolarite($annee)
+    {
         
         $pcharges = Pcharge::get()->where('scolarite.annee','=',$annee);
         $effectif = Pcharge::get()->where('scolarite.annee','=',$annee)->count();
@@ -134,7 +135,8 @@ class ScolariteController extends Controller
         return view('scolarites.countscolarite', compact('annee','pcharges', 'effectif'));
     }
 
-    public function countype($type, $annee, $effectif){
+    public function countype($type, $annee, $effectif)
+    {
 
         $pcharges = Pcharge::get()->where('typedemande','=',$type)->where('scolarite.annee','=',$annee);
 

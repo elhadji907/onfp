@@ -136,6 +136,9 @@ class PermissionsOnfpSeeder extends Seeder
 
         $role = Role::create(['name' => 'Demandeur']);
 
+        $role = Role::create(['name' => 'Etablissement']);
+        $role->givePermissionTo(['etablissement-list', 'etablissement-create', 'etablissement-edit', 'etablissement-delete']);
+
         $role = Role::create(['name' => 'Operateur']);
 
         $role = Role::create(['name' => 'Individuelle']);

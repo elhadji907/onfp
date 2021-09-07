@@ -60,6 +60,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Collection|Courrier[] $courriers
  * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Employee[] $employees
+ * @property Collection|Etablissement[] $etablissements
  * @property Collection|Gestionnaire[] $gestionnaires
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Poste[] $postes
@@ -198,6 +199,11 @@ class User extends Authenticatable
 		return $this->hasOne(Employee::class, 'users_id');
 	}
 
+	public function etablissement()
+	{
+		return $this->hasOne(Etablissement::class, 'users_id');
+	}
+	
 	public function gestionnaire()
 	{
 		return $this->hasOne(Gestionnaire::class, 'users_id');

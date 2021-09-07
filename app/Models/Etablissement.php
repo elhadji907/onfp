@@ -29,12 +29,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $adresse
  * @property int|null $communes_id
  * @property int|null $filieres_id
+ * @property int|null $users_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Commune|null $commune
  * @property Filiere|null $filiere
+ * @property User|null $user
  * @property Collection|Pcharge[] $pcharges
  *
  * @package App\Models
@@ -48,7 +50,8 @@ class Etablissement extends Model
 
 	protected $casts = [
 		'communes_id' => 'int',
-		'filieres_id' => 'int'
+		'filieres_id' => 'int',
+		'users_id' => 'int'
 	];
 
 	protected $dates = [
@@ -68,7 +71,8 @@ class Etablissement extends Model
 		'email',
 		'adresse',
 		'communes_id',
-		'filieres_id'
+		'filieres_id',
+		'users_id'
 	];
 
 	public function commune()
@@ -79,6 +83,11 @@ class Etablissement extends Model
 	public function filiere()
 	{
 		return $this->belongsTo(Filiere::class, 'filieres_id');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
 	}
 
 	public function pcharges()

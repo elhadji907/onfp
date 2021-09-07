@@ -149,6 +149,8 @@ Route::group([
         Route::get('countype/{type}/{annee}/{effectif}', [ScolariteController::class, 'countype'])->name('countype');
         Route::get('accord/{pcharge}/{statut}/{avis_dg}', [ScolariteController::class, 'accord'])->name('accord');
         Route::get('nonaccord/{pcharge}/{statut}', [ScolariteController::class, 'nonaccord'])->name('nonaccord');
+        Route::get('countpcharge/{etablissement}', [EtablissementController::class, 'countpcharge'])->name('countpcharge');
+        Route::get('etabcountype/{type}/{etablissement}/{effectif}', [EtablissementController::class, 'etabcountype'])->name('etabcountype');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
