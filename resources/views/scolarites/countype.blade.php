@@ -89,12 +89,12 @@
                                                     </a>   
                                                     @else
                                                     <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
-                                                        title="ajouter" class="btn btn-outline-primary btn-sm mt-0">
-                                                        <i class="fas fa-check-circle">&nbsp;Oui</i>
+                                                        title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                                        <i class="fas fa-check-circle"></i>
                                                     </a>&nbsp;
                                                     <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
-                                                        title="Enlever" class="btn btn-outline-danger btn-sm mt-0">
-                                                        <i class="fas fa-times">&nbsp;Non</i>
+                                                        title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                                        <i class="fas fa-times"></i>
                                                     </a>                                                        
                                                     @endif
                                                 </div>
