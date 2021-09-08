@@ -36,7 +36,7 @@
                             <div class="form-row">
                                 <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     {!! Form::label('Etablissement') !!}
-                                    {!! Form::select('etablissement', $etablissements, $pcharge->etablissement->name, ['placeholder' => '', 'class' => 'form-control', 'id' => 'etablissements']) !!}
+                                    {!! Form::select('etablissement', $etablissements, $pcharge->etablissement->name ?? old('etablissement'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'etablissements']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('etablissement'))
                                             @foreach ($errors->get('etablissement') as $message)
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Scolarité') !!}
-                                    {!! Form::select('scolarite', $scolarites, $pcharge->scolarite->annee, ['placeholder' => '', 'class' => 'form-control', 'id' => 'scolarite']) !!}
+                                    {!! Form::select('scolarite', $scolarites, $pcharge->scolarite->annee ?? old('scolarite'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'scolarite']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('scolarite'))
                                             @foreach ($errors->get('scolarite') as $message)
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->typedemande, ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
+                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->typedemande ?? old('typedemande'), ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('typedemande'))
                                             @foreach ($errors->get('typedemande') as $message)
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Filière') !!}
-                                    {!! Form::select('filiere', $filieres, $pcharge->filiere->name, ['placeholder' => '', 'class' => 'form-control', 'id' => 'filiere']) !!}
+                                    {!! Form::select('filiere', $filieres, $pcharge->filiere->name ?? old('filiere'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'filiere']) !!}
                                     <small id="emailHelp" class="form-text text-muted">{{ __('Merci de ') }}
                                         <a href="{{ route('filieres.create') }}" target="_blank">cliquer ici</a>
                                         {{ __('pour ajouter une nouvelle filière') }}
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Montant demandé') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('montant', $pcharge->montant, ['placeholder' => 'Montant demandé', 'class' => 'form-control', 'id' => 'montant']) !!}
+                                    {!! Form::text('montant', $pcharge->montant ?? old('montant'), ['placeholder' => 'Montant demandé', 'class' => 'form-control', 'id' => 'montant']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('montant'))
                                             @foreach ($errors->get('montant') as $message)
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Montant accordé') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('avis_dg', $pcharge->avis_dg, ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
+                                    {!! Form::text('avis_dg', $pcharge->avis_dg ?? old('avis_dg'), ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('avis_dg'))
                                             @foreach ($errors->get('avis_dg') as $message)
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Spécialité') !!}
-                                    {!! Form::text('specialite', $pcharge->specialisation, ['placeholder' => 'La spécialité de la filière choisie', 'class' => 'form-control']) !!}
+                                    {!! Form::text('specialite', $pcharge->specialisation ?? old('specialite'), ['placeholder' => 'La spécialité de la filière choisie', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('specialite'))
                                             @foreach ($errors->get('specialite') as $message)
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('CIN') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('cin', $pcharge->cin, ['placeholder' => 'Votre numéro de cin', 'class' => 'form-control']) !!}
+                                    {!! Form::text('cin', $pcharge->cin ?? old('cin'), ['placeholder' => 'Votre numéro de cin', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('cin'))
                                             @foreach ($errors->get('cin') as $message)
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Prénom') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('firstname', $pcharge->demandeur->user->firstname, ['placeholder' => 'Votre prénom', 'class' => 'form-control']) !!}
+                                    {!! Form::text('firstname', $pcharge->demandeur->user->firstname ?? old('firstname'), ['placeholder' => 'Votre prénom', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('firstname'))
                                             @foreach ($errors->get('firstname') as $message)
@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Nom') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('name', $pcharge->demandeur->user->name, ['placeholder' => 'Votre nom', 'class' => 'form-control', 'id' => 'nom']) !!}
+                                    {!! Form::text('name', $pcharge->demandeur->user->name ?? old('name'), ['placeholder' => 'Votre nom', 'class' => 'form-control', 'id' => 'nom']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('name'))
                                             @foreach ($errors->get('name') as $message)
@@ -150,7 +150,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Date naissance') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::date('date', $pcharge->demandeur->user->date_naissance->format('Y-m-d'), ['placeholder' => 'Votre date de naissance', 'class' => 'form-control']) !!}
+                                    {!! Form::date('date', $pcharge->demandeur->user->date_naissance->format('Y-m-d') ?? old('date'), ['placeholder' => 'Votre date de naissance', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('date'))
                                             @foreach ($errors->get('date') as $message)
@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Lieu naissance') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('lieu_naissance', $pcharge->demandeur->user->lieu_naissance, ['placeholder' => 'Votre lieu de naissance', 'class' => 'form-control', 'id' => 'lieu_naissance']) !!}
+                                    {!! Form::text('lieu_naissance', $pcharge->demandeur->user->lieu_naissance ?? old('lieu_naissance'), ['placeholder' => 'Votre lieu de naissance', 'class' => 'form-control', 'id' => 'lieu_naissance']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('lieu_naissance'))
                                             @foreach ($errors->get('lieu_naissance') as $message)
@@ -172,7 +172,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Email') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('email', $pcharge->demandeur->user->email, ['placeholder' => 'Numero de email', 'class' => 'form-control']) !!}
+                                    {!! Form::text('email', $pcharge->demandeur->user->email ?? old('email'), ['placeholder' => 'Numero de email', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('email'))
                                             @foreach ($errors->get('email') as $message)
@@ -183,7 +183,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('civilite') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], $pcharge->demandeur->user->civilite, ['placeholder' => '', 'class' => 'form-control', 'id' => 'civilite']) !!}
+                                    {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], $pcharge->demandeur->user->civilite ?? old('civilite'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'civilite']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('civilite'))
                                             @foreach ($errors->get('civilite') as $message)
@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('professionnelle', $professionnelle, $pcharge->demandeur->user->professionnelle->name, ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                    {!! Form::select('professionnelle', $professionnelle, $pcharge->demandeur->user->professionnelle->name ?? old('professionnelle'), ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('professionnelle'))
                                             @foreach ($errors->get('professionnelle') as $message)
@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Telephone portable') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('telephone', $pcharge->demandeur->user->telephone, ['placeholder' => 'Numero de telephone', 'class' => 'form-control']) !!}
+                                    {!! Form::text('telephone', $pcharge->demandeur->user->telephone ?? old('telephone'), ['placeholder' => 'Numero de telephone', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('telephone'))
                                             @foreach ($errors->get('telephone') as $message)
@@ -227,7 +227,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                     {!! Form::label('Adresse résidence') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::textarea('adresse', $pcharge->demandeur->user->adresse, ['placeholder' => 'Votre adresse de résidence', 'class' => 'form-control', 'id' => 'adresse', 'rows' => '1']) !!}
+                                    {!! Form::textarea('adresse', $pcharge->demandeur->user->adresse ?? old('adresse'), ['placeholder' => 'Votre adresse de résidence', 'class' => 'form-control', 'id' => 'adresse', 'rows' => '1']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('adresse'))
                                             @foreach ($errors->get('adresse') as $message)
@@ -238,7 +238,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Commune résidence') !!}
-                                    {!! Form::select('commune', $communes, $pcharge->commune->nom, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
+                                    {!! Form::select('commune', $communes, $pcharge->commune->nom ?? old('commune'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('commune'))
                                             @foreach ($errors->get('commune') as $message)
@@ -249,7 +249,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Telephone secondaire') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('fixe', $pcharge->demandeur->user->fixe, ['placeholder' => 'Numero de secondaire', 'class' => 'form-control']) !!}
+                                    {!! Form::text('fixe', $pcharge->demandeur->user->fixe ?? old('fixe'), ['placeholder' => 'Numero de secondaire', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('fixe'))
                                             @foreach ($errors->get('fixe') as $message)
@@ -260,7 +260,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Téléphone fax') !!}
-                                    {!! Form::text('fax', $pcharge->demandeur->user->fax, ['placeholder' => 'Numero de fax', 'class' => 'form-control']) !!}
+                                    {!! Form::text('fax', $pcharge->demandeur->user->fax ?? old('fax'), ['placeholder' => 'Numero de fax', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('fax'))
                                             @foreach ($errors->get('fax') as $message)
@@ -271,7 +271,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Boite postale (BP)') !!}
-                                    {!! Form::text('bp', $pcharge->demandeur->user->bp, ['placeholder' => 'Numero de bp', 'class' => 'form-control']) !!}
+                                    {!! Form::text('bp', $pcharge->demandeur->user->bp ?? old('bp'), ['placeholder' => 'Numero de bp', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('bp'))
                                             @foreach ($errors->get('bp') as $message)
@@ -282,7 +282,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Inscription') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('inscription', $pcharge->inscription, ['placeholder' => 'Montant inscription', 'class' => 'form-control', 'id' => 'inscription']) !!}
+                                    {!! Form::text('inscription', $pcharge->inscription ?? old('inscription'), ['placeholder' => 'Montant inscription', 'class' => 'form-control', 'id' => 'inscription']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('inscription'))
                                             @foreach ($errors->get('inscription') as $message)
@@ -293,7 +293,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Montant') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('montant', $pcharge->montant, ['placeholder' => 'Montant annuelle de la formation', 'class' => 'form-control', 'id' => 'montant']) !!}
+                                    {!! Form::text('montant', $pcharge->montant ?? old('montant'), ['placeholder' => 'Montant annuelle de la formation', 'class' => 'form-control', 'id' => 'montant']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('montant'))
                                             @foreach ($errors->get('montant') as $message)
@@ -304,7 +304,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Durée') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::number('duree', $pcharge->duree, ['placeholder' => 'Durée de la formation', 'class' => 'form-control', 'id' => 'duree', 'min' => '1', 'max' => '3']) !!}
+                                    {!! Form::number('duree', $pcharge->duree ?? old('duree'), ['placeholder' => 'Durée de la formation', 'class' => 'form-control', 'id' => 'duree', 'min' => '1', 'max' => '3']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('duree'))
                                             @foreach ($errors->get('duree') as $message)
@@ -315,7 +315,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Niveau entrée') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('niveauentree', $pcharge->niveauentree, ['placeholder' => 'Niveau entrée de la formation', 'class' => 'form-control', 'id' => 'niveauentree']) !!}
+                                    {!! Form::text('niveauentree', $pcharge->niveauentree ?? old('niveauentree'), ['placeholder' => 'Niveau entrée de la formation', 'class' => 'form-control', 'id' => 'niveauentree']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('niveauentree'))
                                             @foreach ($errors->get('niveauentree') as $message)
@@ -326,7 +326,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Niveau sortie') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('niveausortie', $pcharge->niveausortie, ['placeholder' => 'Niveau sortie de la formation', 'class' => 'form-control', 'id' => 'niveausortie']) !!}
+                                    {!! Form::text('niveausortie', $pcharge->niveausortie ?? old('niveausortie'), ['placeholder' => 'Niveau sortie de la formation', 'class' => 'form-control', 'id' => 'niveausortie']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('niveausortie'))
                                             @foreach ($errors->get('niveausortie') as $message)
@@ -348,7 +348,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     {!! Form::label('Niveau étude:') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('etude', $etude, $pcharge->etude->name, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
+                                    {!! Form::select('etude', $etude, $pcharge->etude->name ?? old('etude'), ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('etude'))
                                             @foreach ($errors->get('etude') as $message)
@@ -359,7 +359,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     {!! Form::label('Dernier diplôme :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('diplome', $diplomes, $pcharge->demandeur->diplome->name, ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
+                                    {!! Form::select('diplome', $diplomes, $pcharge->demandeur->diplome->name ?? old('diplome'), ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('diplome'))
                                             @foreach ($errors->get('diplome') as $message)
@@ -368,18 +368,33 @@
                                         @endif
                                     </small>
                                 </div>
-                                {!! Form::hidden('username', $pcharge->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
-                                {!! Form::hidden('numero', $pcharge->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
-                                <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
-                                    placeholder="Mot de passe">
-                                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                    <button type="submit" class="btn btn-primary"><i
-                                            class="far fa-paper-plane"></i>&nbsp;Modifier</button>
+                                @can('user-list')
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                            {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
+                                            {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
+                                            <small id="emailHelp" class="form-text text-muted">
+                                                @if ($errors->has('statut'))
+                                                    @foreach ($errors->get('statut') as $message)
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @endforeach
+                                                @endif
+                                            </small>
+                                        </div>
+                                    </div>
+                                    @endcan
+                                    {!! Form::hidden('username', $pcharge->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
+                                    {!! Form::hidden('numero', $pcharge->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
+                                    <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
+                                        placeholder="Mot de passe">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                        <button type="submit" class="btn btn-primary"><i
+                                                class="far fa-paper-plane"></i>&nbsp;Modifier</button>
+                                    </div>
+                                    {!! Form::close() !!}
                                 </div>
-                                {!! Form::close() !!}
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endsection
+        @endsection

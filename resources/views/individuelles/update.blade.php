@@ -169,7 +169,7 @@
                             </div>
                             <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                 {!! Form::label('Situation familiale :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('familiale', ['Célibataire' => 'Célibataire', 'Divorcé(e)' => 'Divorcé(e)'], $individuelle->demandeur->user->situation_familiale ?? old('familiale'), ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                {!! Form::select('familiale', $familiale, $individuelle->demandeur->user->familiale->name ?? old('familiale'), ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('familiale'))
                                         @foreach ($errors->get('familiale') as $message)
@@ -180,7 +180,7 @@
                             </div>
                             <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                 {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('professionnelle', $professionnelle, $individuelle->demandeur->user->professionnelle->name, ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                {!! Form::select('professionnelle', $professionnelle, $individuelle->demandeur->user->professionnelle->name ?? old('professionnelle'), ['placeholder' => 'Situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('professionnelle'))
                                         @foreach ($errors->get('professionnelle') as $message)
@@ -190,8 +190,8 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
-                                {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('commune', $communes, $individuelle->demandeur->commune->nom ?? '', ['placeholder' => 'Choir une commune', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
+                                {!! Form::label('Commune') !!}
+                                {!! Form::select('commune', $communes, $individuelle->commune->nom, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('commune'))
                                         @foreach ($errors->get('commune') as $message)
@@ -266,7 +266,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('etude', $etude, $individuelle->etude->name, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
+                                {!! Form::select('etude', $etude, $individuelle->etude->name ?? old('etude'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('etude'))
                                         @foreach ($errors->get('etude') as $message)

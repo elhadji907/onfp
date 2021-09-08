@@ -38,7 +38,7 @@
                                         {{-- <th>Username</th> --}}
                                         <th width="300px">Role</th>
                                         {{--  <th width="200px">Permission</th>  --}}
-                                        <th width="50px">Action</th>
+                                        <th width="70px">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">

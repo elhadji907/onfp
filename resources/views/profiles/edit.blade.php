@@ -182,41 +182,26 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="professionnelle">{{ __('Situation professionnelle') }}</label>
-                                    <select name="professionnelle" id="professionnelle"
-                                        class="form-control @error('professionnelle') is-invalid @enderror">
-                                        <option value="{{ Auth::user()->situation_professionnelle }}">
-                                            {{ Auth::user()->situation_professionnelle }}
-                                        </option>
-                                        @foreach ($professionnelles as $professionnelle)
-                                            <option value="{{ $professionnelle->situation_professionnelle }}">
-                                                {{ $professionnelle->situation_professionnelle }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('professionnelle')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('professionnelle', $professionnelles, Auth::user()->professionnelle->name ?? old('professionnelle'), ['placeholder' => 'Situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('professionnelle'))
+                                            @foreach ($errors->get('professionnelle') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="familiale">{{ __('Situation familiale') }}</label>
-                                    <select name="familiale" id="familiale"
-                                        class="form-control @error('familiale') is-invalid @enderror">
-                                        <option value="{{ Auth::user()->situation_familiale }}">{{ Auth::user()->situation_familiale }}
-                                        </option>
-                                        @foreach ($familiales as $familiale)
-                                            <option value="{{ $familiale->situation_familiale }}">
-                                                {{ $familiale->situation_familiale }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('familiale')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    {!! Form::label('Situation familiale :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('familiale', $familiales, Auth::user()->familiale->name ?? old('familiale'), ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('familiale'))
+                                            @foreach ($errors->get('familiale') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
                                 </div>
                             </div>
                             <div class="form-row">

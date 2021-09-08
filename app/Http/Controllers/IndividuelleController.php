@@ -338,7 +338,6 @@ class IndividuelleController extends Controller
 
         /* $this->authorize('update',  $individuelle); */
 
-        if (!$user_connect->hasRole('Demandeur')) {
             $this->validate(
                 $request,
                 [
@@ -357,40 +356,13 @@ class IndividuelleController extends Controller
                'email'               =>  'required|email|max:255|unique:users,email,'.$individuelle->demandeur->user->id,
                'familiale'           =>  'required',
                'professionnelle'     =>  'required',
-               'niveau_etude'        =>  'required',
+               'etude'               =>  'required',
                'commune'             =>  'required',
                'modules'             =>  'required',
                'diplome'             =>  'required',
                'option'              =>  'required',
                ]
             );
-        } else {
-            $this->validate(
-                $request,
-                [
-               'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:individuelles,cin,{$individuelle->id},id,deleted_at,NULL",
-               'prenom'              =>  'required|string|max:50',
-               'nom'                 =>  'required|string|max:50',
-               'date_naiss'          =>  'required|date_format:Y-m-d',
-               'date_depot'          =>  'required|date_format:Y-m-d',
-               'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
-               'etablissement'       =>  'required|string|max:100',
-               'adresse'             =>  'required|string|max:100',
-               'prerequis'           =>  'required|string|max:1500',
-               'motivation'          =>  'required|string|max:1500',
-               'email'               =>  'required|email|max:255',
-               'familiale'           =>  'required',
-               'professionnelle'     =>  'required',
-               'niveau_etude'        =>  'required',
-               'commune'             =>  'required',
-               'modules'             =>  'required',
-               'diplome'             =>  'required',
-               'option'              =>  'required',
-               ]
-            );
-        }
 
         $updated_by1 = $user_connect->firstname;
         $updated_by2 = $user_connect->name;
@@ -478,7 +450,8 @@ class IndividuelleController extends Controller
         $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
         $individuelle->prerequis                =     $request->input('prerequis');
         $individuelle->date_depot               =     $request->input('date_depot');
-        $individuelle->communes_id              =      $commune_id;
+        $individuelle->communes_id              =     $commune_id;
+        $individuelle->etudes_id                =     $etude_id;
         $individuelle->demandeurs_id            =     $demandeur->id;
 
         $individuelle->save();

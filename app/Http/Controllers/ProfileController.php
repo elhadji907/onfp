@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Courrier;
+use App\Models\Demandeur;
+use App\Models\Professionnelle;
+use App\Models\Familiale;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Auth;
-use App\Models\Courrier;
-use App\Models\Demandeur;
 
 class ProfileController extends Controller
 {    
@@ -134,8 +136,13 @@ class ProfileController extends Controller
         /* $this->authorize('update', $user->profile); */
 
         $civilites = User::select('civilite')->distinct()->get();
-        $professionnelles = User::select('situation_professionnelle')->distinct()->get();
-        $familiales = User::select('situation_familiale')->distinct()->get();
+        /* $professionnelles = User::select('situation_professionnelle')->distinct()->get();
+        $familiales = User::select('situation_familiale')->distinct()->get(); */
+        
+        $professionnelles = Professionnelle::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $familiales = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
+
         //dd($civilites);
         return view('profiles.edit', compact('user', 'civilites', 'professionnelles', 'familiales'));
     }
@@ -178,6 +185,9 @@ class ProfileController extends Controller
                 $sexe = "";
             }
 
+        $familiale_id     = Familiale::where('name', $request->input('familiale'))->first()->id;
+        $professionnelle_id     = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
+        /* dd($professionnelle_id); */
          if (request('image')) {   
         $imagePath = request('image')->store('avatars', 'public');
         
@@ -194,8 +204,6 @@ class ProfileController extends Controller
         $fileNameToStore = 'avatars/'.$filename.''.time().'.'.$extension;
   
         //dd($fileNameToStore);
-
-
 
         $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
         $image->save();
@@ -215,8 +223,8 @@ class ProfileController extends Controller
                 'fixe'                          =>       $data['fixe'],
                 'bp'                            =>       $data['bp'],
                 'adresse'                       =>       $data['adresse'],
-                'situation_familiale'           =>       $data['familiale'],
-                'situation_professionnelle'     =>       $data['professionnelle'],
+                'familiales_id'                 =>       $familiale_id,
+                'professionnelles_id'           =>       $professionnelle_id,
                 'fax'                           =>       $data['fax']
             ]);
 
@@ -234,8 +242,8 @@ class ProfileController extends Controller
                 'fixe'                          =>       $data['fixe'],
                 'bp'                            =>       $data['bp'],
                 'adresse'                       =>       $data['adresse'],
-                'situation_familiale'           =>       $data['familiale'],
-                'situation_professionnelle'     =>       $data['professionnelle'],
+                'familiales_id'                 =>       $familiale_id,
+                'professionnelles_id'           =>       $professionnelle_id,
                 'fax'                           =>       $data['fax']
                 ]);
         }

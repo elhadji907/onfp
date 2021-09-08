@@ -88,8 +88,7 @@ class PchargeController extends Controller
         $etude = Etude::distinct('name')->get()->pluck('name', 'id')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         
-        $scolarites = Scolarite::distinct('annee')
-                                ->where('statut', '!=', 'Fermé')
+        $scolarites = Scolarite::where('statut', '!=', 'Fermé')
                                 ->get()
                                 ->pluck('annee', 'id')
                                 ->unique();
@@ -304,7 +303,6 @@ class PchargeController extends Controller
             $user_connect->civilite                     =      $request->input('civilite');
             $user_connect->firstname                    =      $request->input('firstname');
             $user_connect->name                         =      $request->input('name');
-            $user_connect->username                     =      $username;
             $user_connect->telephone                    =      $telephone;
             $user_connect->fixe                         =      $fixe;
             $user_connect->bp                           =      $request->input('bp');
@@ -393,8 +391,13 @@ class PchargeController extends Controller
 
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
 
-        $scolarites = Scolarite::distinct('annee')
+      /*   $scolarites = Scolarite::distinct('annee')
                                 ->where('statut', '!=', 'Ouvert')
+                                ->get()
+                                ->pluck('annee', 'annee')
+                                ->unique(); */
+
+       $scolarites = Scolarite::where('statut', '!=', 'Fermé')
                                 ->get()
                                 ->pluck('annee', 'annee')
                                 ->unique();
@@ -418,7 +421,7 @@ class PchargeController extends Controller
         $demandeur      =   $pcharge->demandeur;
 
         $this->validate($request, [
-            'cin'                   =>  "required|string|min:13|max:15|unique:pcharges,cin,{$pcharge->id},id,deleted_at,NULL",
+            'cin'                   =>  'required|string|min:13|max:15|unique:pcharges,cin,'.$pcharge->id,
             'civilite'              =>  'required|string',
             'firstname'             =>  'required|string|max:50',
             'name'                  =>  'required|string|max:50',
@@ -461,9 +464,9 @@ class PchargeController extends Controller
 
         $diplome_id     = Diplome::where('name', $request->input('diplome'))->first()->id;
         $familiale_id     = Familiale::where('name', $request->input('familiale'))->first()->id;
+        $professionnelle_id     = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
         $commune_id     = Commune::where('nom', $request->input('commune'))->first()->id;
         $etablissement_id     = Etablissement::where('name', $request->input('etablissement'))->first()->id;
-        $professionnelle_id     = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
         $filiere_id     = Filiere::where('name', $request->input('filiere'))->first()->id;
         $etude_id     = Etude::where('name', $request->input('etude'))->first()->id;
         $scolarite_id     = Scolarite::where('annee', $request->input('scolarite'))->first()->id;
@@ -525,6 +528,7 @@ class PchargeController extends Controller
         $pcharge->typedemande               =      $request->input('typedemande');
         $pcharge->date_depot                =      $request->input('date_depot');
         $pcharge->statut                    =      $request->input('statut');
+        $pcharge->avis_dg                   =      $request->input('avis_dg');
         $pcharge->etablissements_id         =      $etablissement_id;
         $pcharge->filieres_id               =      $filiere_id;
         $pcharge->etudes_id                 =      $etude_id;
