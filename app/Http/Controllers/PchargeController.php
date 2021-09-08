@@ -446,7 +446,7 @@ class PchargeController extends Controller
             'commune'               =>  'required',
             'typedemande'           =>  'required',
             'scolarite'             =>  'required|string',
-            'avis_dg'               =>  'required',
+            'avis_dg'               =>  'sometimes',
             'montant'               =>  'required',
         ]);
 
@@ -527,7 +527,9 @@ class PchargeController extends Controller
         $pcharge->specialisation            =      $request->input('specialite');
         $pcharge->typedemande               =      $request->input('typedemande');
         $pcharge->date_depot                =      $request->input('date_depot');
-        $pcharge->statut                    =      $request->input('statut');
+        if ($user_connect->hasRole('Administrateur|super-admin')) {
+            $pcharge->statut                    =      $request->input('statut');
+        }
         $pcharge->avis_dg                   =      $request->input('avis_dg');
         $pcharge->etablissements_id         =      $etablissement_id;
         $pcharge->filieres_id               =      $filiere_id;

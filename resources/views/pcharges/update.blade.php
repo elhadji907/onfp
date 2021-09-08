@@ -34,7 +34,7 @@
                             {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
 
                             <div class="form-row">
-                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     {!! Form::label('Etablissement') !!}
                                     {!! Form::select('etablissement', $etablissements, $pcharge->etablissement->name ?? old('etablissement'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'etablissements']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -45,23 +45,12 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     {!! Form::label('Scolarité') !!}
                                     {!! Form::select('scolarite', $scolarites, $pcharge->scolarite->annee ?? old('scolarite'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'scolarite']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('scolarite'))
                                             @foreach ($errors->get('scolarite') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->typedemande ?? old('typedemande'), ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('typedemande'))
-                                            @foreach ($errors->get('typedemande') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
@@ -83,27 +72,29 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Montant demandé') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('montant', $pcharge->montant ?? old('montant'), ['placeholder' => 'Montant demandé', 'class' => 'form-control', 'id' => 'montant']) !!}
+                                    {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->typedemande ?? old('typedemande'), ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('montant'))
-                                            @foreach ($errors->get('montant') as $message)
+                                        @if ($errors->has('typedemande'))
+                                            @foreach ($errors->get('typedemande') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
                                     </small>
                                 </div>
+                                @can('user-edit')
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Montant accordé') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('avis_dg', $pcharge->avis_dg ?? old('avis_dg'), ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('avis_dg'))
-                                            @foreach ($errors->get('avis_dg') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                                        {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
+                                        {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
+                                        <small id="emailHelp" class="form-text text-muted">
+                                            @if ($errors->has('statut'))
+                                                @foreach ($errors->get('statut') as $message)
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @endforeach
+                                            @endif
+                                        </small>
+                                    </div>
+                                @endcan
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Spécialité') !!}
                                     {!! Form::text('specialite', $pcharge->specialisation ?? old('specialite'), ['placeholder' => 'La spécialité de la filière choisie', 'class' => 'form-control']) !!}
@@ -115,6 +106,30 @@
                                         @endif
                                     </small>
                                 </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    {!! Form::label('Montant demandé') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::text('montant', $pcharge->montant ?? old('montant'), ['placeholder' => 'Montant demandé', 'class' => 'form-control', 'id' => 'montant']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('montant'))
+                                            @foreach ($errors->get('montant') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                @can('user-edit')
+                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    {!! Form::label('Montant accordé') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::text('avis_dg', $pcharge->avis_dg ?? old('avis_dg'), ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('avis_dg'))
+                                            @foreach ($errors->get('avis_dg') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                @endcan
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('CIN') !!}(<span class="text-danger">*</span>)
                                     {!! Form::text('cin', $pcharge->cin ?? old('cin'), ['placeholder' => 'Votre numéro de cin', 'class' => 'form-control']) !!}
@@ -368,33 +383,18 @@
                                         @endif
                                     </small>
                                 </div>
-                                @can('user-list')
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                            {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
-                                            {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
-                                            <small id="emailHelp" class="form-text text-muted">
-                                                @if ($errors->has('statut'))
-                                                    @foreach ($errors->get('statut') as $message)
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @endforeach
-                                                @endif
-                                            </small>
-                                        </div>
-                                    </div>
-                                    @endcan
-                                    {!! Form::hidden('username', $pcharge->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
-                                    {!! Form::hidden('numero', $pcharge->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
-                                    <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
-                                        placeholder="Mot de passe">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="far fa-paper-plane"></i>&nbsp;Modifier</button>
-                                    </div>
-                                    {!! Form::close() !!}
+                                {!! Form::hidden('username', $pcharge->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
+                                {!! Form::hidden('numero', $pcharge->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
+                                <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
+                                    placeholder="Mot de passe">
+                                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary"><i
+                                            class="far fa-paper-plane"></i>&nbsp;Modifier</button>
                                 </div>
-                        </div>
+                                {!! Form::close() !!}
+                            </div>
                     </div>
                 </div>
             </div>
-        @endsection
+        </div>
+    @endsection
