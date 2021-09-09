@@ -191,7 +191,7 @@
                             </div>
                             <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                 {!! Form::label('Commune') !!}
-                                {!! Form::select('commune', $communes, $individuelle->commune->nom, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
+                                {!! Form::select('commune', $communes, $individuelle->commune->nom ?? old('nom'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('commune'))
                                         @foreach ($errors->get('commune') as $message)
@@ -366,7 +366,7 @@
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('experience :') !!}
-                                {!! Form::textarea('experience', $individuelle->demandeur->experience, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 2, 'class' => 'form-control']) !!}
+                                {!! Form::textarea('experience', $individuelle->experience, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 2, 'class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="form-row">

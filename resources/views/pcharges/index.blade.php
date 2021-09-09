@@ -127,14 +127,14 @@
                                         <th style="width:4%;">Cin</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-                                        {{-- <th style="width:9%;">Date nais.</th>
-                                        <th style="width:9%;">Lieu nais.</th> --}}
+                                        <th style="width:5%;">Âge</th>
+                                        {{-- <th style="width:9%;">Lieu nais.</th> --}}
                                         {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:30%;">Etablissement</th>
                                         <th style="width:5%;">Scolarité</th>
                                         <th style="width:12%;">Type demande</th>
-                                        <th style="width:10%;"></th>
+                                        <th style="width:12%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -143,8 +143,8 @@
                                         <th>Cin</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-                                        {{-- <th>Date nais.</th>
-                                        <th>Lieu nais.</th> --}}
+                                        <th>Âge</th>
+                                        {{-- <th>Lieu nais.</th> --}}
                                         {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
@@ -163,8 +163,14 @@
                                             </td>
                                             <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!}</td>
                                             <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
-                                            {{-- <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                            <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td> --}}
+                                            {{-- <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td> --}}
+                                            <td>{!! number_format(Carbon\Carbon::now()->floatDiffInYears($pcharge->demandeur->user->date_naissance), 0, ',', ' ') . ' ' !!}</td>
+                                           {{--   <td>
+                                                <a href="{{ url('diffage', ['$age' => $pcharge->demandeur->user->date_naissance, '$id' => $pcharge->id]) }}"
+                                                    class="btn btn-outline-success btn-sm">
+                                                    {!! number_format(Carbon\Carbon::now()->floatDiffInYears($pcharge->demandeur->user->date_naissance), 0, ',', ' ') . ' ' !!}</a>
+                                            </td>  --}}
+                                            {{-- <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td> --}}
                                             {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
                                             <td>{!! $pcharge->etablissement->name ?? '' !!}</td>
@@ -176,7 +182,7 @@
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                <a href="{!! url('pcharges/' . $pcharge->id) !!}" class='btn btn-primary btn-sm'
+                                                <a href="{{ url('pdetails', ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) }}" class='btn btn-primary btn-sm'
                                                     title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>

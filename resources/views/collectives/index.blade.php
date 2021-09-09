@@ -80,8 +80,9 @@
                           <i class="far fa-edit">&nbsp;</i>
                         </a>
                         &nbsp;
-                        <a href="{!! url('demandeurs/' .$collective->demandeur->id) !!}" class= 'btn btn-primary btn-sm' title="voir">
-                          <i class="far fa-eye">&nbsp;</i>
+                        <a href="{{ url('coldetails', ['$id' => $collective->id]) }}" class='btn btn-primary btn-sm'
+                            title="voir">
+                            <i class="far fa-eye">&nbsp;</i>
                         </a>
                         &nbsp;
                         {!! Form::open(['method'=>'DELETE', 'url'=>'collectives/' .$collective->id, 'id'=>'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}

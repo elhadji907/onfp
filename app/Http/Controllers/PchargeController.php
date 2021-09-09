@@ -123,12 +123,12 @@ class PchargeController extends Controller
             'telephone'             =>  'required|string|max:50',
             'email'                 =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
             'adresse'               =>  'required|string',
+            'specialite'            =>  'required|string',
             'fixe'                  =>  'required|string|max:50',
             'date'                  =>  'required|date',
             'lieu_naissance'        =>  'required|string|max:50',
             'etablissement'         =>  'required|exists:etablissements,id',
             'filiere'               =>  'required|exists:filieres,id',
-            'familiale'             =>  'required',
             'professionnelle'       =>  'required',
             'etude'                 =>  'required',
             'inscription'           =>  'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -152,12 +152,12 @@ class PchargeController extends Controller
                 'telephone'             =>  'required|string|max:50',
                 'email'                 =>  'required|email|max:255|unique:users,email,'.$user_connect->id,
                 'adresse'               =>  'required|string',
+                'specialite'            =>  'required|string',
                 'fixe'                  =>  'required|string|max:50',
                 'date'                  =>  'required|date',
                 'lieu_naissance'        =>  'required|string|max:50',
                 'etablissement'         =>  'required|exists:etablissements,id',
                 'filiere'               =>  'required|exists:filieres,id',
-                'familiale'             =>  'required',
                 'professionnelle'       =>  'required',
                 'etude'                 =>  'required',
                 'inscription'           =>  'required|regex:/^\d+(\.\d{1,2})?$/',
@@ -364,9 +364,55 @@ class PchargeController extends Controller
      */
     public function show(Pcharge $pcharge)
     {
-        //
+        $utilisateurs = $pcharge->demandeur->user;
+
+        $civilites = User::pluck('civilite', 'civilite');
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $filieres = Filiere::distinct('name')->get()->pluck('name', 'id')->unique();
+        $scolarites = Scolarite::distinct('annee')->get()->pluck('annee', 'id')->unique();
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        
+        return view('pcharges.show', compact(
+            'pcharge',
+            'communes',
+            'familiale',
+            'professionnelle',
+            'modules',
+            'filieres',
+            'scolarites',
+            'diplomes',
+            'utilisateurs',
+            'civilites'
+        ));
     }
 
+    public function details($id, $pcharge)
+    {        
+
+        $demandeur = Demandeur::get()->where('id','=',$id);
+        $pcharges = Pcharge::get()->where('id','=',$pcharge);
+
+        $civilites = User::pluck('civilite', 'civilite');
+
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+
+        return view('pcharges.details', compact(
+            'demandeur',
+            'pcharges',
+            'communes',
+            'modules',
+            'diplomes',
+            'civilites'
+        ));
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -419,9 +465,8 @@ class PchargeController extends Controller
         $user_connect   =   $pcharge->demandeur->user;
         $utilisateur    =   $user_connect;
         $demandeur      =   $pcharge->demandeur;
-
         $this->validate($request, [
-            'cin'                   =>  'required|string|min:13|max:15|unique:pcharges,cin,'.$pcharge->id,
+            /* 'cin'                   =>  'required|string|min:13|max:15|unique:pcharges,cin,'.$pcharge->id, */
             'civilite'              =>  'required|string',
             'firstname'             =>  'required|string|max:50',
             'name'                  =>  'required|string|max:50',
@@ -539,7 +584,7 @@ class PchargeController extends Controller
         $pcharge->demandeurs_id             =      $demandeur->id;
 
         $pcharge->save();
-            
+        
         return redirect()->route('pcharges.index')->with('success', 'demande modifiée avec succès !');
     }
 
@@ -573,5 +618,10 @@ class PchargeController extends Controller
         $effectif = Pcharge::get()->where('cin','=',$cin)->count();
 
         return view('pcharges.countscolaritenbre', compact('cin','pcharges', 'effectif'));
+    }
+    
+    public function diffage($age, $id)
+    {        
+        //
     }
 }

@@ -37,7 +37,7 @@ class UserFactory extends Factory
             'telephone' => $this->faker->e164PhoneNumber,
             'fixe' => $this->faker->phoneNumber,
             'sexe' => SnmG::getSexe(),
-            'date_naissance' => $this->faker->dateTime(),
+            'date_naissance' => $this->faker->dateTimeBetween('-35 years', '-18 years'),
             'lieu_naissance' => SnmG::getLieunaissance(),
             'adresse' => $this->faker->address,
             'bp' => $this->faker->postcode,

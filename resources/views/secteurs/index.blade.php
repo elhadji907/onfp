@@ -33,9 +33,9 @@
                           </thead>
                           <tfoot class="table-dark">
                               <tr>
-                                <th>ID</th>
+                                <th style="width:12%;">ID</th>
                                  <th>{!! __("Secteur d'activité") !!}</th>
-                                <th>Action</th>
+                                <th style="width:12%;">Action</th>
                               </tr>
                             </tfoot>
                           <tbody>

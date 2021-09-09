@@ -4,16 +4,6 @@
     <div class="content">
         <div class="container col-12 col-sm-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 col-xl-12">
             <div class="container-fluid">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger mt-2">
-                        <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <a class="btn btn-outline-primary" href="{{ route('pcharges.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
@@ -83,7 +73,7 @@
                                     </small>
                                 </div>
                                 @can('user-edit')
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                         {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
                                         {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
                                         <small id="emailHelp" class="form-text text-muted">
@@ -118,17 +108,17 @@
                                     </small>
                                 </div>
                                 @can('user-edit')
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Montant accordé') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('avis_dg', $pcharge->avis_dg ?? old('avis_dg'), ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('avis_dg'))
-                                            @foreach ($errors->get('avis_dg') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        {!! Form::label('Montant accordé') !!}(<span class="text-danger">*</span>)
+                                        {!! Form::text('avis_dg', $pcharge->avis_dg ?? old('avis_dg'), ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
+                                        <small id="emailHelp" class="form-text text-muted">
+                                            @if ($errors->has('avis_dg'))
+                                                @foreach ($errors->get('avis_dg') as $message)
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @endforeach
+                                            @endif
+                                        </small>
+                                    </div>
                                 @endcan
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('CIN') !!}(<span class="text-danger">*</span>)
@@ -392,6 +382,52 @@
                                             class="far fa-paper-plane"></i>&nbsp;Modifier</button>
                                 </div>
                                 {!! Form::close() !!}
+                                <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Verifier les
+                                                    donn&eacute;es
+                                                    saisies svp</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @if ($errors->any())
+
+                                                    @if (count($errors) > 0)
+                                                        <div class="alert alert-danger mt-2">
+                                                            <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                            entrées.
+                                                            <ul>
+                                                                @foreach ($errors->all() as $error)
+                                                                    <li>{{ $error }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                    @push('scripts')
+                                                        <script type="text/javascript">
+                                                            $(document).ready(function() {
+                                                                $("#error-modal").modal({
+                                                                    'show': true,
+                                                                })
+                                                            });
+                                                        </script>
+
+                                                    @endpush
+                                                @endif
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                     </div>
                 </div>

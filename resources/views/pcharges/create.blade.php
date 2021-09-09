@@ -4,23 +4,13 @@
     <div class="content">
         <div class="container col-12 col-sm-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 col-xl-12">
             <div class="container-fluid">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger mt-2">
-                        <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <a class="btn btn-outline-primary" href="{{ route('pcharges.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
                     <a class="btn btn-outline-primary" href="{{ route('filieres.create') }}" target="_blank"> <i
                             class="fas fa-plus"></i>&nbsp;Ajouter filière</i></a>
-                   {{--   <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
-                            class="fas fa-plus"></i>&nbsp;Ajouter spécialité</i></a>  --}}
+                    {{-- <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
+                            class="fas fa-plus"></i>&nbsp;Ajouter spécialité</i></a> --}}
 
                 </div>
                 <div class="card border-success">
@@ -36,10 +26,10 @@
                         {!! Form::open(['route' => 'pcharges.store', 'method' => 'POST']) !!}
                         <input type="hidden" name="etablissement" value="{{ $etablissement->id }}" class="form-control"
                             name="inputName" id="inputName" placeholder="">
-                            
-                            {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
-                            
-                            {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
+
+                        {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
+
+                        {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
 
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -52,7 +42,7 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>                     
+                            </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'typedemande']) !!}
@@ -67,9 +57,9 @@
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Filière') !!}
                                 {!! Form::select('filiere', $filieres, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'filiere']) !!}
-                                <small id="emailHelp"
-                                    class="form-text text-muted">{{ __("Merci de ") }}
-                                    <a href="{{ route('filieres.create') }}" target="_blank">cliquer ici</a> {{ __("pour ajouter une nouvelle filière") }}
+                                <small id="emailHelp" class="form-text text-muted">{{ __('Merci de ') }}
+                                    <a href="{{ route('filieres.create') }}" target="_blank">cliquer ici</a>
+                                    {{ __('pour ajouter une nouvelle filière') }}
                                 </small>
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('filiere'))
@@ -79,7 +69,7 @@
                                     @endif
                                 </small>
                             </div>
-                         {{--     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            {{-- <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('spécialité') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('specialite', $filierespecialites, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'filierespecialite']) !!}
                                 <small id="emailHelp"
@@ -93,7 +83,7 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>  --}}
+                            </div> --}}
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Spécialité') !!}
                                 {!! Form::text('specialite', null, ['placeholder' => 'La spécialité de la filière choisie', 'class' => 'form-control']) !!}
@@ -159,7 +149,7 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>                            
+                            </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('civilite') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'civilite']) !!}
@@ -335,13 +325,13 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>                   
+                            </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <label
                                     for="motivation">{{ __('Quelles sont vos motivations pour cette formation ?') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <textarea class="form-control  @error('motivation') is-invalid @enderror"
-                                    name="motivation" id="motivation" rows="3"
+                                <textarea class="form-control  @error('motivation') is-invalid @enderror" name="motivation"
+                                    id="motivation" rows="3"
                                     placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ old('motivation') }}</textarea>
                                 @error('motivation')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -377,6 +367,51 @@
                                         class="far fa-paper-plane"></i>&nbsp;Soumettre</button>
                             </div>
                             {!! Form::close() !!}
+                            <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es
+                                                saisies svp</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @if ($errors->any())
+
+                                                @if (count($errors) > 0)
+                                                    <div class="alert alert-danger mt-2">
+                                                        <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                        entrées.
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <li>{{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                                @push('scripts')
+                                                    <script type="text/javascript">
+                                                        $(document).ready(function() {
+                                                            $("#error-modal").modal({
+                                                                'show': true,
+                                                            })
+                                                        });
+                                                    </script>
+
+                                                @endpush
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

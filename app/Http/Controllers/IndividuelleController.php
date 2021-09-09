@@ -241,7 +241,6 @@ class IndividuelleController extends Controller
                 'information'       =>     $request->input('information'),
                 'date_depot'        =>     $request->input('date_depot'),
                 'nbre_pieces'       =>     $request->input('nombre_de_piece'),
-                'information'       =>     $request->input('information'),
                 'prerequis'         =>     $request->input('prerequis'),
                 'statut'            =>     'Attente',
                 'etudes_id'         =>     $etude_id,
@@ -289,6 +288,33 @@ class IndividuelleController extends Controller
             'programmes',
             'diplomes',
             'utilisateurs',
+            'civilites'
+        ));
+    }
+
+    public function details($id)
+    {
+        $individuelle = Individuelle::find($id);
+        
+        $civilites = User::pluck('civilite', 'civilite');
+
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
+    
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+
+        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+
+        return view('individuelles.details', compact(
+            'individuelle',
+            'communes',
+            'niveaux',
+            'modules',
+            'programmes',
+            'diplomes',
             'civilites'
         ));
     }

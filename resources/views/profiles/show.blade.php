@@ -315,15 +315,21 @@
                                             <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
                                             <td>
                                                 <span>
-                                                    @foreach ($individuelle->modules as $module)
-                                                        @if (isset($module->name))
-                                                            <h5><label
-                                                                    class="badge badge-success">{{ $individuelle->statut }}</label>
-                                                            </h5>
-                                                        @else
-                                                            <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                        @endif
-                                                    @endforeach
+                                                    @if (isset($individuelle->modules) && $individuelle->modules != '[]')
+                                                        @foreach ($individuelle->modules as $module)
+                                                            @if (isset($module->name))
+                                                                <h5><label
+                                                                        class="badge badge-success">{{ $individuelle->statut }}</label>
+                                                                </h5>
+                                                            @else
+                                                                <h5><label class="badge badge-danger">Invalide</label></h5>
+                                                            @endif
+                                                        @endforeach
+
+                                                    @else
+                                                        <h5><label class="badge badge-danger">Invalide</label></h5>
+
+                                                    @endif
                                                 </span>
                                             </td>
                                             <td class="d-flex align-items-baseline text-center-row">
@@ -332,8 +338,8 @@
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                <a href="{!! url('individuelles/' . $individuelle->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir">
+                                                <a href="{{ url('details', ['$id' => $individuelle->id]) }}"
+                                                    class='btn btn-primary btn-sm' title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 {{-- &nbsp;
@@ -392,15 +398,21 @@
                                             <td>{!! $collective->commune->arrondissement->departement->region->nom ?? '' !!}</td>
                                             <td>
                                                 <span>
-                                                    @foreach ($collective->modules as $module)
-                                                        @if (isset($module->name))
-                                                            <h5><label
-                                                                    class="badge badge-success">{{ $collective->statut }}</label>
-                                                            </h5>
-                                                        @else
-                                                            <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                        @endif
-                                                    @endforeach
+                                                    @if (isset($collective->modules) && $collective->modules != '[]')
+                                                        @foreach ($collective->modules as $module)
+                                                            @if (isset($module->name))
+                                                                <h5><label
+                                                                        class="badge badge-success">{{ $collective->statut }}</label>
+                                                                </h5>
+                                                            @else
+                                                                <h5><label class="badge badge-danger">Invalide</label></h5>
+                                                            @endif
+                                                        @endforeach
+
+                                                    @else
+                                                        <h5><label class="badge badge-danger">Invalide</label></h5>
+
+                                                    @endif
                                                 </span>
                                             </td>
                                             <td class="d-flex align-items-baseline text-center-row">
@@ -409,8 +421,8 @@
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                <a href="{!! url('collectives/' . $collective->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir">
+                                                <a href="{{ url('coldetails', ['$id' => $collective->id]) }}"
+                                                    class='btn btn-primary btn-sm' title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 {{-- &nbsp;
@@ -501,7 +513,7 @@
                     </div>
                 </div>
             </div>
-            {{--  <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            {{-- <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="mt-3 d-flex align-items-baseline align-middle">
                     <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
                             data-feather="book-open"></span>Devenir opérateur</a>
@@ -509,7 +521,7 @@
                         <i class="far fa-eye"></i>
                     </button>
                 </div>
-            </div>  --}}
+            </div> --}}
         </div>
     </div>
     <div class="modal fade" id="individuelles" tabindex="-1" role="dialog" aria-labelledby="individuellesTitle"

@@ -17,6 +17,13 @@ class FiliereSeeder extends Seeder
     {
         
         DB::table('filieres')->insert([
+            "name"=>"Autre",
+            'created_at' => now(),
+            'updated_at' => now(),
+            "uuid"=>Str::uuid(),
+        ]);
+
+        DB::table('filieres')->insert([
             "name"=>"FROID/CLIMATISATION",
             'created_at' => now(),
             'updated_at' => now(),

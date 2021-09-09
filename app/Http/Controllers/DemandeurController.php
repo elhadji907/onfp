@@ -316,7 +316,6 @@ class DemandeurController extends Controller
                 'programmes',
                 'diplomes',
                 'utilisateurs',
-                'roles',
                 'civilites'
             ));
         } elseif ($typesdemande === "Collective") {
@@ -329,7 +328,6 @@ class DemandeurController extends Controller
                 'programmes',
                 'diplomes',
                 'utilisateurs',
-                'roles',
                 'civilites'
             ));
         } else {

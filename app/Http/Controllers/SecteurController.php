@@ -75,10 +75,9 @@ class SecteurController extends Controller
      * @param  \App\Models\Secteur  $secteur
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Secteur $secteur)
     {
-        $secteur = Secteur::find($id);
-        return view('secteurs.update', compact('secteur','id'));
+        return view('secteurs.update', compact('secteur'));
     }
 
     /**
@@ -88,14 +87,14 @@ class SecteurController extends Controller
      * @param  \App\Models\Secteur  $secteur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Secteur $secteur)
     {       
         $this->validate(
             $request, 
             [
-                'name' =>  'required|string|max:50'
+                'name' =>  "required|string|max:50|unique:secteurs,name,{$secteur->id},id,deleted_at,NULL"
             ]);   
-        $secteur = Secteur::find($id);
+
         $secteur->name  =   $request->input('name');
         $secteur->save();
         return redirect()->route('secteurs.index')->with('success','enregistrement modifié avec succès !');

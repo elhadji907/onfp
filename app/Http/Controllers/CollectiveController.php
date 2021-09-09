@@ -314,6 +314,33 @@ class CollectiveController extends Controller
         ));
     }
 
+    public function details($id)
+    {
+        $collective = Collective::find($id);
+        
+        $civilites = User::pluck('civilite', 'civilite');
+
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
+    
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+
+        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+
+        return view('collectives.details', compact(
+            'collective',
+            'communes',
+            'niveaux',
+            'modules',
+            'programmes',
+            'diplomes',
+            'civilites'
+        ));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
