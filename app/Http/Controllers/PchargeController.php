@@ -352,7 +352,12 @@ class PchargeController extends Controller
             
             $pcharge->save();
 
-            return redirect()->route('pcharges.index')->with('success', 'renouvellement prise en compte !');
+            if ($user_connect->hasRole('Administrateur')) {
+                return redirect()->route('pcharges.index')->with('success', 'renouvellement prise en compte !');
+            } else {
+                return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
+            }
+            
         }
     }
 

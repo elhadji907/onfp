@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesoperateursTable extends Migration
+class CreateDemandeursdisponibilitesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modulesoperateurs';
+    public $tableName = 'demandeursdisponibilites';
 
     /**
      * Run the migrations.
-     * @table modulesoperateurs
+     * @table demandeursdisponibilites
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateModulesoperateursTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('modules_id');
-            $table->unsignedInteger('operateurs_id');
+            $table->unsignedInteger('demandeurs_id');
+            $table->unsignedInteger('disponibilites_id');
 
-            $table->index(["operateurs_id"], 'fk_modulesoperateurs_operateurs1_idx');
+            $table->index(["disponibilites_id"], 'fk_demandeurs_has_disponibilites_disponibilites1_idx');
 
-            $table->index(["modules_id"], 'fk_modulesoperateurs_modules1_idx');
+            $table->index(["demandeurs_id"], 'fk_demandeurs_has_disponibilites_demandeurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modulesoperateurs_modules1_idx')
-                ->references('id')->on('modules')
+            $table->foreign('demandeurs_id', 'fk_demandeurs_has_disponibilites_demandeurs1_idx')
+                ->references('id')->on('demandeurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('operateurs_id', 'fk_modulesoperateurs_operateurs1_idx')
-                ->references('id')->on('operateurs')
+            $table->foreign('disponibilites_id', 'fk_demandeurs_has_disponibilites_disponibilites1_idx')
+                ->references('id')->on('disponibilites')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

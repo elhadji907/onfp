@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $communes_id
  * @property int|null $scolarites_id
  * @property int|null $etudes_id
+ * @property int|null $typepcharges_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -58,6 +59,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Etude|null $etude
  * @property Filiere|null $filiere
  * @property Scolarite|null $scolarite
+ * @property Typepcharge|null $typepcharge
  * @property Collection|Nouvelle[] $nouvelles
  * @property Collection|Renouvellement[] $renouvellements
  *
@@ -82,7 +84,8 @@ class Pcharge extends Model
 		'filieres_id' => 'int',
 		'communes_id' => 'int',
 		'scolarites_id' => 'int',
-		'etudes_id' => 'int'
+		'etudes_id' => 'int',
+		'typepcharges_id' => 'int'
 	];
 
 	protected $dates = [
@@ -122,7 +125,8 @@ class Pcharge extends Model
 		'filieres_id',
 		'communes_id',
 		'scolarites_id',
-		'etudes_id'
+		'etudes_id',
+		'typepcharges_id'
 	];
 
 	public function demandeur()
@@ -153,6 +157,11 @@ class Pcharge extends Model
 	public function scolarite()
 	{
 		return $this->belongsTo(Scolarite::class, 'scolarites_id');
+	}
+
+	public function typepcharge()
+	{
+		return $this->belongsTo(Typepcharge::class, 'typepcharges_id');
 	}
 
 	public function nouvelles()

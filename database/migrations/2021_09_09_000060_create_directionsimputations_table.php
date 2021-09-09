@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBeneficiairesformationsTable extends Migration
+class CreateDirectionsimputationsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'beneficiairesformations';
+    public $tableName = 'directionsimputations';
 
     /**
      * Run the migrations.
-     * @table beneficiairesformations
+     * @table directionsimputations
      *
      * @return void
      */
@@ -22,23 +22,24 @@ class CreateBeneficiairesformationsTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('beneficiaires_id');
-            $table->unsignedInteger('formations_id');
+            $table->increments('id');
+            $table->unsignedInteger('directions_id');
+            $table->unsignedInteger('imputations_id');
 
-            $table->index(["formations_id"], 'fk_beneficiairesformations_formations1_idx');
+            $table->index(["imputations_id"], 'fk_directions_has_imputations_imputations1_idx');
 
-            $table->index(["beneficiaires_id"], 'fk_beneficiairesformations_beneficiaires1_idx');
+            $table->index(["directions_id"], 'fk_directions_has_imputations_directions1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('beneficiaires_id', 'fk_beneficiairesformations_beneficiaires1_idx')
-                ->references('id')->on('beneficiaires')
+            $table->foreign('directions_id', 'fk_directions_has_imputations_directions1_idx')
+                ->references('id')->on('directions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('formations_id', 'fk_beneficiairesformations_formations1_idx')
-                ->references('id')->on('formations')
+            $table->foreign('imputations_id', 'fk_directions_has_imputations_imputations1_idx')
+                ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

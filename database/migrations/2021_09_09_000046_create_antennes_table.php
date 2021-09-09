@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeescourriersTable extends Migration
+class CreateAntennesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'employeescourriers';
+    public $tableName = 'antennes';
 
     /**
      * Run the migrations.
-     * @table employeescourriers
+     * @table antennes
      *
      * @return void
      */
@@ -23,23 +23,17 @@ class CreateEmployeescourriersTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('employees_id');
-            $table->unsignedInteger('courriers_id');
+            $table->char('uuid', 36);
+            $table->string('name', 200)->nullable();
+            $table->unsignedInteger('regions_id')->nullable();
 
-            $table->index(["courriers_id"], 'fk_employeescourriers_courriers1_idx');
-
-            $table->index(["employees_id"], 'fk_employeescourriers_employees1_idx');
+            $table->index(["regions_id"], 'fk_antennes_regions1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('employees_id', 'fk_employeescourriers_employees1_idx')
-                ->references('id')->on('employees')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('courriers_id', 'fk_employeescourriers_courriers1_idx')
-                ->references('id')->on('courriers')
+            $table->foreign('regions_id', 'fk_antennes_regions1_idx')
+                ->references('id')->on('regions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

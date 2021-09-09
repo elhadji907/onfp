@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersimputationsTable extends Migration
+class CreateEmployeescourriersTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'usersimputations';
+    public $tableName = 'employeescourriers';
 
     /**
      * Run the migrations.
-     * @table usersimputations
+     * @table employeescourriers
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateUsersimputationsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('users_id');
-            $table->unsignedInteger('imputations_id');
+            $table->unsignedInteger('employees_id');
+            $table->unsignedInteger('courriers_id');
 
-            $table->index(["imputations_id"], 'fk_usersimputations_imputations1_idx');
+            $table->index(["courriers_id"], 'fk_employees_has_courriers_courriers1_idx');
 
-            $table->index(["users_id"], 'fk_usersimputations_users1_idx');
+            $table->index(["employees_id"], 'fk_employees_has_courriers_employees1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('users_id', 'fk_usersimputations_users1_idx')
-                ->references('id')->on('users')
+            $table->foreign('employees_id', 'fk_employees_has_courriers_employees1_idx')
+                ->references('id')->on('employees')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('imputations_id', 'fk_usersimputations_imputations1_idx')
-                ->references('id')->on('imputations')
+            $table->foreign('courriers_id', 'fk_employees_has_courriers_courriers1_idx')
+                ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

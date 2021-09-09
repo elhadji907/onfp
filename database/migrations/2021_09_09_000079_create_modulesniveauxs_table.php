@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDemandeursmodulesTable extends Migration
+class CreateModulesniveauxsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'demandeursmodules';
+    public $tableName = 'modulesniveauxs';
 
     /**
      * Run the migrations.
-     * @table demandeursmodules
+     * @table modulesniveauxs
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateDemandeursmodulesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('modules_id');
+            $table->unsignedInteger('niveauxs_id');
 
-            $table->index(["modules_id"], 'fk_demandeursmodules_modules1_idx');
+            $table->index(["niveauxs_id"], 'fk_modules_has_niveauxs_niveauxs1_idx');
 
-            $table->index(["demandeurs_id"], 'fk_demandeursmodules_demandeurs1_idx');
+            $table->index(["modules_id"], 'fk_modules_has_niveauxs_modules1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('demandeurs_id', 'fk_demandeursmodules_demandeurs1_idx')
-                ->references('id')->on('demandeurs')
+            $table->foreign('modules_id', 'fk_modules_has_niveauxs_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('modules_id', 'fk_demandeursmodules_modules1_idx')
-                ->references('id')->on('modules')
+            $table->foreign('niveauxs_id', 'fk_modules_has_niveauxs_niveauxs1_idx')
+                ->references('id')->on('niveauxs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

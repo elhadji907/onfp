@@ -126,7 +126,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], $collective->demandeur->user->sexe ?? old('sexe'), ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -136,36 +136,13 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                {!! Form::label('Situation professionnelle :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('professionnelle', 
-                                [
-                                    'Salarié CDD' => 'Salarié CDD', 
-                                    'Recherche d\'emploi' => 'Recherche d\'emploi',
-                                    'Salarié CDI' => 'Salarié CDI',
-                                    'Élève' => 'Élève',
-                                    'Étudiant' => 'Étudiant',
-                                    'Sans activité' => 'Sans activité',
-                                    'En stage' => 'En stage',
-                                    'Autre' => 'Autre'
-                                ], 
-                                $collective->demandeur->user->situation_professionnelle ?? old('professionnelle'), 
-                                ['placeholder' => 'sélectionner situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                            </div>                     
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('professionnelle', $professionnelle, $collective->demandeur->user->professionnelle->name ?? old('professionnelle'), ['placeholder' => 'Situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('professionnelle'))
                                         @foreach ($errors->get('professionnelle') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
-                            </div>                            
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('commune', $communes, $collective->demandeur->commune->nom ?? old('commune'), ['placeholder' => 'Choir une commune', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('commune'))
-                                        @foreach ($errors->get('commune') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
@@ -184,12 +161,25 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                {!! Form::label('Region :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('region', $regions, $collective->demandeur->region->nom ?? old('region'), ['placeholder' => 'Choir une region', 'class' => 'form-control', 'id' => 'region', 'data-width' => '100%']) !!}
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {!! Form::label('Localité (Commune)') !!}(<span
+                                class="text-danger">*</span>)
+                                {!! Form::select('commune', $communes, $collective->commune->nom ?? old('nom'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('region'))
-                                        @foreach ($errors->get('region') as $message)
+                                    @if ($errors->has('commune'))
+                                        @foreach ($errors->get('commune') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                {!! Form::label('Module') !!} (<span
+                                class="text-danger">*</span>)
+                                {!! Form::select('modules', $modules, null, ['class' => 'form-control', 'id' => 'moduleup']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('modules'))
+                                        @foreach ($errors->get('modules') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
@@ -264,18 +254,6 @@
                                 </small>
                             </div> --}}
                             {{-- </div> --}}
-                            
-                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                {!! Form::label('Module') !!} 
-                                {!! Form::select('modules[]', $modules, null, ['class' => 'form-control', 'multiple', 'id' => 'moduleup']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('modules'))
-                                        @foreach ($errors->get('modules') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
-                            </div>
 
                           {{--    <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('module :') !!}(<span class="text-danger">*</span>)

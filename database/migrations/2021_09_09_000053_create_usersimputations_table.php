@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDirectionsimputationsTable extends Migration
+class CreateUsersimputationsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'directionsimputations';
+    public $tableName = 'usersimputations';
 
     /**
      * Run the migrations.
-     * @table directionsimputations
+     * @table usersimputations
      *
      * @return void
      */
@@ -23,22 +23,22 @@ class CreateDirectionsimputationsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('directions_id');
+            $table->unsignedInteger('users_id');
             $table->unsignedInteger('imputations_id');
 
-            $table->index(["imputations_id"], 'fk_directionsimputations_imputations1_idx');
+            $table->index(["imputations_id"], 'fk_users_has_imputations_imputations1_idx');
 
-            $table->index(["directions_id"], 'fk_directionsimputations_directions1_idx');
+            $table->index(["users_id"], 'fk_users_has_imputations_users1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('directions_id', 'fk_directionsimputations_directions1_idx')
-                ->references('id')->on('directions')
+            $table->foreign('users_id', 'fk_users_has_imputations_users1_idx')
+                ->references('id')->on('users')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('imputations_id', 'fk_directionsimputations_imputations1_idx')
+            $table->foreign('imputations_id', 'fk_users_has_imputations_imputations1_idx')
                 ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');

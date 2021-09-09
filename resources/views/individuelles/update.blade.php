@@ -264,7 +264,7 @@
                                 </div> --}}
                         {{-- </div> --}}
                         <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('etude', $etude, $individuelle->etude->name ?? old('etude'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -275,12 +275,23 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Diplômes :') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('diplome', $diplomes, $individuelle->demandeur->diplome->name ?? old('diplome'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'diplome']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('diplome'))
                                         @foreach ($errors->get('diplome') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {!! Form::label('Module demandé') !!}
+                                {!! Form::select('modules', $modules, null, ['class' => 'form-control',  'id' => 'moduleup']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('modules'))
+                                        @foreach ($errors->get('modules') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
@@ -320,19 +331,6 @@
                                 @error('autres_diplomes')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                {!! Form::label('Module') !!}
-                                {!! Form::select('modules[]', $modules, null, ['class' => 'form-control', 'multiple', 'id' => 'moduleup']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('modules'))
-                                        @foreach ($errors->get('modules') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
                             </div>
                         </div>
                         <div class="form-row">

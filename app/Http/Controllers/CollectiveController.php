@@ -78,7 +78,7 @@ class CollectiveController extends Controller
         $civilites = User::pluck('civilite', 'civilite');
         $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
-        if ($user->hasRole('Demandeur')) {
+        /* if ($user->hasRole('Demandeur')) { */
             foreach ($user->demandeur->collectives as $key => $collective) {
             }
                 $demandeurs = $user->demandeur;
@@ -87,11 +87,12 @@ class CollectiveController extends Controller
                 
                 $CollectiveModules = $collective->modules->pluck('name', 'name')->all();
 
-                return view('collectives.update', compact('civilites', 'familiale', 'collective', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'CollectiveModules', 'regions'));
+                /* return view('collectives.update', compact('civilites', 'familiale', 'collective', 
+                'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'CollectiveModules', 'regions')); */
           
-        } else {
+      /*   } else { */
             return view('collectives.create', compact('civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'regions'));
-        }
+       /*  } */
     }
 
     /**
@@ -355,8 +356,8 @@ class CollectiveController extends Controller
         $utilisateurs = $demandeurs->user;
 
         $civilites = User::pluck('civilite', 'civilite');
-        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
-        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $CollectiveModules = $collective->modules->pluck('name', 'name')->all();
@@ -426,7 +427,6 @@ class CollectiveController extends Controller
                'email'               =>  'required|email|max:255',
                'professionnelle'     =>  'required',
                'commune'             =>  'required',
-               'region'              =>  'required',
                'modules'             =>  'required',
 
                ]
@@ -469,9 +469,9 @@ class CollectiveController extends Controller
         $statut = "Attente";
 
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $region_id = Region::where('nom', $request->input('region'))->first()->id;
+        /* $region_id = Region::where('nom', $request->input('region'))->first()->id; */
         $types_demandes_id = TypesDemande::where('name', 'Collective')->first()->id;
-        $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
+        /* $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id; */
         $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
 
         $utilisateur->sexe                      =      $request->input('sexe');
@@ -499,8 +499,6 @@ class CollectiveController extends Controller
         $demandeur->autres_diplomes             =      $request->input('autres_diplomes');
         $demandeur->experience                  =      $request->input('experience');
         $demandeur->qualification               =      $request->input('qualification');
-        $demandeur->communes_id                 =      $commune_id;
-        $demandeur->regions_id                  =      $region_id;
         if ($request->input('programme') !== null) {
             $demandeur->programmes_id           =      $programme_id;
         }
@@ -512,11 +510,12 @@ class CollectiveController extends Controller
         if (!$user_connect->hasRole('Demandeur')) {
         $collective->statut                   =      $request->input('statut');
         }
-        $collective->statut                   =      $statut;
+        $collective->statut                   =     $statut;
         $collective->name                     =     $request->input('name');
-        $demandeur->date_depot                =      $request->input('date_depot');
+        $demandeur->date_depot                =     $request->input('date_depot');
         $collective->description              =     $request->input('description');
         $collective->demandeurs_id            =     $demandeur->id;
+        $collective->communes_id              =     $commune_id;
 
         $collective->save();
         $collective->modules()->sync($request->input('modules'));

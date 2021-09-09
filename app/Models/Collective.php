@@ -30,10 +30,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $formations_id
  * @property int|null $communes_id
  * @property int|null $etudes_id
+ * @property int|null $antennes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Antenne|null $antenne
  * @property Commune|null $commune
  * @property Demandeur $demandeur
  * @property Etude|null $etude
@@ -56,7 +58,8 @@ class Collective extends Model
 		'ingenieurs_id' => 'int',
 		'formations_id' => 'int',
 		'communes_id' => 'int',
-		'etudes_id' => 'int'
+		'etudes_id' => 'int',
+		'antennes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -78,8 +81,14 @@ class Collective extends Model
 		'ingenieurs_id',
 		'formations_id',
 		'communes_id',
-		'etudes_id'
+		'etudes_id',
+		'antennes_id'
 	];
+
+	public function antenne()
+	{
+		return $this->belongsTo(Antenne::class, 'antennes_id');
+	}
 
 	public function commune()
 	{

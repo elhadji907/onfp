@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Collection|Antenne[] $antennes
  * @property Collection|Departement[] $departements
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Programme[] $programmes
@@ -41,6 +42,11 @@ class Region extends Model
 		'nom',
 		'sigle'
 	];
+
+	public function antennes()
+	{
+		return $this->hasMany(Antenne::class, 'regions_id');
+	}
 
 	public function departements()
 	{

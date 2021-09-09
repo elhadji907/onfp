@@ -297,17 +297,6 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Montant') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('montant', $pcharge->montant ?? old('montant'), ['placeholder' => 'Montant annuelle de la formation', 'class' => 'form-control', 'id' => 'montant']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('montant'))
-                                            @foreach ($errors->get('montant') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Durée') !!}(<span class="text-danger">*</span>)
                                     {!! Form::number('duree', $pcharge->duree ?? old('duree'), ['placeholder' => 'Durée de la formation', 'class' => 'form-control', 'id' => 'duree', 'min' => '1', 'max' => '3']) !!}
                                     <small id="emailHelp" class="form-text text-muted">

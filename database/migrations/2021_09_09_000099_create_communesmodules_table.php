@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesniveauxsTable extends Migration
+class CreateCommunesmodulesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modulesniveauxs';
+    public $tableName = 'communesmodules';
 
     /**
      * Run the migrations.
-     * @table modulesniveauxs
+     * @table communesmodules
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateModulesniveauxsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->unsignedInteger('communes_id');
             $table->unsignedInteger('modules_id');
-            $table->unsignedInteger('niveauxs_id');
 
-            $table->index(["niveauxs_id"], 'fk_modulesniveauxs_niveauxs1_idx');
+            $table->index(["modules_id"], 'fk_communes_has_modules_modules1_idx');
 
-            $table->index(["modules_id"], 'fk_modulesniveauxs_modules1_idx');
+            $table->index(["communes_id"], 'fk_communes_has_modules_communes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modulesniveauxs_modules1_idx')
-                ->references('id')->on('modules')
+            $table->foreign('communes_id', 'fk_communes_has_modules_communes1_idx')
+                ->references('id')->on('communes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('niveauxs_id', 'fk_modulesniveauxs_niveauxs1_idx')
-                ->references('id')->on('niveauxs')
+            $table->foreign('modules_id', 'fk_communes_has_modules_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

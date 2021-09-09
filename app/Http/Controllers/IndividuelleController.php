@@ -76,16 +76,16 @@ class IndividuelleController extends Controller
         
         $civilites = User::pluck('civilite', 'civilite');
 
-        if ($user->hasRole('Demandeur')) {
+        /* if ($user->hasRole('Demandeur')) { */
             foreach ($user->demandeur->individuelles as $key => $individuelle) {
             }
             $demandeurs = $user->demandeur;
             $individuelles = $demandeurs->individuelles;
             $utilisateurs = $user;
-            return view('individuelles.update', compact('etude', 'civilites', 'familiale', 'individuelle', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs'));
-        } else {
+            /* return view('individuelles.update', compact('etude', 'civilites', 'familiale', 'individuelle', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs')); */
+       /*  } else { */
             return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-        }
+       /*  } */
     }
 
     public function findNomDept(Request $request)
