@@ -127,14 +127,15 @@
                                         <th style="width:4%;">Cin</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-                                        <th style="width:5%;">Âge</th>
+                                       {{--   <th style="width:5%;">Âge</th>  --}}
                                         {{-- <th style="width:9%;">Lieu nais.</th> --}}
                                         {{-- <th style="width:5%;">Email</th> --}}
-                                        <th style="width:5%;">Téléphone</th>
+                                        {{--  <th style="width:5%;">Téléphone</th>  --}}
                                         <th style="width:30%;">Etablissement</th>
                                         <th style="width:5%;">Scolarité</th>
                                         <th style="width:12%;">Type demande</th>
-                                        <th style="width:12%;"></th>
+                                        <th style="width:9%;">Appréciation</th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -143,13 +144,14 @@
                                         <th>Cin</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-                                        <th>Âge</th>
+                                       {{--   <th>Âge</th>  --}}
                                         {{-- <th>Lieu nais.</th> --}}
                                         {{-- <th>Email</th> --}}
-                                        <th>Téléphone</th>
+                                       {{--   <th>Téléphone</th>  --}}
                                         <th>Etablissement</th>
                                         <th>Scolarité</th>
                                         <th>Type demande</th>
+                                        <th>Appréciation</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -164,7 +166,7 @@
                                             <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!}</td>
                                             <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
                                             {{-- <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td> --}}
-                                            <td>{!! number_format(Carbon\Carbon::now()->floatDiffInYears($pcharge->demandeur->user->date_naissance), 0, ',', ' ') . ' ' !!}</td>
+                                            {{--  <td>{!! number_format(Carbon\Carbon::now()->floatDiffInYears($pcharge->demandeur->user->date_naissance), 0, ',', ' ') . ' ' !!}</td>  --}}
                                            {{--   <td>
                                                 <a href="{{ url('diffage', ['$age' => $pcharge->demandeur->user->date_naissance, '$id' => $pcharge->id]) }}"
                                                     class="btn btn-outline-success btn-sm">
@@ -172,21 +174,47 @@
                                             </td>  --}}
                                             {{-- <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td> --}}
                                             {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
-                                            <td>{!! $pcharge->demandeur->user->telephone !!}</td>
+                                           {{--   <td>{!! $pcharge->demandeur->user->telephone !!}</td>  --}}
                                             <td>{!! $pcharge->etablissement->name ?? '' !!}</td>
                                             <td>{!! $pcharge->scolarite->annee ?? '' !!}</td>
                                             <td>{!! $pcharge->typedemande !!}</td>
+                                            <td>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    @if (isset($pcharge->statut) && $pcharge->statut == "Accordée")
+                                                    <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>
+                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                                        title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>   
+                                                    @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
+                                                    <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
+                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                                        title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>   
+                                                    @else
+                                                    <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
+                                                    <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
+                                                        title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                                        <i class="fas fa-check-circle"></i>
+                                                    </a>
+                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                                        title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                                        <i class="fas fa-times"></i>
+                                                    </a>                                                        
+                                                    @endif
+                                                </div>
+                                            </td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
+                                                    <i class="far fa-edit"></i>
                                                 </a>
                                                 &nbsp;
                                                 <a href="{{ url('pdetails', ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) }}" class='btn btn-primary btn-sm'
                                                     title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
-                                                &nbsp;
+                                                    <i class="far fa-eye"></i>
+                                                </a>&nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!}

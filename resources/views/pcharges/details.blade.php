@@ -99,6 +99,11 @@
     @foreach ($pcharges as $pcharge)
         <div class="invoice-box justify-content-center">
             <div class="row justify-content-center pb-2">
+                @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
                 <div class="col-lg-12 margin-tb">
                     <a class="btn btn-outline-success" href="{{ route('pcharges.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
@@ -165,15 +170,17 @@
                                 SCOLARITÉ
                             </td>
                             <td>
-
+                                STATUT
                             </td>
 
                         </tr>
 
                         <tr class="item">
-
-                            <td colspan="2">
+                            <td>
                                 {{ $pcharge->scolarite->annee }}
+                            </td>
+                            <td>
+                                <label class="badge badge-info">{{ $pcharge->statut }}</label>
                             </td>
                         </tr>
                         <tr class="heading">
@@ -236,6 +243,31 @@
                         <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning mt-0">
                             <i class="far fa-edit">&nbsp;Modifier</i>
                         </a>
+                        <div class="d-flex justify-content-between align-items-center">
+                            @if (isset($pcharge->statut) && $pcharge->statut == "Accordée")
+                            <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>
+                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                                <i class="fas fa-times"></i>
+                            </a>   
+                            @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
+                            <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
+                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                                <i class="fas fa-times"></i>
+                            </a>   
+                            @else
+                            <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
+                            <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
+                                title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                <i class="fas fa-check-circle"></i>
+                            </a>
+                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                <i class="fas fa-times"></i>
+                            </a>                                                        
+                            @endif
+                        </div>
                         <a href="{!! route('pcharges.show', $pcharge->id) !!}" title="modifier" class="btn btn-outline-primary mt-0">
                             <i class="far fa-eye">&nbsp;M&eacute;ssage</i>
                         </a>

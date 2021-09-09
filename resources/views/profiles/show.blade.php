@@ -493,13 +493,12 @@
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
+                                                    <i class="far fa-edit"></i>
                                                 </a>
-                                                &nbsp;
-                                                <a href="{!! url('pcharges/' . $pcharge->id) !!}" class='btn btn-primary btn-sm'
+                                                &nbsp;                                                
+                                                <a href="{{ url('pdetails', ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) }}" class='btn btn-primary btn-sm'
                                                     title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
+                                                    <i class="far fa-eye"></i>
                                                 {{-- &nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}

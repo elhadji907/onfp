@@ -43,7 +43,7 @@
                         <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning">
                             <i class="far fa-edit">&nbsp;Modifier</i>
                         </a>
-                        <a href="{!! url('pcharges/' . $pcharge->demandeur->id) !!}" title="voir les d&eacute;tails du courrier"
+                        <a href="{!! url('pdetails' , ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) !!}" title="voir les d&eacute;tails du courrier"
                             class="btn btn-outline-primary">
                             <i class="far fa-eye">&nbsp;D&eacute;tails</i>
                         </a>
