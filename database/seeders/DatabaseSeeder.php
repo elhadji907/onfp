@@ -52,6 +52,7 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             TypesDirectionSeeder::class,
             DirectionSeeder::class,
+            AntenneSeeder::class,
             DepenseSeeder::class,
             SecteurSeeder::class,
             DomaineSeeder::class,
@@ -71,6 +72,7 @@ class DatabaseSeeder extends Seeder
             ScolariteSeeder::class,
             EtudeSeeder::class,
             FiliereSeeder::class,
+            TypepchargeSeeder::class,
             PchargeSeeder::class,
             FilierespecialiteSeeder::class,
         ]);

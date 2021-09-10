@@ -82,18 +82,6 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="email">{{ __('E-Mail') }}(<span class="text-danger">*</span>)</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" placeholder="Votre adresse e-mail"
-                                    value="{{ $collective->demandeur->user->email ?? '' }}" autocomplete="email">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                </small>
-                            </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="telephone">{{ __('Telephone') }}(<span class="text-danger">*</span>)</label>
                                 <input id="telephone" type="text"
                                     class="form-control @error('telephone') is-invalid @enderror" name="telephone"
@@ -116,11 +104,11 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-8 col-lg-8 col-xs-8 col-sm-12">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 <label for="adresse">{{ __('Adresse de résidence') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
-                                    id="adresse" rows="1"
+                                    id="adresse" rows="2"
                                     placeholder="Votre adresse complète">{{ $collective->demandeur->user->adresse ?? old('adresse') }}</textarea>
                                 @error('adresse')
                                     <div class="invalid-feedback">{{ $message }}</div>

@@ -105,6 +105,8 @@ class IndividuelleController extends Controller
         $user_connect = Auth::user();
         
         $individuelles = $user_connect->demandeur->individuelles;
+        $demandeur = $user_connect->demandeur;
+
         foreach ($individuelles as $individuelle) {
         }
         
@@ -192,70 +194,93 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-        $user = new User([
-            'sexe'                      =>      $request->input('sexe'),
-            'civilite'                  =>      $civilite,
-            'firstname'                 =>      $request->input('prenom'),
-            'name'                      =>      $request->input('nom'),
-            'email'                     =>      $request->input('email'),
-            'username'                  =>      $username,
-            'telephone'                 =>      $telephone,
-            'bp'                        =>      $request->input('bp'),
-            'fax'                       =>      $request->input('fax'),
-            'date_naissance'            =>      $request->input('date_naiss'),
-            'lieu_naissance'            =>      $request->input('lieu_naissance'),
-            'adresse'                   =>      $request->input('adresse'),
-            'password'                  =>      Hash::make($request->input('email')),
-            'professionnelles_id'       =>      $professionnelle_id,
-            'familiales_id'             =>      $familiale_id,
-            'created_by'                =>      $created_by,
-            'updated_by'                =>      $created_by
-
-        ]);
+        if (!$user_connect->hasRole('Demandeur')) {        
+            $user = new User([
+                'sexe'                      =>      $request->input('sexe'),
+                'civilite'                  =>      $civilite,
+                'firstname'                 =>      $request->input('prenom'),
+                'name'                      =>      $request->input('nom'),
+                'email'                     =>      $request->input('email'),
+                'username'                  =>      $username,
+                'telephone'                 =>      $telephone,
+                'bp'                        =>      $request->input('bp'),
+                'fax'                       =>      $request->input('fax'),
+                'date_naissance'            =>      $request->input('date_naiss'),
+                'lieu_naissance'            =>      $request->input('lieu_naissance'),
+                'adresse'                   =>      $request->input('adresse'),
+                'password'                  =>      Hash::make($request->input('email')),
+                'professionnelles_id'       =>      $professionnelle_id,
+                'familiales_id'             =>      $familiale_id,
+                'created_by'                =>      $created_by,
+                'updated_by'                =>      $created_by
     
-        $user->save();
-        $user->assignRole('Demandeur');
+            ]);
+        
+            $user->save();
+
+            $user->assignRole('Individuelle');
+            $user->assignRole('Collective');
+            $user->assignRole('Pcharge');
+            $user->assignRole('Operateur');
+                
+            $demandeur = new Demandeur([
+                    'numero'                    =>     $numero,
+                    'nbre_piece'                =>     $request->input('nombre_de_piece'),
+                    'niveau_etude'              =>     $request->input('niveau_etude'),
+                    'etablissement'             =>     $request->input('etablissement'),
+                    'telephone'                 =>     $autre_tel,
+                    'programmes_id'             =>     $programme_id,
+                    'option'                    =>     $request->input('option'),
+                    'adresse'                   =>     $request->input('adresse'),
+                    'motivation'                =>     $request->input('motivation'),
+                    'autres_diplomes'           =>     $request->input('autres_diplomes'),
+                    'qualification'             =>     $request->input('qualification'),
+                    'types_demandes_id'         =>     $types_demandes_id,
+                    'diplomes_id'               =>     $diplome_id,
+                    'users_id'                  =>     $user->id
+                ]);
+        
+            $demandeur->save();
+
+            $individuelle = new Individuelle([
+                    'cin'               =>     $cin,
+                    'experience'        =>     $request->input('experience'),
+                    'information'       =>     $request->input('information'),
+                    'date_depot'        =>     $request->input('date_depot'),
+                    'nbre_pieces'       =>     $request->input('nombre_de_piece'),
+                    'prerequis'         =>     $request->input('prerequis'),
+                    'statut'            =>     'Attente',
+                    'etudes_id'         =>     $etude_id,
+                    'communes_id'       =>     $commune_id,
+                    'demandeurs_id'     =>     $demandeur->id
+                ]);
+        
+            $individuelle->save();
             
-        $demandeur = new Demandeur([
-                'numero'                    =>     $numero,
-                'nbre_piece'                =>     $request->input('nombre_de_piece'),
-                'niveau_etude'              =>     $request->input('niveau_etude'),
-                'etablissement'             =>     $request->input('etablissement'),
-                'telephone'                 =>     $autre_tel,
-                'programmes_id'             =>     $programme_id,
-                'option'                    =>     $request->input('option'),
-                'adresse'                   =>     $request->input('adresse'),
-                'motivation'                =>     $request->input('motivation'),
-                'autres_diplomes'           =>     $request->input('autres_diplomes'),
-                'qualification'             =>     $request->input('qualification'),
-                'types_demandes_id'         =>     $types_demandes_id,
-                'diplomes_id'               =>     $diplome_id,
-                'users_id'                  =>     $user->id
-            ]);
-    
-        $demandeur->save();
-    
-        $individuelle = new Individuelle([
-                'cin'               =>     $cin,
-                'experience'        =>     $request->input('experience'),
-                'information'       =>     $request->input('information'),
-                'date_depot'        =>     $request->input('date_depot'),
-                'nbre_pieces'       =>     $request->input('nombre_de_piece'),
-                'prerequis'         =>     $request->input('prerequis'),
-                'statut'            =>     'Attente',
-                'etudes_id'         =>     $etude_id,
-                'communes_id'       =>     $commune_id,
-                'demandeurs_id'     =>     $demandeur->id
-            ]);
-    
-        $individuelle->save();
         $individuelle->modules()->sync($request->input('modules'));
+        return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
 
-        if (!$user_connect->hasRole('Demandeur')) {
-            return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
         } else {
-            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
+
+            $individuelle = new Individuelle([
+                    'cin'               =>     $cin,
+                    'experience'        =>     $request->input('experience'),
+                    'information'       =>     $request->input('information'),
+                    'date_depot'        =>     $request->input('date_depot'),
+                    'nbre_pieces'       =>     $request->input('nombre_de_piece'),
+                    'prerequis'         =>     $request->input('prerequis'),
+                    'statut'            =>     'Attente',
+                    'etudes_id'         =>     $etude_id,
+                    'communes_id'       =>     $commune_id,
+                    'demandeurs_id'     =>     $demandeur->id
+                ]);
+        
+            $individuelle->save();
+            
+            $individuelle->modules()->sync($request->input('modules'));
+            return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
         }
+    
     }
 
     /**
@@ -295,7 +320,7 @@ class IndividuelleController extends Controller
     public function details($id)
     {
         $individuelle = Individuelle::find($id);
-        
+
         $civilites = User::pluck('civilite', 'civilite');
 
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
@@ -368,7 +393,7 @@ class IndividuelleController extends Controller
                 $request,
                 [
                'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15|unique:individuelles,cin,{$individuelle->id},id,deleted_at,NULL",
+               'cin'                 =>  "required|string|min:13|max:15",
                'prenom'              =>  'required|string|max:50',
                'nom'                 =>  'required|string|max:50',
                'date_naiss'          =>  'required|date_format:Y-m-d',
@@ -379,7 +404,6 @@ class IndividuelleController extends Controller
                'adresse'             =>  'required|string|max:100',
                'prerequis'           =>  'required|string|max:1500',
                'motivation'          =>  'required|string|max:1500',
-               'email'               =>  'required|email|max:255|unique:users,email,'.$individuelle->demandeur->user->id,
                'familiale'           =>  'required',
                'professionnelle'     =>  'required',
                'etude'               =>  'required',
@@ -433,7 +457,6 @@ class IndividuelleController extends Controller
         $utilisateur->civilite                  =      $civilite;
         $utilisateur->firstname                 =      $request->input('prenom');
         $utilisateur->name                      =      $request->input('nom');
-        $utilisateur->email                     =      $request->input('email');
         $utilisateur->username                  =      $request->input('username');
         $utilisateur->telephone                 =      $telephone;
         $utilisateur->bp                        =      $request->input('bp');

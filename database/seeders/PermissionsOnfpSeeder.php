@@ -131,6 +131,9 @@ class PermissionsOnfpSeeder extends Seeder
         $role = Role::create(['name' => 'Administrateur']);
         $role->givePermissionTo(Permission::all());
 
+        $role = Role::create(['name' => 'DG']);
+        $role->givePermissionTo(Permission::all());
+
         $role = Role::create(['name' => 'Gestionnaire']);
         $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list',  'demande-create', 'demande-list', 'demande-edit', 'demande-delete', 'module-list']);
 

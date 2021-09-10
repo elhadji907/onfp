@@ -4,15 +4,17 @@
     <div class="content">
         <div class="container col-12 col-sm-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 col-xl-12">
             <div class="container-fluid">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <a class="btn btn-outline-primary" href="{{ route('pcharges.index') }}"> <i
-                            class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
-                    <a class="btn btn-outline-primary" href="{{ route('filieres.create') }}" target="_blank"> <i
-                            class="fas fa-plus"></i>&nbsp;Ajouter filière</i></a>
-                    {{-- <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
+                @can('user-create')
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <a class="btn btn-outline-primary" href="{{ route('pcharges.index') }}"> <i
+                                class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                        <a class="btn btn-outline-primary" href="{{ route('filieres.create') }}" target="_blank"> <i
+                                class="fas fa-plus"></i>&nbsp;Ajouter filière</i></a>
+                        {{-- <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
                             class="fas fa-plus"></i>&nbsp;Ajouter spécialité</i></a> --}}
 
-                </div>
+                    </div>
+                @endcan
                 <div class="card border-success">
                     <div class="card-body">
                         <form method="POST" action="{{ route('pcharges.update', [$pcharge->id]) }}">
@@ -49,10 +51,12 @@
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Filière') !!}
                                     {!! Form::select('filiere', $filieres, $pcharge->filiere->name ?? old('filiere'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'filiere']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">{{ __('Merci de ') }}
-                                        <a href="{{ route('filieres.create') }}" target="_blank">cliquer ici</a>
-                                        {{ __('pour ajouter une nouvelle filière') }}
-                                    </small>
+                                    @can('user-create')
+                                        <small id="emailHelp" class="form-text text-muted">{{ __('Merci de ') }}
+                                            <a href="{{ route('filieres.create') }}" target="_blank">cliquer ici</a>
+                                            {{ __('pour ajouter une nouvelle filière') }}
+                                        </small>
+                                    @endcan
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('filiere'))
                                             @foreach ($errors->get('filiere') as $message)

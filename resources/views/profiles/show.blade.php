@@ -353,11 +353,11 @@
                                                         title="modifier">
                                                         <i class="far fa-edit">&nbsp;</i>
                                                     </a>
-                                                    &nbsp;
-                                                    <a href="{{ url('details', ['$id' => $individuelle->id]) }}"
-                                                        class='btn btn-primary btn-sm' title="voir">
-                                                        <i class="far fa-eye">&nbsp;</i>
-                                                    </a>
+                                                    &nbsp;                                                  
+                                                <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}" class='btn btn-primary btn-sm'
+                                                    title="voir">
+                                                    <i class="far fa-eye">&nbsp;</i>
+                                                </a>
                                                     {{-- &nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'individuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}

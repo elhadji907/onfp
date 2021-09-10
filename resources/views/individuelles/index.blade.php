@@ -30,7 +30,7 @@
                                 id="table-individuelles">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>N°</th>
+                                        <th style="width:5%;">N°</th>
                                         <th>Cin</th>
                                         <th>Civilité</th>
                                         <th>Prenom</th>
@@ -40,7 +40,7 @@
                                         <th>Téléphone</th>
                                         <th>Commune</th>
                                         <th>Région</th>
-                                        <th width="70px"></th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">

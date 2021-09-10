@@ -49,11 +49,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $statuts_id
  * @property int|null $types_formations_id
  * @property int|null $communes_id
+ * @property int|null $antennes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Agent|null $agent
+ * @property Antenne|null $antenne
  * @property Commune|null $commune
  * @property Convention|null $convention
  * @property Courrier|null $courrier
@@ -104,7 +106,8 @@ class Formation extends Model
 		'courriers_id' => 'int',
 		'statuts_id' => 'int',
 		'types_formations_id' => 'int',
-		'communes_id' => 'int'
+		'communes_id' => 'int',
+		'antennes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -146,12 +149,18 @@ class Formation extends Model
 		'courriers_id',
 		'statuts_id',
 		'types_formations_id',
-		'communes_id'
+		'communes_id',
+		'antennes_id'
 	];
 
 	public function agent()
 	{
 		return $this->belongsTo(Agent::class, 'agents_id');
+	}
+
+	public function antenne()
+	{
+		return $this->belongsTo(Antenne::class, 'antennes_id');
 	}
 
 	public function commune()

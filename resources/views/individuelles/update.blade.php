@@ -65,8 +65,6 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="date_naiss">{{ __('Date de naissance') }}(<span
                                         class="text-danger">*</span>)</label>
@@ -96,23 +94,8 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="email">{{ __('Addresse E-Mail') }}(<span
+                                <label for="telephone">{{ __('Telephone') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" placeholder="Votre adresse e-mail"
-                                    value="{{ $individuelle->demandeur->user->email ?? old('email') }}"
-                                    autocomplete="email">
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                </small>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="telephone">{{ __('Telephone') }}(<span class="text-danger">*</span>)</label>
                                 <input id="telephone" type="text"
                                     class="form-control @error('telephone') is-invalid @enderror" name="telephone"
                                     placeholder="+221 .. ... .. .."
@@ -154,9 +137,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], $individuelle->demandeur->user->sexe ?? old('sexe'), ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -167,7 +148,7 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Situation familiale :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('familiale', $familiale, $individuelle->demandeur->user->familiale->name ?? old('familiale'), ['placeholder' => 'Situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -178,7 +159,7 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('professionnelle', $professionnelle, $individuelle->demandeur->user->professionnelle->name ?? old('professionnelle'), ['placeholder' => 'Situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -189,7 +170,7 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Commune') !!}
                                 {!! Form::select('commune', $communes, $individuelle->commune->nom ?? old('nom'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -200,8 +181,6 @@
                                     @endif
                                 </small>
                             </div>
-                        </div>
-                        <div class="form-row">
                             {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="bp">{{ __('Boite postale') }}</label>
                                 <input id="bp" type="text" class="form-control @error('bp') is-invalid @enderror" name="bp"
@@ -224,15 +203,11 @@
                                     </span>
                                 @enderror
                             </div> --}}
-                        </div>
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2">DEMANDE</p>
-                        </div>
-                        {{-- <div class="form-row"> --}}
-                        {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
-                        {{-- {!! Form::label('N° courrier :') !!}(<span class="text-danger">*</span>) --}}
-                        {!! Form::hidden('numero_courrier', null, ['placeholder' => 'Le numéro du courrier', 'class' => 'form-control']) !!}
-                        {{-- <small id="emailHelp" class="form-text text-muted">
+                            {{-- <div class="form-row"> --}}
+                            {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
+                            {{-- {!! Form::label('N° courrier :') !!}(<span class="text-danger">*</span>) --}}
+                            {!! Form::hidden('numero_courrier', null, ['placeholder' => 'Le numéro du courrier', 'class' => 'form-control']) !!}
+                            {{-- <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('numero_courrier'))
                                             @foreach ($errors->get('numero_courrier') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
@@ -241,9 +216,9 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
-                        {{-- {!! Form::label('Nbre pièces:') !!}(<span class="text-danger">*</span>) --}}
-                        {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
-                        {{-- <small id="emailHelp" class="form-text text-muted">
+                            {{-- {!! Form::label('Nbre pièces:') !!}(<span class="text-danger">*</span>) --}}
+                            {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
+                            {{-- <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('nombre_de_piece'))
                                             @foreach ($errors->get('nombre_de_piece') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
@@ -252,9 +227,9 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
-                        {{-- {!! Form::label('Dépot :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>) --}}
-                        {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
-                        {{-- <small id="emailHelp" class="form-text text-muted">
+                            {{-- {!! Form::label('Dépot :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>) --}}
+                            {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
+                            {{-- <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('date_depot'))
                                             @foreach ($errors->get('date_depot') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
@@ -262,8 +237,7 @@
                                         @endif
                                     </small>
                                 </div> --}}
-                        {{-- </div> --}}
-                        <div class="form-row">
+                            {{-- </div> --}}
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('etude', $etude, $individuelle->etude->name ?? old('etude'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
@@ -288,7 +262,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Module demandé') !!}
-                                {!! Form::select('modules', $modules, null, ['class' => 'form-control',  'id' => 'moduleup']) !!}
+                                {!! Form::select('modules', $modules, null, ['class' => 'form-control', 'id' => 'moduleup']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('modules'))
                                         @foreach ($errors->get('modules') as $message)
@@ -297,8 +271,6 @@
                                     @endif
                                 </small>
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="Option">{{ __('Option du diplôme') }}(<span
                                         class="text-danger">*</span>)</label>
@@ -332,8 +304,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 <label for="motivation">{{ __('Pourquoi voulez-vous faire cette formation ?') }}(<span
                                         class="text-danger">*</span>)</label>
@@ -344,8 +314,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 <label for="prerequis">{{ __('Avez-vous des prerequis ?') }}(<span
                                         class="text-danger">*</span>)</label>
@@ -356,25 +324,19 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Qualifications :') !!}
                                 {!! Form::textarea('qualification', $individuelle->demandeur->qualification, ['placeholder' => 'Qualifications et autres diplômes', 'rows' => 2, 'class' => 'form-control']) !!}
                             </div>
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('experience :') !!}
                                 {!! Form::textarea('experience', $individuelle->experience, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 2, 'class' => 'form-control']) !!}
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Informations :') !!}
                                 {!! Form::textarea('information', $individuelle->information, ['placeholder' => 'Informations complémenaires', 'rows' => 1, 'class' => 'form-control']) !!}
                             </div>
-                        </div>
-                        @can('demandeur-list')
-                            <div class="form-row">
+                            @can('demandeur-list')
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $individuelle->demandeur->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
@@ -386,13 +348,8 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                        @endcan
-                        @can('demandeur-list')
-                            <div class="bg-gradient-secondary text-center">
-                                <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
-                            </div>
-                            <div class="form-row">
+                            @endcan
+                            @can('demandeur-list')
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('programme', $programmes, $individuelle->demandeur->programme->sigle ?? ' ', ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
@@ -404,15 +361,15 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                        @endcan
-                        {!! Form::hidden('username', $individuelle->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
-                        {!! Form::hidden('numero', $individuelle->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
-                        <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Mot de passe">
-                        {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
-                        {!! Form::submit('Modifier', ['class' => 'btn btn-outline-primary pull-right']) !!}
-                        {!! Form::close() !!}
+                            @endcan
+                            {!! Form::hidden('username', $individuelle->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
+                            {!! Form::hidden('numero', $individuelle->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
+                            <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
+                                placeholder="Mot de passe">
+                            {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
+                            {!! Form::submit('Modifier', ['class' => 'btn btn-outline-primary pull-right']) !!}
+                            {!! Form::close() !!}
+                        </div>
                     </div>
                 </div>
             </div>

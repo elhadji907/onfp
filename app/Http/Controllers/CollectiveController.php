@@ -400,10 +400,9 @@ class CollectiveController extends Controller
                'structure_fixe'      =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                'adresse'             =>  'required|string|max:100',
                'description'         =>  'required|string|min:10|max:1500',
-               'email'               =>  'required|email|max:255|unique:users,email,'.$collective->demandeur->user->id,
                'professionnelle'     =>  'required',
                'commune'             =>  'required',
-               'modules'             =>  'exists:modules,id',
+               'modules'             =>  'required',
 
                ]
             );
@@ -424,7 +423,6 @@ class CollectiveController extends Controller
                'adresse'             =>  'required|string|max:100',
                'structure_adresse'   =>  'required|string|max:200',
                'description'         =>  'required|string|min:10|max:1500',
-               'email'               =>  'required|email|max:255',
                'professionnelle'     =>  'required',
                'commune'             =>  'required',
                'modules'             =>  'required',
@@ -478,7 +476,6 @@ class CollectiveController extends Controller
         $utilisateur->civilite                  =      $civilite;
         $utilisateur->firstname                 =      $request->input('prenom');
         $utilisateur->name                      =      $request->input('nom');
-        $utilisateur->email                     =      $request->input('email');
         $utilisateur->username                  =      $request->input('username');
         $utilisateur->telephone                 =      $telephone;
         $utilisateur->fixe                      =      $fixe;
@@ -512,10 +509,10 @@ class CollectiveController extends Controller
         }
         $collective->statut                   =     $statut;
         $collective->name                     =     $request->input('name');
-        $demandeur->date_depot                =     $request->input('date_depot');
+        $collective->date_depot                =     $request->input('date_depot');
         $collective->description              =     $request->input('description');
-        $collective->demandeurs_id            =     $demandeur->id;
         $collective->communes_id              =     $commune_id;
+        $collective->demandeurs_id            =     $demandeur->id;
 
         $collective->save();
         $collective->modules()->sync($request->input('modules'));

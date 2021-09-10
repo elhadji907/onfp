@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Antenne
@@ -24,13 +25,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * 
  * @property Region|null $region
  * @property Collection|Collective[] $collectives
+ * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
  *
  * @package App\Models
  */
 class Antenne extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'antennes';
 
 	protected $casts = [
@@ -51,6 +55,11 @@ class Antenne extends Model
 	public function collectives()
 	{
 		return $this->hasMany(Collective::class, 'antennes_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'antennes_id');
 	}
 
 	public function individuelles()
