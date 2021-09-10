@@ -12,16 +12,16 @@ use Intervention\Image\Facades\Image;
 use Auth;
 
 class ProfileController extends Controller
-{    
+{
     /**
     * Create a new controller instance.
     *
     * @return void
     */
-   public function __construct()
-   {
-       $this->middleware(['auth']);
-   }
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -61,68 +61,39 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        $demandeurs                 =      Demandeur::all();
+        $individuelles    =      $user->demandeur->individuelles;
+        $collectives      =      $user->demandeur->collectives;
+        $pcharges         =      $user->demandeur->pcharges;
 
-        $individuelle_demandeurs    =      $user->demandeur->individuelles;
-        $collective_demandeurs      =      $user->demandeur->collectives;
-        $pcharge_demandeurs         =      $user->demandeur->pcharges;
-
-        $individuelle_users         =      $user->demandeur->individuelles;
-        $collective_users           =      $user->demandeur->collectives;
-        $pcharge_users              =      $user->demandeur->pcharges;
-
-        foreach ($individuelle_demandeurs as $key => $individuelle_demandeur) {
+        foreach ($individuelles as $key => $individuelle) {
         }
-        if(isset($individuelle_demandeur)){
-            $individuelle_demandeur = $individuelle_demandeur;
-        }else {
-            $individuelle_demandeur = "";
+        if (isset($individuelle)) {
+            $individuelle = $individuelle;
+        } else {
+            $individuelle = "";
         }
-        foreach ($collective_demandeurs as $key => $collective_demandeur) {
+        foreach ($collectives as $key => $collective) {
         }
-        if(isset($collective_demandeur)){
-            $collective_demandeur = $collective_demandeur;
-        }else {
-            $collective_demandeur = "";
+        if (isset($collective)) {
+            $collective = $collective;
+        } else {
+            $collective = "";
         }
 
-        foreach ($pcharge_demandeurs as $key => $pcharge_demandeur) {
+        foreach ($pcharges as $key => $pcharge) {
         }
-        if(isset($pcharge_demandeur)){
-            $pcharge_demandeur = $pcharge_demandeur;
-        }else {
-            $pcharge_demandeur = "";
-        }
-
-
-        foreach ($individuelle_users as $key => $individuelle_user) {
-        }
-        if(isset($individuelle_user)){
-            $individuelle_user = $individuelle_user;
-        }else {
-            $individuelle_user = "";
-        }
-
-        foreach ($collective_users as $key => $collective_user) {
-        }
-        if(isset($collective_user)){
-            $collective_user = $collective_user;
-        }else {
-            $collective_user = "";
-        }
-
-        foreach ($pcharge_users as $key => $pcharge_user) {
-        }
-        if(isset($pcharge_user)){
-            $pcharge_user = $pcharge_user;
-        }else {
-            $pcharge_user = "";
+        if (isset($pcharge)) {
+            $pcharge = $pcharge;
+        } else {
+            $pcharge = "";
         }
 
         $courriers = $user->courriers;
 
-        return view('profiles.show', 
-        compact('user', 'courriers', 'demandeurs', 'individuelle_demandeur', 'collective_demandeur', 'pcharge_demandeur', 'individuelle_user', 'collective_user', 'pcharge_user'));
+        return view(
+            'profiles.show',
+            compact('user', 'courriers', 'individuelle', 'collective', 'pcharge')
+        );
     }
 
     /**
@@ -179,36 +150,36 @@ class ProfileController extends Controller
 
         if ($request->input('civilite') == "M.") {
             $sexe = "M";
-            }elseif ($request->input('civilite') == "Mme") {
-                $sexe = "F";
-            }else {
-                $sexe = "";
-            }
+        } elseif ($request->input('civilite') == "Mme") {
+            $sexe = "F";
+        } else {
+            $sexe = "";
+        }
 
         $familiale_id     = Familiale::where('name', $request->input('familiale'))->first()->id;
         $professionnelle_id     = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
         /* dd($professionnelle_id); */
-         if (request('image')) {   
-        $imagePath = request('image')->store('avatars', 'public');
+        if (request('image')) {
+            $imagePath = request('image')->store('avatars', 'public');
         
-        $file = $request->file('image');
-        $filenameWithExt = $file->getClientOriginalName();
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        // Remove unwanted characters
-        $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-        $filename = preg_replace("/\s+/", '-', $filename);
-        // Get the original image extension
-        $extension = $file->getClientOriginalExtension();
+            $file = $request->file('image');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
   
-        // Create unique file name
-        $fileNameToStore = 'avatars/'.$filename.''.time().'.'.$extension;
+            // Create unique file name
+            $fileNameToStore = 'avatars/'.$filename.''.time().'.'.$extension;
   
-        //dd($fileNameToStore);
+            //dd($fileNameToStore);
 
-        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
-        $image->save();
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
+            $image->save();
 
-           auth()->user()->profile->update([
+            auth()->user()->profile->update([
             'image' => $imagePath
             ]);
 
@@ -227,8 +198,7 @@ class ProfileController extends Controller
                 'professionnelles_id'           =>       $professionnelle_id,
                 'fax'                           =>       $data['fax']
             ]);
-
-        }  else {
+        } else {
             auth()->user()->profile->update($data);
 
             auth()->user()->update([
