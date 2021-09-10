@@ -76,7 +76,6 @@ class CollectiveController extends Controller
         $user = auth::user();
         
         $civilites = User::pluck('civilite', 'civilite');
-        $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
         /* if ($user->hasRole('Demandeur')) { */
             foreach ($user->demandeur->collectives as $key => $collective) {

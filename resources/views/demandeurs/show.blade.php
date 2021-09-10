@@ -7,239 +7,353 @@
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
-                <div class="row pt-0"></div>
-                <div class="card">
-                    <div class="card-header card-header-primary text-center">
-                        <h3 class="card-title">Détails demandeurs</h3>
+                <div class="row justify-content-center pb-2">
+                    <div class="col-lg-12 margin-tb">
+                        <a class="btn btn-outline-success" href="{{ route('demandeurs.index') }}"> <i
+                                class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                    </div>
+                </div>
+                <div class="card border-success">
+                    <div class="card card-header text-center bg-gradient-default border-success">
+                        <h3 class="card-title">INFORMATIONS</h3>
                     </div>
                     <div class="card-body">
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2 mt-0">IDENTIFICATION</p>
-                        </div>
-                        {!! Form::open(['url' => '', 'method' => 'PATCH', 'files' => true]) !!}
-                        @csrf
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                {!! Form::label('CIN') !!}
-                                {!! Form::text('cin', $demandeurs->cin, ['placeholder' => 'Votre numéro national d\'identité', 'class'
-                                => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Prénom') !!}
-                                {!! Form::text('prenom', $utilisateurs->firstname, ['placeholder' => 'Votre prénom', 'class' => 'form-control','disabled' => 'disabled'])
-                                !!}
-                            </div>
+                        <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
-                            <div class="form-group col-md-4">
-                                {!! Form::label('NOM') !!}
-                                {!! Form::text('nom', $utilisateurs->name, ['placeholder' => 'Votre nom', 'class' => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
+                                    <div class="card border-success">
+                                        <div class="card-header border-success">
+                                            <i class="fas fa-table"></i>
+                                            Liste demandes individuelles
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                @foreach ($demandeur->individuelles as $individuelle)
+                                                @endforeach
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <button type="button" class="btn btn-outline-primary"
+                                                        data-toggle="modal" data-target="#individuelles">
+                                                        <i class="far fa-eye"></i>
+                                                    </button>
+                                                    @if (isset($individuelle))
+                                                        <a href="{{ route('individuelles.create') }}">
+                                                            <div class="btn btn-success  btn-sm"><i
+                                                                    class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                                            </div>
+                                                        </a>
+                                                    @elseif (isset($individuelle->cin))
+                                                        <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="fas fa-plus">Ajouter</i>
+                                                        </a>
+                                                    @else
+                                                    <a href="{{ route('individuelles.create') }}">
+                                                        <div class="btn btn-success  btn-sm"><i
+                                                                class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                                        </div>
+                                                    </a>
+                                                    @endif
+                                                </div>
+                                                <br />
+                                                @if (isset($individuelle))
+                                                    <table class="table table-bordered table-striped" width="100%"
+                                                        cellspacing="0" id="table-individuelles">
+                                                        <thead class="table-dark">
+                                                            <tr>
+                                                                <th style="width:15%;">N°</th>
+                                                                <th style="width:30%;">Module</th>
+                                                                <th>Région</th>
+                                                                <th>Statut</th>
+                                                                <th style="width:15%;"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php $i = 1; ?>
+                                                            <tr>
+                                                                <td>{{ $individuelle->demandeur->numero ?? '' }}</td>
+                                                                <td>
+                                                                    @foreach ($individuelle->modules as $module)
+                                                                        {!! $module->name ?? '' !!}
+                                                                    @endforeach
+                                                                </td>
+                                                                <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                                <td>
+                                                                    <span>
+                                                                        @if (isset($individuelle->modules) && $individuelle->modules != '[]')
+                                                                            @foreach ($individuelle->modules as $module)
+                                                                                @if (isset($module->name))
+                                                                                    <h5>
+                                                                                        @if ($individuelle->statut != 'Attente')
+                                                                                            <label
+                                                                                                class="badge badge-success">{{ $individuelle->statut }}</label>
+                                                                                        @else
+                                                                                            <label
+                                                                                                class="badge badge-warning">{{ $individuelle->statut }}</label>
+                                                                                        @endif
+                                                                                    </h5>
+                                                                                @else
+                                                                                    <h5><label
+                                                                                            class="badge badge-danger">Invalide</label>
+                                                                                    </h5>
+                                                                                @endif
+                                                                            @endforeach
 
-                           {{--   <div class="form-group col-md-4">
-                                {!! Form::label('NOM') !!}  --}}
-                                {!! Form::hidden('username', $utilisateurs->username, ['placeholder' => 'Votre nom', 'class' => 'form-control','disabled' => 'disabled']) !!}
-                           {{--   </div>  --}}
-                           {{--   <div class="form-group col-md-4">
-                                {!! Form::label('NOM') !!}  --}}
-                                {!! Form::hidden('matricule', $utilisateurs->matricule, ['placeholder' => 'Votre nom', 'class' => 'form-control','disabled' => 'disabled']) !!}
-                           {{--   </div>  --}}
+                                                                        @else
+                                                                            <h5><label
+                                                                                    class="badge badge-danger">Invalide</label>
+                                                                            </h5>
 
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Civilité', null, ['class' => 'control-label']) !!}
-                                {!! Form::select('civilite', $civilites, $utilisateurs->civilite, ['placeholder' => 'sélectionnez', 'class'
-                                => 'form-control','disabled' => 'disabled', 'id' => 'civilites']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Date naissance', null, ['class' => 'control-label']) !!}
-                                {!! Form::date('date_naiss', $utilisateurs->date_naissance->format('Y-m-d'), ['placeholder' => 'La date de naissance', 'class' =>
-                                'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Lieu naissance') !!}
-                                {!! Form::text('lieu', $utilisateurs->lieu_naissance, ['placeholder' => 'Votre lieu de naissance', 'class' =>
-                                'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                        </div>
+                                                                        @endif
+                                                                    </span>
+                                                                </td>
+                                                                <td class="d-flex align-items-baseline text-center-row">
+                                                                    <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}"
+                                                                        class='btn btn-success btn-sm' title="modifier">
+                                                                        <i class="far fa-edit">&nbsp;</i>
+                                                                    </a>
+                                                                    &nbsp;
+                                                                    <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}"
+                                                                        class='btn btn-primary btn-sm' title="voir">
+                                                                        <i class="far fa-eye">&nbsp;</i>
+                                                                    </a>
+                                                                    {{-- &nbsp;
+                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'individuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                                    {!! Form::close() !!} --}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                @else
 
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                {!! Form::label('E-mail') !!}
-                                {!! Form::email('email', $utilisateurs->email, ['placeholder' => 'Votre adresse e-mail', 'class' =>
-                                'form-control','disabled' => 'disabled', 'id' => 'email']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Téléphone') !!}
-                                {!! Form::text('telephone', $utilisateurs->telephone, ['placeholder' => 'Numero de telephone', 'class' =>
-                                'form-control','disabled' => 'disabled']) !!}
-                            </div>
-
-                            
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Département') !!}
-                                {!! Form::select('departements[]', $departements, $utilisateurs->demandeur->departements, ['class' =>
-                                'form-control','disabled' => 'disabled', 'id' => 'departement']) !!}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Situation familiale') !!}
-                                {!! Form::select('familiale', ['Marié' => 'Marié', 'Célibataire' => 'Célibataire'], $utilisateurs->situation_familiale,
-                                ['placeholder' => 'Votre situation familiale', 'class' => 'form-control','disabled' => 'disabled', 'id' =>
-                                'familiale']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Situation professionnelle') !!}
-                                {!! Form::select('professionnelle', ['Employé' => 'Employé', 'Recherche emploi' =>
-                                'Recherche emploi'], $utilisateurs->situation_professionnelle, ['placeholder' => 'Votre situation professionnelle', 'class' =>
-                                'form-control','disabled' => 'disabled', 'id' => 'professionnelle']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Adresse') !!}
-                                {!! Form::textarea('adresse', $utilisateurs->adresse, ['placeholder' => 'Votre adresse', 'rows' => 1, 'class'
-                                => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Enregistrée par:') !!}
-                                {!! Form::text('cin', $utilisateurs->created_by.'  le  '.$utilisateurs->created_at->format('d/m/Y').' à '.$utilisateurs->created_at->format('H:m:s'), ['placeholder' => '', 'class'
-                                => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Modifiée par :') !!}
-                                {!! Form::text('prenom', $utilisateurs->updated_by.' le '.$utilisateurs->updated_at->format('d/m/Y').' à '.$utilisateurs->updated_at->format('H:m:s'), ['placeholder' => '', 'class' => 'form-control','disabled' => 'disabled'])
-                                !!}
-                            </div>
-                        </div>
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2">DEMANDE</p>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Numéro courrier') !!}
-                                {!! Form::text('numero_courrier', $demandeurs->numero_courrier, ['placeholder' => 'Le numéro du courrier', 'class'
-                                => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Date dépot', null, ['class' => 'control-label']) !!}
-                                {!! Form::date('date_depot', $demandeurs->date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' =>
-                                'form-control','disabled' => 'disabled']) !!}
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                {!! Form::label('localité') !!}
-                                {!! Form::select('localite', $localites, $demandeurs->localite->name, ['placeholder' => '', 'class' =>
-                                'form-control','disabled' => 'disabled', 'id' => 'localite']) !!}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Objet') !!}
-                                {!! Form::select('objet', $objets, $demandeurs->objet->name, ['placeholder' => '', 'class' => 'form-control','disabled' => 'disabled',
-                                'id' => 'objet']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Type demande') !!}
-                                {!! Form::select('type_demande', $types_demandes, $demandeurs->typedemande->name, ['placeholder' =>
-                                '--sélectionnez--', 'class' => 'form-control','disabled' => 'disabled', 'id' => 'type_demande']) !!}
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Programme') !!}
-                                {!! Form::select('programme', $programmes, $demandeurs->programme->sigle, ['class' => 'form-control','disabled' => 'disabled', 'id' => 'programme']) !!}
-                            </div>
-                            <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
-                                placeholder="Mot de passe">
-                            {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' =>
-                            'form-control','disabled' => 'disabled']) !!}
-                        </div>
-
-                        <div class="form-row">
-
-                            <div class="form-group col-md-4">
-                                {!! Form::label("Niveau d'etude") !!}
-                                {!! Form::select('niveaux[]', $niveaux, $demandeurs->nivauxes, ['placeholder' => '', 'class' =>
-                                'form-control','disabled' => 'disabled', 'id' => 'niveau']) !!}
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                {!! Form::label('Diplômes') !!}
-                                {!! Form::select('diplomes[]', $diplomes, $demandeurs->diplomes, ['placeholder' => 'diplome', 'class' =>
-                                'form-control','disabled' => 'disabled', 'id' => 'diplome']) !!}
-                            </div>
-                            <div class="form-group col-md-4">
-                                {!! Form::label('module') !!}
-                                {!! Form::select('modules[]', $modules, $demandeurs->modules, ['placeholder' => '','class' =>
-                                'form-control','disabled' => 'disabled', 'id' => 'module']) !!}
-                            </div>
-                        </div>                        
-                   {{--       <div class="form-row">
-                            <div class="form-group col-md-12">
-                                {!! Form::label('Projet') !!}
-                                {!! Form::textarea('projet', $demandeurs->projet, ['placeholder' => 'Décrire en quelques lignes votre projet professionnel...', 'rows' => 4,
-                                'class' => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Expérience') !!}
-                                {!! Form::textarea('experience', $demandeurs->experience, ['placeholder' => 'Votre expérience', 'rows' => 3,
-                                'class' => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Information') !!}
-                                {!! Form::textarea('information', $demandeurs->information, ['placeholder' => 'Informations complémentaires', 'rows' => 3,
-                                'class' => 'form-control','disabled' => 'disabled']) !!}
-                            </div>
-                        </div>  --}}
-                        {{--  {!! Form::submit('Modifier', ['class' => 'btn btn-outline-primary pull-right']) !!}  --}}
-                        {!! Form::close() !!}
-                        <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es saisies
-                                            svp</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
+                                                @endif
                                             </div>
-                                            @push('scripts')
-                                                <script type="text/javascript">
-                                                    $(document).ready(function() {
-                                                        $("#error-modal").modal({
-                                                            'show': true,
-                                                        })
-                                                    });
+                                        </div>
 
-                                                </script>
-
-                                            @endpush
-                                        @endif
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="card border-success">
+                                        <div class="card-header border-success">
+                                            <i class="fas fa-table"></i>
+                                            Liste demandes collectives
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                @foreach ($demandeur->collectives as $collective)
+                                                @endforeach
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <button type="button" class="btn btn-outline-success"
+                                                        data-toggle="modal" data-target="#collectives">
+                                                        <i class="far fa-eye"></i>
+                                                    </button>
+                                                    @if (isset($collective))
+                                                        <a href="{{ route('collectives.create') }}">
+                                                            <div class="btn btn-success  btn-sm"><i
+                                                                    class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                                            </div>
+                                                        </a>
+                                                    @elseif (isset($collective->cin))
+                                                        <a href="{!! url('collectives/' . $collective->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="fas fa-plus">Ajouter</i>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route('collectives.create') }}">
+                                                            <div class="btn btn-success  btn-sm"><i
+                                                                    class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                                            </div>
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                                <br />
+                                                @if (isset($collective->name))
+                                                    <table class="table table-bordered table-striped" width="100%"
+                                                        cellspacing="0" id="table-collectives">
+                                                        <thead class="table-dark">
+                                                            <tr>
+                                                                <th style="width:15%;">N°</th>
+                                                                <th style="width:30%;">Module</th>
+                                                                <th>Région</th>
+                                                                <th>Statut</th>
+                                                                <th style="width:15%;"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php $i = 1; ?>
+
+                                                            <tr>
+                                                                <td>{{ $collective->demandeur->numero ?? '' }}</td>
+                                                                <td>
+                                                                    @foreach ($collective->modules as $module)
+                                                                        {!! $module->name ?? '' !!}
+                                                                    @endforeach
+                                                                </td>
+                                                                <td>{!! $collective->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                                <td>
+                                                                    <span>
+                                                                        @if (isset($collective->modules) && $collective->modules != '[]')
+                                                                            @foreach ($collective->modules as $module)
+                                                                                @if (isset($module->name))
+                                                                                    <h5>
+                                                                                        @if ($collective->statut != 'Attente')
+                                                                                            <label
+                                                                                                class="badge badge-success">{{ $collective->statut }}</label>
+                                                                                        @else
+                                                                                            <label
+                                                                                                class="badge badge-warning">{{ $collective->statut }}</label>
+                                                                                        @endif
+                                                                                    </h5>
+                                                                                @else
+                                                                                    <h5><label
+                                                                                            class="badge badge-danger">Invalide</label>
+                                                                                    </h5>
+                                                                                @endif
+                                                                            @endforeach
+
+                                                                        @else
+                                                                            <h5><label
+                                                                                    class="badge badge-danger">Invalide</label>
+                                                                            </h5>
+
+                                                                        @endif
+                                                                    </span>
+                                                                </td>
+                                                                <td class="d-flex align-items-baseline text-center-row">
+                                                                    <a href="{!! url('collectives/' . $collective->id . '/edit') !!}"
+                                                                        class='btn btn-success btn-sm' title="modifier">
+                                                                        <i class="far fa-edit">&nbsp;</i>
+                                                                    </a>
+                                                                    &nbsp;
+                                                                    <a href="{{ url('coldetails', ['$id' => $collective->id]) }}"
+                                                                        class='btn btn-primary btn-sm' title="voir">
+                                                                        <i class="far fa-eye">&nbsp;</i>
+                                                                    </a>
+                                                                    {{-- &nbsp;
+                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'collectives/' . $collective->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                                    {!! Form::close() !!} --}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                @else
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row justify-content-center mt-2">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="card border-success">
+                                        <div class="card-header border-success">
+                                            <i class="fas fa-table"></i>
+                                            Liste demandes prises en charges
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                @foreach ($demandeur->pcharges as $pcharge)
+                                                @endforeach
+                                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                                    <button type="button" class="btn btn-outline-info" data-toggle="modal"
+                                                        data-target="#pcharges">
+                                                        <i class="far fa-eye"></i>
+                                                    </button>
+                                                    @if (isset($pcharge))
+                                                    <a href="{{ route('pcharges.selectetablissements') }}">
+                                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                                        </div>
+                                                    </a>
+                                                    @elseif(isset($pcharge->scolarite))
+                                                        <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="fas fa-plus">Ajouter</i>
+                                                        </a>
+                                                    @else
+                                                    <a href="{{ route('pcharges.selectetablissements') }}">
+                                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                                        </div>
+                                                    </a>
+                                                    @endif
+                                                </div>
+                                                <br />
+                                                @if (isset($pcharge))
+                                                    <table class="table table-bordered table-striped" width="100%"
+                                                        cellspacing="0" id="table-pcharges">
+                                                        <thead class="table-dark">
+                                                            <tr>
+                                                                <th style="width:7%;">N°</th>
+                                                                <th style="width:7%;">Scolarité</th>
+                                                                <th style="width:30%;">Etablissement</th>
+                                                                <th style="width:15%;">Filière</th>
+                                                                <th style="width:8%;">Région</th>
+                                                                <th style="width:7%;">Statut</th>
+                                                                <th style="width:7%;"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php $i = 1; ?>
+                                                                <tr>
+                                                                    <td>{{ $pcharge->demandeur->numero ?? '' }}</td>
+                                                                    <td>{{ $pcharge->scolarite->annee ?? '' }}</td>
+                                                                    <td>{{ $pcharge->etablissement->name ?? '' }}</td>
+                                                                    <td>{{ $pcharge->filiere->name ?? '' }}</td>
+                                                                    <td>{!! $pcharge->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                                    <td>
+                                                                        @if (isset($pcharge->filiere->name))
+                                                                            <h5>
+                                                                                @if ($pcharge->statut == 'Attente')
+                                                                                    <label
+                                                                                        class="badge badge-warning">{{ $pcharge->statut }}</label>
+                                                                                @else
+                                                                                    <label
+                                                                                        class="badge badge-success">{{ $pcharge->statut }}</label>
+                                                                                @endif
+                                                                            </h5>
+                                                                        @else
+                                                                            <h5><label
+                                                                                    class="badge badge-danger">Invalide</label>
+                                                                            </h5>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td class="d-flex align-items-baseline text-center-row">
+                                                                        <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}"
+                                                                            class='btn btn-success btn-sm' title="modifier">
+                                                                            <i class="far fa-edit"></i>
+                                                                        </a>
+                                                                        &nbsp;
+                                                                        <a href="{{ url('pdetails', ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) }}"
+                                                                            class='btn btn-primary btn-sm' title="voir">
+                                                                            <i class="far fa-eye"></i>
+                                                                            {{-- &nbsp;
+                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                                    {!! Form::close() !!} --}}
+                                                                    </td>
+                                                                </tr>
+                                                        </tbody>
+                                                    </table>
+                                                @else
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="mt-3 d-flex align-items-baseline align-middle">
+                                        <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
+                                                data-feather="book-open"></span>Devenir opérateur</a>
+                                        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#operateurs">
+                                            <i class="far fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div> --}}
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

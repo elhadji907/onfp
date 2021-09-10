@@ -18,7 +18,7 @@
                 <div class="card border-success">
                     <div class="card-header card-header-primary text-center border-success">
                         <h3 class="card-title">Enregistrement demande de prise en charge</h3>
-                        Établissement => <label class="badge badge-success">{{ $etablissement->name }}
+                        Établissement => <label class="badge badge-success">{{ $etablissement->name ?? '' }}
                             @if (isset($etablissement->sigle))
                                 [{{ $etablissement->sigle ?? '' }}]
                         </label>

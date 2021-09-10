@@ -289,50 +289,7 @@ class DemandeurController extends Controller
      */
     public function show(Demandeur $demandeur)
     {
-        $typesdemande = $demandeur->types_demande->name;
-        $individuelles = $demandeur->individuelles;
-        $collectives = $demandeur->collectives;
-
-        /*  if (Auth::user()->role->name == "Administrateur") { */
-
-        $utilisateurs = $demandeur->user;
-
-        $roles = Role::get();
-        $civilites = User::pluck('civilite', 'civilite');
-        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
-        $types_demandes = Typesdemande::distinct('name')->get()->pluck('name', 'name')->unique();
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
-        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
-
-        if ($typesdemande === "Individuelle") {
-            return view('individuelles.show', compact(
-                'individuelles',
-                'communes',
-                'niveaux',
-                'modules',
-                'types_demandes',
-                'programmes',
-                'diplomes',
-                'utilisateurs',
-                'civilites'
-            ));
-        } elseif ($typesdemande === "Collective") {
-            return view('collectives.show', compact(
-                'collectives',
-                'communes',
-                'niveaux',
-                'modules',
-                'types_demandes',
-                'programmes',
-                'diplomes',
-                'utilisateurs',
-                'civilites'
-            ));
-        } else {
-            return back();
-        }
+        return view('demandeurs.show', compact('demandeur'));
     }
 
     /**

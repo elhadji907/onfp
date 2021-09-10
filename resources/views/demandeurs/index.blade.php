@@ -22,7 +22,8 @@
                         <div class="table-responsive">
                             <div align="right">
                                 <a href="{{ route('demandeurs.create') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                    </div>
                                 </a>
                             </div>
                             <br />
@@ -67,7 +68,7 @@
                                             <td>{!! $demandeur->user->telephone !!}</td>
                                             <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
                                             <td>
-                                                <a href="{{ route('profiles.show', ['user' => $demandeur->user]) }}" class='btn btn-primary btn-sm'
+                                                <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
                                                     title="voir" target='_blank'>
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
@@ -89,8 +90,7 @@
         $(document).ready(function() {
             $('#table-demandeurs').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -108,8 +108,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
