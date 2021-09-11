@@ -21,7 +21,6 @@
                         <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <div class="row justify-content-center mt-5">
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
                                     <div class="card border-success">
                                         <div class="card-header border-success">
                                             <i class="fas fa-table"></i>

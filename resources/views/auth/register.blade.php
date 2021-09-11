@@ -17,8 +17,8 @@
                                             class="text-danger">*</span>)</label>
                                     <input id="firstname" type="text"
                                         class="form-control @error('firstname') is-invalid @enderror" name="firstname"
-                                        placeholder="Votre et prenom" value="{{ old('firstname') }}"
-                                        autocomplete="firstname" autofocus>
+                                        placeholder="Votre prénom" value="{{ old('firstname') }}" autocomplete="firstname"
+                                        autofocus>
                                     @error('firstname')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -29,8 +29,8 @@
                                     <label for="name"><b>{{ __('Nom') }}</b>(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" placeholder="Votre et nom" value="{{ old('name') }}"
-                                        autocomplete="name" autofocus>
+                                        name="name" placeholder="Votre nom" value="{{ old('name') }}" autocomplete="name"
+                                        autofocus>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -79,7 +79,6 @@
                                         </span>
                                     @enderror
                                 </div>
-
                                 {{-- <div class="form-group col-md-4">
                                 <label for="exampleInputEmail1"><b>Civilité</b></b>(<span class="text-danger">*</span>)</label>
                                 <select name="civilite" id="civilite" class="form-control {{ $errors->has('civilite') ? 'is-invalid' : '' }}">
