@@ -271,8 +271,7 @@
     @endhasrole
     <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="row justify-content-center mt-5">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
                     <div class="card-header border-success">
                         <i class="fas fa-table"></i>
@@ -304,11 +303,11 @@
                                     id="table-individuelles">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:15%;">N°</th>
-                                            <th style="width:30%;">Module</th>
+                                            <th style="width:10%;">N°</th>
+                                            <th>Module</th>
                                             <th>Région</th>
-                                            <th>Statut</th>
-                                            <th style="width:15%;"></th>
+                                            <th style="width:8%;">Statut</th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -328,12 +327,12 @@
                                                             @foreach ($individuelle->modules as $module)
                                                                 @if (isset($module->name))
                                                                     <h5>
-                                                                        @if ($individuelle->statut != "Attente")                                                                            
-                                                                        <label
-                                                                        class="badge badge-success">{{ $individuelle->statut }}</label>
-                                                                        @else                                                                            
-                                                                        <label
-                                                                        class="badge badge-warning">{{ $individuelle->statut }}</label>
+                                                                        @if ($individuelle->statut != 'Attente')
+                                                                            <label
+                                                                                class="badge badge-success">{{ $individuelle->statut }}</label>
+                                                                        @else
+                                                                            <label
+                                                                                class="badge badge-warning">{{ $individuelle->statut }}</label>
                                                                         @endif
                                                                     </h5>
                                                                 @else
@@ -353,11 +352,11 @@
                                                         title="modifier">
                                                         <i class="far fa-edit">&nbsp;</i>
                                                     </a>
-                                                    &nbsp;                                                  
-                                                <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}" class='btn btn-primary btn-sm'
-                                                    title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
+                                                    &nbsp;
+                                                    <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}"
+                                                        class='btn btn-primary btn-sm' title="voir">
+                                                        <i class="far fa-eye">&nbsp;</i>
+                                                    </a>
                                                     {{-- &nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'individuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
@@ -375,7 +374,9 @@
 
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        </div>
+        <div class="row justify-content-center mt-2">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
                     <div class="card-header border-success">
                         <i class="fas fa-table"></i>
@@ -407,11 +408,11 @@
                                     id="table-collectives">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:15%;">N°</th>
-                                            <th style="width:30%;">Module</th>
+                                            <th style="width:10%;">N°</th>
+                                            <th>Module</th>
                                             <th>Région</th>
-                                            <th>Statut</th>
-                                            <th style="width:15%;"></th>
+                                            <th style="width:8%;">Statut</th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -431,12 +432,12 @@
                                                             @foreach ($collective->modules as $module)
                                                                 @if (isset($module->name))
                                                                     <h5>
-                                                                        @if ($collective->statut != "Attente")                                                                            
-                                                                        <label
-                                                                        class="badge badge-success">{{ $collective->statut }}</label>
-                                                                        @else                                                                            
-                                                                        <label
-                                                                        class="badge badge-warning">{{ $collective->statut }}</label>
+                                                                        @if ($collective->statut != 'Attente')
+                                                                            <label
+                                                                                class="badge badge-success">{{ $collective->statut }}</label>
+                                                                        @else
+                                                                            <label
+                                                                                class="badge badge-warning">{{ $collective->statut }}</label>
                                                                         @endif
                                                                     </h5>
                                                                 @else
@@ -531,12 +532,12 @@
                                                 <td>
                                                     @if (isset($pcharge->filiere->name))
                                                         <h5>
-                                                            @if ($pcharge->statut == "Attente")                                                                            
-                                                            <label
-                                                            class="badge badge-warning">{{ $pcharge->statut }}</label>
-                                                            @else                                                                            
-                                                            <label
-                                                            class="badge badge-success">{{ $pcharge->statut }}</label>
+                                                            @if ($pcharge->statut == 'Attente')
+                                                                <label
+                                                                    class="badge badge-warning">{{ $pcharge->statut }}</label>
+                                                            @else
+                                                                <label
+                                                                    class="badge badge-success">{{ $pcharge->statut }}</label>
                                                             @endif
                                                         </h5>
                                                     @else
@@ -567,15 +568,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="mt-3 d-flex align-items-baseline align-middle">
-                    <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
-                            data-feather="book-open"></span>Devenir opérateur</a>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#operateurs">
-                        <i class="far fa-eye"></i>
-                    </button>
-                </div>
-            </div> --}}
         </div>
     </div>
     <div class="modal fade" id="individuelles" tabindex="-1" role="dialog" aria-labelledby="individuellesTitle"
