@@ -347,7 +347,7 @@
                                                         @endif
                                                     </span>
                                                 </td>
-                                                <td class="d-flex align-items-baseline text-center-row">
+                                                <td class="d-flex align-items-baseline align-middle">
                                                     <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                         title="modifier">
                                                         <i class="far fa-edit">&nbsp;</i>

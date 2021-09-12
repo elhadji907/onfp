@@ -17,6 +17,7 @@ class AntenneSeeder extends Seeder
     {
         DB::table('antennes')->insert([
             'name' => "Antenne de Kaolack",
+            'code' => "AntKL",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -24,6 +25,7 @@ class AntenneSeeder extends Seeder
 
         DB::table('antennes')->insert([
             'name' => "Antenne de Kolda",
+            'code' => "AntKD",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -31,6 +33,7 @@ class AntenneSeeder extends Seeder
 
         DB::table('antennes')->insert([
             'name' => "Antenne de Kédougou",
+            'code' => "AntKD",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -38,6 +41,7 @@ class AntenneSeeder extends Seeder
 
         DB::table('antennes')->insert([
             'name' => "Antenne de Diourbel",
+            'code' => "AntDL",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -45,6 +49,7 @@ class AntenneSeeder extends Seeder
 
         DB::table('antennes')->insert([
             'name' => "Antenne de Matam",
+            'code' => "AntMT",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -52,6 +57,7 @@ class AntenneSeeder extends Seeder
 
         DB::table('antennes')->insert([
             'name' => "Antenne de Saint-Louis",
+            'code' => "AntSL",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
@@ -59,6 +65,7 @@ class AntenneSeeder extends Seeder
 
         DB::table('antennes')->insert([
             'name' => "Antenne de Ziguinchor",
+            'code' => "AntZG",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),

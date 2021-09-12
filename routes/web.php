@@ -55,6 +55,7 @@ use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\FilierespecialiteController;
 use App\Http\Controllers\SpecialiteController;
 use App\Http\Controllers\ScolariteController;
+use App\Http\Controllers\AntenneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -221,6 +222,7 @@ Route::group([
         Route::resource('/filierespecialites', FilierespecialiteController::class);
         Route::resource('/specialites', SpecialiteController::class);
         Route::resource('/scolarites', ScolariteController::class);
+        Route::resource('/antennes', AntenneController::class);
     });
 
 require __DIR__.'/auth.php';

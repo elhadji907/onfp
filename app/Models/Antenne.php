@@ -18,12 +18,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $name
- * @property int|null $regions_id
+ * @property string|null $code
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Region|null $region
+ * @property Collection|Region[] $regions
  * @property Collection|Collective[] $collectives
  * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
@@ -37,19 +37,17 @@ class Antenne extends Model
 	use \App\Helpers\UuidForKey;
 	protected $table = 'antennes';
 
-	protected $casts = [
-		'regions_id' => 'int'
-	];
-
 	protected $fillable = [
 		'uuid',
 		'name',
-		'regions_id'
+		'code'
 	];
 
-	public function region()
+	public function regions()
 	{
-		return $this->belongsTo(Region::class, 'regions_id');
+		return $this->belongsToMany(Region::class, 'antennesregions', 'antennes_id', 'regions_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function collectives()

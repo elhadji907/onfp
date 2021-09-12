@@ -309,6 +309,16 @@
     @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('antennes.index') }}">
+            <span data-feather="users"></span>
+            <span>Antennes</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+@else
+    @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('ingenieurs.index') }}">
             <span data-feather="users"></span>
             <span>Ingénieurs</span>

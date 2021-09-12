@@ -45,7 +45,9 @@ class Region extends Model
 
 	public function antennes()
 	{
-		return $this->hasMany(Antenne::class, 'regions_id');
+		return $this->belongsToMany(Antenne::class, 'antennesregions', 'regions_id', 'antennes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function departements()
