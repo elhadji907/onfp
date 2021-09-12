@@ -4,16 +4,16 @@
     <div class="content mb-5">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
-                @if (count($errors) > 0)
+            {{--      @if (count($errors) > 0)
                     <div class="alert alert-danger mt-2">
                         <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                        {{-- <ul>
+                        <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
-                        </ul> --}}
+                        </ul>
                     </div>
-                @endif
+                @endif  --}}
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -251,7 +251,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Diplômes :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('diplome', $diplomes, $individuelle->demandeur->diplome->name ?? old('diplome'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'diplome']) !!}
+                                {!! Form::select('diplome', $diplomes, $individuelle->diplome->name ?? old('diplome'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'diplome']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('diplome'))
                                         @foreach ($errors->get('diplome') as $message)
@@ -274,10 +274,10 @@
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="Option">{{ __('Option du diplôme') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <input id="option" type="option" class="form-control @error('option') is-invalid @enderror"
-                                    name="option" placeholder="Ex: Gestion finance"
-                                    value="{{ $individuelle->demandeur->option ?? old('option') }}"
-                                    autocomplete="option">
+                                <input id="optiondiplome" type="optiondiplome" class="form-control @error('optiondiplome') is-invalid @enderror"
+                                    name="optiondiplome" placeholder="Ex: Gestion finance"
+                                    value="{{ $individuelle->optiondiplome ?? old('optiondiplome') }}"
+                                    autocomplete="optiondiplome">
                                 @error('option')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -290,7 +290,7 @@
                                         class="text-danger">*</span>)</label>
                                 <textarea class="form-control  @error('etablissement') is-invalid @enderror"
                                     name="etablissement" id="etablissement" rows="1"
-                                    placeholder="Votre etablissement complète">{{ $individuelle->demandeur->etablissement ?? old('etablissement') }}</textarea>
+                                    placeholder="Votre etablissement complète">{{ $individuelle->etablissement ?? old('etablissement') }}</textarea>
                                 @error('etablissement')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -299,7 +299,7 @@
                                 <label for="autres_diplomes">{{ __('Autres diplomes') }}</label>
                                 <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
                                     name="autres_diplomes" id="autres_diplomes" rows="1"
-                                    placeholder="Si vous possédez d'autres diplômes">{{ $individuelle->demandeur->autres_diplomes ?? old('autres_diplomes') }}</textarea>
+                                    placeholder="Si vous possédez d'autres diplômes">{{ $individuelle->autres_diplomes ?? old('autres_diplomes') }}</textarea>
                                 @error('autres_diplomes')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -309,7 +309,7 @@
                                         class="text-danger">*</span>)</label>
                                 <textarea class="form-control  @error('motivation') is-invalid @enderror" name="motivation"
                                     id="motivation" rows="2"
-                                    placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ $individuelle->demandeur->motivation ?? old('motivation') }}</textarea>
+                                    placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ $individuelle->motivation ?? old('motivation') }}</textarea>
                                 @error('motivation')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -326,7 +326,7 @@
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Qualifications :') !!}
-                                {!! Form::textarea('qualification', $individuelle->demandeur->qualification, ['placeholder' => 'Qualifications et autres diplômes', 'rows' => 2, 'class' => 'form-control']) !!}
+                                {!! Form::textarea('qualification', $individuelle->qualification, ['placeholder' => 'Qualifications et autres diplômes', 'rows' => 2, 'class' => 'form-control']) !!}
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('experience :') !!}
@@ -339,7 +339,7 @@
                             @can('demandeur-list')
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $individuelle->demandeur->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
+                                    {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $individuelle->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('statut'))
                                             @foreach ($errors->get('statut') as $message)
@@ -352,7 +352,7 @@
                             @can('demandeur-list')
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('programme', $programmes, $individuelle->demandeur->programme->sigle ?? ' ', ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
+                                    {!! Form::select('programme', $programmes, $individuelle->programme->sigle ?? ' ', ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('programme'))
                                             @foreach ($errors->get('programme') as $message)
@@ -369,6 +369,52 @@
                             {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
                             {!! Form::submit('Modifier', ['class' => 'btn btn-outline-primary pull-right']) !!}
                             {!! Form::close() !!}
+                            <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Verifier les
+                                                donn&eacute;es
+                                                saisies svp</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @if ($errors->any())
+
+                                                @if (count($errors) > 0)
+                                                    <div class="alert alert-danger mt-2">
+                                                        <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                        entrées.
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <li>{{ $error }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                                @push('scripts')
+                                                    <script type="text/javascript">
+                                                        $(document).ready(function() {
+                                                            $("#error-modal").modal({
+                                                                'show': true,
+                                                            })
+                                                        });
+                                                    </script>
+
+                                                @endpush
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

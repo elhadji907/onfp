@@ -67,6 +67,7 @@ class IndividuelleFactory extends Factory
             'telephone' => $this->faker->word,
             'fixe' => $this->faker->word,
             'motivation' => $this->faker->text,
+            'optiondiplome' => $faker->word,
             'type' => $this->faker->randomElement($array = array('Nouvelle demande','Renouvellement')),
 
             'communes_id' => function () use ($communes_id) {

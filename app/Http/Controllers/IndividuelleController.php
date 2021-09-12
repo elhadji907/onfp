@@ -132,7 +132,7 @@ class IndividuelleController extends Controller
                     'commune'             =>  'required',
                     'modules'             =>  'required',
                     'diplome'             =>  'required',
-                    'option'              =>  'required',
+                    'optiondiplome'       =>  'required',
                 ]
             );
 
@@ -225,34 +225,13 @@ class IndividuelleController extends Controller
                 
             $demandeur = new Demandeur([
                     'numero'                    =>     $numero,
-                    'nbre_piece'                =>     $request->input('nombre_de_piece'),
-                    'niveau_etude'              =>     $request->input('niveau_etude'),
-                    'etablissement'             =>     $request->input('etablissement'),
-                    'telephone'                 =>     $autre_tel,
-                    'programmes_id'             =>     $programme_id,
-                    'option'                    =>     $request->input('option'),
-                    'adresse'                   =>     $request->input('adresse'),
-                    'motivation'                =>     $request->input('motivation'),
-                    'autres_diplomes'           =>     $request->input('autres_diplomes'),
-                    'qualification'             =>     $request->input('qualification'),
                     'types_demandes_id'         =>     $types_demandes_id,
-                    'diplomes_id'               =>     $diplome_id,
                     'users_id'                  =>     $user->id
                 ]);
         
             $demandeur->save();
 
             $individuelle = new Individuelle([
-                    'cin'               =>     $cin,
-                    'experience'        =>     $request->input('experience'),
-                    'information'       =>     $request->input('information'),
-                    'date_depot'        =>     $request->input('date_depot'),
-                    'nbre_pieces'       =>     $request->input('nombre_de_piece'),
-                    'prerequis'         =>     $request->input('prerequis'),
-                    'statut'            =>     'Attente',
-                    'etudes_id'         =>     $etude_id,
-                    'communes_id'       =>     $commune_id,
-                    'demandeurs_id'     =>     $demandeur->id
                 ]);
         
             $individuelle->save();
@@ -263,16 +242,25 @@ class IndividuelleController extends Controller
         } else {
 
             $individuelle = new Individuelle([
-                    'cin'               =>     $cin,
-                    'experience'        =>     $request->input('experience'),
-                    'information'       =>     $request->input('information'),
-                    'date_depot'        =>     $request->input('date_depot'),
-                    'nbre_pieces'       =>     $request->input('nombre_de_piece'),
-                    'prerequis'         =>     $request->input('prerequis'),
-                    'statut'            =>     'Attente',
-                    'etudes_id'         =>     $etude_id,
-                    'communes_id'       =>     $commune_id,
-                    'demandeurs_id'     =>     $demandeur->id
+                'cin'                       =>     $cin,
+                'experience'                =>     $request->input('experience'),
+                'information'               =>     $request->input('information'),
+                'date_depot'                =>     $request->input('date_depot'),
+                'nbre_pieces'               =>     $request->input('nombre_de_piece'),
+                'prerequis'                 =>     $request->input('prerequis'),
+                'etablissement'             =>     $request->input('etablissement'),
+                'optiondiplome'             =>     $request->input('optiondiplome'),
+                'adresse'                   =>     $request->input('adresse'),
+                'motivation'                =>     $request->input('motivation'),
+                'autres_diplomes'           =>     $request->input('autres_diplomes'),
+                'qualification'             =>     $request->input('qualification'),
+                'statut'                    =>     'Attente',
+                'telephone'                 =>     $autre_tel,
+                'etudes_id'                 =>     $etude_id,
+                'communes_id'               =>     $commune_id,
+                'programmes_id'             =>     $programme_id,
+                'diplomes_id'               =>     $diplome_id,
+                'demandeurs_id'             =>     $demandeur->id
                 ]);
         
             $individuelle->save();
@@ -410,7 +398,7 @@ class IndividuelleController extends Controller
                'commune'             =>  'required',
                'modules'             =>  'required',
                'diplome'             =>  'required',
-               'option'              =>  'required',
+               'optiondiplome'       =>  'required',
                ]
             );
 
@@ -471,20 +459,7 @@ class IndividuelleController extends Controller
         $utilisateur->save();
 
         $demandeur->numero                      =      $request->input('numero');
-        $demandeur->nbre_piece                  =      $request->input('nombre_de_piece');
-        $demandeur->niveau_etude                =      $request->input('niveau_etude');
-        $demandeur->etablissement               =      $request->input('etablissement');
-        $demandeur->telephone                   =      $autre_tel;
-        $demandeur->option                      =      $request->input('option');
-        $demandeur->adresse                     =      $request->input('adresse');
-        $demandeur->motivation                  =      $request->input('motivation');
-        $demandeur->autres_diplomes             =      $request->input('autres_diplomes');
-        $demandeur->qualification               =      $request->input('qualification');
-        if ($request->input('programme') !== null) {
-            $demandeur->programmes_id           =      $programme_id;
-        }
         $demandeur->types_demandes_id           =      $types_demandes_id;
-        $demandeur->diplomes_id                 =      $diplome_id;
         $demandeur->users_id                    =      $utilisateur->id;
 
         $demandeur->save();
@@ -492,16 +467,27 @@ class IndividuelleController extends Controller
         if (!$user_connect->hasRole('Demandeur')) {
             $individuelle->statut                  =      $request->input('statut');
         }
-        $individuelle->statut                   =     $statut;
-        $individuelle->cin                      =     $cin;
-        $individuelle->experience               =     $request->input('experience');
-        $individuelle->information              =     $request->input('information');
-        $individuelle->nbre_pieces              =     $request->input('nombre_de_piece');
-        $individuelle->prerequis                =     $request->input('prerequis');
-        $individuelle->date_depot               =     $request->input('date_depot');
-        $individuelle->communes_id              =     $commune_id;
-        $individuelle->etudes_id                =     $etude_id;
-        $individuelle->demandeurs_id            =     $demandeur->id;
+        $individuelle->statut                      =     $statut;
+        $individuelle->cin                         =     $cin;
+        $individuelle->experience                  =     $request->input('experience');
+        $individuelle->information                 =     $request->input('information');
+        $individuelle->nbre_pieces                 =     $request->input('nombre_de_piece');
+        $individuelle->prerequis                   =     $request->input('prerequis');
+        $individuelle->date_depot                  =     $request->input('date_depot');
+        $individuelle->etablissement               =      $request->input('etablissement');
+        $individuelle->telephone                   =      $autre_tel;
+        $individuelle->optiondiplome               =      $request->input('optiondiplome');
+        $individuelle->adresse                     =      $request->input('adresse');
+        $individuelle->motivation                  =      $request->input('motivation');
+        $individuelle->autres_diplomes             =      $request->input('autres_diplomes');
+        $individuelle->qualification               =      $request->input('qualification');
+        if ($request->input('programme') !== null) {
+            $individuelle->programmes_id           =      $programme_id;
+        }
+        $individuelle->diplomes_id                 =      $diplome_id;
+        $individuelle->communes_id                 =     $commune_id;
+        $individuelle->etudes_id                   =     $etude_id;
+        $individuelle->demandeurs_id               =     $demandeur->id;
 
         $individuelle->save();
         

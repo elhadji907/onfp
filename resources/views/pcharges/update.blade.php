@@ -339,7 +339,7 @@
                                             class="text-danger">*</span>)</label>
                                     <textarea class="form-control  @error('motivation') is-invalid @enderror"
                                         name="motivation" id="motivation" rows="3"
-                                        placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ $pcharge->demandeur->motivation ?? old('motivation') }}</textarea>
+                                        placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ $pcharge->motivation ?? old('motivation') }}</textarea>
                                     @error('motivation')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -357,7 +357,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     {!! Form::label('Dernier diplôme :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('diplome', $diplomes, $pcharge->demandeur->diplome->name ?? old('diplome'), ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
+                                    {!! Form::select('diplome', $diplomes, $pcharge->diplome->name ?? old('diplome'), ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('diplome'))
                                             @foreach ($errors->get('diplome') as $message)

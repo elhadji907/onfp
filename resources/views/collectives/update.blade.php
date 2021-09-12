@@ -178,7 +178,7 @@
                                         class="text-danger">*</span>)</label>
                                 <textarea class="form-control  @error('structure_adresse') is-invalid @enderror"
                                     name="structure_adresse" id="structure_adresse" rows="2"
-                                    placeholder="adresse de la structure">{{ $collective->demandeur->adresse ?? old('structure_adresse') }}</textarea>
+                                    placeholder="adresse de la structure">{{ $collective->adresse ?? old('structure_adresse') }}</textarea>
                                 @error('structure_adresse')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -188,7 +188,7 @@
                                         class="text-danger">*</span>)</label>
                                 <input id="structure_fixe" type="text"
                                     class="form-control @error('structure_fixe') is-invalid @enderror" name="structure_fixe"
-                                    placeholder="+221 .. ... .. .." value="{{ $collective->demandeur->fixe ?? old('structure_fixe') }}"
+                                    placeholder="+221 .. ... .. .." value="{{ $collective->fixe ?? old('structure_fixe') }}"
                                     autocomplete="structure_fixe">
                                 @error('structure_fixe')
                                     <span class="invalid-feedback" role="alert">
@@ -197,11 +197,11 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="bp">{{ __('Boite postale') }}</label>
-                                <input id="bp" type="text" class="form-control @error('bp') is-invalid @enderror" name="bp"
-                                    placeholder="Votre adresse postale" value="{{ $collective->demandeur->user->bp ?? old('bp') }}"
-                                    autocomplete="bp">
-                                @error('bp')
+                                <label for="bpcol">{{ __('Boite postale') }}</label>
+                                <input id="bpcol" type="text" class="form-control @error('bpcol') is-invalid @enderror" name="bpcol"
+                                    placeholder="Adresse postale de la structure" value="{{ $collective->bp ?? old('bpcol') }}"
+                                    autocomplete="bpcol">
+                                @error('bpcol')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>
@@ -209,9 +209,9 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="fax">{{ __('Téléphone fax') }}</label>
-                                <input id="fax" type="text" class="form-control @error('fax') is-invalid @enderror"
-                                    name="fax" placeholder="Votre numero de fax" value="{{ $collective->demandeur->user->fax ?? old('fax') }}"
-                                    autocomplete="fax">
+                                <input id="faxcol" type="text" class="form-control @error('faxcol') is-invalid @enderror"
+                                    name="faxcol" placeholder="Votre numero de faxcol" value="{{ $collective->demandeur->user->fax ?? old('faxcol') }}"
+                                    autocomplete="faxcol">
                                 @error('fax')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -266,12 +266,12 @@
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('experience :') !!}
-                                {!! Form::textarea('experience', $collective->demandeur->experience ?? old('experience'), ['placeholder' => 'Experience dans le domaine, ...', 'rows' => 2, 'class' => 'form-control']) !!}
+                                {!! Form::textarea('experience', $collective->experience ?? old('experience'), ['placeholder' => 'Experience dans le domaine, ...', 'rows' => 2, 'class' => 'form-control']) !!}
                             </div>
                             @hasrole('Administrateur|Gestionnaire')
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $collective->demandeur->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
+                                {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $collective->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('statut'))
                                         @foreach ($errors->get('statut') as $message)
@@ -290,7 +290,7 @@
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('programme', $programmes, $collective->demandeur->programme->sigle ?? " ", ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
+                                {!! Form::select('programme', $programmes, $collective->programme->sigle ?? " ", ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('programme'))
                                         @foreach ($errors->get('programme') as $message)
