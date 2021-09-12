@@ -24,9 +24,9 @@ class CreateMembresTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('name', 200);
-            $table->string('firtname', 200)->nullable();
             $table->string('cin', 200)->nullable();
+            $table->string('firtname', 200)->nullable();
+            $table->string('name', 200)->nullable();
             $table->dateTime('date_naissance')->nullable();
             $table->string('lieu_naissance', 200)->nullable();
             $table->string('niveaux', 200)->nullable();
@@ -34,6 +34,9 @@ class CreateMembresTable extends Migration
             $table->longText('autre_experience')->nullable();
             $table->string('titre1', 200)->nullable();
             $table->timestamp('date1')->nullable();
+            $table->string('file1', 200)->nullable();
+            $table->string('file2', 200)->nullable();
+            $table->string('statut', 45)->nullable();
             $table->unsignedInteger('collectives_id');
 
             $table->index(["collectives_id"], 'fk_membres_collectives1_idx');

@@ -29,16 +29,8 @@ class CreateDiplomesTable extends Migration
             $table->string('titre1', 200)->nullable();
             $table->timestamp('date1')->nullable();
             $table->unsignedInteger('options_id')->nullable();
-
-            $table->index(["options_id"], 'fk_diplomes_options1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
-
-
-            $table->foreign('options_id', 'fk_diplomes_options1_idx')
-                ->references('id')->on('options')
-                ->onDelete('no action')
-                ->onUpdate('no action');
         });
     }
 

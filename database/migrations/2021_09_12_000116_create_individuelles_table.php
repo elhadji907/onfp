@@ -25,11 +25,10 @@ class CreateIndividuellesTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('cin', 45)->nullable();
-            $table->integer('nbre_pieces')->nullable();
             $table->longText('legende')->nullable();
             $table->longText('reference')->nullable();
             $table->longText('experience')->nullable();
-            $table->longText('projet')->nullable();
+            $table->longText('projetprofessionnel')->nullable();
             $table->longText('prerequis')->nullable();
             $table->longText('information')->nullable();
             $table->timestamp('date_depot')->nullable();
@@ -38,11 +37,34 @@ class CreateIndividuellesTable extends Migration
             $table->timestamp('date1')->nullable();
             $table->string('statut', 45)->nullable();
             $table->string('type', 45)->nullable();
+            $table->string('qualification', 200)->nullable();
+            $table->string('etablissement', 200)->nullable();
+            $table->string('adresse', 200)->nullable();
+            $table->string('option', 200)->nullable();
+            $table->string('autres_diplomes', 200)->nullable();
+            $table->string('telephone', 200)->nullable();
+            $table->string('fixe', 200)->nullable();
+            $table->longText('motivation')->nullable();
+            $table->longText('motif')->nullable();
+            $table->string('item1', 200)->nullable();
+            $table->string('item2', 200)->nullable();
+            $table->string('file1', 200)->nullable();
+            $table->string('file2', 200)->nullable();
+            $table->string('file3', 200)->nullable();
+            $table->string('file4', 200)->nullable();
+            $table->string('file5', 200)->nullable();
+            $table->string('file6', 200)->nullable();
+            $table->string('file7', 200)->nullable();
+            $table->integer('nbre_pieces')->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
+            $table->unsignedInteger('programmes_id')->nullable();
+            $table->unsignedInteger('projets_id')->nullable();
+            $table->unsignedInteger('diplomes_id')->nullable();
+            $table->string('optiondiplome', 200)->nullable();
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');
 
@@ -53,6 +75,12 @@ class CreateIndividuellesTable extends Migration
             $table->index(["etudes_id"], 'fk_individuelles_etudes1_idx');
 
             $table->index(["antennes_id"], 'fk_individuelles_antennes1_idx');
+
+            $table->index(["programmes_id"], 'fk_individuelles_programmes1_idx');
+
+            $table->index(["projets_id"], 'fk_individuelles_projets1_idx');
+
+            $table->index(["diplomes_id"], 'fk_individuelles_diplomes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -79,6 +107,21 @@ class CreateIndividuellesTable extends Migration
 
             $table->foreign('antennes_id', 'fk_individuelles_antennes1_idx')
                 ->references('id')->on('antennes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('programmes_id', 'fk_individuelles_programmes1_idx')
+                ->references('id')->on('programmes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('projets_id', 'fk_individuelles_projets1_idx')
+                ->references('id')->on('projets')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('diplomes_id', 'fk_individuelles_diplomes1_idx')
+                ->references('id')->on('diplomes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

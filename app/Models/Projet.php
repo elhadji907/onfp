@@ -27,9 +27,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Collection|Collective[] $collectives
  * @property Collection|Courrier[] $courriers
- * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Depense[] $depenses
+ * @property Collection|Individuelle[] $individuelles
  *
  * @package App\Models
  */
@@ -59,18 +60,23 @@ class Projet extends Model
 		'locatite'
 	];
 
+	public function collectives()
+	{
+		return $this->hasMany(Collective::class, 'projets_id');
+	}
+
 	public function courriers()
 	{
 		return $this->hasMany(Courrier::class, 'projets_id');
 	}
 
-	public function demandeurs()
-	{
-		return $this->hasMany(Demandeur::class, 'projets_id');
-	}
-
 	public function depenses()
 	{
 		return $this->hasMany(Depense::class, 'projets_id');
+	}
+
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'projets_id');
 	}
 }

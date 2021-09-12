@@ -6,6 +6,9 @@ use App\Models\Individuelle;
 use App\Models\Demandeur;
 use App\Models\TypesDemande;
 use App\Models\Commune;
+use App\Models\Projet;
+use App\Models\Programme;
+use App\Models\Diplome;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class IndividuelleFactory extends Factory
@@ -36,6 +39,9 @@ class IndividuelleFactory extends Factory
         $cin = $nombre1.$nombre2.$nombre3.$nombre4.$nombre5.$nombre6.$nombre7.$nombre8.$nombre9;
         $types_demande_id=TypesDemande::where('name', 'Individuelle')->first()->id;
         $communes_id=Commune::all()->random()->id;
+        $diplomes_id=Diplome::all()->random()->id;
+        $projet_id=Projet::all()->random()->id;
+        $programmes_id=Programme::all()->random()->id;
             
         $nombre = rand(1, 9);
         
@@ -45,19 +51,38 @@ class IndividuelleFactory extends Factory
             'legende' => $this->faker->text,
             'reference' => $this->faker->text,
             'experience' => $this->faker->text,
-            'projet' => $this->faker->text,
             'date_depot' => $this->faker->dateTime(),
             'prerequis' => $this->faker->text,
             'information' => $this->faker->text,
             'items1' => $this->faker->word,
             'statut' => "Attente",
-            'type' => $this->faker->randomElement($array = array ('Nouvelle demande','Renouvellement')),
+            'projetprofessionnel' => $this->faker->text,
+            'note' => $this->faker->randomFloat(),
             'date1' => $this->faker->dateTime(),
+            'qualification' => $this->faker->word,
+            'etablissement' => $this->faker->word,
+            'adresse' => $this->faker->word,
+            'option' => $this->faker->word,
+            'autres_diplomes' => $this->faker->word,
+            'telephone' => $this->faker->word,
+            'fixe' => $this->faker->word,
+            'motivation' => $this->faker->text,
+            'type' => $this->faker->randomElement($array = array('Nouvelle demande','Renouvellement')),
+
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
             },
             'demandeurs_id' => function () use ($types_demande_id) {
                 return Demandeur::factory()->create(["types_demandes_id"=>$types_demande_id])->id;
+            },
+            'diplomes_id' => function () use ($diplomes_id) {
+                return $diplomes_id;
+            },
+            'projets_id' => function () use ($projet_id) {
+                return $projet_id;
+            },
+            'programmes_id' => function () use ($programmes_id) {
+                return $programmes_id;
             },
         ];
     }

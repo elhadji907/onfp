@@ -25,19 +25,36 @@ class CreateCollectivesTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->longText('name')->nullable();
+            $table->string('sigle', 100)->nullable();
             $table->timestamp('date_depot')->nullable();
             $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
-            $table->string('sigle', 100)->nullable();
             $table->string('statut', 100)->nullable();
             $table->longText('description')->nullable();
             $table->string('type', 45)->nullable();
+            $table->string('adresse', 200)->nullable();
+            $table->string('telephone', 45)->nullable();
+            $table->string('fixe', 45)->nullable();
+            $table->string('bp', 200)->nullable();
+            $table->string('fax', 200)->nullable();
+            $table->longText('projetprofessionnel')->nullable();
+            $table->longText('experience')->nullable();
+            $table->longText('prerequis')->nullable();
+            $table->longText('motivation')->nullable();
+            $table->integer('nbre_pieces')->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
+            $table->unsignedInteger('programmes_id')->nullable();
+            $table->unsignedInteger('projets_id')->nullable();
+            $table->string('file1', 200)->nullable();
+            $table->string('file2', 200)->nullable();
+            $table->string('file3', 200)->nullable();
+            $table->string('file4', 200)->nullable();
+            $table->string('file5', 200)->nullable();
 
             $table->index(["demandeurs_id"], 'fk_collectives_demandeurs1_idx');
 
@@ -50,6 +67,10 @@ class CreateCollectivesTable extends Migration
             $table->index(["etudes_id"], 'fk_collectives_etudes1_idx');
 
             $table->index(["antennes_id"], 'fk_collectives_antennes1_idx');
+
+            $table->index(["programmes_id"], 'fk_collectives_programmes1_idx');
+
+            $table->index(["projets_id"], 'fk_collectives_projets1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -81,6 +102,16 @@ class CreateCollectivesTable extends Migration
 
             $table->foreign('antennes_id', 'fk_collectives_antennes1_idx')
                 ->references('id')->on('antennes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('programmes_id', 'fk_collectives_programmes1_idx')
+                ->references('id')->on('programmes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('projets_id', 'fk_collectives_projets1_idx')
+                ->references('id')->on('projets')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

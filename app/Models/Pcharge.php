@@ -33,6 +33,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $niveausortie
  * @property string|null $specialisation
  * @property string|null $statut
+ * @property string|null $motivation
+ * @property string|null $adresse
+ * @property int|null $nbre_pieces
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
@@ -49,12 +52,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $scolarites_id
  * @property int|null $etudes_id
  * @property int|null $typepcharges_id
+ * @property int|null $diplomes_id
+ * @property string|null $optiondiplome
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Demandeur|null $demandeur
  * @property Commune|null $commune
+ * @property Diplome|null $diplome
  * @property Etablissement|null $etablissement
  * @property Etude|null $etude
  * @property Filiere|null $filiere
@@ -79,13 +85,15 @@ class Pcharge extends Model
 		'accompt' => 'float',
 		'reliquat' => 'float',
 		'duree' => 'int',
+		'nbre_pieces' => 'int',
 		'demandeurs_id' => 'int',
 		'etablissements_id' => 'int',
 		'filieres_id' => 'int',
 		'communes_id' => 'int',
 		'scolarites_id' => 'int',
 		'etudes_id' => 'int',
-		'typepcharges_id' => 'int'
+		'typepcharges_id' => 'int',
+		'diplomes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -111,6 +119,9 @@ class Pcharge extends Model
 		'niveausortie',
 		'specialisation',
 		'statut',
+		'motivation',
+		'adresse',
+		'nbre_pieces',
 		'file1',
 		'file2',
 		'file3',
@@ -126,7 +137,9 @@ class Pcharge extends Model
 		'communes_id',
 		'scolarites_id',
 		'etudes_id',
-		'typepcharges_id'
+		'typepcharges_id',
+		'diplomes_id',
+		'optiondiplome'
 	];
 
 	public function demandeur()
@@ -137,6 +150,11 @@ class Pcharge extends Model
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
+	}
+
+	public function diplome()
+	{
+		return $this->belongsTo(Diplome::class, 'diplomes_id');
 	}
 
 	public function etablissement()
