@@ -4,7 +4,7 @@
     <div class="content mb-5">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
-                @if (count($errors) > 0)
+              {{--    @if (count($errors) > 0)
                     <div class="alert alert-danger mt-2">
                         <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
                         <ul>
@@ -13,21 +13,24 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif  --}}
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
-                <div class="row pt-0"></div>
-                <div class="card">
-                    <div class="card-header bg-gradient-info text-center">
-                        <h1 class="h4 text-white mb-0"><span data-feather="info"></span>Enregistrement demande
-                            individuelle</h1>
+                <div class="row justify-content-center pb-2">
+                    <div class="col-lg-12 margin-tb">
+                        <a class="btn btn-outline-success" href="{{ route('individuelles.index') }}"> <i
+                                class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                    </div>
+                </div>
+                <div class="card border-success">
+                    <div class="card card-header text-center bg-gradient-default border-success">
+                        <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
+                                class="font-italic">Enregistrement demande individuelle</span></h1>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires
-                        <div class="bg-gradient-secondary text-center">
-                            <p class="h4 text-white mb-2 mt-0">IDENTIFICATION</p>
-                        </div>
+                        <hr class="sidebar-divider my-0"><br>
                         <form method="POST" action="{{ url('individuelles') }}">
                             @csrf
                             <div class="form-row">
@@ -57,16 +60,14 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="nom">{{ __('Nom') }}(<span class="text-danger">*</span>)</label>
                                     <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror"
-                                        name="nom" placeholder="Votre et nom" value="{{ old('nom') }}" autocomplete="nom"
-                                        autofocus>
+                                        name="nom" placeholder="Votre et nom" value="{{ old('nom') }}"
+                                        autocomplete="nom" autofocus>
                                     @error('nom')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="date_naiss">{{ __('Date de naissance') }}(<span
                                             class="text-danger">*</span>)</label>
@@ -106,8 +107,6 @@
                                     @enderror
                                     </small>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="telephone">{{ __('Telephone') }}(<span
                                             class="text-danger">*</span>)</label>
@@ -138,9 +137,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -151,18 +148,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
-                                    {!! Form::label('Situation familiale :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('familiale'))
-                                            @foreach ($errors->get('familiale') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation professionnelle :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('professionnelle', $professionnelle, null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -173,7 +159,18 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('Situation familiale :') !!}
+                                    {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('familiale'))
+                                            @foreach ($errors->get('familiale') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('commune', $communes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -184,26 +181,10 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                            <div class="bg-gradient-secondary text-center">
-                                <p class="h4 text-white mb-2">DEMANDE</p>
-                            </div>
-                            {{-- <div class="form-row"> --}}
-                            {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
-                            {{-- {!! Form::label('N° courrier :') !!}(<span class="text-danger">*</span>) --}}
-                            {!! Form::hidden('numero_courrier', null, ['placeholder' => 'Le numéro du courrier', 'class' => 'form-control']) !!}
-                            {{-- <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('numero_courrier'))
-                                            @foreach ($errors->get('numero_courrier') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
-                            {{-- {!! Form::label('Nbre pièces:') !!}(<span class="text-danger">*</span>) --}}
-                            {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
-                            {{-- <small id="emailHelp" class="form-text text-muted">
+                                {{--<div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
+                                {{-- {!! Form::label('Nbre pièces:') !!}(<span class="text-danger">*</span>) --}}
+                                {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
+                                {{-- <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('nombre_de_piece'))
                                             @foreach ($errors->get('nombre_de_piece') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
@@ -212,9 +193,9 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12"> --}}
-                            {{-- {!! Form::label('Dépot :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>) --}}
-                            {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
-                            {{-- <small id="emailHelp" class="form-text text-muted">
+                                {{-- {!! Form::label('Dépot :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>) --}}
+                                {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
+                                {{-- <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('date_depot'))
                                             @foreach ($errors->get('date_depot') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
@@ -222,8 +203,6 @@
                                         @endif
                                     </small>
                                 </div> --}}
-                            {{-- </div> --}}
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('modules', $modules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
@@ -257,8 +236,6 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="Option">{{ __('Option du diplôme') }}(<span
                                             class="text-danger">*</span>)</label>
@@ -292,8 +269,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label
                                         for="motivation">{{ __('Pourquoi voulez-vous faire cette formation ?') }}(<span
@@ -315,8 +290,6 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Qualifications :') !!}
                                     {!! Form::textarea('qualification', null, ['placeholder' => 'Qualifications et autres diplômes', 'rows' => 1, 'class' => 'form-control']) !!}
@@ -325,17 +298,10 @@
                                     {!! Form::label('experience :') !!}
                                     {!! Form::textarea('experience', null, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 1, 'class' => 'form-control']) !!}
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Informations :') !!}
                                     {!! Form::textarea('information', null, ['placeholder' => 'Informations complémenaires', 'rows' => 1, 'class' => 'form-control']) !!}
                                 </div>
-                            </div>
-                            <div class="bg-gradient-secondary text-center">
-                                <p class="h4 text-white mb-2">INSCRIVEZ-VOUS A UN PROGRAMME</p>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Programme :') !!}
                                     {!! Form::select('programme', $programmes, null, ['placeholder' => 'sélectionner un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
@@ -347,6 +313,51 @@
                             <button type="submit" class="btn btn-primary"><i
                                     class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
                         </form>
+                        <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es
+                                            saisies svp</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @if ($errors->any())
+
+                                            @if (count($errors) > 0)
+                                                <div class="alert alert-danger mt-2">
+                                                    <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                    entrées.
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            @push('scripts')
+                                                <script type="text/javascript">
+                                                    $(document).ready(function() {
+                                                        $("#error-modal").modal({
+                                                            'show': true,
+                                                        })
+                                                    });
+                                                </script>
+
+                                            @endpush
+                                        @endif
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

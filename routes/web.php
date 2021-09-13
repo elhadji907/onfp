@@ -56,6 +56,7 @@ use App\Http\Controllers\FilierespecialiteController;
 use App\Http\Controllers\SpecialiteController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\AntenneController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,6 +173,11 @@ Route::group([
         Route::get('/etablissements.selectefilieres', function () {
             return view('etablissements.selectefilieres');
         })->name('etablissements.selectefilieres');
+
+
+
+        Route::get('preview', [PDFController::class,  'preview']);
+        Route::get('download', [PDFController::class, 'download'])->name('download');
         
         Route::resource('/courriers', CourrierController::class);
         Route::resource('/recues', RecueController::class);

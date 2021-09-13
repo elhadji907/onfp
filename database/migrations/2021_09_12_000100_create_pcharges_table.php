@@ -39,6 +39,7 @@ class CreatePchargesTable extends Migration
             $table->string('niveauentree', 200)->nullable();
             $table->string('niveausortie', 45)->nullable();
             $table->string('specialisation', 200)->nullable();
+            $table->string('telephone', 200)->nullable();
             $table->string('statut', 45)->nullable();
             $table->string('motivation', 200)->nullable();
             $table->string('adresse', 200)->nullable();

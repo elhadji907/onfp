@@ -29,7 +29,7 @@
                         <input type="hidden" name="etablissement" value="{{ $etablissement->id }}" class="form-control"
                             name="inputName" id="inputName" placeholder="">
 
-                        {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
+                        {!! Form::hidden('nbre_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
 
                         {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
 
@@ -166,22 +166,22 @@
                                 </small>
                             </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                {!! Form::label('Situation familiale :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('professionnelle', $professionnelle, null, ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('familiale'))
-                                        @foreach ($errors->get('familiale') as $message)
+                                    @if ($errors->has('professionnelle'))
+                                        @foreach ($errors->get('professionnelle') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
                                 </small>
                             </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                {!! Form::label('Situation professionnelle:') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('professionnelle', $professionnelle, null, ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                {!! Form::label('Situation familiale :') !!}
+                                {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('professionnelle'))
-                                        @foreach ($errors->get('professionnelle') as $message)
+                                    @if ($errors->has('familiale'))
+                                        @foreach ($errors->get('familiale') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
