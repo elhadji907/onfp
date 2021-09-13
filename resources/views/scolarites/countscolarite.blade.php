@@ -6,6 +6,61 @@
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
         <div class="row">
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('scolarites.index') }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        TOTAL </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $effectif }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <a class="nav-link" href="{{ url('countype', ['$type' => 'Nouvelle demande', '$annee' => $annee, '$effectif' => $effectif]) }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Nouvelle demande</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">                                        
+                                        {{ $nouvelle }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <a class="nav-link" href="{{ url('countype', ['$type' => 'Renouvellement', '$annee' => $annee, '$effectif' => $effectif]) }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Renouvellement</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $renouvelle }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
             <div class="col-md-12">
                 @if (session('message'))
                     <div class="alert alert-success">
@@ -15,10 +70,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        @if (isset($annee))
-                            Liste des prises en charge pour la scolarité <label
-                                class="badge badge-info">{{ $annee }}</label> avec un effectif de <label
-                                class="badge badge-info">{{ $effectif }}</label>
+                        @if (isset($annee))Scolarité <label class="badge badge-info">{{ $annee }}</label>
                         @endif
                     </div>
                     <div class="card-body">

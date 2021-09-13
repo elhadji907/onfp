@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            {{-- <div class="col-xl-3 col-md-6 mb-4">
+            {{--  <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <a class="nav-link" href="{{ route('pcharges.index') }}">
                         <div class="card-body">
@@ -11,7 +11,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         {{ 'Prises en charge (TOTAL)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pctotal }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -20,34 +20,16 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </div>  --}}
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                    <a class="nav-link" href="{{ url('attente', ['$attente' => 'Attente']) }}">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2019)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2019 }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2020)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2020 }}</div>
+                                        Attente </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $attente }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -59,13 +41,13 @@
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                    <a class="nav-link" href="{{ url('rejeter', ['$attente' => 'Non accordée']) }}">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2021)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2021 }}</div>
+                                        Non accordée </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $nonaccorde }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -74,16 +56,34 @@
                         </div>
                     </a>
                 </div>
-            </div> --}}
-            {{-- <div class="col-xl-2 col-md-6 mb-4">
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <a class="nav-link" href="{{ url('accorder', ['$attente' => 'Accordée']) }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Accordée </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $accorde }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-secondary shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
+                    <a class="nav-link" href="{{ url('terminer', ['$attente' => 'Terminée']) }}">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ 'Année (2022)' }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $an2022 }}</div>
+                                        Terminée</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $termine }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -92,7 +92,7 @@
                         </div>
                     </a>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
     <div class="container-fluid">
@@ -109,7 +109,9 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des prises en charge
+                        @if (isset($pctotal))
+                        Total <label class="badge badge-info">{{ $pctotal }}</label>
+                    @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -182,16 +184,18 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     @if (isset($pcharge->statut) && $pcharge->statut == "Accordée")
                                                     <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>
-                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
-                                                        title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
-                                                        <i class="fas fa-times"></i>
+                                                    <a href="{{ url('termine', ['$pcharge' => $pcharge, '$statut' => 'Terminée']) }}"
+                                                        title="terminer" class="btn btn-outline-success btn-sm mt-0">
+                                                        <i class="fas fa-check-double"></i>
                                                     </a>   
                                                     @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
                                                     <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
-                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                                   {{--   <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
                                                         title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
                                                         <i class="fas fa-times"></i>
-                                                    </a>   
+                                                    </a>    --}} 
+                                                    @elseif (isset($pcharge->statut) && $pcharge->statut == "Terminée")
+                                                    <label class="badge badge-success">{!! $pcharge->statut ?? '' !!}</label>
                                                     @else
                                                     <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
                                                     <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"

@@ -1,84 +1,11 @@
 @extends('layout.default')
-@section('title', 'ONFP - Liste des prises en charge')
+@section('title', 'ONFP - Liste des prises en charge terminées')
 @section('content')
     <div class="container-fluid">
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
         <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('pcharges.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ $annee }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $count }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div> 
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('scolarites.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Attente</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $attente }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('countype', ['$type' => 'Nouvelle demande', '$annee' => $annee, '$effectif' => $effectif]) }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Accordée</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">                                        
-                                        {{ $accorde }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('countype', ['$type' => 'Renouvellement', '$annee' => $annee, '$effectif' => $effectif]) }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Non accordée</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $nonaccorde }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
             <div class="col-md-12">
                 @if (session('message'))
                     <div class="alert alert-success">
@@ -88,9 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        @if (isset($annee))
-                            <label class="badge badge-info">{{ $type }}</label>
-                        @endif
+                        Liste des prises en charge terminées
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -112,9 +37,7 @@
                                         {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:30%;">Etablissement</th>
-                                        <th style="width:5%;">Montant</th>
-                                        <th style="width:9%;">Appréciation</th>
-                                        <th style="width:7%;"></th>
+                                        <th style="width:8%;">Scolarité</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -127,9 +50,7 @@
                                         {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
-                                        <th>Montant</th>
-                                        <th>Appréciation</th>
-                                        <th></th>
+                                        <th>Scolarité</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -140,54 +61,25 @@
                                             <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
                                             <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>
+                                            {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
-                                            <td>{!! $pcharge->etablissement->name !!}</td>
-                                            <td>{!! number_format($pcharge->montant,0, ',', ' ') . ' ' !!}</td>
-                                            {{--  <td>{!! $pcharge->demandeur->user->email !!}</td>  --}}
-                                            <td>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    @if (isset($pcharge->statut) && $pcharge->statut == "Accordée")
-                                                    <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>
-                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
-                                                        title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
-                                                        <i class="fas fa-times"></i>
-                                                    </a>   
-                                                    @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
-                                                    <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
-                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
-                                                        title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
-                                                        <i class="fas fa-times"></i>
-                                                    </a>   
-                                                    @else
-                                                    <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
-                                                    <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
-                                                        title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
-                                                        <i class="fas fa-check-circle"></i>
-                                                    </a>
-                                                    <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
-                                                        title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
-                                                        <i class="fas fa-times"></i>
-                                                    </a>                                                        
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            {{-- <td>{!! $pcharge->etablissement->name ?? '' !!}</td> --}}
-                                            <td class="d-flex align-items-baseline align-middle">
+                                            <td>{!! $pcharge->etablissement->name ?? '' !!}</td>                                            
+                                            <td><label class="badge badge-info">{!! $pcharge->scolarite->annee !!}</label></td>
+                                            {{--  <td class="d-flex align-items-baseline align-middle">
                                                 <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
-                                                </a>
                                                 </a>
                                                 &nbsp;
                                                 <a href="{!! url('pcharges/' . $pcharge->id) !!}" class='btn btn-primary btn-sm'
                                                     title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
-                                                {{--  &nbsp;
+                                                &nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                {!! Form::close() !!}  --}}
-                                            </td>
+                                                {!! Form::close() !!}
+                                            </td>  --}}
                                         </tr>
                                     @endforeach
                                 </tbody>

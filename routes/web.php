@@ -151,6 +151,7 @@ Route::group([
         Route::get('countype/{type}/{annee}/{effectif}', [ScolariteController::class, 'countype'])->name('countype');
         Route::get('accord/{pcharge}/{statut}/{avis_dg}', [ScolariteController::class, 'accord'])->name('accord');
         Route::get('nonaccord/{pcharge}/{statut}', [ScolariteController::class, 'nonaccord'])->name('nonaccord');
+        Route::get('termine/{pcharge}/{statut}', [PchargeController::class, 'termine'])->name('termine');
         Route::get('countpcharge/{etablissement}', [EtablissementController::class, 'countpcharge'])->name('countpcharge');
         Route::get('etabcountype/{type}/{etablissement}/{effectif}', [EtablissementController::class, 'etabcountype'])->name('etabcountype');
         Route::get('countscolaritenbre/{cin}', [PchargeController::class, 'countscolaritenbre'])->name('countscolaritenbre');
@@ -158,6 +159,10 @@ Route::group([
         Route::get('indetails/{id}', [IndividuelleController::class, 'details'])->name('indetails');
         Route::get('coldetails/{id}', [CollectiveController::class, 'details'])->name('coldetails');
         Route::get('pdetails/{id}/{pcharge}', [PchargeController::class, 'details'])->name('pdetails');
+        Route::get('attente/{statut}', [PchargeController::class, 'attente'])->name('attente');
+        Route::get('terminer/{statut}', [PchargeController::class, 'terminer'])->name('terminer');
+        Route::get('rejeter/{statut}', [PchargeController::class, 'rejeter'])->name('rejeter');
+        Route::get('accorder/{statut}', [PchargeController::class, 'accorder'])->name('accorder');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 

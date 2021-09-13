@@ -245,23 +245,41 @@
                         </a>
                         <div class="d-flex justify-content-between align-items-center">
                             @if (isset($pcharge->statut) && $pcharge->statut == "Accordée")
-                            <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>
-                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
-                                title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                            <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
+                            <a href="{{ url('termine', ['$pcharge' => $pcharge, '$statut' => 'Terminée']) }}"
+                                title="terminer" class="btn btn-outline-success btn-sm mt-0">
+                                <i class="fas fa-check-double"></i>
+                            </a>&nbsp;
+                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
                                 <i class="fas fa-times"></i>
-                            </a>   
+                            </a> 
                             @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
-                            <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
+                            <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
+                            <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
+                                title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                <i class="fas fa-check-circle"></i>
+                            </a>&nbsp;
                             <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
                                 title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
                                 <i class="fas fa-times"></i>
                             </a>   
+                            @elseif (isset($pcharge->statut) && $pcharge->statut == "Terminée")
+                            <label class="badge badge-success">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
+                            <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
+                                title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                <i class="fas fa-check-circle"></i>
+                            </a>&nbsp;
+                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                <i class="fas fa-times"></i>
+                            </a> 
                             @else
                             <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
                             <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
                                 title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
                                 <i class="fas fa-check-circle"></i>
-                            </a>
+                            </a>&nbsp;
                             <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
                                 title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
                                 <i class="fas fa-times"></i>
