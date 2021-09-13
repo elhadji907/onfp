@@ -432,6 +432,13 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('preview') }}">
+            <span data-feather="layers"></span>
+            <span>Preview</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
 @else
     @endhasrole
     @hasrole('super-admin|Administrateur')

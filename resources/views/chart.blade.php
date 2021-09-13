@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+@extends('layout.default')
+@section('title', 'ONFP - Enregistrement utilisateur')
+@section('content')
 <head>
     <meta charset="utf-8">
     <script src="https://www.google.com/jsapi"></script>
@@ -56,4 +57,4 @@
 </script>
   
 </body>
-</html>
+@endsection
