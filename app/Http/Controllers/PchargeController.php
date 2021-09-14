@@ -738,6 +738,6 @@ class PchargeController extends Controller
         
         /* $pdf->save(public_path('/storage/pcharges/lamine.pdf')); */
         
-        return $pdf->download('lamine.pdf');
+        return $pdf->stream('lamine.pdf');
     }
 }
