@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des prises en charge accordées
+                        Total <label class="badge badge-info">{{ $effectif }}</label>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

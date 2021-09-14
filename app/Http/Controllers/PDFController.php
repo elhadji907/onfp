@@ -24,8 +24,7 @@ class PDFController extends Controller
      */
     public function download()
     {
-        $render = view('chart')->render();
-  
+        $render = view('chart')->render();        
         $pdf = new Pdf;
         $pdf->addPage($render);
         $pdf->setOptions(['javascript-delay' => 5000]);

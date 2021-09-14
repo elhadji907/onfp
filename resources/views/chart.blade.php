@@ -26,7 +26,7 @@
     <h2>ItSolutionStuff.com.com</h2>
 </div>
   
-<script type="text/javascript">
+{{--  <script type="text/javascript">
     window.onload = function() {
         google.load("visualization", "1.1", {
             packages: ["corechart"],
@@ -54,7 +54,7 @@
         var chart = new google.visualization.PieChart(document.getElementById('chartDiv'));
         chart.draw(data, options);
     }
-</script>
+</script>  --}}
   
 </body>
 @endsection

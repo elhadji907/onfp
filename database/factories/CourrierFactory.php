@@ -48,8 +48,6 @@ class CourrierFactory extends Factory
             'fax' => $this->faker->e164PhoneNumber,
             'bp' => $this->faker->postcode,
             'telephone' => $this->faker->phoneNumber,
-            'file' => "",
-            'legende' => "",
             'statut' => "",
             'date' => $this->faker->dateTime(),
             'adresse' => $this->faker->address,

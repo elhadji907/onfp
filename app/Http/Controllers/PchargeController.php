@@ -712,4 +712,32 @@ class PchargeController extends Controller
 
         return view('pcharges.accorder', compact('statut', 'pcharges', 'effectif'));
     }
+
+    public function telecharger($pcharges)
+    {
+        /* $render = view('pcharges.details')->render();  
+        $pdf = new Pdf;
+        $pdf->addPage($render); */
+
+        /* $pcharges = Pcharge::get()->where('id', '=', $pcharges);
+        
+        $pdf = PDF::loadView('pcharges.details', compact('pcharges'));
+
+        $pdf->setOptions(['javascript-delay' => 5000]);
+
+        $pdf->saveAs(public_path('/storage/pcharges/lamine.pdf'));
+   
+        return $pdf->download(public_path('/storage/pcharges/lamine.pdf')); */
+
+        $pcharges = Pcharge::get()->where('id', '=', $pcharges);
+
+        $pdf = PDF::loadView('pdf', compact('pcharges'))
+                            ->setOption('images', true)
+                            ->setOption('enable-javascript', true)
+                            ->setOption('javascript-delay', 10);
+        
+        /* $pdf->save(public_path('/storage/pcharges/lamine.pdf')); */
+        
+        return $pdf->download('lamine.pdf');
+    }
 }
