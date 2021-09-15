@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             PermissionsOnfpSeeder::class,
             FamilialeSeeder::class,
             ProfessionnelleSeeder::class,
+            ConventionSeeder::class,
             AdministrateurSeeder::class,
             GestionnaireSeeder::class,
             TypeCourrierSeeder::class,

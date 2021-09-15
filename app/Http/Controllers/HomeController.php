@@ -93,6 +93,7 @@ class HomeController extends Controller
             return view('layout.404'); 
         }
         else {
+            
         $courriers = Courrier::all();
 
         $pcharges = Pcharge::distinct('scolarites_id')->pluck('annee', 'annee'); 

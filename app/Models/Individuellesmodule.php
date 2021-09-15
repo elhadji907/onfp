@@ -12,49 +12,49 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Modulesagrement
+ * Class Individuellesmodule
  * 
  * @property int $id
+ * @property int $individuelles_id
  * @property int $modules_id
- * @property int $agrements_id
- * @property int|null $moduleagrementstatut_id
+ * @property int|null $individuellemodulestatut_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Agrement $agrement
- * @property Moduleagrementstatut|null $moduleagrementstatut
+ * @property Individuellemodulestatut|null $individuellemodulestatut
+ * @property Individuelle $individuelle
  * @property Module $module
  *
  * @package App\Models
  */
-class Modulesagrement extends Model
+class Individuellesmodule extends Model
 {
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'modulesagrements';
+	protected $table = 'individuellesmodules';
 
 	protected $casts = [
+		'individuelles_id' => 'int',
 		'modules_id' => 'int',
-		'agrements_id' => 'int',
-		'moduleagrementstatut_id' => 'int'
+		'individuellemodulestatut_id' => 'int'
 	];
 
 	protected $fillable = [
+		'individuelles_id',
 		'modules_id',
-		'agrements_id',
-		'moduleagrementstatut_id'
+		'individuellemodulestatut_id'
 	];
 
-	public function agrement()
+	public function individuellemodulestatut()
 	{
-		return $this->belongsTo(Agrement::class, 'agrements_id');
+		return $this->belongsTo(Individuellemodulestatut::class);
 	}
 
-	public function moduleagrementstatut()
+	public function individuelle()
 	{
-		return $this->belongsTo(Moduleagrementstatut::class);
+		return $this->belongsTo(Individuelle::class, 'individuelles_id');
 	}
 
 	public function module()

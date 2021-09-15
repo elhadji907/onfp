@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\Courrier;
 use App\Models\Demandeur;
 use App\Models\Professionnelle;
+use App\Models\Recue;
+use App\Models\Interne;
+use App\Models\Depart;
 use App\Models\Familiale;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -65,35 +68,80 @@ class ProfileController extends Controller
         $collectives      =      $user->demandeur->collectives;
         $pcharges         =      $user->demandeur->pcharges;
 
-        foreach ($individuelles as $key => $individuelle) {
-        }
-        if (isset($individuelle)) {
-            $individuelle = $individuelle;
-        } else {
-            $individuelle = "";
-        }
-        foreach ($collectives as $key => $collective) {
-        }
-        if (isset($collective)) {
-            $collective = $collective;
-        } else {
-            $collective = "";
-        }
+        
+        $recues = Recue::get()->count();
+        $internes = Interne::get()->count();
+        $departs = Depart::get()->count();
+        $courrier = Courrier::get()->count();
+        $demandeurs = Demandeur::get()->count();
 
-        foreach ($pcharges as $key => $pcharge) {
-        }
-        if (isset($pcharge)) {
-            $pcharge = $pcharge;
-        } else {
-            $pcharge = "";
-        }
+        $chart      = Courrier::all();
+        $user = Auth::user();
+        $demandeurs = Demandeur::all();
 
-        $courriers = $user->courriers;
+        $demandeur  =  $user->demandeur;
+        $courriers  = $user->courriers;
 
-        return view(
-            'profiles.show',
-            compact('user', 'courriers', 'individuelle', 'collective', 'pcharge')
-        );
+        
+        if ($user->hasRole('Demandeur')) { 
+
+            $individuelles  =  $demandeur->individuelles;
+            $collectives  =  $demandeur->collectives;
+            $pcharges  =  $demandeur->pcharges;
+    
+    
+            foreach ($individuelles as $key => $individuelle) {
+            }
+    
+            foreach ($collectives as $key => $collective) {
+            }
+    
+            foreach ($pcharges as $key => $pcharge) {
+            }
+    
+            return view('profiles.show', compact('user', 'courriers', 'individuelle', 'collective', 'pcharge'));         
+            } 
+            elseif ($user->hasRole('Individuelle') && $user->hasRole('Collective') && $user->hasRole('Pcharge')) {
+                $individuelles  =  $demandeur->individuelles;
+                foreach ($individuelles as $key => $individuelle) {
+                }
+                $collectives  =  $demandeur->collectives;
+                foreach ($collectives as $key => $collective) {
+                }
+                $pcharges  =  $demandeur->pcharges;
+                foreach ($pcharges as $key => $pcharge) {
+                }
+                return view('profiles.show', compact('user', 'courriers', 'individuelle', 'collective', 'pcharge'));  
+            }
+            elseif ($user->hasRole('Individuelle')) {
+                $individuelles  =  $demandeur->individuelles;
+                foreach ($individuelles as $key => $individuelle) {
+                }
+                return view('profiles.show', compact('user', 'courriers', 'individuelle'));  
+            }
+            elseif ($user->hasRole('Collective')) {
+                $collectives  =  $demandeur->collectives;
+                foreach ($collectives as $key => $collective) {
+                }
+                return view('profiles.show', compact('user', 'courriers', 'collective'));  
+            }
+            elseif ($user->hasRole('Pcharge')) {
+                $pcharges  =  $demandeur->pcharges;
+                foreach ($pcharges as $key => $pcharge) {
+                }
+                return view('profiles.show', compact('user', 'courriers', 'pcharge'));  
+            }
+            elseif ($user->hasRole('Nologin')) {
+                return view('layout.404'); 
+            }
+            else {
+                
+            $courriers = Courrier::all();
+    
+            $pcharges = Pcharge::distinct('scolarites_id')->pluck('annee', 'annee'); 
+            return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'pcharges'));      
+    
+            }
     }
 
     /**

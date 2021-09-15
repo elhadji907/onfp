@@ -1,4 +1,9 @@
-    <style>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>A simple, clean, and responsive HTML invoice template</title>
+         <style>
         .invoice-box {
             max-width: 1500px;
             margin: auto;
@@ -92,6 +97,9 @@
         }
 
     </style>
+</head>
+
+<body>
     @foreach ($pcharges as $pcharge)
         <div class="invoice-box justify-content-center">
             <div class="row justify-content-center pb-2">
@@ -234,3 +242,6 @@
             </div>
         </div>
     @endforeach
+
+</body>
+</html>

@@ -579,7 +579,6 @@ class PchargeController extends Controller
         $user_connect->date_naissance       =      $request->input('date');
         $user_connect->lieu_naissance       =      $request->input('lieu_naissance');
         $user_connect->adresse              =      $request->input('adresse');
-        $user_connect->password             =      Hash::make($request->input('email'));
         $user_connect->created_by           =      $created_by;
         $user_connect->updated_by           =      $created_by;
 
@@ -731,13 +730,25 @@ class PchargeController extends Controller
 
         $pcharges = Pcharge::get()->where('id', '=', $pcharges);
 
+        foreach ($pcharges as $pcharge){
+        }
+        $prenom = $pcharge->demandeur->user->firstname;
+        $nom = $pcharge->demandeur->user->name;
+
+        $name = $prenom.'-'.$nom;
+
         $pdf = PDF::loadView('pdf', compact('pcharges'))
                             ->setOption('images', true)
                             ->setOption('enable-javascript', true)
                             ->setOption('javascript-delay', 10);
         
         /* $pdf->save(public_path('/storage/pcharges/lamine.pdf')); */
+
+        $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
+        $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
+        $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
+        $name = preg_replace('#&[^;]+;#', '', $name);
         
-        return $pdf->stream('lamine.pdf');
+        return $pdf->stream('lettre-prise-en-charge-de-'.$name.'.pdf');
     }
 }

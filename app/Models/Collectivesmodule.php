@@ -12,49 +12,49 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Modulesagrement
+ * Class Collectivesmodule
  * 
  * @property int $id
+ * @property int $collectives_id
  * @property int $modules_id
- * @property int $agrements_id
- * @property int|null $moduleagrementstatut_id
+ * @property int|null $collectivemodulestatut_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Agrement $agrement
- * @property Moduleagrementstatut|null $moduleagrementstatut
+ * @property Collectivemodulestatut|null $collectivemodulestatut
+ * @property Collective $collective
  * @property Module $module
  *
  * @package App\Models
  */
-class Modulesagrement extends Model
+class Collectivesmodule extends Model
 {
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'modulesagrements';
+	protected $table = 'collectivesmodules';
 
 	protected $casts = [
+		'collectives_id' => 'int',
 		'modules_id' => 'int',
-		'agrements_id' => 'int',
-		'moduleagrementstatut_id' => 'int'
+		'collectivemodulestatut_id' => 'int'
 	];
 
 	protected $fillable = [
+		'collectives_id',
 		'modules_id',
-		'agrements_id',
-		'moduleagrementstatut_id'
+		'collectivemodulestatut_id'
 	];
 
-	public function agrement()
+	public function collectivemodulestatut()
 	{
-		return $this->belongsTo(Agrement::class, 'agrements_id');
+		return $this->belongsTo(Collectivemodulestatut::class);
 	}
 
-	public function moduleagrementstatut()
+	public function collective()
 	{
-		return $this->belongsTo(Moduleagrementstatut::class);
+		return $this->belongsTo(Collective::class, 'collectives_id');
 	}
 
 	public function module()

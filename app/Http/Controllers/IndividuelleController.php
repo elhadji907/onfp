@@ -17,6 +17,8 @@ use App\Models\Professionnelle;
 use App\Models\Familiale;
 use App\Models\User;
 use App\Models\Etude;
+use App\Models\Convention;
+use App\Models\Projet;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -34,7 +36,7 @@ class IndividuelleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur']);
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']);
     }
     /**
      * Display a listing of the resource.
@@ -62,8 +64,11 @@ class IndividuelleController extends Controller
      */
     public function create()
     {
+
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $conventions = Convention::distinct('name')->get()->pluck('name', 'name')->unique();
+        $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
@@ -76,16 +81,21 @@ class IndividuelleController extends Controller
         
         $civilites = User::pluck('civilite', 'civilite');
 
-        /* if ($user->hasRole('Demandeur')) { */
             foreach ($user->demandeur->individuelles as $key => $individuelle) {
+
             }
+
+
             $demandeurs = $user->demandeur;
             $individuelles = $demandeurs->individuelles;
             $utilisateurs = $user;
-            /* return view('individuelles.update', compact('etude', 'civilites', 'familiale', 'individuelle', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs')); */
-       /*  } else { */
-            return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot'));
-       /*  } */
+
+            if(isset($individuelle->cin) && !$user->hasRole('Administrateur')){                
+            return view('individuelles.icreate', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
+            }
+
+
+       
     }
 
     public function findNomDept(Request $request)
@@ -109,7 +119,30 @@ class IndividuelleController extends Controller
 
         foreach ($individuelles as $individuelle) {
         }
+
         
+        if(isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')){
+            $this->validate(
+                $request,
+                [                    
+                    'cin'                 =>  "required|string|min:13|max:15",
+                    'date_depot'          =>  'required|date_format:Y-m-d',
+                    'autre_tel'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
+                    'etablissement'       =>  'required|string|max:100',
+                    'adresse'             =>  'required|string|max:100',
+                    'prerequis'           =>  'required|string|max:1500',
+                    'motivation'          =>  'required|string|max:1500',
+                    'etude'               =>  'required',
+                    'commune'             =>  'required',
+                    'modules'             =>  'required',
+                    'diplome'             =>  'required',
+                    'optiondiplome'       =>  'required',
+                    'projet_professionnel'=>  'required|string|min:100',
+                ]
+            );
+    
+        }
+        else {
             $this->validate(
                 $request,
                 [
@@ -120,21 +153,23 @@ class IndividuelleController extends Controller
                     'date_naiss'          =>  'required|date_format:Y-m-d',
                     'date_depot'          =>  'required|date_format:Y-m-d',
                     'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+                    'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
                     'etablissement'       =>  'required|string|max:100',
                     'adresse'             =>  'required|string|max:100',
                     'prerequis'           =>  'required|string|max:1500',
                     'motivation'          =>  'required|string|max:1500',
                     'email'               =>  "required|string|email|max:255|unique:users,email,{$user_connect->id},id,deleted_at,NULL",
-                    'familiale'           =>  'required',
                     'professionnelle'     =>  'required',
                     'etude'               =>  'required',
                     'commune'             =>  'required',
                     'modules'             =>  'required',
                     'diplome'             =>  'required',
                     'optiondiplome'       =>  'required',
+                    'projet_professionnel'=>  'required|string|min:100',
                 ]
             );
+        }
+        
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
@@ -175,6 +210,16 @@ class IndividuelleController extends Controller
         } else {
             $programme_id = null;
         }
+        if ($request->input('convention') !== null) {
+            $convention_id = Convention::where('name', $request->input('convention'))->first()->id;
+        } else {
+            $convention_id = null;
+        }
+        if ($request->input('projet') !== null) {
+            $projet_id = Projet::where('name', $request->input('projet'))->first()->id;
+        } else {
+            $projet_id = null;
+        }
 
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
@@ -194,7 +239,41 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-        if (!$user_connect->hasRole('Demandeur')) {        
+        if(isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')){     
+           
+
+            $individuelle = new Individuelle([
+                'cin'                       =>     $cin,
+                'experience'                =>     $request->input('experience'),
+                'information'               =>     $request->input('information'),
+                'date_depot'                =>     $request->input('date_depot'),
+                'nbre_pieces'               =>     $request->input('nombre_de_piece'),
+                'prerequis'                 =>     $request->input('prerequis'),
+                'etablissement'             =>     $request->input('etablissement'),
+                'optiondiplome'             =>     $request->input('optiondiplome'),
+                'adresse'                   =>     $request->input('adresse'),
+                'motivation'                =>     $request->input('motivation'),
+                'autres_diplomes'           =>     $request->input('autres_diplomes'),
+                'qualification'             =>     $request->input('qualification'),
+                'projetprofessionnel'       =>     $request->input('projet_professionnel'),
+                'statut'                    =>     'Attente',
+                'telephone'                 =>     $autre_tel,
+                'etudes_id'                 =>     $etude_id,
+                'communes_id'               =>     $commune_id,
+                'programmes_id'             =>     $programme_id,
+                'conventions_id'            =>     $convention_id,
+                'projets_id'                =>     $projet_id,
+                'diplomes_id'               =>     $diplome_id,
+                'demandeurs_id'             =>     $demandeur->id
+                ]);
+        
+            $individuelle->save();
+            
+        $individuelle->modules()->sync($request->input('modules'));
+        return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
+
+        } else {
+
             $user = new User([
                 'sexe'                      =>      $request->input('sexe'),
                 'civilite'                  =>      $civilite,
@@ -232,16 +311,6 @@ class IndividuelleController extends Controller
             $demandeur->save();
 
             $individuelle = new Individuelle([
-                ]);
-        
-            $individuelle->save();
-            
-        $individuelle->modules()->sync($request->input('modules'));
-        return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
-
-        } else {
-
-            $individuelle = new Individuelle([
                 'cin'                       =>     $cin,
                 'experience'                =>     $request->input('experience'),
                 'information'               =>     $request->input('information'),
@@ -254,11 +323,14 @@ class IndividuelleController extends Controller
                 'motivation'                =>     $request->input('motivation'),
                 'autres_diplomes'           =>     $request->input('autres_diplomes'),
                 'qualification'             =>     $request->input('qualification'),
+                'projetprofessionnel'       =>     $request->input('projet_professionnel'),
                 'statut'                    =>     'Attente',
                 'telephone'                 =>     $autre_tel,
                 'etudes_id'                 =>     $etude_id,
                 'communes_id'               =>     $commune_id,
                 'programmes_id'             =>     $programme_id,
+                'conventions_id'            =>     $convention_id,
+                'projets_id'                =>     $projet_id,
                 'diplomes_id'               =>     $diplome_id,
                 'demandeurs_id'             =>     $demandeur->id
                 ]);
@@ -289,7 +361,6 @@ class IndividuelleController extends Controller
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
         $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
-
         
         return view('individuelles.show', compact(
             'individuelle',
@@ -354,12 +425,14 @@ class IndividuelleController extends Controller
         $moduleIndividuelle = $individuelle->modules->pluck('name', 'name')->all();
         /* dd($moduleIndividuelle); */
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $conventions = Convention::distinct('name')->get()->pluck('name', 'name')->unique();
+        $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
 
         $date_depot = Carbon::now();
 
-        return view('individuelles.update', compact('etude', 'civilites', 'individuelle', 'communes', 'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
+        return view('individuelles.update', compact('projets','conventions','etude', 'civilites', 'individuelle', 'communes', 'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
     }
 
     /**
@@ -464,9 +537,7 @@ class IndividuelleController extends Controller
 
         $demandeur->save();
 
-        if (!$user_connect->hasRole('Demandeur')) {
-            $individuelle->statut                  =      $request->input('statut');
-        }
+        $individuelle->statut                      =     $request->input('statut');
         $individuelle->statut                      =     $statut;
         $individuelle->cin                         =     $cin;
         $individuelle->experience                  =     $request->input('experience');
@@ -474,17 +545,17 @@ class IndividuelleController extends Controller
         $individuelle->nbre_pieces                 =     $request->input('nombre_de_piece');
         $individuelle->prerequis                   =     $request->input('prerequis');
         $individuelle->date_depot                  =     $request->input('date_depot');
-        $individuelle->etablissement               =      $request->input('etablissement');
-        $individuelle->telephone                   =      $autre_tel;
-        $individuelle->optiondiplome               =      $request->input('optiondiplome');
-        $individuelle->adresse                     =      $request->input('adresse');
-        $individuelle->motivation                  =      $request->input('motivation');
-        $individuelle->autres_diplomes             =      $request->input('autres_diplomes');
-        $individuelle->qualification               =      $request->input('qualification');
+        $individuelle->etablissement               =     $request->input('etablissement');
+        $individuelle->telephone                   =     $autre_tel;
+        $individuelle->optiondiplome               =     $request->input('optiondiplome');
+        $individuelle->adresse                     =     $request->input('adresse');
+        $individuelle->motivation                  =     $request->input('motivation');
+        $individuelle->autres_diplomes             =     $request->input('autres_diplomes');
+        $individuelle->qualification               =     $request->input('qualification');
         if ($request->input('programme') !== null) {
-            $individuelle->programmes_id           =      $programme_id;
+            $individuelle->programmes_id           =     $programme_id;
         }
-        $individuelle->diplomes_id                 =      $diplome_id;
+        $individuelle->diplomes_id                 =     $diplome_id;
         $individuelle->communes_id                 =     $commune_id;
         $individuelle->etudes_id                   =     $etude_id;
         $individuelle->demandeurs_id               =     $demandeur->id;

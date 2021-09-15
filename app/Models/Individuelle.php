@@ -58,12 +58,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $projets_id
  * @property int|null $diplomes_id
  * @property string|null $optiondiplome
+ * @property int|null $conventions_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Antenne|null $antenne
  * @property Commune|null $commune
+ * @property Convention|null $convention
  * @property Demandeur $demandeur
  * @property Diplome|null $diplome
  * @property Etude|null $etude
@@ -91,7 +93,8 @@ class Individuelle extends Model
 		'antennes_id' => 'int',
 		'programmes_id' => 'int',
 		'projets_id' => 'int',
-		'diplomes_id' => 'int'
+		'diplomes_id' => 'int',
+		'conventions_id' => 'int'
 	];
 
 	protected $dates = [
@@ -141,7 +144,8 @@ class Individuelle extends Model
 		'programmes_id',
 		'projets_id',
 		'diplomes_id',
-		'optiondiplome'
+		'optiondiplome',
+		'conventions_id'
 	];
 
 	public function antenne()
@@ -152,6 +156,11 @@ class Individuelle extends Model
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
+	}
+
+	public function convention()
+	{
+		return $this->belongsTo(Convention::class, 'conventions_id');
 	}
 
 	public function demandeur()
@@ -187,7 +196,7 @@ class Individuelle extends Model
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'individuellesmodules', 'individuelles_id', 'modules_id')
-					->withPivot('id', 'deleted_at')
+					->withPivot('id', 'individuellemodulestatut_id', 'deleted_at')
 					->withTimestamps();
 	}
 }

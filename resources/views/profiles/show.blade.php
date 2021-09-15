@@ -55,221 +55,11 @@
             @endif
         </div>
     </div>
-    @hasrole('user')
-    {{-- <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="row justify-content-center mt-5">
-            @if (isset($individuelle_user->cin))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_user->id) !!}" target="_blank">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Individuelle)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($individuelle_user->modules as $module_individuelle)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_individuelle->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $individuelle_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($collective_user->name))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('collectives/' . $collective_user->id) !!}" target="_blank">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Collective)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($collective_user->modules as $module_collective)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_collective->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $collective_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($pcharge_user->scolarites_id))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}" target="_blank">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (prise en charge)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($pcharge_user->modules as $module)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                            @if (isset($module->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $pcharge_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span data-feather="mail"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div> --}}
-@else
-    {{-- <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-        <div class="row justify-content-center mt-5">
-            @if (isset($individuelle_user->cin))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_user->id) !!}">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Individuelle)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($individuelle_user->modules as $module_individuelle)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_individuelle->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $individuelle_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($collective_user->name))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('collectives/' . $collective_user->id) !!}">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Collective)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($collective_user->modules as $module_collective)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_collective->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $collective_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($pcharge_user->scolarites_id))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (prise en charge)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($pcharge_user->modules as $module)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                            <label class="badge badge-info">{{ $pcharge_user->filiere->name }}</label>
-                                            @if (isset($pcharge_user->filiere->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $pcharge_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span data-feather="mail"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div> --}}
-    @endhasrole
+  
     <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        @foreach (auth::user()->demandeur->individuelles as $individuelle)
+        @endforeach
+        @if (isset($individuelle))
         <div class="row justify-content-center mt-5">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
@@ -374,7 +164,11 @@
 
                 </div>
             </div>
-        </div>
+        </div>            
+        @endif
+        @foreach (auth::user()->demandeur->collectives as $collective)
+        @endforeach
+        @if (isset($collective))            
         <div class="row justify-content-center mt-2">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
@@ -478,6 +272,11 @@
                 </div>
             </div>
         </div>
+        @endif
+        
+        @foreach (auth::user()->demandeur->pcharges as $pcharge)
+        @endforeach
+        @if (isset($pcharge))
         <div class="row justify-content-center mt-2">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
@@ -572,7 +371,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>            
+        @endif
     </div>
     <div class="modal fade" id="individuelles" tabindex="-1" role="dialog" aria-labelledby="individuellesTitle"
         aria-hidden="true">

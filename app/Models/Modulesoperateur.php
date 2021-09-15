@@ -17,10 +17,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property int $modules_id
  * @property int $operateurs_id
+ * @property int|null $moduleoperateurstatut_id
+ * @property string|null $specialites
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Moduleoperateurstatut|null $moduleoperateurstatut
  * @property Module $module
  * @property Operateur $operateur
  *
@@ -35,13 +38,21 @@ class Modulesoperateur extends Model
 
 	protected $casts = [
 		'modules_id' => 'int',
-		'operateurs_id' => 'int'
+		'operateurs_id' => 'int',
+		'moduleoperateurstatut_id' => 'int'
 	];
 
 	protected $fillable = [
 		'modules_id',
-		'operateurs_id'
+		'operateurs_id',
+		'moduleoperateurstatut_id',
+		'specialites'
 	];
+
+	public function moduleoperateurstatut()
+	{
+		return $this->belongsTo(Moduleoperateurstatut::class);
+	}
 
 	public function module()
 	{

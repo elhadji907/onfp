@@ -11,6 +11,9 @@ use App\Models\Courrier;
 use App\Models\Commune;
 use App\Models\Typesdemande;
 use App\Models\Programme;
+use App\Models\Individuelle;
+use App\Models\Collective;
+use App\Models\Pcharge;
 use Auth;
 use App\Models\Module;
 use App\Models\Localite;
@@ -47,13 +50,33 @@ class DemandeurController extends Controller
       /*   $date = Carbon::today()->toDateString();
         dd($date); */
 
-        $roles  =   Auth::user()->role;
         
         /* $demandeurs = Demandeur::all(); */
         
-        $demandeurs      =   Demandeur::whereNotNull('types_demandes_id')->get();
+        /* $demandeurs      =   Demandeur::whereNotNull('types_demandes_id')
+                                        ->whereNull('deleted_at')
+                                        ->get(); */
 
-        return view('demandeurs.index', compact('roles', 'demandeurs'));
+        $demandeurs      =   Demandeur::whereNull('deleted_at')
+                                        ->get();
+
+        $effectif      =   Demandeur::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        $individuelles      =   Individuelle::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        $collectives      =   Collective::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        $pcharges      =   Pcharge::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        return view('demandeurs.index', compact('effectif','individuelles', 'demandeurs', 'collectives', 'pcharges'));
 
         /* dd($demandeurs); */
 
