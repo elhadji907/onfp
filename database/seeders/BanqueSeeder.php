@@ -16,7 +16,7 @@ class BanqueSeeder extends Seeder
     public function run()
     {
         Banque::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

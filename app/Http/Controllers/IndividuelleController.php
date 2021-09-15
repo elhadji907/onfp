@@ -85,10 +85,16 @@ class IndividuelleController extends Controller
 
             }
 
-
             $demandeurs = $user->demandeur;
             $individuelles = $demandeurs->individuelles;
             $utilisateurs = $user;
+
+            $cont = $individuelle->where('demandeurs_id', '=', $demandeurs->id)->count();
+
+          if (isset($individuelle->cin) && $cont >= 2) {
+            $message = $user->firstname.' '.$user->name.', vous avez certainement atteint la limite du nombre de demandes autorisées !';
+            return redirect()->route('profiles.show', ['user'=>$user])->with('attention', $message);
+          } 
 
             if(isset($individuelle->cin) && !$user->hasRole('Administrateur')){                
             return view('individuelles.icreate', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
@@ -270,7 +276,7 @@ class IndividuelleController extends Controller
             $individuelle->save();
             
         $individuelle->modules()->sync($request->input('modules'));
-        return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
+        return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
 
         } else {
 
@@ -338,7 +344,7 @@ class IndividuelleController extends Controller
             $individuelle->save();
             
             $individuelle->modules()->sync($request->input('modules'));
-            return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
+            return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
         }
     
     }
@@ -564,7 +570,7 @@ class IndividuelleController extends Controller
         
         $individuelle->modules()->sync($request->input('modules'));
 
-        if (!$user_connect->hasRole('Demandeur')) {
+        if (!$user_connect->hasRole('Demandeur') && !$user_connect->hasRole('Individuelle') && !$user_connect->hasRole('Collective') && !$user_connect->hasRole('Pcharge')) {
             return redirect()->route('individuelles.index')->with('success', 'demande modifiée avec succès !');
         } else {
             return redirect()->route('profiles.show', ['user'=>$user_connect, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');

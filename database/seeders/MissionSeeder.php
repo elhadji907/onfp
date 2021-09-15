@@ -15,7 +15,7 @@ class MissionSeeder extends Seeder
     public function run()
     {
         Mission::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

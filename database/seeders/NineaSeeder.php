@@ -15124,8 +15124,8 @@ class NineaSeeder extends Seeder
             'updated_at' => now(),
             'uuid' => Str::uuid(),
         ]);
-/*         
-       DB::table('nineas')->insert([
+        
+       /* DB::table('nineas')->insert([
             "numero"=>"5176054"],["name"=>"DOUJA PROMOTION-GROUPE ADDOHA SENEGAL SA"],["uuid"=>Str::uuid()]);
         
        DB::table('nineas')->insert([
@@ -37153,6 +37153,7 @@ class NineaSeeder extends Seeder
         
        DB::table('nineas')->insert([
             "numero"=>"6963541"],["name"=>"Mr MOUHAMADOU DRAME"],["uuid"=>Str::uuid()]);
+            
         App\Ninea::firstOrCreate(["numero"=>"2427830"],["name"=>"Mr MOUHAMADOU GUEYE"],["uuid"=>Str::uuid()]);
         App\Ninea::firstOrCreate(["numero"=>"4214988"],["name"=>"Mr MOUHAMADOU GUEYE 'TECH- FU'"],["uuid"=>Str::uuid()]);
         App\Ninea::firstOrCreate(["numero"=>"2630136"],["name"=>"Mr MOUHAMADOU LOUM"],["uuid"=>Str::uuid()]);

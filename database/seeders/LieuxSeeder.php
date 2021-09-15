@@ -15,7 +15,7 @@ class LieuxSeeder extends Seeder
     public function run()
     {
         Lieux::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

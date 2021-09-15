@@ -15,7 +15,7 @@ class ListeSeeder extends Seeder
     public function run()
     {
         Liste::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

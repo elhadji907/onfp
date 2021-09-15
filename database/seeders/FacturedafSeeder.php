@@ -15,7 +15,7 @@ class FacturedafSeeder extends Seeder
     public function run()
     {
         Facturesdaf::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

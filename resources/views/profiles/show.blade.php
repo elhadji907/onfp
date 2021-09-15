@@ -43,13 +43,25 @@
             @endcan
         </div>
     </div>
-    <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+    <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="mt-5">
             @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">{{ session('success') }}</div>
             @endif
             @if (session('message'))
                 <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
+
+        <div class="mt-5">
+            @if (session()->has('attention'))
+                <div class="alert alert-danger" role="alert">
+                    <strong>Oups!</strong>.<br><br>{{ session('attention') }}</div>
+            @endif
+            @if (session('message'))
+                <div class="alert alert-attention">
                     {{ session('message') }}
                 </div>
             @endif

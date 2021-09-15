@@ -15,7 +15,7 @@ class FcollectiveSeeder extends Seeder
     public function run()
     {
         Fcollective::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }
