@@ -441,7 +441,7 @@
     <hr class="sidebar-divider my-0">
 @else
     @endhasrole
-    @hasrole('super-admin|Administrateur')
+    @hasrole('super-admin')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
             aria-controls="collapsePages">
