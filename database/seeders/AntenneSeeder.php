@@ -16,6 +16,14 @@ class AntenneSeeder extends Seeder
     public function run()
     {
         DB::table('antennes')->insert([
+            'name' => "Direction générale",
+            'code' => "DG",
+            'created_at' => now(),
+            'updated_at' => now(),
+            'uuid' => Str::uuid(),
+        ]);
+
+        DB::table('antennes')->insert([
             'name' => "Antenne de Kaolack",
             'code' => "AntKL",
             'created_at' => now(),

@@ -331,13 +331,23 @@
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('experience :') !!}
                                 {!! Form::textarea('experience', $individuelle->experience, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 2, 'class' => 'form-control']) !!}
+                            </div>                       
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                <label for="projet_professionnel">{{ __('Projet professionnel') }}(<span
+                                        class="text-danger">*</span>)</label>
+                                <textarea class="form-control  @error('projet_professionnel') is-invalid @enderror" name="projet_professionnel"
+                                    id="projet_professionnel" rows="5"
+                                    placeholder="Votre projet professionnel">{{ $individuelle->projetprofessionnel ?? old('projet_professionnel') }}</textarea>
+                                @error('projet_professionnel')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Informations :') !!}
-                                {!! Form::textarea('information', $individuelle->information, ['placeholder' => 'Informations complémenaires', 'rows' => 1, 'class' => 'form-control']) !!}
+                                {!! Form::textarea('information', $individuelle->information, ['placeholder' => 'Informations complémenaires', 'rows' => 2, 'class' => 'form-control']) !!}
                             </div>
-                            @can('demandeur-list')
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            @can('user-list')
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $individuelle->statut, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -349,13 +359,39 @@
                                     </small>
                                 </div>
                             @endcan
-                            @can('demandeur-list')
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('Programme :') !!}(<span class="text-danger">*</span>)
+                            @can('user-list')
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('Programme :') !!}
                                     {!! Form::select('programme', $programmes, $individuelle->programme->sigle ?? ' ', ['placeholder' => 'Choir un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('programme'))
                                             @foreach ($errors->get('programme') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                            @endcan
+                            @can('user-list')
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('projet :') !!}
+                                    {!! Form::select('projet', $projets, $individuelle->projet->name, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'projet']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('projet'))
+                                            @foreach ($errors->get('projet') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                            @endcan
+                            @can('user-list')
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('convention :') !!}
+                                    {!! Form::select('convention', $conventions, $individuelle->convention->name ?? ' ', ['placeholder' => 'Choir une convention', 'class' => 'form-control', 'id' => 'convention', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('convention'))
+                                            @foreach ($errors->get('convention') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif

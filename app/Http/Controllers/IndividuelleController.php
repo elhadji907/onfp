@@ -81,9 +81,10 @@ class IndividuelleController extends Controller
         
         $civilites = User::pluck('civilite', 'civilite');
 
+        if(isset($user->demandeur->individuelles)){
             foreach ($user->demandeur->individuelles as $key => $individuelle) {
-
             }
+        }
 
             $demandeurs = $user->demandeur;
             $individuelles = $demandeurs->individuelles;
@@ -95,9 +96,16 @@ class IndividuelleController extends Controller
             $message = $user->firstname.' '.$user->name.', vous avez certainement atteint la limite du nombre de demandes autorisées !';
             return redirect()->route('profiles.show', ['user'=>$user])->with('attention', $message);
           } 
-
             if(isset($individuelle->cin) && !$user->hasRole('Administrateur')){                
             return view('individuelles.icreate', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
+            }
+
+            else {
+               
+                           
+                return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
+            
+
             }
 
 
@@ -131,7 +139,7 @@ class IndividuelleController extends Controller
             $this->validate(
                 $request,
                 [                    
-                    'cin'                 =>  "required|string|min:13|max:15",
+                    /* 'cin'                 =>  "required|string|min:13|max:15", */
                     'date_depot'          =>  'required|date_format:Y-m-d',
                     'autre_tel'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
                     'etablissement'       =>  'required|string|max:100',
@@ -171,7 +179,7 @@ class IndividuelleController extends Controller
                     'modules'             =>  'required',
                     'diplome'             =>  'required',
                     'optiondiplome'       =>  'required',
-                    'projet_professionnel'=>  'required|string|min:100',
+                    'projet_professionnel'=>  'required|string|max:1000',
                 ]
             );
         }
@@ -304,9 +312,6 @@ class IndividuelleController extends Controller
             $user->save();
 
             $user->assignRole('Individuelle');
-            $user->assignRole('Collective');
-            $user->assignRole('Pcharge');
-            $user->assignRole('Operateur');
                 
             $demandeur = new Demandeur([
                     'numero'                    =>     $numero,
@@ -466,7 +471,7 @@ class IndividuelleController extends Controller
                'date_naiss'          =>  'required|date_format:Y-m-d',
                'date_depot'          =>  'required|date_format:Y-m-d',
                'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
+               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
                'etablissement'       =>  'required|string|max:100',
                'adresse'             =>  'required|string|max:100',
                'prerequis'           =>  'required|string|max:1500',
@@ -501,6 +506,16 @@ class IndividuelleController extends Controller
         } else {
             $programme_id = "";
         }
+        if ($request->input('projet') !== null) {
+            $projet_id = Projet::where('name', $request->input('projet'))->first()->id;
+        } else {
+            $projet_id = "";
+        }
+        if ($request->input('convention') !== null) {
+            $convention_id = Convention::where('name', $request->input('convention'))->first()->id;
+        } else {
+            $convention_id = "";
+        }
 
         $sexe = $request->input('sexe');
         if ($sexe == "M") {
@@ -511,10 +526,11 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-        $statut = "Attente";
-
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
+        $communes = Commune::find($commune_id);        
+        $region = $communes->arrondissement->departement->region->nom;
+        
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
         $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
         $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
@@ -544,7 +560,6 @@ class IndividuelleController extends Controller
         $demandeur->save();
 
         $individuelle->statut                      =     $request->input('statut');
-        $individuelle->statut                      =     $statut;
         $individuelle->cin                         =     $cin;
         $individuelle->experience                  =     $request->input('experience');
         $individuelle->information                 =     $request->input('information');
@@ -558,13 +573,21 @@ class IndividuelleController extends Controller
         $individuelle->motivation                  =     $request->input('motivation');
         $individuelle->autres_diplomes             =     $request->input('autres_diplomes');
         $individuelle->qualification               =     $request->input('qualification');
+        $individuelle->projetprofessionnel         =     $request->input('projet_professionnel');
         if ($request->input('programme') !== null) {
             $individuelle->programmes_id           =     $programme_id;
+        }
+        if ($request->input('projet') !== null) {
+            $individuelle->projets_id               =     $projet_id;
+        }
+        if ($request->input('convention') !== null) {
+            $individuelle->conventions_id           =     $convention_id;
         }
         $individuelle->diplomes_id                 =     $diplome_id;
         $individuelle->communes_id                 =     $commune_id;
         $individuelle->etudes_id                   =     $etude_id;
         $individuelle->demandeurs_id               =     $demandeur->id;
+        $individuelle->antennes_id                 =     '1';
 
         $individuelle->save();
         
