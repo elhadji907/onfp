@@ -33,28 +33,30 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:4%;">Civilité</th>
-                                        <th style="width:12%;">Prénom Nom</th>
+                                        <th style="width:12%;">Prénom & Nom</th>
                                         <th style="width:9%;">Date nais.</th>
                                         <th style="width:9%;">Lieu nais.</th>
-                                        <th style="width:5%;">Email</th>
+                                        {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
-                                        <th style="width:25%;">Etablissement</th>
-                                        <th style="width:12%;">Type demande</th>
-                                        <th style="width:5%;">Appréciation</th>
-                                        <th style="width:12%;"></th>
+                                        <th style="width:20%;">Etablissement</th>
+                                        <th style="width:15%;">Type demande</th>
+                                        <th style="width:5%;">Statut</th>
+                                        <th style="width:5%;">Option</th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
-                                        <th>Prénom Nom</th>
+                                        <th>Prénom & Nom</th>
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
-                                        <th>Email</th>
+                                        {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
                                         <th>Etablissement</th>
                                         <th>Type demande</th>
-                                        <th>Appréciation</th>
+                                        <th>Statut</th>
+                                        <th>Option</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -65,27 +67,38 @@
                                             <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!} {!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
                                             <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>
-                                            <td>{!! $pcharge->demandeur->user->email !!}</td>
+                                            {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
-                                            {{-- <td>{!! $pcharge->commune->arrondissement->departement->region->nom !!}</td> --}}                                          
+                                            {{-- <td>{!! $pcharge->commune->arrondissement->departement->region->nom !!}</td> --}}
                                             <td>{!! $pcharge->etablissement->name ?? '' !!}</td>
-                                            <td>{!! $pcharge->typedemande !!}</td>  <td>
+                                            <td>{!! $pcharge->typedemande !!}</td>
+                                            <td>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    @if (isset($pcharge->statut) && $pcharge->statut == 'Accordée')
+                                                    @if ($pcharge->statut == 'Accordée')
                                                         <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>
+                                                    @elseif ($pcharge->statut == "Non accordée")
+                                                        <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
+                                                    @else
+                                                        <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    @if ($pcharge->statut == 'Accordée')
+                                                        {{-- <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label> --}}
                                                         <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
                                                             title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
                                                             <i class="fas fa-times"></i>
                                                         </a>
-                                                    @elseif (isset($pcharge->statut) && $pcharge->statut == "Non
-                                                        accordée")
-                                                        <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
+                                                    @elseif ($pcharge->statut == "Non accordée")
+                                                        {{-- <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label> --}}
                                                         <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
                                                             title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
                                                             <i class="fas fa-times"></i>
                                                         </a>
                                                     @else
-                                                        <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
+                                                        {{-- <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label> --}}
                                                         <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' => $pcharge->montant]) }}"
                                                             title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
                                                             <i class="fas fa-check-circle"></i>

@@ -107,7 +107,7 @@
                 <div class="d-flex col-lg-12 margin-tb justify-content-between align-items-center">
                     <a class="btn btn-outline-success" href="{{ route('pcharges.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
-                            <a class="btn btn-outline-success" title="télécharger" href="{{ url('telecharger', ['$pcharges' => $pcharge->id]) }}"><i class="fas fa-download"></i></a>
+                            <a class="btn btn-outline-success" title="télécharger" href="{{ url('telecharger', ['$pcharges' => $pcharge->id]) }}" target="_blank"><i class="fas fa-download"></i></a>
                 </div>
             </div>
             <div class="card  border-success">

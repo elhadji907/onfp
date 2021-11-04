@@ -738,6 +738,8 @@ class PchargeController extends Controller
         $name = $prenom.'-'.$nom;
 
         $pdf = PDF::loadView('pdf', compact('pcharges'))
+                            ->setPaper('A4', 'portrait')
+                            ->setWarnings(false)
                             ->setOption('images', true)
                             ->setOption('enable-javascript', true)
                             ->setOption('javascript-delay', 10);

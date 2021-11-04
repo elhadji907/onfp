@@ -98,7 +98,6 @@
 
     </style>
 </head>
-
 <body>
     @foreach ($pcharges as $pcharge)
         <div class="invoice-box justify-content-center">
@@ -109,21 +108,31 @@
                     </div>
                 @endif
             </div>
-            <div class="card  border-success">
-                <div class="card card-header text-center bg-gradient-default border-success">
-                    <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
-                            class="font-italic">INFORMATIONS PRISES EN CHARGE</span></h1>
+            <div class="card">
+                <div class="card-header bg-gradient-default">
+                    <h3 class="text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">REPUBLIQUE DU SENEGAL</span></h3>
+                    <small class="text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">Un Peuple  - Un But – Une Foi</span></small>
+                    <small class="text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic"><br>--------------------</span></small>
+                            <h3 class="text-black h-100 text-uppercase mb-0"><b></b><span
+                                class="font-italic">MINISTERE DE L’EMPLOI,<br> DE LA FORMATION
+                                PROFESSIONNELLE, <br> DE L’APPRENTISSAGE ET DE L’INSERTION
+                                </span></h3>
+                    <small class="text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">--------------------</span></small>
                 </div>
                 <div class="card-body">
                     <table method="POST" cellpadding="0" cellspacing="0">
-                        <tr class="top">
+                        <tr class="item">
                             <td colspan="2">
                                 <table>
                                     <tr>
                                         <td class="title">
                                             {{-- <img src="" style="width:100%; max-width:300px;"> --}}
-                                            <img style="width:50%; max-width:100px;"
-                                                src="{{ asset('images/image_onfp.jpg') }}">
+                                            <img style="width:75%; max-width:100%;"
+                                                src="{{ asset('images/LOGOONFPTEXTEGOOD1.jpg') }}">
                                         </td>
                                         <td>
                                             <b>Numéro dossier </b>#:
@@ -134,8 +143,7 @@
                                 </table>
                             </td>
                         </tr>
-
-                        <tr class="information">
+                        <tr class="item">
                             <td colspan="2">
                                 <table>
                                     <tr>
@@ -157,9 +165,9 @@
                                         </td>
 
                                         <td>
-                                            {{-- <h3>{{ __('GESTIONNAIRE') }}</h3>
+                                            <h3>{{ __('BENEFICIAIRE') }}</h3>
                                 <b>Nom:</b> {{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}<br>
-                                <b>Tel:</b> {{ $pcharge->demandeur->user->telephone }} --}}
+                                <b>Tel:</b> {{ $pcharge->demandeur->user->telephone }}
                                         </td>
                                     </tr>
                                 </table>
