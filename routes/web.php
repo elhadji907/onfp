@@ -183,7 +183,7 @@ Route::group([
 
         Route::get('preview', [PDFController::class,  'preview']);
         Route::get('download', [PDFController::class, 'download'])->name('download');
-        Route::get('telecharger/{pcharges}', [PchargeController::class, 'telecharger'])->name('telecharger');
+        Route::get('contrat/{pcharges}', [PchargeController::class, 'contrat'])->name('contrat');
         
         Route::resource('/courriers', CourrierController::class);
         Route::resource('/recues', RecueController::class);

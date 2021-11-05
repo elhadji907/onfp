@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Contrat</title>
+    <title>A simple, clean, and responsive HTML invoice template</title>
     <style>
         .invoice-box {
             max-width: 1500px;
             margin: auto;
             padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
             font-size: 16px;
             line-height: 24px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
@@ -96,17 +98,11 @@
         }
 
     </style>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     @foreach ($pcharges as $pcharge)
-        <div class="invoice-box">
+        <div class="invoice-box justify-content-center">
             <div class="row justify-content-center pb-2">
                 @if (session('message'))
                     <div class="alert alert-success">
@@ -114,57 +110,34 @@
                     </div>
                 @endif
             </div>
-            <div>
-                <div>
+            <div class="card">
+                <div class="card-header bg-gradient-default">
+
                     <img style="max-width:100%;" src="{{ asset('images/logo1.png') }}">
-                    {{-- <h5 class="text-black h-100 text-uppercase mb-0"><b></b><span
-                            class="font-italic">REPUBLIQUE DU SENEGAL</span></h5>
+
+                    {{-- <h3 class="text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">REPUBLIQUE DU SENEGAL</span></h3>
                     <small class="text-black h-100 text-uppercase mb-0"><b></b><span
                             class="font-italic">Un Peuple  - Un But – Une Foi</span></small>
                     <small class="text-black h-100 text-uppercase mb-0"><b></b><span
                             class="font-italic"><br>--------------------</span></small>
-                            <h5 class="text-black h-100 text-uppercase mb-0"><b></b><span
+                            <h3 class="text-black h-100 text-uppercase mb-0"><b></b><span
                                 class="font-italic">MINISTERE DE L’EMPLOI,<br> DE LA FORMATION
                                 PROFESSIONNELLE, <br> DE L’APPRENTISSAGE ET DE L’INSERTION
-                                </span></h5>
+                                </span></h3>
                     <small class="text-black h-100 text-uppercase mb-0"><b></b><span
                             class="font-italic">--------------------</span></small> --}}
                 </div>
-                <b>
-                    <center>
-                        <br>
-                        <br>
-                        <br>
-                        <br>
-                        <p>Entre les soussignés<br><br></p>
-                    </center>
-                    <center>
-                        <p>L’Office National de Formation Professionnelle (O.N.F.P.)
-                            Cité SIPRES 1, Lot 2, 2 voies Liberté 6 extension VDN - BP 21013 – Dakar Ponty<br><br>
-                            Et
-                        </p>
-                    </center>
-                    <center>
-                        <p>{{ $pcharge->etablissement->name }}
-                        </p>
-                    </center>
-                </b>
-                <p>Il a été convenu et arrêté ce qui suit :</p>
-                <h5><b>Article 1 : Objet du contrat </b></h5>
-                <p>Pour l’année académique {{ $pcharge->scolarite->annee }}, l’Office National de Formation
-                    Professionnelle (O.N.F.P.) confie à
-                    l’Opérateur, qui accepte, la formation d’un(e) étudiant(e), conformément aux indications du tableau
-                    suivant :</p>
-                <div>
-                    <table class="table table-bordered" method="POST" cellpadding="0" cellspacing="0">
-                        {{-- <tr class="item">
+                <div class="card-body">
+                    <table method="POST" cellpadding="0" cellspacing="0">
+                        <tr class="item">
                             <td colspan="2">
                                 <table>
                                     <tr>
                                         <td class="title">
-                                            <img src="" style="width:100%; max-width:300px;">
-                                            <img style="width:75%; max-width:100%;"
-                                                src="{{ asset('images/logo1.png') }}">
+                                            {{-- <img src="" style="width:100%; max-width:300px;"> --}}
+                                            {{-- <img style="width:75%; max-width:100%;"
+                                                src="{{ asset('images/logo1.png') }}"> --}}
                                         </td>
                                         <td>
                                             <b>Numéro dossier </b>#:
@@ -174,13 +147,13 @@
                                     </tr>
                                 </table>
                             </td>
-                        </tr> --}}
-                        {{-- <tr class="item">
+                        </tr>
+                        <tr class="item">
                             <td colspan="2">
                                 <table>
                                     <tr>
                                         <td>
-                                            <h5>{{ __('INFORMATIONS PERSONNELLES') }}</h5>
+                                            <h3>{{ __('INFORMATIONS PERSONNELLES') }}</h3>
                                             <b>CIN:</b> {{ $pcharge->cin ?? '' }}<br>
                                             <b>Prénom:</b> {{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;
                                             <b>Nom :</b>{{ $pcharge->demandeur->user->name }}<br>
@@ -197,7 +170,7 @@
                                         </td>
 
                                         <td>
-                                            <h5>{{ __('BENEFICIAIRE') }}</h5>
+                                            <h3>{{ __('BENEFICIAIRE') }}</h3>
                                             <b>Nom:</b>
                                             {{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}<br>
                                             <b>Tel:</b> {{ $pcharge->demandeur->user->telephone }}
@@ -205,26 +178,26 @@
                                     </tr>
                                 </table>
                             </td>
-                        </tr> --}}
+                        </tr>
                         <tr class="heading">
                             <td>
-                                Prénom & Nom
+                                SCOLARITÉ
                             </td>
                             <td>
-                                Niveau
+                                STATUT
                             </td>
 
                         </tr>
 
                         <tr class="item">
                             <td>
-                                {{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}
+                                {{ $pcharge->scolarite->annee }}
                             </td>
                             <td>
-                                {{-- <label class="badge badge-info">{{ $pcharge->statut }}</label> --}}
+                                <label class="badge badge-info">{{ $pcharge->statut }}</label>
                             </td>
                         </tr>
-                        {{-- <tr class="heading">
+                        <tr class="heading">
                             <td>
                                 {{ __('ÉTABLISSEMENT') }}
                             </td>
@@ -238,10 +211,10 @@
                             <td>
 
                             </td>
-                        </tr> --}}
+                        </tr>
                         <tr class="heading">
                             <td>
-                                {{ __('Spécialité') }}
+                                {{ __('FILIERE') }}
                             </td>
                             <td>
                             </td>
@@ -261,11 +234,11 @@
                             <td>Prix</td>
                         </tr>
 
-                        {{-- <tr class="item">
+                        <tr class="item">
                             <td>Inscription</td>
 
                             <td>{!! number_format($pcharge->inscription, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
-                        </tr> --}}
+                        </tr>
                         <tr class="item">
                             <td>{{ __('Montant global') }}</td>
 
@@ -280,79 +253,6 @@
 
                     </table>
                 </div>
-                <h5><b>Article 2 : Engagement des parties</b></h5>
-                <h5><b>A : Engagement de l’ONFP</b></h5>
-                <p>L’ONFP s’engage :</p>
-                <ul>
-                    <li> A prendre en charge les frais de scolarité annuels (excepté les frais d’inscription), selon les
-                        modalités prévues à article 3;</li>
-                    <li>A réaliser des visites ponctuelles au niveau de l’établissement pour le suivi de la formation
-                    </li>
-                </ul>
-                <h5><b>B : Engagement de l’Etablissement</b></h5>
-                <p>L’Etablissement s’engage à:</p>
-                <ul>
-                    <li>Assurer à l’apprenant une formation, correspondant à la spécialité et au niveau indiqué dans le
-                        contrat;</li>
-                    <li>Veillez au respect de l’assiduité de l’apprenant /étudiant ;</li>
-                    <li>Mettre à la disposition de l’ONFP les relevés de notes de l’apprenant/étudiant ainsi que les
-                        factures et rapport d’exécution</li>
-                    <li>Signaler tout manquement de la part de l’étudiant notamment assiduité, résultat scolaire,
-                        discipline.</li>
-                    <li>Faciliter à tout moment les visites de contrôle au sein de l’établissement </li>
-                </ul>
-
-                <h5>Article 3 : Modalités de paiement:</h5>
-
-                <p>Le règlement s’effectue selon les modalités ci-après :</p>
-                <ul>
-                    <li>50% dès signature du présent contrat par les deux parties, sur présentation d’une facture
-                        d’acompte par l’Opérateur ; </li>
-                    <li>50% à la fin de la formation, après présentation par l’opérateur d’un rapport d’exécution et de
-                        la facture reliquat.</li>
-                </ul>
-
-                <h5>Article 4 : Modification</h5>
-
-                <p>Toute modification de la présente convention fera l’objet d’un avenant écrit et dûment signé par les
-                    deux parties.</p>
-
-                <h5>Article 5: Résiliation </h5>
-
-                <p>La présente convention peut être résiliée, sans indemnités, à tout moment par l’une des parties en
-                    cas de manquement grave des obligations mises à la charge de l’autre, ou encore en cas d’arrêt
-                    définitif de l’apprenant en cours de formation pour un quelconque motif. Le contrat ne sera pas
-                    renouvelé en cas d’insuffisance de résultat du bénéficiaire.</p>
-
-                <h5>Article 6: règlement des Litiges : </h5>
-
-                <p>Le présent contrat est soumis au droit en vigueur au Sénégal.</p>
-                <p>Les parties conviennent de tout mettre en œuvre pour trouver un règlement amiable aux différends qui
-                    pourraient naître de l’exécution ou de l’interprétation des présentes.</p>
-                <br>
-                <br>
-                <br>
-                <br>
-                <center>
-                    <p>Fait à Dakar en deux exemplaires originaux, le………………………</p>
-                </center>
-                <br>
-                <br>
-                <br>
-                <br>
-                <td colspan="2">
-                    <table>
-                        <tr>
-                            <td>
-                                <b> {{ __('Pour l’Opérateur,') }} <br> Le Directeur</b>
-                            </td>
-
-                            <td>
-                                <b>{{ __('Pour l’O.N.F.P') }} <br> Le Directeur Général</b>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
             </div>
         </div>
     @endforeach

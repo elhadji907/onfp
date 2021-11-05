@@ -712,7 +712,7 @@ class PchargeController extends Controller
         return view('pcharges.accorder', compact('statut', 'pcharges', 'effectif'));
     }
 
-    public function telecharger($pcharges)
+    public function contrat($pcharges)
     {
         /* $render = view('pcharges.details')->render();  
         $pdf = new Pdf;
@@ -739,7 +739,6 @@ class PchargeController extends Controller
 
         $pdf = PDF::loadView('pdf', compact('pcharges'))
                             ->setPaper('A4', 'portrait')
-                            ->setWarnings(false)
                             ->setOption('images', true)
                             ->setOption('enable-javascript', true)
                             ->setOption('javascript-delay', 10);
@@ -750,7 +749,9 @@ class PchargeController extends Controller
         $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
         $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
         $name = preg_replace('#&[^;]+;#', '', $name);
+
+        $anne = date('YmdHis');
         
-        return $pdf->stream('lettre-prise-en-charge-de-'.$name.'.pdf');
+        return $pdf->stream('lettre_prise_en_charge_de_'.$name.'_'.$anne.'.pdf');
     }
 }
