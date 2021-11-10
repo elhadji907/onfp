@@ -106,8 +106,12 @@
                 @endif
                 <div class="d-flex col-lg-12 margin-tb justify-content-between align-items-center">
                     <a class="btn btn-outline-success" href="{{ route('pcharges.index') }}"> <i
-                            class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
-                            <a class="btn btn-outline-success" title="télécharger" href="{{ url('contrat', ['$pcharges' => $pcharge->id]) }}" target="_blank"><i class="fas fa-download"></i></a>
+                            class="fas fa-undo-alt"></i>&nbsp;Retour</a>
+                    <a class="btn btn-outline-success" href="{{ url('lettre', ['$pcharges' => $pcharge->id]) }}" target="_blank">
+                        <i class="far fa-envelope"></i>
+                        &nbsp;Lettre</a>
+                    <a class="btn btn-outline-success" title="télécharger"
+                        href="{{ url('contrat', ['$pcharges' => $pcharge->id]) }}" target="_blank"><i class="fas fa-file-download"></i>&nbsp;Contrat</a>
                 </div>
             </div>
             <div class="card  border-success">
@@ -224,18 +228,18 @@
                         <tr class="item">
                             <td>Inscription</td>
 
-                            <td>{!! number_format($pcharge->inscription,0, ',', ' ') . ' ' . 'F CFA' !!}</td>
+                            <td>{!! number_format($pcharge->inscription, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
                         </tr>
                         <tr class="item">
                             <td>{{ __('Montant global') }}</td>
 
-                            <td>{!! number_format($pcharge->montant,0, ',', ' ') . ' ' . 'F CFA' !!}</td>
+                            <td>{!! number_format($pcharge->montant, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
                         </tr>
 
                         <tr class="total">
                             <td></td>
 
-                            <td>Total: {!! number_format($pcharge->avis_dg,0, ',', ' ') . ' ' . 'F CFA' !!}</td>
+                            <td>Total: {!! number_format($pcharge->avis_dg, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
                         </tr>
 
                     </table>
@@ -245,46 +249,46 @@
                             <i class="far fa-edit">&nbsp;Modifier</i>
                         </a>
                         <div class="d-flex justify-content-between align-items-center">
-                            @if (isset($pcharge->statut) && $pcharge->statut == "Accordée")
-                            <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
-                            <a href="{{ url('termine', ['$pcharge' => $pcharge, '$statut' => 'Terminée']) }}"
-                                title="terminer" class="btn btn-outline-success btn-sm mt-0">
-                                <i class="fas fa-check-double"></i>
-                            </a>&nbsp;
-                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
-                                title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
-                                <i class="fas fa-times"></i>
-                            </a> 
+                            @if (isset($pcharge->statut) && $pcharge->statut == 'Accordée')
+                                <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
+                                <a href="{{ url('termine', ['$pcharge' => $pcharge, '$statut' => 'Terminée']) }}"
+                                    title="terminer" class="btn btn-outline-success btn-sm mt-0">
+                                    <i class="fas fa-check-double"></i>
+                                </a>&nbsp;
+                                <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                    title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                    <i class="fas fa-times"></i>
+                                </a>
                             @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
-                            <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
-                            <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
-                                title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
-                                <i class="fas fa-check-circle"></i>
-                            </a>&nbsp;
-                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
-                                title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
-                                <i class="fas fa-times"></i>
-                            </a>   
+                                <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
+                                <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' => $pcharge->montant]) }}"
+                                    title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                    <i class="fas fa-check-circle"></i>
+                                </a>&nbsp;
+                                <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                    title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                                    <i class="fas fa-times"></i>
+                                </a>
                             @elseif (isset($pcharge->statut) && $pcharge->statut == "Terminée")
-                            <label class="badge badge-success">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
-                            <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
-                                title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
-                                <i class="fas fa-check-circle"></i>
-                            </a>&nbsp;
-                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
-                                title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
-                                <i class="fas fa-times"></i>
-                            </a> 
+                                <label class="badge badge-success">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
+                                <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' => $pcharge->montant]) }}"
+                                    title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                    <i class="fas fa-check-circle"></i>
+                                </a>&nbsp;
+                                <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                    title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                    <i class="fas fa-times"></i>
+                                </a>
                             @else
-                            <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
-                            <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' =>$pcharge->montant]) }}"
-                                title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
-                                <i class="fas fa-check-circle"></i>
-                            </a>&nbsp;
-                            <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
-                                title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
-                                <i class="fas fa-times"></i>
-                            </a>                                                        
+                                <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
+                                <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' => $pcharge->montant]) }}"
+                                    title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                    <i class="fas fa-check-circle"></i>
+                                </a>&nbsp;
+                                <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                    title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                    <i class="fas fa-times"></i>
+                                </a>
                             @endif
                         </div>
                         <a href="{!! route('pcharges.show', $pcharge->id) !!}" title="modifier" class="btn btn-outline-primary mt-0">

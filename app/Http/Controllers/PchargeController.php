@@ -102,7 +102,7 @@ class PchargeController extends Controller
      */
     public function create(Request $request)
     {
-        $etablissement_id = $request->input('etablissement');        
+        $etablissement_id = $request->input('etablissement');
         $etablissement = Etablissement::find($etablissement_id);
         $etablissements = Etablissement::distinct('name')->get()->pluck('name', 'name')->unique();
         $filieres = Filiere::distinct('name')->get()->pluck('name', 'id')->unique();
@@ -520,7 +520,6 @@ class PchargeController extends Controller
             'duree'                 =>  'required|min:1|max:1',
             'niveauentree'          =>  'required',
             'niveausortie'          =>  'required',
-            'optiondiplome'         =>  'required',
             'motivation'            =>  'required',
             'diplome'               =>  'required',
             'commune'               =>  'required',
@@ -665,7 +664,7 @@ class PchargeController extends Controller
     }
 
     public function attente($statut)
-    {        
+    {
         $pcharges = Pcharge::get()->where('scolarites_id', '>=', 1)
                                   ->where('statut', '=', 'Attente');
 
@@ -677,7 +676,7 @@ class PchargeController extends Controller
     }
 
     public function terminer($statut)
-    {        
+    {
         $pcharges = Pcharge::get()->where('scolarites_id', '>=', 1)
                                   ->where('statut', '=', 'Terminée');
 
@@ -689,7 +688,7 @@ class PchargeController extends Controller
     }
 
     public function rejeter($statut)
-    {        
+    {
         $pcharges = Pcharge::get()->where('scolarites_id', '>=', 1)
                                   ->where('statut', '=', 'Non accordée');
 
@@ -701,7 +700,7 @@ class PchargeController extends Controller
     }
 
     public function accorder($statut)
-    {        
+    {
         $pcharges = Pcharge::get()->where('scolarites_id', '>=', 1)
                                   ->where('statut', '=', 'Accordée');
 
@@ -714,44 +713,80 @@ class PchargeController extends Controller
 
     public function contrat($pcharges)
     {
-        /* $render = view('pcharges.details')->render();  
+        /* $render = view('pcharges.details')->render();
         $pdf = new Pdf;
         $pdf->addPage($render); */
 
         /* $pcharges = Pcharge::get()->where('id', '=', $pcharges);
-        
+
         $pdf = PDF::loadView('pcharges.details', compact('pcharges'));
 
         $pdf->setOptions(['javascript-delay' => 5000]);
 
         $pdf->saveAs(public_path('/storage/pcharges/lamine.pdf'));
-   
+
         return $pdf->download(public_path('/storage/pcharges/lamine.pdf')); */
 
         $pcharges = Pcharge::get()->where('id', '=', $pcharges);
 
-        foreach ($pcharges as $pcharge){
+        foreach ($pcharges as $pcharge) {
         }
         $prenom = $pcharge->demandeur->user->firstname;
         $nom = $pcharge->demandeur->user->name;
 
         $name = $prenom.'-'.$nom;
 
-        $pdf = PDF::loadView('pdf', compact('pcharges'))
+        $contrat = PDF::loadView('contrat', compact('pcharges'))
                             ->setPaper('A4', 'portrait')
                             ->setOption('images', true)
                             ->setOption('enable-javascript', true)
                             ->setOption('javascript-delay', 10);
         
-        /* $pdf->save(public_path('/storage/pcharges/lamine.pdf')); */
+        /* $contrat->save(public_path('/storage/pcharges/lamine.pdf')); */
 
         $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
         $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
         $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
         $name = preg_replace('#&[^;]+;#', '', $name);
 
-        $anne = date('YmdHis');
+        $anne = date('d');
+        $anne = $anne.'_'.date('m');
+        $anne = $anne.'_'.date('Y');
+        $anne = $anne.'_'.date('His');
         
-        return $pdf->stream('lettre_prise_en_charge_de_'.$name.'_'.$anne.'.pdf');
+        return $contrat->stream('Contrat_'.$name.'_'.$anne.'.pdf');
+    }
+
+
+    public function lettre($pcharges)
+    {
+        $pcharges = Pcharge::get()->where('id', '=', $pcharges);
+
+        foreach ($pcharges as $pcharge) {
+        }
+
+        $prenom = $pcharge->demandeur->user->firstname;
+        $nom = $pcharge->demandeur->user->name;
+
+        $name = $prenom.'-'.$nom;
+
+        $lettre = PDF::loadView('lettre', compact('pcharges'))
+                            ->setPaper('A4', 'portrait')
+                            ->setOption('images', true)
+                            ->setOption('enable-javascript', true)
+                            ->setOption('javascript-delay', 10);
+        
+        $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
+        $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
+        $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
+        $name = preg_replace('#&[^;]+;#', '', $name);
+
+        $anne = date('d');
+        $anne = $anne.'_'.date('m');
+        $anne = $anne.'_'.date('Y');
+        $anne = $anne.'_'.date('His');
+        
+        return $lettre->stream('Lettre_'.$name.'_'.$anne.'.pdf');
+
     }
 }
