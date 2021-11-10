@@ -143,7 +143,12 @@ class ScolariteController extends Controller
                         ->where('typedemande', '=', 'Renouvellement')
                         ->count();
 
-        return view('scolarites.countscolarite', compact('annee', 'pcharges', 'effectif', 'nouvelle', 'renouvelle'));
+        $report = Pcharge::get()
+                        ->where('scolarite.annee', '=', $annee)
+                        ->where('typedemande', '=', 'Report')
+                        ->count();
+
+        return view('scolarites.countscolarite', compact('annee', 'pcharges', 'effectif', 'nouvelle', 'renouvelle', 'report'));
     }
 
     public function countype($type, $annee, $effectif)

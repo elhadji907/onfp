@@ -43,7 +43,10 @@
                             </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'typedemande']) !!}
+                                {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 
+                                'Renouvellement' => 'Renouvellement',
+                                'Report' => 'Report'
+                                ], null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'typedemande']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('typedemande'))
                                         @foreach ($errors->get('typedemande') as $message)

@@ -64,7 +64,7 @@ class PchargeFactory extends Factory
             'adresse' => $this->faker->word,
             'nbre_pieces' => $this->faker->randomNumber(),
             'avis_dg' => $this->faker->randomElement($array = array('0','0')),
-            'typedemande' => $this->faker->randomElement($array = array('Nouvelle demande','Renouvellement')),
+            'typedemande' => $this->faker->randomElement($array = array('Nouvelle demande','Renouvellement', 'Report')),
             'optiondiplome' => $this->faker->word,
             'statut' => "Attente",
             'file1' => "",

@@ -67,7 +67,10 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->typedemande ?? old('typedemande'), ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
+                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 
+                                    'Renouvellement' => 'Renouvellement',
+                                    'Report' => 'Report'
+                                    ], $pcharge->typedemande ?? old('typedemande'), ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('typedemande'))
                                             @foreach ($errors->get('typedemande') as $message)
@@ -79,7 +82,10 @@
                                 @can('user-edit')
                                     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                         {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
-                                        {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
+                                        {!! Form::select('statut', ['Attente' => 'Attente', 
+                                        'Accordée' => 'Accordée', 
+                                        'Non accordée' => 'Non accordée',
+                                        'Terminée' => 'Terminée'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
                                         <small id="emailHelp" class="form-text text-muted">
                                             @if ($errors->has('statut'))
                                                 @foreach ($errors->get('statut') as $message)
