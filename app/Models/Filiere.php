@@ -44,7 +44,9 @@ class Filiere extends Model
 
 	public function etablissements()
 	{
-		return $this->hasMany(Etablissement::class, 'filieres_id');
+		return $this->belongsToMany(Etablissement::class, 'etablissementsfilieres', 'filieres_id', 'etablissements_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function filierespecialites()

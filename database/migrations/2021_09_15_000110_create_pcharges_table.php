@@ -28,7 +28,7 @@ class CreatePchargesTable extends Migration
             $table->integer('annee')->nullable();
             $table->string('matricule', 45)->nullable();
             $table->string('typedemande', 200)->nullable();
-            $table->string('items1', 200)->nullable();
+            $table->string('niveau', 200)->nullable();
             $table->timestamp('date1')->nullable();
             $table->timestamp('date_depot')->nullable();
             $table->double('inscription')->nullable();

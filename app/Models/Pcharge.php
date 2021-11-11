@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $annee
  * @property string|null $matricule
  * @property string|null $typedemande
- * @property string|null $items1
+ * @property string|null $niveau
  * @property Carbon|null $date1
  * @property Carbon|null $date_depot
  * @property float|null $inscription
@@ -107,7 +107,7 @@ class Pcharge extends Model
 		'annee',
 		'matricule',
 		'typedemande',
-		'items1',
+		'niveau',
 		'date1',
 		'date_depot',
 		'inscription',

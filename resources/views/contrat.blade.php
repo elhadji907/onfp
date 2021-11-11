@@ -139,7 +139,7 @@
                                 <td>{{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}
                                 </td>
                                 <td>{{ $pcharge->filiere->name }}</td>
-                                <td>{{ $pcharge->items1 }}</td>
+                                <td>{{ $pcharge->niveau }}</td>
                                 <td>{!! number_format($pcharge->avis_dg, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
                             </tr>
                         </tbody>
@@ -215,7 +215,15 @@
                 <table class="table" style="border: hidden">
                     <tbody>
                         <tr>
-                            <td><b>{{ __('Pour l’Opérateur,') }} <br> Le Directeur</b></td>
+                            <td><b>{{ __('Pour l’Opérateur,') }} <br> 
+                                @if ($pcharge->etablissement->user->civilite == 'M.')
+                                {{ __('Le Directeur') }}<br>
+                            @elseif($pcharge->etablissement->user->civilite == 'Mme')
+                                {{ __('La Directrice') }}<br>
+                            @else
+                                {{ __('') }}<br>
+                            @endif
+                            </b></td>
                             <td class="float-right" style="border: hidden"><b>{{ __('Pour l’ONFP') }} <br> Le
                                     Directeur Général</b></td>
                         </tr>

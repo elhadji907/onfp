@@ -52,8 +52,7 @@ class PchargeFactory extends Factory
             'cin' => $cin,
             'annee' => $this->faker->numberBetween(2018, 2022),
             'matricule' => "PC".$this->faker->word,
-            // année (ex : 1 ère année)
-            'items1' => $this->faker->randomElement($array = array('1ère Année','2ème Année', '3ème Année')),
+            'niveau' => $this->faker->randomElement($array = array('1ère Année','2ème Année', '3ème Année')),
             'date1' => $this->faker->dateTime(),
             'date_depot' => $this->faker->dateTime(),
             'duree' => $this->faker->numberBetween(1, 3),

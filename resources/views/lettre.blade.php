@@ -69,7 +69,7 @@
                                 <td>{{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}
                                 </td>
                                 <td>{{ $pcharge->filiere->name }}</td>
-                                <td>{{ $pcharge->items1 }}</td>
+                                <td>{{ $pcharge->niveau }}</td>
                                 <td>{!! number_format($pcharge->avis_dg, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
                             </tr>
                             <tr>
