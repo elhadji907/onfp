@@ -152,8 +152,7 @@
                                             <b>Date et lieu de naissance:</b>
                                             {{ $pcharge->demandeur->user->date_naissance->format('d/m/Y') }}&nbsp;à&nbsp;
                                             {{ $pcharge->demandeur->user->lieu_naissance }}<br>
-                                            <b>E-mail:</b> <span
-                                                style="color: blue">{{ $pcharge->demandeur->user->email }}</span>&nbsp;&nbsp;
+                                            <b>E-mail:</b> <span style="color: blue">{{ $pcharge->demandeur->user->email }}</span>&nbsp;&nbsp;
                                             <b>Tel:</b> {{ $pcharge->demandeur->user->telephone }}&nbsp;&nbsp;
                                             <b>Fixe:</b> {{ $pcharge->demandeur->user->fixe }}<br>
                                             <b>Fax:</b> {{ $pcharge->demandeur->user->fax }}&nbsp;&nbsp;

@@ -32,11 +32,11 @@ class EtablissementFactory extends Factory
             'sigle' => $this->faker->word,
             'items1' => $this->faker->word,
             'date1' => $this->faker->dateTime(),
-            'telephone1' => $this->faker->word,
-            'telephone2' => $this->faker->word,
-            'fixe' => $this->faker->word,
+            'telephone1' => $this->faker->e164PhoneNumber,
+            'telephone2' => $this->faker->e164PhoneNumber,
+            'fixe' => $this->faker->phoneNumber,
             'email' => $this->faker->safeEmail,
-            'adresse' => $this->faker->word,
+            'adresse' => $this->faker->address,
             'users_id' => function () {
                 return User::factory()->create()->id;
             },

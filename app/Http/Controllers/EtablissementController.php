@@ -47,7 +47,7 @@ class EtablissementController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-                'etablissement'         =>  'required|string|unique:etablissements,name,NULL,id,deleted_at,NULL',
+                'etablissement'         =>  'required|string|unique:etablissements,name,NULL,id,deleted_at,NULL|max:200',
                 'telephone_1'           =>  'required|string|max:17',
                 'telephone_2'           =>  'required|string|max:17',
                 'email'                 =>  'required|string|email|max:255|unique:etablissements,email,NULL,id,deleted_at,NULL',
@@ -107,7 +107,7 @@ class EtablissementController extends Controller
     public function update(Request $request, Etablissement $etablissement)
     {
         $this->validate($request, [
-            'etablissement'         =>  "required|string|unique:etablissements,name,{$etablissement->id},id,deleted_at,NULL",
+            'etablissement'         =>  "required|string|unique:etablissements,name,{$etablissement->id},id,deleted_at,NULL|max:200",
             'telephone_1'           =>  'required|string|max:17',
             'telephone_2'           =>  'required|string|max:17',
             'email'                 =>  "required|string|email|max:255|unique:etablissements,email,{$etablissement->id},id,deleted_at,NULL",

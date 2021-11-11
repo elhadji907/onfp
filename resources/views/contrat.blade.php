@@ -53,20 +53,21 @@
                         <p>Entre les soussignés<br><br></p>
                     </center>
                     <center>
-                        <p>L’Office National de Formation Professionnelle (O.N.F.P.)
+                        <p>Office National de Formation Professionnelle (O.N.F.P.)
                             Cité SIPRES 1, Lot 2, 2 voies Liberté 6 extension VDN - BP 21013 – Dakar Ponty<br><br>
                             Et
                         </p>
                     </center>
                     <center>
-                        <p>{{ $pcharge->etablissement->name }}
-                        </p>
+                        <p>{{ $pcharge->etablissement->name }}<br>
+                        <strong>Contact</strong> : {{ $pcharge->etablissement->fixe }}&nbsp; / &nbsp;{{ $pcharge->etablissement->telephone1 }}<br>
+                            <strong>Email</strong> : <span style="color: blue"> {{ $pcharge->etablissement->email }}</span></p>
                     </center>
                 </b>
                 <p>Il a été convenu et arrêté ce qui suit :</p>
                 <h6><b>Article 1 : Objet du contrat </b></h6>
-                <p>Pour l’année académique {{ $pcharge->scolarite->annee }}, l’Office National de Formation
-                    Professionnelle (O.N.F.P.) confie à
+                <p>Pour l’année académique <b>{{ $pcharge->scolarite->annee }}</b>, l’Office National de Formation
+                    Professionnelle (ONFP) confie à
                     l’Opérateur, qui accepte, la formation d’un(e) étudiant(e), conformément aux indications du tableau
                     suivant :</p>
                 <div>
@@ -135,9 +136,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}</td>
+                                <td>{{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}
+                                </td>
                                 <td>{{ $pcharge->filiere->name }}</td>
-                                <td></td>
+                                <td>{{ $pcharge->items1 }}</td>
                                 <td>{!! number_format($pcharge->avis_dg, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
                             </tr>
                         </tbody>
@@ -158,13 +160,13 @@
                 <ul>
                     <li>Assurer à l’apprenant une formation, correspondant à la spécialité et au niveau indiqué dans le
                         contrat;</li>
-                        
 
-                <div style="margin-bottom: 70px; margin-top:120px">
-                    <img style="max-width:100%;" src="{{ asset('images/pied.png') }}">
-                </div>
 
-                    <li>Veillez au respect de l’assiduité de l’apprenant /étudiant ;</li>
+                    <div style="margin-bottom: 70px; margin-top:80px">
+                        <img style="max-width:100%;" src="{{ asset('images/pied.png') }}">
+                    </div>
+
+                    <li>Veuillez  au respect de l’assiduité de l’apprenant /étudiant ;</li>
                     <li>Mettre à la disposition de l’ONFP les relevés de notes de l’apprenant/étudiant ainsi que les
                         factures et rapport d’exécution</li>
                     <li>Signaler tout manquement de la part de l’étudiant notamment assiduité, résultat scolaire,
@@ -214,7 +216,8 @@
                     <tbody>
                         <tr>
                             <td><b>{{ __('Pour l’Opérateur,') }} <br> Le Directeur</b></td>
-                            <td class="float-right" style="border: hidden"><b>{{ __('Pour l’ONFP') }} <br> Le Directeur Général</b></td>
+                            <td class="float-right" style="border: hidden"><b>{{ __('Pour l’ONFP') }} <br> Le
+                                    Directeur Général</b></td>
                         </tr>
                     </tbody>
                 </table>
