@@ -28,17 +28,17 @@
                         {!! Form::open(['url' => 'etablissements/' . $etablissement->id, 'method' => 'PATCH', 'files' => true]) !!}
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label for="civilite">{{ __('Commune') }}</label>
-                                <select name="commune" id="commune"
-                                    class="form-control @error('commune') is-invalid @enderror">
-                                    <option value="{{ $etablissement->commune->nom }}">{{ $etablissement->commune->nom }}
+                                <label for="civilite">{{ __('Région') }}</label>
+                                <select name="region" id="region"
+                                    class="form-control @error('region') is-invalid @enderror">
+                                    <option value="{{ $etablissement->region->nom }}">{{ $etablissement->region->nom }}
                                     </option>
-                                    @foreach ($communes as $commune)
-                                        <option value="{{ $commune->nom }}">{{ $commune->nom }}
+                                    @foreach ($regions as $region)
+                                        <option value="{{ $region->nom }}">{{ $region->nom }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('commune')
+                                @error('region')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -83,28 +83,37 @@
 
                 </div>
                 <br>
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A cet effet, je vous transmets le contrat ci-joint que vous voudrez bien signer et
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A cet effet, je vous transmets le contrat ci-joint que vous
+                    voudrez bien signer et
                     me retourner au
                     plus tard un mois après la date de réception.</p>
-                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Je vous prie de croire, Monsieur le Directeur, en l’assurance de ma considération
+                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Je vous prie de croire, Monsieur le Directeur, en l’assurance
+                    de ma considération
                     distinguée.</p><br><br>
                 <h6><b><span class="font-italic"><u>P.J</u></span> : contrat<br><br>
 
                         A<br>
-                        @if ($pcharge->etablissement->user->civilite == 'M.')
+                        {{-- @if ($pcharge->etablissement->user->civilite == 'M.')
                             {{ __('Monsieur le Directeur') }}<br>
                         @elseif($pcharge->etablissement->user->civilite == 'Mme')
                             {{ __('Madame la Directrice') }}<br>
                         @else
                             {{ __('') }}<br>
-                        @endif
-                        {{ $pcharge->etablissement->name }}<br>
+                        @endif --}}
+                        Monsieur le Directeur<br>
+                        {{ $pcharge->etablissement->name }}&nbsp;
+                        @if (isset($pcharge->etablissement->sigle))
+                            ({{ $pcharge->etablissement->sigle }})
+                        @else
+                        @endif <br>
                         <u>Adresse</u> : {{ $pcharge->etablissement->adresse }}<br>
                         <u>Téléphone</u> : {{ $pcharge->etablissement->telephone1 }}<br>
-                        <u>Email</u> : {{ $pcharge->etablissement->user->email }}<br><br><br>
+                        {{-- <u>Email</u> : {{ $pcharge->etablissement->user->email }}<br><br><br> --}}
+                        <u>Email</u> : {{ $pcharge->etablissement->email }}<br><br><br>
 
 
-                        {{ $pcharge->etablissement->commune->arrondissement->departement->region->nom }}
+                        {{-- {{ $pcharge->etablissement->commune->arrondissement->departement->region->nom }} --}}
+                        {{ $pcharge->etablissement->region->nom }}
                     </b>
                 </h6>
                 <div style="margin-top:150px">

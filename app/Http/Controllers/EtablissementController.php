@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Etablissement;
 use App\Models\Commune;
+use App\Models\Region;
 use App\Models\Pcharge;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
@@ -35,7 +36,8 @@ class EtablissementController extends Controller
     public function create()
     {
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
-        return view('etablissements.create', compact('communes'));
+        $regions = Region::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        return view('etablissements.create', compact('communes', 'regions'));
     }
 
     /**
@@ -49,14 +51,13 @@ class EtablissementController extends Controller
         $this->validate($request, [
                 'etablissement'         =>  'required|string|unique:etablissements,name,NULL,id,deleted_at,NULL|max:200',
                 'telephone_1'           =>  'required|string|max:17',
-                'telephone_2'           =>  'required|string|max:17',
                 'email'                 =>  'required|string|email|max:255|unique:etablissements,email,NULL,id,deleted_at,NULL',
                 'adresse'               =>  'required|string',
                 'fixe'                  =>  'required|string|max:50',
-                'commune'               =>  'required|string'
+                'region'                =>  'required|string'
             ]);
 
-            $etablissement = new Etablissement([      
+        $etablissement = new Etablissement([
                 'name'                         =>      $request->input('etablissement'),
                 'telephone1'                   =>      $request->input('telephone_1'),
                 'telephone2'                   =>      $request->input('telephone_2'),
@@ -65,11 +66,11 @@ class EtablissementController extends Controller
                 'adresse'                      =>      $request->input('adresse'),
                 'name'                         =>      $request->input('etablissement'),
                 'sigle'                        =>      $request->input('sigle'),
-                'communes_id'                  =>      $request->input('commune')
+                'regions_id'                   =>      $request->input('region')
             ]);
     
-            $etablissement->save();
-            return redirect()->route('etablissements.index')->with('success','enregistrement effectué avec succès !');
+        $etablissement->save();
+        return redirect()->route('etablissements.index')->with('success', 'enregistrement effectué avec succès !');
     }
 
     /**
@@ -80,8 +81,8 @@ class EtablissementController extends Controller
      */
     public function show(Etablissement $etablissement)
     {
-        $communes = Commune::all();
-        return view('etablissements.show', compact('etablissement', 'communes'));
+        $regions = Region::all();
+        return view('etablissements.show', compact('etablissement', 'regions'));
     }
 
     /**
@@ -92,9 +93,9 @@ class EtablissementController extends Controller
      */
     public function edit(Etablissement $etablissement)
     {
-        /* $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique(); */
-        $communes = Commune::all();
-        return view('etablissements.update', compact('etablissement', 'communes'));
+        /* $regions = Region::distinct('nom')->get()->pluck('nom', 'id')->unique(); */
+        $regions = Region::all();
+        return view('etablissements.update', compact('etablissement', 'regions'));
     }
 
     /**
@@ -113,10 +114,10 @@ class EtablissementController extends Controller
             'email'                 =>  "required|string|email|max:255|unique:etablissements,email,{$etablissement->id},id,deleted_at,NULL",
             'adresse'               =>  'required|string',
             'fixe'                  =>  'required|string|max:50',
-            'commune'               =>  'required|string'
+            'region'               =>  'required|string'
         ]);
 
-        $communes_id = Commune::where('nom', $request->input('commune'))->first()->id;
+        $regions_id = Region::where('nom', $request->input('region'))->first()->id;
 
         $etablissement->name                         =      $request->input('etablissement');
         $etablissement->telephone1                   =      $request->input('telephone_1');
@@ -126,10 +127,10 @@ class EtablissementController extends Controller
         $etablissement->adresse                      =      $request->input('adresse');
         $etablissement->name                         =      $request->input('etablissement');
         $etablissement->sigle                        =      $request->input('sigle');
-        $etablissement->communes_id                  =      $communes_id;
+        $etablissement->regions_id                  =      $regions_id;
 
         $etablissement->save();
-        return redirect()->route('etablissements.index')->with('success','modification effectué avec succès !');
+        return redirect()->route('etablissements.index')->with('success', 'modification effectué avec succès !');
     }
 
     /**
@@ -140,15 +141,14 @@ class EtablissementController extends Controller
      */
     public function destroy(Etablissement $etablissement)
     {
-
         $etablissement->delete();
-        $message = $etablissement->name.' ['.$etablissement->sigle.'] a été supprimé';        
+        $message = $etablissement->name.' ['.$etablissement->sigle.'] a été supprimé';
         return redirect()->route('etablissements.index')->with('success', $message);
     }
 
     public function list(Request $request)
     {
-        $etablissements=Etablissement::withCount('pcharges')->with('commune')->get();
+        $etablissements=Etablissement::withCount('pcharges')->with('region')->get();
         return Datatables::of($etablissements)->make(true);
     }
 
@@ -156,20 +156,18 @@ class EtablissementController extends Controller
     {
         $etablissement = Etablissement::where('id', $etablissement)->first()->name;
         
-        $pcharges = Pcharge::get()->where('etablissement.name','=',$etablissement);
-        $effectif = Pcharge::get()->where('etablissement.name','=',$etablissement)->count();
+        $pcharges = Pcharge::get()->where('etablissement.name', '=', $etablissement);
+        $effectif = Pcharge::get()->where('etablissement.name', '=', $etablissement)->count();
 
-        return view('etablissements.countpcharge', compact('etablissement','pcharges', 'effectif'));
+        return view('etablissements.countpcharge', compact('etablissement', 'pcharges', 'effectif'));
     }
 
     public function etabcountype($type, $etablissement, $effectif)
     {
+        $pcharges = Pcharge::get()->where('typedemande', '=', $type)->where('etablissement.name', '=', $etablissement);
 
-        $pcharges = Pcharge::get()->where('typedemande','=',$type)->where('etablissement.name','=',$etablissement);
+        $count = Pcharge::get()->where('typedemande', '=', $type)->where('etablissement.name', '=', $etablissement)->count();
 
-        $count = Pcharge::get()->where('typedemande','=',$type)->where('etablissement.name','=',$etablissement)->count();
-
-        return view('etablissements.etabcountype', compact('etablissement','pcharges', 'effectif', 'type', 'count'));
+        return view('etablissements.etabcountype', compact('etablissement', 'pcharges', 'effectif', 'type', 'count'));
     }
-    
 }

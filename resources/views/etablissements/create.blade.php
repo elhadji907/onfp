@@ -28,11 +28,11 @@
                         {!! Form::open(['route' => 'etablissements.store', 'method' => 'POST']) !!}
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                {!! Form::label('Commune') !!}
-                                {!! Form::select('commune', $communes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
+                                {!! Form::label('Région') !!} (<span class="text-danger">*</span>)
+                                {!! Form::select('region', $regions, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'region']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('commune'))
-                                        @foreach ($errors->get('commune') as $message)
+                                    @if ($errors->has('region'))
+                                        @foreach ($errors->get('region') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
-                                {!! Form::label('Etablissement') !!}
+                                {!! Form::label('Etablissement') !!} (<span class="text-danger">*</span>)
                                 {!! Form::text('etablissement', null, ['placeholder' => 'Nom de l\'établissement', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('etablissement'))
@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                {!! Form::label('Email') !!}
+                                {!! Form::label('Email') !!} (<span class="text-danger">*</span>)
                                 {!! Form::text('email', null, ['placeholder' => 'Adresse email', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('email'))
@@ -76,7 +76,7 @@
                                 </small>
                             </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                {!! Form::label('Telephone') !!}
+                                {!! Form::label('Telephone') !!} (<span class="text-danger">*</span>)
                                 {!! Form::text('telephone_1', null, ['placeholder' => 'Numero de telephone', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('telephone_1'))
@@ -89,7 +89,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                {!! Form::label('Fixe') !!}
+                                {!! Form::label('Fixe') !!} (<span class="text-danger">*</span>)
                                 {!! Form::text('fixe', null, ['placeholder' => 'Numero de téléphone fixe', 'class' => 'form-control']) !!}
                                 <small id="fixeHelp" class="form-text text-muted">
                                     @if ($errors->has('fixe'))
@@ -113,7 +113,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                {!! Form::label('Adresse résidence') !!}(<span class="text-danger">*</span>)
+                                {!! Form::label('Adresse résidence') !!} (<span class="text-danger">*</span>)
                                 {!! Form::textarea('adresse', null, ['placeholder' => 'Votre adresse de résidence', 'class' => 'form-control', 'id' => 'adresse', 'rows' => '1']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('adresse'))

@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property Collection|Antenne[] $antennes
  * @property Collection|Departement[] $departements
+ * @property Collection|Etablissement[] $etablissements
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Programme[] $programmes
  *
@@ -53,6 +54,11 @@ class Region extends Model
 	public function departements()
 	{
 		return $this->hasMany(Departement::class, 'regions_id');
+	}
+
+	public function etablissements()
+	{
+		return $this->hasMany(Etablissement::class, 'regions_id');
 	}
 
 	public function operateurs()

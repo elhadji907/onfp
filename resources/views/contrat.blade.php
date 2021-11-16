@@ -59,9 +59,16 @@
                         </p>
                     </center>
                     <center>
-                        <p>{{ $pcharge->etablissement->name }}<br>
-                        <strong>Contact</strong> : {{ $pcharge->etablissement->fixe }}&nbsp; / &nbsp;{{ $pcharge->etablissement->telephone1 }}<br>
-                            <strong>Email</strong> : <span style="color: blue"> {{ $pcharge->etablissement->email }}</span></p>
+                        <p>{{ $pcharge->etablissement->name }}&nbsp;
+                            @if (isset($pcharge->etablissement->sigle))
+                                ({{ $pcharge->etablissement->sigle }})
+                            @else
+                            @endif <br>
+                            <strong>Contact</strong> : {{ $pcharge->etablissement->fixe }}&nbsp; /
+                            &nbsp;{{ $pcharge->etablissement->telephone1 }}<br>
+                            <strong>Email</strong> : <span style="color: blue">
+                                {{ $pcharge->etablissement->email }}</span>
+                        </p>
                     </center>
                 </b>
                 <p>Il a été convenu et arrêté ce qui suit :</p>
@@ -166,7 +173,7 @@
                         <img style="max-width:100%;" src="{{ asset('images/pied.png') }}">
                     </div>
 
-                    <li>Veuillez  au respect de l’assiduité de l’apprenant /étudiant ;</li>
+                    <li>Veuillez au respect de l’assiduité de l’apprenant /étudiant ;</li>
                     <li>Mettre à la disposition de l’ONFP les relevés de notes de l’apprenant/étudiant ainsi que les
                         factures et rapport d’exécution</li>
                     <li>Signaler tout manquement de la part de l’étudiant notamment assiduité, résultat scolaire,
@@ -215,15 +222,16 @@
                 <table class="table" style="border: hidden">
                     <tbody>
                         <tr>
-                            <td><b>{{ __('Pour l’Opérateur,') }} <br> 
-                                @if ($pcharge->etablissement->user->civilite == 'M.')
+                            <td><b>{{ __('Pour l’Opérateur,') }} <br>
+                                    {{-- @if ($pcharge->etablissement->user->civilite == 'M.')
                                 {{ __('Le Directeur') }}<br>
                             @elseif($pcharge->etablissement->user->civilite == 'Mme')
                                 {{ __('La Directrice') }}<br>
                             @else
                                 {{ __('') }}<br>
-                            @endif
-                            </b></td>
+                            @endif --}}
+                                    Le Directeur
+                                </b></td>
                             <td class="float-right" style="border: hidden"><b>{{ __('Pour l’ONFP') }} <br> Le
                                     Directeur Général</b></td>
                         </tr>

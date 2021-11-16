@@ -20,7 +20,7 @@
                         <div class="table-responsive">
                             <div align="right">
                                 @can('role-create')
-                                <a href="{{ route('etablissements.selectefilieres') }}">
+                                <a href="{{ route('etablissements.create') }}">
                                     <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
                                 </a>
                                 @endcan
@@ -32,6 +32,7 @@
                                         <th style="width:5%;">N°</th>
                                         <th>Name</th>
                                         <th style="width:10%;">Sigle</th>
+                                        <th style="width:12%;">Région</th>
                                         <th style="width:8%;">Effectif</th>
                                         <th style="width:12%;"></th>
                                     </tr>
@@ -41,6 +42,7 @@
                                         <th>N°</th>
                                         <th>Name</th>
                                         <th style="width:10%;">Sigle</th>
+                                        <th>Région</th>
                                         <th>Effectif</th>
                                         <th></th>
                                     </tr>
@@ -52,6 +54,7 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $etablissement->name }}</td>
                                             <td>{{ $etablissement->sigle }}</td>
+                                            <td>{{ $etablissement->region->nom }}</td>
                                             <td>
                                                 @foreach ($etablissement->pcharges as $pcharge)
                                                 @if ($loop->last)

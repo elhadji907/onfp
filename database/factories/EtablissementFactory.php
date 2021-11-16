@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Etablissement;
 use App\Models\Commune;
+use App\Models\Region;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Helpers\SnNameGenerator as SnmG;
@@ -25,6 +26,7 @@ class EtablissementFactory extends Factory
     public function definition()
     {
         $communes_id=Commune::all()->random()->id;
+        $regions_id=Region::all()->random()->id;
         
         return [
             'matricule' => "ETAB".$this->faker->postcode,
@@ -42,6 +44,9 @@ class EtablissementFactory extends Factory
             },
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
+            },
+            'regions_id' => function () use ($regions_id) {
+                return $regions_id;
             },
         ];
     }
