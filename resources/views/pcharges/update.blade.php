@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                     {!! Form::label('Adresse résidence') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::textarea('adresse', $pcharge->demandeur->user->adresse ?? old('adresse'), ['placeholder' => 'Votre adresse de résidence', 'class' => 'form-control', 'id' => 'adresse', 'rows' => '1']) !!}
+                                    {!! Form::textarea('adresse', $pcharge->adresse ?? old('adresse'), ['placeholder' => 'Votre adresse de résidence', 'class' => 'form-control', 'id' => 'adresse', 'rows' => '1']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('adresse'))
                                             @foreach ($errors->get('adresse') as $message)

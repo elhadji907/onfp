@@ -133,6 +133,7 @@ class PchargeController extends Controller
      */
     public function store(Request $request)
     {
+
         $user_connect = Auth::user();
         $demandeur = $user_connect->demandeur;
         $pcharges = $user_connect->demandeur->pcharges;

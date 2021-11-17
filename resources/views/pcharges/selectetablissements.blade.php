@@ -23,7 +23,7 @@
                                         <th style="width:5%;">N°</th>
                                         <th>Établissement</th>
                                         <th style="width:10%;">Sigle</th>
-                                        <th style="width:15%;">Commune</th>
+                                        <th style="width:15%;">Réssgion</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
@@ -31,7 +31,7 @@
                                     <tr>
                                         <th>N°</th>
                                         <th>Établissement</th>
-                                        <th>Commune</th>
+                                        <th>Réssgion</th>
                                         <th>Sigle</th>
                                         <th></th>
                                     </tr>
@@ -67,8 +67,8 @@
                         name: 'sigle'
                     },
                     {
-                        data: 'commune.nom',
-                        name: 'commune.nom'
+                        data: 'region.nom',
+                        name: 'region.nom'
                     },
                     {
                         data: null,

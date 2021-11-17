@@ -35,7 +35,7 @@ class ScolariteSeeder extends Seeder
         ]);
         DB::table('scolarites')->insert([
             'annee' => "2020-2021",
-            'statut' => "Fermé",
+            'statut' => "Ouvert",
             'date_debut' => "2020-08-04",
             'date_fin' => "2020-09-04",
             'created_at' => now(),
@@ -45,7 +45,7 @@ class ScolariteSeeder extends Seeder
 
         DB::table('scolarites')->insert([
             'annee' => "2021-2022",
-            'statut' => "Fermé",
+            'statut' => "Ouvert",
             'date_debut' => "2021-08-04",
             'date_fin' => "2021-09-04",
             'created_at' => now(),
