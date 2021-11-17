@@ -112,6 +112,16 @@ class PermissionsOnfpSeeder extends Seeder
         Permission::create(['name' => 'employee-edit']);
         Permission::create(['name' => 'employee-delete']);
  
+        Permission::create(['name' => 'individuelle-list']);
+        Permission::create(['name' => 'individuelle-create']);
+        Permission::create(['name' => 'individuelle-edit']);
+        Permission::create(['name' => 'individuelle-delete']);
+ 
+        Permission::create(['name' => 'collective-list']);
+        Permission::create(['name' => 'collective-create']);
+        Permission::create(['name' => 'collective-edit']);
+        Permission::create(['name' => 'collective-delete']);
+ 
         // create roles and assign created permissions
  
         // this can be done as separate statements
@@ -138,6 +148,8 @@ class PermissionsOnfpSeeder extends Seeder
         $role->givePermissionTo(['courrier-list', 'courrier-create', 'courrier-edit', 'courrier-delete', 'demande-list',  'demande-create', 'demande-list', 'demande-edit', 'demande-delete', 'module-list']);
 
         $role = Role::create(['name' => 'Demandeur']);
+        $role->givePermissionTo(['pcharge-list', 'pcharge-create', 'pcharge-edit', 'individuelle-list', 'individuelle-create', 'individuelle-edit', 'collective-list', 'collective-create', 'collective-edit']);
+
 
         $role = Role::create(['name' => 'Etablissement']);
         $role->givePermissionTo(['etablissement-list', 'etablissement-create', 'etablissement-edit', 'etablissement-delete']);
@@ -145,10 +157,13 @@ class PermissionsOnfpSeeder extends Seeder
         $role = Role::create(['name' => 'Operateur']);
 
         $role = Role::create(['name' => 'Individuelle']);
+        $role->givePermissionTo(['individuelle-list', 'individuelle-create', 'individuelle-edit']);
 
         $role = Role::create(['name' => 'Collective']);
+        $role->givePermissionTo(['collective-list', 'collective-create', 'collective-edit']);
         
         $role = Role::create(['name' => 'Pcharge']);
+        $role->givePermissionTo(['pcharge-list', 'pcharge-create', 'pcharge-edit']);
 
         $role = Role::create(['name' => 'Comptable']);
         $role->givePermissionTo('facture-list', 'facture-create', 'facture-edit', 'facture-delete', 'formation-list', 'operateur-list', 'module-list');

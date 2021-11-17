@@ -107,6 +107,7 @@ class RegisteredUserController extends Controller
 
         $pcharge = Pcharge::create([
             'demandeurs_id'     =>      $demandeur->id,
+            'statut'            =>      'Attente',
         ]);
 
         event(new Registered($user));

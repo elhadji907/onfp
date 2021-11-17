@@ -34,11 +34,11 @@ class PchargeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        /* $this->middleware(['role:super-admin|Administrateur|Gestionnaire']); */
-      /*   $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:user-create', ['only' => ['create','store']]);
-        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:user-delete', ['only' => ['destroy']]); */
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']);
+        /*  $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:user-create', ['only' => ['create','store']]);
+         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:user-delete', ['only' => ['destroy']]); */
     }
     /**
      * Display a listing of the resource.
@@ -92,7 +92,14 @@ class PchargeController extends Controller
                                ->where('statut', '=', 'Terminée')
                                ->count();
 
-        return view('pcharges.index', compact('pcharges', 'pctotal', 'ptypenouvelle', 'ptyperenouvelle', 'attente', 'accorde', 'nonaccorde', 'termine'));
+        $user = Auth::user();
+        $user_connect = $user;
+
+        if (!$user->hasRole('Demandeur')) {
+            return view('pcharges.index', compact('pcharges', 'pctotal', 'ptypenouvelle', 'ptyperenouvelle', 'attente', 'accorde', 'nonaccorde', 'termine'));
+        } else {
+            return redirect()->route('profiles.show', ['user'=>$user, 'user_connect'=>$user_connect]);
+        }
     }
 
     /**
@@ -133,7 +140,6 @@ class PchargeController extends Controller
      */
     public function store(Request $request)
     {
-
         $user_connect = Auth::user();
         $demandeur = $user_connect->demandeur;
         $pcharges = $user_connect->demandeur->pcharges;
@@ -543,7 +549,7 @@ class PchargeController extends Controller
         $fixe = str_replace(' ', '', $fixe);
 
         $diplome_id     = Diplome::where('name', $request->input('diplome'))->first()->id;
-        /* $familiale_id     = Familiale::where('name', $request->input('familiale'))->first()->id; */
+        $familiale_id     = Familiale::where('name', $request->input('familiale'))->first()->id;
         $professionnelle_id     = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
         $commune_id     = Commune::where('nom', $request->input('commune'))->first()->id;
         $etablissement_id     = Etablissement::where('name', $request->input('etablissement'))->first()->id;
@@ -553,6 +559,15 @@ class PchargeController extends Controller
 
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
+
+        $inscription = $request->input('inscription');
+        $inscription = str_replace(' ', '', $inscription);
+
+        $montant = $request->input('montant');
+        $montant = str_replace(' ', '', $montant);
+
+        $avis_dg = $request->input('avis_dg');
+        $avis_dg = str_replace(' ', '', $avis_dg);
 
         $types_demandes_id = TypesDemande::where('name', 'Prise en charge')->first()->id;
         
@@ -574,7 +589,7 @@ class PchargeController extends Controller
         $user_connect->fixe                 =      $fixe;
         $user_connect->bp                   =      $request->input('bp');
         $user_connect->fax                  =      $request->input('fax');
-        /* $user_connect->familiales_id        =      $familiale_id; */
+        $user_connect->familiales_id        =      $familiale_id;
         $user_connect->professionnelles_id  =      $professionnelle_id;
         $user_connect->date_naissance       =      $request->input('date');
         $user_connect->lieu_naissance       =      $request->input('lieu_naissance');
@@ -592,8 +607,8 @@ class PchargeController extends Controller
 
         $pcharge->cin                       =      $request->input('cin');
         $pcharge->duree                     =      $request->input('duree');
-        $pcharge->inscription               =      $request->input('inscription');
-        $pcharge->montant                   =      $request->input('montant');
+        $pcharge->inscription               =      $inscription;
+        $pcharge->montant                   =      $montant;
         $pcharge->niveauentree              =      $request->input('niveauentree');
         $pcharge->niveausortie              =      $request->input('niveausortie');
         $pcharge->specialisation            =      $request->input('specialite');
@@ -607,7 +622,7 @@ class PchargeController extends Controller
         if ($user_connect->hasRole('Administrateur|super-admin')) {
             $pcharge->statut                =      $request->input('statut');
         }
-        $pcharge->avis_dg                   =      $request->input('avis_dg');
+        $pcharge->avis_dg                   =      $avis_dg;
         $pcharge->etablissements_id         =      $etablissement_id;
         $pcharge->filieres_id               =      $filiere_id;
         $pcharge->etudes_id                 =      $etude_id;
@@ -788,6 +803,5 @@ class PchargeController extends Controller
         $anne = $anne.'_'.date('His');
         
         return $lettre->stream('Lettre_'.$name.'_'.$anne.'.pdf');
-
     }
 }
