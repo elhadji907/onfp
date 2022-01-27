@@ -43,7 +43,7 @@
             @endcan
         </div>
     </div>
-    <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+    <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="mt-5">
             @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">{{ session('success') }}</div>
@@ -54,225 +54,26 @@
                 </div>
             @endif
         </div>
-    </div>
-    @hasrole('user')
-    {{-- <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="row justify-content-center mt-5">
-            @if (isset($individuelle_user->cin))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_user->id) !!}" target="_blank">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Individuelle)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($individuelle_user->modules as $module_individuelle)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_individuelle->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $individuelle_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($collective_user->name))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('collectives/' . $collective_user->id) !!}" target="_blank">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Collective)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($collective_user->modules as $module_collective)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_collective->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $collective_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($pcharge_user->scolarites_id))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}" target="_blank">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (prise en charge)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($pcharge_user->modules as $module)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                            @if (isset($module->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $pcharge_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span data-feather="mail"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div> --}}
-@else
-    {{-- <div class="container-fluid col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-        <div class="row justify-content-center mt-5">
-            @if (isset($individuelle_user->cin))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('individuelles/' . $individuelle_user->id) !!}">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Individuelle)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($individuelle_user->modules as $module_individuelle)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_individuelle->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $individuelle_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($collective_user->name))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('collectives/' . $collective_user->id) !!}">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (Collective)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($collective_user->modules as $module_collective)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span>
-                                            @if (isset($module_collective->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $collective_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-            @if (isset($pcharge_user->scolarites_id))
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{!! url('pcharges/' . $pcharge_user->id) !!}">
-                            <div class="card-body">
-                                <div class="row justify-content-center no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Demande (prise en charge)' }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            @foreach ($pcharge_user->modules as $module)
-                                                @if ($loop->last)
-                                                    {!! $loop->count !!}
-                                                @endif
-                                            @endforeach
-                                            <label class="badge badge-info">{{ $pcharge_user->filiere->name }}</label>
-                                            @if (isset($pcharge_user->filiere->name))
-                                                <h5><label
-                                                        class="badge badge-success">{{ $pcharge_user->statut }}</label>
-                                                </h5>
-                                            @else
-                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <span data-feather="mail"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div> --}}
-    @endhasrole
-    <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <div class="row justify-content-center mt-5">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
+        <div class="mt-5">
+            @if (session()->has('attention'))
+                <div class="alert alert-danger" role="alert">
+                    <strong>Oups!</strong>.<br><br>{{ session('attention') }}</div>
+            @endif
+            @if (session('message'))
+                <div class="alert alert-attention">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
+    </div>
+  
+    <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        @foreach (auth::user()->demandeur->individuelles as $individuelle)
+        @endforeach
+        @if (isset($individuelle))
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
                     <div class="card-header border-success">
                         <i class="fas fa-table"></i>
@@ -280,32 +81,31 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            @foreach (auth::user()->demandeur->individuelles as $individuelle)
+                            @endforeach
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                                     data-target="#individuelles">
                                     <i class="far fa-eye"></i>
                                 </button>
-                                <a href="{{ route('individuelles.create') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                    </div>
-                                </a>
+                                @if (isset($individuelle->cin))
+                                    <a href="{{ route('individuelles.create') }}">
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm' title="modifier">
+                                        <i class="fas fa-plus">Ajouter</i>
+                                    </a>
+                                @endif
                             </div>
                             <br />
-                            <table class="table table-bordered table-striped" width="100%" cellspacing="0"
-                                id="table-individuelles">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:15%;">N°</th>
-                                        <th style="width:30%;">Module</th>
-                                        <th>Région</th>
-                                        <th>Statut</th>
-                                        <th style="width:15%;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    @foreach (auth::user()->demandeur->individuelles as $individuelle)
+                            @if (isset($individuelle->cin))
+                                <table class="table table-bordered table-striped" width="100%" cellspacing="0"
+                                    id="table-individuelles">
+                                    <thead class="table-dark">
                                         <tr>
+<<<<<<< HEAD
                                             <td>{{ $individuelle->demandeur->numero ?? '' }}</td>
                                             <td>
                                                 @foreach ($individuelle->modules as $module)
@@ -343,19 +143,86 @@
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 {{-- &nbsp;
+=======
+                                            <th style="width:10%;">N°</th>
+                                            <th>Module</th>
+                                            <th>Région</th>
+                                            <th style="width:8%;">Statut</th>
+                                            <th style="width:8%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        @foreach (auth::user()->demandeur->individuelles as $individuelle)
+                                            <tr>
+                                                <td>{{ $individuelle->demandeur->numero ?? '' }}</td>
+                                                <td>
+                                                    @foreach ($individuelle->modules as $module)
+                                                        {!! $module->name ?? '' !!}
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                <td>
+                                                    <span>
+                                                        @if (isset($individuelle->modules) && $individuelle->modules != '[]')
+                                                            @foreach ($individuelle->modules as $module)
+                                                                @if (isset($module->name))
+                                                                    <h5>
+                                                                        @if ($individuelle->statut != 'Attente')
+                                                                            <label
+                                                                                class="badge badge-success">{{ $individuelle->statut }}</label>
+                                                                        @else
+                                                                            <label
+                                                                                class="badge badge-warning">{{ $individuelle->statut }}</label>
+                                                                        @endif
+                                                                    </h5>
+                                                                @else
+                                                                    <h5><label class="badge badge-danger">Invalide</label>
+                                                                    </h5>
+                                                                @endif
+                                                            @endforeach
+
+                                                        @else
+                                                            <h5><label class="badge badge-danger">Invalide</label></h5>
+
+                                                        @endif
+                                                    </span>
+                                                </td>
+                                                <td class="d-flex align-items-baseline align-middle">
+                                                    <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                        title="modifier">
+                                                        <i class="far fa-edit">&nbsp;</i>
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}"
+                                                        class='btn btn-primary btn-sm' title="voir">
+                                                        <i class="far fa-eye">&nbsp;</i>
+                                                    </a>
+                                                    {{-- &nbsp;
+>>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'individuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!} --}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+
+                            @endif
                         </div>
                     </div>
+
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        </div>            
+        @endif
+        @foreach (auth::user()->demandeur->collectives as $collective)
+        @endforeach
+        @if (isset($collective))            
+        <div class="row justify-content-center mt-2">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
                     <div class="card-header border-success">
                         <i class="fas fa-table"></i>
@@ -363,32 +230,31 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            @foreach (auth::user()->demandeur->collectives as $collective)
+                            @endforeach
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <button type="button" class="btn btn-outline-success" data-toggle="modal"
                                     data-target="#collectives">
                                     <i class="far fa-eye"></i>
                                 </button>
-                                <a href="{{ route('collectives.create') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                    </div>
-                                </a>
+                                @if (isset($collective->cin))
+                                    <a href="{{ route('collectives.create') }}">
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="{!! url('collectives/' . $collective->id . '/edit') !!}" class='btn btn-success btn-sm' title="modifier">
+                                        <i class="fas fa-plus">Ajouter</i>
+                                    </a>
+                                @endif
                             </div>
                             <br />
-                            <table class="table table-bordered table-striped" width="100%" cellspacing="0"
-                                id="table-collectives">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:15%;">N°</th>
-                                        <th style="width:30%;">Module</th>
-                                        <th>Région</th>
-                                        <th>Statut</th>
-                                        <th style="width:15%;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    @foreach (auth::user()->demandeur->collectives as $collective)
+                            @if (isset($collective->name))
+                                <table class="table table-bordered table-striped" width="100%" cellspacing="0"
+                                    id="table-collectives">
+                                    <thead class="table-dark">
                                         <tr>
+<<<<<<< HEAD
                                             <td>{{ $collective->demandeur->numero ?? '' }}</td>
                                             <td>
                                                 @foreach ($collective->modules as $module)
@@ -426,19 +292,83 @@
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 {{-- &nbsp;
+=======
+                                            <th style="width:10%;">N°</th>
+                                            <th>Module</th>
+                                            <th>Région</th>
+                                            <th style="width:8%;">Statut</th>
+                                            <th style="width:8%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        @foreach (auth::user()->demandeur->collectives as $collective)
+                                            <tr>
+                                                <td>{{ $collective->demandeur->numero ?? '' }}</td>
+                                                <td>
+                                                    @foreach ($collective->modules as $module)
+                                                        {!! $module->name ?? '' !!}
+                                                    @endforeach
+                                                </td>
+                                                <td>{!! $collective->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                <td>
+                                                    <span>
+                                                        @if (isset($collective->modules) && $collective->modules != '[]')
+                                                            @foreach ($collective->modules as $module)
+                                                                @if (isset($module->name))
+                                                                    <h5>
+                                                                        @if ($collective->statut != 'Attente')
+                                                                            <label
+                                                                                class="badge badge-success">{{ $collective->statut }}</label>
+                                                                        @else
+                                                                            <label
+                                                                                class="badge badge-warning">{{ $collective->statut }}</label>
+                                                                        @endif
+                                                                    </h5>
+                                                                @else
+                                                                    <h5><label class="badge badge-danger">Invalide</label>
+                                                                    </h5>
+                                                                @endif
+                                                            @endforeach
+
+                                                        @else
+                                                            <h5><label class="badge badge-danger">Invalide</label></h5>
+
+                                                        @endif
+                                                    </span>
+                                                </td>
+                                                <td class="d-flex align-items-baseline text-center-row">
+                                                    <a href="{!! url('collectives/' . $collective->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                        title="modifier">
+                                                        <i class="far fa-edit">&nbsp;</i>
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="{{ url('coldetails', ['$id' => $collective->id]) }}"
+                                                        class='btn btn-primary btn-sm' title="voir">
+                                                        <i class="far fa-eye">&nbsp;</i>
+                                                    </a>
+                                                    {{-- &nbsp;
+>>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'collectives/' . $collective->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!} --}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @endif
+        
+        @foreach (auth::user()->demandeur->pcharges as $pcharge)
+        @endforeach
+        @if (isset($pcharge))
         <div class="row justify-content-center mt-2">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card border-success">
@@ -448,71 +378,92 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
+                            @foreach (auth::user()->demandeur->pcharges as $pcharge)
+                            @endforeach
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <button type="button" class="btn btn-outline-info" data-toggle="modal"
                                     data-target="#pcharges">
                                     <i class="far fa-eye"></i>
                                 </button>
-                                <a href="{{ route('pcharges.selectetablissements') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                    </div>
-                                </a>
+                                @if (isset($pcharge->scolarite->annee))
+                                    <a href="{{ route('pcharges.create') }}">
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm' title="modifier">
+                                        <i class="fas fa-plus">Ajouter</i>
+                                    </a>
+                                @endif
                             </div>
                             <br />
-                            <table class="table table-bordered table-striped" width="100%" cellspacing="0"
-                                id="table-pcharges">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th style="width:7%;">N°</th>
-                                        <th style="width:7%;">Scolarité</th>
-                                        <th style="width:30%;">Etablissement</th>
-                                        <th style="width:15%;">Filière</th>
-                                        <th style="width:8%;">Région</th>
-                                        <th style="width:7%;">Statut</th>
-                                        <th style="width:7%;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    @foreach (auth::user()->demandeur->pcharges as $pcharge)
+                            @if (isset($pcharge->scolarite->annee))
+                                <table class="table table-bordered table-striped" width="100%" cellspacing="0"
+                                    id="table-pcharges">
+                                    <thead class="table-dark">
                                         <tr>
-                                            <td>{{ $pcharge->demandeur->numero ?? '' }}</td>
-                                            <td>{{ $pcharge->scolarite->annee ?? '' }}</td>
-                                            <td>{{ $pcharge->etablissement->name ?? '' }}</td>
-                                            <td>{{ $pcharge->filiere->name ?? '' }}</td>
-                                            <td>{!! $pcharge->commune->arrondissement->departement->region->nom ?? '' !!}</td>
-                                            <td>
-                                                @if (isset($pcharge->filiere->name))
-                                                    <h5><label
-                                                            class="badge badge-success">{{ $pcharge->statut ?? '' }}</label>
-                                                    </h5>
-                                                @else
-                                                    <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                @endif
-                                            </td>
-                                            <td class="d-flex align-items-baseline text-center-row">
-                                                <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                    title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
-                                                </a>
-                                                &nbsp;
-                                                <a href="{!! url('pcharges/' . $pcharge->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
-                                                {{-- &nbsp;
+                                            <th style="width:7%;">N°</th>
+                                            <th style="width:7%;">Scolarité</th>
+                                            <th style="width:30%;">Etablissement</th>
+                                            <th style="width:15%;">Filière</th>
+                                            <th style="width:8%;">Région</th>
+                                            <th style="width:7%;">Statut</th>
+                                            <th style="width:7%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        @foreach (auth::user()->demandeur->pcharges as $pcharge)
+                                            <tr>
+                                                <td>{{ $pcharge->demandeur->numero ?? '' }}</td>
+                                                <td>{{ $pcharge->scolarite->annee ?? '' }}</td>
+                                                <td>{{ $pcharge->etablissement->name ?? '' }}</td>
+                                                <td>{{ $pcharge->filiere->name ?? '' }}</td>
+                                                <td>{!! $pcharge->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                <td>
+                                                    @if (isset($pcharge->filiere->name))
+                                                        <h5>
+                                                            @if ($pcharge->statut == 'Attente')
+                                                                <label
+                                                                    class="badge badge-warning">{{ $pcharge->statut }}</label>
+                                                            @else
+                                                                <label
+                                                                    class="badge badge-success">{{ $pcharge->statut }}</label>
+                                                            @endif
+                                                        </h5>
+                                                    @else
+                                                        <h5><label class="badge badge-danger">Invalide</label></h5>
+                                                    @endif
+                                                </td>
+                                                <td class="d-flex align-items-baseline text-center-row">
+                                                    @if ($pcharge->statut == 'Attente')
+                                                    <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                        title="modifier">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="{{ url('pdetails', ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) }}"
+                                                        class='btn btn-primary btn-sm' title="voir">
+                                                        <i class="far fa-eye"></i>
+                                                    </a>
+                                                    @else
+                                                    @endif
+                                                        {{-- &nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!} --}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             {{-- <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                 <div class="mt-3 d-flex align-items-baseline align-middle">
                     <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
@@ -523,6 +474,10 @@
                 </div>
             </div> --}}
         </div>
+=======
+        </div>            
+        @endif
+>>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
     </div>
     <div class="modal fade" id="individuelles" tabindex="-1" role="dialog" aria-labelledby="individuellesTitle"
         aria-hidden="true">

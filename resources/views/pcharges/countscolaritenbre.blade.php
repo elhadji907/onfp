@@ -16,8 +16,7 @@
                     <div class="card-header">
                         <i class="fas fa-table"></i>
                         @if (isset($cin))
-                            CIN => <label
-                                class="badge badge-info">{{ $cin }}</label> NOMBRE => <label
+                            CIN => <label class="badge badge-info">{{ $cin }}</label> NOMBRE => <label
                                 class="badge badge-info">{{ $effectif }}</label>
                         @endif
                     </div>
@@ -34,30 +33,30 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:4%;">Civilité</th>
-                                        <th>Prénom</th>
-                                        <th>Nom</th>
+                                        <th style="width:12%;">Prénom & Nom</th>
                                         <th style="width:9%;">Date nais.</th>
                                         <th style="width:9%;">Lieu nais.</th>
-                                        <th style="width:5%;">Email</th>
+                                        {{-- <th style="width:5%;">Email</th> --}}
                                         <th style="width:5%;">Téléphone</th>
-                                        <th style="width:5%;">Région</th>
-                                        <th style="width:30%;">Etablissement</th>
-                                        <th style="width:12%;">Type demande</th>
-                                        <th style="width:15%;"></th>
+                                        <th style="width:20%;">Etablissement</th>
+                                        <th style="width:15%;">Type demande</th>
+                                        <th style="width:5%;">Statut</th>
+                                        <th style="width:5%;">Option</th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
-                                        <th>Prénom</th>
-                                        <th>Nom</th>
+                                        <th>Prénom & Nom</th>
                                         <th>Date nais.</th>
                                         <th>Lieu nais.</th>
-                                        <th>Email</th>
+                                        {{-- <th>Email</th> --}}
                                         <th>Téléphone</th>
-                                        <th>Région</th>
                                         <th>Etablissement</th>
                                         <th>Type demande</th>
+                                        <th>Statut</th>
+                                        <th>Option</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -65,24 +64,61 @@
                                     @foreach ($pcharges as $pcharge)
                                         <tr>
                                             <td>{!! $pcharge->demandeur->user->civilite !!}</td>
-                                            <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!}</td>
-                                            <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
+                                            <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!} {!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
                                             <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                             <td> {!! mb_strtoupper($pcharge->demandeur->user->lieu_naissance) !!}</td>
-                                            <td>{!! $pcharge->demandeur->user->email !!}</td>
+                                            {{-- <td>{!! $pcharge->demandeur->user->email !!}</td> --}}
                                             <td>{!! $pcharge->demandeur->user->telephone !!}</td>
-                                            <td>{!! $pcharge->commune->arrondissement->departement->region->nom !!}</td>
+                                            {{-- <td>{!! $pcharge->commune->arrondissement->departement->region->nom !!}</td> --}}
                                             <td>{!! $pcharge->etablissement->name ?? '' !!}</td>
                                             <td>{!! $pcharge->typedemande !!}</td>
+                                            <td>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    @if ($pcharge->statut == 'Accordée')
+                                                        <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label>
+                                                    @elseif ($pcharge->statut == "Non accordée")
+                                                        <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>
+                                                    @else
+                                                        <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    @if ($pcharge->statut == 'Accordée')
+                                                        {{-- <label class="badge badge-info">{!! $pcharge->statut ?? '' !!}</label> --}}
+                                                        <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                                            title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                                                            <i class="fas fa-times"></i>
+                                                        </a>
+                                                    @elseif ($pcharge->statut == "Non accordée")
+                                                        {{-- <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label> --}}
+                                                        <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Attente']) }}"
+                                                            title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
+                                                            <i class="fas fa-times"></i>
+                                                        </a>
+                                                    @else
+                                                        {{-- <label class="badge badge-warning">{!! $pcharge->statut ?? '' !!}</label> --}}
+                                                        <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' => $pcharge->montant]) }}"
+                                                            title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
+                                                            <i class="fas fa-check-circle"></i>
+                                                        </a>
+                                                        <a href="{{ url('nonaccord', ['$pcharge' => $pcharge, '$statut' => 'Non accordée']) }}"
+                                                            title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
+                                                            <i class="fas fa-times"></i>
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
+                                                    <i class="far fa-edit"></i>
                                                 </a>
                                                 &nbsp;
                                                 <a href="{!! url('pcharges/' . $pcharge->id) !!}" class='btn btn-primary btn-sm'
                                                     title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
+                                                    <i class="far fa-eye"></i>
                                                 </a>
                                                 &nbsp;
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'pcharges/' . $pcharge->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}

@@ -17,11 +17,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property int $modules_id
  * @property int $agrements_id
+ * @property int|null $moduleagrementstatut_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Agrement $agrement
+ * @property Moduleagrementstatut|null $moduleagrementstatut
  * @property Module $module
  *
  * @package App\Models
@@ -35,17 +37,24 @@ class Modulesagrement extends Model
 
 	protected $casts = [
 		'modules_id' => 'int',
-		'agrements_id' => 'int'
+		'agrements_id' => 'int',
+		'moduleagrementstatut_id' => 'int'
 	];
 
 	protected $fillable = [
 		'modules_id',
-		'agrements_id'
+		'agrements_id',
+		'moduleagrementstatut_id'
 	];
 
 	public function agrement()
 	{
 		return $this->belongsTo(Agrement::class, 'agrements_id');
+	}
+
+	public function moduleagrementstatut()
+	{
+		return $this->belongsTo(Moduleagrementstatut::class);
 	}
 
 	public function module()

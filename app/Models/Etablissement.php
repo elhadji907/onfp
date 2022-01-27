@@ -28,15 +28,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $email
  * @property string|null $adresse
  * @property int|null $communes_id
- * @property int|null $filieres_id
  * @property int|null $users_id
+ * @property int|null $regions_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Commune|null $commune
- * @property Filiere|null $filiere
+ * @property Region|null $region
  * @property User|null $user
+ * @property Collection|Filiere[] $filieres
  * @property Collection|Pcharge[] $pcharges
  *
  * @package App\Models
@@ -50,8 +51,8 @@ class Etablissement extends Model
 
 	protected $casts = [
 		'communes_id' => 'int',
-		'filieres_id' => 'int',
-		'users_id' => 'int'
+		'users_id' => 'int',
+		'regions_id' => 'int'
 	];
 
 	protected $dates = [
@@ -71,8 +72,8 @@ class Etablissement extends Model
 		'email',
 		'adresse',
 		'communes_id',
-		'filieres_id',
-		'users_id'
+		'users_id',
+		'regions_id'
 	];
 
 	public function commune()
@@ -80,14 +81,21 @@ class Etablissement extends Model
 		return $this->belongsTo(Commune::class, 'communes_id');
 	}
 
-	public function filiere()
+	public function region()
 	{
-		return $this->belongsTo(Filiere::class, 'filieres_id');
+		return $this->belongsTo(Region::class, 'regions_id');
 	}
 
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'users_id');
+	}
+
+	public function filieres()
+	{
+		return $this->belongsToMany(Filiere::class, 'etablissementsfilieres', 'etablissements_id', 'filieres_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function pcharges()

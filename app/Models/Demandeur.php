@@ -18,42 +18,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $numero
- * @property string|null $numero_courrier
- * @property string|null $etablissement
- * @property string|null $niveau_etude
- * @property string|null $qualification
- * @property string|null $experience
- * @property string|null $deja_forme
- * @property string|null $adresse
- * @property string|null $pre_requis
- * @property string|null $option
- * @property string|null $autres_diplomes
- * @property string|null $telephone
- * @property string|null $fixe
- * @property int|null $nbre_piece
  * @property string|null $statut
- * @property string|null $motivation
  * @property string|null $items1
  * @property string|null $items2
- * @property string|null $motif
  * @property Carbon|null $date1
- * @property Carbon|null $date2
  * @property string|null $file1
- * @property string|null $file2
- * @property string|null $file3
- * @property string|null $file4
- * @property string|null $file5
- * @property string|null $file6
- * @property string|null $file7
- * @property string|null $file8
- * @property string|null $file9
- * @property string|null $file10
  * @property int $users_id
- * @property int|null $lieux_id
  * @property int|null $items_id
- * @property int|null $projets_id
- * @property int|null $programmes_id
- * @property int|null $diplomes_id
  * @property int|null $types_demandes_id
  * @property int|null $courriers_id
  * @property string|null $deleted_at
@@ -61,11 +32,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Courrier|null $courrier
- * @property Diplome|null $diplome
  * @property Item|null $item
- * @property Lieux|null $lieux
- * @property Programme|null $programme
- * @property Projet|null $projet
  * @property TypesDemande|null $types_demande
  * @property User $user
  * @property Collection|Collective[] $collectives
@@ -87,61 +54,26 @@ class Demandeur extends Model
 	protected $table = 'demandeurs';
 
 	protected $casts = [
-		'nbre_piece' => 'int',
 		'users_id' => 'int',
-		'lieux_id' => 'int',
 		'items_id' => 'int',
-		'projets_id' => 'int',
-		'programmes_id' => 'int',
-		'diplomes_id' => 'int',
 		'types_demandes_id' => 'int',
 		'courriers_id' => 'int'
 	];
 
 	protected $dates = [
-		'date1',
-		'date2'
+		'date1'
 	];
 
 	protected $fillable = [
 		'uuid',
 		'numero',
-		'numero_courrier',
-		'etablissement',
-		'niveau_etude',
-		'qualification',
-		'experience',
-		'deja_forme',
-		'adresse',
-		'pre_requis',
-		'option',
-		'autres_diplomes',
-		'telephone',
-		'fixe',
-		'nbre_piece',
 		'statut',
-		'motivation',
 		'items1',
 		'items2',
-		'motif',
 		'date1',
-		'date2',
 		'file1',
-		'file2',
-		'file3',
-		'file4',
-		'file5',
-		'file6',
-		'file7',
-		'file8',
-		'file9',
-		'file10',
 		'users_id',
-		'lieux_id',
 		'items_id',
-		'projets_id',
-		'programmes_id',
-		'diplomes_id',
 		'types_demandes_id',
 		'courriers_id'
 	];
@@ -151,29 +83,9 @@ class Demandeur extends Model
 		return $this->belongsTo(Courrier::class, 'courriers_id');
 	}
 
-	public function diplome()
-	{
-		return $this->belongsTo(Diplome::class, 'diplomes_id');
-	}
-
 	public function item()
 	{
 		return $this->belongsTo(Item::class, 'items_id');
-	}
-
-	public function lieux()
-	{
-		return $this->belongsTo(Lieux::class);
-	}
-
-	public function programme()
-	{
-		return $this->belongsTo(Programme::class, 'programmes_id');
-	}
-
-	public function projet()
-	{
-		return $this->belongsTo(Projet::class, 'projets_id');
 	}
 
 	public function types_demande()

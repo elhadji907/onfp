@@ -29,7 +29,6 @@
                               <th width="50px">N°</th>
                               <th width="300px">Raison sociale</th>
                               <th width="30px">Dépot</th>
-                              <th width="50px">Type</th>
                               <th width="120px">Responsable</th>
                               <th width="30px">Module</th>
                               <th>Localité</th>
@@ -42,7 +41,6 @@
                               <th>N°</th>
                               <th>Raison sociale</th>
                               <th>Dépot</th>
-                              <th>Type</th>
                               <th>Responsable</th>
                               <th>Module</th>
                               <th>Localité</th>
@@ -58,30 +56,24 @@
                     <td>{!! $collective->demandeur->numero !!}</td>
                     <td>{!! $collective->name !!}</td>
                     <td>{!! $collective->date_depot->format('d/m/Y') ?? '' !!}</td>
-                    <td>{!! $collective->statut!!}</td>
                     <td>{!! $collective->demandeur->user->firstname !!} {{" "}} {!! $collective->demandeur->user->name !!}</td>
                     <td>
                       @foreach ($collective->modules as $module)
                       {!! $module->name !!}
                       @endforeach
                     </td>
-                    <td>{!! $collective->demandeur->commune->nom ?? '' !!}</td>
+                    <td>{!! $collective->commune->nom ?? '' !!}</td>
                     <td style="text-align: center;">
-                      @if ($collective->demandeur->status == "Retenue")
-                      <i class="fa fa-check text-success" title="Retenue" aria-hidden="true"></i>
-                      @elseif($collective->demandeur->status == "Annulée")
-                      <i class="fa fa-times text-danger" title="Annulée" aria-hidden="true"></i>
-                      @else                      
-                      {!! $collective->demandeur->status !!}                          
-                      @endif
+                      {!! $collective->statut!!}
                     </td>
                     <td style="text-align: center;" class="d-flex align-items-baseline align-content-center">
                         <a href="{!! url('collectives/' .$collective->id. '/edit') !!}" class= 'btn btn-success btn-sm' title="modifier">
                           <i class="far fa-edit">&nbsp;</i>
                         </a>
                         &nbsp;
-                        <a href="{!! url('demandeurs/' .$collective->demandeur->id) !!}" class= 'btn btn-primary btn-sm' title="voir">
-                          <i class="far fa-eye">&nbsp;</i>
+                        <a href="{{ url('coldetails', ['$id' => $collective->id]) }}" class='btn btn-primary btn-sm'
+                            title="voir">
+                            <i class="far fa-eye">&nbsp;</i>
                         </a>
                         &nbsp;
                         {!! Form::open(['method'=>'DELETE', 'url'=>'collectives/' .$collective->id, 'id'=>'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}

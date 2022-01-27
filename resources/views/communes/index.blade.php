@@ -29,12 +29,12 @@
                             id="table-communes">
                             <thead class="table-dark">
                                 <tr>
-                                    <th>N°</th>
+                                    <th style="width:5%;">N°</th>
                                     <th>{!! __('Commune') !!}</th>
                                     <th>{!! __('Arrondissement') !!}</th>
                                     <th>{!! __('Département') !!}</th>
-                                    <th width="20px">{!! __('Région') !!}</th>
-                                    <th width="20px">Action</th>
+                                    <th style="width:10%;">{!! __('Région') !!}</th>
+                                    <th style="width:10%;"></th>
                                 </tr>
                             </thead>
                             <tfoot class="table-dark">
@@ -44,7 +44,7 @@
                                     <th>{!! __('Arrondissement') !!}</th>
                                     <th>{!! __('Département') !!}</th>
                                     <th>{!! __('Région') !!}</th>
-                                    <th>Action</th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -56,7 +56,7 @@
                                         <td>{!! $commune->arrondissement->nom !!}</td>
                                         <td>{!! $commune->arrondissement->departement->nom !!}</td>
                                         <td>{!! $commune->arrondissement->departement->region->nom !!}</td>
-                                        <td class="d-flex align-items-center justify-content-center">
+                                        <td class="align-middle d-flex align-items-baseline">
 
                                             <a href="{!! url('communes/' . $commune->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                 title="modifier">

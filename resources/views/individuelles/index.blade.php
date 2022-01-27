@@ -30,7 +30,7 @@
                                 id="table-individuelles">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>N°</th>
+                                        <th style="width:5%;">N°</th>
                                         <th>Cin</th>
                                         <th>Civilité</th>
                                         <th>Prenom</th>
@@ -40,7 +40,7 @@
                                         <th>Téléphone</th>
                                         <th>Commune</th>
                                         <th>Région</th>
-                                        <th width="70px"></th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -78,7 +78,7 @@
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                <a href="{!! url('demandeurs/' . $individuelle->demandeur->id) !!}" class='btn btn-primary btn-sm'
+                                                <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}" class='btn btn-primary btn-sm'
                                                     title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>

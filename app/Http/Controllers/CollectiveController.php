@@ -76,9 +76,8 @@ class CollectiveController extends Controller
         $user = auth::user();
         
         $civilites = User::pluck('civilite', 'civilite');
-        $familiale = User::pluck('situation_familiale', 'situation_familiale');
 
-        if ($user->hasRole('Demandeur')) {
+        /* if ($user->hasRole('Demandeur')) { */
             foreach ($user->demandeur->collectives as $key => $collective) {
             }
                 $demandeurs = $user->demandeur;
@@ -87,11 +86,12 @@ class CollectiveController extends Controller
                 
                 $CollectiveModules = $collective->modules->pluck('name', 'name')->all();
 
-                return view('collectives.update', compact('civilites', 'familiale', 'collective', 'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'CollectiveModules', 'regions'));
+                /* return view('collectives.update', compact('civilites', 'familiale', 'collective', 
+                'professionnelle', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'CollectiveModules', 'regions')); */
           
-        } else {
+      /*   } else { */
             return view('collectives.create', compact('civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'regions'));
-        }
+       /*  } */
     }
 
     /**
@@ -130,7 +130,7 @@ class CollectiveController extends Controller
                         'email'               =>  'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
                         'professionnelle'     =>  'required',
                         'commune'             =>  'required',
-                        'modules'             =>  'exists:modules,id',
+                        'modules'             =>  'required',
                     ]
                 );
             } 
@@ -154,7 +154,7 @@ class CollectiveController extends Controller
                     'email'               =>  "required|string|email|max:255|unique:users,email,{$user_connect->id},id,deleted_at,NULL",
                     'professionnelle'     =>  'required',
                     'commune'             =>  'required',
-                    'modules'             =>  'exists:modules,id',
+                    'modules'             =>  'required',
                 ]
             );
         }
@@ -250,12 +250,6 @@ class CollectiveController extends Controller
 
         $demandeur = new Demandeur([
             'numero'                        =>     $numero,
-            'telephone'                     =>     $autre_tel,
-            'fixe'                          =>     $autre_tel,
-            'programmes_id'                 =>     $programme_id,
-            'adresse'                       =>     $request->input('structure_adresse'),
-            'experience'                    =>     $request->input('experience'),
-            'communes_id'                   =>     $commune_id,
             'types_demandes_id'             =>     $types_demandes_id,
             'users_id'                      =>     $user->id
         ]);
@@ -263,11 +257,26 @@ class CollectiveController extends Controller
         $demandeur->save();
 
         $collectives = new Collective([
-            'name'              =>     $request->input('name'),
-            'description'       =>     $request->input('description'),
-            'date_depot'        =>     $request->input('date_depot'),
-            'statut'            =>     $statut,
-            'demandeurs_id'     =>     $demandeur->id
+            'name'                          =>     $request->input('name'),
+            'sigle'                         =>     $request->input('sigle'),
+            'description'                   =>     $request->input('description'),
+            'date_depot'                    =>     $request->input('date_depot'),
+            'adresse'                       =>     $request->input('structure_adresse'),
+            'experience'                    =>     $request->input('experience'),
+            'projetprofessionnel'           =>     $request->input('projetprofessionnel'),
+            'prerequis'                     =>     $request->input('prerequis'),
+            'motivation'                    =>     $request->input('motivation'),
+            'nbre_pieces'                   =>     $request->input('nombre_de_piece'),
+            'telephone'                     =>     $telephone,
+            'fixe'                          =>     $fixe,
+            'bp'                            =>     $request->input('bpcol'),
+            'fax'                           =>     $request->input('faxcol'),
+            'communes_id'                   =>     $commune_id,
+            'statut'                        =>     $statut,
+            'telephone'                     =>     $autre_tel,
+            'fixe'                          =>     $autre_tel,
+            'programmes_id'                 =>     $programme_id,
+            'demandeurs_id'                 =>     $demandeur->id
         ]);
 
         $collectives->save();
@@ -314,6 +323,33 @@ class CollectiveController extends Controller
         ));
     }
 
+    public function details($id)
+    {
+        $collective = Collective::find($id);
+        
+        $civilites = User::pluck('civilite', 'civilite');
+
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
+    
+        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+
+        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+
+        return view('collectives.details', compact(
+            'collective',
+            'communes',
+            'niveaux',
+            'modules',
+            'programmes',
+            'diplomes',
+            'civilites'
+        ));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -328,8 +364,8 @@ class CollectiveController extends Controller
         $utilisateurs = $demandeurs->user;
 
         $civilites = User::pluck('civilite', 'civilite');
-        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
-        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
+        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $CollectiveModules = $collective->modules->pluck('name', 'name')->all();
@@ -372,10 +408,9 @@ class CollectiveController extends Controller
                'structure_fixe'      =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:12|max:17',
                'adresse'             =>  'required|string|max:100',
                'description'         =>  'required|string|min:10|max:1500',
-               'email'               =>  'required|email|max:255|unique:users,email,'.$collective->demandeur->user->id,
                'professionnelle'     =>  'required',
                'commune'             =>  'required',
-               'modules'             =>  'exists:modules,id',
+               'modules'             =>  'required',
 
                ]
             );
@@ -396,10 +431,8 @@ class CollectiveController extends Controller
                'adresse'             =>  'required|string|max:100',
                'structure_adresse'   =>  'required|string|max:200',
                'description'         =>  'required|string|min:10|max:1500',
-               'email'               =>  'required|email|max:255',
                'professionnelle'     =>  'required',
                'commune'             =>  'required',
-               'region'              =>  'required',
                'modules'             =>  'required',
 
                ]
@@ -442,16 +475,15 @@ class CollectiveController extends Controller
         $statut = "Attente";
 
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $region_id = Region::where('nom', $request->input('region'))->first()->id;
+        /* $region_id = Region::where('nom', $request->input('region'))->first()->id; */
         $types_demandes_id = TypesDemande::where('name', 'Collective')->first()->id;
-        $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
+        /* $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id; */
         $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
 
         $utilisateur->sexe                      =      $request->input('sexe');
         $utilisateur->civilite                  =      $civilite;
         $utilisateur->firstname                 =      $request->input('prenom');
         $utilisateur->name                      =      $request->input('nom');
-        $utilisateur->email                     =      $request->input('email');
         $utilisateur->username                  =      $request->input('username');
         $utilisateur->telephone                 =      $telephone;
         $utilisateur->fixe                      =      $fixe;
@@ -466,30 +498,35 @@ class CollectiveController extends Controller
         $utilisateur->save();
 
         $demandeur->numero                      =      $request->input('numero');
-        $demandeur->fixe                        =      $structure_fixe;
-        $demandeur->telephone                   =      $autre_tel;
-        $demandeur->adresse                     =      $request->input('structure_adresse');
-        $demandeur->autres_diplomes             =      $request->input('autres_diplomes');
-        $demandeur->experience                  =      $request->input('experience');
-        $demandeur->qualification               =      $request->input('qualification');
-        $demandeur->communes_id                 =      $commune_id;
-        $demandeur->regions_id                  =      $region_id;
-        if ($request->input('programme') !== null) {
-            $demandeur->programmes_id           =      $programme_id;
-        }
         $demandeur->types_demandes_id           =      $types_demandes_id;
         $demandeur->users_id                    =      $utilisateur->id;
 
         $demandeur->save();
 
         if (!$user_connect->hasRole('Demandeur')) {
-        $collective->statut                   =      $request->input('statut');
+        $collective->statut                     =       $request->input('statut');
         }
-        $collective->statut                   =      $statut;
-        $collective->name                     =     $request->input('name');
-        $demandeur->date_depot                =      $request->input('date_depot');
-        $collective->description              =     $request->input('description');
-        $collective->demandeurs_id            =     $demandeur->id;
+        $collective->statut                     =       $statut;
+        $collective->name                       =       $request->input('name');
+        $collective->date_depot                 =       $request->input('date_depot');
+        $collective->description                =       $request->input('description');
+        $collective->projetprofessionnel        =       $request->input('projetprofessionnel');
+        $collective->prerequis                  =       $request->input('prerequis');
+        $collective->motivation                 =       $request->input('motivation');
+        $collective->nbre_pieces                =       $request->input('nbre_pieces');
+        $collective->fixe                       =       $structure_fixe;
+        $collective->telephone                  =       $autre_tel;
+        $utilisateur->bp                        =       $request->input('bpcol');
+        $utilisateur->fax                       =       $request->input('faxcol');
+        $collective->adresse                    =       $request->input('structure_adresse');
+        $collective->autres_diplomes            =       $request->input('autres_diplomes');
+        $collective->experience                 =       $request->input('experience');
+        $collective->qualification              =       $request->input('qualification');
+        if ($request->input('programme') !== null) {
+            $collective->programmes_id          =       $programme_id;
+        }
+        $collective->communes_id                =       $commune_id;
+        $collective->demandeurs_id              =       $demandeur->id;
 
         $collective->save();
         $collective->modules()->sync($request->input('modules'));

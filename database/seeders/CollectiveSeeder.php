@@ -15,7 +15,7 @@ class CollectiveSeeder extends Seeder
     public function run()
     {
         Collective::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

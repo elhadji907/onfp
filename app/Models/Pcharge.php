@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $annee
  * @property string|null $matricule
  * @property string|null $typedemande
- * @property string|null $items1
+ * @property string|null $niveau
  * @property Carbon|null $date1
  * @property Carbon|null $date_depot
  * @property float|null $inscription
@@ -33,6 +33,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $niveausortie
  * @property string|null $specialisation
  * @property string|null $statut
+ * @property string|null $motivation
+ * @property string|null $adresse
+ * @property int|null $nbre_pieces
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
@@ -48,16 +51,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $communes_id
  * @property int|null $scolarites_id
  * @property int|null $etudes_id
+ * @property int|null $typepcharges_id
+ * @property int|null $diplomes_id
+ * @property string|null $optiondiplome
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Demandeur|null $demandeur
  * @property Commune|null $commune
+ * @property Diplome|null $diplome
  * @property Etablissement|null $etablissement
  * @property Etude|null $etude
  * @property Filiere|null $filiere
  * @property Scolarite|null $scolarite
+ * @property Typepcharge|null $typepcharge
  * @property Collection|Nouvelle[] $nouvelles
  * @property Collection|Renouvellement[] $renouvellements
  *
@@ -77,12 +85,15 @@ class Pcharge extends Model
 		'accompt' => 'float',
 		'reliquat' => 'float',
 		'duree' => 'int',
+		'nbre_pieces' => 'int',
 		'demandeurs_id' => 'int',
 		'etablissements_id' => 'int',
 		'filieres_id' => 'int',
 		'communes_id' => 'int',
 		'scolarites_id' => 'int',
-		'etudes_id' => 'int'
+		'etudes_id' => 'int',
+		'typepcharges_id' => 'int',
+		'diplomes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -96,7 +107,7 @@ class Pcharge extends Model
 		'annee',
 		'matricule',
 		'typedemande',
-		'items1',
+		'niveau',
 		'date1',
 		'date_depot',
 		'inscription',
@@ -108,6 +119,9 @@ class Pcharge extends Model
 		'niveausortie',
 		'specialisation',
 		'statut',
+		'motivation',
+		'adresse',
+		'nbre_pieces',
 		'file1',
 		'file2',
 		'file3',
@@ -122,7 +136,10 @@ class Pcharge extends Model
 		'filieres_id',
 		'communes_id',
 		'scolarites_id',
-		'etudes_id'
+		'etudes_id',
+		'typepcharges_id',
+		'diplomes_id',
+		'optiondiplome'
 	];
 
 	public function demandeur()
@@ -133,6 +150,11 @@ class Pcharge extends Model
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
+	}
+
+	public function diplome()
+	{
+		return $this->belongsTo(Diplome::class, 'diplomes_id');
 	}
 
 	public function etablissement()
@@ -153,6 +175,11 @@ class Pcharge extends Model
 	public function scolarite()
 	{
 		return $this->belongsTo(Scolarite::class, 'scolarites_id');
+	}
+
+	public function typepcharge()
+	{
+		return $this->belongsTo(Typepcharge::class, 'typepcharges_id');
 	}
 
 	public function nouvelles()

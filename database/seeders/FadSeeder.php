@@ -15,7 +15,7 @@ class FadSeeder extends Seeder
     public function run()
     {
         Fad::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

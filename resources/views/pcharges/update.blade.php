@@ -4,32 +4,24 @@
     <div class="content">
         <div class="container col-12 col-sm-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-lg-12 col-xl-12">
             <div class="container-fluid">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger mt-2">
-                        <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <a class="btn btn-outline-primary" href="{{ route('pcharges.index') }}"> <i
-                            class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
-                    <a class="btn btn-outline-primary" href="{{ route('filieres.create') }}" target="_blank"> <i
-                            class="fas fa-plus"></i>&nbsp;Ajouter filière</i></a>
-                    {{-- <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
+                @can('user-create')
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <a class="btn btn-outline-primary" href="{{ route('pcharges.index') }}"> <i
+                                class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                        <a class="btn btn-outline-primary" href="{{ route('filieres.create') }}" target="_blank"> <i
+                                class="fas fa-plus"></i>&nbsp;Ajouter filière</i></a>
+                        {{-- <a class="btn btn-outline-primary" href="{{ route('specialites.create') }}" target="_blank"> <i
                             class="fas fa-plus"></i>&nbsp;Ajouter spécialité</i></a> --}}
 
-                </div>
+                    </div>
+                @endcan
                 <div class="card border-success">
                     <div class="card-body">
                         <form method="POST" action="{{ route('pcharges.update', [$pcharge->id]) }}">
                             @csrf
                             <input type="hidden" name="_method" value="PATCH" />
 
-                            {!! Form::hidden('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
+                            {!! Form::hidden('nbre_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '20']) !!}
 
                             {!! Form::hidden('date_depot', $date_depot->format('Y-m-d'), ['placeholder' => 'La date de dépot', 'class' => 'form-control']) !!}
 
@@ -59,10 +51,12 @@
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Filière') !!}
                                     {!! Form::select('filiere', $filieres, $pcharge->filiere->name ?? old('filiere'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'filiere']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">{{ __('Merci de ') }}
-                                        <a href="{{ route('filieres.create') }}" target="_blank">cliquer ici</a>
-                                        {{ __('pour ajouter une nouvelle filière') }}
-                                    </small>
+                                    @can('user-create')
+                                        <small id="emailHelp" class="form-text text-muted">{{ __('Merci de ') }}
+                                            <a href="{{ route('filieres.create') }}" target="_blank">cliquer ici</a>
+                                            {{ __('pour ajouter une nouvelle filière') }}
+                                        </small>
+                                    @endcan
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('filiere'))
                                             @foreach ($errors->get('filiere') as $message)
@@ -73,7 +67,10 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Type demande') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 'Renouvellement' => 'Renouvellement'], $pcharge->typedemande ?? old('typedemande'), ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
+                                    {!! Form::select('typedemande', ['Nouvelle demande' => 'Nouvelle demande', 
+                                    'Renouvellement' => 'Renouvellement',
+                                    'Report' => 'Report'
+                                    ], $pcharge->typedemande ?? old('typedemande'), ['placeholder' => 'Type de demande', 'class' => 'form-control', 'id' => 'typedemande']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('typedemande'))
                                             @foreach ($errors->get('typedemande') as $message)
@@ -83,9 +80,12 @@
                                     </small>
                                 </div>
                                 @can('user-edit')
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                         {!! Form::label('Statut :') !!}(<span class="text-danger">*</span>)
-                                        {!! Form::select('statut', ['Attente' => 'Attente', 'Validé' => 'Validé', 'Rejeté' => 'Rejeté'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
+                                        {!! Form::select('statut', ['Attente' => 'Attente', 
+                                        'Accordée' => 'Accordée', 
+                                        'Non accordée' => 'Non accordée',
+                                        'Terminée' => 'Terminée'], $pcharge->statut ?? old('statut'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'statut']) !!}
                                         <small id="emailHelp" class="form-text text-muted">
                                             @if ($errors->has('statut'))
                                                 @foreach ($errors->get('statut') as $message)
@@ -118,17 +118,17 @@
                                     </small>
                                 </div>
                                 @can('user-edit')
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Montant accordé') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('avis_dg', $pcharge->avis_dg ?? old('avis_dg'), ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('avis_dg'))
-                                            @foreach ($errors->get('avis_dg') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                        {!! Form::label('Montant accordé') !!}(<span class="text-danger">*</span>)
+                                        {!! Form::text('avis_dg', $pcharge->avis_dg ?? old('avis_dg'), ['placeholder' => 'Montant accordé', 'class' => 'form-control', 'id' => 'avis_dg']) !!}
+                                        <small id="emailHelp" class="form-text text-muted">
+                                            @if ($errors->has('avis_dg'))
+                                                @foreach ($errors->get('avis_dg') as $message)
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @endforeach
+                                            @endif
+                                        </small>
+                                    </div>
                                 @endcan
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('CIN') !!}(<span class="text-danger">*</span>)
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
                                     {!! Form::label('Adresse résidence') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::textarea('adresse', $pcharge->demandeur->user->adresse ?? old('adresse'), ['placeholder' => 'Votre adresse de résidence', 'class' => 'form-control', 'id' => 'adresse', 'rows' => '1']) !!}
+                                    {!! Form::textarea('adresse', $pcharge->adresse ?? old('adresse'), ['placeholder' => 'Votre adresse de résidence', 'class' => 'form-control', 'id' => 'adresse', 'rows' => '1']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('adresse'))
                                             @foreach ($errors->get('adresse') as $message)
@@ -307,17 +307,6 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                                    {!! Form::label('Montant') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::text('montant', $pcharge->montant ?? old('montant'), ['placeholder' => 'Montant annuelle de la formation', 'class' => 'form-control', 'id' => 'montant']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('montant'))
-                                            @foreach ($errors->get('montant') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                     {!! Form::label('Durée') !!}(<span class="text-danger">*</span>)
                                     {!! Form::number('duree', $pcharge->duree ?? old('duree'), ['placeholder' => 'Durée de la formation', 'class' => 'form-control', 'id' => 'duree', 'min' => '1', 'max' => '3']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -356,7 +345,7 @@
                                             class="text-danger">*</span>)</label>
                                     <textarea class="form-control  @error('motivation') is-invalid @enderror"
                                         name="motivation" id="motivation" rows="3"
-                                        placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ $pcharge->demandeur->motivation ?? old('motivation') }}</textarea>
+                                        placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ $pcharge->motivation ?? old('motivation') }}</textarea>
                                     @error('motivation')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -374,7 +363,7 @@
                                 </div>
                                 <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                     {!! Form::label('Dernier diplôme :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('diplome', $diplomes, $pcharge->demandeur->diplome->name ?? old('diplome'), ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
+                                    {!! Form::select('diplome', $diplomes, $pcharge->diplome->name ?? old('diplome'), ['placeholder' => 'Dernier dipôme', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('diplome'))
                                             @foreach ($errors->get('diplome') as $message)
@@ -392,6 +381,52 @@
                                             class="far fa-paper-plane"></i>&nbsp;Modifier</button>
                                 </div>
                                 {!! Form::close() !!}
+                                <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Verifier les
+                                                    donn&eacute;es
+                                                    saisies svp</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @if ($errors->any())
+
+                                                    @if (count($errors) > 0)
+                                                        <div class="alert alert-danger mt-2">
+                                                            <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                            entrées.
+                                                            <ul>
+                                                                @foreach ($errors->all() as $error)
+                                                                    <li>{{ $error }}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    @endif
+                                                    @push('scripts')
+                                                        <script type="text/javascript">
+                                                            $(document).ready(function() {
+                                                                $("#error-modal").modal({
+                                                                    'show': true,
+                                                                })
+                                                            });
+                                                        </script>
+
+                                                    @endpush
+                                                @endif
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                     </div>
                 </div>

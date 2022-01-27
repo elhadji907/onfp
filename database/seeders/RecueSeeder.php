@@ -15,7 +15,7 @@ class RecueSeeder extends Seeder
     public function run()
     {
         Recue::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

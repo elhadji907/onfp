@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <b>{!! Form::label('Commune') !!}</b>: {{$etablissement->commune->nom}}
+                                <b>{!! Form::label('region') !!}</b>: {{$etablissement->region->nom}}
                             </div>
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <b>{!! Form::label('Etablissement') !!}</b> : {{$etablissement->name}}

@@ -23,7 +23,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Collection|Antenne[] $antennes
  * @property Collection|Departement[] $departements
+ * @property Collection|Etablissement[] $etablissements
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Programme[] $programmes
  *
@@ -42,9 +44,21 @@ class Region extends Model
 		'sigle'
 	];
 
+	public function antennes()
+	{
+		return $this->belongsToMany(Antenne::class, 'antennesregions', 'regions_id', 'antennes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
 	public function departements()
 	{
 		return $this->hasMany(Departement::class, 'regions_id');
+	}
+
+	public function etablissements()
+	{
+		return $this->hasMany(Etablissement::class, 'regions_id');
 	}
 
 	public function operateurs()

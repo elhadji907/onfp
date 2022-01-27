@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Fiche Courier collective')
+@section('title', 'ONFP - Fiche demande collective')
 @section('content')
 
     <style>
@@ -97,11 +97,15 @@
 
     </style>
     <?php $i = 1; ?>
-    @foreach ($collectives as $collective)
         <div class="invoice-box justify-content-center">
+            <div class="col-lg-12 margin-tb">
+                <a class="btn btn-outline-success" href="{{ route('collectives.index') }}"> <i
+                        class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+            </div>
             <div class="card">
-                <div class="card card-header text-center bg-gradient-success">
-                    <h1 class="h4 text-white mb-0">{!! $collective->demandeur->types_demande->name !!}</h1>
+                <div class="card card-header text-center bg-gradient-default border-success">
+                    <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">INFORMATIONS DEMANDE COLLECTIVE</span></h1>
                 </div>
                 <div class="card-body">
                     <table method="POST" cellpadding="0" cellspacing="0">
@@ -130,7 +134,7 @@
                                     <tr>
                                         <td>
                                             <h3>{{ __('INFORMATIONS PERSONNELLES') }}</h3>
-                                            <b>CIN:</b> {{ $collective->demandeur->cin }}<br>
+                                            <b>CIN:</b> {{ $collective->cin }}<br>
                                             <b>Prénom:</b> {{ $collective->demandeur->user->firstname }}&nbsp;&nbsp;
                                             <b>Nom :</b>{{ $collective->demandeur->user->name }}<br>
                                             <b>Date et lieu de naissance:</b>
@@ -166,19 +170,20 @@
 
                         <tr class="details">
                             <td>
-                                @foreach ($collective->demandeur->modules as $module)
-                                    <p><small>{!! $i++ !!}</small>)
+                                @foreach ($collective->modules as $module)
                                         {!! $module->name ?? 'aucun module demandé' !!}</small></p>
                                 @endforeach
                             </td>
                             <td>
-                                {{-- @if ($collective->demandeur->file !== '')
-                        <a class="btn btn-outline-secondary mt-0" title="télécharger le fichier joint" target="_blank" href="{{ asset($collective->demandeur->getFile()) }}">
-                            <i class="fas fa-download">&nbsp;cliquez ici pour télécharger</i>
-                        </a>                                            
-                    @else
-                        Aucun fichier joint
-                    @endif --}}
+                                @if (isset($collective->formation)){
+                                    @foreach ($collective->formation as $formation)
+                                    <label class="badge badge-success">{!! $formation->statut ?? '' !!}</label>
+                                @endforeach  
+                                }
+                                    
+                                @else
+                                <label class="badge badge-info">Attente</label>
+                                @endif
                             </td>
                         </tr>
                         <tr class="heading">
@@ -234,5 +239,4 @@
                 </div>
             </div>
         </div>
-    @endforeach
 @endsection

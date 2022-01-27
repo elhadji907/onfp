@@ -15,7 +15,7 @@ class GestionnaireSeeder extends Seeder
     public function run()
     {
         Gestionnaire::factory()
-            ->count(30)
+            ->count(1)
             ->create();
     }
 }

@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Fiche Courier individuelle')
+@section('title', 'ONFP - Fiche demande individuelle')
 @section('content')
 
     <style>
@@ -97,11 +97,15 @@
 
     </style>
     <?php $i = 1; ?>
-    @foreach ($individuelles as $individuelle)
         <div class="invoice-box justify-content-center">
+            <div class="col-lg-12 margin-tb">
+                <a class="btn btn-outline-success" href="{{ route('individuelles.index') }}"> <i
+                        class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+            </div>
             <div class="card">
-                <div class="card card-header text-center bg-gradient-success">
-                    <h1 class="h4 text-white mb-0">{!! $individuelle->demandeur->types_demande->name !!}</h1>
+                <div class="card card-header text-center bg-gradient-default border-success">
+                    <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">INFORMATIONS DEMANDE INDIVIDUELLE</span></h1>
                 </div>
                 <div class="card-body">
                     <table method="POST" cellpadding="0" cellspacing="0">
@@ -153,32 +157,38 @@
                                 </table>
                             </td>
                         </tr>
-
                         <tr class="heading">
                             <td>
                                 {{ __('MODULES') }}
                             </td>
-
                             <td>
                                 {{ __('FORMATIONS') }}
                             </td>
                         </tr>
-
                         <tr class="details">
                             <td>
-                                @foreach ($individuelle->demandeur->modules as $module)
-                                    <p><small>{!! $i++ !!}</small>)
-                                        {!! $module->name ?? 'aucun module demandé' !!}</small></p>
-                                @endforeach
+                                @if (isset($individuelle->modules))
+                                    @foreach ($individuelle->modules as $module)
+                                    {!! $module->name ?? '' !!}</small></p>
+                            @endforeach                          
+                                @else
+                                <label class="badge badge-info">Aucun module demandé</label>
+                                @endif
                             </td>
                             <td>
-                                {{-- @if ($individuelle->demandeur->file !== '')
-                        <a class="btn btn-outline-secondary mt-0" title="télécharger le fichier joint" target="_blank" href="{{ asset($individuelle->demandeur->getFile()) }}">
-                            <i class="fas fa-download">&nbsp;cliquez ici pour télécharger</i>
-                        </a>                                            
-                    @else
-                        Aucun fichier joint
-                    @endif --}}
+                                @if (isset($individuelle->formation)){
+                                    @foreach ($individuelle->formation as $formation)
+                                    @if (isset($individuelle->modules))
+                                    <label class="badge badge-success">{!! $formation->statut ?? '' !!}</label>               
+                                    @else
+                                    <label class="badge badge-info">Aucun module demandé</label>
+                                    @endif
+                                @endforeach  
+                                }                                    
+                                @elseif(isset($individuelle->modules))
+                                <label class="badge badge-info">Attente</label>
+                                @else
+                                @endif
                             </td>
                         </tr>
                         <tr class="heading">
@@ -234,5 +244,4 @@
                 </div>
             </div>
         </div>
-    @endforeach
 @endsection

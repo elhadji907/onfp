@@ -46,21 +46,22 @@ class ScolariteController extends Controller
     public function store(Request $request)
     {
         $this->validate(
-            $request, [
+            $request,
+            [
                 'annee'        =>  'required|string|max:9|unique:scolarites,annee,NULL,id,deleted_at,NULL',
             ]
         );
 
         $statut = "Fermé";
 
-        $scolarite = new Scolarite([      
+        $scolarite = new Scolarite([
             'annee'           =>      $request->input('annee'),
             'statut'          =>      $statut
 
         ]);
        
         $scolarite->save();
-        return redirect()->route('scolarites.index')->with('success','enregistrement effectué avec succès !');
+        return redirect()->route('scolarites.index')->with('success', 'enregistrement effectué avec succès !');
     }
 
     /**
@@ -95,7 +96,8 @@ class ScolariteController extends Controller
     public function update(Request $request, Scolarite $scolarite)
     {
         $this->validate(
-            $request, [
+            $request,
+            [
                 'annee'             =>  'required|string|max:9|unique:scolarites,annee,'.$scolarite->id,
                 'date_debut'        =>  'required|date',
                 'date_fin'          =>  'required|date',
@@ -110,7 +112,7 @@ class ScolariteController extends Controller
 
         $scolarite->save();
 
-        return redirect()->route('scolarites.index')->with('success','enregistrement modifié avec succès !');
+        return redirect()->route('scolarites.index')->with('success', 'enregistrement modifié avec succès !');
     }
 
     /**
@@ -128,25 +130,53 @@ class ScolariteController extends Controller
 
     public function countscolarite($annee)
     {
-        
-        $pcharges = Pcharge::get()->where('scolarite.annee','=',$annee);
-        $effectif = Pcharge::get()->where('scolarite.annee','=',$annee)->count();
+        $pcharges = Pcharge::get()->where('scolarite.annee', '=', $annee);
+        $effectif = Pcharge::get()->where('scolarite.annee', '=', $annee)->count();
 
-        return view('scolarites.countscolarite', compact('annee','pcharges', 'effectif'));
+        $nouvelle = Pcharge::get()
+                        ->where('scolarite.annee', '=', $annee)
+                        ->where('typedemande', '=', 'Nouvelle demande')
+                        ->count();
+
+        $renouvelle = Pcharge::get()
+                        ->where('scolarite.annee', '=', $annee)
+                        ->where('typedemande', '=', 'Renouvellement')
+                        ->count();
+
+        $report = Pcharge::get()
+                        ->where('scolarite.annee', '=', $annee)
+                        ->where('typedemande', '=', 'Report')
+                        ->count();
+
+        return view('scolarites.countscolarite', compact('annee', 'pcharges', 'effectif', 'nouvelle', 'renouvelle', 'report'));
     }
 
     public function countype($type, $annee, $effectif)
     {
+        $pcharges = Pcharge::get()->where('typedemande', '=', $type)->where('scolarite.annee', '=', $annee);
 
-        $pcharges = Pcharge::get()->where('typedemande','=',$type)->where('scolarite.annee','=',$annee);
+        $count = Pcharge::get()->where('typedemande', '=', $type)->where('scolarite.annee', '=', $annee)->count();
 
-        $count = Pcharge::get()->where('typedemande','=',$type)->where('scolarite.annee','=',$annee)->count();
+        $attente = Pcharge::get()->where('typedemande', '=', $type)
+                                ->where('scolarite.annee', '=', $annee)
+                                ->where('statut', '=', 'Attente')
+                                ->count();
+                                
+        $accorde = Pcharge::get()->where('typedemande', '=', $type)
+                                ->where('scolarite.annee', '=', $annee)
+                                ->where('statut', '=', 'Accordée')
+                                ->count();
+                                
+        $nonaccorde = Pcharge::get()->where('typedemande', '=', $type)
+                                ->where('scolarite.annee', '=', $annee)
+                                ->where('statut', '=', 'Non accordée')
+                                ->count();
 
-        return view('scolarites.countype', compact('annee','pcharges', 'effectif', 'type', 'count'));
+        return view('scolarites.countype', compact('annee', 'pcharges', 'effectif', 'type', 'count', 'attente', 'accorde', 'nonaccorde'));
     }
 
-    public function accord($pcharge, $statut, $avis_dg){
-
+    public function accord($pcharge, $statut, $avis_dg)
+    {
         $pcharge = Pcharge::find($pcharge);
         
         $pcharge->statut    =   $statut;
@@ -158,8 +188,8 @@ class ScolariteController extends Controller
         return back()->with(compact('message'));
     }
 
-    public function nonaccord($pcharge, $statut){
-
+    public function nonaccord($pcharge, $statut)
+    {
         $pcharge = Pcharge::find($pcharge);
 
         $pcharge->statut    =   $statut;

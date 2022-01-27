@@ -25,8 +25,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|Demandeur[] $demandeurs
+ * @property Collection|Collective[] $collectives
  * @property Collection|Formation[] $formations
+ * @property Collection|Individuelle[] $individuelles
  * @property Collection|Module[] $modules
  * @property Collection|Region[] $regions
  *
@@ -51,14 +52,19 @@ class Programme extends Model
 		'effectif'
 	];
 
-	public function demandeurs()
+	public function collectives()
 	{
-		return $this->hasMany(Demandeur::class, 'programmes_id');
+		return $this->hasMany(Collective::class, 'programmes_id');
 	}
 
 	public function formations()
 	{
 		return $this->hasMany(Formation::class, 'programmes_id');
+	}
+
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'programmes_id');
 	}
 
 	public function modules()

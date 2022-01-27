@@ -32,7 +32,7 @@ class FiliereController extends Controller
      */
     public function create()
     {
-        //
+        return view('filieres.create');
     }
 
     /**
@@ -43,7 +43,20 @@ class FiliereController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request, [
+               
+                'name' =>  'required|string|max:50|unique:filieres,name',
+            ]
+        );
+        $filiere = new Filiere([      
+            'name'           =>      $request->input('name'),
+
+        ]);
+        
+        $filiere->save();
+
+        return redirect()->route('filieres.index')->with('success','enregistrement effectué avec succès !');
     }
 
     /**
@@ -65,7 +78,7 @@ class FiliereController extends Controller
      */
     public function edit(Filiere $filiere)
     {
-        //
+        return view('filieres.update', compact('filiere'));
     }
 
     /**
@@ -77,7 +90,17 @@ class FiliereController extends Controller
      */
     public function update(Request $request, Filiere $filiere)
     {
-        //
+        $this->validate(
+            $request, 
+            [
+                'name' =>  "required|string|max:50|unique:filieres,name,{$filiere->id},id,deleted_at,NULL"
+            ]);   
+
+        $filiere->name  =   $request->input('name');
+
+        $filiere->save();
+
+        return redirect()->route('filieres.index')->with('success','enregistrement modifié avec succès !');
     }
 
     /**
@@ -88,7 +111,9 @@ class FiliereController extends Controller
      */
     public function destroy(Filiere $filiere)
     {
-        //
+        $filiere->delete();
+        $message = $filiere->name.' a été supprimé(e)';
+        return redirect()->route('filieres.index')->with(compact('message'));
     }
     
     public function list(Request $request)

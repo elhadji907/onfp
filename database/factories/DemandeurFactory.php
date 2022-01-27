@@ -5,16 +5,10 @@ namespace Database\Factories;
 use App\Helpers\SnNameGenerator as SnmG;
 use Illuminate\Support\Str;
 use App\Models\Demandeur;
-use App\Models\Role;
 use App\Models\User;
-use App\Models\Projet;
-use App\Models\Programme;
-use App\Models\Region;
-use App\Models\Commune;
-use App\Models\Lieux;
-use App\Models\Diplome;
 use App\Models\TypesDemande;
 use App\Models\Domaine;
+use App\Models\Courrier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DemandeurFactory extends Factory
@@ -34,53 +28,30 @@ class DemandeurFactory extends Factory
     public function definition()
     {
         /* $role_id=Role::where('name', 'Demandeur')->first()->id; */
-        $projet_id=Projet::all()->random()->id;
-        $programmes_id=Programme::all()->random()->id;
-        $lieux_id=Lieux::all()->random()->id;
-        $diplomes_id=Diplome::all()->random()->id;
-        $types_demandes_id=TypesDemande::all()->random()->id;
-        $domaine=Domaine::all()->random()->name;
+        $types_demandes_id  =   TypesDemande::all()->random()->id;
+        $courriers_id       =   Courrier::all()->random()->id;
+        $domaine            =   Domaine::all()->random()->name;
         
         $nombre = rand(1, 9);
         $annee = date('y');
 
         return [
             'numero' => $this->faker->unique(true)->numberBetween(100, 999)."".$annee,
-            'etablissement' => SnmG::getEtablissement(),
-            'niveau_etude' => SnmG::getNiveaux(),
-            'qualification' => $this->faker->text,
-            'experience' => $this->faker->text,
-            'deja_forme' => SnmG::getDeja(),
-            'adresse' => $this->faker->address,
-            'option' => $domaine,
-            'autres_diplomes' => SnmG::getDiplome(),
-            'telephone' => $this->faker->e164PhoneNumber,
-            'fixe' => $this->faker->phoneNumber,
-            'statut' => "Attente",
-            'motivation' => $this->faker->paragraph(3),
-            'nbre_piece' => $nombre,
-            'date1' => $this->faker->dateTime(),
-            'date2' => $this->faker->dateTime(),            
+            'date1' => $this->faker->dateTime(),         
             'users_id' => function () {
                 return User::factory()->create()->id;
             },
             /* 'users_id' => function () use ($role_id) {
                 return User::factory()->create(["roles_id"=>$role_id])->id;
             }, */
-            'lieux_id' => function () use ($lieux_id) {
-                return $lieux_id;
-            },
-            'projets_id' => function () use ($projet_id) {
-                return $projet_id;
-            },
-            'programmes_id' => function () use ($programmes_id) {
-                return $programmes_id;
-            },
-            'diplomes_id' => function () use ($diplomes_id) {
-                return $diplomes_id;
-            },
+        /* 'items_id' => function () {
+            return factory(App\Item::class)->create()->id;
+        }, */
             'types_demandes_id' => function () use ($types_demandes_id) {
                 return $types_demandes_id;
+            },
+            'courriers_id' =>function () use ($courriers_id) {
+                return $courriers_id;
             },
         ];
     }

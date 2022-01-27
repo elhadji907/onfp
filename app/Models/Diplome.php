@@ -26,8 +26,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Option|null $option
- * @property Collection|Demandeur[] $demandeurs
+ * @property Collection|Individuelle[] $individuelles
+ * @property Collection|Pcharge[] $pcharges
  *
  * @package App\Models
  */
@@ -55,13 +55,13 @@ class Diplome extends Model
 		'options_id'
 	];
 
-	public function option()
+	public function individuelles()
 	{
-		return $this->belongsTo(Option::class, 'options_id');
+		return $this->hasMany(Individuelle::class, 'diplomes_id');
 	}
 
-	public function demandeurs()
+	public function pcharges()
 	{
-		return $this->hasMany(Demandeur::class, 'diplomes_id');
+		return $this->hasMany(Pcharge::class, 'diplomes_id');
 	}
 }

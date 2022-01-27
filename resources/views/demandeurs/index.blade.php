@@ -1,6 +1,85 @@
 @extends('layout.default')
 @section('title', 'ONFP - Liste des demandeurs')
 @section('content')
+<div class="container-fluid">
+    <div class="row">     
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <a class="nav-link" href="{{ route('demandeurs.index') }}" target="_blank">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ ('Demandeurs') }}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $effectif }}</div>
+                  </div>
+                  <div class="col-auto">
+                    <span data-feather="mail"></span>
+                  </div>
+                </div>
+              </div>
+            </a>
+            </div>
+          </div>   
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <a class="nav-link" href="{{ route('individuelles.index') }}" target="_blank">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                     {{ ('individuelles') }}
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{  $individuelles }}</div>
+                  </div>
+                  <div class="col-auto">
+                    <span data-feather="mail"></span>
+                  </div>
+                </div>
+              </div>
+              </a>
+            </div>
+          </div>        
+          <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                 <a class="nav-link" href="{{ route('collectives.index') }}" target="_blank">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ ('collectives') }}</div>
+                        <div class="row no-gutters align-items-center">
+                          <div class="col-auto">
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{  $collectives }}</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <span data-feather="mail"></span>
+                      </div>
+                    </div>
+                </div>
+               </a>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-warning shadow h-100 py-2">
+              <a class="nav-link" href="{{ route('pcharges.index') }}" target="_blank" >
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{{ ('pcharges') }}</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $pcharges }}</div>
+                </div>
+                <div class="col-auto">
+                  <span data-feather="mail"></span>
+                </div>
+              </div>
+            </div>
+            </a>
+          </div>
+        </div>          
+    </div>
+</div>
     <div class="container-fluid">
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
@@ -22,7 +101,8 @@
                         <div class="table-responsive">
                             <div align="right">
                                 <a href="{{ route('demandeurs.create') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                    </div>
                                 </a>
                             </div>
                             <br />
@@ -37,7 +117,6 @@
                                         <th>Lieu naissance</th>
                                         <th style="width:18%;">Email</th>
                                         <th>Téléphone</th>
-                                        <th>Type demande</th>
                                         <th style="width:4%;"></th>
                                     </tr>
                                 </thead>
@@ -50,7 +129,6 @@
                                         <th>Lieu naissance</th>
                                         <th>Email</th>
                                         <th>Téléphone</th>
-                                        <th>Type demande</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -58,16 +136,15 @@
                                     <?php $i = 1; ?>
                                     @foreach ($demandeurs as $demandeur)
                                         <tr>
-                                            <td>{!! $demandeur->user->civilite !!}</td>
-                                            <td>{!! ucwords($demandeur->user->firstname) !!}</td>
-                                            <td>{!! mb_strtoupper($demandeur->user->name, 'UTF-8') !!}</td>
-                                            <td>{!! $demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                            <td>{!! mb_strtoupper($demandeur->user->lieu_naissance, 'UTF-8') !!}</td>
-                                            <td>{!! $demandeur->user->email !!}</td>
-                                            <td>{!! $demandeur->user->telephone !!}</td>
-                                            <td>{!! $demandeur->types_demande->name ?? ' ' !!}</td>
+                                            <td>{!! $demandeur->user->civilite ?? '' !!}</td>
+                                            <td>{!! ucwords($demandeur->user->firstname) ?? '' !!}</td>
+                                            <td>{!! mb_strtoupper($demandeur->user->name, 'UTF-8')  ?? '' !!}</td>
+                                            <td>{!! $demandeur->user->date_naissance->format('d/m/Y')  ?? '' !!}</td>
+                                            <td>{!! mb_strtoupper($demandeur->user->lieu_naissance, 'UTF-8')  ?? '' !!}</td>
+                                            <td>{!! $demandeur->user->email  ?? '' !!}</td>
+                                            <td>{!! $demandeur->user->telephone  ?? '' !!}</td>
                                             <td>
-                                                <a href="{{ route('profiles.show', ['user' => $demandeur->user]) }}" class='btn btn-primary btn-sm'
+                                                <a href="{!! url('demandeurs/' . $demandeur->id) !!}" class='btn btn-primary btn-sm'
                                                     title="voir" target='_blank'>
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
@@ -89,8 +166,7 @@
         $(document).ready(function() {
             $('#table-demandeurs').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -108,8 +184,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {

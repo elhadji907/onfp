@@ -21,7 +21,7 @@
                             <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label for="input-nom"><b>{{ __("Région") }}:</b></label>
-                                <input type="text" name="nom" class="form-control" id="input-nom" placeholder="ex: primaire" value="{{ old('nom') ?? $region->nom }}">
+                                <input type="text" name="nom" class="form-control" id="input-nom" placeholder="région" value="{{ old('nom') ?? $region->nom }}">
                                 <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('nom'))
                                         @foreach ($errors->get('nom') as $message)

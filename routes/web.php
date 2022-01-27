@@ -55,6 +55,8 @@ use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\FilierespecialiteController;
 use App\Http\Controllers\SpecialiteController;
 use App\Http\Controllers\ScolariteController;
+use App\Http\Controllers\AntenneController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,10 +151,21 @@ Route::group([
         Route::get('countype/{type}/{annee}/{effectif}', [ScolariteController::class, 'countype'])->name('countype');
         Route::get('accord/{pcharge}/{statut}/{avis_dg}', [ScolariteController::class, 'accord'])->name('accord');
         Route::get('nonaccord/{pcharge}/{statut}', [ScolariteController::class, 'nonaccord'])->name('nonaccord');
+        Route::get('termine/{pcharge}/{statut}', [PchargeController::class, 'termine'])->name('termine');
         Route::get('countpcharge/{etablissement}', [EtablissementController::class, 'countpcharge'])->name('countpcharge');
         Route::get('etabcountype/{type}/{etablissement}/{effectif}', [EtablissementController::class, 'etabcountype'])->name('etabcountype');
         Route::get('countscolaritenbre/{cin}', [PchargeController::class, 'countscolaritenbre'])->name('countscolaritenbre');
         Route::get('diffage/{age}/{id}', [PchargeController::class, 'diffage'])->name('diffage');
+<<<<<<< HEAD
+=======
+        Route::get('indetails/{id}', [IndividuelleController::class, 'details'])->name('indetails');
+        Route::get('coldetails/{id}', [CollectiveController::class, 'details'])->name('coldetails');
+        Route::get('pdetails/{id}/{pcharge}', [PchargeController::class, 'details'])->name('pdetails');
+        Route::get('attente/{statut}', [PchargeController::class, 'attente'])->name('attente');
+        Route::get('terminer/{statut}', [PchargeController::class, 'terminer'])->name('terminer');
+        Route::get('rejeter/{statut}', [PchargeController::class, 'rejeter'])->name('rejeter');
+        Route::get('accorder/{statut}', [PchargeController::class, 'accorder'])->name('accorder');
+>>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
@@ -168,6 +181,13 @@ Route::group([
         Route::get('/etablissements.selectefilieres', function () {
             return view('etablissements.selectefilieres');
         })->name('etablissements.selectefilieres');
+
+
+
+        Route::get('preview', [PDFController::class,  'preview']);
+        Route::get('download', [PDFController::class, 'download'])->name('download');
+        Route::get('contrat/{pcharges}', [PchargeController::class, 'contrat'])->name('contrat');
+        Route::get('lettre/{pcharges}', [PchargeController::class, 'lettre'])->name('lettre');
         
         Route::resource('/courriers', CourrierController::class);
         Route::resource('/recues', RecueController::class);
@@ -218,6 +238,7 @@ Route::group([
         Route::resource('/filierespecialites', FilierespecialiteController::class);
         Route::resource('/specialites', SpecialiteController::class);
         Route::resource('/scolarites', ScolariteController::class);
+        Route::resource('/antennes', AntenneController::class);
     });
 
 require __DIR__.'/auth.php';

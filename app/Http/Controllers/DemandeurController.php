@@ -11,6 +11,9 @@ use App\Models\Courrier;
 use App\Models\Commune;
 use App\Models\Typesdemande;
 use App\Models\Programme;
+use App\Models\Individuelle;
+use App\Models\Collective;
+use App\Models\Pcharge;
 use Auth;
 use App\Models\Module;
 use App\Models\Localite;
@@ -47,13 +50,33 @@ class DemandeurController extends Controller
       /*   $date = Carbon::today()->toDateString();
         dd($date); */
 
-        $roles  =   Auth::user()->role;
         
         /* $demandeurs = Demandeur::all(); */
         
-        $demandeurs      =   Demandeur::whereNotNull('types_demandes_id')->get();
+        /* $demandeurs      =   Demandeur::whereNotNull('types_demandes_id')
+                                        ->whereNull('deleted_at')
+                                        ->get(); */
 
-        return view('demandeurs.index', compact('roles', 'demandeurs'));
+        $demandeurs      =   Demandeur::whereNull('deleted_at')
+                                        ->get();
+
+        $effectif      =   Demandeur::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        $individuelles      =   Individuelle::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        $collectives      =   Collective::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        $pcharges      =   Pcharge::whereNull('deleted_at')
+                                        ->get()
+                                        ->count();
+
+        return view('demandeurs.index', compact('effectif','individuelles', 'demandeurs', 'collectives', 'pcharges'));
 
         /* dd($demandeurs); */
 
@@ -289,52 +312,7 @@ class DemandeurController extends Controller
      */
     public function show(Demandeur $demandeur)
     {
-        $typesdemande = $demandeur->types_demande->name;
-        $individuelles = $demandeur->individuelles;
-        $collectives = $demandeur->collectives;
-
-        /*  if (Auth::user()->role->name == "Administrateur") { */
-
-        $utilisateurs = $demandeur->user;
-
-        $roles = Role::get();
-        $civilites = User::pluck('civilite', 'civilite');
-        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
-        $types_demandes = Typesdemande::distinct('name')->get()->pluck('name', 'name')->unique();
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
-        $communes = commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
-
-        if ($typesdemande === "Individuelle") {
-            return view('individuelles.show', compact(
-                'individuelles',
-                'communes',
-                'niveaux',
-                'modules',
-                'types_demandes',
-                'programmes',
-                'diplomes',
-                'utilisateurs',
-                'roles',
-                'civilites'
-            ));
-        } elseif ($typesdemande === "Collective") {
-            return view('collectives.show', compact(
-                'collectives',
-                'communes',
-                'niveaux',
-                'modules',
-                'types_demandes',
-                'programmes',
-                'diplomes',
-                'utilisateurs',
-                'roles',
-                'civilites'
-            ));
-        } else {
-            return back();
-        }
+        return view('demandeurs.show', compact('demandeur'));
     }
 
     /**

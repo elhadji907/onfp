@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Filiere
@@ -30,7 +31,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Filiere extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'filieres';
 
 	protected $fillable = [
@@ -41,7 +44,9 @@ class Filiere extends Model
 
 	public function etablissements()
 	{
-		return $this->hasMany(Etablissement::class, 'filieres_id');
+		return $this->belongsToMany(Etablissement::class, 'etablissementsfilieres', 'filieres_id', 'etablissements_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function filierespecialites()
