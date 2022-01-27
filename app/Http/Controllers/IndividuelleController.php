@@ -241,7 +241,6 @@ class IndividuelleController extends Controller
                 'information'       =>     $request->input('information'),
                 'date_depot'        =>     $request->input('date_depot'),
                 'nbre_pieces'       =>     $request->input('nombre_de_piece'),
-                'information'       =>     $request->input('information'),
                 'prerequis'         =>     $request->input('prerequis'),
                 'statut'            =>     'Attente',
                 'etudes_id'         =>     $etude_id,

@@ -574,4 +574,9 @@ class PchargeController extends Controller
 
         return view('pcharges.countscolaritenbre', compact('cin','pcharges', 'effectif'));
     }
+    
+    public function diffage($age, $id)
+    {        
+        //
+    }
 }
