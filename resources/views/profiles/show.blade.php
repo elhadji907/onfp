@@ -105,45 +105,6 @@
                                     id="table-individuelles">
                                     <thead class="table-dark">
                                         <tr>
-<<<<<<< HEAD
-                                            <td>{{ $individuelle->demandeur->numero ?? '' }}</td>
-                                            <td>
-                                                @foreach ($individuelle->modules as $module)
-                                                    {!! $module->name ?? '' !!}
-                                                @endforeach
-                                            </td>
-                                            <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
-                                            <td>
-                                                <span>
-                                                    @if (isset($individuelle->modules) && $individuelle->modules != '[]')
-                                                        @foreach ($individuelle->modules as $module)
-                                                            @if (isset($module->name))
-                                                                <h5><label
-                                                                        class="badge badge-success">{{ $individuelle->statut }}</label>
-                                                                </h5>
-                                                            @else
-                                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                            @endif
-                                                        @endforeach
-                                                    
-                                                    @else                                                       
-                                                        <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                    
-                                                    @endif
-                                                </span>
-                                            </td>
-                                            <td class="d-flex align-items-baseline text-center-row">
-                                                <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                    title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
-                                                </a>
-                                                &nbsp;
-                                                <a href="{!! url('individuelles/' . $individuelle->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
-                                                {{-- &nbsp;
-=======
                                             <th style="width:10%;">N°</th>
                                             <th>Module</th>
                                             <th>Région</th>
@@ -199,7 +160,6 @@
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     {{-- &nbsp;
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'individuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!} --}}
@@ -254,45 +214,6 @@
                                     id="table-collectives">
                                     <thead class="table-dark">
                                         <tr>
-<<<<<<< HEAD
-                                            <td>{{ $collective->demandeur->numero ?? '' }}</td>
-                                            <td>
-                                                @foreach ($collective->modules as $module)
-                                                    {!! $module->name ?? '' !!}
-                                                @endforeach
-                                            </td>
-                                            <td>{!! $collective->commune->arrondissement->departement->region->nom ?? '' !!}</td>
-                                            <td>
-                                                <span>
-                                                    @if (isset($collective->modules) && $collective->modules != '[]')
-                                                        @foreach ($collective->modules as $module)
-                                                            @if (isset($module->name))
-                                                                <h5><label
-                                                                        class="badge badge-success">{{ $collective->statut }}</label>
-                                                                </h5>
-                                                            @else
-                                                                <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                            @endif
-                                                        @endforeach
-                                                    
-                                                    @else                                                       
-                                                        <h5><label class="badge badge-danger">Invalide</label></h5>
-                                                    
-                                                    @endif
-                                                </span>
-                                            </td>
-                                            <td class="d-flex align-items-baseline text-center-row">
-                                                <a href="{!! url('collectives/' . $collective->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                    title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
-                                                </a>
-                                                &nbsp;
-                                                <a href="{!! url('collectives/' . $collective->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
-                                                {{-- &nbsp;
-=======
                                             <th style="width:10%;">N°</th>
                                             <th>Module</th>
                                             <th>Région</th>
@@ -348,7 +269,6 @@
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     {{-- &nbsp;
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'collectives/' . $collective->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!} --}}
@@ -463,21 +383,8 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            {{-- <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                <div class="mt-3 d-flex align-items-baseline align-middle">
-                    <a class="btn btn-outline-secondary btn-block" href="{!! url('operateurs/' . $pcharge_user->id . '/edit') !!}" target="_blank"><span
-                            data-feather="book-open"></span>Devenir opérateur</a>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#operateurs">
-                        <i class="far fa-eye"></i>
-                    </button>
-                </div>
-            </div> --}}
-        </div>
-=======
         </div>            
         @endif
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
     </div>
     <div class="modal fade" id="individuelles" tabindex="-1" role="dialog" aria-labelledby="individuellesTitle"
         aria-hidden="true">

@@ -129,23 +129,15 @@
                                         <th style="width:4%;">Cin</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-<<<<<<< HEAD
-                                        <th style="width:5%;">Âge</th>
-=======
                                        {{--   <th style="width:5%;">Âge</th>  --}}
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                         {{-- <th style="width:9%;">Lieu nais.</th> --}}
                                         {{-- <th style="width:5%;">Email</th> --}}
                                         {{--  <th style="width:5%;">Téléphone</th>  --}}
                                         <th style="width:30%;">Etablissement</th>
                                         <th style="width:5%;">Scolarité</th>
                                         <th style="width:12%;">Type demande</th>
-<<<<<<< HEAD
-                                        <th style="width:12%;"></th>
-=======
                                         <th style="width:9%;">Appréciation</th>
                                         <th style="width:10%;"></th>
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -154,11 +146,7 @@
                                         <th>Cin</th>
                                         <th>Prénom</th>
                                         <th>Nom</th>
-<<<<<<< HEAD
-                                        <th>Âge</th>
-=======
                                        {{--   <th>Âge</th>  --}}
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                         {{-- <th>Lieu nais.</th> --}}
                                         {{-- <th>Email</th> --}}
                                        {{--   <th>Téléphone</th>  --}}
@@ -180,11 +168,7 @@
                                             <td>{!! ucwords(strtolower($pcharge->demandeur->user->firstname)) !!}</td>
                                             <td>{!! mb_strtoupper($pcharge->demandeur->user->name, 'UTF-8') !!}</td>
                                             {{-- <td>{!! $pcharge->demandeur->user->date_naissance->format('d/m/Y') !!}</td> --}}
-<<<<<<< HEAD
-                                            <td>{!! number_format(Carbon\Carbon::now()->floatDiffInYears($pcharge->demandeur->user->date_naissance), 0, ',', ' ') . ' ' !!}</td>
-=======
                                             {{--  <td>{!! number_format(Carbon\Carbon::now()->floatDiffInYears($pcharge->demandeur->user->date_naissance), 0, ',', ' ') . ' ' !!}</td>  --}}
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                                            {{--   <td>
                                                 <a href="{{ url('diffage', ['$age' => $pcharge->demandeur->user->date_naissance, '$id' => $pcharge->id]) }}"
                                                     class="btn btn-outline-success btn-sm">

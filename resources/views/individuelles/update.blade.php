@@ -331,8 +331,6 @@
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('experience :') !!}
                                 {!! Form::textarea('experience', $individuelle->experience, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 2, 'class' => 'form-control']) !!}
-<<<<<<< HEAD
-=======
                             </div>                       
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 <label for="projet_professionnel">{{ __('Projet professionnel') }}(<span
@@ -343,7 +341,6 @@
                                 @error('projet_professionnel')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Informations :') !!}
