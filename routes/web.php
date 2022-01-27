@@ -156,8 +156,6 @@ Route::group([
         Route::get('etabcountype/{type}/{etablissement}/{effectif}', [EtablissementController::class, 'etabcountype'])->name('etabcountype');
         Route::get('countscolaritenbre/{cin}', [PchargeController::class, 'countscolaritenbre'])->name('countscolaritenbre');
         Route::get('diffage/{age}/{id}', [PchargeController::class, 'diffage'])->name('diffage');
-<<<<<<< HEAD
-=======
         Route::get('indetails/{id}', [IndividuelleController::class, 'details'])->name('indetails');
         Route::get('coldetails/{id}', [CollectiveController::class, 'details'])->name('coldetails');
         Route::get('pdetails/{id}/{pcharge}', [PchargeController::class, 'details'])->name('pdetails');
@@ -165,7 +163,6 @@ Route::group([
         Route::get('terminer/{statut}', [PchargeController::class, 'terminer'])->name('terminer');
         Route::get('rejeter/{statut}', [PchargeController::class, 'rejeter'])->name('rejeter');
         Route::get('accorder/{statut}', [PchargeController::class, 'accorder'])->name('accorder');
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
