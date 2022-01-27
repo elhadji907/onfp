@@ -804,9 +804,4 @@ class PchargeController extends Controller
         
         return $lettre->stream('Lettre_'.$name.'_'.$anne.'.pdf');
     }
-    
-    public function diffage($age, $id)
-    {        
-        //
-    }
 }

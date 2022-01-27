@@ -278,33 +278,11 @@ class IndividuelleController extends Controller
                 'conventions_id'            =>     $convention_id,
                 'projets_id'                =>     $projet_id,
                 'diplomes_id'               =>     $diplome_id,
-<<<<<<< HEAD
-                'users_id'                  =>     $user->id
-            ]);
-    
-        $demandeur->save();
-    
-        $individuelle = new Individuelle([
-                'cin'               =>     $cin,
-                'experience'        =>     $request->input('experience'),
-                'information'       =>     $request->input('information'),
-                'date_depot'        =>     $request->input('date_depot'),
-                'nbre_pieces'       =>     $request->input('nombre_de_piece'),
-                'prerequis'         =>     $request->input('prerequis'),
-                'statut'            =>     'Attente',
-                'etudes_id'         =>     $etude_id,
-                'communes_id'       =>     $commune_id,
-                'demandeurs_id'     =>     $demandeur->id
-            ]);
-    
-        $individuelle->save();
-=======
                 'demandeurs_id'             =>     $demandeur->id
                 ]);
         
             $individuelle->save();
             
->>>>>>> a264ceeb8403f08cda5af6a26e555c33e6a49963
         $individuelle->modules()->sync($request->input('modules'));
         return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
 
