@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name'            =>     'required|string|max:255',
             'firstname'       =>     'required|string|max:255',
-            'date_naissance'  =>     'required|date',
+            'date_naissance'  =>     'required|date|max:10',
             'lieu_naissance'  =>     'required|string|max:50',
             'username'        =>     'required|string|min:5|max:10|unique:users,username,NULL,id,deleted_at,NULL',
             'email'           =>     'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
@@ -51,6 +51,8 @@ class RegisteredUserController extends Controller
             'password'        =>     'required|confirmed', Rules\Password::defaults(),
             /* 'password'        =>      ['required', 'string', 'confirmed', new isValidPassword()], */
         ]);
+        
+        /* dd($request->input('date_naissance')); */
         
         $annee = date('y');
         $user_id             =      User::latest('id')->first()->id;
