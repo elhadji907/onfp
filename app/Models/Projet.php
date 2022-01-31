@@ -19,10 +19,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $uuid
  * @property string|null $name
  * @property string|null $sigle
+ * @property string|null $description
  * @property Carbon|null $debut
  * @property Carbon|null $fin
  * @property float|null $budjet
- * @property string|null $locatite
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Courrier[] $courriers
  * @property Collection|Depense[] $depenses
  * @property Collection|Individuelle[] $individuelles
+ * @property Collection|Localite[] $localites
  *
  * @package App\Models
  */
@@ -54,10 +55,10 @@ class Projet extends Model
 		'uuid',
 		'name',
 		'sigle',
+		'description',
 		'debut',
 		'fin',
-		'budjet',
-		'locatite'
+		'budjet'
 	];
 
 	public function collectives()
@@ -78,5 +79,10 @@ class Projet extends Model
 	public function individuelles()
 	{
 		return $this->hasMany(Individuelle::class, 'projets_id');
+	}
+
+	public function localites()
+	{
+		return $this->hasMany(Localite::class, 'projets_id');
 	}
 }

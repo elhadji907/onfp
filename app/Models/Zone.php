@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * Created by Reliese Model.
+ */
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+/**
+ * Class Zone
+ * 
+ * @property int $id
+ * @property string $uuid
+ * @property string|null $nom
+ * @property int $localites_id
+ * @property string|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * 
+ * @property Localite $localite
+ *
+ * @package App\Models
+ */
+class Zone extends Model
+{
+    use HasFactory;
+	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
+	protected $table = 'zones';
+
+	protected $casts = [
+		'localites_id' => 'int'
+	];
+
+	protected $fillable = [
+		'uuid',
+		'nom',
+		'localites_id'
+	];
+
+	public function localite()
+	{
+		return $this->belongsTo(Localite::class, 'localites_id');
+	}
+}
