@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjetsTable extends Migration
+class CreateZonesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'projets';
+    public $tableName = 'zones';
 
     /**
      * Run the migrations.
-     * @table projets
+     * @table zones
      *
      * @return void
      */
@@ -24,14 +24,18 @@ class CreateProjetsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('name', 200)->nullable();
-            $table->string('sigle', 200)->nullable();
-            $table->timestamp('debut')->nullable();
-            $table->dateTime('fin')->nullable();
-            $table->double('budjet')->nullable();
-            $table->longText('locatite')->nullable();
+            $table->string('nom', 200)->nullable();
+            $table->unsignedInteger('localites_id');
+
+            $table->index(["localites_id"], 'fk_zones_localites1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
+
+
+            $table->foreign('localites_id', 'fk_zones_localites1_idx')
+                ->references('id')->on('localites')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 

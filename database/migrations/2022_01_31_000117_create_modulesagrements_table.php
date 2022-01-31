@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesoperateursTable extends Migration
+class CreateModulesagrementsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modulesoperateurs';
+    public $tableName = 'modulesagrements';
 
     /**
      * Run the migrations.
-     * @table modulesoperateurs
+     * @table modulesagrements
      *
      * @return void
      */
@@ -24,31 +24,30 @@ class CreateModulesoperateursTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('modules_id');
-            $table->unsignedInteger('operateurs_id');
-            $table->unsignedInteger('moduleoperateurstatut_id')->nullable();
-            $table->longText('specialites')->nullable();
+            $table->unsignedInteger('agrements_id');
+            $table->unsignedInteger('moduleagrementstatut_id')->nullable();
 
-            $table->index(["operateurs_id"], 'fk_modulesoperateurs_operateurs1_idx');
+            $table->index(["agrements_id"], 'fk_modules_has_agrements_agrements1_idx');
 
-            $table->index(["modules_id"], 'fk_modulesoperateurs_modules1_idx');
+            $table->index(["modules_id"], 'fk_modules_has_agrements_modules1_idx');
 
-            $table->index(["moduleoperateurstatut_id"], 'fk_modulesoperateurs_moduleoperateurstatut1_idx');
+            $table->index(["moduleagrementstatut_id"], 'fk_modulesagrements_moduleagrementstatut1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modulesoperateurs_modules1_idx')
+            $table->foreign('modules_id', 'fk_modules_has_agrements_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('operateurs_id', 'fk_modulesoperateurs_operateurs1_idx')
-                ->references('id')->on('operateurs')
+            $table->foreign('agrements_id', 'fk_modules_has_agrements_agrements1_idx')
+                ->references('id')->on('agrements')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('moduleoperateurstatut_id', 'fk_modulesoperateurs_moduleoperateurstatut1_idx')
-                ->references('id')->on('moduleoperateurstatut')
+            $table->foreign('moduleagrementstatut_id', 'fk_modulesagrements_moduleagrementstatut1_idx')
+                ->references('id')->on('moduleagrementstatut')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

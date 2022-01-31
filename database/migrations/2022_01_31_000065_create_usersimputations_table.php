@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeescourriersTable extends Migration
+class CreateUsersimputationsTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'employeescourriers';
+    public $tableName = 'usersimputations';
 
     /**
      * Run the migrations.
-     * @table employeescourriers
+     * @table usersimputations
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateEmployeescourriersTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('employees_id');
-            $table->unsignedInteger('courriers_id');
+            $table->unsignedInteger('users_id');
+            $table->unsignedInteger('imputations_id');
 
-            $table->index(["courriers_id"], 'fk_employeescourriers_courriers1_idx');
+            $table->index(["imputations_id"], 'fk_users_has_imputations_imputations1_idx');
 
-            $table->index(["employees_id"], 'fk_employeescourriers_employees1_idx');
+            $table->index(["users_id"], 'fk_users_has_imputations_users1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('employees_id', 'fk_employeescourriers_employees1_idx')
-                ->references('id')->on('employees')
+            $table->foreign('users_id', 'fk_users_has_imputations_users1_idx')
+                ->references('id')->on('users')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('courriers_id', 'fk_employeescourriers_courriers1_idx')
-                ->references('id')->on('courriers')
+            $table->foreign('imputations_id', 'fk_users_has_imputations_imputations1_idx')
+                ->references('id')->on('imputations')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

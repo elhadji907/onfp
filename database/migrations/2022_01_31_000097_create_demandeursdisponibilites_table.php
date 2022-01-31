@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEvaluationsevaluateursTable extends Migration
+class CreateDemandeursdisponibilitesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'evaluationsevaluateurs';
+    public $tableName = 'demandeursdisponibilites';
 
     /**
      * Run the migrations.
-     * @table evaluationsevaluateurs
+     * @table demandeursdisponibilites
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateEvaluationsevaluateursTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('evaluations_id');
-            $table->unsignedInteger('evaluateurs_id');
+            $table->unsignedInteger('demandeurs_id');
+            $table->unsignedInteger('disponibilites_id');
 
-            $table->index(["evaluateurs_id"], 'fk_evaluationsevaluateurs_evaluateurs1_idx');
+            $table->index(["disponibilites_id"], 'fk_demandeurs_has_disponibilites_disponibilites1_idx');
 
-            $table->index(["evaluations_id"], 'fk_evaluationsevaluateurs_evaluations1_idx');
+            $table->index(["demandeurs_id"], 'fk_demandeurs_has_disponibilites_demandeurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('evaluations_id', 'fk_evaluationsevaluateurs_evaluations1_idx')
-                ->references('id')->on('evaluations')
+            $table->foreign('demandeurs_id', 'fk_demandeurs_has_disponibilites_demandeurs1_idx')
+                ->references('id')->on('demandeurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('evaluateurs_id', 'fk_evaluationsevaluateurs_evaluateurs1_idx')
-                ->references('id')->on('evaluateurs')
+            $table->foreign('disponibilites_id', 'fk_demandeurs_has_disponibilites_disponibilites1_idx')
+                ->references('id')->on('disponibilites')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollectivesmodulesTable extends Migration
+class CreateIndividuellesmodulesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'collectivesmodules';
+    public $tableName = 'individuellesmodules';
 
     /**
      * Run the migrations.
-     * @table collectivesmodules
+     * @table individuellesmodules
      *
      * @return void
      */
@@ -23,31 +23,31 @@ class CreateCollectivesmodulesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('collectives_id');
+            $table->unsignedInteger('individuelles_id');
             $table->unsignedInteger('modules_id');
-            $table->unsignedInteger('collectivemodulestatut_id')->nullable();
+            $table->unsignedInteger('individuellemodulestatut_id')->nullable();
 
-            $table->index(["modules_id"], 'fk_collectivesmodules_modules1_idx');
+            $table->index(["modules_id"], 'fk_individuelles_has_modules_modules1_idx');
 
-            $table->index(["collectives_id"], 'fk_collectivesmodules_collectives1_idx');
+            $table->index(["individuelles_id"], 'fk_individuelles_has_modules_individuelles1_idx');
 
-            $table->index(["collectivemodulestatut_id"], 'fk_collectivesmodules_collectivemodulestatut1_idx');
+            $table->index(["individuellemodulestatut_id"], 'fk_individuellesmodules_individuellemodulestatut1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('collectives_id', 'fk_collectivesmodules_collectives1_idx')
-                ->references('id')->on('collectives')
+            $table->foreign('individuelles_id', 'fk_individuelles_has_modules_individuelles1_idx')
+                ->references('id')->on('individuelles')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('modules_id', 'fk_collectivesmodules_modules1_idx')
+            $table->foreign('modules_id', 'fk_individuelles_has_modules_modules1_idx')
                 ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('collectivemodulestatut_id', 'fk_collectivesmodules_collectivemodulestatut1_idx')
-                ->references('id')->on('collectivemodulestatut')
+            $table->foreign('individuellemodulestatut_id', 'fk_individuellesmodules_individuellemodulestatut1_idx')
+                ->references('id')->on('individuellemodulestatut')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

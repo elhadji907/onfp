@@ -26,19 +26,19 @@ class CreateOperateursniveauxTable extends Migration
             $table->unsignedInteger('operateurs_id');
             $table->unsignedInteger('niveaux_id');
 
-            $table->index(["niveaux_id"], 'fk_operateursniveaux_niveaux1_idx');
+            $table->index(["niveaux_id"], 'fk_operateurs_has_niveaux_niveaux1_idx');
 
-            $table->index(["operateurs_id"], 'fk_operateursniveaux_operateurs1_idx');
+            $table->index(["operateurs_id"], 'fk_operateurs_has_niveaux_operateurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('operateurs_id', 'fk_operateursniveaux_operateurs1_idx')
+            $table->foreign('operateurs_id', 'fk_operateurs_has_niveaux_operateurs1_idx')
                 ->references('id')->on('operateurs')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('niveaux_id', 'fk_operateursniveaux_niveaux1_idx')
+            $table->foreign('niveaux_id', 'fk_operateurs_has_niveaux_niveaux1_idx')
                 ->references('id')->on('niveauxs')
                 ->onDelete('no action')
                 ->onUpdate('no action');

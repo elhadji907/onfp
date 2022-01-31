@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDemandeursdisponibilitesTable extends Migration
+class CreateEtablissementsfilieresTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'demandeursdisponibilites';
+    public $tableName = 'etablissementsfilieres';
 
     /**
      * Run the migrations.
-     * @table demandeursdisponibilites
+     * @table etablissementsfilieres
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateDemandeursdisponibilitesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('demandeurs_id');
-            $table->unsignedInteger('disponibilites_id');
+            $table->unsignedInteger('etablissements_id');
+            $table->unsignedInteger('filieres_id');
 
-            $table->index(["disponibilites_id"], 'fk_demandeursdisponibilites_disponibilites1_idx');
+            $table->index(["filieres_id"], 'fk_etablissements_has_filieres_filieres1_idx');
 
-            $table->index(["demandeurs_id"], 'fk_demandeursdisponibilites_demandeurs1_idx');
+            $table->index(["etablissements_id"], 'fk_etablissements_has_filieres_etablissements1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('demandeurs_id', 'fk_demandeursdisponibilites_demandeurs1_idx')
-                ->references('id')->on('demandeurs')
+            $table->foreign('etablissements_id', 'fk_etablissements_has_filieres_etablissements1_idx')
+                ->references('id')->on('etablissements')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('disponibilites_id', 'fk_demandeursdisponibilites_disponibilites1_idx')
-                ->references('id')->on('disponibilites')
+            $table->foreign('filieres_id', 'fk_etablissements_has_filieres_filieres1_idx')
+                ->references('id')->on('filieres')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

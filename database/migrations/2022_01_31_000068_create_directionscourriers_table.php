@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModulesniveauxsTable extends Migration
+class CreateDirectionscourriersTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'modulesniveauxs';
+    public $tableName = 'directionscourriers';
 
     /**
      * Run the migrations.
-     * @table modulesniveauxs
+     * @table directionscourriers
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateModulesniveauxsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('modules_id');
-            $table->unsignedInteger('niveauxs_id');
+            $table->unsignedInteger('directions_id');
+            $table->unsignedInteger('courriers_id');
 
-            $table->index(["niveauxs_id"], 'fk_modulesniveauxs_niveauxs1_idx');
+            $table->index(["courriers_id"], 'fk_directions_has_courriers_courriers1_idx');
 
-            $table->index(["modules_id"], 'fk_modulesniveauxs_modules1_idx');
+            $table->index(["directions_id"], 'fk_directions_has_courriers_directions1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('modules_id', 'fk_modulesniveauxs_modules1_idx')
-                ->references('id')->on('modules')
+            $table->foreign('directions_id', 'fk_directions_has_courriers_directions1_idx')
+                ->references('id')->on('directions')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('niveauxs_id', 'fk_modulesniveauxs_niveauxs1_idx')
-                ->references('id')->on('niveauxs')
+            $table->foreign('courriers_id', 'fk_directions_has_courriers_courriers1_idx')
+                ->references('id')->on('courriers')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
