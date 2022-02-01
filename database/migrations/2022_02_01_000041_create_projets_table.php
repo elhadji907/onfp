@@ -30,8 +30,17 @@ class CreateProjetsTable extends Migration
             $table->timestamp('debut')->nullable();
             $table->dateTime('fin')->nullable();
             $table->double('budjet')->nullable();
+            $table->unsignedInteger('ingenieurs_id');
+
+            $table->index(["ingenieurs_id"], 'fk_projets_ingenieurs1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
+
+
+            $table->foreign('ingenieurs_id', 'fk_projets_ingenieurs1_idx')
+                ->references('id')->on('ingenieurs')
+                ->onDelete('no action')
+                ->onUpdate('no action');
         });
     }
 

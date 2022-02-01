@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Module
@@ -41,12 +42,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection|Niveaux[] $niveauxes
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Programme[] $programmes
+ * @property Collection|Projet[] $projets
  *
  * @package App\Models
  */
 class Module extends Model
 {
+    use HasFactory;
 	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'modules';
 
 	protected $casts = [
@@ -84,7 +88,7 @@ class Module extends Model
 	public function collectives()
 	{
 		return $this->belongsToMany(Collective::class, 'collectivesmodules', 'modules_id', 'collectives_id')
-					->withPivot('id', 'deleted_at')
+					->withPivot('id', 'collectivemodulestatut_id', 'deleted_at')
 					->withTimestamps();
 	}
 
@@ -122,14 +126,14 @@ class Module extends Model
 	public function individuelles()
 	{
 		return $this->belongsToMany(Individuelle::class, 'individuellesmodules', 'modules_id', 'individuelles_id')
-					->withPivot('id', 'deleted_at')
+					->withPivot('id', 'individuellemodulestatut_id', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function agrements()
 	{
 		return $this->belongsToMany(Agrement::class, 'modulesagrements', 'modules_id', 'agrements_id')
-					->withPivot('id', 'deleted_at')
+					->withPivot('id', 'moduleagrementstatut_id', 'deleted_at')
 					->withTimestamps();
 	}
 
@@ -143,13 +147,20 @@ class Module extends Model
 	public function operateurs()
 	{
 		return $this->belongsToMany(Operateur::class, 'modulesoperateurs', 'modules_id', 'operateurs_id')
-					->withPivot('id', 'deleted_at')
+					->withPivot('id', 'moduleoperateurstatut_id', 'specialites', 'deleted_at')
 					->withTimestamps();
 	}
 
 	public function programmes()
 	{
 		return $this->belongsToMany(Programme::class, 'programmesmodules', 'modules_id', 'programmes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function projets()
+	{
+		return $this->belongsToMany(Projet::class, 'projetsmodules', 'modules_id', 'projets_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

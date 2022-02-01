@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocalitesTable extends Migration
+class CreateProjetsmodulesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'localites';
+    public $tableName = 'projetsmodules';
 
     /**
      * Run the migrations.
-     * @table localites
+     * @table projetsmodules
      *
      * @return void
      */
@@ -23,17 +23,23 @@ class CreateLocalitesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->char('uuid', 36);
-            $table->string('nom', 200)->nullable();
             $table->unsignedInteger('projets_id');
+            $table->unsignedInteger('modules_id');
 
-            $table->index(["projets_id"], 'fk_localites_projets1_idx');
+            $table->index(["modules_id"], 'fk_projets_has_modules_modules1_idx');
+
+            $table->index(["projets_id"], 'fk_projets_has_modules_projets1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('projets_id', 'fk_localites_projets1_idx')
+            $table->foreign('projets_id', 'fk_projets_has_modules_projets1_idx')
                 ->references('id')->on('projets')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('modules_id', 'fk_projets_has_modules_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

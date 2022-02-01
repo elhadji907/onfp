@@ -73,6 +73,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Programme|null $programme
  * @property Projet|null $projet
  * @property Collection|Module[] $modules
+ * @property Collection|Programme[] $programmes
+ * @property Collection|Projet[] $projets
  *
  * @package App\Models
  */
@@ -197,6 +199,20 @@ class Individuelle extends Model
 	{
 		return $this->belongsToMany(Module::class, 'individuellesmodules', 'individuelles_id', 'modules_id')
 					->withPivot('id', 'individuellemodulestatut_id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function programmes()
+	{
+		return $this->belongsToMany(Programme::class, 'individuellesprogrammes', 'individuelles_id', 'programmes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function projets()
+	{
+		return $this->belongsToMany(Projet::class, 'individuellesprojets', 'individuelles_id', 'projets_id')
+					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
 }

@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Ingenieur
@@ -29,15 +28,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Collection|Collective[] $collectives
  * @property Collection|Formation[] $formations
+ * @property Collection|Programme[] $programmes
+ * @property Collection|Projet[] $projets
  *
  * @package App\Models
  */
 class Ingenieur extends Model
 {
-    use HasFactory;
 	use SoftDeletes;
-	use \App\Helpers\UuidForKey;
 	protected $table = 'ingenieurs';
 
 	protected $dates = [
@@ -56,8 +56,23 @@ class Ingenieur extends Model
 		'items2'
 	];
 
+	public function collectives()
+	{
+		return $this->hasMany(Collective::class, 'ingenieurs_id');
+	}
+
 	public function formations()
 	{
 		return $this->hasMany(Formation::class, 'ingenieurs_id');
+	}
+
+	public function programmes()
+	{
+		return $this->hasMany(Programme::class, 'ingenieurs_id');
+	}
+
+	public function projets()
+	{
+		return $this->hasMany(Projet::class, 'ingenieurs_id');
 	}
 }

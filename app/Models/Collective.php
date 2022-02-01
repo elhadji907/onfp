@@ -35,6 +35,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $prerequis
  * @property string|null $motivation
  * @property int|null $nbre_pieces
+ * @property string|null $file1
+ * @property string|null $file2
+ * @property string|null $file3
+ * @property string|null $file4
+ * @property string|null $file5
  * @property int $demandeurs_id
  * @property int|null $ingenieurs_id
  * @property int|null $formations_id
@@ -43,17 +48,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $antennes_id
  * @property int|null $programmes_id
  * @property int|null $projets_id
- * @property string|null $file1
- * @property string|null $file2
- * @property string|null $file3
- * @property string|null $file4
- * @property string|null $file5
+ * @property int|null $conventions_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Antenne|null $antenne
  * @property Commune|null $commune
+ * @property Convention|null $convention
  * @property Demandeur $demandeur
  * @property Etude|null $etude
  * @property Formation|null $formation
@@ -61,6 +63,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Programme|null $programme
  * @property Projet|null $projet
  * @property Collection|Module[] $modules
+ * @property Collection|Programme[] $programmes
+ * @property Collection|Projet[] $projets
  * @property Collection|Membre[] $membres
  *
  * @package App\Models
@@ -81,7 +85,8 @@ class Collective extends Model
 		'etudes_id' => 'int',
 		'antennes_id' => 'int',
 		'programmes_id' => 'int',
-		'projets_id' => 'int'
+		'projets_id' => 'int',
+		'conventions_id' => 'int'
 	];
 
 	protected $dates = [
@@ -109,6 +114,11 @@ class Collective extends Model
 		'prerequis',
 		'motivation',
 		'nbre_pieces',
+		'file1',
+		'file2',
+		'file3',
+		'file4',
+		'file5',
 		'demandeurs_id',
 		'ingenieurs_id',
 		'formations_id',
@@ -117,11 +127,7 @@ class Collective extends Model
 		'antennes_id',
 		'programmes_id',
 		'projets_id',
-		'file1',
-		'file2',
-		'file3',
-		'file4',
-		'file5'
+		'conventions_id'
 	];
 
 	public function antenne()
@@ -132,6 +138,11 @@ class Collective extends Model
 	public function commune()
 	{
 		return $this->belongsTo(Commune::class, 'communes_id');
+	}
+
+	public function convention()
+	{
+		return $this->belongsTo(Convention::class, 'conventions_id');
 	}
 
 	public function demandeur()
@@ -167,6 +178,20 @@ class Collective extends Model
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'collectivesmodules', 'collectives_id', 'modules_id')
+					->withPivot('id', 'collectivemodulestatut_id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function programmes()
+	{
+		return $this->belongsToMany(Programme::class, 'collectivesprogrammes', 'collectives_id', 'programmes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function projets()
+	{
+		return $this->belongsToMany(Projet::class, 'collectivesprojets', 'collectives_id', 'projets_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

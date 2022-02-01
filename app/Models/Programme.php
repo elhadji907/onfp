@@ -21,13 +21,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $sigle
  * @property string|null $duree
  * @property int|null $effectif
+ * @property int|null $ingenieurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Ingenieur|null $ingenieur
  * @property Collection|Collective[] $collectives
  * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
+ * @property Collection|Localite[] $localites
  * @property Collection|Module[] $modules
  * @property Collection|Region[] $regions
  *
@@ -41,7 +44,8 @@ class Programme extends Model
 	protected $table = 'programmes';
 
 	protected $casts = [
-		'effectif' => 'int'
+		'effectif' => 'int',
+		'ingenieurs_id' => 'int'
 	];
 
 	protected $fillable = [
@@ -49,12 +53,20 @@ class Programme extends Model
 		'name',
 		'sigle',
 		'duree',
-		'effectif'
+		'effectif',
+		'ingenieurs_id'
 	];
+
+	public function ingenieur()
+	{
+		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
+	}
 
 	public function collectives()
 	{
-		return $this->hasMany(Collective::class, 'programmes_id');
+		return $this->belongsToMany(Collective::class, 'collectivesprogrammes', 'programmes_id', 'collectives_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function formations()
@@ -64,7 +76,14 @@ class Programme extends Model
 
 	public function individuelles()
 	{
-		return $this->hasMany(Individuelle::class, 'programmes_id');
+		return $this->belongsToMany(Individuelle::class, 'individuellesprogrammes', 'programmes_id', 'individuelles_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function localites()
+	{
+		return $this->hasMany(Localite::class, 'programmes_id');
 	}
 
 	public function modules()

@@ -23,15 +23,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $debut
  * @property Carbon|null $fin
  * @property float|null $budjet
+ * @property int $ingenieurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Ingenieur $ingenieur
  * @property Collection|Collective[] $collectives
  * @property Collection|Courrier[] $courriers
  * @property Collection|Depense[] $depenses
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Localite[] $localites
+ * @property Collection|Module[] $modules
  *
  * @package App\Models
  */
@@ -43,7 +46,8 @@ class Projet extends Model
 	protected $table = 'projets';
 
 	protected $casts = [
-		'budjet' => 'float'
+		'budjet' => 'float',
+		'ingenieurs_id' => 'int'
 	];
 
 	protected $dates = [
@@ -58,12 +62,20 @@ class Projet extends Model
 		'description',
 		'debut',
 		'fin',
-		'budjet'
+		'budjet',
+		'ingenieurs_id'
 	];
+
+	public function ingenieur()
+	{
+		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
+	}
 
 	public function collectives()
 	{
-		return $this->hasMany(Collective::class, 'projets_id');
+		return $this->belongsToMany(Collective::class, 'collectivesprojets', 'projets_id', 'collectives_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function courriers()
@@ -78,11 +90,20 @@ class Projet extends Model
 
 	public function individuelles()
 	{
-		return $this->hasMany(Individuelle::class, 'projets_id');
+		return $this->belongsToMany(Individuelle::class, 'individuellesprojets', 'projets_id', 'individuelles_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function localites()
 	{
 		return $this->hasMany(Localite::class, 'projets_id');
+	}
+
+	public function modules()
+	{
+		return $this->belongsToMany(Module::class, 'projetsmodules', 'projets_id', 'modules_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 }

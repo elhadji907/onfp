@@ -1,20 +1,15 @@
 <?php
 
-namespace Database\Factories;
+/* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Faker\Generator as Faker;
 
-class LocaliteFactory extends Factory
-{
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
-    {
-        return [
-            //
-        ];
-    }
-}
+$factory->define(App\Localite::class, function (Faker $faker) {
+    return [
+        'uuid' => $faker->uuid,
+        'nom' => $faker->word,
+        'projets_id' => function () {
+            return factory(App\Projet::class)->create()->id;
+        },
+    ];
+});

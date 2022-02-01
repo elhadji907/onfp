@@ -179,6 +179,33 @@
     </li>
 @else
     @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_ageroute"
+            aria-expanded="true" aria-controls="collapsePages_ageroute">
+            <span data-feather="layers"></span>
+            <span>AGEROUTE</span>
+        </a>
+        <div id="collapsePages_ageroute" class="collapse" aria-labelledby="headingPages"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('regions.index') }}">
+                    <span>Localités</span>
+                </a>
+                <a class="collapse-item" href="{{ route('departements.index') }}">
+                    <span>Zones</span>
+                </a>
+                <a class="collapse-item" href="{{ route('arrondissements.index') }}">
+                    <span>Modules</span>
+                </a>
+                <a class="collapse-item" href="{{ route('communes.index') }}">
+                    <span>Bénéficiaires</span>
+                </a>
+            </div>
+        </div>
+    </li>
+@else
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire|Courrier|ACourrier')
     <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_pcharge"
