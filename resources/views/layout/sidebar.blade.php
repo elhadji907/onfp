@@ -156,8 +156,8 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_localite"
             aria-expanded="true" aria-controls="collapsePages_localite">
-            <span data-feather="layers"></span>
-            <span>Localités</span>
+            <span data-feather="map-pin"></span>
+            <span>LOCALITES</span>
         </a>
         <div id="collapsePages_localite" class="collapse" aria-labelledby="headingPages"
             data-parent="#accordionSidebar">
@@ -183,7 +183,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_ageroute"
             aria-expanded="true" aria-controls="collapsePages_ageroute">
-            <span data-feather="layers"></span>
+            <span data-feather="folder-plus"></span>
             <span>AGEROUTE</span>
         </a>
         <div id="collapsePages_ageroute" class="collapse" aria-labelledby="headingPages"

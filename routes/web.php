@@ -57,6 +57,7 @@ use App\Http\Controllers\SpecialiteController;
 use App\Http\Controllers\ScolariteController;
 use App\Http\Controllers\AntenneController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\AgeroutelocaliteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -163,6 +164,7 @@ Route::group([
         Route::get('terminer/{statut}', [PchargeController::class, 'terminer'])->name('terminer');
         Route::get('rejeter/{statut}', [PchargeController::class, 'rejeter'])->name('rejeter');
         Route::get('accorder/{statut}', [PchargeController::class, 'accorder'])->name('accorder');
+        Route::get('/ageroutelocalites/list', [AgeroutelocaliteController::class, 'list'])->name('ageroutelocalites.list');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
@@ -236,6 +238,7 @@ Route::group([
         Route::resource('/specialites', SpecialiteController::class);
         Route::resource('/scolarites', ScolariteController::class);
         Route::resource('/antennes', AntenneController::class);
+        Route::resource('/ageroutelocalites', AgeroutelocaliteController::class);
     });
 
 require __DIR__.'/auth.php';
