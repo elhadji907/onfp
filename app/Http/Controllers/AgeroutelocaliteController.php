@@ -35,11 +35,9 @@ class AgeroutelocaliteController extends Controller
 
         /* dd($ageroutelocalites); */
 
-        $zones = Zone::all();      
-
         /* dd($projet_name); */
 
-        return view('ageroutelocalites.index', compact('ageroutelocalites', 'zones', 'projet_name'));
+        return view('ageroutelocalites.index', compact('ageroutelocalites', 'projet_name'));
     }
 
     /**

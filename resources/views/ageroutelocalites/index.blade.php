@@ -1,4 +1,5 @@
 @extends('layout.default')
+@section('title', 'ONFP - AGEROUTE DEPARTEMENTS')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -31,16 +32,16 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th width="5px">N°</th>
-                                        <th width="100px">Localite</th>
-                                        <th width="300px">Zone</th>
+                                        <th width="100px">Départements</th>
+                                        <th width="300px">Communes</th>
                                         <th width="20px">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
-                                        <th>Localite</th>
-                                        <th>Zone</th>
+                                        <th>Départements</th>
+                                        <th>Communes</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -51,14 +52,15 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $localite->nom }}</td>
                                             <td>
-                                               @foreach ($localite->zones as $zone)
+                                               {{--  @foreach ($localite->zones as $zone)
                                                     @if ($loop->last)
                                                     <span class="badge badge-info"> {!! $loop->count !!} </span>
                                                     @endif
-                                                @endforeach
-                                                <span data-feather="arrow-right"></span>
+                                                @endforeach  --}}
+                                                {{--  <span data-feather="arrow-right"></span>  --}}
                                                 @foreach ($localite->zones as $zone)
                                                     <span class="badge badge-success">{{ $zone->nom }}</span>
+                                                    {{--  {{ $zone->nom }} {{ __(";")}}  --}}
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">

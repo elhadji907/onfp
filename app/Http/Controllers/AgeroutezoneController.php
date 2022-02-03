@@ -16,16 +16,21 @@ class AgeroutezoneController extends Controller
      */
     public function index()
     {
+        
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
-        
-        $ageroutelocalites = Localite::where('projets_id', $projet_id)->get();
 
-        $zones = Zone::all();      
+        /* dd($projet_id); */
 
-        dd($ageroutelocalites);
+        $ageroutelocalite = Projet::all()->load(['zones'])
+        ->where('name','=',$projet_name);
 
-        return view('ageroutelocalites.index', compact('ageroutelocalites', 'zones', 'projet_name'));
+        /* dd($ageroutelocalite); */
+
+        foreach ($ageroutelocalite as $ageroutezones) {
+        }
+
+        return view('ageroutezones.index', compact('ageroutezones', 'projet_name'));
     }
 
     /**

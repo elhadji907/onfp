@@ -1,4 +1,5 @@
 @extends('layout.default')
+@section('title', 'ONFP - AGEROUTE COMMUNES')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -20,59 +21,52 @@
                         <div class="table-responsive">
                             <div align="right">
                                 @can('role-create')
-                                    <a href="{{ route('ageroutelocalites.create') }}">
+                                    <a href="{{ route('ageroutezones.create') }}">
                                         <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
                                         </div>
                                     </a>
                                 @endcan
                             </div>
                             <br />
-                            <table class="table table-bordered" id="table-ageroutelocalites">
+                            <table class="table table-bordered" id="table-ageroutezones">
                                 <thead class="table-dark">
                                     <tr>
                                         <th width="5px">N°</th>
-                                        <th width="100px">Localite</th>
-                                        <th width="300px">Zone</th>
+                                        <th width="200px">Communes</th>
+                                        <th width="200px">Départements</th>
                                         <th width="20px">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
-                                        <th>Localite</th>
-                                        <th>Zone</th>
+                                        <th>Communes</th>
+                                        <th>Départements</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($ageroutelocalites as $key => $ageroutelocalite)
+                                    @foreach ($ageroutezones->zones as $key => $zone)
                                         <tr>
                                             <td>{{ $i++ }}</td>
-                                            <td>{{ $ageroutelocalite->nom }}</td>
+                                            <td>{{ $zone->nom }}</td>
                                             <td>
-                                                @foreach ($ageroutelocalite->zones as $zone)
-                                                    @if ($loop->last)
-                                                    <span class="badge badge-info"> {!! $loop->count !!} </span>
-                                                    @endif
-                                                @endforeach
-                                                <span data-feather="arrow-right"></span>
-                                                @foreach ($ageroutelocalite->zones as $zone)
-                                                    <span class="badge badge-success">{{ $zone->nom }}</span>
-                                                @endforeach
+                                                <span>{{ $zone->localite->nom ?? ""}}</span>
+
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a class="btn btn-info btn-sm"
-                                                    href="{{ route('ageroutelocalites.show', $ageroutelocalite->id) }}"><i
+                                                    href="{{ route('ageroutezones.show', $zone->id) }}"><i
                                                         class="far fa-eye">&nbsp;</i></a>&nbsp;
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"
-                                                        href="{{ route('ageroutelocalites.edit', $ageroutelocalite->id) }}"><i
+                                                        href="{{ route('ageroutezones.edit', $zone->id) }}"><i
                                                             class="far fa-edit">&nbsp;</i></a>
                                                 @endcan
                                                 &nbsp;
                                                 @can('role-delete')
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $ageroutelocalite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutezones.destroy', $zone->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                     {!! Form::close() !!}
                                                 @endcan
@@ -93,7 +87,7 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#table-ageroutelocalites').DataTable({
+            $('#table-ageroutezones').DataTable({
                 dom: 'lBfrtip',
                 buttons: [{
                         extend: 'copyHtml5',

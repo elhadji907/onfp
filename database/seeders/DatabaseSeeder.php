@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             IngenieurSeeder::class,
             ProjetSeeder::class,
             /* LocaliteSeeder::class, */
-            ZoneSeeder::class,
+            /* ZoneSeeder::class, */
             InterneSeeder::class,
             DepartSeeder::class,
             RecueSeeder::class,
