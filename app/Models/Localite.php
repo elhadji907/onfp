@@ -18,12 +18,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string|null $nom
- * @property int $projets_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Projet $projet
+ * @property Collection|Programme[] $programmes
+ * @property Collection|Projet[] $projets
  * @property Collection|Zone[] $zones
  *
  * @package App\Models
@@ -35,19 +35,23 @@ class Localite extends Model
 	use \App\Helpers\UuidForKey;
 	protected $table = 'localites';
 
-	protected $casts = [
-		'projets_id' => 'int'
-	];
-
 	protected $fillable = [
 		'uuid',
-		'nom',
-		'projets_id'
+		'nom'
 	];
 
-	public function projet()
+	public function programmes()
 	{
-		return $this->belongsTo(Projet::class, 'projets_id');
+		return $this->belongsToMany(Programme::class, 'programmeslocalites', 'localites_id', 'programmes_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function projets()
+	{
+		return $this->belongsToMany(Projet::class, 'projetslocalites', 'localites_id', 'projets_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function zones()

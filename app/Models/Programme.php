@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Collective[] $collectives
  * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
+ * @property Collection|Zone[] $zones
  * @property Collection|Localite[] $localites
  * @property Collection|Module[] $modules
  * @property Collection|Region[] $regions
@@ -81,9 +82,18 @@ class Programme extends Model
 					->withTimestamps();
 	}
 
+	public function zones()
+	{
+		return $this->belongsToMany(Zone::class, 'programmes_has_zones', 'programmes_id', 'zones_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
 	public function localites()
 	{
-		return $this->hasMany(Localite::class, 'programmes_id');
+		return $this->belongsToMany(Localite::class, 'programmeslocalites', 'programmes_id', 'localites_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function modules()

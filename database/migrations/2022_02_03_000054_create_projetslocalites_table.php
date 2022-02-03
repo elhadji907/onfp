@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProjetsTable extends Migration
+class CreateProjetslocalitesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'projets';
+    public $tableName = 'projetslocalites';
 
     /**
      * Run the migrations.
-     * @table projets
+     * @table projetslocalites
      *
      * @return void
      */
@@ -23,22 +23,23 @@ class CreateProjetsTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->char('uuid', 36);
-            $table->string('name', 200)->nullable();
-            $table->string('sigle', 200)->nullable();
-            $table->longText('description')->nullable();
-            $table->timestamp('debut')->nullable();
-            $table->dateTime('fin')->nullable();
-            $table->double('budjet')->nullable();
-            $table->unsignedInteger('ingenieurs_id');
+            $table->unsignedInteger('projets_id');
+            $table->unsignedInteger('localites_id');
 
-            $table->index(["ingenieurs_id"], 'fk_projets_ingenieurs1_idx');
+            $table->index(["localites_id"], 'fk_projets_has_localites_localites1_idx');
+
+            $table->index(["projets_id"], 'fk_projets_has_localites_projets1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('ingenieurs_id', 'fk_projets_ingenieurs1_idx')
-                ->references('id')->on('ingenieurs')
+            $table->foreign('projets_id', 'fk_projets_has_localites_projets1_idx')
+                ->references('id')->on('projets')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('localites_id', 'fk_projets_has_localites_localites1_idx')
+                ->references('id')->on('localites')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Localite;
 use App\Models\Zone;
 use App\Models\Projet;
+use App\Models\Projetslocalite;
 use Illuminate\Http\Request;
 
 class AgeroutelocaliteController extends Controller
@@ -19,8 +20,20 @@ class AgeroutelocaliteController extends Controller
         
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
-        
-        $ageroutelocalites = Localite::where('projets_id', $projet_id)->get();
+
+        /* dd($projet_id); */
+
+        $ageroutelocalite = Projet::all()->load(['localites'])
+        ->where('name','=',$projet_name);
+
+        foreach ($ageroutelocalite as $ageroutelocalites) {
+        }
+
+        /* dd($ageroutelocalites); */
+
+        /* $ageroutelocalites = Localite::where('name', $projet_name)->get(); */
+
+        /* dd($ageroutelocalites); */
 
         $zones = Zone::all();      
 

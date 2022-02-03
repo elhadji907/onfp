@@ -18,7 +18,6 @@ class LocaliteSeeder extends Seeder
     {
         DB::table('localites')->insert([
                "nom" => "Ziguinchor",
-               "projets_id" =>"4",
                'created_at' => now(),
                'updated_at' => now(),
                'uuid' => Str::uuid(),
@@ -26,7 +25,6 @@ class LocaliteSeeder extends Seeder
 
         DB::table('localites')->insert([
                "nom" => "Bignona",
-               "projets_id" =>"4",
                'created_at' => now(),
                'updated_at' => now(),
                'uuid' => Str::uuid(),
@@ -34,7 +32,6 @@ class LocaliteSeeder extends Seeder
    
         DB::table('localites')->insert([
                "nom" => "Bounkiling",
-               "projets_id" =>"4",
                'created_at' => now(),
                'updated_at' => now(),
                'uuid' => Str::uuid(),

@@ -23,18 +23,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $debut
  * @property Carbon|null $fin
  * @property float|null $budjet
- * @property int $ingenieurs_id
+ * @property int|null $ingenieurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Ingenieur $ingenieur
+ * @property Ingenieur|null $ingenieur
  * @property Collection|Collective[] $collectives
  * @property Collection|Courrier[] $courriers
  * @property Collection|Depense[] $depenses
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Localite[] $localites
  * @property Collection|Module[] $modules
+ * @property Collection|Zone[] $zones
  *
  * @package App\Models
  */
@@ -97,12 +98,21 @@ class Projet extends Model
 
 	public function localites()
 	{
-		return $this->hasMany(Localite::class, 'projets_id');
+		return $this->belongsToMany(Localite::class, 'projetslocalites', 'projets_id', 'localites_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'projetsmodules', 'projets_id', 'modules_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function zones()
+	{
+		return $this->belongsToMany(Zone::class, 'projetszones', 'projets_id', 'zones_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

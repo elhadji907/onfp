@@ -46,33 +46,33 @@
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($ageroutelocalites as $key => $ageroutelocalite)
+                                    @foreach ($ageroutelocalites->localites as $key => $localite)
                                         <tr>
                                             <td>{{ $i++ }}</td>
-                                            <td>{{ $ageroutelocalite->nom }}</td>
+                                            <td>{{ $localite->nom }}</td>
                                             <td>
-                                                @foreach ($ageroutelocalite->zones as $zone)
+                                               @foreach ($localite->zones as $zone)
                                                     @if ($loop->last)
                                                     <span class="badge badge-info"> {!! $loop->count !!} </span>
                                                     @endif
                                                 @endforeach
                                                 <span data-feather="arrow-right"></span>
-                                                @foreach ($ageroutelocalite->zones as $zone)
+                                                @foreach ($localite->zones as $zone)
                                                     <span class="badge badge-success">{{ $zone->nom }}</span>
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a class="btn btn-info btn-sm"
-                                                    href="{{ route('ageroutelocalites.show', $ageroutelocalite->id) }}"><i
+                                                    href="{{ route('ageroutelocalites.show', $localite->id) }}"><i
                                                         class="far fa-eye">&nbsp;</i></a>&nbsp;
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"
-                                                        href="{{ route('ageroutelocalites.edit', $ageroutelocalite->id) }}"><i
+                                                        href="{{ route('ageroutelocalites.edit', $localite->id) }}"><i
                                                             class="far fa-edit">&nbsp;</i></a>
                                                 @endcan
                                                 &nbsp;
                                                 @can('role-delete')
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $ageroutelocalite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $localite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                     {!! Form::close() !!}
                                                 @endcan
