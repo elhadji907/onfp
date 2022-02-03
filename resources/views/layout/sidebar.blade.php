@@ -154,33 +154,6 @@
     @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
-        <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_localite"
-            aria-expanded="true" aria-controls="collapsePages_localite">
-            <span data-feather="map-pin"></span>
-            <span>LOCALITES</span>
-        </a>
-        <div id="collapsePages_localite" class="collapse" aria-labelledby="headingPages"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('regions.index') }}">
-                    <span>Régions</span>
-                </a>
-                <a class="collapse-item" href="{{ route('departements.index') }}">
-                    <span>Départements</span>
-                </a>
-                <a class="collapse-item" href="{{ route('arrondissements.index') }}">
-                    <span>Arrondissements</span>
-                </a>
-                <a class="collapse-item" href="{{ route('communes.index') }}">
-                    <span>Communes</span>
-                </a>
-            </div>
-        </div>
-    </li>
-@else
-    @endhasrole
-    @hasrole('super-admin|Administrateur|Gestionnaire')
-    <li class="nav-item">
         <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_ageroute"
             aria-expanded="true" aria-controls="collapsePages_ageroute">
             <span data-feather="folder-plus"></span>
@@ -189,10 +162,10 @@
         <div id="collapsePages_ageroute" class="collapse" aria-labelledby="headingPages"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('regions.index') }}">
+                <a class="collapse-item" href="{{ route('ageroutelocalites.index') }}">
                     <span>Localités</span>
                 </a>
-                <a class="collapse-item" href="{{ route('departements.index') }}">
+                <a class="collapse-item" href="{{ route('ageroutezones.index') }}">
                     <span>Zones</span>
                 </a>
                 <a class="collapse-item" href="{{ route('arrondissements.index') }}">
@@ -322,6 +295,34 @@
         </a>
     </li>
     <hr class="sidebar-divider my-0">
+@else
+    @endhasrole
+    
+    @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_localite"
+            aria-expanded="true" aria-controls="collapsePages_localite">
+            <span data-feather="map-pin"></span>
+            <span>LOCALITES</span>
+        </a>
+        <div id="collapsePages_localite" class="collapse" aria-labelledby="headingPages"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('regions.index') }}">
+                    <span>Régions</span>
+                </a>
+                <a class="collapse-item" href="{{ route('departements.index') }}">
+                    <span>Départements</span>
+                </a>
+                <a class="collapse-item" href="{{ route('arrondissements.index') }}">
+                    <span>Arrondissements</span>
+                </a>
+                <a class="collapse-item" href="{{ route('communes.index') }}">
+                    <span>Communes</span>
+                </a>
+            </div>
+        </div>
+    </li>
 @else
     @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire')

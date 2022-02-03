@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Localite;
-use App\Models\Zone;
-use App\Models\Projet;
+use App\Models\Individuelle;
 use Illuminate\Http\Request;
 
-class AgeroutelocaliteController extends Controller
+class AgerouteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,17 +14,7 @@ class AgeroutelocaliteController extends Controller
      */
     public function index()
     {
-        
-        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
-        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
-        
-        $ageroutelocalites = Localite::where('projets_id', $projet_id)->get();
-
-        $zones = Zone::all();      
-
-        /* dd($projet_name); */
-
-        return view('ageroutelocalites.index', compact('ageroutelocalites', 'zones', 'projet_name'));
+        //
     }
 
     /**
@@ -53,10 +41,10 @@ class AgeroutelocaliteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Localite  $localite
+     * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function show(Localite $localite)
+    public function show(Individuelle $individuelle)
     {
         //
     }
@@ -64,10 +52,10 @@ class AgeroutelocaliteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Localite  $localite
+     * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function edit(Localite $localite)
+    public function edit(Individuelle $individuelle)
     {
         //
     }
@@ -76,10 +64,10 @@ class AgeroutelocaliteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Localite  $localite
+     * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Localite $localite)
+    public function update(Request $request, Individuelle $individuelle)
     {
         //
     }
@@ -87,10 +75,10 @@ class AgeroutelocaliteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Localite  $localite
+     * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Localite $localite)
+    public function destroy(Individuelle $individuelle)
     {
         //
     }
