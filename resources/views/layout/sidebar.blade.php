@@ -168,7 +168,7 @@
                 <a class="collapse-item" href="{{ route('ageroutezones.index') }}">
                     <span>Zones</span>
                 </a>
-                <a class="collapse-item" href="{{ route('arrondissements.index') }}">
+                <a class="collapse-item" href="{{ route('ageroutemodules.index') }}">
                     <span>Modules</span>
                 </a>
                 <a class="collapse-item" href="{{ route('communes.index') }}">

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Localite;
 use App\Models\Projet;
 use App\Models\Zone;
+use App\Models\Module;
 
 class ProjetSeeder extends Seeder
 {
@@ -210,6 +211,15 @@ class ProjetSeeder extends Seeder
              Projet::all()->each(function ($projet) use ($zones) {
                  $projet->zones()->attach(
                      $zones->random(rand(1, 18))->pluck('id')->toArray()
+                 );
+             });
+
+
+             $modules = Module::all();
+
+             Projet::all()->each(function ($projet) use ($modules) {
+                 $projet->modules()->attach(
+                     $modules->random(rand(1, 5))->pluck('id')->toArray()
                  );
              });
     }

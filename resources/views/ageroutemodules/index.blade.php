@@ -1,14 +1,13 @@
 @extends('layout.default')
-@section('title', 'ONFP - Liste des modules')
+@section('title', 'ONFP - AGEROUTE MODULES')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-12">
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @elseif (session('message'))
+            <div class="col-md-8">
+                @if (session()->has('success'))
+                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+                @endif
+                @if (session('message'))
                     <div class="alert alert-success">
                         {{ session('message') }}
                     </div>
@@ -16,70 +15,61 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des modules
+                        <span class="badge badge-secondary">{{ $projet_name }}</span>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
-                                <a href="{!! url('modules/create') !!}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</div>
-                                </a>
+                                @can('role-create')
+                                    <a href="{{ route('ageroutemodules.create') }}">
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                        </div>
+                                    </a>
+                                @endcan
                             </div>
                             <br />
-                            <table class="table table-bordered table-striped" id="table-modules" width="100%"
-                                cellspacing="0">
+                            <table class="table table-bordered" id="table-ageroutemodules">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>N°</th>
-                                        <th>{!! __('module') !!}</th>
-                                        <th>{!! __('Domaine') !!}</th>
-                                        <th>{!! __('Secteur') !!}</th>
-                                        <th>{!! __('Effectif') !!}</th>
-                                        <th style="width:10%;">Action</th>
+                                        <th width="5px">N°</th>
+                                        <th width="100px">Modules</th>
+                                        <th>Domaine</th>
+                                        <th>Secteur</th>
+                                        <th width="20px">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
-                                        <th>{!! __('module') !!}</th>
-                                        <th>{!! __('Domaine') !!}</th>
-                                        <th>{!! __('Secteur') !!}</th>
-                                        <th>{!! __('Effectif') !!}</th>
+                                        <th>Modules</th>
+                                        <th>Domaine</th>
+                                        <th>Secteur</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($modules as $module)
+                                    @foreach ($ageroutemodules->modules as $key => $module)
                                         <tr>
-                                            <td>
-                                                {{ $i++ }}
-                                                {{--  <input type="checkbox" name="selected_values[]" value="{{ $module->id }}">  --}}
-                                            </td>
-                                            <td>{!! $module->name !!}</td>
-                                            <td>{!! $module->domaine->name !!}</td>
-                                            <td>{!! $module->domaine->secteur->name !!}</td>
-                                            <td>
-                                                @foreach ($module->demandeurs as $demandeur)
-                                                    @if ($loop->last)
-                                                        {!! $loop->count !!}
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td class="d-flex align-items-baseline align-content-center">
-                                                <a href="{!! url('modules/' . $module->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                    title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
-                                                </a>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $module->name }}</td>
+                                            <td>{{ $module->domaine->name }}</td>
+                                            <td>{{ $module->domaine->secteur->name }}</td>
+                                            <td class="d-flex align-items-baseline align-middle">
+                                                <a class="btn btn-info btn-sm"
+                                                    href="{{ route('ageroutemodules.show', $module->id) }}"><i
+                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;
+                                                @can('role-edit')
+                                                    <a class="btn btn-primary btn-sm"
+                                                        href="{{ route('ageroutemodules.edit', $module->id) }}"><i
+                                                            class="far fa-edit">&nbsp;</i></a>
+                                                @endcan
                                                 &nbsp;
-                                                <a href="{!! url('modules/' . $module->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
-                                                &nbsp;
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'modules/' . $module->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                {!! Form::close() !!}
+                                                @can('role-delete')
+                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutemodules.destroy', $module->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                    {!! Form::close() !!}
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
@@ -91,15 +81,15 @@
             </div>
         </div>
     </div>
+    {{-- <p class="text-center text-primary"><small>Tutorial by Tutsmake.com</small></p> --}}
 @endsection
 
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#table-modules').DataTable({
+            $('#table-ageroutemodules').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -117,8 +107,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
@@ -128,8 +118,8 @@
                     }
                 ],
                 "lengthMenu": [
-                    [10, 25, 50, 100, -1],
-                    [10, 25, 50, 100, "Tout"]
+                    [5, 10, 25, 50, 100, -1],
+                    [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
                     [0, 'asc']

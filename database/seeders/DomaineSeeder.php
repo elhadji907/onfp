@@ -58,7 +58,7 @@ class DomaineSeeder extends Seeder
             "uuid"=>Str::uuid(),
         ]);
          DB::table('domaines')->insert([
-            "name"=>"Bâtiment - Travaux publics",
+            "name"=>"Bâtiment - Travaux publics (BTP)",
             "secteurs_id"=>"2",
             'created_at' => now(),
             'updated_at' => now(),

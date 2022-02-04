@@ -59,8 +59,8 @@
                                                 @endforeach  --}}
                                                 {{--  <span data-feather="arrow-right"></span>  --}}
                                                 @foreach ($localite->zones as $zone)
-                                                    <span class="badge badge-success">{{ $zone->nom }}</span>
-                                                    {{--  {{ $zone->nom }} {{ __(";")}}  --}}
+                                                    {{--  <span class="badge badge-success">{{ $zone->nom }}</span>  --}}
+                                                    {{ $zone->nom }} {{ __(";") }}
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
