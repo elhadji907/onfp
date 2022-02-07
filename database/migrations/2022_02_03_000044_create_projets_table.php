@@ -30,6 +30,7 @@ class CreateProjetsTable extends Migration
             $table->timestamp('debut')->nullable();
             $table->dateTime('fin')->nullable();
             $table->double('budjet')->nullable();
+            $table->longText('budjet_lettre')->nullable();
             $table->unsignedInteger('ingenieurs_id')->nullable();
 
             $table->index(["ingenieurs_id"], 'fk_projets_ingenieurs1_idx');

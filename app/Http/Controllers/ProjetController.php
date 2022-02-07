@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projet;
+use App\Models\Localite;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -21,7 +23,6 @@ class ProjetController extends Controller
      */
     public function index()
     {
-
         $projets = Projet::all();
 
         return view('projets.index', compact('projets'));
@@ -46,7 +47,8 @@ class ProjetController extends Controller
     public function store(Request $request)
     {
         $this->validate(
-            $request, [
+            $request,
+            [
                
                 'name'  =>  'required|string|max:200|unique:projets,name',
                 'sigle' =>  'required|string|max:20|unique:projets,sigle',
@@ -54,7 +56,7 @@ class ProjetController extends Controller
                 'fin'   =>  'date',
             ]
         );
-        $projet = new Projet([      
+        $projet = new Projet([
             'name'              =>      $request->input('name'),
             'sigle'             =>      $request->input('sigle'),
             'debut'             =>      $request->input('debut'),
@@ -64,7 +66,7 @@ class ProjetController extends Controller
         ]);
         
         $projet->save();
-        return redirect()->route('projets.index')->with('success','enregistrement effectué avec succès !');
+        return redirect()->route('projets.index')->with('success', 'enregistrement effectué avec succès !');
     }
 
     /**
@@ -77,7 +79,7 @@ class ProjetController extends Controller
     {
         $projet = Projet::find($id);
 
-        return view('projets.show', compact('projet','id'));
+        return view('projets.show', compact('projet', 'id'));
     }
 
     /**
@@ -86,10 +88,14 @@ class ProjetController extends Controller
      * @param  \App\Models\Projet  $projet
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Projet $projet)
     {
-        $projet = Projet::find($id);
-        return view('projets.update', compact('projet','id'));
+        /* dd($projet); */
+        
+        $localites = Localite::pluck('nom','id');
+        $zones = Zone::pluck('nom','id');
+
+        return view('projets.update', compact('projet', 'localites', 'zones'));
     }
 
     /**
@@ -101,8 +107,10 @@ class ProjetController extends Controller
      */
     public function update(Request $request, Projet $projet)
     {
+
         $this->validate(
-            $request, [
+            $request,
+            [
                 'name'  =>  'required|string|max:200|unique:projets,name,'.$projet->id,
                 'sigle' =>  'required|string|max:20|unique:projets,sigle,'.$projet->id,
                 'debut' =>  'date',
@@ -110,15 +118,23 @@ class ProjetController extends Controller
             ]
         );
 
+        $budjet = $request->input('budjet');
         
-        $projet->name   =   $request->input('name');
-        $projet->sigle  =   $request->input('sigle');
-        $projet->debut  =   $request->input('debut');
-        $projet->fin    =   $request->input('fin');
-        $projet->budjet =   $request->input('budjet');
+        $budjet = str_replace(' ', '',$budjet);
+
+        $projet->name           =   $request->input('name');
+        $projet->sigle          =   $request->input('sigle');
+        $projet->debut          =   $request->input('debut');
+        $projet->fin            =   $request->input('fin');
+        $projet->budjet_lettre  =   $request->input('budjet_lettre');
+        $projet->budjet         =   $budjet;
 
         $projet->save();
-        return redirect()->route('projets.index')->with('success','enregistrement modifié avec succès !');
+        
+        $projet->localites()->sync($request->input('localites'));
+        $projet->zones()->sync($request->input('zones'));
+
+        return redirect()->route('projets.index')->with('success', 'enregistrement modifié avec succès !');
     }
 
     /**

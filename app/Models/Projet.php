@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $debut
  * @property Carbon|null $fin
  * @property float|null $budjet
+ * @property string|null $budjet_lettre
  * @property int|null $ingenieurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
@@ -64,6 +65,7 @@ class Projet extends Model
 		'debut',
 		'fin',
 		'budjet',
+		'budjet_lettre',
 		'ingenieurs_id'
 	];
 

@@ -11,87 +11,115 @@
                 <div class="card">
                     <div class="card-header card-header-primary text-center">
                         <h3 class="card-title">{{ 'Modification' }}</h3>
-                        <p class="card-category">{{ "projet" }}</p>
+                        <p class="card-category">{{ 'projet' }}</p>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ action('ProjetsController@update', $id) }}">
-                            @csrf
-                            <input type="hidden" name="_method" value="PATCH" /> 
-                            <div class="form-row">
-                                <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                                    <label for="input-name"><b>{{ __('Nom du projet') }}:</b></label>
-                                    <input type="text" name="name" class="form-control" id="input-name"
-                                        placeholder="nom complète" value="{{ old('name') ?? $projet->name }}">
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('name'))
-                                            @foreach ($errors->get('name') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <label for="input-name"><b>{{ __('Sigle') }}:</b></label>
-                                    <input type="text" name="sigle" class="form-control" id="input-sigle"
-                                        placeholder="nom complète" value="{{ old('sigle')  ?? $projet->sigle }}">
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('sigle'))
-                                            @foreach ($errors->get('sigle') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                        {!! Form::open(['url' => 'projets/' . $projet->id, 'method' => 'PATCH', 'files' => true]) !!}
+                        @csrf
+                        <input type="hidden" name="_method" value="PATCH" />
+                        <div class="form-row">
+                            <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
+                                <label for="input-name"><b>{{ __('Nom du projet') }}:</b></label>
+                                <input type="text" name="name" class="form-control" id="input-name"
+                                    placeholder="nom complète" value="{{ old('name') ?? $projet->name }}">
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('name'))
+                                        @foreach ($errors->get('name') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Date début :', null, ['class' => 'control-label']) !!}
-                                    {!! Form::date('debut',  Carbon\Carbon::parse($projet->debut)->format('Y-m-d'), ['placeholder' => 'La date de démarrage', 'class' => 'form-control']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('debut'))
-                                            @foreach ($errors->get('debut') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Date fin :', null, ['class' => 'control-label']) !!}
-                                    {!! Form::date('fin', Carbon\Carbon::parse($projet->fin)->format('Y-m-d'), ['placeholder' => 'La date de cloture', 'class' => 'form-control']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('fin'))
-                                            @foreach ($errors->get('fin') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                            <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                <label for="input-name"><b>{{ __('Sigle') }}:</b></label>
+                                <input type="text" name="sigle" class="form-control" id="input-sigle"
+                                    placeholder="nom complète" value="{{ old('sigle') ?? $projet->sigle }}">
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('sigle'))
+                                        @foreach ($errors->get('sigle') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label for="input-name"><b>{{ __('Budjet') }}:</b></label>
-                                    <input type="text" name="budjet" class="form-control" id="input-budjet"
-                                        placeholder="Bdjet" value="{{ old('budjet')  ?? $projet->budjet }}">
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('budjet'))
-                                            @foreach ($errors->get('budjet') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                {!! Form::label('Date début :', null, ['class' => 'control-label']) !!}
+                                {!! Form::date('debut', Carbon\Carbon::parse($projet->debut)->format('Y-m-d'), ['placeholder' => 'La date de démarrage', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('debut'))
+                                        @foreach ($errors->get('debut') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
                             </div>
-                            <button type="submit" class="btn btn-primary"><i
-                                    class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
-                        </form>
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                {!! Form::label('Date fin :', null, ['class' => 'control-label']) !!}
+                                {!! Form::date('fin', Carbon\Carbon::parse($projet->fin)->format('Y-m-d'), ['placeholder' => 'La date de cloture', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('fin'))
+                                        @foreach ($errors->get('fin') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
+                                <label for="input-name"><b>{{ __('Budjet (en lettre)') }}:</b></label>
+                                <input type="text" name="budjet_lettre" class="form-control" id="input-budjet"
+                                    placeholder="Budjet en lettre" value="{{ old('budjet') ?? $projet->budjet_lettre ?? '' }}">
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('budjet'))
+                                        @foreach ($errors->get('budjet') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                <label for="input-name"><b>{{ __('Budjet (F CFA)') }}:</b></label>
+                                <input type="text" name="budjet" class="form-control" id="input-budjet"
+                                    placeholder="Budjet en FCFA" value="{{ old('budjet') ?? $projet->budjet }}">
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('budjet'))
+                                        @foreach ($errors->get('budjet') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                {!! Form::label('LOCALITES') !!}
+                                {!! Form::select('localites[]', $localites, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'localite']) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                {!! Form::label('ZONES') !!}
+                                {!! Form::select('zones[]', $zones, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'zone']) !!}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"><i
+                                class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
                         <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es saisies
+                                        <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es
+                                            saisies
                                             svp</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -111,7 +139,6 @@
                                                             'show': true,
                                                         })
                                                     });
-
                                                 </script>
 
                                             @endpush
@@ -129,4 +156,12 @@
             </div>
         </div>
     </div>
+@endsection
+@section('javascripts')
+    <script type="text/javascript">
+        $('#localite').select2().val({!! json_encode($projet->localites()->allRelatedIds()) !!}).trigger('change');
+    </script>
+    <script type="text/javascript">
+        $('#zone').select2().val({!! json_encode($projet->zones()->allRelatedIds()) !!}).trigger('change');
+    </script>
 @endsection

@@ -221,7 +221,7 @@ class RecueController extends Controller
                 'telephone'     =>  'required|string|max:50',
                 'email'         =>  'required|email|max:255',
                 'date_recep'    =>  'required|date',
-                'date_cores'          =>  'required|date',
+                'date_cores'    =>  'required|date',
                 'file'          =>  'sometimes|required|file|max:30000|mimes:pdf,doc,txt,xlsx,xls,jpeg,jpg,jif,docx,png,svg,csv,rtf,bmp|max:100000',
 
             ]
