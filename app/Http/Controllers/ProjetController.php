@@ -7,6 +7,7 @@ use App\Models\Localite;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use DB;
 
 class ProjetController extends Controller
 {
@@ -88,14 +89,27 @@ class ProjetController extends Controller
      * @param  \App\Models\Projet  $projet
      * @return \Illuminate\Http\Response
      */
-    public function edit(Projet $projet)
+    public function edit($id)
     {
-        /* dd($projet); */
+        $projet = Projet::find($id);
+        $localite = Localite::get();
+        $zone = Zone::get();
         
+        $projetLocalites = DB::table("projetslocalites")->where("projetslocalites.projets_id", $id)
+->pluck('projetslocalites.localites_id', 'projetslocalites.localites_id')
+->all();
+        $projetZones = DB::table("projetszones")->where("projetszones.projets_id", $id)
+->pluck('projetszones.zones_id', 'projetszones.zones_id')
+->all();
+
+        return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone'));
+
+        /* dd($projetLocalites);
+
         $localites = Localite::pluck('nom','id');
         $zones = Zone::pluck('nom','id');
 
-        return view('projets.update', compact('projet', 'localites', 'zones'));
+        return view('projets.update', compact('projet', 'localites', 'zones')); */
     }
 
     /**
@@ -107,7 +121,6 @@ class ProjetController extends Controller
      */
     public function update(Request $request, Projet $projet)
     {
-
         $this->validate(
             $request,
             [
@@ -120,7 +133,7 @@ class ProjetController extends Controller
 
         $budjet = $request->input('budjet');
         
-        $budjet = str_replace(' ', '',$budjet);
+        $budjet = str_replace(' ', '', $budjet);
 
         $projet->name           =   $request->input('name');
         $projet->sigle          =   $request->input('sigle');
@@ -131,8 +144,11 @@ class ProjetController extends Controller
 
         $projet->save();
         
-        $projet->localites()->sync($request->input('localites'));
-        $projet->zones()->sync($request->input('zones'));
+        $projet->localites()->sync($request->input('localite'));
+        $projet->zones()->sync($request->input('zone'));
+
+        
+        /* $projet->syncLocalites($request->input('localite')); */
 
         return redirect()->route('projets.index')->with('success', 'enregistrement modifié avec succès !');
     }

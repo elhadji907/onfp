@@ -94,22 +94,45 @@
                             </div>
                         </div>
 
-                        <div class="form-row">
+                        {{--  <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('LOCALITES') !!}
                                 {!! Form::select('localites[]', $localites, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'localite']) !!}
                             </div>
-                        </div>
+                        </div>  --}}
 
-                        <div class="form-row">
+                       {{--   <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('ZONES') !!}
                                 {!! Form::select('zones[]', $zones, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'zone']) !!}
                             </div>
+                        </div>  --}}
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-right">
+                            <button type="submit" class="btn btn-outline-primary"><i
+                                    class="far fa-paper-plane"></i>&nbsp;Soumettre</button>
                         </div>
 
-                        <button type="submit" class="btn btn-primary"><i
-                                class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <strong>Localités:</strong>
+                                <br />
+                                @foreach ($localite as $value)
+                                    <label>{{ Form::checkbox('localite[]', $value->id, in_array($value->id, $projetLocalites) ? true : false, ['class' => 'name']) }}
+                                        {{ $value->nom }}</label>
+                                    <br />
+                                @endforeach
+                            </div>
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <strong>Zones:</strong>
+                                <br />
+                                @foreach ($zone as $value)
+                                    <label>{{ Form::checkbox('zone[]', $value->id, in_array($value->id, $projetZones) ? true : false, ['class' => 'name']) }}
+                                        {{ $value->nom }}</label>
+                                    <br />
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -157,11 +180,11 @@
         </div>
     </div>
 @endsection
-@section('javascripts')
+{{--  @section('javascripts')
     <script type="text/javascript">
         $('#localite').select2().val({!! json_encode($projet->localites()->allRelatedIds()) !!}).trigger('change');
     </script>
     <script type="text/javascript">
         $('#zone').select2().val({!! json_encode($projet->zones()->allRelatedIds()) !!}).trigger('change');
     </script>
-@endsection
+@endsection  --}}
