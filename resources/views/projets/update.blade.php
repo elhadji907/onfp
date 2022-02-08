@@ -19,7 +19,7 @@
                         <input type="hidden" name="_method" value="PATCH" />
                         <div class="form-row">
                             <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
-                                <label for="input-name"><b>{{ __('Nom du projet') }}:</b></label>
+                                <label for="input-name"><b>{{ __('Projet') }}:</b></label>
                                 <input type="text" name="name" class="form-control" id="input-name"
                                     placeholder="nom complète" value="{{ old('name') ?? $projet->name }}">
                                 <small id="emailHelp" class="form-text text-muted">
@@ -93,6 +93,21 @@
                                 </small>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                {!! Form::label('Ingénieur') !!}
+                                {!! Form::select('ingenieur', $ingenieurs, $projet->ingenieur->name ?? old('ingenieur'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'ingenieur_projet']) !!}
+                                @can('user-create')
+                                @endcan
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('ingenieur'))
+                                        @foreach ($errors->get('ingenieur') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
 
                         {{--  <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
@@ -114,7 +129,7 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                <strong>Localités:</strong>
+                                <strong class="btn btn-success">Localités</strong>
                                 <br />
                                 @foreach ($localite as $value)
                                     <label>{{ Form::checkbox('localite[]', $value->id, in_array($value->id, $projetLocalites) ? true : false, ['class' => 'name']) }}
@@ -123,7 +138,7 @@
                                 @endforeach
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                <strong>Zones:</strong>
+                                <strong class="btn btn-success">Zones</strong>
                                 <br />
                                 @foreach ($zone as $value)
                                     <label>{{ Form::checkbox('zone[]', $value->id, in_array($value->id, $projetZones) ? true : false, ['class' => 'name']) }}

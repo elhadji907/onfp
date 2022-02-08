@@ -31,6 +31,7 @@
                               <th style="width:12%;">{!! __("Budjet (F CFA)") !!}</th>
                               <th>{!! __("Début") !!}</th>
                               <th>{!! __("Fin") !!}</th>
+                              <th>{!! __("Ingénieur") !!}</th>
                               <th style="width:10%;">Action</th>
                             </tr>
                           </thead>
@@ -42,6 +43,7 @@
                                 <th>{!! __("Budjet (F CFA)") !!}</th>
                                 <th>{!! __("Début") !!}</th>
                                 <th>{!! __("Fin") !!}</th>
+                                <th>{!! __("Ingénieur") !!}</th>
                                 <th style="width:10%;">Action</th>
                               </tr>
                             </tfoot>
@@ -49,12 +51,13 @@
                             <?php $i = 1 ?>
                             @foreach ($projets as $projet)
                             <tr>
-                               <td class="align-middle">{!! $i++ !!}</td> 
-                              <td class="align-middle">{!! $projet->name !!}</td>   
-                              <td class="align-middle">{!! $projet->sigle !!}</td>   
-                              <td class="align-middle">{!! number_format($projet->budjet,0, ',', ' ') . ' ' !!}</td>   
-                              <td class="align-middle">{!! Carbon\Carbon::parse($projet->debut)->format('d/m/Y') !!}</td>        
-                              <td class="align-middle">{!! Carbon\Carbon::parse($projet->fin)->format('d/m/Y') !!}</td>        
+                               <td class="align-middle">{!! $i++ !!}</td>
+                              <td class="align-middle">{!! $projet->name !!}</td>
+                              <td class="align-middle">{!! $projet->sigle !!}</td>
+                              <td class="align-middle">{!! number_format($projet->budjet,0, ',', ' ') . ' ' !!}</td>
+                              <td class="align-middle">{!! Carbon\Carbon::parse($projet->debut)->format('d/m/Y') !!}</td>
+                              <td class="align-middle">{!! Carbon\Carbon::parse($projet->fin)->format('d/m/Y') !!}</td>
+                              <td class="align-middle">{!! $projet->ingenieur->name !!}</td>
                               <td class="d-flex align-items-center justify-content-center">
                                {{--   @can('update', $projet)  --}}
                                   <a href="{!! url('projets/' .$projet->id. '/edit') !!}" class= 'btn btn-success btn-sm' title="modifier">

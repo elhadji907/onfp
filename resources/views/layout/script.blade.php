@@ -62,6 +62,13 @@
 </script>  
 <script type="text/javascript">
 
+      $("#ingenieur_projet").select2({
+            placeholder: "choisir ingénieur responsable",
+            allowClear: true
+        });
+</script>  
+<script type="text/javascript">
+
       $("#projet-sigle").select2({
             placeholder: "choisir sigle",
             allowClear: true

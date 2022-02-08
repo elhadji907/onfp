@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projet;
+use App\Models\Ingenieur;
 use App\Models\Localite;
 use App\Models\Zone;
 use Illuminate\Http\Request;
@@ -95,6 +96,8 @@ class ProjetController extends Controller
         $localite = Localite::get();
         $zone = Zone::get();
         
+        $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
+        
         $projetLocalites = DB::table("projetslocalites")->where("projetslocalites.projets_id", $id)
 ->pluck('projetslocalites.localites_id', 'projetslocalites.localites_id')
 ->all();
@@ -102,7 +105,7 @@ class ProjetController extends Controller
 ->pluck('projetszones.zones_id', 'projetszones.zones_id')
 ->all();
 
-        return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone'));
+        return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone', 'ingenieurs'));
 
         /* dd($projetLocalites);
 
@@ -124,16 +127,22 @@ class ProjetController extends Controller
         $this->validate(
             $request,
             [
-                'name'  =>  'required|string|max:200|unique:projets,name,'.$projet->id,
-                'sigle' =>  'required|string|max:20|unique:projets,sigle,'.$projet->id,
-                'debut' =>  'date',
-                'fin'   =>  'date',
+                'name'          =>  'required|string|max:200|unique:projets,name,'.$projet->id,
+                'sigle'         =>  'required|string|max:20|unique:projets,sigle,'.$projet->id,
+                'localite'      => 'required',
+                'budjet_lettre' => 'required',
+                'budjet'        => 'required',
+                'zone'          => 'required',
+                'debut'         =>  'date',
+                'fin'           =>  'date',
             ]
         );
 
         $budjet = $request->input('budjet');
         
         $budjet = str_replace(' ', '', $budjet);
+        
+        $ingenieur_id     = Ingenieur::where('name', $request->input('ingenieur'))->first()->id;
 
         $projet->name           =   $request->input('name');
         $projet->sigle          =   $request->input('sigle');
@@ -141,6 +150,7 @@ class ProjetController extends Controller
         $projet->fin            =   $request->input('fin');
         $projet->budjet_lettre  =   $request->input('budjet_lettre');
         $projet->budjet         =   $budjet;
+        $projet->ingenieurs_id  =   $ingenieur_id;
 
         $projet->save();
         
