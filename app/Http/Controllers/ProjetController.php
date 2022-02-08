@@ -6,6 +6,7 @@ use App\Models\Projet;
 use App\Models\Ingenieur;
 use App\Models\Localite;
 use App\Models\Zone;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use DB;
@@ -95,6 +96,7 @@ class ProjetController extends Controller
         $projet = Projet::find($id);
         $localite = Localite::get();
         $zone = Zone::get();
+        $module = Module::get();
         
         $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
         
@@ -105,7 +107,11 @@ class ProjetController extends Controller
 ->pluck('projetszones.zones_id', 'projetszones.zones_id')
 ->all();
 
-        return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone', 'ingenieurs'));
+        $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $id)
+->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
+->all();
+
+        return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone', 'ingenieurs', 'projetModules', 'module'));
 
         /* dd($projetLocalites);
 
@@ -133,6 +139,8 @@ class ProjetController extends Controller
                 'budjet_lettre' => 'required',
                 'budjet'        => 'required',
                 'zone'          => 'required',
+                'module'        => 'required',
+                'description'   => 'required',
                 'debut'         =>  'date',
                 'fin'           =>  'date',
             ]
@@ -146,6 +154,7 @@ class ProjetController extends Controller
 
         $projet->name           =   $request->input('name');
         $projet->sigle          =   $request->input('sigle');
+        $projet->description    =   $request->input('description');
         $projet->debut          =   $request->input('debut');
         $projet->fin            =   $request->input('fin');
         $projet->budjet_lettre  =   $request->input('budjet_lettre');
@@ -156,8 +165,8 @@ class ProjetController extends Controller
         
         $projet->localites()->sync($request->input('localite'));
         $projet->zones()->sync($request->input('zone'));
+        $projet->modules()->sync($request->input('module'));
 
-        
         /* $projet->syncLocalites($request->input('localite')); */
 
         return redirect()->route('projets.index')->with('success', 'enregistrement modifié avec succès !');

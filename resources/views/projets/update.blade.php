@@ -19,7 +19,8 @@
                         <input type="hidden" name="_method" value="PATCH" />
                         <div class="form-row">
                             <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
-                                <label for="input-name"><b>{{ __('Projet') }}:</b></label>
+                                <label for="input-name"><b>{{ __('Projet') }}:</b>(<span
+                                    class="text-danger">*</span>)</label>
                                 <input type="text" name="name" class="form-control" id="input-name"
                                     placeholder="nom complète" value="{{ old('name') ?? $projet->name }}">
                                 <small id="emailHelp" class="form-text text-muted">
@@ -41,6 +42,18 @@
                                         @endforeach
                                     @endif
                                 </small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <label for="description">{{ __('Description') }}(<span
+                                    class="text-danger">*</span>)</label>
+                            <textarea class="form-control  @error('description') is-invalid @enderror" name="description"
+                                id="description" rows="4"
+                                placeholder="Décrire en quelques lignes le projet...">{{ $projet->description ?? old('description') }}</textarea>
+                            @error('description')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                             </div>
                         </div>
                         <div class="form-row">
@@ -128,7 +141,7 @@
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <strong class="btn btn-success">Localités</strong>
                                 <br />
                                 @foreach ($localite as $value)
@@ -137,12 +150,21 @@
                                     <br />
                                 @endforeach
                             </div>
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <strong class="btn btn-success">Zones</strong>
                                 <br />
                                 @foreach ($zone as $value)
                                     <label>{{ Form::checkbox('zone[]', $value->id, in_array($value->id, $projetZones) ? true : false, ['class' => 'name']) }}
                                         {{ $value->nom }}</label>
+                                    <br />
+                                @endforeach
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <strong class="btn btn-success">Modules</strong>
+                                <br />
+                                @foreach ($module as $value)
+                                    <label>{{ Form::checkbox('module[]', $value->id, in_array($value->id, $projetModules) ? true : false, ['class' => 'name']) }}
+                                        {{ $value->name }}</label>
                                     <br />
                                 @endforeach
                             </div>
