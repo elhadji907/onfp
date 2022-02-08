@@ -1,86 +1,58 @@
 @extends('layout.default')
-@section('title', 'ONFP - '.$projet->sigle)
+@section('title', 'ONFP - ' .$projet->sigle)
 @section('content')
-    <div class="content">
-        <div class="container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="container-fluid">
-                @if (session()->has('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
-                <div class="row pt-5"></div>
-                <div class="card">
-                    <div class="card-header card-header-primary text-center">
-                        <h3 class="card-title">{{ $projet->name }}</h3>
-                        <p class="card-category">{{ $projet->sigle }}</p>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            @csrf
-                            <div class="form-row">
-                                <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                                    <label for="input-name"><b>{{ __('Nom du projet') }}:</b></label>
-                                    <input type="text" name="name" class="form-control" id="input-name"
-                                        placeholder="nom complète" value="{{ old('name') ?? $projet->name }}" disabled>
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('name'))
-                                            @foreach ($errors->get('name') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <label for="input-name"><b>{{ __('Sigle') }}:</b></label>
-                                    <input type="text" name="sigle" class="form-control" id="input-sigle"
-                                        placeholder="nom complète" value="{{ old('sigle') ?? $projet->sigle }}" disabled>
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('sigle'))
-                                            @foreach ($errors->get('sigle') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+    <div class="container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="container-fluid">
+            <div class="row justify-content-center pb-2">
+                <div class="col-lg-12 margin-tb">
+                    <a class="btn btn-outline-success" href="{{ route('projets.index') }}"> <i
+                            class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                </div>
+            </div>
+            <div class="card border-success">
+                <div class="card card-header text-center bg-gradient-default border-success">
+                    <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">INFORMATIONS</span></h1>
+                </div>
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Projet :</strong>
+                                {{ $projet->name }}
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Date début :', null, ['class' => 'control-label']) !!}
-                                    {!! Form::date('debut', Carbon\Carbon::parse($projet->debut)->format('Y-m-d'), ['placeholder' => 'La date de démarrage', 'class' => 'form-control', 'disabled' => 'disabled']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('debut'))
-                                            @foreach ($errors->get('debut') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Date fin :', null, ['class' => 'control-label']) !!}
-                                    {!! Form::date('fin', Carbon\Carbon::parse($projet->fin)->format('Y-m-d'), ['placeholder' => 'La date de cloture', 'class' => 'form-control', 'disabled' => 'disabled']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('fin'))
-                                            @foreach ($errors->get('fin') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Localites :</strong>
+                                @if (!empty($projetLocalites))
+                                    @foreach ($projetLocalites as $v)
+                                        <label class="badge badge-success">{{ $v->nom }}</label>
+                                    @endforeach
+                                @endif
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label for="input-name"><b>{{ __('Budjet') }}:</b></label>
-                                    <input type="text" name="budjet" class="form-control" id="input-budjet"
-                                        placeholder="Bdjet" value="{{ old('budjet') ?? number_format($projet->budjet,0, ',', ' ') . ' ' }}" disabled>
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('budjet'))
-                                            @foreach ($errors->get('budjet') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Zones :</strong>
+                                @if (!empty($projetZones))
+                                    @foreach ($projetZones as $v)
+                                        <label class="badge badge-success">{{ $v->nom }}</label>
+                                    @endforeach
+                                @endif
                             </div>
-                        </form>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Modules :</strong>
+                                @if (!empty($projetModules))
+                                    @foreach ($projetModules as $v)
+                                        <label class="badge badge-success">{{ $v->name }}</label>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

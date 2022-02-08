@@ -246,31 +246,6 @@
                     <a class="collapse-item" href="{{ route('bordereaus.index') }}">
                         <span>FAD</span>
                     </a>
-                @endguest
-            </div>
-        </div>
-    </li>
-    <hr class="sidebar-divider my-0">
-@else
-    @endhasrole
-    @hasrole('super-admin|Administrateur|DAF|DPP|ADPP|PRDPP|PLDPP')
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_projet"
-            aria-expanded="true" aria-controls="collapsePages_projet">
-            <span data-feather="folder"></span>
-            <span>PROJETS</span>
-        </a>
-        <div id="collapsePages_projet" class="collapse" aria-labelledby="headingPages"
-            data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                {{-- <h6 class="collapse-header"></h6> --}}
-                @guest
-                    <a class="collapse-item" href="{{ route('login') }}">{{ __('Se connecter') }}</a>
-                    @if (Route::has('register'))
-                        <a class="collapse-item" href="{{ route('register') }}">{{ __("S'inscrire") }}</a>
-                    @endif
-                @else
-                    {{-- <h6 class="collapse-header">UTILISATEURS</h6> --}}
                     <a class="collapse-item" href="{{ route('activites.index') }}">
                         <span>Activites</span>
                     </a>
@@ -287,6 +262,39 @@
     <hr class="sidebar-divider my-0">
 @else
     @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('projets.index') }}">
+            <span data-feather="folder"></span>
+            <span>PROJETS</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+@else
+    @endhasrole
+   {{--   @hasrole('super-admin|Administrateur|DAF|DPP|ADPP|PRDPP|PLDPP')
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_projet"
+            aria-expanded="true" aria-controls="collapsePages_projet">
+            <span data-feather="folder"></span>
+            <span>PROJETS</span>
+        </a>
+        <div id="collapsePages_projet" class="collapse" aria-labelledby="headingPages"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                @guest
+                    <a class="collapse-item" href="{{ route('login') }}">{{ __('Se connecter') }}</a>
+                    @if (Route::has('register'))
+                        <a class="collapse-item" href="{{ route('register') }}">{{ __("S'inscrire") }}</a>
+                    @endif
+                @else
+                @endguest
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider my-0">
+@else
+    @endhasrole  --}}
     @hasrole('super-admin|Administrateur|Gestionnaire')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('operateurs.index') }}">
