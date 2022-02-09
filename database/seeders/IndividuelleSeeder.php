@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Individuelle;
+use App\Models\Projet;
 
 class IndividuelleSeeder extends Seeder
 {
@@ -15,7 +16,15 @@ class IndividuelleSeeder extends Seeder
     public function run()
     {
         Individuelle::factory()
-            ->count(1)
+            ->count(150)
             ->create();
+
+        $projets = Projet::all();
+
+        Individuelle::all()->each(function ($individuelle) use ($projets) {
+            $individuelle->projets()->attach(
+                $projets->random(rand(1, 4))->pluck('id')->toArray()
+            );
+        });
     }
 }
