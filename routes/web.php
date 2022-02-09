@@ -61,6 +61,7 @@ use App\Http\Controllers\AgerouteController;
 use App\Http\Controllers\AgeroutelocaliteController;
 use App\Http\Controllers\AgeroutezoneController;
 use App\Http\Controllers\AgeroutemoduleController;
+use App\Http\Controllers\AgerouteindividuelleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -171,6 +172,7 @@ Route::group([
         Route::get('/ageroutelocalites/list', [AgeroutelocaliteController::class, 'list'])->name('ageroutelocalites.list');
         Route::get('/ageroutezones/list', [AgeroutezoneController::class, 'list'])->name('ageroutezones.list');
         Route::get('/ageroutemodules/list', [AgeroutemoduleController::class, 'list'])->name('ageroutemodules.list');
+        Route::get('/agerouteindividuelles/list', [AgerouteindividuelleController::class, 'list'])->name('agerouteindividuelles.list');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
@@ -248,6 +250,7 @@ Route::group([
         Route::resource('/ageroutelocalites', AgeroutelocaliteController::class);
         Route::resource('/ageroutezones', AgeroutezoneController::class);
         Route::resource('/ageroutemodules', AgeroutemoduleController::class);
+        Route::resource('/agerouteindividuelles', AgerouteindividuelleController::class);
     });
 
 require __DIR__.'/auth.php';

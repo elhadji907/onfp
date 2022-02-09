@@ -171,7 +171,7 @@
                 <a class="collapse-item" href="{{ route('ageroutemodules.index') }}">
                     <span>Modules</span>
                 </a>
-                <a class="collapse-item" href="{{ route('communes.index') }}">
+                <a class="collapse-item" href="{{ route('agerouteindividuelles.index') }}">
                     <span>Bénéficiaires</span>
                 </a>
             </div>

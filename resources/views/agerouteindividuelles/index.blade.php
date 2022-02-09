@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - AGEROUTE MODULES')
+@section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -18,63 +18,44 @@
                         <span class="badge badge-secondary">{{ $projet_name }}</span>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <div align="right">
-                                @can('role-create')
-                                    <a href="{{ route('ageroutemodules.create') }}">
-                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                        </div>
-                                    </a>
-                                @endcan
-                            </div>
-                            <br />
-                            <table class="table table-bordered" id="table-ageroutemodules">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th width="5%">N°</th>
-                                        <th width="30%">Modules</th>
-                                        <th width="30%">Domaine</th>
-                                        <th width="20%">Secteur</th>
-                                        <th width="10%">Action</th>
-                                    </tr>
-                                </thead>
-                                <tfoot class="table-dark">
-                                    <tr>
-                                        <th>N°</th>
-                                        <th>Modules</th>
-                                        <th>Domaine</th>
-                                        <th>Secteur</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    @foreach ($ageroutemodules->modules as $key => $module)
+                        <div class="table-responsive">            
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="table-ageroutebeneficiaires">
+                                    <thead class="table-dark">
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $module->name }}</td>
-                                            <td>{{ $module->domaine->name }}</td>
-                                            <td>{{ $module->domaine->secteur->name }}</td>
-                                            <td class="d-flex align-items-baseline align-middle">
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{ route('ageroutemodules.show', $module->id) }}"><i
-                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;
-                                                @can('role-edit')
-                                                    <a class="btn btn-primary btn-sm"
-                                                        href="{{ route('ageroutemodules.edit', $module->id) }}"><i
-                                                            class="far fa-edit">&nbsp;</i></a>
-                                                @endcan
-                                                &nbsp;
-                                                @can('role-delete')
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutemodules.destroy', $module->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
-                                                @endcan
-                                            </td>
+                                            <th style="width:10%;">N°</th>
+                                            <th style="width:10%;">Cin</th>
+                                            <th style="width:5%;">Civilité</th>
+                                            <th style="width:10%;">Prenom</th>
+                                            <th style="width:10%;">Nom</th>
+                                            <th style="width:10%;">Date nais.</th>
+                                            <th style="width:10%;">Lieu nais.</th>
+                                            <th style="width:10%;">Téléphone</th>
+                                            <th style="width:10%;">Commune</th>
+                                            <th style="width:10%;">Région</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        @foreach ($projet->individuelles as $key => $individuelle)
+                                            <tr>
+                                                <td>
+                                                    <a class="btn btn-outline-info" href="{{ route('individuelles.show', $individuelle->id) }}">{!! $individuelle->demandeur->numero !!}</a>
+                                                </td>
+                                                <td>{!! $individuelle->cin !!}</td>
+                                                <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                                <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                <td>{!! $individuelle->commune->nom ?? '' !!}</td>
+                                                <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,7 +68,7 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#table-ageroutemodules').DataTable({
+            $('#table-ageroutebeneficiaires').DataTable({
                 dom: 'lBfrtip',
                 buttons: [{
                         extend: 'copyHtml5',

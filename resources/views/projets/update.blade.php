@@ -95,7 +95,7 @@
                             <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Budjet (en lettre)') }}:</b></label>
                                 <input type="text" name="budjet_lettre" class="form-control" id="input-budjet"
-                                    placeholder="Budjet en lettre" value="{{ old('budjet') ?? $projet->budjet_lettre }}">
+                                    placeholder="Budjet en lettre" value="{{ old('budjet_lettre') ?? $projet->budjet_lettre }}">
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('budjet'))
                                         @foreach ($errors->get('budjet') as $message)
