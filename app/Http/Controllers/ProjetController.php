@@ -112,9 +112,11 @@ class ProjetController extends Controller
         $projetLocalites = Localite::join("projetslocalites", "projetslocalites.localites_id", "=", "localites.id")
         ->where("projetslocalites.projets_id", $id)
         ->get();
+        
         $projetZones = Zone::join("projetszones", "projetszones.zones_id", "=", "zones.id")
         ->where("projetszones.projets_id", $id)
         ->get();
+
         $projetModules = Module::join("projetsmodules", "projetsmodules.modules_id", "=", "modules.id")
         ->where("projetsmodules.projets_id", $id)
         ->get();

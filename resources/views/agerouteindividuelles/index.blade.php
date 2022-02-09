@@ -15,33 +15,38 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        <span class="badge badge-secondary">{{ $projet_name }}</span>
+                        LISTE BENEFICIAIRES : {!! $projet_name !!}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">            
                             <div class="table-responsive">
+                                <div align="right">
+                                    <a href="{{ route('agerouteindividuelles.create') }}">
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                    </a>
+                                </div>
+                                <br />
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:10%;">N°</th>
+                                            <th style="width:7%;">N°</th>
                                             <th style="width:10%;">Cin</th>
                                             <th style="width:5%;">Civilité</th>
                                             <th style="width:10%;">Prenom</th>
-                                            <th style="width:10%;">Nom</th>
-                                            <th style="width:10%;">Date nais.</th>
+                                            <th style="width:8%;">Nom</th>
+                                            <th style="width:8%;">Date nais.</th>
                                             <th style="width:10%;">Lieu nais.</th>
                                             <th style="width:10%;">Téléphone</th>
                                             <th style="width:10%;">Commune</th>
                                             <th style="width:10%;">Région</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($projet->individuelles as $key => $individuelle)
                                             <tr>
-                                                <td>
-                                                    <a class="btn btn-outline-info" href="{{ route('individuelles.show', $individuelle->id) }}">{!! $individuelle->demandeur->numero !!}</a>
-                                                </td>
+                                                <td>{!! $individuelle->demandeur->numero !!}</td>
                                                 <td>{!! $individuelle->cin !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->civilite !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->firstname !!} </td>
@@ -51,6 +56,21 @@
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->commune->nom ?? '' !!}</td>
                                                 <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                <td class="d-flex align-items-baseline text-center-row">
+                                                    <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                        title="modifier">
+                                                        <i class="far fa-edit">&nbsp;</i>
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}" class='btn btn-primary btn-sm'
+                                                        title="voir">
+                                                        <i class="far fa-eye">&nbsp;</i>
+                                                    </a>
+                                                    &nbsp;
+                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                    {!! Form::close() !!}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
