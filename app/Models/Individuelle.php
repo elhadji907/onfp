@@ -55,7 +55,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $etudes_id
  * @property int|null $antennes_id
  * @property int|null $programmes_id
- * @property int|null $projets_id
  * @property int|null $diplomes_id
  * @property string|null $optiondiplome
  * @property int|null $conventions_id
@@ -71,7 +70,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Etude|null $etude
  * @property Formation|null $formation
  * @property Programme|null $programme
- * @property Projet|null $projet
  * @property Collection|Module[] $modules
  * @property Collection|Programme[] $programmes
  * @property Collection|Projet[] $projets
@@ -94,7 +92,6 @@ class Individuelle extends Model
 		'etudes_id' => 'int',
 		'antennes_id' => 'int',
 		'programmes_id' => 'int',
-		'projets_id' => 'int',
 		'diplomes_id' => 'int',
 		'conventions_id' => 'int'
 	];
@@ -144,7 +141,6 @@ class Individuelle extends Model
 		'etudes_id',
 		'antennes_id',
 		'programmes_id',
-		'projets_id',
 		'diplomes_id',
 		'optiondiplome',
 		'conventions_id'
@@ -188,11 +184,6 @@ class Individuelle extends Model
 	public function programme()
 	{
 		return $this->belongsTo(Programme::class, 'programmes_id');
-	}
-
-	public function projet()
-	{
-		return $this->belongsTo(Projet::class, 'projets_id');
 	}
 
 	public function modules()

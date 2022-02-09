@@ -375,10 +375,10 @@
                             @can('user-list')
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('projet :') !!}
-                                    {!! Form::select('projet', $projets, $individuelle->projet->name, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'projet']) !!}
+                                    {!! Form::select('projets', $projets, null, ['class' => 'form-control', 'id' => 'projet']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('projet'))
-                                            @foreach ($errors->get('projet') as $message)
+                                        @if ($errors->has('projets'))
+                                            @foreach ($errors->get('projets') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
@@ -462,5 +462,8 @@
 @section('javascripts')
     <script type="text/javascript">
         $('#moduleup').select2().val({!! json_encode($individuelle->modules()->allRelatedIds()) !!}).trigger('change');
+    </script>
+    <script type="text/javascript">
+        $('#projet').select2().val({!! json_encode($individuelle->projets()->allRelatedIds()) !!}).trigger('change');
     </script>
 @endsection

@@ -38,7 +38,12 @@ class ProjetController extends Controller
      */
     public function create()
     {
-        return view('projets.create');
+        $localite = Localite::get();
+        $zone = Zone::get();
+        $module = Module::get();
+        $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        return view('projets.create', compact('ingenieurs', 'localite', 'zone', 'module'));
     }
 
     /**
@@ -52,23 +57,45 @@ class ProjetController extends Controller
         $this->validate(
             $request,
             [
-               
-                'name'  =>  'required|string|max:200|unique:projets,name',
-                'sigle' =>  'required|string|max:20|unique:projets,sigle',
-                'debut' =>  'date',
-                'fin'   =>  'date',
+                'name'          =>  'required|string|max:200|unique:projets,name',
+                'sigle'         =>  'required|string|max:20|unique:projets,sigle',
+                'localite'      => 'required',
+                'budjet_lettre' => 'required',
+                'budjet'        => 'required',
+                'zone'          => 'required',
+                'module'        => 'required',
+                'description'   => 'required',
+                'debut'         =>  'date',
+                'fin'           =>  'date',
+                'date_signature'=>  'date',
             ]
         );
+
+        if ($request->input('ingenieur') !== null) {
+            $ingenieur_id = Ingenieur::where('name', $request->input('ingenieur'))->first()->id;
+        } else {
+            $ingenieur_id = null;
+        }
+
         $projet = new Projet([
             'name'              =>      $request->input('name'),
             'sigle'             =>      $request->input('sigle'),
+            'description'       =>      $request->input('description'),
+            'date_signature'    =>      $request->input('date_signature'),
             'debut'             =>      $request->input('debut'),
             'fin'               =>      $request->input('fin'),
+            'budjet_lettre'     =>      $request->input('budjet_lettre'),
             'budjet'            =>      $request->input('budjet'),
+            'ingenieurs_id'     =>      $ingenieur_id,
 
         ]);
         
         $projet->save();
+        
+        $projet->localites()->sync($request->input('localite'));
+        $projet->zones()->sync($request->input('zone'));
+        $projet->modules()->sync($request->input('module'));
+
         return redirect()->route('projets.index')->with('success', 'enregistrement effectué avec succès !');
     }
 
@@ -80,7 +107,6 @@ class ProjetController extends Controller
      */
     public function show($id)
     {
-
         $projet = Projet::find($id);
 
         $projetLocalites = Localite::join("projetslocalites", "projetslocalites.localites_id", "=", "localites.id")
@@ -155,6 +181,7 @@ class ProjetController extends Controller
                 'description'   => 'required',
                 'debut'         =>  'date',
                 'fin'           =>  'date',
+                'date_signature'=>  'date',
             ]
         );
 

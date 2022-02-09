@@ -104,14 +104,15 @@
                                     <th style="width:10%;">Téléphone</th>
                                     <th style="width:10%;">Commune</th>
                                     <th style="width:10%;">Région</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($projet->individuelles as $key => $individuelle)
                                     <tr>
-                                        <td>{!! $individuelle->demandeur->numero !!}</td>
+                                        <td>
+                                            <a class="btn btn-outline-info" href="{{ route('individuelles.show', $individuelle->id) }}">{!! $individuelle->demandeur->numero !!}</a>
+                                        </td>
                                         <td>{!! $individuelle->cin !!}</td>
                                         <td>{!! $individuelle->demandeur->user->civilite !!}</td>
                                         <td>{!! $individuelle->demandeur->user->firstname !!} </td>
@@ -120,11 +121,7 @@
                                         <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                         <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                         <td>{!! $individuelle->commune->nom ?? '' !!}</td>
-                                        <td>{!! $individuelle->commune->arrondissement->departement->region->sigle ?? '' !!}</td>
-                                        <td class="align-middle">
-                                            <a class="btn btn-info btn-sm"
-                                                href="{{ route('individuelles.show', $individuelle->id) }}"><i class="far fa-eye">&nbsp;</i></a>&nbsp;
-                                        </td>
+                                        <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

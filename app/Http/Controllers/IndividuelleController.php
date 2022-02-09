@@ -437,7 +437,7 @@ class IndividuelleController extends Controller
         /* dd($moduleIndividuelle); */
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $conventions = Convention::distinct('name')->get()->pluck('name', 'name')->unique();
-        $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
+        $projets = Projet::distinct('name')->pluck('name', 'id')->unique();
         $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
 
@@ -506,11 +506,6 @@ class IndividuelleController extends Controller
         } else {
             $programme_id = "";
         }
-        if ($request->input('projet') !== null) {
-            $projet_id = Projet::where('name', $request->input('projet'))->first()->id;
-        } else {
-            $projet_id = "";
-        }
         if ($request->input('convention') !== null) {
             $convention_id = Convention::where('name', $request->input('convention'))->first()->id;
         } else {
@@ -577,9 +572,6 @@ class IndividuelleController extends Controller
         if ($request->input('programme') !== null) {
             $individuelle->programmes_id           =     $programme_id;
         }
-        if ($request->input('projet') !== null) {
-            $individuelle->projets_id               =     $projet_id;
-        }
         if ($request->input('convention') !== null) {
             $individuelle->conventions_id           =     $convention_id;
         }
@@ -592,6 +584,7 @@ class IndividuelleController extends Controller
         $individuelle->save();
         
         $individuelle->modules()->sync($request->input('modules'));
+        $individuelle->projets()->sync($request->input('projets'));
 
         if (!$user_connect->hasRole('Demandeur') && !$user_connect->hasRole('Individuelle') && !$user_connect->hasRole('Collective') && !$user_connect->hasRole('Pcharge')) {
             return redirect()->route('individuelles.index')->with('success', 'demande modifiée avec succès !');

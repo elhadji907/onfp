@@ -57,7 +57,18 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {!! Form::label('Date signature :', null, ['class' => 'control-label']) !!}
+                                {!! Form::date('date_signature', Carbon\Carbon::parse($projet->date_signature)->format('Y-m-d'), ['placeholder' => 'La date de signature', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('date_signature'))
+                                        @foreach ($errors->get('date_signature') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Date début :', null, ['class' => 'control-label']) !!}
                                 {!! Form::date('debut', Carbon\Carbon::parse($projet->debut)->format('Y-m-d'), ['placeholder' => 'La date de démarrage', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -68,7 +79,7 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Date fin :', null, ['class' => 'control-label']) !!}
                                 {!! Form::date('fin', Carbon\Carbon::parse($projet->fin)->format('Y-m-d'), ['placeholder' => 'La date de cloture', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
@@ -84,7 +95,7 @@
                             <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Budjet (en lettre)') }}:</b></label>
                                 <input type="text" name="budjet_lettre" class="form-control" id="input-budjet"
-                                    placeholder="Budjet en lettre" value="{{ old('budjet') ?? $projet->budjet_lettre ?? '' }}">
+                                    placeholder="Budjet en lettre" value="{{ old('budjet') ?? $projet->budjet_lettre }}">
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('budjet'))
                                         @foreach ($errors->get('budjet') as $message)

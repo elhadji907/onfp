@@ -6,7 +6,6 @@ use App\Models\Individuelle;
 use App\Models\Demandeur;
 use App\Models\TypesDemande;
 use App\Models\Commune;
-use App\Models\Projet;
 use App\Models\Programme;
 use App\Models\Diplome;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -40,7 +39,6 @@ class IndividuelleFactory extends Factory
         $types_demande_id=TypesDemande::where('name', 'Individuelle')->first()->id;
         $communes_id=Commune::all()->random()->id;
         $diplomes_id=Diplome::all()->random()->id;
-        $projet_id=Projet::all()->random()->id;
         $programmes_id=Programme::all()->random()->id;
             
         $nombre = rand(1, 9);
@@ -78,9 +76,6 @@ class IndividuelleFactory extends Factory
             },
             'diplomes_id' => function () use ($diplomes_id) {
                 return $diplomes_id;
-            },
-            'projets_id' => function () use ($projet_id) {
-                return $projet_id;
             },
             'programmes_id' => function () use ($programmes_id) {
                 return $programmes_id;

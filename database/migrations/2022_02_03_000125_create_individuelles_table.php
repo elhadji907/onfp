@@ -62,7 +62,6 @@ class CreateIndividuellesTable extends Migration
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
             $table->unsignedInteger('programmes_id')->nullable();
-            $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('diplomes_id')->nullable();
             $table->string('optiondiplome', 200)->nullable();
             $table->unsignedInteger('conventions_id')->nullable();
@@ -78,8 +77,6 @@ class CreateIndividuellesTable extends Migration
             $table->index(["antennes_id"], 'fk_individuelles_antennes1_idx');
 
             $table->index(["programmes_id"], 'fk_individuelles_programmes1_idx');
-
-            $table->index(["projets_id"], 'fk_individuelles_projets1_idx');
 
             $table->index(["diplomes_id"], 'fk_individuelles_diplomes1_idx');
 
@@ -115,11 +112,6 @@ class CreateIndividuellesTable extends Migration
 
             $table->foreign('programmes_id', 'fk_individuelles_programmes1_idx')
                 ->references('id')->on('programmes')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('projets_id', 'fk_individuelles_projets1_idx')
-                ->references('id')->on('projets')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
