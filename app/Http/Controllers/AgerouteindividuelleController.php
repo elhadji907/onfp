@@ -56,20 +56,21 @@ class AgerouteindividuelleController extends Controller
         $etude = Etude::distinct('name')->get()->pluck('name', 'id')->unique();
 
         $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
         $projetLocalites = Localite::join("projetslocalites", "projetslocalites.localites_id", "=", "localites.id")
         ->where("projetslocalites.projets_id", $id)
-        ->get();
+        ->get()->pluck('nom', 'id')->unique();
         
         $projetZones = Zone::join("projetszones", "projetszones.zones_id", "=", "zones.id")
         ->where("projetszones.projets_id", $id)
-        ->get();
+        ->get()->pluck('nom', 'id')->unique();
 
         $projetModules = Module::join("projetsmodules", "projetsmodules.modules_id", "=", "modules.id")
         ->where("projetsmodules.projets_id", $id)
-        ->get();
-                           
-        return view('agerouteindividuelles.create', compact('etude', 'familiale', 'professionnelle', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites'));
+        ->get()->pluck('name', 'id')->unique();
+        
+        return view('agerouteindividuelles.create', compact('etude', 'familiale', 'professionnelle', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name'));
     }
 
     /**
@@ -80,7 +81,31 @@ class AgerouteindividuelleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request,
+            [
+                'sexe'                =>  'required|string|max:10',
+                'cin'                 =>  'required|string|min:13|max:15|unique:individuelles,cin',
+                'prenom'              =>  'required|string|max:50',
+                'nom'                 =>  'required|string|max:50',
+                'date_naiss'          =>  'required|date_format:Y-m-d',
+                'date_depot'          =>  'required|date_format:Y-m-d',
+                'lieu_naissance'      =>  'required|string|max:50',
+                'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
+                'etablissement'       =>  'required|string|max:100',
+                'adresse'             =>  'required|string|max:100',
+                'prerequis'           =>  'required|string|max:1500',
+                'motivation'          =>  'required|string|max:1500',
+                'email'               =>  'required|string|email|max:255|unique:users,email,{$user_connect->id},id,deleted_at,NULL',
+                'professionnelle'     =>  'required',
+                'etude'               =>  'required',
+                'commune'             =>  'required',
+                'modules'             =>  'required',
+                'diplome'             =>  'required',
+                'optiondiplome'       =>  'required',
+                'projet_professionnel'=>  'required|string|max:1000',
+        ]
+        );
     }
 
     /**
