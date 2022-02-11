@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Collection|Individuelle[] $individuelles
  * @property Collection|Programme[] $programmes
  * @property Collection|Projet[] $projets
  * @property Collection|Zone[] $zones
@@ -39,6 +40,13 @@ class Localite extends Model
 		'uuid',
 		'nom'
 	];
+
+	public function individuelles()
+	{
+		return $this->belongsToMany(Individuelle::class, 'individuelleslocalites', 'localites_id', 'individuelles_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
 
 	public function programmes()
 	{

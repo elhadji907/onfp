@@ -70,6 +70,9 @@ class ProjetController extends Controller
                 'date_signature'=>  'date',
             ]
         );
+        
+        $budjet = $request->input('budjet');        
+        $budjet = str_replace(' ', '', $budjet);
 
         $projet = new Projet([
             'name'              =>      $request->input('name'),
@@ -79,7 +82,7 @@ class ProjetController extends Controller
             'debut'             =>      $request->input('debut'),
             'fin'               =>      $request->input('fin'),
             'budjet_lettre'     =>      $request->input('budjet_lettre'),
-            'budjet'            =>      $request->input('budjet'),
+            'budjet'            =>      $budjet,
 
         ]);
         
@@ -188,8 +191,7 @@ class ProjetController extends Controller
             ]
         );
 
-        $budjet = $request->input('budjet');
-        
+        $budjet = $request->input('budjet');        
         $budjet = str_replace(' ', '', $budjet);
 
         $projet->name           =   $request->input('name');
@@ -198,7 +200,7 @@ class ProjetController extends Controller
         $projet->debut          =   $request->input('debut');
         $projet->fin            =   $request->input('fin');
         $projet->budjet_lettre  =   $request->input('budjet_lettre');
-        $projet->budjet         =   $request->input('budjet');
+        $projet->budjet         =   $budjet;
 
         $projet->save();
         

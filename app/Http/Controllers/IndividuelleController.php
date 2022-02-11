@@ -156,6 +156,7 @@ class IndividuelleController extends Controller
             );
     
         }
+        
         else {
             $this->validate(
                 $request,
@@ -183,7 +184,6 @@ class IndividuelleController extends Controller
                 ]
             );
         }
-        
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
@@ -218,7 +218,7 @@ class IndividuelleController extends Controller
 
         $autre_tel = $request->input('autre_tel');
         $autre_tel = str_replace(' ', '', $autre_tel);
-       
+
         if ($request->input('programme') !== null) {
             $programme_id = Programme::where('sigle', $request->input('programme'))->first()->id;
         } else {

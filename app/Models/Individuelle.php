@@ -70,9 +70,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Etude|null $etude
  * @property Formation|null $formation
  * @property Programme|null $programme
+ * @property Collection|Localite[] $localites
  * @property Collection|Module[] $modules
  * @property Collection|Programme[] $programmes
  * @property Collection|Projet[] $projets
+ * @property Collection|Zone[] $zones
  *
  * @package App\Models
  */
@@ -186,6 +188,13 @@ class Individuelle extends Model
 		return $this->belongsTo(Programme::class, 'programmes_id');
 	}
 
+	public function localites()
+	{
+		return $this->belongsToMany(Localite::class, 'individuelleslocalites', 'individuelles_id', 'localites_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'individuellesmodules', 'individuelles_id', 'modules_id')
@@ -203,6 +212,13 @@ class Individuelle extends Model
 	public function projets()
 	{
 		return $this->belongsToMany(Projet::class, 'individuellesprojets', 'individuelles_id', 'projets_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function zones()
+	{
+		return $this->belongsToMany(Zone::class, 'individuelleszones', 'individuelles_id', 'zones_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
