@@ -21,9 +21,10 @@
                         <div class="table-responsive">
                             <div align="right">
                                 @can('projet-create')
-                                <a href="{{ route('projets.create') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
-                                </a>
+                                    <a href="{{ route('projets.create') }}">
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                        </div>
+                                    </a>
                                 @endcan
                             </div>
                             <br />
@@ -31,16 +32,18 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th>N°</th>
-                                        <th width="700px">Projet</th>
-                                        <th width="15px">Sigle</th>
-                                        <th width="15px">Action</th>
+                                        <th width="70%">Projet</th>
+                                        <th width="10%">Sigle</th>
+                                        <th width="5%">Effectif</th>
+                                        <th width="10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
                                         <th>Projet</th>
-                                        <th >Sigle</th>
+                                        <th>Sigle</th>
+                                        <th>Effectif</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -51,12 +54,21 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $projet->name }}</td>
                                             <td>{{ $projet->sigle }}</td>
+                                            <td>
+                                                @foreach ($projet->individuelles as $individuelle)
+                                                    @if ($loop->last)
+                                                        {!! $loop->count !!}
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a class="btn btn-info btn-sm"
-                                                    href="{{ route('projets.show', $projet->id) }}"><i class="far fa-eye">&nbsp;</i></a>&nbsp;
+                                                    href="{{ route('projets.show', $projet->id) }}"><i
+                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;
                                                 @can('projet-edit')
                                                     <a class="btn btn-primary btn-sm"
-                                                        href="{{ route('projets.edit', $projet->id) }}"><i class="far fa-edit">&nbsp;</i></a>
+                                                        href="{{ route('projets.edit', $projet->id) }}"><i
+                                                            class="far fa-edit">&nbsp;</i></a>
                                                 @endcan
                                                 &nbsp;
                                                 @can('projet-delete')
@@ -75,7 +87,7 @@
             </div>
         </div>
     </div>
-    {{--  <p class="text-center text-primary"><small>Tutorial by Tutsmake.com</small></p>  --}}
+    {{-- <p class="text-center text-primary"><small>Tutorial by Tutsmake.com</small></p> --}}
 @endsection
 
 @push('scripts')
