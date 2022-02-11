@@ -235,6 +235,8 @@
                                         @endif
                                     </small>
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
@@ -246,9 +248,7 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Diplômes :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -259,7 +259,9 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label for="optiondiplome">{{ __('Option du diplôme') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="optiondiplome" type="optiondiplome"
@@ -273,7 +275,7 @@
                                     @enderror
                                     </small>
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <textarea class="form-control  @error('etablissement') is-invalid @enderror"
@@ -284,7 +286,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-row">
+                            {{--  <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Nbre pièces fournis:') !!}(<span class="text-danger">*</span>)
                                     {!! Form::number('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '10']) !!}
@@ -296,7 +298,7 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
+                            </div>  --}}
                             <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     <label for="autres_diplomes">{{ __('Autres diplomes') }}</label>
@@ -363,10 +365,20 @@
                             </div>
                     </div>
                 </div>
+                <br />
                 <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
                     placeholder="Mot de passe">
+
                 {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
-                <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
+
+
+                {{--  <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>  --}}
+                
+                <div class="col-xs-12 col-sm-12 col-md-12 text-right">
+                    <button type="submit" class="btn btn-outline-primary"><i
+                            class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
+                </div>
+
                 </form>
                 <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">

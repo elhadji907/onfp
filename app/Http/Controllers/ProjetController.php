@@ -71,12 +71,6 @@ class ProjetController extends Controller
             ]
         );
 
-        if ($request->input('ingenieur') !== null) {
-            $ingenieur_id = Ingenieur::where('name', $request->input('ingenieur'))->first()->id;
-        } else {
-            $ingenieur_id = null;
-        }
-
         $projet = new Projet([
             'name'              =>      $request->input('name'),
             'sigle'             =>      $request->input('sigle'),
@@ -86,7 +80,6 @@ class ProjetController extends Controller
             'fin'               =>      $request->input('fin'),
             'budjet_lettre'     =>      $request->input('budjet_lettre'),
             'budjet'            =>      $request->input('budjet'),
-            'ingenieurs_id'     =>      $ingenieur_id,
 
         ]);
         
@@ -95,6 +88,7 @@ class ProjetController extends Controller
         $projet->localites()->sync($request->input('localite'));
         $projet->zones()->sync($request->input('zone'));
         $projet->modules()->sync($request->input('module'));
+        $projet->ingenieurs()->sync($request->input('ingenieur'));
 
         return redirect()->route('projets.index')->with('success', 'enregistrement effectué avec succès !');
     }
@@ -120,9 +114,12 @@ class ProjetController extends Controller
         $projetModules = Module::join("projetsmodules", "projetsmodules.modules_id", "=", "modules.id")
         ->where("projetsmodules.projets_id", $id)
         ->get();
-        
 
-        return view('projets.show', compact('projet', 'projetLocalites', 'projetZones', 'projetModules'));
+        $projetIngenieurs = Ingenieur::join("projetsingenieurs", "projetsingenieurs.ingenieurs_id", "=", "ingenieurs.id")
+        ->where("projetsingenieurs.projets_id", $id)
+        ->get();
+
+        return view('projets.show', compact('projet', 'projetLocalites', 'projetZones', 'projetModules', 'projetIngenieurs'));
     }
 
     /**
@@ -137,21 +134,25 @@ class ProjetController extends Controller
         $localite = Localite::get();
         $zone = Zone::get();
         $module = Module::get();
+        $ingenieur = Ingenieur::get();
         
-        $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
-        
+        $projetIngenieurs = DB::table("projetsingenieurs")->where("projetsingenieurs.projets_id", $id)
+        ->pluck('projetsingenieurs.ingenieurs_id', 'projetsingenieurs.ingenieurs_id')
+        ->all();
+
         $projetLocalites = DB::table("projetslocalites")->where("projetslocalites.projets_id", $id)
-->pluck('projetslocalites.localites_id', 'projetslocalites.localites_id')
-->all();
+        ->pluck('projetslocalites.localites_id', 'projetslocalites.localites_id')
+        ->all();
+
         $projetZones = DB::table("projetszones")->where("projetszones.projets_id", $id)
-->pluck('projetszones.zones_id', 'projetszones.zones_id')
-->all();
+        ->pluck('projetszones.zones_id', 'projetszones.zones_id')
+        ->all();
 
         $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $id)
-->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
-->all();
+        ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
+        ->all();
 
-        return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone', 'ingenieurs', 'projetModules', 'module'));
+        return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone', 'projetIngenieurs', 'projetModules', 'module', 'ingenieur'));
 
         /* dd($projetLocalites);
 
@@ -190,8 +191,6 @@ class ProjetController extends Controller
         $budjet = $request->input('budjet');
         
         $budjet = str_replace(' ', '', $budjet);
-        
-        $ingenieur_id     = Ingenieur::where('name', $request->input('ingenieur'))->first()->id;
 
         $projet->name           =   $request->input('name');
         $projet->sigle          =   $request->input('sigle');
@@ -199,14 +198,14 @@ class ProjetController extends Controller
         $projet->debut          =   $request->input('debut');
         $projet->fin            =   $request->input('fin');
         $projet->budjet_lettre  =   $request->input('budjet_lettre');
-        $projet->budjet         =   $budjet;
-        $projet->ingenieurs_id  =   $ingenieur_id;
+        $projet->budjet         =   $request->input('budjet');
 
         $projet->save();
         
         $projet->localites()->sync($request->input('localite'));
         $projet->zones()->sync($request->input('zone'));
         $projet->modules()->sync($request->input('module'));
+        $projet->ingenieurs()->sync($request->input('ingenieur'));
 
         /* $projet->syncLocalites($request->input('localite')); */
 
@@ -222,7 +221,7 @@ class ProjetController extends Controller
     public function destroy(Projet $projet)
     {
         $projet->delete();
-        $message = "Le projet ".$projet->sigle." a été supprimé avec succès";
+        $message = "Le projet ".$projet->name." a été supprimé avec succès";
         return redirect()->route('projets.index')->with(compact('message'));
     }
 

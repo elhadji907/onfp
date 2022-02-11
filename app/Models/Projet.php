@@ -24,16 +24,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $fin
  * @property float|null $budjet
  * @property string|null $budjet_lettre
- * @property int|null $ingenieurs_id
+ * @property Carbon|null $date_signature
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Ingenieur|null $ingenieur
  * @property Collection|Collective[] $collectives
  * @property Collection|Courrier[] $courriers
  * @property Collection|Depense[] $depenses
  * @property Collection|Individuelle[] $individuelles
+ * @property Collection|Ingenieur[] $ingenieurs
  * @property Collection|Localite[] $localites
  * @property Collection|Module[] $modules
  * @property Collection|Zone[] $zones
@@ -48,13 +48,13 @@ class Projet extends Model
 	protected $table = 'projets';
 
 	protected $casts = [
-		'budjet' => 'float',
-		'ingenieurs_id' => 'int'
+		'budjet' => 'float'
 	];
 
 	protected $dates = [
 		'debut',
-		'fin'
+		'fin',
+		'date_signature'
 	];
 
 	protected $fillable = [
@@ -66,13 +66,8 @@ class Projet extends Model
 		'fin',
 		'budjet',
 		'budjet_lettre',
-		'ingenieurs_id'
+		'date_signature'
 	];
-
-	public function ingenieur()
-	{
-		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
-	}
 
 	public function collectives()
 	{
@@ -94,6 +89,13 @@ class Projet extends Model
 	public function individuelles()
 	{
 		return $this->belongsToMany(Individuelle::class, 'individuellesprojets', 'projets_id', 'individuelles_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function ingenieurs()
+	{
+		return $this->belongsToMany(Ingenieur::class, 'projetsingenieurs', 'projets_id', 'ingenieurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

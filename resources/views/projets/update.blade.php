@@ -20,7 +20,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Projet') }}:</b>(<span
-                                    class="text-danger">*</span>)</label>
+                                        class="text-danger">*</span>)</label>
                                 <input type="text" name="name" class="form-control" id="input-name"
                                     placeholder="nom complète" value="{{ old('name') ?? $projet->name }}">
                                 <small id="emailHelp" class="form-text text-muted">
@@ -47,13 +47,13 @@
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                 <label for="description">{{ __('Description') }}(<span
-                                    class="text-danger">*</span>)</label>
-                            <textarea class="form-control  @error('description') is-invalid @enderror" name="description"
-                                id="description" rows="4"
-                                placeholder="Décrire en quelques lignes le projet...">{{ $projet->description ?? old('description') }}</textarea>
-                            @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                                        class="text-danger">*</span>)</label>
+                                <textarea class="form-control  @error('description') is-invalid @enderror"
+                                    name="description" id="description" rows="4"
+                                    placeholder="Décrire en quelques lignes le projet...">{{ $projet->description ?? old('description') }}</textarea>
+                                @error('description')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-row">
@@ -95,7 +95,8 @@
                             <div class="form-group col-md-10 col-lg-10 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Budjet (en lettre)') }}:</b></label>
                                 <input type="text" name="budjet_lettre" class="form-control" id="input-budjet"
-                                    placeholder="Budjet en lettre" value="{{ old('budjet_lettre') ?? $projet->budjet_lettre }}">
+                                    placeholder="Budjet en lettre"
+                                    value="{{ old('budjet_lettre') ?? $projet->budjet_lettre }}">
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('budjet'))
                                         @foreach ($errors->get('budjet') as $message)
@@ -119,33 +120,28 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                {!! Form::label('Ingénieur') !!}
-                                {!! Form::select('ingenieur', $ingenieurs, $projet->ingenieur->name ?? old('ingenieur'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'ingenieur_projet']) !!}
-                                @can('user-create')
-                                @endcan
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('ingenieur'))
-                                        @foreach ($errors->get('ingenieur') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
+                                <label for="input-name"><b>{{ __('Ingenieurs') }}:</b></label>
+                                <br />
+                                @foreach ($ingenieur as $value)
+                                    <label>{{ Form::checkbox('ingenieur[]', $value->id, in_array($value->id, $projetIngenieurs) ? true : false, ['class' => 'name']) }}
+                                        {{ $value->name }}</label>
+                                @endforeach
                             </div>
                         </div>
 
-                        {{--  <div class="form-row">
+                        {{-- <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('LOCALITES') !!}
                                 {!! Form::select('localites[]', $localites, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'localite']) !!}
                             </div>
-                        </div>  --}}
+                        </div> --}}
 
-                       {{--   <div class="form-row">
+                        {{-- <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('ZONES') !!}
                                 {!! Form::select('zones[]', $zones, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'zone']) !!}
                             </div>
-                        </div>  --}}
+                        </div> --}}
                         <div class="col-xs-12 col-sm-12 col-md-12 text-right">
                             <button type="submit" class="btn btn-outline-primary"><i
                                     class="far fa-paper-plane"></i>&nbsp;Soumettre</button>
@@ -153,7 +149,7 @@
 
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <strong class="btn btn-success">Localités</strong>
+                                <label for="input-name"><b>{{ __('Localités') }}:</b></label>
                                 <br />
                                 @foreach ($localite as $value)
                                     <label>{{ Form::checkbox('localite[]', $value->id, in_array($value->id, $projetLocalites) ? true : false, ['class' => 'name']) }}
@@ -162,7 +158,7 @@
                                 @endforeach
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <strong class="btn btn-success">Zones</strong>
+                                <label for="input-name"><b>{{ __('Zones') }}:</b></label>
                                 <br />
                                 @foreach ($zone as $value)
                                     <label>{{ Form::checkbox('zone[]', $value->id, in_array($value->id, $projetZones) ? true : false, ['class' => 'name']) }}
@@ -171,7 +167,7 @@
                                 @endforeach
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <strong class="btn btn-success">Modules</strong>
+                                <label for="input-name"><b>{{ __('Modules') }}:</b></label>
                                 <br />
                                 @foreach ($module as $value)
                                     <label>{{ Form::checkbox('module[]', $value->id, in_array($value->id, $projetModules) ? true : false, ['class' => 'name']) }}
@@ -228,11 +224,11 @@
         </div>
     </div>
 @endsection
-{{--  @section('javascripts')
+{{-- @section('javascripts')
     <script type="text/javascript">
         $('#localite').select2().val({!! json_encode($projet->localites()->allRelatedIds()) !!}).trigger('change');
     </script>
     <script type="text/javascript">
         $('#zone').select2().val({!! json_encode($projet->zones()->allRelatedIds()) !!}).trigger('change');
     </script>
-@endsection  --}}
+@endsection --}}

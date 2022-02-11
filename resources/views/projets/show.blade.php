@@ -82,10 +82,14 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-4">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
-                                <span class="badge badge-dark">Ingénieur</span> :
-                                <label>{{ $projet->ingenieur->name }}</label>
+                                <span class="badge badge-dark">Ingenieurs</span> :
+                                @if (!empty($projetIngenieurs))
+                                    @foreach ($projetIngenieurs as $v)
+                                        <label>{{ $v->name }},</label>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>   
