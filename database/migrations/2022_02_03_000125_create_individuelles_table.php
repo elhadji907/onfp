@@ -42,6 +42,7 @@ class CreateIndividuellesTable extends Migration
             $table->string('adresse', 200)->nullable();
             $table->string('option', 200)->nullable();
             $table->string('autres_diplomes', 200)->nullable();
+            $table->string('autres_diplomes_pros', 200)->nullable();
             $table->string('telephone', 200)->nullable();
             $table->string('fixe', 200)->nullable();
             $table->longText('motivation')->nullable();
@@ -56,6 +57,7 @@ class CreateIndividuellesTable extends Migration
             $table->string('file6', 200)->nullable();
             $table->string('file7', 200)->nullable();
             $table->integer('nbre_pieces')->nullable();
+            $table->integer('nbre_enfants')->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();

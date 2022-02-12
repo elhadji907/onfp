@@ -283,7 +283,13 @@ $("#type_structure").select2({
 </script>
 <script type="text/javascript">  
   $("#diplome").select2({
-        placeholder: "Dernier diplôme",
+        placeholder: "Dernier diplôme académique",
+        allowClear: true
+    });
+</script>
+<script type="text/javascript">  
+  $("#diplome_pros").select2({
+        placeholder: "Dernier diplôme professionnel",
         allowClear: true
     });
 </script>

@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $adresse
  * @property string|null $option
  * @property string|null $autres_diplomes
+ * @property string|null $autres_diplomes_pros
  * @property string|null $telephone
  * @property string|null $fixe
  * @property string|null $motivation
@@ -49,6 +50,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file6
  * @property string|null $file7
  * @property int|null $nbre_pieces
+ * @property int|null $nbre_enfants
  * @property int $demandeurs_id
  * @property int|null $formations_id
  * @property int|null $communes_id
@@ -88,6 +90,7 @@ class Individuelle extends Model
 	protected $casts = [
 		'note' => 'float',
 		'nbre_pieces' => 'int',
+		'nbre_enfants' => 'int',
 		'demandeurs_id' => 'int',
 		'formations_id' => 'int',
 		'communes_id' => 'int',
@@ -123,6 +126,7 @@ class Individuelle extends Model
 		'adresse',
 		'option',
 		'autres_diplomes',
+		'autres_diplomes_pros',
 		'telephone',
 		'fixe',
 		'motivation',
@@ -137,6 +141,7 @@ class Individuelle extends Model
 		'file6',
 		'file7',
 		'nbre_pieces',
+		'nbre_enfants',
 		'demandeurs_id',
 		'formations_id',
 		'communes_id',

@@ -28,13 +28,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property float|null $montant
  * @property float|null $accompt
  * @property float|null $reliquat
- * @property int|null $duree
  * @property string|null $niveauentree
  * @property string|null $niveausortie
  * @property string|null $specialisation
  * @property string|null $statut
  * @property string|null $motivation
  * @property string|null $adresse
+ * @property string|null $telephone
+ * @property string|null $avis_dg
+ * @property int|null $duree
  * @property int|null $nbre_pieces
  * @property string|null $file1
  * @property string|null $file2
@@ -44,7 +46,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file6
  * @property string|null $file7
  * @property string|null $file8
- * @property string|null $avis_dg
  * @property int|null $demandeurs_id
  * @property int|null $etablissements_id
  * @property int|null $filieres_id
@@ -114,13 +115,15 @@ class Pcharge extends Model
 		'montant',
 		'accompt',
 		'reliquat',
-		'duree',
 		'niveauentree',
 		'niveausortie',
 		'specialisation',
 		'statut',
 		'motivation',
 		'adresse',
+		'telephone',
+		'avis_dg',
+		'duree',
 		'nbre_pieces',
 		'file1',
 		'file2',
@@ -130,7 +133,6 @@ class Pcharge extends Model
 		'file6',
 		'file7',
 		'file8',
-		'avis_dg',
 		'demandeurs_id',
 		'etablissements_id',
 		'filieres_id',

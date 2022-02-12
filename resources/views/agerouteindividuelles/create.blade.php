@@ -24,22 +24,34 @@
                         <form method="POST" action="{{ url('agerouteindividuelles') }}">
                             @csrf
                             <div class="bg-gradient-secondary text-center">
-                                <p class="h5 text-white mb-2">INFORMATIONS PERSONNELLES</small></p>
+                                <p class="h5 text-white mb-2">IDENTIFICATION DU CANDIDAT</small></p>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('sexe'))
-                                            @foreach ($errors->get('sexe') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="date_depot">{{ __('Date dépôt') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <input id="date_depot" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
+                                        class="form-control @error('date_depot') is-invalid @enderror" name="date_depot"
+                                        placeholder="Votre date dépôt" value="{{ old('date_depot') }}"
+                                        autocomplete="username">
+                                    @error('date_depot')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="numero">{{ __('Numero de dossier') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <input id="numero" type="text"
+                                        class="form-control @error('numero') is-invalid @enderror" name="numero"
+                                        placeholder="Votre et numero" value="{{ old('numero') }}" autocomplete="numero">
+                                    @error('numero')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
                                     <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
@@ -51,6 +63,8 @@
                                         </span>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="prenom">{{ __('Prénom') }}(<span class="text-danger">*</span>)</label>
                                     <input id="prenom" type="text"
@@ -72,6 +86,17 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('Genre :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('sexe'))
+                                            @foreach ($errors->get('sexe') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -130,7 +155,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <label for="autre_tel">{{ __('Téléphone secondaire') }}</label>
+                                    <label for="autre_tel">{{ __('Téléphone parent (ou tuteur)') }}</label>
                                     <input id="autre_tel" type="text"
                                         class="form-control @error('autre_tel') is-invalid @enderror" name="autre_tel"
                                         placeholder="+221 .. ... .. .." value="{{ old('autre_tel') }}"
@@ -171,7 +196,7 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('Situation familiale :') !!}
+                                    {!! Form::label('Situation matrimoniale :') !!}
                                     {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('familiale'))
@@ -183,23 +208,104 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label for="date_depot">{{ __('Date dépôt') }}(<span
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {{ __("Nombre d'enfants en charge :") }} (<span class="text-danger">*</span>)
+                                    {!! Form::number('enfant', 0, ['placeholder' => 'Le nombre d\'enfants en charge', 'class' => 'form-control', 'min' => '0', 'max' => '50']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('enfant'))
+                                            @foreach ($errors->get('enfant') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-secondary text-center">
+                                <p class="h5 text-white mb-2">PARCOURS ACADEMIQUE ET PROFESSIONNEL</small>
+                                </p>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('Diplômes académiques:') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('diplome'))
+                                            @foreach ($errors->get('diplome') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label for="autres_diplomes">{{ __('Si autre, précisez :') }}</label>
+                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
+                                        name="autres_diplomes" id="autres_diplomes" rows="1"
+                                        placeholder="autre diplôme académique">{{ old('autres_diplomes') }}</textarea>
+                                    @error('autres_diplomes')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('Diplômes professionnels:') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome_pros', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('diplome'))
+                                            @foreach ($errors->get('diplome') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label for="autres_diplomes_pros">{{ __('Si autre, précisez :') }}</label>
+                                    <textarea class="form-control  @error('autres_diplomes_pros') is-invalid @enderror"
+                                        name="autres_diplomes_pros" id="autres_diplomes_pros" rows="1"
+                                        placeholder="autres diplôme professionnel">{{ old('autres_diplomes_pros') }}</textarea>
+                                    @error('autres_diplomes_pros')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('etude'))
+                                            @foreach ($errors->get('etude') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label for="optiondiplome">{{ __('Option du diplôme') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <input id="date_depot" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
-                                        class="form-control @error('date_depot') is-invalid @enderror" name="date_depot"
-                                        placeholder="Votre date dépôt" value="{{ old('date_depot') }}"
-                                        autocomplete="username">
-                                    @error('date_depot')
+                                    <input id="optiondiplome" type="optiondiplome"
+                                        class="form-control @error('optiondiplome') is-invalid @enderror"
+                                        name="optiondiplome" placeholder="Ex: Gestion finance"
+                                        value="{{ old('optiondiplome') }}" autocomplete="optiondiplome">
+                                    @error('optiondiplome')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
+                                    </small>
                                 </div>
-                            </div>
-                            <div class="bg-gradient-secondary pl-2">
-                                <p class="h5 text-white mb-2">INSCRIPTION AU PROJET => <small>{{ $projet_name }}</small>
-                                </p>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <textarea class="form-control  @error('etablissement') is-invalid @enderror"
+                                        name="etablissement" id="etablissement" rows="1"
+                                        placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
+                                    @error('etablissement')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
@@ -236,57 +342,7 @@
                                     </small>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('etude'))
-                                            @foreach ($errors->get('etude') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Diplômes :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('diplome'))
-                                            @foreach ($errors->get('diplome') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="optiondiplome">{{ __('Option du diplôme') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <input id="optiondiplome" type="optiondiplome"
-                                        class="form-control @error('optiondiplome') is-invalid @enderror"
-                                        name="optiondiplome" placeholder="Ex: Gestion finance"
-                                        value="{{ old('optiondiplome') }}" autocomplete="optiondiplome">
-                                    @error('optiondiplome')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('etablissement') is-invalid @enderror"
-                                        name="etablissement" id="etablissement" rows="1"
-                                        placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
-                                    @error('etablissement')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            {{--  <div class="form-row">
+                            {{-- <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Nbre pièces fournis:') !!}(<span class="text-danger">*</span>)
                                     {!! Form::number('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '10']) !!}
@@ -298,17 +354,8 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>  --}}
+                            </div> --}}
                             <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label for="autres_diplomes">{{ __('Autres diplomes') }}</label>
-                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
-                                        name="autres_diplomes" id="autres_diplomes" rows="1"
-                                        placeholder="Si vous possédez d'autres diplômes">{{ old('autres_diplomes') }}</textarea>
-                                    @error('autres_diplomes')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
@@ -372,8 +419,8 @@
                 {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
 
 
-                {{--  <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>  --}}
-                
+                {{-- <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i>&nbsp;Enregistrer</button> --}}
+
                 <div class="col-xs-12 col-sm-12 col-md-12 text-right">
                     <button type="submit" class="btn btn-outline-primary"><i
                             class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
