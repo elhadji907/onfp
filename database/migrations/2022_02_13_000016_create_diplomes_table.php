@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDiplomesprosTable extends Migration
+class CreateDiplomesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'diplomespros';
+    public $tableName = 'diplomes';
 
     /**
      * Run the migrations.
-     * @table diplomespros
+     * @table diplomes
      *
      * @return void
      */
@@ -28,7 +28,6 @@ class CreateDiplomesprosTable extends Migration
             $table->string('sigle', 50)->nullable();
             $table->string('titre1', 200)->nullable();
             $table->timestamp('date1')->nullable();
-            $table->unsignedInteger('options_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });

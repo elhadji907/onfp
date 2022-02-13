@@ -21,7 +21,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $sigle
  * @property string|null $titre1
  * @property Carbon|null $date1
- * @property int|null $options_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -38,10 +37,6 @@ class Diplome extends Model
 	use \App\Helpers\UuidForKey;
 	protected $table = 'diplomes';
 
-	protected $casts = [
-		'options_id' => 'int'
-	];
-
 	protected $dates = [
 		'date1'
 	];
@@ -51,8 +46,7 @@ class Diplome extends Model
 		'name',
 		'sigle',
 		'titre1',
-		'date1',
-		'options_id'
+		'date1'
 	];
 
 	public function individuelles()

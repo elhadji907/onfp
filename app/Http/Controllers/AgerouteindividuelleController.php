@@ -90,32 +90,42 @@ class AgerouteindividuelleController extends Controller
         $this->validate(
             $request,
             [
-                'sexe'                =>  'required|string|max:10',
-                'cin'                 =>  'required|string|min:13|max:15|unique:individuelles,cin',
-                'prenom'              =>  'required|string|max:50',
-                'nom'                 =>  'required|string|max:50',
-                'date_naiss'          =>  'required|date_format:Y-m-d',
-                'date_depot'          =>  'required|date_format:Y-m-d',
-                'lieu_naissance'      =>  'required|string|max:50',
-                'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
-                'etablissement'       =>  'required|string|max:100',
-                'adresse'             =>  'required|string|max:100',
-                'prerequis'           =>  'required|string|max:1500',
-                'motivation'          =>  'required|string|max:1500',
-                'email'               =>  'required|string|email|max:255|unique:users,email',
-                'professionnelle'     =>  'required',
-                'etude'               =>  'required',
-                'commune'             =>  'required',
-                'diplome'             =>  'required',
-                'optiondiplome'       =>  'required',
-                'localites'           =>  'required',
-                'zones'               =>  'required',
-                'modules'             =>  'required',
-                'projet_professionnel'=>  'required|string|min:10',
+                'sexe'                              =>    'required|string|max:10',
+                'numero_dossier'                    =>    'required|string|min:5',
+                'cin'                               =>    'required|string|min:13|max:15|unique:individuelles,cin',
+                'prenom'                            =>    'required|string|max:50',
+                'nom'                               =>    'required|string|max:50',
+                'date_naiss'                        =>    'required|date_format:Y-m-d',
+                'date_depot'                        =>    'required|date_format:Y-m-d',
+                'lieu_naissance'                    =>    'required|string|max:50',
+                'telephone'                         =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
+                'telephone_secondaire'              =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
+                'adresse'                           =>    'required|string|max:100',
+                'email'                             =>    'required|string|email|max:255|unique:users,email',
+                'familiale'                         =>    'required',
+                'enfant'                            =>    'required|numeric',
+                'etude'                             =>    'required',
+                'commune'                           =>    'required',
+                'diplome'                           =>    'required',
+                'annee_diplome'                     =>    'required|numeric',
+                'diplomespro'                       =>    'required',
+                'annee_diplome_professionelle'      =>    'required|numeric',
+                'optiondiplome'                     =>    'required',
+                'activite_travail'                  =>    'required',
+                'travail_renumeration'              =>    'required',
+                'localites'                         =>    'required',
+                'activite_avenir'                   =>    'required',
+                'zones'                             =>    'required',
+                'handicap'                          =>    'required',
+                'situation_economique'              =>    'required',
+                'victime_social'                    =>    'required',
+                'modules'                           =>    'required',
         ]
         );
 
         $user_connect           =   Auth::user();
+
+        dd($user_connect);
         
         $created_by1 = $user_connect->firstname;
         $created_by2 = $user_connect->name;
@@ -158,7 +168,8 @@ class AgerouteindividuelleController extends Controller
         $autre_tel = $request->input('autre_tel');
         $autre_tel = str_replace(' ', '', $autre_tel);
         
-        $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
+        $diplome_id = Diplome::where('sigle', $request->input('diplome'))->first()->id;
+        $diplomepro_id = Diplomespro::where('sigle', $request->input('diplomespro'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $professionnelle_id = $request->input('professionnelle');
         $familiale_id = $request->input('familiale');
@@ -204,23 +215,18 @@ class AgerouteindividuelleController extends Controller
         
         $individuelle = new Individuelle([
             'cin'                       =>     $cin,
-            'experience'                =>     $request->input('experience'),
-            'information'               =>     $request->input('information'),
+            'numero_dossier'            =>     $request->input('numero_dossier'),
             'date_depot'                =>     $request->input('date_depot'),
             'nbre_pieces'               =>     $request->input('nombre_de_piece'),
-            'prerequis'                 =>     $request->input('prerequis'),
-            'etablissement'             =>     $request->input('etablissement'),
             'optiondiplome'             =>     $request->input('optiondiplome'),
             'adresse'                   =>     $request->input('adresse'),
-            'motivation'                =>     $request->input('motivation'),
             'autres_diplomes'           =>     $request->input('autres_diplomes'),
-            'qualification'             =>     $request->input('qualification'),
-            'projetprofessionnel'       =>     $request->input('projet_professionnel'),
             'statut'                    =>     'Attente',
             'telephone'                 =>     $autre_tel,
             'etudes_id'                 =>     $etude_id,
             'communes_id'               =>     $commune_id,
             'diplomes_id'               =>     $diplome_id,
+            'diplomespros_id'               =>     $diplomepro_id,
             'demandeurs_id'             =>     $demandeur->id
             ]);
             

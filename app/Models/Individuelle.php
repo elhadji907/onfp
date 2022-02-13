@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
+ * @property string|null $numero_dossier
  * @property string|null $cin
  * @property string|null $legende
  * @property string|null $reference
@@ -26,8 +27,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $information
  * @property Carbon|null $date_depot
  * @property float|null $note
- * @property string|null $items1
- * @property Carbon|null $date1
  * @property string|null $statut
  * @property string|null $type
  * @property string|null $qualification
@@ -40,6 +39,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $fixe
  * @property string|null $motivation
  * @property string|null $motif
+ * @property int|null $annee_diplome
+ * @property int|null $annee_diplome_professionelle
+ * @property int|null $nbre_enfant
+ * @property string|null $activite_travail
+ * @property string|null $travail_renumeration
+ * @property string|null $activite_avenir
+ * @property string|null $handicap
+ * @property string|null $situation_economique
+ * @property string|null $victime_social
+ * @property string|null $salaire
+ * @property string|null $preciser_handicap
+ * @property string|null $optiondiplome
+ * @property string|null $items1
+ * @property Carbon|null $date1
  * @property string|null $item1
  * @property string|null $item2
  * @property string|null $file1
@@ -58,8 +71,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $antennes_id
  * @property int|null $programmes_id
  * @property int|null $diplomes_id
- * @property string|null $optiondiplome
  * @property int|null $conventions_id
+ * @property int|null $diplomespros_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -69,6 +82,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Convention|null $convention
  * @property Demandeur $demandeur
  * @property Diplome|null $diplome
+ * @property Diplomespro|null $diplomespro
  * @property Etude|null $etude
  * @property Formation|null $formation
  * @property Programme|null $programme
@@ -89,6 +103,9 @@ class Individuelle extends Model
 
 	protected $casts = [
 		'note' => 'float',
+		'annee_diplome' => 'int',
+		'annee_diplome_professionelle' => 'int',
+		'nbre_enfant' => 'int',
 		'nbre_pieces' => 'int',
 		'nbre_enfants' => 'int',
 		'demandeurs_id' => 'int',
@@ -98,7 +115,8 @@ class Individuelle extends Model
 		'antennes_id' => 'int',
 		'programmes_id' => 'int',
 		'diplomes_id' => 'int',
-		'conventions_id' => 'int'
+		'conventions_id' => 'int',
+		'diplomespros_id' => 'int'
 	];
 
 	protected $dates = [
@@ -108,6 +126,7 @@ class Individuelle extends Model
 
 	protected $fillable = [
 		'uuid',
+		'numero_dossier',
 		'cin',
 		'legende',
 		'reference',
@@ -117,8 +136,6 @@ class Individuelle extends Model
 		'information',
 		'date_depot',
 		'note',
-		'items1',
-		'date1',
 		'statut',
 		'type',
 		'qualification',
@@ -131,6 +148,20 @@ class Individuelle extends Model
 		'fixe',
 		'motivation',
 		'motif',
+		'annee_diplome',
+		'annee_diplome_professionelle',
+		'nbre_enfant',
+		'activite_travail',
+		'travail_renumeration',
+		'activite_avenir',
+		'handicap',
+		'situation_economique',
+		'victime_social',
+		'salaire',
+		'preciser_handicap',
+		'optiondiplome',
+		'items1',
+		'date1',
 		'item1',
 		'item2',
 		'file1',
@@ -149,8 +180,8 @@ class Individuelle extends Model
 		'antennes_id',
 		'programmes_id',
 		'diplomes_id',
-		'optiondiplome',
-		'conventions_id'
+		'conventions_id',
+		'diplomespros_id'
 	];
 
 	public function antenne()
@@ -176,6 +207,11 @@ class Individuelle extends Model
 	public function diplome()
 	{
 		return $this->belongsTo(Diplome::class, 'diplomes_id');
+	}
+
+	public function diplomespro()
+	{
+		return $this->belongsTo(Diplomespro::class, 'diplomespros_id');
 	}
 
 	public function etude()
