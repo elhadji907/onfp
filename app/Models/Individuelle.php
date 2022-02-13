@@ -41,7 +41,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $motif
  * @property int|null $annee_diplome
  * @property int|null $annee_diplome_professionelle
- * @property int|null $nbre_enfant
  * @property string|null $activite_travail
  * @property string|null $travail_renumeration
  * @property string|null $activite_avenir
@@ -105,7 +104,6 @@ class Individuelle extends Model
 		'note' => 'float',
 		'annee_diplome' => 'int',
 		'annee_diplome_professionelle' => 'int',
-		'nbre_enfant' => 'int',
 		'nbre_pieces' => 'int',
 		'nbre_enfants' => 'int',
 		'demandeurs_id' => 'int',
@@ -150,7 +148,6 @@ class Individuelle extends Model
 		'motif',
 		'annee_diplome',
 		'annee_diplome_professionelle',
-		'nbre_enfant',
 		'activite_travail',
 		'travail_renumeration',
 		'activite_avenir',

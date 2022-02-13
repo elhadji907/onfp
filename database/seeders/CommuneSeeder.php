@@ -1438,21 +1438,21 @@ class CommuneSeeder extends Seeder
               ]);
         DB::table('communes')->insert([
              "nom" => "Ndramé Escale",
-             "arrondissements_id" =>"45",        
+             "arrondissements_id" =>"44",        
              'created_at' => now(),
              'updated_at' => now(),
              'uuid' => Str::uuid(),
               ]);
         DB::table('communes')->insert([
              "nom" => "Wack Ngouna",
-             "arrondissements_id" =>"45",        
+             "arrondissements_id" =>"44",        
              'created_at' => now(),
              'updated_at' => now(),
              'uuid' => Str::uuid(),
               ]);
         DB::table('communes')->insert([
              "nom" => "Keur Madiabel", 
-             "arrondissements_id" =>"5",        
+             "arrondissements_id" =>"44",        
              'created_at' => now(),
              'updated_at' => now(),
              'uuid' => Str::uuid(),

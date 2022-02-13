@@ -195,7 +195,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label("Nombre d'enfants en charge :") !!} (<span class="text-danger">*</span>)
-                                    {!! Form::number('enfant', 0, ['placeholder' => 'Le nombre d\'enfants en charge', 'class' => 'form-control', 'min' => '0', 'max' => '50']) !!}
+                                    {!! Form::number('enfant', null, ['placeholder' => 'Ex: 2', 'class' => 'form-control', 'min' => '0', 'max' => '50']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('enfant'))
                                             @foreach ($errors->get('enfant') as $message)
@@ -221,6 +221,17 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    {!! Form::label('Niveau étude :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('etude'))
+                                            @foreach ($errors->get('etude') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Diplômes académiques:') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -233,21 +244,10 @@
                                 </div>
                                 <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                     {!! Form::label('Année obtention :') !!}
-                                    {!! Form::number('annee_diplome', 2000, ['placeholder' => 'Année obtention', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
+                                    {!! Form::number('annee_diplome', null, ['placeholder' => 'Ex: 2010', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('annee_diplome'))
                                             @foreach ($errors->get('annee_diplome') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
-                                    {!! Form::label('Niveau étude :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('etude'))
-                                            @foreach ($errors->get('etude') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
@@ -275,7 +275,7 @@
                                 </div>
                                 <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                     {!! Form::label('Année obtention :') !!}
-                                    {!! Form::number('annee_diplome_professionelle', 2000, ['placeholder' => 'Année obtention', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
+                                    {!! Form::number('annee_diplome_professionelle', null, ['placeholder' => 'Ex: 2021', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('annee_diplome_professionelle'))
                                             @foreach ($errors->get('annee_diplome_professionelle') as $message)
@@ -285,16 +285,17 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
-                                    <label for="optiondiplome">{{ __('Spécialité') }}</label>
-                                    <input id="optiondiplome" type="optiondiplome"
-                                        class="form-control @error('optiondiplome') is-invalid @enderror"
-                                        name="optiondiplome" placeholder="Ex: Comptabilité"
-                                        value="{{ old('optiondiplome') }}" autocomplete="optiondiplome">
-                                    @error('optiondiplome')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
+                                    <label for="specialite">{{ __('Spécialité') }}</label>
+                                    <input id="specialite" type="specialite"
+                                        class="form-control @error('specialite') is-invalid @enderror"
+                                        name="specialite" placeholder="Ex: Comptabilité"
+                                        value="{{ old('specialite') }}" autocomplete="specialite">
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('specialite'))
+                                            @foreach ($errors->get('specialite') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
@@ -410,7 +411,7 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label>
                                         {{ __('Comment appréciez-vous votre situation économique familiale ?') }}(<span
                                             class="text-danger">*</span>)
@@ -437,7 +438,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label> {{ __('Avez-vous été victime d\'un quelconque problème social ?') }}(<span
                                             class="text-danger">*</span>)
                                     </label> :
@@ -465,6 +466,15 @@
                                             @endforeach
                                         @endif
                                     </small>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="autre_victime">{{ __('Si autre, précisez :') }}</label>
+                                    <textarea class="form-control  @error('autre_victime') is-invalid @enderror"
+                                        name="autre_victime" id="autre_victime" rows="1"
+                                        placeholder="autre diplôme professionnel">{{ old('autre_victime') }}</textarea>
+                                    @error('autre_victime')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- <div class="form-row">

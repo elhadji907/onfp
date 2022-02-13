@@ -48,7 +48,6 @@ class CreateIndividuellesTable extends Migration
             $table->longText('motif')->nullable();
             $table->integer('annee_diplome')->nullable();
             $table->integer('annee_diplome_professionelle')->nullable();
-            $table->integer('nbre_enfant')->nullable();
             $table->string('activite_travail', 200)->nullable();
             $table->string('travail_renumeration', 200)->nullable();
             $table->string('activite_avenir', 200)->nullable();

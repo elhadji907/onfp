@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             ModuleSeeder::class,
             NiveauSeeder::class,
             DiplomeSeeder::class,
-            DiplomesprosSeeder::class,
+            DiplomesproSeeder::class,
             ActiviteSeeder::class,
             IngenieurSeeder::class,
             ProjetSeeder::class,
