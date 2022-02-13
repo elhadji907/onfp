@@ -16,7 +16,7 @@
                 <div class="card border-success">
                     <div class="card card-header text-center bg-gradient-default border-success">
                         <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
-                                class="font-italic">Enregistrement demandeur</span></h1>
+                                class="font-italic">FORMULAIRE DE CANDIDATURE</span></h1>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires
@@ -24,7 +24,7 @@
                         <form method="POST" action="{{ url('agerouteindividuelles') }}">
                             @csrf
                             <div class="bg-gradient-secondary text-center">
-                                <p class="h5 text-white mb-2">IDENTIFICATION DU CANDIDAT</small></p>
+                                <p class="h5 text-white mb-2">IDENTIFICATION DU CANDIDAT</p>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
@@ -63,8 +63,6 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="prenom">{{ __('Prénom') }}(<span class="text-danger">*</span>)</label>
                                     <input id="prenom" type="text"
@@ -87,19 +85,6 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('Genre :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('sexe'))
-                                            @foreach ($errors->get('sexe') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="date_naiss">{{ __('Date de naissance') }}(<span
                                             class="text-danger">*</span>)</label>
@@ -139,8 +124,6 @@
                                     @enderror
                                     </small>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="telephone">{{ __('Telephone') }}(<span
                                             class="text-danger">*</span>)</label>
@@ -171,8 +154,17 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
-                            <div class="form-row">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label("Nombre d'enfants en charge :") !!} (<span class="text-danger">*</span>)
+                                    {!! Form::number('enfant', 0, ['placeholder' => 'Le nombre d\'enfants en charge', 'class' => 'form-control', 'min' => '0', 'max' => '50']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('enfant'))
+                                            @foreach ($errors->get('enfant') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('commune', $communes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
@@ -184,7 +176,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation professionnelle :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('professionnelle', $professionnelle, null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -194,7 +186,7 @@
                                             @endforeach
                                         @endif
                                     </small>
-                                </div>
+                                </div> --}}
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation matrimoniale :') !!}
                                     {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
@@ -206,14 +198,12 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {{ __("Nombre d'enfants en charge :") }} (<span class="text-danger">*</span>)
-                                    {!! Form::number('enfant', 0, ['placeholder' => 'Le nombre d\'enfants en charge', 'class' => 'form-control', 'min' => '0', 'max' => '50']) !!}
+                                    {!! Form::label('Genre :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('enfant'))
-                                            @foreach ($errors->get('enfant') as $message)
+                                        @if ($errors->has('sexe'))
+                                            @foreach ($errors->get('sexe') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
@@ -221,11 +211,10 @@
                                 </div>
                             </div>
                             <div class="bg-gradient-secondary text-center">
-                                <p class="h5 text-white mb-2">PARCOURS ACADEMIQUE ET PROFESSIONNEL</small>
-                                </p>
+                                <p class="h5 text-white mb-2">PARCOURS ACADEMIQUE ET PROFESSIONNEL</p>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     {!! Form::label('Diplômes académiques:') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -236,41 +225,19 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="autres_diplomes">{{ __('Si autre, précisez :') }}</label>
-                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
-                                        name="autres_diplomes" id="autres_diplomes" rows="1"
-                                        placeholder="autre diplôme académique">{{ old('autres_diplomes') }}</textarea>
-                                    @error('autres_diplomes')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Diplômes professionnels:') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome_pros', 'data-width' => '100%']) !!}
+                                <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                    {!! Form::label('Année obtention :') !!}
+                                    {!! Form::number('annee_diplome', 2000, ['placeholder' => 'Année obtention du diplôme', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('diplome'))
-                                            @foreach ($errors->get('diplome') as $message)
+                                        @if ($errors->has('annee_diplome'))
+                                            @foreach ($errors->get('annee_diplome') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="autres_diplomes_pros">{{ __('Si autre, précisez :') }}</label>
-                                    <textarea class="form-control  @error('autres_diplomes_pros') is-invalid @enderror"
-                                        name="autres_diplomes_pros" id="autres_diplomes_pros" rows="1"
-                                        placeholder="autres diplôme professionnel">{{ old('autres_diplomes_pros') }}</textarea>
-                                    @error('autres_diplomes_pros')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    {!! Form::label('Niveau étude :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('etude'))
@@ -280,14 +247,42 @@
                                         @endif
                                     </small>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="optiondiplome">{{ __('Option du diplôme') }}(<span
-                                            class="text-danger">*</span>)</label>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="autres_diplomes">{{ __('Si autre, précisez :') }}</label>
+                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror"
+                                        name="autres_diplomes" id="autres_diplomes" rows="1"
+                                        placeholder="autre diplôme académique">{{ old('autres_diplomes') }}</textarea>
+                                    @error('autres_diplomes')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    {!! Form::label('Diplômes professionnels:') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('diplomespro', $diplomespros, null, ['placeholder' => 'diplomespro', 'class' => 'form-control', 'id' => 'diplome_pros', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('diplomespro'))
+                                            @foreach ($errors->get('diplomespro') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                    {!! Form::label('Année obtention :') !!}
+                                    {!! Form::number('annee_diplome_pro', 2000, ['placeholder' => 'Année obtention du diplôme professionnel', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('annee_diplome_pro'))
+                                            @foreach ($errors->get('annee_diplome_pro') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    <label for="optiondiplome">{{ __('Spécialité') }}</label>
                                     <input id="optiondiplome" type="optiondiplome"
                                         class="form-control @error('optiondiplome') is-invalid @enderror"
-                                        name="optiondiplome" placeholder="Ex: Gestion finance"
+                                        name="optiondiplome" placeholder="Ex: Comptabilité"
                                         value="{{ old('optiondiplome') }}" autocomplete="optiondiplome">
                                     @error('optiondiplome')
                                         <span class="invalid-feedback" role="alert">
@@ -296,6 +291,131 @@
                                     @enderror
                                     </small>
                                 </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="autres_diplomes_pros">{{ __('Si autre, précisez :') }}</label>
+                                    <textarea class="form-control  @error('autres_diplomes_pros') is-invalid @enderror"
+                                        name="autres_diplomes_pros" id="autres_diplomes_pros" rows="1"
+                                        placeholder="autre diplôme professionnel">{{ old('autres_diplomes_pros') }}</textarea>
+                                    @error('autres_diplomes_pros')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="bg-gradient-secondary text-center">
+                                <p class="h5 text-white mb-2">PROJET PROFESSIONNEL</p>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <label
+                                        for="activite_travail">{{ __('Quellle activité ou travail exercez-vous ? ') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <textarea class="form-control  @error('activite_travail') is-invalid @enderror"
+                                        name="activite_travail" id="activite_travail" rows="1"
+                                        placeholder="Votre activité ou travail que vous exercez">{{ old('activite_travail') }}</textarea>
+                                    @error('activite_travail')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label>Etes-vous dans un travail rénuméré ? </label> :
+                                    <br />
+                                    <label>
+                                        {{ Form::radio('travail_renum', 'Oui', false, ['class' => 'name']) }}
+                                        {{ __('Oui') }}
+                                        <br />
+                                        {{ Form::radio('travail_renum', 'Non', false, ['class' => 'name']) }}
+                                        {{ __('Non') }}
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label>Si oui, comment trouvez-vous votre salaire ? </label> :
+                                    <br />
+                                    <label>
+                                        {{ Form::radio('salaire', 'Indécent', false, ['class' => 'name']) }}
+                                        {{ __('Indécent') }}
+                                        <br />
+                                        {{ Form::radio('salaire', 'Moyen', false, ['class' => 'name']) }}
+                                        {{ __('Moyen') }}
+                                        <br />
+                                        {{ Form::radio('salaire', 'Bien', false, ['class' => 'name']) }}
+                                        {{ __('Bien') }}
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <label
+                                        for="activite_avenir">{{ __('Dans quellle activité voulez-vous travailler à l\'avenir ? ') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <textarea class="form-control  @error('activite_avenir') is-invalid @enderror"
+                                        name="activite_avenir" id="activite_avenir" rows="1"
+                                        placeholder="Votre activité ou travail dans l'avenir">{{ old('activite_avenir') }}</textarea>
+                                    @error('activite_avenir')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="bg-gradient-secondary text-center">
+                                <p class="h5 text-white mb-2">SITUATION ÉCONOMIQUE</p>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label> {{ __("Souffrez-vous d'un handicap quelconque ?") }} </label> :
+                                    <br />
+                                    <label>
+                                        {{ Form::radio('handicap', 'Oui', false, ['class' => 'name']) }}
+                                        {{ __('Oui') }}
+                                        <br />
+                                        {{ Form::radio('handicap', 'Non', false, ['class' => 'name']) }}
+                                        {{ __('Non') }}
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                                    <label for="preciser_handicap">{{ __('Si oui, précisez-le ou lesquels ? ') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <textarea class="form-control  @error('preciser_handicap') is-invalid @enderror"
+                                        name="preciser_handicap" id="preciser_handicap" rows="1"
+                                        placeholder="Type handicap">{{ old('preciser_handicap') }}</textarea>
+                                    @error('preciser_handicap')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label> {{ __('Comment appréciez-vous votre situation économique familiale ?') }}
+                                    </label> :
+                                    <br />
+                                    <label>
+                                        {{ Form::radio('situation_economique', 'Très faible', false, ['class' => 'name']) }}
+                                        {{ __('Très faible') }}
+                                        <br />
+                                        {{ Form::radio('situation_economique', 'Faible', false, ['class' => 'name']) }}
+                                        {{ __('Faible') }}
+                                        <br />
+                                        {{ Form::radio('situation_economique', 'Moyenne', false, ['class' => 'name']) }}
+                                        {{ __('Moyenne') }}
+                                        <br />
+                                        {{ Form::radio('situation_economique', 'Correcte', false, ['class' => 'name']) }}
+                                        {{ __('Correcte') }}
+                                    </label>
+                                </div>
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label> {{ __('Avez-vous été victime d\'un quelconque problème social ?') }}
+                                    </label> :
+                                    <br />
+                                    <label>
+                                        {{ Form::radio('victime_social', 'Emigration irrégulière', false, ['class' => 'name']) }}
+                                        {{ __('Emigration irrégulière') }}
+                                        <br />
+                                        {{ Form::radio('victime_social', 'Déplacé ou démobilisé par le conflit', false, ['class' => 'name']) }}
+                                        {{ __('Déplacé ou démobilisé par le conflit') }}
+                                        <br />
+                                        {{ Form::radio('victime_social', 'Emprisonnement', false, ['class' => 'name']) }}
+                                        {{ __('Emprisonnement') }}
+                                        <br />
+                                        {{ Form::radio('victime_social', 'Autres', false, ['class' => 'name']) }}
+                                        {{ __('Autres') }}
+                                    </label>
+                                </div>
+                            </div>
+                            {{-- <div class="form-row">
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
                                             class="text-danger">*</span>)</label>
@@ -306,6 +426,9 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+                            </div> --}}
+                            <div class="bg-gradient-secondary text-center">
+                                <p class="h5 text-white mb-2">CHOIX ET LOCALISATION</p>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
@@ -355,7 +478,7 @@
                                     </small>
                                 </div>
                             </div> --}}
-                            <div class="form-row">
+                            {{-- <div class="form-row">
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
@@ -409,7 +532,7 @@
                                     {!! Form::label('Informations :') !!}
                                     {!! Form::textarea('information', null, ['placeholder' => 'Informations complémenaires', 'rows' => 2, 'class' => 'form-control']) !!}
                                 </div>
-                            </div>
+                            </div> --}}
                     </div>
                 </div>
                 <br />
@@ -471,7 +594,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
 @endsection

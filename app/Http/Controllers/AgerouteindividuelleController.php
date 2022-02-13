@@ -15,6 +15,7 @@ use App\Models\Zone;
 use App\Models\User;
 use App\Models\TypesDemande;
 use App\Models\Demandeur;
+use App\Models\Diplomespro;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -53,7 +54,8 @@ class AgerouteindividuelleController extends Controller
      */
     public function create()
     {
-        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
+        $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
         $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
@@ -74,7 +76,7 @@ class AgerouteindividuelleController extends Controller
         ->where("projetsmodules.projets_id", $id)
         ->get()->pluck('name', 'name')->unique();
         
-        return view('agerouteindividuelles.create', compact('etude', 'familiale', 'professionnelle', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name'));
+        return view('agerouteindividuelles.create', compact('etude', 'familiale', 'professionnelle', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name', 'diplomespros'));
     }
 
     /**

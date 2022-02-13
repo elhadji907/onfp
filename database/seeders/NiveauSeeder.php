@@ -15,24 +15,28 @@ class NiveauSeeder extends Seeder
      */
     public function run()
     {
-         DB::table('niveauxs')->insert([
+        DB::table('niveauxs')->insert([
+            "name"=>"Aucun",
+            "uuid"=>Str::uuid(),
+           ]);
+
+        DB::table('niveauxs')->insert([
              "name"=>"Elementaire",
              "uuid"=>Str::uuid(),
             ]);
-         DB::table('niveauxs')->insert([
+
+        DB::table('niveauxs')->insert([
              "name"=>"Moyen",
              "uuid"=>Str::uuid(),
             ]);
-         DB::table('niveauxs')->insert([
+
+        DB::table('niveauxs')->insert([
              "name"=>"Secondaire",
              "uuid"=>Str::uuid(),
             ]);
-         DB::table('niveauxs')->insert([
+
+        DB::table('niveauxs')->insert([
              "name"=>"Supérieur",
-             "uuid"=>Str::uuid(),
-            ]);
-         DB::table('niveauxs')->insert([
-             "name"=>"Aucun",
              "uuid"=>Str::uuid(),
             ]);
     }

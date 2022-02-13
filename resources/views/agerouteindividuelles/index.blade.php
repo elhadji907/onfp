@@ -18,11 +18,12 @@
                         LISTE BENEFICIAIRES : {!! $projet_name !!}
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">            
+                        <div class="table-responsive">
                             <div class="table-responsive">
                                 <div align="right">
                                     <a href="{{ route('agerouteindividuelles.create') }}">
-                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                        </div>
                                     </a>
                                 </div>
                                 <br />
@@ -62,8 +63,8 @@
                                                         <i class="far fa-edit">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
-                                                    <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}" class='btn btn-primary btn-sm'
-                                                        title="voir">
+                                                    <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                        class='btn btn-primary btn-sm' title="voir">
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
@@ -82,9 +83,7 @@
             </div>
         </div>
     </div>
-    {{-- <p class="text-center text-primary"><small>Tutorial by Tutsmake.com</small></p> --}}
 @endsection
-
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
