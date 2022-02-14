@@ -350,6 +350,7 @@ class AgerouteindividuelleController extends Controller
         $localite = Localite::get();
         $zone = Zone::get();
         $module = Module::get();
+
         $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
@@ -358,24 +359,25 @@ class AgerouteindividuelleController extends Controller
 
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
+        $individuelleLocalites = Localite::join("individuelleslocalites", "individuelleslocalites.localites_id", "=", "localites.id")
+        ->where("individuelleslocalites.individuelles_id", $id)
+        ->get()->pluck('nom', 'id')->unique();
+
+        $individuelleZones = Zone::join("individuelleszones", "individuelleszones.zones_id", "=", "zones.id")
+        ->where("individuelleszones.individuelles_id", $id)
+        ->get()->pluck('nom', 'id')->unique();
+
+        $individuelleModules = Module::join("individuellesmodules", "individuellesmodules.modules_id", "=", "modules.id")
+        ->where("individuellesmodules.individuelles_id", $id)
+        ->get()->pluck('name', 'id')->unique();
+
+        $individuelleModules = DB::table("individuellesmodules")->where("individuellesmodules.individuelles_id", $id)
+        ->pluck('individuellesmodules.modules_id', 'individuellesmodules.modules_id')
+        ->all();
+
         
-        $projetZones = DB::table("projetszones")->where("projetszones.projets_id", $id)
-        ->pluck('projetszones.zones_id', 'projetszones.zones_id')
-        ->all();
 
-        $projetLocalites = DB::table("projetslocalites")->where("projetslocalites.projets_id", $id)
-        ->pluck('projetslocalites.localites_id', 'projetslocalites.localites_id')
-        ->all();
-
-        $projetZones = DB::table("projetszones")->where("projetszones.projets_id", $id)
-        ->pluck('projetszones.zones_id', 'projetszones.zones_id')
-        ->all();
-
-        $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $id)
-        ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
-        ->all();
-
-        return view('agerouteindividuelles.update', compact('individuelle', 'etude', 'familiale', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name', 'diplomespros'));
+        return view('agerouteindividuelles.update', compact('individuelle', 'etude', 'familiale', 'communes', 'diplomes', 'individuelleModules', 'individuelleZones', 'individuelleLocalites', 'projet_name', 'diplomespros'));
     }
 
     /**

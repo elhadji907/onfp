@@ -32,7 +32,8 @@
                                             class="text-danger">*</span>)</label>
                                     <input id="date_depot" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
                                         class="form-control @error('date_depot') is-invalid @enderror" name="date_depot"
-                                        placeholder="Votre date dépôt" value="{{ $individuelle->date_depot->format('Y-m-d') ?? old('date_depot') }}"
+                                        placeholder="Votre date dépôt"
+                                        value="{{ $individuelle->date_depot->format('Y-m-d') ?? old('date_depot') }}"
                                         autocomplete="username">
                                     @error('date_depot')
                                         <span class="invalid-feedback" role="alert">
@@ -46,7 +47,8 @@
                                     <input id="numero_dossier" type="text"
                                         class="form-control @error('numero_dossier') is-invalid @enderror"
                                         name="numero_dossier" placeholder="Votre et numero de dossier"
-                                        value="{{ $individuelle->numero_dossier ?? old('numero_dossier') }}" autocomplete="numero_dossier">
+                                        value="{{ $individuelle->numero_dossier ?? old('numero_dossier') }}"
+                                        autocomplete="numero_dossier">
                                     @error('numero_dossier')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -56,8 +58,8 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
                                     <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
-                                        name="cin" placeholder="Votre et cin" value="{{ $individuelle->cin ?? old('cin') }}"
-                                        autocomplete="cin">
+                                        name="cin" placeholder="Votre et cin"
+                                        value="{{ $individuelle->cin ?? old('cin') }}" autocomplete="cin">
                                     @error('cin')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -68,7 +70,9 @@
                                     <label for="prenom">{{ __('Prénom') }}(<span class="text-danger">*</span>)</label>
                                     <input id="prenom" type="text"
                                         class="form-control @error('prenom') is-invalid @enderror" name="prenom"
-                                        placeholder="Votre et prenom" value="{{ $individuelle->demandeur->user->firstname ?? old('prenom') }}" autocomplete="prenom">
+                                        placeholder="Votre et prenom"
+                                        value="{{ $individuelle->demandeur->user->firstname ?? old('prenom') }}"
+                                        autocomplete="prenom">
                                     @error('prenom')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -78,7 +82,8 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="nom">{{ __('Nom') }}(<span class="text-danger">*</span>)</label>
                                     <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror"
-                                        name="nom" placeholder="Votre et nom" value="{{ $individuelle->demandeur->user->name ?? old('nom') }}"
+                                        name="nom" placeholder="Votre et nom"
+                                        value="{{ $individuelle->demandeur->user->name ?? old('nom') }}"
                                         autocomplete="nom">
                                     @error('nom')
                                         <span class="invalid-feedback" role="alert">
@@ -92,7 +97,8 @@
                                     <input id="date_naiss" {{ $errors->has('date_naiss') ? 'is-invalid' : '' }}
                                         type="date" class="form-control @error('date_naiss') is-invalid @enderror"
                                         name="date_naiss" placeholder="Votre date de naissance"
-                                        value="{{ $individuelle->demandeur->user->date_naissance->format('Y-m-d') ?? old('date_naiss') }}" autocomplete="username">
+                                        value="{{ $individuelle->demandeur->user->date_naissance->format('Y-m-d') ?? old('date_naiss') }}"
+                                        autocomplete="username">
                                     @error('date_naiss')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -105,7 +111,8 @@
                                     <input id="lieu_naissance" type="text"
                                         class="form-control @error('lieu_naissance') is-invalid @enderror"
                                         name="lieu_naissance" placeholder="Votre lieu de naissance"
-                                        value="{{ $individuelle->demandeur->user->lieu_naissance ?? old('lieu_naissance') }}" autocomplete="lieu_naissance">
+                                        value="{{ $individuelle->demandeur->user->lieu_naissance ?? old('lieu_naissance') }}"
+                                        autocomplete="lieu_naissance">
                                     @error('lieu_naissance')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -116,7 +123,8 @@
                                     <label for="email">{{ __('Addresse E-Mail') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" placeholder="Votre adresse e-mail" value="{{ $individuelle->demandeur->user->email ?? old('email') }}"
+                                        name="email" placeholder="Votre adresse e-mail"
+                                        value="{{ $individuelle->demandeur->user->email ?? old('email') }}"
                                         autocomplete="email">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -130,7 +138,8 @@
                                             class="text-danger">*</span>)</label>
                                     <input id="telephone" type="text"
                                         class="form-control @error('telephone') is-invalid @enderror" name="telephone"
-                                        placeholder="70 000 00 00" value="{{ $individuelle->demandeur->user->telephone ?? old('telephone') }}"
+                                        placeholder="70 000 00 00"
+                                        value="{{ $individuelle->demandeur->user->telephone ?? old('telephone') }}"
                                         autocomplete="telephone">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
@@ -143,7 +152,8 @@
                                     <input id="telephone_secondaire" type="text"
                                         class="form-control @error('telephone_secondaire') is-invalid @enderror"
                                         name="telephone_secondaire" placeholder="70 000 00 00"
-                                        value="{{ $individuelle->telephone ?? old('telephone_secondaire') }}" autocomplete="telephone_secondaire">
+                                        value="{{ $individuelle->telephone ?? old('telephone_secondaire') }}"
+                                        autocomplete="telephone_secondaire">
                                     @error('telephone_secondaire')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -155,7 +165,7 @@
                                             class="text-danger">*</span>)</label>
                                     <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse"
                                         id="adresse" rows="1"
-                                        placeholder="Votre adresse complète">{{  $individuelle->demandeur->user->adresse ?? old('adresse') }}</textarea>
+                                        placeholder="Votre adresse complète">{{ $individuelle->demandeur->user->adresse ?? old('adresse') }}</textarea>
                                     @error('adresse')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -288,7 +298,8 @@
                                     <label for="specialite">{{ __('Spécialité') }}</label>
                                     <input id="specialite" type="specialite"
                                         class="form-control @error('specialite') is-invalid @enderror" name="specialite"
-                                        placeholder="Ex: Comptabilité" value="{{ $individuelle->specialite ?? old('specialite') }}"
+                                        placeholder="Ex: Comptabilité"
+                                        value="{{ $individuelle->specialite ?? old('specialite') }}"
                                         autocomplete="specialite">
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('specialite'))
@@ -327,13 +338,11 @@
                                     <label>Etes-vous dans un travail rénuméré ? </label> :(<span
                                         class="text-danger">*</span>)
                                     <br />
-                                    <label>
-                                        {{ Form::radio('travail_renumeration', 'Oui', $individuelle->travail_renumeration, ['class' => 'name']) }}
-                                        {{ __('Oui') }}
-                                        <br />
-                                        {{ Form::radio('travail_renumeration', 'Non', $individuelle->travail_renumeration, ['class' => 'name']) }}
-                                        {{ __('Non') }}
-                                    </label>
+                                    {{ Form::radio('travail_renumeration', 'Oui', $individuelle->travail_renumeration == 'Oui' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Oui') }}
+                                    <br />
+                                    {{ Form::radio('travail_renumeration', 'Non', $individuelle->travail_renumeration == 'Non' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Non') }}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('travail_renumeration'))
                                             @foreach ($errors->get('travail_renumeration') as $message)
@@ -345,16 +354,14 @@
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label>Si oui, comment trouvez-vous votre salaire ? </label> :
                                     <br />
-                                    <label>
-                                        {{ Form::radio('salaire', 'Indécent', false, ['class' => 'name']) }}
-                                        {{ __('Indécent') }}
-                                        <br />
-                                        {{ Form::radio('salaire', 'Moyen', false, ['class' => 'name']) }}
-                                        {{ __('Moyen') }}
-                                        <br />
-                                        {{ Form::radio('salaire', 'Bien', false, ['class' => 'name']) }}
-                                        {{ __('Bien') }}
-                                    </label>
+                                    {{ Form::radio('salaire', 'Indécent', $individuelle->salaire == 'Indécent' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Indécent') }}
+                                    <br />
+                                    {{ Form::radio('salaire', 'Moyen', $individuelle->salaire == 'Moyen' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Moyen') }}
+                                    <br />
+                                    {{ Form::radio('salaire', 'Bien', $individuelle->salaire == 'Bien' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Bien') }}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('salaire'))
                                             @foreach ($errors->get('salaire') as $message)
@@ -369,7 +376,7 @@
                                             class="text-danger">*</span>)</label>
                                     <textarea class="form-control  @error('activite_avenir') is-invalid @enderror"
                                         name="activite_avenir" id="activite_avenir" rows="1"
-                                        placeholder="Votre activité ou travail dans l'avenir">{{ old('activite_avenir') }}</textarea>
+                                        placeholder="Votre activité ou travail dans l'avenir">{{ $individuelle->activite_avenir ?? old('activite_avenir') }}</textarea>
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('activite_avenir'))
                                             @foreach ($errors->get('activite_avenir') as $message)
@@ -387,13 +394,11 @@
                                     <label> {{ __("Souffrez-vous d'un handicap quelconque ?") }} </label> :(<span
                                         class="text-danger">*</span>)
                                     <br />
-                                    <label>
-                                        {{ Form::radio('handicap', 'Oui', false, ['class' => 'name']) }}
-                                        {{ __('Oui') }}
-                                        <br />
-                                        {{ Form::radio('handicap', 'Non', false, ['class' => 'name']) }}
-                                        {{ __('Non') }}
-                                    </label>
+                                    {{ Form::radio('handicap', 'Oui', $individuelle->handicap == 'Oui' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Oui') }}
+                                    <br />
+                                    {{ Form::radio('handicap', 'Non', $individuelle->handicap == 'Non' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Non') }}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('handicap'))
                                             @foreach ($errors->get('handicap') as $message)
@@ -406,7 +411,7 @@
                                     <label for="preciser_handicap">{{ __('Si oui, précisez-le ou lesquels ? ') }}</label>
                                     <textarea class="form-control  @error('preciser_handicap') is-invalid @enderror"
                                         name="preciser_handicap" id="preciser_handicap" rows="1"
-                                        placeholder="Précisez le type de handicap">{{ old('preciser_handicap') }}</textarea>
+                                        placeholder="Précisez le type de handicap">{{ $individuelle->preciser_handicap ?? old('preciser_handicap') }}</textarea>
                                     @error('preciser_handicap')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -417,19 +422,17 @@
                                             class="text-danger">*</span>)
                                     </label> :
                                     <br />
-                                    <label>
-                                        {{ Form::radio('situation_economique', 'Très faible', false, ['class' => 'name']) }}
-                                        {{ __('Très faible') }}
-                                        <br />
-                                        {{ Form::radio('situation_economique', 'Faible', false, ['class' => 'name']) }}
-                                        {{ __('Faible') }}
-                                        <br />
-                                        {{ Form::radio('situation_economique', 'Moyenne', false, ['class' => 'name']) }}
-                                        {{ __('Moyenne') }}
-                                        <br />
-                                        {{ Form::radio('situation_economique', 'Correcte', false, ['class' => 'name']) }}
-                                        {{ __('Correcte') }}
-                                    </label>
+                                    {{ Form::radio('situation_economique', 'Très faible', $individuelle->situation_economique == 'Très faible' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Très faible') }}
+                                    <br />
+                                    {{ Form::radio('situation_economique', 'Faible', $individuelle->situation_economique == 'Faible' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Faible') }}
+                                    <br />
+                                    {{ Form::radio('situation_economique', 'Moyenne', $individuelle->situation_economique == 'Moyenne' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Moyenne') }}
+                                    <br />
+                                    {{ Form::radio('situation_economique', 'Correcte', $individuelle->situation_economique == 'Correcte' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Correcte') }}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('situation_economique'))
                                             @foreach ($errors->get('situation_economique') as $message)
@@ -443,22 +446,20 @@
                                             class="text-danger">*</span>)
                                     </label> :
                                     <br />
-                                    <label>
-                                        {{ Form::radio('victime_social', 'Emigration irrégulière', false, ['class' => 'name']) }}
-                                        {{ __('Emigration irrégulière') }}
-                                        <br />
-                                        {{ Form::radio('victime_social', 'Déplacé ou démobilisé par le conflit', false, ['class' => 'name']) }}
-                                        {{ __('Déplacé ou démobilisé par le conflit') }}
-                                        <br />
-                                        {{ Form::radio('victime_social', 'Emprisonnement', false, ['class' => 'name']) }}
-                                        {{ __('Emprisonnement') }}
-                                        <br />
-                                        {{ Form::radio('victime_social', 'Aucun', false, ['class' => 'name']) }}
-                                        {{ __('Aucun') }}
-                                        <br />
-                                        {{ Form::radio('victime_social', 'Autre', false, ['class' => 'name']) }}
-                                        {{ __('Autre') }}
-                                    </label>
+                                    {{ Form::radio('victime_social', 'Emigration irrégulière', $individuelle->victime_social == 'Emigration irrégulière' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Emigration irrégulière') }}
+                                    <br />
+                                    {{ Form::radio('victime_social', 'Déplacé ou démobilisé par le conflit', $individuelle->victime_social == 'Déplacé ou démobilisé par le conflit' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Déplacé ou démobilisé par le conflit') }}
+                                    <br />
+                                    {{ Form::radio('victime_social', 'Emprisonnement', $individuelle->victime_social == 'Emprisonnement' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Emprisonnement') }}
+                                    <br />
+                                    {{ Form::radio('victime_social', 'Aucun', $individuelle->victime_social == 'Aucun' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Aucun') }}
+                                    <br />
+                                    {{ Form::radio('victime_social', 'Autre', $individuelle->victime_social == 'Autre' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Autre') }}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('victime_social'))
                                             @foreach ($errors->get('victime_social') as $message)
@@ -471,7 +472,7 @@
                                     <label for="autre_victime">{{ __('Si autre, précisez :') }}</label>
                                     <textarea class="form-control  @error('autre_victime') is-invalid @enderror"
                                         name="autre_victime" id="autre_victime" rows="1"
-                                        placeholder="autre diplôme professionnel">{{ old('autre_victime') }}</textarea>
+                                        placeholder="autre diplôme professionnel">{{ $individuelle->autre_victime ?? old('autre_victime') }}</textarea>
                                     @error('autre_victime')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -495,7 +496,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Lieu dépôt :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('localites', $projetLocalites, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'localite']) !!}
+                                    {!! Form::select('localites', $individuelleLocalites, null, ['class' => 'form-control', 'id' => 'localite']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('localites'))
                                             @foreach ($errors->get('localites') as $message)
@@ -506,7 +507,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Zone Formation :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('zones', $projetZones, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'zone']) !!}
+                                    {!! Form::select('zones', $individuelleZones, null, ['class' => 'form-control', 'id' => 'zoneup']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('zones'))
                                             @foreach ($errors->get('zones') as $message)
@@ -516,6 +517,17 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('Module demandé') !!}
+                                    {!! Form::select('modules', $individuelleModules, null, ['class' => 'form-control', 'id' => 'moduleup']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('modules'))
+                                            @foreach ($errors->get('modules') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                              {{--    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('modules', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -525,23 +537,23 @@
                                             @endforeach
                                         @endif
                                     </small>
-                                </div>
+                                </div>  --}}
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Composition dossier :') !!}(<span class="text-danger">*</span>)
                                     <br />
-                                    <label>{{ Form::checkbox('dossier[]', 'Fiche de candidature', true, ['class' => 'name']) }}
+                                        {{ Form::radio('dossier[]', 'Fiche de candidature', $individuelle->dossier == 'Fiche de candidature' ? 'checked' : '', ['class' => 'name']) }}
                                         {{ __('Fiche de candidature') }}
                                         <br />
-                                        {{ Form::checkbox('dossier[]', "Copie carte nationale d'identité", true, ['class' => 'name']) }}
+                                        {{ Form::radio('dossier[]', "Copie carte nationale d'identité", $individuelle->dossier == "Copie carte nationale d'identité" ? 'checked' : '', ['class' => 'name']) }}
                                         {{ __("Copie carte nationale d'identité") }}
                                         <br />
-                                        {{ Form::checkbox('dossier[]', 'Certificat de résidence', true, ['class' => 'name']) }}
+                                        {{ Form::radio('dossier[]', 'Certificat de résidence', $individuelle->dossier == 'Certificat de résidence' ? 'checked' : '', ['class' => 'name']) }}
                                         {{ __('Certificat de résidence') }}
                                         <br />
-                                        {{ Form::checkbox('dossier[]', 'Copie diplomes', false, ['class' => 'name']) }}
+                                        {{ Form::radio('dossier[]', 'Copie diplomes', $individuelle->dossier == 'Copie diplomes' ? 'checked' : '', ['class' => 'name']) }}
                                         {{ __('Copie diplomes') }}
                                         <br />
-                                        {{ Form::checkbox('dossier[]', 'Copie attestations', false, ['class' => 'name']) }}
+                                        {{ Form::radio('dossier[]', 'Copie attestations', $individuelle->dossier == 'Copie attestations' ? 'checked' : '', ['class' => 'name']) }}
                                         {{ __('Copie attestations') }}
                                     </label>
                                     <small id="emailHelp" class="form-text text-muted">
@@ -686,4 +698,11 @@
             </div>
         </div>
     </div>
+@endsection
+@section('javascripts')
+    <script type="text/javascript">
+        $('#moduleup').select2().val({!! json_encode($individuelle->modules()->allRelatedIds()) !!}).trigger('change');
+        $('#localiteup').select2().val({!! json_encode($individuelle->localites()->allRelatedIds()) !!}).trigger('change');
+        $('#zoneup').select2().val({!! json_encode($individuelle->zones()->allRelatedIds()) !!}).trigger('change');
+    </script>
 @endsection
