@@ -72,7 +72,7 @@
                                     class="form-control @error('date_naiss') is-invalid @enderror" name="date_naiss"
                                     placeholder="Votre date de naissance"
                                     value="{{ $individuelle->demandeur->user->date_naissance->format('Y-m-d') ?? old('date_naiss') }}"
-                                    autocomplete="username">
+                                    autocomplete="date_naiss">
                                 @error('date_naiss')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>

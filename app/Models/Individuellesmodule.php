@@ -22,9 +22,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Individuellemodulestatut|null $individuellemodulestatut
  * @property Individuelle $individuelle
  * @property Module $module
+ * @property Individuellemodulestatut|null $individuellemodulestatut
  *
  * @package App\Models
  */
@@ -47,11 +47,6 @@ class Individuellesmodule extends Model
 		'individuellemodulestatut_id'
 	];
 
-	public function individuellemodulestatut()
-	{
-		return $this->belongsTo(Individuellemodulestatut::class);
-	}
-
 	public function individuelle()
 	{
 		return $this->belongsTo(Individuelle::class, 'individuelles_id');
@@ -60,5 +55,10 @@ class Individuellesmodule extends Model
 	public function module()
 	{
 		return $this->belongsTo(Module::class, 'modules_id');
+	}
+
+	public function individuellemodulestatut()
+	{
+		return $this->belongsTo(Individuellemodulestatut::class);
 	}
 }
