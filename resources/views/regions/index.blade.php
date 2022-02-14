@@ -50,7 +50,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($regions as $region)
                                         <tr>
-                                            <td>{!! $i++ !!}</td>
+                                            <td>{!! $region->id !!}</td>
                                             <td>{!! $region->nom !!}</td>
                                             <td>{!! $region->sigle !!}</td>
                                             <td ALIGN="CENTER">

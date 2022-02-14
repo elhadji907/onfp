@@ -172,7 +172,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Commune') !!}
-                                {!! Form::select('commune', $communes, $individuelle->commune->nom ?? old('nom'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
+                                {!! Form::select('commune', $communes, $individuelle->commune->nom ?? old('commune'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('commune'))
                                         @foreach ($errors->get('commune') as $message)

@@ -24,26 +24,26 @@
                     </h4><br />
                     <h4>
                         <b><u>Filière de formation </u></b>:
-                            {!! $pcharge->filiere->name ?? 'aucune filière demandée' !!}</small>
+                        {!! $pcharge->filiere->name ?? 'aucune filière demandée' !!}</small>
                     </h4><br />
                     <h4>
                         <b><u>Scolarité </u></b>:
-                            {!! $pcharge->scolarite->annee ?? '' !!}</small>
+                        {!! $pcharge->scolarite->annee ?? '' !!}</small>
                     </h4><br />
                     <h4>
                         <b><u>Établissement </u></b>:
-                            {!! $pcharge->etablissement->name ?? '' !!}</small>
+                        {!! $pcharge->etablissement->name ?? '' !!}</small>
                     </h4><br />
                     <h4>
                         <b><u>Localisation </u></b>:
-                            Commune de {!! $pcharge->etablissement->commune->nom ?? '' !!}, dans la région de {!! $pcharge->etablissement->commune->arrondissement->departement->region->nom ?? '' !!}</small>
+                        Commune de {!! $pcharge->etablissement->commune->nom ?? '' !!}, dans la région de {!! $pcharge->etablissement->commune->arrondissement->departement->region->nom ?? '' !!}</small>
                     </h4><br />
 
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <a href="{!! url('pcharges/' . $pcharge->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning">
                             <i class="far fa-edit">&nbsp;Modifier</i>
                         </a>
-                        <a href="{!! url('pdetails' , ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) !!}" title="voir les d&eacute;tails du courrier"
+                        <a href="{!! url('pdetails', ['$id' => $pcharge->demandeur->id, '$pchareg' => $pcharge->id]) !!}" title="voir les d&eacute;tails du courrier"
                             class="btn btn-outline-primary">
                             <i class="far fa-eye">&nbsp;D&eacute;tails</i>
                         </a>

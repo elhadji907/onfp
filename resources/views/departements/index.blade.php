@@ -49,7 +49,7 @@
                                 <?php $i = 1 ?>
                                 @foreach ($departements as $departement)
                                 <tr> 
-                                  <td>{!! $i++ !!}</td>
+                                  <td>{!! $departement->id !!}</td>
                                   <td>{!! $departement->nom !!}</td>
                                   <td>{!! $departement->region->nom ?? "" !!}</td>
                                   <td ALIGN="CENTER">

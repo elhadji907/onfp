@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 /**
  * Class Individuelle
  * 
@@ -51,6 +52,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $preciser_handicap
  * @property string|null $optiondiplome
  * @property string|null $items1
+ * @property string|null $dossier
+ * @property string|null $autre_diplomes_fournis
  * @property Carbon|null $date1
  * @property string|null $item1
  * @property string|null $item2
@@ -158,6 +161,8 @@ class Individuelle extends Model
 		'preciser_handicap',
 		'optiondiplome',
 		'items1',
+		'dossier',
+		'autre_diplomes_fournis',
 		'date1',
 		'item1',
 		'item2',

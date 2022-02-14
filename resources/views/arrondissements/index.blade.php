@@ -51,7 +51,7 @@
                                     <?php $i = 1 ?>
                                     @foreach ($arrondissements as $arrondissement)
                                     <tr> 
-                                      <td>{!! $i++ !!}</td>
+                                      <td>{!! $arrondissement->id !!}</td>
                                       <td>{!! $arrondissement->nom !!}</td>
                                       <td>{!! $arrondissement->departement->nom ?? "" !!}</td>
                                       <td>{!! $arrondissement->departement->region->nom ?? "" !!}</td>

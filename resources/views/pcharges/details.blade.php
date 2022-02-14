@@ -107,11 +107,13 @@
                 <div class="d-flex col-lg-12 margin-tb justify-content-between align-items-center">
                     <a class="btn btn-outline-success" href="{{ route('pcharges.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Retour</a>
-                    <a class="btn btn-outline-success" href="{{ url('lettre', ['$pcharges' => $pcharge->id]) }}" target="_blank">
+                    <a class="btn btn-outline-success" href="{{ url('lettre', ['$pcharges' => $pcharge->id]) }}"
+                        target="_blank">
                         <i class="far fa-envelope"></i>
                         &nbsp;Lettre</a>
                     <a class="btn btn-outline-success" title="télécharger"
-                        href="{{ url('contrat', ['$pcharges' => $pcharge->id]) }}" target="_blank"><i class="fas fa-file-download"></i>&nbsp;Contrat</a>
+                        href="{{ url('contrat', ['$pcharges' => $pcharge->id]) }}" target="_blank"><i
+                            class="fas fa-file-download"></i>&nbsp;Contrat</a>
                 </div>
             </div>
             <div class="card  border-success">
@@ -152,7 +154,8 @@
                                             <b>Date et lieu de naissance:</b>
                                             {{ $pcharge->demandeur->user->date_naissance->format('d/m/Y') }}&nbsp;à&nbsp;
                                             {{ $pcharge->demandeur->user->lieu_naissance }}<br>
-                                            <b>E-mail:</b> <span style="color: blue">{{ $pcharge->demandeur->user->email }}</span>&nbsp;&nbsp;
+                                            <b>E-mail:</b> <span
+                                                style="color: blue">{{ $pcharge->demandeur->user->email }}</span>&nbsp;&nbsp;
                                             <b>Tel:</b> {{ $pcharge->demandeur->user->telephone }}&nbsp;&nbsp;
                                             <b>Fixe:</b> {{ $pcharge->demandeur->user->fixe }}<br>
                                             <b>Fax:</b> {{ $pcharge->demandeur->user->fax }}&nbsp;&nbsp;
@@ -258,7 +261,7 @@
                                     title="Non accordée" class="btn btn-outline-danger btn-sm mt-0">
                                     <i class="fas fa-times"></i>
                                 </a>
-                            @elseif (isset($pcharge->statut) && $pcharge->statut == "Non accordée")
+                            @elseif (isset($pcharge->statut) && $pcharge->statut == 'Non accordée')
                                 <label class="badge badge-danger">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
                                 <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' => $pcharge->montant]) }}"
                                     title="Accordée" class="btn btn-outline-primary btn-sm mt-0">
@@ -268,7 +271,7 @@
                                     title="Annuler" class="btn btn-outline-danger btn-sm mt-0">
                                     <i class="fas fa-times"></i>
                                 </a>
-                            @elseif (isset($pcharge->statut) && $pcharge->statut == "Terminée")
+                            @elseif (isset($pcharge->statut) && $pcharge->statut == 'Terminée')
                                 <label class="badge badge-success">{!! $pcharge->statut ?? '' !!}</label>&nbsp;
                                 <a href="{{ url('accord', ['$pcharge' => $pcharge, '$statut' => 'Accordée', '$avis_dg' => $pcharge->montant]) }}"
                                     title="Accordée" class="btn btn-outline-primary btn-sm mt-0">

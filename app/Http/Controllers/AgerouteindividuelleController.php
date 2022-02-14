@@ -17,6 +17,7 @@ use App\Models\TypesDemande;
 use App\Models\Demandeur;
 use App\Models\Diplomespro;
 use Auth;
+use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,6 @@ class AgerouteindividuelleController extends Controller
         $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
-        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
         $etude = Etude::distinct('name')->get()->pluck('name', 'id')->unique();
 
         $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
@@ -76,7 +76,7 @@ class AgerouteindividuelleController extends Controller
         ->where("projetsmodules.projets_id", $id)
         ->get()->pluck('name', 'name')->unique();
         
-        return view('agerouteindividuelles.create', compact('etude', 'familiale', 'professionnelle', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name', 'diplomespros'));
+        return view('agerouteindividuelles.create', compact('etude', 'familiale', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name', 'diplomespros'));
     }
 
     /**
@@ -117,6 +117,7 @@ class AgerouteindividuelleController extends Controller
                 'situation_economique'              =>    'required',
                 'victime_social'                    =>    'required',
                 'modules'                           =>    'required',
+                'dossier'                           =>    'required',
         ]
         );
         
@@ -162,14 +163,21 @@ class AgerouteindividuelleController extends Controller
             $this->validate(
                 $request,
                 [
-                    'salaire'                                =>    'required',
+                    'salaire'                                      =>    'required',
                 ]
             );
         } elseif ($handicap == "Oui") {
             $this->validate(
                 $request,
                 [
-                    'preciser_handicap'                              =>    'required'
+                    'preciser_handicap'                             =>    'required'
+                ]
+            );
+        } elseif ($victime_social == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autre_victime'                                 =>    'required'
                 ]
             );
         } elseif ($victime_social == "Autre") {
@@ -268,6 +276,8 @@ class AgerouteindividuelleController extends Controller
                 ]);
         
         $demandeur->save();
+
+        $dossier = implode("; ", $request->get('dossier'));
         
         $individuelle = new Individuelle([
             'cin'                               =>     $cin,
@@ -289,6 +299,8 @@ class AgerouteindividuelleController extends Controller
             'situation_economique'              =>     $request->input('situation_economique'),
             'victime_social'                    =>     $request->input('victime_social'),
             'salaire'                           =>     $request->input('salaire'),
+            'dossier'                           =>     $dossier,
+            'autre_diplomes_fournis'            =>     $request->input('autre_diplomes_fournis'),
             'statut'                            =>     'Attente',
             'telephone'                         =>     $telephone_secondaire,
             'etudes_id'                         =>     $etude_id,
@@ -332,9 +344,38 @@ class AgerouteindividuelleController extends Controller
      * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function edit(Individuelle $individuelle)
+    public function edit($id)
     {
-        //
+        $individuelle = Individuelle::find($id);
+        $localite = Localite::get();
+        $zone = Zone::get();
+        $module = Module::get();
+        $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
+        $etude = Etude::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+
+        
+        $projetZones = DB::table("projetszones")->where("projetszones.projets_id", $id)
+        ->pluck('projetszones.zones_id', 'projetszones.zones_id')
+        ->all();
+
+        $projetLocalites = DB::table("projetslocalites")->where("projetslocalites.projets_id", $id)
+        ->pluck('projetslocalites.localites_id', 'projetslocalites.localites_id')
+        ->all();
+
+        $projetZones = DB::table("projetszones")->where("projetszones.projets_id", $id)
+        ->pluck('projetszones.zones_id', 'projetszones.zones_id')
+        ->all();
+
+        $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $id)
+        ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
+        ->all();
+
+        return view('agerouteindividuelles.update', compact('individuelle', 'etude', 'familiale', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name', 'diplomespros'));
     }
 
     /**

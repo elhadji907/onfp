@@ -58,6 +58,8 @@ class CreateIndividuellesTable extends Migration
             $table->string('preciser_handicap', 200)->nullable();
             $table->string('optiondiplome', 200)->nullable();
             $table->string('items1', 200)->nullable();
+            $table->longText('dossier')->nullable();
+            $table->longText('autre_diplomes_fournis')->nullable();
             $table->timestamp('date1')->nullable();
             $table->string('item1', 200)->nullable();
             $table->string('item2', 200)->nullable();

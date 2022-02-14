@@ -215,7 +215,7 @@ class ProjetSeeder extends Seeder
 
              Projet::all()->each(function ($projet) use ($zones) {
                  $projet->zones()->attach(
-                     $zones->random(rand(1, 18))->pluck('id')->toArray()
+                     $zones->random(rand(1, 17))->pluck('id')->toArray()
                  );
              });
 

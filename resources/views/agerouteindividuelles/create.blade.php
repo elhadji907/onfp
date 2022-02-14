@@ -287,9 +287,9 @@
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     <label for="specialite">{{ __('Spécialité') }}</label>
                                     <input id="specialite" type="specialite"
-                                        class="form-control @error('specialite') is-invalid @enderror"
-                                        name="specialite" placeholder="Ex: Comptabilité"
-                                        value="{{ old('specialite') }}" autocomplete="specialite">
+                                        class="form-control @error('specialite') is-invalid @enderror" name="specialite"
+                                        placeholder="Ex: Comptabilité" value="{{ old('specialite') }}"
+                                        autocomplete="specialite">
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('specialite'))
                                             @foreach ($errors->get('specialite') as $message)
@@ -525,6 +525,41 @@
                                             @endforeach
                                         @endif
                                     </small>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('Composition dossier :') !!}(<span class="text-danger">*</span>)
+                                    <br />
+                                    <label>{{ Form::checkbox('dossier[]', 'Fiche de candidature', true, ['class' => 'name']) }}
+                                        {{ __('Fiche de candidature') }}
+                                        <br />
+                                        {{ Form::checkbox('dossier[]', "Copie carte nationale d'identité", true, ['class' => 'name']) }}
+                                        {{ __("Copie carte nationale d'identité") }}
+                                        <br />
+                                        {{ Form::checkbox('dossier[]', 'Certificat de résidence', true, ['class' => 'name']) }}
+                                        {{ __('Certificat de résidence') }}
+                                        <br />
+                                        {{ Form::checkbox('dossier[]', 'Copie diplomes', false, ['class' => 'name']) }}
+                                        {{ __('Copie diplomes') }}
+                                        <br />
+                                        {{ Form::checkbox('dossier[]', 'Copie attestations', false, ['class' => 'name']) }}
+                                        {{ __('Copie attestations') }}
+                                    </label>
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('dossier'))
+                                            @foreach ($errors->get('dossier') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                                    <label for="autre_diplomes_fournis">{{ __('Si autre, précisez :') }}</label>
+                                    <textarea class="form-control  @error('autre_diplomes_fournis') is-invalid @enderror"
+                                        name="autre_diplomes_fournis" id="autre_diplomes_fournis" rows="2"
+                                        placeholder="lister les autres diplômes fournis">{{ old('autre_diplomes_fournis') }}</textarea>
+                                    @error('autre_diplomes_fournis')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             {{-- <div class="form-row">

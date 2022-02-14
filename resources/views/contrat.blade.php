@@ -58,7 +58,7 @@
                             Et
                         </p>
                     </center>
-                    <center>
+                   {{--   <center>
                         <p>{{ $pcharge->etablissement->name }}&nbsp;
                             @if (isset($pcharge->etablissement->sigle))
                                 ({{ $pcharge->etablissement->sigle }})
@@ -69,14 +69,14 @@
                             <strong>Email</strong> : <span style="color: blue">
                                 {{ $pcharge->etablissement->email }}</span>
                         </p>
-                    </center>
+                    </center>  --}}
                 </b>
                 <p>Il a été convenu et arrêté ce qui suit :</p>
                 <h6><b>Article 1 : Objet du contrat </b></h6>
-                <p>Pour l’année académique <b>{{ $pcharge->scolarite->annee }}</b>, l’Office National de Formation
+                {{--  <p>Pour l’année académique <b>{{ $pcharge->scolarite->annee }}</b>, l’Office National de Formation
                     Professionnelle (ONFP) confie à
                     l’Opérateur, qui accepte, la formation d’un(e) étudiant(e), conformément aux indications du tableau
-                    suivant :</p>
+                    suivant :</p>  --}}
                 <div>
 
                     {{-- <table class="table table-bordered" method="POST" cellpadding="0" cellspacing="0">
@@ -135,19 +135,19 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">Prénoms et Nom</th>
+                               {{--   <th scope="col">Prénoms et Nom</th>
                                 <th scope="col">Spécialité</th>
                                 <th scope="col">Niveau</th>
-                                <th scope="col">Montant (CFA)</th>
+                                <th scope="col">Montant (CFA)</th>  --}}
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}
+                                {{--  <td>{{ $pcharge->demandeur->user->firstname }}&nbsp;&nbsp;{{ $pcharge->demandeur->user->name }}
                                 </td>
                                 <td>{{ $pcharge->filiere->name }}</td>
                                 <td>{{ $pcharge->niveau }}</td>
-                                <td>{!! number_format($pcharge->avis_dg, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>
+                                <td>{!! number_format($pcharge->avis_dg, 0, ',', ' ') . ' ' . 'F CFA' !!}</td>  --}}
                             </tr>
                         </tbody>
                     </table>

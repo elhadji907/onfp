@@ -51,7 +51,7 @@
                                 <?php $i = 1; ?>
                                 @foreach ($communes as $commune)
                                     <tr>
-                                        <td>{!! $i++ !!}</td>
+                                        <td>{!! $commune->id !!}</td>
                                         <td>{!! $commune->nom !!}</td>
                                         <td>{!! $commune->arrondissement->nom !!}</td>
                                         <td>{!! $commune->arrondissement->departement->nom !!}</td>

@@ -64,7 +64,6 @@ class IndividuelleController extends Controller
      */
     public function create()
     {
-
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $conventions = Convention::distinct('name')->get()->pluck('name', 'name')->unique();
@@ -81,35 +80,26 @@ class IndividuelleController extends Controller
         
         $civilites = User::pluck('civilite', 'civilite');
 
-        if(isset($user->demandeur->individuelles)){
+        if (isset($user->demandeur->individuelles)) {
             foreach ($user->demandeur->individuelles as $key => $individuelle) {
             }
         }
 
-            $demandeurs = $user->demandeur;
-            $individuelles = $demandeurs->individuelles;
-            $utilisateurs = $user;
+        $demandeurs = $user->demandeur;
+        $individuelles = $demandeurs->individuelles;
+        $utilisateurs = $user;
 
-            $cont = $individuelle->where('demandeurs_id', '=', $demandeurs->id)->count();
+        $cont = $individuelle->where('demandeurs_id', '=', $demandeurs->id)->count();
 
-          if (isset($individuelle->cin) && $cont >= 2) {
+        if (isset($individuelle->cin) && $cont >= 2) {
             $message = $user->firstname.' '.$user->name.', vous avez certainement atteint la limite du nombre de demandes autorisées !';
             return redirect()->route('profiles.show', ['user'=>$user])->with('attention', $message);
-          } 
-            if(isset($individuelle->cin) && !$user->hasRole('Administrateur')){                
+        }
+        if (isset($individuelle->cin) && !$user->hasRole('Administrateur')) {
             return view('individuelles.icreate', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
-            }
-
-            else {
-               
-                           
-                return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
-            
-
-            }
-
-
-       
+        } else {
+            return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
+        }
     }
 
     public function findNomDept(Request $request)
@@ -135,10 +125,10 @@ class IndividuelleController extends Controller
         }
 
         
-        if(isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')){
+        if (isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')) {
             $this->validate(
                 $request,
-                [                    
+                [
                     /* 'cin'                 =>  "required|string|min:13|max:15", */
                     'date_depot'          =>  'required|date_format:Y-m-d',
                     'autre_tel'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
@@ -154,10 +144,7 @@ class IndividuelleController extends Controller
                     'projet_professionnel'=>  'required|string|min:100',
                 ]
             );
-    
-        }
-        
-        else {
+        } else {
             $this->validate(
                 $request,
                 [
@@ -253,9 +240,7 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-        if(isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')){     
-           
-
+        if (isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')) {
             $individuelle = new Individuelle([
                 'cin'                       =>     $cin,
                 'experience'                =>     $request->input('experience'),
@@ -283,11 +268,9 @@ class IndividuelleController extends Controller
         
             $individuelle->save();
             
-        $individuelle->modules()->sync($request->input('modules'));
-        return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
-
+            $individuelle->modules()->sync($request->input('modules'));
+            return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
         } else {
-
             $user = new User([
                 'sexe'                      =>      $request->input('sexe'),
                 'civilite'                  =>      $civilite,
@@ -351,7 +334,6 @@ class IndividuelleController extends Controller
             $individuelle->modules()->sync($request->input('modules'));
             return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
         }
-    
     }
 
     /**
@@ -443,7 +425,8 @@ class IndividuelleController extends Controller
 
         $date_depot = Carbon::now();
 
-        return view('individuelles.update', compact('projets','conventions','etude', 'civilites', 'individuelle', 'communes', 'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
+        return view('individuelles.update', compact('projets', 'conventions', 'etude', 'civilites', 'individuelle', 'communes', 
+        'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
     }
 
     /**
@@ -461,9 +444,9 @@ class IndividuelleController extends Controller
 
         /* $this->authorize('update',  $individuelle); */
 
-            $this->validate(
-                $request,
-                [
+        $this->validate(
+            $request,
+            [
                'sexe'                =>  'required|string|max:10',
                'cin'                 =>  "required|string|min:13|max:15",
                'prenom'              =>  'required|string|max:50',
@@ -484,7 +467,7 @@ class IndividuelleController extends Controller
                'diplome'             =>  'required',
                'optiondiplome'       =>  'required',
                ]
-            );
+        );
 
         $updated_by1 = $user_connect->firstname;
         $updated_by2 = $user_connect->name;
@@ -523,7 +506,7 @@ class IndividuelleController extends Controller
 
         $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $communes = Commune::find($commune_id);        
+        $communes = Commune::find($commune_id);
         $region = $communes->arrondissement->departement->region->nom;
         
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
