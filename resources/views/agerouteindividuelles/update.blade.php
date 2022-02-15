@@ -4,8 +4,14 @@
     <div class="content mb-5">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
-                @if (session()->has('success'))
-                    <div class="alert alert-success" role="alert">{{ session('success') }}</div>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @elseif (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
                 @endif
                 <div class="row justify-content-center pb-2">
                     <div class="col-lg-12 margin-tb">
@@ -476,18 +482,82 @@
                                 @enderror
                             </div>
                         </div>
-                        {{-- <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('etablissement') is-invalid @enderror"
-                                        name="etablissement" id="etablissement" rows="1"
-                                        placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
-                                    @error('etablissement')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div> --}}
+                        <div class="bg-gradient-secondary text-center">
+                            <p class="h5 text-white mb-2">COMPOSITION DOSSIER</p>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <b>{!! Form::label('Composition dossier :') !!}</b>(<span class="text-danger">*</span>)
+                                <br />
+                                {{-- @if (isset($dossier[0]))
+                                    {{ Form::checkbox('dossier[]', 'Fiche de candidature', $dossier[0] == 'Fiche de candidature' ? 'checked' : '', ['class' => 'name', 'disabled' => 'disabled']) }}
+                                    {{ __('Fiche de candidature') }}
+                                @else
+                                    {{ Form::checkbox('dossier[]', 'Fiche de candidature', true, ['class' => 'name']) }}
+                                    {{ __('Fiche de candidature') }}
+                                @endif
+                                <br />
+                                @if (isset($dossier[1]))
+                                    {{ Form::checkbox('dossier[]',"Copie carte nationale d'identité",$dossier[1] == "Copie carte nationale d'identité" ? 'checked' : '',['class' => 'name', 'disabled' => 'disabled']) }}
+                                    {{ __("Copie carte nationale d'identité") }}
+                                @else
+                                    {{ Form::checkbox('dossier[]', "Copie carte nationale d'identité", true, ['class' => 'name']) }}
+                                    {{ __("Copie carte nationale d'identité") }}
+                                @endif
+                                <br />
+                                @if (isset($dossier[2]))
+                                    {{ Form::checkbox('dossier[]','Certificat de résidence',$dossier[2] == 'Certificat de résidence' ? 'checked' : '',['class' => 'name', 'disabled' => 'disabled']) }}
+                                    {{ __('Certificat de résidence') }}
+                                @else
+                                    {{ Form::checkbox('dossier[]', 'Certificat de résidence', true, ['class' => 'name']) }}
+                                    {{ __('Certificat de résidence') }}
+                                @endif
+                                <br />
+                                @if (isset($dossier[3]))
+                                    {{ Form::checkbox('dossier[]', 'Copie diplomes ou attestations', $dossier[3] == 'Copie diplomes ou attestations' ? 'checked' : '', ['class' => 'name']) }}
+                                    {{ __('Copie diplomes ou attestations') }}
+                                @else
+                                    {{ Form::checkbox('dossier[]', 'Copie diplomes ou attestations', false, ['class' => 'name']) }}
+                                    {{ __('Copie diplomes ou attestations') }}
+                                @endif --}}
+
+                                {{ Form::checkbox('dossier', 'Fiche de candidature', true, ['class' => 'name', 'disabled' => 'disabled']) }}
+                                {{ __('Fiche de candidature') }}
+                                <br />
+                                {{ Form::checkbox('dossier', "Copie carte nationale d'identité", true, ['class' => 'name', 'disabled' => 'disabled']) }}
+                                {{ __("Copie carte nationale d'identité") }}
+                                <br />
+                                {{ Form::checkbox('dossier', 'Certificat de résidence', true, ['class' => 'name', 'disabled' => 'disabled']) }}
+                                {{ __('Certificat de résidence') }}
+                                <br />
+                                {{ Form::checkbox('dossier','Copie diplomes ou attestations',$individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '',['class' => 'name']) }}
+                                {{ __('Copie diplomes ou attestations') }}
+
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('dossier'))
+                                        @foreach ($errors->get('dossier') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                                <label for="autre_diplomes_fournis">{{ __('Si autre, précisez :') }}</label>
+                                <textarea class="form-control  @error('autre_diplomes_fournis') is-invalid @enderror"
+                                    name="autre_diplomes_fournis" id="autre_diplomes_fournis" rows="2"
+                                    placeholder="lister les autres diplômes fournis">{{ $individuelle->autre_diplomes_fournis ?? old('autre_diplomes_fournis') }}</textarea>
+                                @error('autre_diplomes_fournis')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="submit" class="btn btn-outline-primary"><i
+                                    class="far fa-paper-plane"></i>&nbsp;Modifier</button>
+                            {{-- {!! Form::submit('Modifier', ['class' => 'btn btn-outline-primary pull-right']) !!} --}}
+                        </div>
+                        <br />
+                        <br />
                         <div class="bg-gradient-secondary text-center">
                             <p class="h5 text-white mb-2">CHOIX ET LOCALISATION</p>
                         </div>
@@ -527,7 +597,7 @@
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
                                 <br />
-                                @foreach ($module as $value)
+                                @foreach ($projetModules as $value)
                                     <label>{{ Form::radio('module', $value->id, in_array($value->id, $individuelleModules) ? true : false, ['class' => 'name']) }}
                                         {{ $value->name }}</label>
                                     <br />
@@ -540,145 +610,7 @@
                                     @endif
                                 </small>
                             </div>
-                            {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('modules', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('modules'))
-                                            @foreach ($errors->get('modules') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div> --}}
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                {!! Form::label('Composition dossier :') !!}(<span class="text-danger">*</span>)
-                                <br />
-                                @if (isset($dossier[0]))
-                                    {{ Form::checkbox('dossier[]', 'Fiche de candidature', $dossier[0] == 'Fiche de candidature' ? 'checked' : '', ['class' => 'name']) }}
-                                    {{ __('Fiche de candidature') }}
-                                    @else {{ Form::checkbox('dossier[]', 'Fiche de candidature', true, ['class' => 'name']) }}
-                                    {{ __('Fiche de candidature') }}
-                                @endif
-                                <br />
-                                @if (isset($dossier[1]))
-                                    {{ Form::checkbox('dossier[]',"Copie carte nationale d'identité",$dossier[1] == "Copie carte nationale d'identité" ? 'checked' : '',['class' => 'name']) }}
-                                    {{ __("Copie carte nationale d'identité") }}
-                                    @else 
-                                    {{ Form::checkbox('dossier[]', "Copie carte nationale d'identité", true, ['class' => 'name']) }}
-                                    {{ __("Copie carte nationale d'identité") }}
-                                @endif
-                                <br />
-                                @if (isset($dossier[2]))
-                                    {{ Form::checkbox('dossier[]','Certificat de résidence',$dossier[2] == 'Certificat de résidence' ? 'checked' : '',['class' => 'name']) }}
-                                    {{ __('Certificat de résidence') }}
-                                    @else 
-                                    {{ Form::checkbox('dossier[]', 'Certificat de résidence', true, ['class' => 'name']) }}
-                                    {{ __('Certificat de résidence') }}
-                                @endif
-                                <br />
-                                @if (isset($dossier[3]))
-                                    {{ Form::checkbox('dossier[]', 'Copie diplomes', $dossier[3] == 'Copie diplomes' ? 'checked' : '', ['class' => 'name']) }}
-                                    {{ __('Copie diplomes') }}
-                                    @else 
-                                    {{ Form::checkbox('dossier[]', 'Copie diplomes', false, ['class' => 'name']) }}
-                                    {{ __('Copie diplomes') }}
-                                @endif
-                                <br />
-                                @if (isset($dossier[4]))
-                                    {{ Form::checkbox('dossier[]', 'Copie attestations', $dossier[4] == 'Copie attestations' ? 'checked' : '', ['class' => 'name']) }}
-                                    {{ __('Copie attestations') }}
-                                    @else 
-                                    {{ Form::checkbox('dossier[]', 'Copie attestations', false, ['class' => 'name']) }}
-                                    {{ __('Copie attestations') }}
-                                @endif
-                                </label>
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('dossier'))
-                                        @foreach ($errors->get('dossier') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
-                            </div>
-                            <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                                <label for="autre_diplomes_fournis">{{ __('Si autre, précisez :') }}</label>
-                                <textarea class="form-control  @error('autre_diplomes_fournis') is-invalid @enderror"
-                                    name="autre_diplomes_fournis" id="autre_diplomes_fournis" rows="2"
-                                    placeholder="lister les autres diplômes fournis">{{ $individuelle->autre_diplomes_fournis ?? old('autre_diplomes_fournis') }}</textarea>
-                                @error('autre_diplomes_fournis')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
-                        {{-- <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('Nbre pièces fournis:') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::number('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '10']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('nombre_de_piece'))
-                                            @foreach ($errors->get('nombre_de_piece') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                            </div> --}}
-                        {{-- <div class="form-row">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label
-                                        for="motivation">{{ __('Pourquoi voulez-vous faire cette formation ?') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('motivation') is-invalid @enderror"
-                                        name="motivation" id="motivation" rows="3"
-                                        placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ old('motivation') }}</textarea>
-                                    @error('motivation')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="prerequis">{{ __('Avez-vous des prerequis ?') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('prerequis') is-invalid @enderror"
-                                        name="prerequis" id="prerequis" rows="1"
-                                        placeholder="Prérequis par rapport à la formation demandée">{{ old('prerequis') }}</textarea>
-                                    @error('prerequis')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Qualifications :') !!}
-                                    {!! Form::textarea('qualification', null, ['placeholder' => 'Qualifications', 'rows' => 1, 'class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('experience :') !!}
-                                    {!! Form::textarea('experience', null, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 2, 'class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label for="projet_professionnel">{{ __('Projet professionnel') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('projet_professionnel') is-invalid @enderror"
-                                        name="projet_professionnel" id="projet_professionnel" rows="5"
-                                        placeholder="Votre projet professionnel">{{ old('projet_professionnel') }}</textarea>
-                                    @error('projet_professionnel')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('Informations :') !!}
-                                    {!! Form::textarea('information', null, ['placeholder' => 'Informations complémenaires', 'rows' => 2, 'class' => 'form-control']) !!}
-                                </div>
-                            </div> --}}
                     </div>
                 </div>
                 <br />
@@ -687,8 +619,6 @@
                 {!! Form::hidden('username', $individuelle->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
                 {!! Form::hidden('numero', $individuelle->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
                 {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
-                {{-- <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i>&nbsp;Enregistrer</button> --}}
-                {!! Form::submit('Modifier', ['class' => 'btn btn-outline-primary pull-right']) !!}
                 {!! Form::close() !!}
                 <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">

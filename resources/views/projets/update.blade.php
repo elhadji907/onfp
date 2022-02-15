@@ -144,7 +144,7 @@
                         </div> --}}
                         <div class="col-xs-12 col-sm-12 col-md-12 text-right">
                             <button type="submit" class="btn btn-outline-primary"><i
-                                    class="far fa-paper-plane"></i>&nbsp;Soumettre</button>
+                                    class="far fa-paper-plane"></i>&nbsp;Modifier</button>
                         </div>
 
                         <div class="form-row">

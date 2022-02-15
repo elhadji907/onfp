@@ -529,20 +529,17 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Composition dossier :') !!}(<span class="text-danger">*</span>)
                                     <br />
-                                    <label>{{ Form::checkbox('dossier[]', 'Fiche de candidature', true, ['class' => 'name']) }}
+                                    <label>{{ Form::checkbox('dossier', 'Fiche de candidature', true, ['class' => 'name', 'disabled' => 'disabled']) }}
                                         {{ __('Fiche de candidature') }}
                                         <br />
-                                        {{ Form::checkbox('dossier[]', "Copie carte nationale d'identité", true, ['class' => 'name']) }}
+                                        {{ Form::checkbox('dossier', "Copie carte nationale d'identité", true, ['class' => 'name', 'disabled' => 'disabled']) }}
                                         {{ __("Copie carte nationale d'identité") }}
                                         <br />
-                                        {{ Form::checkbox('dossier[]', 'Certificat de résidence', true, ['class' => 'name']) }}
+                                        {{ Form::checkbox('dossier', 'Certificat de résidence', true, ['class' => 'name', 'disabled' => 'disabled']) }}
                                         {{ __('Certificat de résidence') }}
                                         <br />
-                                        {{ Form::checkbox('dossier[]', 'Copie diplomes', false, ['class' => 'name']) }}
-                                        {{ __('Copie diplomes') }}
-                                        <br />
-                                        {{ Form::checkbox('dossier[]', 'Copie attestations', false, ['class' => 'name']) }}
-                                        {{ __('Copie attestations') }}
+                                        {{ Form::checkbox('dossier', 'Copie diplomes ou attestations', false, ['class' => 'name']) }}
+                                        {{ __('Copie diplomes ou attestations') }}
                                     </label>
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('dossier'))

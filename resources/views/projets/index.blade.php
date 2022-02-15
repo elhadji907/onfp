@@ -62,15 +62,15 @@
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{ route('projets.show', $projet->id) }}"><i
-                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;
                                                 @can('projet-edit')
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ route('projets.edit', $projet->id) }}"><i
                                                             class="far fa-edit">&nbsp;</i></a>
                                                 @endcan
                                                 &nbsp;
+                                                <a class="btn btn-info btn-sm"
+                                                    href="{{ route('projets.show', $projet->id) }}"><i
+                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;
                                                 @can('projet-delete')
                                                     {!! Form::open(['method' => 'DELETE', 'route' => ['projets.destroy', $projet->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}

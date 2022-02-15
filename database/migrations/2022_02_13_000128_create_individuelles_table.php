@@ -54,6 +54,7 @@ class CreateIndividuellesTable extends Migration
             $table->string('handicap', 45)->nullable();
             $table->string('situation_economique', 200)->nullable();
             $table->string('victime_social', 200)->nullable();
+            $table->string('autre_victime', 200)->nullable();
             $table->string('salaire', 200)->nullable();
             $table->string('preciser_handicap', 200)->nullable();
             $table->string('optiondiplome', 200)->nullable();
