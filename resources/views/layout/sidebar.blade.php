@@ -152,7 +152,7 @@
         </li>
     @else
     @endhasrole
-    @hasrole('super-admin|Administrateur|Gestionnaire')
+    @hasrole('super-admin|Administrateur|Gestionnaire|Ageroute')
         <li class="nav-item">
             <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_ageroute"
                 aria-expanded="true" aria-controls="collapsePages_ageroute">

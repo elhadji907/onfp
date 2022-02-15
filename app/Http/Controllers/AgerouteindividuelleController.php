@@ -32,7 +32,7 @@ class AgerouteindividuelleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']);
+        $this->middleware(['role:super-admin|Administrateur|Ageroute|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']);
     }
     /**
      * Display a listing of the resource.
@@ -344,6 +344,10 @@ class AgerouteindividuelleController extends Controller
         $zone = Zone::get();
         $module = Module::get();
 
+        /* dd($individuelle->demandeur->user); */
+
+        /* $this->authorize('update',  $individuelle->demandeur->user); */
+
         $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
@@ -395,6 +399,8 @@ class AgerouteindividuelleController extends Controller
         $user_connect           =   Auth::user();
         $demandeur = $individuelle->demandeur;
         $utilisateur   =   $demandeur->user;
+
+        /* $this->authorize('update',  $individuelle); */
 
         $this->validate(
             $request,

@@ -50,6 +50,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\FilierespecialiteController;
@@ -105,6 +106,7 @@ Route::group([
         })->name('findividuelles.selectingenieurs');
         Route::get('/courriers/list', [CourrierController::class, 'list'])->name('courriers.list');
         Route::get('/roles/list', [RoleController::class, 'list'])->name('roles.list');
+        Route::get('/permissions/list', [PermissionController::class, 'list'])->name('permissions.list');
         Route::get('/recues/list', [RecueController::class, 'list'])->name('recues.list');
         Route::get('/departs/list', [DepartController::class, 'list'])->name('departs.list');
         Route::get('/internes/list', [InterneController::class, 'list'])->name('internes.list');
@@ -240,6 +242,7 @@ Route::group([
         Route::resource('/arrondissements', ArrondissementController::class);
         Route::resource('/communes', CommuneController::class);
         Route::resource('/roles', RoleController::class);
+        Route::resource('/permissions', PermissionController::class);
         Route::resource('/etablissements', EtablissementController::class);
         Route::resource('/filieres', FiliereController::class);
         Route::resource('/filierespecialites', FilierespecialiteController::class);
