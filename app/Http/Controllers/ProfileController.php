@@ -81,67 +81,19 @@ class ProfileController extends Controller
 
         $demandeur  =  $user->demandeur;
         $courriers  = $user->courriers;
-
         
-        if ($user->hasRole('Demandeur')) { 
-
-            $individuelles  =  $demandeur->individuelles;
-            $collectives  =  $demandeur->collectives;
-            $pcharges  =  $demandeur->pcharges;
-    
-    
-            foreach ($individuelles as $key => $individuelle) {
-            }
-    
-            foreach ($collectives as $key => $collective) {
-            }
-    
-            foreach ($pcharges as $key => $pcharge) {
-            }
-    
-            return view('profiles.show', compact('user', 'courriers', 'individuelle', 'collective', 'pcharge'));         
-            } 
-            elseif ($user->hasRole('Individuelle') && $user->hasRole('Collective') && $user->hasRole('Pcharge')) {
-                $individuelles  =  $demandeur->individuelles;
-                foreach ($individuelles as $key => $individuelle) {
-                }
-                $collectives  =  $demandeur->collectives;
-                foreach ($collectives as $key => $collective) {
-                }
-                $pcharges  =  $demandeur->pcharges;
-                foreach ($pcharges as $key => $pcharge) {
-                }
-                return view('profiles.show', compact('user', 'courriers', 'individuelle', 'collective', 'pcharge'));  
-            }
-            elseif ($user->hasRole('Individuelle')) {
-                $individuelles  =  $demandeur->individuelles;
-                foreach ($individuelles as $key => $individuelle) {
-                }
-                return view('profiles.show', compact('user', 'courriers', 'individuelle'));  
-            }
-            elseif ($user->hasRole('Collective')) {
-                $collectives  =  $demandeur->collectives;
-                foreach ($collectives as $key => $collective) {
-                }
-                return view('profiles.show', compact('user', 'courriers', 'collective'));  
-            }
-            elseif ($user->hasRole('Pcharge')) {
-                $pcharges  =  $demandeur->pcharges;
-                foreach ($pcharges as $key => $pcharge) {
-                }
-                return view('profiles.show', compact('user', 'courriers', 'pcharge'));  
-            }
-            elseif ($user->hasRole('Nologin')) {
-                return view('layout.404'); 
-            }
-            else {
-                
+        /* if ($user->hasRole('Ageroute')) {
+            $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+            $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+            $projet = Projet::find($id);
+            return view('agerouteindividuelles.index', compact('projet', 'projet_name'));
+        } elseif ($user->hasRole('Demandeur')) {
+            return view('profiles.show', compact('user', 'courriers'));
+        } else {
             $courriers = Courrier::all();
-    
-            $pcharges = Pcharge::distinct('scolarites_id')->pluck('annee', 'annee'); 
-            return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'pcharges'));      
-    
-            }
+            return view('courriers.index', compact('courriers', 'courrier', 'recues', 'internes', 'departs'));
+        } */
+        return view('profiles.show', compact('user', 'courriers'));
     }
 
     /**

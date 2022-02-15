@@ -9,6 +9,7 @@ use App\Models\Interne;
 use App\Models\Depart;
 use App\Models\Courrier;
 use App\Models\Pcharge;
+use App\Models\Projet;
 use Auth;
 
 class HomeController extends Controller
@@ -26,7 +27,6 @@ class HomeController extends Controller
 
     public function index()
     {
-
         $recues = Recue::get()->count();
         $internes = Interne::get()->count();
         $departs = Depart::get()->count();
@@ -40,66 +40,16 @@ class HomeController extends Controller
         $user_connect = Auth::user();
         $demandeur  =  $user_connect->demandeur;
         $courriers = $user->courriers;
-
-        if ($user->hasRole('Demandeur')) { 
-
-        $individuelles  =  $demandeur->individuelles;
-        $collectives  =  $demandeur->collectives;
-        $pcharges  =  $demandeur->pcharges;
-
-
-        foreach ($individuelles as $key => $individuelle) {
+        if ($user->hasRole('Ageroute')) {
+            $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+            $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+            $projet = Projet::find($id);
+            return view('agerouteindividuelles.index', compact('projet', 'projet_name'));
+        } elseif ($user->hasRole('Demandeur')) {
+            return view('profiles.show', compact('user', 'courriers'));
+        } else {
+            $courriers = Courrier::all();
+            return view('courriers.index', compact('courriers', 'courrier', 'recues', 'internes', 'departs'));
         }
-
-        foreach ($collectives as $key => $collective) {
-        }
-
-        foreach ($pcharges as $key => $pcharge) {
-        }
-
-        return view('profiles.show', compact('user', 'courriers', 'individuelle', 'collective', 'pcharge'));         
-        } 
-        elseif ($user->hasRole('Individuelle') && $user->hasRole('Collective') && $user->hasRole('Pcharge')) {
-            $individuelles  =  $demandeur->individuelles;
-            foreach ($individuelles as $key => $individuelle) {
-            }
-            $collectives  =  $demandeur->collectives;
-            foreach ($collectives as $key => $collective) {
-            }
-            $pcharges  =  $demandeur->pcharges;
-            foreach ($pcharges as $key => $pcharge) {
-            }
-            return view('profiles.show', compact('user', 'courriers', 'individuelle', 'collective', 'pcharge'));  
-        }
-        elseif ($user->hasRole('Individuelle')) {
-            $individuelles  =  $demandeur->individuelles;
-            foreach ($individuelles as $key => $individuelle) {
-            }
-            return view('profiles.show', compact('user', 'courriers', 'individuelle'));  
-        }
-        elseif ($user->hasRole('Collective')) {
-            $collectives  =  $demandeur->collectives;
-            foreach ($collectives as $key => $collective) {
-            }
-            return view('profiles.show', compact('user', 'courriers', 'collective'));  
-        }
-        elseif ($user->hasRole('Pcharge')) {
-            $pcharges  =  $demandeur->pcharges;
-            foreach ($pcharges as $key => $pcharge) {
-            }
-            return view('profiles.show', compact('user', 'courriers', 'pcharge'));  
-        }
-        elseif ($user->hasRole('Nologin')) {
-            return view('layout.404'); 
-        }
-        else {
-            
-        $courriers = Courrier::all();
-
-        $pcharges = Pcharge::distinct('scolarites_id')->pluck('annee', 'annee'); 
-        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'pcharges'));      
-
-        }
-        
     }
 }

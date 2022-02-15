@@ -58,41 +58,17 @@
                                                 <td>{!! $individuelle->commune->nom ?? '' !!}</td>
                                                 <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
                                                 <td class="d-flex align-items-baseline">
-                                                    @can('ageroute-zig')
                                                     <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                         title="modifier">
                                                         <i class="far fa-edit">&nbsp;</i>
                                                     </a>
-                                                    @endcan
-                                                    @can('ageroute-bing')
-                                                    <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                        title="modifier">
-                                                        <i class="far fa-edit">&nbsp;</i>
-                                                    </a>
-                                                    @endcan
-                                                    @can('ageroute-bounk')
-                                                    <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                        title="modifier">
-                                                        <i class="far fa-edit">&nbsp;</i>
-                                                    </a>
-                                                    @endcan
                                                     &nbsp;
                                                     <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                         class='btn btn-primary btn-sm' title="voir">
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
-                                                    @can('ageroute-zig')
-                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
-                                                    @endcan
-                                                    @can('ageroute-bing')
-                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
-                                                    @endcan
-                                                    @can('ageroute-bounk')
+                                                    @can('role-delete')
                                                     {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                     {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                     {!! Form::close() !!}

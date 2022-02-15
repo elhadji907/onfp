@@ -36,7 +36,7 @@ class IndividuelleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']);
+        $this->middleware(['role:super-admin|Administrateur|Courrier|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge|Ageroute']);
     }
     /**
      * Display a listing of the resource.
