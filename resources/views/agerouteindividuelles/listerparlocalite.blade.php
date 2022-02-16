@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
-    <div class="container-fluid">
+    {{-- <div class="container-fluid">
         <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -126,7 +126,7 @@
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        @foreach ($projet->individuelles as $key => $individuelle)
+                                        @foreach ($localite->individuelles as $key => $individuelle)
                                             <tr>
                                                 <td>{!! $individuelle->numero_dossier !!}</td>
                                                 <td>{!! $individuelle->cin !!}</td>

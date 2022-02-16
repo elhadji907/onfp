@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Localite;
-use App\Models\Zone;
-use App\Models\Projet;
-use App\Models\Projetslocalite;
 use Illuminate\Http\Request;
 
-class AgeroutelocaliteController extends Controller
+class LocaliteagerouteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,18 +14,7 @@ class AgeroutelocaliteController extends Controller
      */
     public function index()
     {
-        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
-        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
-
-        $ageroutelocalite = Projet::all()->load(['localites'])
-        ->where('name', '=', $projet_name);
-
-        foreach ($ageroutelocalite as $ageroutelocalites) {
-        }
-        /* $ageroutelocalites = Localite::where('name', $projet_name)->get(); */
-
-        /* dd($projet_name); */
-        return view('ageroutelocalites.index', compact('ageroutelocalites', 'projet_name'));
+        dd('ok');
     }
 
     /**
