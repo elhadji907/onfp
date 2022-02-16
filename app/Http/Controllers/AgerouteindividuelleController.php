@@ -44,7 +44,16 @@ class AgerouteindividuelleController extends Controller
         $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet = Projet::find($id);
+    
+        /* $localites = $projet->localites()->withCount('localites')->get(); */
+
+        /* $projetlocalites = Localite::join("projetslocalites", "projetslocalites.localites_id", "=", "localites.id")
+        ->where("projetslocalites.projets_id", $id)
+        ->where("projetslocalites.localites_id", '1')
+        ->get()->pluck('nom', 'nom')->unique();
         
+        dd($projet); */
+
         return view('agerouteindividuelles.index', compact('projet', 'projet_name'));
     }
 
@@ -337,12 +346,22 @@ class AgerouteindividuelleController extends Controller
      * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $individuelle = Individuelle::find($id);
         $localite = Localite::get();
         $zone = Zone::get();
         $module = Module::get();
+
+        $user_created_by = $individuelle->demandeur->user->created_by;
+        $user_updated_by = $individuelle->demandeur->user->updated_by;
+
+    /*     if ($user_created_by == $user_updated_by) {
+            dd("ok");
+        } else {
+            dd("non");
+        } */
+        
 
         /* dd($individuelle->demandeur->user); */
 

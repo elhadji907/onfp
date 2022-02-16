@@ -1,6 +1,88 @@
 @extends('layout.default')
 @section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
+   {{--   <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('agerouteindividuelles.index') }}">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ 'TOTAL)' }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"> </div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('agerouteindividuelles.index') }}" target="_blank">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        {{ __('ZIGUINCHOR') }}
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"> </div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('agerouteindividuelles.index') }}" target="_blank">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        {{ __('BIGNONA') }}</div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <a class="nav-link" href="{{ route('agerouteindividuelles.index') }}" target="_blank">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        {{ __('BOUNKILING') }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"> </div>
+                                </div>
+                                <div class="col-auto">
+                                    <span data-feather="mail"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>  --}}
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -15,7 +97,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        LISTE BENEFICIAIRES : {!! $projet_name !!}
+                        LISTE BENEFICIAIRES {{-- {!! $projet_name !!} --}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -26,7 +108,6 @@
                                         </div>
                                     </a>
                                 </div>
-                                <br />
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
@@ -38,8 +119,8 @@
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:10%;">Lieu nais.</th>
                                             <th style="width:10%;">Téléphone</th>
-                                            <th style="width:10%;">Commune</th>
-                                            <th style="width:10%;">Région</th>
+                                            <th style="width:10%;">Départements</th>
+                                            <th style="width:10%;">Communes</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -55,8 +136,16 @@
                                                 <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                <td>{!! $individuelle->commune->nom ?? '' !!}</td>
-                                                <td>{!! $individuelle->commune->arrondissement->departement->region->nom ?? '' !!}</td>
+                                                <td>
+                                                    @foreach ($individuelle->localites as $key => $localite)
+                                                        {!! $localite->nom ?? '' !!}
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @foreach ($individuelle->zones as $key => $zone)
+                                                        {!! $zone->nom ?? '' !!}
+                                                    @endforeach
+                                                </td>
                                                 <td class="d-flex align-items-baseline">
                                                     <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                         title="modifier">
@@ -69,9 +158,9 @@
                                                     </a>
                                                     &nbsp;
                                                     @can('role-delete')
-                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
+                                                        {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                        {!! Form::close() !!}
                                                     @endcan
                                                 </td>
                                             </tr>
