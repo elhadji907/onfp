@@ -111,16 +111,15 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:7%;">N°</th>
+                                            <th style="width:10%;">N°</th>
                                             <th style="width:10%;">Cin</th>
                                             <th style="width:5%;">Civilité</th>
                                             <th style="width:10%;">Prenom</th>
-                                            <th style="width:8%;">Nom</th>
-                                            <th style="width:8%;">Date nais.</th>
+                                            <th style="width:10%;">Nom</th>
+                                            <th style="width:10%;">Date nais.</th>
                                             <th style="width:10%;">Lieu nais.</th>
                                             <th style="width:10%;">Téléphone</th>
-                                            <th style="width:10%;">Départements</th>
-                                            <th style="width:10%;">Communes</th>
+                                            <th style="width:15%;">Communes</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -136,11 +135,6 @@
                                                 <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                <td>
-                                                    @foreach ($individuelle->localites as $key => $localite)
-                                                        {!! $localite->nom ?? '' !!}
-                                                    @endforeach
-                                                </td>
                                                 <td>
                                                     @foreach ($individuelle->zones as $key => $zone)
                                                         {!! $zone->nom ?? '' !!}

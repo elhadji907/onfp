@@ -42,10 +42,12 @@ class IndividuelleFactory extends Factory
         $programmes_id=Programme::all()->random()->id;
             
         $nombre = rand(1, 9);
+        $annee = date('y');
         
         return [
             'cin' => $cin,
             'nbre_pieces' => $nombre,
+            'numero_dossier' => $this->faker->unique(true)->numberBetween(100, 999)."".$annee,
             'legende' => $this->faker->text,
             'reference' => $this->faker->text,
             'experience' => $this->faker->text,
@@ -62,8 +64,8 @@ class IndividuelleFactory extends Factory
             'adresse' => $this->faker->word,
             'option' => $this->faker->word,
             'autres_diplomes' => $this->faker->word,
-            'telephone' => $this->faker->word,
-            'fixe' => $this->faker->word,
+            'telephone' => $this->faker->e164PhoneNumber,
+            'fixe' => $this->faker->phoneNumber,
             'motivation' => $this->faker->text,
             'optiondiplome' => $this->faker->word,
             'type' => $this->faker->randomElement($array = array('Nouvelle demande','Renouvellement')),
