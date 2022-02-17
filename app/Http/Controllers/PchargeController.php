@@ -778,8 +778,8 @@ class PchargeController extends Controller
         $options->set('defaultFont', 'Courier');
         $dompdf = new Dompdf($options); */
 
-        $path_to_image = "/img/yourimage.svg";
-        $logo = "data:image/svg+xml;base64,". base64_encode(file_get_contents(public_path($path_to_image)));
+        /* $path_to_image = "/img/image_onfp.svg";
+        $logo = "data:image/svg+xml;base64,". base64_encode(file_get_contents(public_path($path_to_image))); */
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
@@ -787,7 +787,7 @@ class PchargeController extends Controller
         $options->setIsHtml5ParserEnabled(true);
         $dompdf->setOptions($options);
 
-        $dompdf->loadHtml(view('contrat', compact('pcharges')));
+        $dompdf->loadHtml(view('contrat', compact('pcharges', 'logo')));
 
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'portrait');
