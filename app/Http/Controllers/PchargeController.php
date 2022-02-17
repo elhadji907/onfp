@@ -787,7 +787,7 @@ class PchargeController extends Controller
         $options->setIsHtml5ParserEnabled(true);
         $dompdf->setOptions($options);
 
-        $dompdf->loadHtml(view('contrat', compact('pcharges', 'logo')));
+        $dompdf->loadHtml(view('contrat', compact('pcharges')));
 
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'portrait');
