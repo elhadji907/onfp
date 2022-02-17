@@ -111,16 +111,17 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:7%;">N°</th>
+                                            <th style="width:5%;">N°</th>
                                             <th style="width:10%;">Cin</th>
-                                            <th style="width:5%;">Civilité</th>
+                                            {{--  <th style="width:5%;">Civilité</th>  --}}
                                             <th style="width:10%;">Prenom</th>
-                                            <th style="width:8%;">Nom</th>
+                                            <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:10%;">Lieu nais.</th>
-                                            <th style="width:10%;">Téléphone</th>
+                                            <th style="width:5%;">Téléphone</th>
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:10%;">Communes</th>
+                                            <th style="width:10%;">Module</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -130,7 +131,7 @@
                                             <tr>
                                                 <td>{!! $individuelle->numero_dossier !!}</td>
                                                 <td>{!! $individuelle->cin !!}</td>
-                                                <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                                {{--  <td>{!! $individuelle->demandeur->user->civilite !!}</td>  --}}
                                                 <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
@@ -144,6 +145,11 @@
                                                 <td>
                                                     @foreach ($individuelle->zones as $key => $zone)
                                                         {!! $zone->nom ?? '' !!}
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @foreach ($individuelle->modules as $key => $module)
+                                                        {!! $module->name ?? '' !!}
                                                     @endforeach
                                                 </td>
                                                 <td class="d-flex align-items-baseline">

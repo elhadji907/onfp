@@ -23,6 +23,8 @@ use Carbon\Carbon;
 use Auth;
 use DB;
 use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
@@ -743,6 +745,7 @@ class PchargeController extends Controller
 
         return $pdf->download(public_path('/storage/pcharges/lamine.pdf')); */
 
+        
         $pcharges = Pcharge::get()->where('id', '=', $pcharges);
 
         foreach ($pcharges as $pcharge) {
@@ -760,17 +763,40 @@ class PchargeController extends Controller
         
         /* $contrat->save(public_path('/storage/pcharges/lamine.pdf')); */
 
-        $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
+        /* $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
         $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
         $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
-        $name = preg_replace('#&[^;]+;#', '', $name);
+        $name = preg_replace('#&[^;]+;#', '', $name); */
 
         $anne = date('d');
         $anne = $anne.'_'.date('m');
         $anne = $anne.'_'.date('Y');
         $anne = $anne.'_'.date('His');
-        
-        return $contrat->stream('Contrat_'.$name.'_'.$anne.'.pdf');
+
+        /* return $contrat->stream('Contrat_'.$name.'_'.$anne.'.pdf'); */
+        /* $options = new Options();
+        $options->set('defaultFont', 'Courier');
+        $dompdf = new Dompdf($options); */
+
+        $path_to_image = "/img/yourimage.svg";
+        $logo = "data:image/svg+xml;base64,". base64_encode(file_get_contents(public_path($path_to_image)));
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('contrat', compact('pcharges')));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('Contrat_'.$name.'_'.$anne.'.pdf', ['Attachment' => false]);
     }
 
 
