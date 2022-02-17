@@ -755,11 +755,11 @@ class PchargeController extends Controller
 
         $name = $prenom.'-'.$nom;
 
-        $contrat = PDF::loadView('contrat', compact('pcharges'))
+        /* $contrat = PDF::loadView('contrat', compact('pcharges'))
                             ->setPaper('A4', 'portrait')
                             ->setOption('images', true)
                             ->setOption('enable-javascript', true)
-                            ->setOption('javascript-delay', 10);
+                            ->setOption('javascript-delay', 10); */
         
         /* $contrat->save(public_path('/storage/pcharges/lamine.pdf')); */
 
@@ -787,7 +787,14 @@ class PchargeController extends Controller
         $options->setIsHtml5ParserEnabled(true);
         $dompdf->setOptions($options);
 
-        $dompdf->loadHtml(view('contrat', compact('pcharges')));
+        $path = 'images/logo1.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        /* dd($logo); */
+
+        $dompdf->loadHtml(view('contrat', compact('pcharges', 'logo', 'data')));
 
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'portrait');
