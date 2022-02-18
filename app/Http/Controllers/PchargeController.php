@@ -730,22 +730,7 @@ class PchargeController extends Controller
     }
 
     public function contrat($pcharges)
-    {
-        /* $render = view('pcharges.details')->render();
-        $pdf = new Pdf;
-        $pdf->addPage($render); */
-
-        /* $pcharges = Pcharge::get()->where('id', '=', $pcharges);
-
-        $pdf = PDF::loadView('pcharges.details', compact('pcharges'));
-
-        $pdf->setOptions(['javascript-delay' => 5000]);
-
-        $pdf->saveAs(public_path('/storage/pcharges/lamine.pdf'));
-
-        return $pdf->download(public_path('/storage/pcharges/lamine.pdf')); */
-
-        
+    {        
         $pcharges = Pcharge::get()->where('id', '=', $pcharges);
 
         foreach ($pcharges as $pcharge) {
@@ -755,31 +740,15 @@ class PchargeController extends Controller
 
         $name = $prenom.'-'.$nom;
 
-        /* $contrat = PDF::loadView('contrat', compact('pcharges'))
-                            ->setPaper('A4', 'portrait')
-                            ->setOption('images', true)
-                            ->setOption('enable-javascript', true)
-                            ->setOption('javascript-delay', 10); */
-        
-        /* $contrat->save(public_path('/storage/pcharges/lamine.pdf')); */
-
-        /* $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
+        $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
         $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
         $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
-        $name = preg_replace('#&[^;]+;#', '', $name); */
-
+        $name = preg_replace('#&[^;]+;#', '', $name);
+        
         $anne = date('d');
         $anne = $anne.'_'.date('m');
         $anne = $anne.'_'.date('Y');
         $anne = $anne.'_'.date('His');
-
-        /* return $contrat->stream('Contrat_'.$name.'_'.$anne.'.pdf'); */
-        /* $options = new Options();
-        $options->set('defaultFont', 'Courier');
-        $dompdf = new Dompdf($options); */
-
-        /* $path_to_image = "/img/image_onfp.svg";
-        $logo = "data:image/svg+xml;base64,". base64_encode(file_get_contents(public_path($path_to_image))); */
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
@@ -787,14 +756,7 @@ class PchargeController extends Controller
         $options->setIsHtml5ParserEnabled(true);
         $dompdf->setOptions($options);
 
-        $path = 'images/logo1.png';
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
-        /* dd($logo); */
-
-        $dompdf->loadHtml(view('contrat', compact('pcharges', 'logo', 'data')));
+        $dompdf->loadHtml(view('contrat', compact('pcharges')));
 
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'portrait');
@@ -819,11 +781,11 @@ class PchargeController extends Controller
 
         $name = $prenom.'-'.$nom;
 
-        $lettre = PDF::loadView('lettre', compact('pcharges'))
+        /* $lettre = PDF::loadView('lettre', compact('pcharges'))
                             ->setPaper('A4', 'portrait')
                             ->setOption('images', true)
                             ->setOption('enable-javascript', true)
-                            ->setOption('javascript-delay', 10);
+                            ->setOption('javascript-delay', 10); */
         
         $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
         $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
@@ -834,7 +796,21 @@ class PchargeController extends Controller
         $anne = $anne.'_'.date('m');
         $anne = $anne.'_'.date('Y');
         $anne = $anne.'_'.date('His');
-        
-        return $lettre->stream('Lettre_'.$name.'_'.$anne.'.pdf');
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('lettre', compact('pcharges')));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('Lettre_'.$name.'_'.$anne.'.pdf', ['Attachment' => false]);
     }
 }

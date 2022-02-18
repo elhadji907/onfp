@@ -18,6 +18,9 @@ use App\Models\Demandeur;
 use App\Models\Diplomespro;
 use Auth;
 use DB;
+use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -43,7 +46,7 @@ class AgerouteindividuelleController extends Controller
     {
         $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
-        $projet = Projet::find($id_projet);    
+        $projet = Projet::find($id_projet);
         /* $localites = $projet->localites()->withCount('localites')->get(); */
         
         $id_zig = Localite::where('nom', 'Ziguinchor')->first()->id;
@@ -345,37 +348,12 @@ class AgerouteindividuelleController extends Controller
      * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function show(Individuelle $individuelle)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Individuelle  $individuelle
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $id)
+    public function show($id)
     {
         $individuelle = Individuelle::find($id);
         $localite = Localite::get();
         $zone = Zone::get();
         $module = Module::get();
-
-        $user_created_by = $individuelle->demandeur->user->created_by;
-        $user_updated_by = $individuelle->demandeur->user->updated_by;
-
-    /*     if ($user_created_by == $user_updated_by) {
-            dd("ok");
-        } else {
-            dd("non");
-        } */
-        
-
-        /* dd($individuelle->demandeur->user); */
-
-        /* $this->authorize('update',  $individuelle->demandeur->user); */
 
         $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
@@ -397,22 +375,120 @@ class AgerouteindividuelleController extends Controller
         $individuelleModules = DB::table("individuellesmodules")->where("individuellesmodules.individuelles_id", $id)
         ->pluck('individuellesmodules.modules_id', 'individuellesmodules.modules_id')
         ->all();
-        
-        /* $dossier = explode(";", $individuelle->dossier); */
-
-        /* dd($dossier); */
 
         $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $projet_id)
         ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
         ->all();
 
         $projetModules  = Module::find($projetModules);
-        /* dd($projetModules); */
 
-        /* dd($dossier);
-        dd($dossier[1]); */
+        $prenom = $individuelle->demandeur->user->firstname;
+        $nom = $individuelle->demandeur->user->name;
 
-        return view('agerouteindividuelles.update', compact('localite', 'projetModules', 'zone', 'module', 'individuelle', 'etude', 'familiale', 'communes', 'diplomes', 'individuelleModules', 'individuelleZones', 'individuelleLocalites', 'projet_name', 'diplomespros'));
+        $name = $prenom.'-'.$nom;
+
+        $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
+        $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
+        $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
+        $name = preg_replace('#&[^;]+;#', '', $name);
+        
+        $anne = date('d');
+        $anne = $anne.'_'.date('m');
+        $anne = $anne.'_'.date('Y');
+        $anne = $anne.'_'.date('His');
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('agerouteindividuelles.show', compact(
+            'localite',
+            'projetModules',
+            'zone',
+            'module',
+            'individuelle',
+            'etude',
+            'familiale',
+            'communes',
+            'diplomes',
+            'individuelleModules',
+            'individuelleZones',
+            'individuelleLocalites',
+            'projet_name',
+            'diplomespros'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('Fiche de candidature de '.$name.'_'.$anne.'.pdf', ['Attachment' => false]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Individuelle  $individuelle
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, $id)
+    {
+        $individuelle = Individuelle::find($id);
+        $localite = Localite::get();
+        $zone = Zone::get();
+        $module = Module::get();
+
+        $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
+        $etude = Etude::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+
+        $individuelleLocalites = DB::table("individuelleslocalites")->where("individuelleslocalites.individuelles_id", $id)
+        ->pluck('individuelleslocalites.localites_id', 'individuelleslocalites.localites_id')
+        ->all();
+
+        $individuelleZones = DB::table("individuelleszones")->where("individuelleszones.individuelles_id", $id)
+        ->pluck('individuelleszones.zones_id', 'individuelleszones.zones_id')
+        ->all();
+
+        $individuelleModules = DB::table("individuellesmodules")->where("individuellesmodules.individuelles_id", $id)
+        ->pluck('individuellesmodules.modules_id', 'individuellesmodules.modules_id')
+        ->all();
+
+        $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $projet_id)
+        ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
+        ->all();
+
+        $projetModules  = Module::find($projetModules);
+
+        return view(
+            'agerouteindividuelles.update',
+            compact(
+                'localite',
+                'projetModules',
+                'zone',
+                'module',
+                'individuelle',
+                'etude',
+                'familiale',
+                'communes',
+                'diplomes',
+                'individuelleModules',
+                'individuelleZones',
+                'individuelleLocalites',
+                'projet_name',
+                'diplomespros'
+            )
+        );
     }
 
     /**
@@ -667,7 +743,5 @@ class AgerouteindividuelleController extends Controller
         $localite = Localite::find($id_localite);
         
         return view('agerouteindividuelles.listerparlocalite', compact('projets', 'localite'));
-
     }
-
 }
