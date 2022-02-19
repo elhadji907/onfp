@@ -69,20 +69,20 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th colspan="2"><b><u>I. IDENTIFICATION DU CANDIDAT</b></u></th>
+                        <th colspan="4"><b><u>I. IDENTIFICATION DU CANDIDAT</b></u></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="4"><b>{{ __("N° carte nationale d'identité (CIN)") }}</b> : {{ $individuelle->cin ?? '' }}
+                        <td colspan="4"><b>{{ __("N° carte nationale d'identité (CIN)") }}</b> :
+                            {{ $individuelle->cin ?? '' }}
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4"><b>{{ __('Prénom') }}</b> : {{ $individuelle->demandeur->user->firstname ?? '' }}</td>
-                    </tr>
-                    <tr>
-                        <td><b>{{ __('Nom') }}</b> : {{ $individuelle->demandeur->user->name ?? '' }}</td>
-                        <td><b>{{ __('Civilité') }}</b> : {{ $individuelle->demandeur->user->civilite ?? '' }}</td>
+                        <td colspan="3"><b>{{ __('Prénom et Nom') }}</b> :
+                            {{ $individuelle->demandeur->user->firstname ?? '' }}&nbsp;&nbsp;{{ $individuelle->demandeur->user->name ?? '' }}</td>
+                        <td colspan="1"><b>{{ __('Civilité') }}</b> :
+                            {{ $individuelle->demandeur->user->civilite ?? '' }}</td>
                     </tr>
                     <tr>
                         <td><b>{{ __('Date et lieu naissance') }}</b> :
@@ -90,18 +90,20 @@
                             {{ $individuelle->demandeur->user->lieu_naissance ?? '' }} </td>
                     </tr>
                     <tr>
-                        <td colspan="4"><b>{{ __('Adresse (Commune / village ou quartier) :  ') }}</b>{{ $individuelle->adresse ?? '' }}
+                        <td colspan="4">
+                            <b>{{ __('Adresse (Commune / village ou quartier) :  ') }}</b>{{ $individuelle->adresse ?? '' }}
                         </td>
                     </tr>
                     <tr>
-                        <td><b>{{ __('Téléphonedu candidat (Personnel) :  ') }}</b>{{ $individuelle->demandeur->user->telephone ?? '' }}
-                        <td><b>{{ __('Téléphone (Tuteur) :  ') }}</b>{{ $individuelle->telephone ?? '' }}
+                        <td colspan="2"><b>{{ __('Téléphonedu candidat (Personnel) :  ') }}</b>{{ $individuelle->demandeur->user->telephone ?? '' }}
+                        </td>
+                        <td colspan="2"><b>{{ __('Téléphone (Tuteur) :  ') }}</b>{{ $individuelle->telephone ?? '' }}
                         </td>
                     </tr>
                     <tr>
-                        <td><b>{{ __('Situation matrimoniale :  ') }}</b>{{ $individuelle->demandeur->user->familiale->name ?? '' }}
+                        <td colspan="2"><b>{{ __('Situation matrimoniale :  ') }}</b>{{ $individuelle->demandeur->user->familiale->name ?? '' }}
                         </td>
-                        <td><b>{{ __('Nombre d’enfants en charge :  ') }}</b>{{ $individuelle->nbre_enfants ?? '' }}
+                        <td colspan="2"><b>{{ __('Nombre d’enfants en charge :  ') }}</b>{{ $individuelle->nbre_enfants ?? '' }}
                         </td>
                     </tr>
                 </tbody>
@@ -109,37 +111,43 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th colspan="2"><b><u>II. PARCOURS ACADEMIQUE ET PROFESSIONNEL</b></u></th>
+                        <th colspan="4"><b><u>II. PARCOURS ACADEMIQUE ET PROFESSIONNEL</b></u></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>{{ __('Diplômes académiques : ') }}</b>{{ $individuelle->diplome->name ?? '' }}
+                        <td colspan="3">
+                            <b>{{ __('Diplômes académiques : ') }}</b>{{ $individuelle->diplome->name ?? '' }}
                         </td>
                         @if (isset($individuelle->annee_diplome))
-                            <td><b>{{ __('Année : ') }}</b>{{ $individuelle->annee_diplome ?? '' }}</td>
-                        @else
-                        @endif
-                    </tr>
-                    <tr>
-                        @if (isset($individuelle->autres_diplomes))
-                            <td colspan="4"><b>{{ __('Autres diplômes académiques : ') }}</b>{{ $individuelle->autres_diplomes ?? '' }}
+                            <td colspan="1"><b>{{ __('Année : ') }}</b>{{ $individuelle->annee_diplome ?? '' }}
                             </td>
                         @else
                         @endif
                     </tr>
                     <tr>
-                        <td><b>{{ __('Diplômes professionnels  : ') }}</b>{{ $individuelle->diplomespro->name ?? '' }}
+                        @if (isset($individuelle->autres_diplomes))
+                            <td colspan="4">
+                                <b>{{ __('Autres diplômes académiques : ') }}</b>{{ $individuelle->autres_diplomes ?? '' }}
+                            </td>
+                        @else
+                        @endif
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <b>{{ __('Diplômes professionnels  : ') }}</b>{{ $individuelle->diplomespro->name ?? '' }}
                         </td>
                         @if (isset($individuelle->annee_diplome_professionelle))
-                            <td><b>{{ __('Année : ') }}</b>{{ $individuelle->annee_diplome_professionelle ?? '' }}
+                            <td colspan="1">
+                                <b>{{ __('Année : ') }}</b>{{ $individuelle->annee_diplome_professionelle ?? '' }}
                             </td>
                         @else
                         @endif
                     </tr>
                     <tr>
                         @if (isset($individuelle->autres_diplomes_pros))
-                            <td colspan="4"><b>{{ __('Autres diplômes professionnels : ') }}</b>{{ $individuelle->autres_diplomes_pros ?? '' }}
+                            <td colspan="4">
+                                <b>{{ __('Autres diplômes professionnels : ') }}</b>{{ $individuelle->autres_diplomes_pros ?? '' }}
                             </td>
                         @else
                         @endif
@@ -154,20 +162,22 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="4"><b>{{ __('Quelle activité ou travail exercez -vous ? : ') }}</b>{{ $individuelle->activite_travail ?? '' }}
+                        <td colspan="4">
+                            <b>{{ __('Quelle activité ou travail exercez -vous ? : ') }}</b>{{ $individuelle->activite_travail ?? '' }}
                         </td>
                     </tr>
                     <tr>
                         <td><b>{{ __('Etes-vous dans un travail rémunéré ? : ') }}</b>{{ $individuelle->travail_renumeration ?? '' }}
                         </td>
-                        @if (isset($individuelle->salaire))
-                            <td><b>{{ __('Si oui, Comment trouvez -vous votre salaire ? : ') }}</b>{{ $individuelle->salaire ?? '' }}
+                        @if (isset($individuelle->travail_renumeration) && $individuelle->travail_renumeration == 'Oui')
+                            <td><b>{{ __('Comment trouvez -vous votre salaire ? : ') }}</b>{{ $individuelle->salaire ?? '' }}
                             </td>
                         @else
                         @endif
                     </tr>
                     <tr>
-                        <td colspan="4"><b>{{ __('Dans quelle activité voulez-vous travailler à l’avenir ? : ') }}</b>{{ $individuelle->activite_avenir ?? '' }}
+                        <td colspan="4">
+                            <b>{{ __('Dans quelle activité voulez-vous travailler à l’avenir ? : ') }}</b>{{ $individuelle->activite_avenir ?? '' }}
                         </td>
                     </tr>
                 </tbody>
@@ -189,7 +199,8 @@
                         @endif
                     </tr>
                     <tr>
-                        <td colspan="4"><b>{{ __('Comment appréciez-vous votre situation économique familiale ? : ') }}</b>{{ $individuelle->situation_economique ?? '' }}
+                        <td colspan="4">
+                            <b>{{ __('Comment appréciez-vous votre situation économique familiale ? : ') }}</b>{{ $individuelle->situation_economique ?? '' }}
                         </td>
                     </tr>
                     <tr>

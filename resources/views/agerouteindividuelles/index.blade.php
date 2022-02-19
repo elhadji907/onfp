@@ -159,7 +159,7 @@
                                                     </a>
                                                     &nbsp;
                                                     <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
-                                                        class='btn btn-primary btn-sm' title="voir">
+                                                        class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
