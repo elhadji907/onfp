@@ -97,7 +97,7 @@ class AgerouteindividuelleController extends Controller
         $projetModules = Module::join("projetsmodules", "projetsmodules.modules_id", "=", "modules.id")
         ->where("projetsmodules.projets_id", $id)
         ->get()->pluck('name', 'name')->unique();
-        
+
         return view('agerouteindividuelles.create', compact('etude', 'familiale', 'communes', 'diplomes', 'projetModules', 'projetZones', 'projetLocalites', 'projet_name', 'diplomespros'));
     }
 
@@ -138,7 +138,7 @@ class AgerouteindividuelleController extends Controller
                 'handicap'                          =>    'required',
                 'situation_economique'              =>    'required',
                 'victime_social'                    =>    'required',
-                'modules'                           =>    'required',
+                'modules1'                           =>    'required',
         ]
         );
         
@@ -331,10 +331,14 @@ class AgerouteindividuelleController extends Controller
         $projet = Projet::find($projet_id);
 
         $zones_id = Zone::where('nom', $request->input('zones'))->first()->id;
-        $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;
-        $modules_id = Module::where('name', $request->input('modules'))->first()->id;
+        $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;        
+        $modules1_id = Module::where('name', $request->input('modules1'))->first()->id;
+        $modules2_id = Module::where('name', $request->input('modules2'))->first()->id;
+        $modules3_id = Module::where('name', $request->input('modules3'))->first()->id;
         
-        $individuelle->modules()->sync($modules_id);
+        $individuelle->modules()->attach($modules1_id);
+        $individuelle->modules()->attach($modules2_id);
+        $individuelle->modules()->attach($modules3_id);
         $individuelle->projets()->sync($projet_id);
         $individuelle->zones()->sync($zones_id);
         $individuelle->localites()->sync($localites_id);

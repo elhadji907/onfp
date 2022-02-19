@@ -78,15 +78,15 @@
                 <strong>Permission:</strong>
                 <br />
                 @foreach ($permission as $value)
-                    <label>{{ Form::checkbox('permission[]', $value->id, false, ['class' => 'name']) }}
+                    <label>{{ Form::checkbox('permission[]', $value->id, false, ['class' => 'name-input']) }}
                         {{ $value->name }}</label>
                     <br />
                 @endforeach
             </div> --}}
                         </div>
-                       {{--   <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        {{-- <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>  --}}
+                        </div> --}}
                     </div>
                     {!! Form::close() !!}
                 </div>
@@ -95,10 +95,16 @@
     </div>
     {{-- <p class="text-center text-primary"><small>Tutorial by Tutsmake.com</small></p> --}}
 @endsection
-{{--  
 @push('scripts')
     <script type="text/javascript">
-        $(document).ready(function() {
+   {{--       $('input[type=checkbox]').on('change', function (e) {
+            if ($('input[type=checkbox]:checked').length > 3) {
+                $(this).prop('checked', false);
+                alert("autorisé seulement 3");
+            }
+        });  --}}
+
+        {{-- $(document).ready(function() {
             $('#table-roles-create').DataTable({
                 dom: 'lBfrtip',
                 "lengthMenu": [
@@ -138,7 +144,6 @@
                     }
                 }
             });
-        });
+        }); --}}
     </script>
 @endpush
-  --}}

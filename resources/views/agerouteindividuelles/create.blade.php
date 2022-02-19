@@ -493,7 +493,7 @@
                                 <p class="h5 text-white mb-2">CHOIX ET LOCALISATION</p>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Lieu dépôt :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('localites', $projetLocalites, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'localite']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -504,7 +504,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Zone Formation :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('zones', $projetZones, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'zone']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -514,10 +514,32 @@
                                             @endforeach
                                         @endif
                                     </small>
+                                </div>                                
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('module 1 :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('modules1', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('modules'))
+                                            @foreach ($errors->get('modules') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('modules', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
+                                    {!! Form::label('module 2 :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('modules2', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute2']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('modules'))
+                                            @foreach ($errors->get('modules') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    {!! Form::label('module 3 :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('modules3', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute3']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('modules'))
                                             @foreach ($errors->get('modules') as $message)
@@ -532,7 +554,7 @@
                                     <label>{{ Form::checkbox('dossier', 'Fiche de candidature', true, ['class' => 'name', 'disabled' => 'disabled']) }}
                                         {{ __('Fiche de candidature') }}
                                         <br />
-                                        {{ Form::checkbox('dossier', "Copie carte nationale d'identité", true, ['class' => 'name', 'disabled' => 'disabled']) }}
+                                        {{ Form::checkbox('dossier', "Copie carte nationale d'identité", true, ['class' => 'name','disabled' => 'disabled']) }}
                                         {{ __("Copie carte nationale d'identité") }}
                                         <br />
                                         {{ Form::checkbox('dossier', 'Certificat de résidence', true, ['class' => 'name', 'disabled' => 'disabled']) }}
@@ -559,81 +581,12 @@
                                     @enderror
                                 </div>
                             </div>
-                            {{-- <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('Nbre pièces fournis:') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::number('nombre_de_piece', 3, ['placeholder' => 'Le nombre de pièces fournis', 'class' => 'form-control', 'min' => '3', 'max' => '10']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('nombre_de_piece'))
-                                            @foreach ($errors->get('nombre_de_piece') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="form-row">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label
-                                        for="motivation">{{ __('Pourquoi voulez-vous faire cette formation ?') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('motivation') is-invalid @enderror"
-                                        name="motivation" id="motivation" rows="3"
-                                        placeholder="Décrire en quelques lignes votre motivation à faire cette formation">{{ old('motivation') }}</textarea>
-                                    @error('motivation')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="prerequis">{{ __('Avez-vous des prerequis ?') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('prerequis') is-invalid @enderror"
-                                        name="prerequis" id="prerequis" rows="1"
-                                        placeholder="Prérequis par rapport à la formation demandée">{{ old('prerequis') }}</textarea>
-                                    @error('prerequis')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Qualifications :') !!}
-                                    {!! Form::textarea('qualification', null, ['placeholder' => 'Qualifications', 'rows' => 1, 'class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('experience :') !!}
-                                    {!! Form::textarea('experience', null, ['placeholder' => 'Experience, stage, attestions, ...', 'rows' => 2, 'class' => 'form-control']) !!}
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    <label for="projet_professionnel">{{ __('Projet professionnel') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('projet_professionnel') is-invalid @enderror"
-                                        name="projet_professionnel" id="projet_professionnel" rows="5"
-                                        placeholder="Votre projet professionnel">{{ old('projet_professionnel') }}</textarea>
-                                    @error('projet_professionnel')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('Informations :') !!}
-                                    {!! Form::textarea('information', null, ['placeholder' => 'Informations complémenaires', 'rows' => 2, 'class' => 'form-control']) !!}
-                                </div>
-                            </div> --}}
                     </div>
                 </div>
                 <br />
                 <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
                     placeholder="Mot de passe">
                 {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
-                {{-- <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i>&nbsp;Enregistrer</button> --}}
                 <div class="col-xs-12 col-sm-12 col-md-12 text-right">
                     <button type="submit" class="btn btn-outline-primary"><i
                             class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
@@ -684,3 +637,14 @@
         </div>
     </div>
 @endsection
+
+{{-- @push('scripts')
+    <script type="text/javascript">
+$('input[type=checkbox]').on('change', function (e) {
+    if ($('input[type=checkbox]:checked').length > 3) {
+        $(this).prop('checked', false);
+        alert("autorisé seulement 3");
+    }
+});
+</script>
+@endpush --}}

@@ -181,11 +181,57 @@
 </script>
 
 <script type="text/javascript">    
-  $("#module").select2({
+  $("#module-ageroute").select2({
         placeholder: "sélectionner module de formation",
         language: "fr",
         allowClear: true,
-        maximumSelectionLength: 2
+        maximumSelectionLength: 3,
+        language: {
+          // You can find all of the options in the language files provided in the
+          // build. They all must be functions that return the string that should be
+          // displayed.
+          maximumSelected: function (e) {
+              var t = "Vous ne pouvez sélectionner que " + e.maximum + " modules";
+              e.maximum != 1 && (t += "s");
+              return t + ' - Mettez à niveau maintenant et sélectionnez plus';
+          }
+      }
+    });
+</script>
+<script type="text/javascript">    
+  $("#module-ageroute2").select2({
+        placeholder: "sélectionner un 2ème module",
+        language: "fr",
+        allowClear: true,
+        maximumSelectionLength: 3,
+        language: {
+          // You can find all of the options in the language files provided in the
+          // build. They all must be functions that return the string that should be
+          // displayed.
+          maximumSelected: function (e) {
+              var t = "Vous ne pouvez sélectionner que " + e.maximum + " modules";
+              e.maximum != 1 && (t += "s");
+              return t + ' - Mettez à niveau maintenant et sélectionnez plus';
+          }
+      }
+    });
+</script>
+<script type="text/javascript">    
+  $("#module-ageroute3").select2({
+        placeholder: "sélectionner un 3ème module",
+        language: "fr",
+        allowClear: true,
+        maximumSelectionLength: 3,
+        language: {
+          // You can find all of the options in the language files provided in the
+          // build. They all must be functions that return the string that should be
+          // displayed.
+          maximumSelected: function (e) {
+              var t = "Vous ne pouvez sélectionner que " + e.maximum + " modules";
+              e.maximum != 1 && (t += "s");
+              return t + ' - Mettez à niveau maintenant et sélectionnez plus';
+          }
+      }
     });
 </script>
 

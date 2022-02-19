@@ -10,7 +10,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ __("TOTAL") }}</div>
+                                        {{ __('TOTAL') }}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800"> {!! $total !!} </div>
                                 </div>
                                 <div class="col-auto">
@@ -23,7 +23,9 @@
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-success shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Ziguinchor']) }}" target="_blank">
+                    <a class="nav-link"
+                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Ziguinchor']) }}"
+                        target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
@@ -42,7 +44,9 @@
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-info shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bignona']) }}" target="_blank">
+                    <a class="nav-link"
+                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bignona']) }}"
+                        target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
@@ -50,7 +54,8 @@
                                         {{ __('BIGNONA') }}</div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
-                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> {!! $bings_count !!} </div>
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                {!! $bings_count !!} </div>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +70,9 @@
 
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}" target="_blank">
+                    <a class="nav-link"
+                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}"
+                        target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
@@ -112,8 +119,8 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:5%;">N°</th>
-                                            <th style="width:10%;">Cin</th>
-                                            {{--  <th style="width:5%;">Civilité</th>  --}}
+                                            {{-- <th style="width:10%;">Cin</th> --}}
+                                            {{-- <th style="width:5%;">Civilité</th> --}}
                                             <th style="width:10%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
@@ -121,7 +128,7 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:10%;">Communes</th>
-                                            <th style="width:10%;">Module</th>
+                                            <th style="width:20%;">Module</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -130,8 +137,8 @@
                                         @foreach ($projet->individuelles as $key => $individuelle)
                                             <tr>
                                                 <td>{!! $individuelle->numero_dossier !!}</td>
-                                                <td>{!! $individuelle->cin !!}</td>
-                                                {{--  <td>{!! $individuelle->demandeur->user->civilite !!}</td>  --}}
+                                                {{-- <td>{!! $individuelle->cin !!}</td> --}}
+                                                {{-- <td>{!! $individuelle->demandeur->user->civilite !!}</td> --}}
                                                 <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
@@ -148,8 +155,13 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
+                                                    <?php $h = 1; ?>
                                                     @foreach ($individuelle->modules as $key => $module)
-                                                        {!! $module->name ?? '' !!}
+                                                        @if (isset($module->name))
+                                                            {!! $h++ !!})
+                                                        @else
+                                                        @endif
+                                                        &nbsp;{!! $module->name ?? '' !!}<br />
                                                     @endforeach
                                                 </td>
                                                 <td class="d-flex align-items-baseline">
