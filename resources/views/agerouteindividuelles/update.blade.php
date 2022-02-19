@@ -598,7 +598,7 @@
                                 {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
                                 <br />
                                 @foreach ($projetModules as $value)
-                                    <label>{{ Form::radio('module', $value->id, in_array($value->id, $individuelleModules) ? true : false, ['class' => 'name']) }}
+                                    <label>{{ Form::checkbox('module[]', $value->id, in_array($value->id, $individuelleModules) ? true : false, ['class' => 'name']) }}
                                         {{ $value->name }}</label>
                                     <br />
                                 @endforeach
@@ -665,3 +665,13 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+$('input[type=checkbox]').on('change', function (e) {
+    if ($('input[type=checkbox]:checked').length > 6) {
+        $(this).prop('checked', false);
+        alert("autorisé seulement 3");
+    }
+});
+</script>
+@endpush
