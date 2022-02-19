@@ -385,7 +385,7 @@ class AgerouteindividuelleController extends Controller
         $prenom = $individuelle->demandeur->user->firstname;
         $nom = $individuelle->demandeur->user->name;
 
-        $name = $prenom.'-'.$nom;
+        $name = $prenom.' '.$nom;
 
         $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
         $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);

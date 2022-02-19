@@ -61,7 +61,7 @@ class IndividuelleFactory extends Factory
             'date1' => $this->faker->dateTime(),
             'qualification' => $this->faker->word,
             'etablissement' => $this->faker->word,
-            'adresse' => $this->faker->word,
+            'adresse' => $this->faker->address,
             'option' => $this->faker->word,
             'autres_diplomes' => $this->faker->word,
             'telephone' => $this->faker->e164PhoneNumber,

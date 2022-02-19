@@ -9,7 +9,7 @@
             max-width: 1500px;
             margin: auto;
             padding: 30px;
-            font-size: 16px;
+            font-size: 12px;
             line-height: 24px;
             color: #555;
         }
@@ -20,21 +20,20 @@
         }
 
         table {
-            border-left: 1px solid rgb(0, 0, 0);
+            border-left: 0px solid rgb(0, 0, 0);
             border-right: 0;
-            border-top: 1px solid rgb(0, 0, 0);
+            border-top: 0px solid rgb(0, 0, 0);
             border-bottom: 0;
             width: 100%;
-            border-spacing: -1px;
+            border-spacing: 0px;
         }
 
         table td,
         table th {
             border-left: 0;
-            border-right: 1px solid rgb(0, 0, 0);
+            border-right: 0px solid rgb(0, 0, 0);
             border-top: 0;
-            border-bottom: 1px solid rgb(0, 0, 0);
-            text-align: center;
+            border-bottom: 0px solid rgb(0, 0, 0);
         }
 
     </style>
@@ -59,23 +58,179 @@
                 color: white;
                 text-align: center;
                 line-height: 35px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete_onfp_ageroute.png'))) }}"
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete_onfp_ageroute2.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <div align="right">
-                <p><b><u>N° Dossier</u></b> : <span style="color: rgb(255, 0, 0); text-shadow: 2px 2px;"> {{ $individuelle->numero_dossier ?? '' }}</span><br></p>
+                <p><b><u>N° Dossier</u></b> : <span style="color: rgb(255, 0, 0); text-shadow: 2px 2px;">
+                        {{ $individuelle->numero_dossier ?? '' }}</span></p>
             </div>
-            <div align="center">
-                <p><b><u>I. IDENTIFICATION DU CANDIDAT</u></b></p>
-            </div>
-            <p><b>{{ __("N° carte nationale d'identité") }}:</b> {{ $individuelle->cin ?? '' }}<br />
-                <b>{{ __('Civilité, Prénom & Nom') }}:</b>
-                {{ $individuelle->demandeur->user->civilite ?? '' }}&nbsp;{{ $individuelle->demandeur->user->firstname ?? '' }}&nbsp;{{ $individuelle->demandeur->user->name ?? '' }}
-                <br />
-                <b>{{ __('Date & lieu de naissance') }}:</b>
-                {{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') ?? '' }}&nbsp;à&nbsp;{{ $individuelle->demandeur->user->lieu_naissance ?? '' }}
-            </p>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th colspan="2"><b><u>I. IDENTIFICATION DU CANDIDAT</b></u></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4"><b>{{ __("N° carte nationale d'identité (CIN)") }}</b> : {{ $individuelle->cin ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>{{ __('Prénom') }}</b> : {{ $individuelle->demandeur->user->firstname ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ __('Nom') }}</b> : {{ $individuelle->demandeur->user->name ?? '' }}</td>
+                        <td><b>{{ __('Civilité') }}</b> : {{ $individuelle->demandeur->user->civilite ?? '' }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ __('Date et lieu naissance') }}</b> :
+                            {{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') ?? '' }}&nbsp;à&nbsp;
+                            {{ $individuelle->demandeur->user->lieu_naissance ?? '' }} </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>{{ __('Adresse (Commune / village ou quartier) :  ') }}</b>{{ $individuelle->adresse ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ __('Téléphonedu candidat (Personnel) :  ') }}</b>{{ $individuelle->demandeur->user->telephone ?? '' }}
+                        <td><b>{{ __('Téléphone (Tuteur) :  ') }}</b>{{ $individuelle->telephone ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ __('Situation matrimoniale :  ') }}</b>{{ $individuelle->demandeur->user->familiale->name ?? '' }}
+                        </td>
+                        <td><b>{{ __('Nombre d’enfants en charge :  ') }}</b>{{ $individuelle->nbre_enfants ?? '' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th colspan="2"><b><u>II. PARCOURS ACADEMIQUE ET PROFESSIONNEL</b></u></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>{{ __('Diplômes académiques : ') }}</b>{{ $individuelle->diplome->name ?? '' }}
+                        </td>
+                        @if (isset($individuelle->annee_diplome))
+                            <td><b>{{ __('Année : ') }}</b>{{ $individuelle->annee_diplome ?? '' }}</td>
+                        @else
+                        @endif
+                    </tr>
+                    <tr>
+                        @if (isset($individuelle->autres_diplomes))
+                            <td colspan="4"><b>{{ __('Autres diplômes académiques : ') }}</b>{{ $individuelle->autres_diplomes ?? '' }}
+                            </td>
+                        @else
+                        @endif
+                    </tr>
+                    <tr>
+                        <td><b>{{ __('Diplômes professionnels  : ') }}</b>{{ $individuelle->diplomespro->name ?? '' }}
+                        </td>
+                        @if (isset($individuelle->annee_diplome_professionelle))
+                            <td><b>{{ __('Année : ') }}</b>{{ $individuelle->annee_diplome_professionelle ?? '' }}
+                            </td>
+                        @else
+                        @endif
+                    </tr>
+                    <tr>
+                        @if (isset($individuelle->autres_diplomes_pros))
+                            <td colspan="4"><b>{{ __('Autres diplômes professionnels : ') }}</b>{{ $individuelle->autres_diplomes_pros ?? '' }}
+                            </td>
+                        @else
+                        @endif
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th colspan="2"><b><u>III. PROJET PROFESSIONNEL</b></u></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4"><b>{{ __('Quelle activité ou travail exercez -vous ? : ') }}</b>{{ $individuelle->activite_travail ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ __('Etes-vous dans un travail rémunéré ? : ') }}</b>{{ $individuelle->travail_renumeration ?? '' }}
+                        </td>
+                        @if (isset($individuelle->salaire))
+                            <td><b>{{ __('Si oui, Comment trouvez -vous votre salaire ? : ') }}</b>{{ $individuelle->salaire ?? '' }}
+                            </td>
+                        @else
+                        @endif
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>{{ __('Dans quelle activité voulez-vous travailler à l’avenir ? : ') }}</b>{{ $individuelle->activite_avenir ?? '' }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th colspan="2"><b><u>IV. SITUATION SOCIO- ECONOMIQUE</b></u></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>{{ __('Souffrez- vous d’un handicap quelconque ? : ') }}</b>{{ $individuelle->handicap ?? '' }}
+                        </td>
+                        @if (isset($individuelle->handicap) && $individuelle->handicap == 'Oui')
+                            <td><b>{{ __('Précisez ? : ') }}</b>{{ $individuelle->preciser_handicap ?? '' }}
+                            </td>
+                        @else
+                        @endif
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>{{ __('Comment appréciez-vous votre situation économique familiale ? : ') }}</b>{{ $individuelle->situation_economique ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>{{ __('Avez-vous été victime d’un quelconque problème social ? : ') }}</b>{{ $individuelle->victime_social ?? '' }}
+                        </td>
+                        @if (isset($individuelle->autre_victime))
+                            <td><b>{{ __('Précisez ? : ') }}</b>{{ $individuelle->autre_victime ?? '' }}
+                            </td>
+                        @else
+                        @endif
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th colspan="2"><b><u>V. CHOIX DU CANDIDAT</b></u></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>{{ __('Département : ') }}</b>
+                            @foreach ($individuelle->localites as $localite)
+                                {{ $localite->nom ?? '' }}
+                            @endforeach
+                        </td>
+                        <td><b>{{ __('Commune : ') }}</b>
+                            @foreach ($individuelle->zones as $zone)
+                                {{ $zone->nom ?? '' }}
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>{{ __('Module : ') }}</b>
+                            @foreach ($individuelle->modules as $module)
+                                {{ $module->name ?? '' }}
+                            @endforeach
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div style="position: fixed; 
             bottom: -10px; 
