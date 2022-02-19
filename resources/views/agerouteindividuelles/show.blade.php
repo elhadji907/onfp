@@ -234,9 +234,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4"><b>{{ __('Module : ') }}</b>
+                        <td colspan="4">
+                            <?php $h = 1; ?>
                             @foreach ($individuelle->modules as $module)
-                                {{ $module->name ?? '' }}
+                            <b>{{ __('Module ') }} {{ $h++ }} </b>
+                                {{ $module->name ?? '' }}<br />
                             @endforeach
                         </td>
                     </tr>
@@ -252,7 +254,7 @@
             color: white;
             text-align: center;
             line-height: 35px;">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp.png'))) }}"
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp4.png'))) }}"
                 style="width: 100%; height: auto;">
         </div>
     </div>

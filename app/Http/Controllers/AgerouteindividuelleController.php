@@ -397,9 +397,11 @@ class AgerouteindividuelleController extends Controller
         $name = preg_replace('#&[^;]+;#', '', $name);
         
         $anne = date('d');
-        $anne = $anne.'_'.date('m');
-        $anne = $anne.'_'.date('Y');
-        $anne = $anne.'_'.date('His');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
 
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
@@ -431,7 +433,7 @@ class AgerouteindividuelleController extends Controller
         $dompdf->render();
 
         // Output the generated PDF to Browser
-        $dompdf->stream('Fiche de candidature de '.$name.'_'.$anne.'.pdf', ['Attachment' => false]);
+        $dompdf->stream('Fiche de candidature de '.$name.' du '.$anne.'.pdf', ['Attachment' => false]);
     }
 
     /**
