@@ -54,12 +54,15 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $localite->nom }}</td>
                                             <td>
+                                                <?php $i = 0; ?>
                                                 @foreach ($localite->individuelles as $individuelle)
-                                                    @if ($loop->last)
-                                                    <span class="badge badge-info"> {!! $loop->count !!} </span>
-                                                    @endif
+                                                    @foreach ($individuelle->projets as $projet)
+                                                        @if ($loop->last && $projet->name == $projet_name)
+                                                            <?php $i++; ?>
+                                                        @endif
+                                                    @endforeach
                                                 @endforeach
-
+                                                <span class="badge badge-info">{!! $i !!}</span>
                                             </td>
                                             <td>
                                                 {{-- @foreach ($localite->zones as $zone)
