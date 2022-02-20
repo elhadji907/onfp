@@ -728,4 +728,11 @@ class AgerouteindividuelleController extends Controller
         
         return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
     }
+
+    public function listerparmodulelocalite($projet, $localite, $module)
+    {
+        $projet = Projet::find($projet);
+        $modules = Module::find($module);
+        return view('agerouteindividuelles.listerparmodulelocalite', compact('projet', 'localite', 'module', 'modules'));
+    }
 }

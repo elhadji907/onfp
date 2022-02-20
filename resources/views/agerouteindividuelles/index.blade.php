@@ -95,9 +95,7 @@
 
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}"
-                        target="_blank">
+                    <a class="nav-link" href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}" target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">

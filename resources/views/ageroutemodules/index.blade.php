@@ -49,7 +49,7 @@
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($ageroutemodules->modules as $key => $module)
+                                    @foreach ($projet->modules as $key => $module)
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $module->name }}</td>

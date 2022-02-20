@@ -18,16 +18,9 @@ class AgeroutemoduleController extends Controller
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
-        /* dd($projet_id); */
+        $projet = Projet::find($projet_id);
 
-        $ageroutemodule = Projet::all()->load(['modules'])
-        ->where('name','=',$projet_name);
-
-        /* dd($ageroutemodule); */
-
-        foreach ($ageroutemodule as $ageroutemodules) {
-        }
-        return view('ageroutemodules.index', compact('ageroutemodules', 'projet_name'));
+        return view('ageroutemodules.index', compact('projet', 'projet_name'));
     }
 
     /**

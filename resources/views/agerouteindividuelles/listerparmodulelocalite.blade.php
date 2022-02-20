@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - Demandeurs du département de ' . $localite )
+@section('title', 'AGEROUTE, demandeurs du département de ' . $localite. ' en '.$modules->name )
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du département de {{$localite}}
+                        AGEROUTE, liste des demandeurs du département de {{$localite}} en {{$modules->name}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -44,9 +44,9 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @if ($localite == 'Bounkiling')
-                                            @foreach ($projet->individuelles as $key => $individuelle)
-                                                @foreach ($individuelle->localites as $key => $localite)
-                                                    @if (isset($localite->nom) && $localite->nom == 'Bounkiling')
+                                        @foreach ($modules->individuelles as $key => $individuelle)
+                                            @foreach ($individuelle->localites as $key => $localite)
+                                                @if (isset($localite->nom) && $localite->nom == 'Bounkiling')
                                                         <tr>
                                                             <td>{!! $individuelle->cin !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->civilite !!}</td>
@@ -65,7 +65,7 @@
                                                                 @foreach ($individuelle->modules as $key => $module)
                                                                     @if (isset($module->name))
                                                                         <a class="nav-link"
-                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Bounkiling','$module' => $module->id]) }}"
+                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Bounkiling','$module' => $module->name]) }}"
                                                                             target="_blank">
                                                                             {!! $module->name ?? '' !!}<br />
                                                                         </a>
@@ -96,7 +96,7 @@
                                                 @endforeach
                                             @endforeach
                                         @elseif ($localite == 'Ziguinchor')
-                                            @foreach ($projet->individuelles as $key => $individuelle)
+                                            @foreach ($modules->individuelles as $key => $individuelle)
                                                 @foreach ($individuelle->localites as $key => $localite)
                                                     @if (isset($localite->nom) && $localite->nom == 'Ziguinchor')
                                                         <tr>
@@ -117,7 +117,7 @@
                                                                 @foreach ($individuelle->modules as $key => $module)
                                                                     @if (isset($module->name))
                                                                         <a class="nav-link"
-                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Ziguinchor','$module' => $module->id]) }}"
+                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Ziguinchor','$module' => $module->name]) }}"
                                                                             target="_blank">
                                                                             {!! $module->name ?? '' !!}<br />
                                                                         </a>
@@ -148,9 +148,9 @@
                                                 @endforeach
                                             @endforeach
                                         @elseif ($localite == 'Bignona')
-                                            @foreach ($projet->individuelles as $key => $individuelle)
-                                                @foreach ($individuelle->localites as $key => $localite)
-                                                    @if (isset($localite->nom) && $localite->nom == 'Bignona')
+                                        @foreach ($modules->individuelles as $key => $individuelle)
+                                            @foreach ($individuelle->localites as $key => $localite)
+                                                @if (isset($localite->nom) && $localite->nom == 'Bignona')
                                                         <tr>
                                                             <td>{!! $individuelle->cin !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->civilite !!}</td>
@@ -169,7 +169,7 @@
                                                                 @foreach ($individuelle->modules as $key => $module)
                                                                     @if (isset($module->name))
                                                                         <a class="nav-link"
-                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Bignona','$module' => $module->id]) }}"
+                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Bignona','$module' => $module->name]) }}"
                                                                             target="_blank">
                                                                             {!! $module->name ?? '' !!}<br />
                                                                         </a>

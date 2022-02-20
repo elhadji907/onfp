@@ -176,6 +176,7 @@ Route::group([
         Route::get('/ageroutemodules/list', [AgeroutemoduleController::class, 'list'])->name('ageroutemodules.list');
         Route::get('/agerouteindividuelles/list', [AgerouteindividuelleController::class, 'list'])->name('agerouteindividuelles.list');
         Route::get('listerparlocalite/{projet}/{localite}', [AgerouteindividuelleController::class, 'listerparlocalite'])->name('listerparlocalite');
+        Route::get('listerparmodulelocalite/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalite'])->name('listerparmodulelocalite');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
