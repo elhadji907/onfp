@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -31,36 +31,46 @@
                             <table class="table table-bordered" id="table-ageroutelocalites">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th width="5px">N°</th>
-                                        <th width="100px">Départements</th>
-                                        <th width="300px">Communes</th>
-                                        <th width="20px">Action</th>
+                                        <th width="5%">N°</th>
+                                        <th width="20%">Départements</th>
+                                        <th width="5%">Effectif</th>
+                                        <th width="60%">Communes</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
                                         <th>Départements</th>
+                                        <th>Effectif</th>
                                         <th>Communes</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($ageroutelocalites->localites as $key => $localite)
+                                    @foreach ($projet->localites as $key => $localite)
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $localite->nom }}</td>
                                             <td>
-                                               {{--  @foreach ($localite->zones as $zone)
+                                                @foreach ($localite->individuelles as $individuelle)
                                                     @if ($loop->last)
                                                     <span class="badge badge-info"> {!! $loop->count !!} </span>
                                                     @endif
-                                                @endforeach  --}}
-                                                {{--  <span data-feather="arrow-right"></span>  --}}
+                                                @endforeach
+
+                                            </td>
+                                            <td>
+                                                {{-- @foreach ($localite->zones as $zone)
+                                                    @if ($loop->last)
+                                                    <span class="badge badge-info"> {!! $loop->count !!} </span>
+                                                    @endif
+                                                @endforeach --}}
+                                                {{-- <span data-feather="arrow-right"></span> --}}
                                                 @foreach ($localite->zones as $zone)
-                                                    {{--  <span class="badge badge-success">{{ $zone->nom }}</span>  --}}
-                                                    {{ $zone->nom }} {{ __(";") }}
+                                                    {{-- <span class="badge badge-success">{{ $zone->nom }}</span> --}}
+                                                    {{ $zone->nom }} {{ __(';') }}
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">

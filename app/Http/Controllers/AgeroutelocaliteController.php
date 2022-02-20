@@ -20,15 +20,9 @@ class AgeroutelocaliteController extends Controller
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
-        $ageroutelocalite = Projet::all()->load(['localites'])
-        ->where('name', '=', $projet_name);
+        $projet = Projet::find($projet_id);
 
-        foreach ($ageroutelocalite as $ageroutelocalites) {
-        }
-        /* $ageroutelocalites = Localite::where('name', $projet_name)->get(); */
-
-        /* dd($projet_name); */
-        return view('ageroutelocalites.index', compact('ageroutelocalites', 'projet_name'));
+        return view('ageroutelocalites.index', compact('projet', 'projet_name'));
     }
 
     /**

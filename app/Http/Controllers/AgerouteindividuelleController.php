@@ -47,27 +47,8 @@ class AgerouteindividuelleController extends Controller
         $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet = Projet::find($id_projet);
-        /* $localites = $projet->localites()->withCount('localites')->get(); */
-        
-        $id_zig = Localite::where('nom', 'Ziguinchor')->first()->id;
-        $id_bings = Localite::where('nom', 'Bignona')->first()->id;
-        $id_bounk = Localite::where('nom', 'Bounkiling')->first()->id;
-
-        $zig_count = DB::table("individuelleslocalites")->where("individuelleslocalites.localites_id", $id_zig)
-        ->pluck('individuelleslocalites.individuelles_id', 'individuelleslocalites.individuelles_id')
-        ->count();
-
-        $bings_count = DB::table("individuelleslocalites")->where("individuelleslocalites.localites_id", $id_bings)
-        ->pluck('individuelleslocalites.individuelles_id', 'individuelleslocalites.individuelles_id')
-        ->count();
-
-        $bounk_count = DB::table("individuelleslocalites")->where("individuelleslocalites.localites_id", $id_bounk)
-        ->pluck('individuelleslocalites.individuelles_id', 'individuelleslocalites.individuelles_id')
-        ->count();
-
-        $total = $zig_count + $bings_count + $bounk_count;
-
-        return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'zig_count', 'bings_count', 'bounk_count', 'total'));
+     
+        return view('agerouteindividuelles.index', compact('projet', 'projet_name'));
     }
 
     /**
@@ -331,7 +312,7 @@ class AgerouteindividuelleController extends Controller
         $projet = Projet::find($projet_id);
 
         $zones_id = Zone::where('nom', $request->input('zones'))->first()->id;
-        $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;        
+        $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;
         $modules1_id = Module::where('name', $request->input('modules1'))->first()->id;
         $modules2_id = Module::where('name', $request->input('modules2'))->first()->id;
         $modules3_id = Module::where('name', $request->input('modules3'))->first()->id;
@@ -743,11 +724,8 @@ class AgerouteindividuelleController extends Controller
 
     public function listerparlocalite($projet, $localite)
     {
-        $projets = Projet::find($projet);
-        $id_localite = Localite::where('nom', $localite)->first()->id;
-
-        $localite = Localite::find($id_localite);
+        $projet = Projet::find($projet);
         
-        return view('agerouteindividuelles.listerparlocalite', compact('projets', 'localite'));
+        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
     }
 }

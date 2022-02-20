@@ -174,6 +174,9 @@
                     <a class="collapse-item" href="{{ route('ageroutemodules.index') }}">
                         <span>Modules</span>
                     </a>
+                    <a class="collapse-item" href="#">
+                        <span>Formations</span>
+                    </a>
                 </div>
             </div>
         </li>

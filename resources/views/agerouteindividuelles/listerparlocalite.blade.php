@@ -1,88 +1,6 @@
 @extends('layout.default')
 @section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
-    {{-- <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <a class="nav-link" href="{{ route('agerouteindividuelles.index') }}">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ __("TOTAL") }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"> {!! $total !!} </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Ziguinchor']) }}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        {{ __('ZIGUINCHOR') }}
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"> {!! $zig_count !!} </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bignona']) }}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        {{ __('BIGNONA') }}</div>
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> {!! $bings_count !!} </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        {{ __('BOUNKILING') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800"> {!! $bounk_count !!} </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -97,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        LISTE BENEFICIAIRES {{-- {!! $projet_name !!} --}}
+                        LISTE BENEFICIAIRES
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -113,7 +31,6 @@
                                         <tr>
                                             <th style="width:5%;">N°</th>
                                             <th style="width:10%;">Cin</th>
-                                            {{--  <th style="width:5%;">Civilité</th>  --}}
                                             <th style="width:10%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
@@ -126,45 +43,136 @@
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        @foreach ($localite->individuelles as $key => $individuelle)
-                                            <tr>
-                                                <td>{!! $individuelle->numero_dossier !!}</td>
-                                                <td>{!! $individuelle->cin !!}</td>
-                                                {{--  <td>{!! $individuelle->demandeur->user->civilite !!}</td>  --}}
-                                                <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                <td>
-                                                    @foreach ($individuelle->zones as $key => $zone)
-                                                        {!! $zone->nom ?? '' !!}
-                                                    @endforeach
-                                                </td>
-                                                <td>
-                                                    @foreach ($individuelle->modules as $key => $module)
-                                                        {!! $module->name ?? '' !!}
-                                                    @endforeach
-                                                </td>
-                                                <td class="d-flex align-items-baseline">
-                                                    <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                        title="modifier">
-                                                        <i class="far fa-edit">&nbsp;</i>
-                                                    </a>
-                                                    &nbsp;
-                                                    <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
-                                                        class='btn btn-primary btn-sm' title="voir">
-                                                        <i class="far fa-eye">&nbsp;</i>
-                                                    </a>
-                                                    &nbsp;
-                                                    @can('role-delete')
-                                                        {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                        {!! Form::close() !!}
-                                                    @endcan
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        @if ($localite == 'Bounkiling')
+                                            @foreach ($projet->individuelles as $key => $individuelle)
+                                                @foreach ($individuelle->localites as $key => $localite)
+                                                    @if (isset($localite->nom) && $localite->nom == 'Bounkiling')
+                                                        <tr>
+                                                            <td>{!! $individuelle->numero_dossier !!}</td>
+                                                            <td>{!! $individuelle->cin !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                            <td>
+                                                                @foreach ($individuelle->zones as $key => $zone)
+                                                                    {!! $zone->nom ?? '' !!}
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
+                                                                @foreach ($individuelle->modules as $key => $module)
+                                                                    {!! $module->name ?? '' !!}
+                                                                @endforeach
+                                                            </td>
+                                                            <td class="d-flex align-items-baseline">
+                                                                <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
+                                                                    class='btn btn-success btn-sm' title="modifier">
+                                                                    <i class="far fa-edit">&nbsp;</i>
+                                                                </a>
+                                                                &nbsp;
+                                                                <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                                    class='btn btn-primary btn-sm' title="voir">
+                                                                    <i class="far fa-eye">&nbsp;</i>
+                                                                </a>
+                                                                &nbsp;
+                                                                @can('role-delete')
+                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                                    {!! Form::close() !!}
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        @elseif ($localite == 'Ziguinchor')
+                                            @foreach ($projet->individuelles as $key => $individuelle)
+                                                @foreach ($individuelle->localites as $key => $localite)
+                                                    @if (isset($localite->nom) && $localite->nom == 'Ziguinchor')
+                                                        <tr>
+                                                            <td>{!! $individuelle->numero_dossier !!}</td>
+                                                            <td>{!! $individuelle->cin !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                            <td>
+                                                                @foreach ($individuelle->zones as $key => $zone)
+                                                                    {!! $zone->nom ?? '' !!}
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
+                                                                @foreach ($individuelle->modules as $key => $module)
+                                                                    {!! $module->name ?? '' !!}
+                                                                @endforeach
+                                                            </td>
+                                                            <td class="d-flex align-items-baseline">
+                                                                <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
+                                                                    class='btn btn-success btn-sm' title="modifier">
+                                                                    <i class="far fa-edit">&nbsp;</i>
+                                                                </a>
+                                                                &nbsp;
+                                                                <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                                    class='btn btn-primary btn-sm' title="voir">
+                                                                    <i class="far fa-eye">&nbsp;</i>
+                                                                </a>
+                                                                &nbsp;
+                                                                @can('role-delete')
+                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                                    {!! Form::close() !!}
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        @elseif ($localite == 'Bignona')
+                                            @foreach ($projet->individuelles as $key => $individuelle)
+                                                @foreach ($individuelle->localites as $key => $localite)
+                                                    @if (isset($localite->nom) && $localite->nom == 'Bignona')
+                                                        <tr>
+                                                            <td>{!! $individuelle->numero_dossier !!}</td>
+                                                            <td>{!! $individuelle->cin !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                            <td>
+                                                                @foreach ($individuelle->zones as $key => $zone)
+                                                                    {!! $zone->nom ?? '' !!}
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
+                                                                @foreach ($individuelle->modules as $key => $module)
+                                                                    {!! $module->name ?? '' !!}
+                                                                @endforeach
+                                                            </td>
+                                                            <td class="d-flex align-items-baseline">
+                                                                <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
+                                                                    class='btn btn-success btn-sm' title="modifier">
+                                                                    <i class="far fa-edit">&nbsp;</i>
+                                                                </a>
+                                                                &nbsp;
+                                                                <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                                    class='btn btn-primary btn-sm' title="voir">
+                                                                    <i class="far fa-eye">&nbsp;</i>
+                                                                </a>
+                                                                &nbsp;
+                                                                @can('role-delete')
+                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                                    {!! Form::close() !!}
+                                                                @endcan
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
