@@ -53,7 +53,7 @@
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $localite->nom }}</td>
-                                            <td>
+                                            <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
                                                 @foreach ($localite->individuelles as $individuelle)
                                                     @foreach ($individuelle->projets as $projet)

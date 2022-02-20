@@ -31,16 +31,18 @@
                             <table class="table table-bordered" id="table-ageroutezones">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th width="5px">N°</th>
-                                        <th width="200px">Communes</th>
-                                        <th width="200px">Départements</th>
-                                        <th width="20px">Action</th>
+                                        <th width="10%">N°</th>
+                                        <th width="35%">Communes</th>
+                                        <th width="10%">Effectif</th>
+                                        <th width="30%">Départements</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
                                         <th>Communes</th>
+                                        <th>Effectif</th>
                                         <th>Départements</th>
                                         <th>Action</th>
                                     </tr>
@@ -51,6 +53,17 @@
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $zone->nom }}</td>
+                                            <td ALIGN="CENTER">
+                                                <?php $i = 0; ?>
+                                                @foreach ($zone->individuelles as $individuelle)
+                                                    @foreach ($individuelle->projets as $projet)
+                                                        @if ($loop->last && $projet->name == $projet_name)
+                                                            <?php $i++; ?>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                                <span class="badge badge-info">{!! $i !!}</span>
+                                            </td>
                                             <td>
                                                 <span>{{ $zone->localite->nom ?? ""}}</span>
 

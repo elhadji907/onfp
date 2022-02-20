@@ -33,6 +33,7 @@
                                     <tr>
                                         <th width="5%">N°</th>
                                         <th width="30%">Modules</th>
+                                        <th width="5%">Demandeurs</th>
                                         <th width="30%">Domaine</th>
                                         <th width="20%">Secteur</th>
                                         <th width="10%">Action</th>
@@ -42,6 +43,7 @@
                                     <tr>
                                         <th>N°</th>
                                         <th>Modules</th>
+                                        <th>Demandeurs</th>
                                         <th>Domaine</th>
                                         <th>Secteur</th>
                                         <th>Action</th>
@@ -49,10 +51,21 @@
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($projet->modules as $key => $module)
+                                    @foreach ($projets->modules as $key => $module)
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $module->name }}</td>
+                                            <td ALIGN="CENTER">
+                                                <?php $h = 0; ?>
+                                                @foreach ($module->individuelles as $individuelle)
+                                                    @foreach ($individuelle->projets as $projet)
+                                                        @if ($loop->last && $projet->name == $projet_name)
+                                                            <?php $h++; ?>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                                <span class="badge badge-info">{!! $h !!}</span>
+                                            </td>
                                             <td>{{ $module->domaine->name }}</td>
                                             <td>{{ $module->domaine->secteur->name }}</td>
                                             <td class="d-flex align-items-baseline align-middle">
