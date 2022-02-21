@@ -56,7 +56,7 @@
                                             <td>{{ $projet->sigle }}</td>
                                             <td>
                                                 <?php $h = 1; ?>
-                                                @foreach ($individuelle->modules as $key => $module)
+                                                @foreach ($projet->individuelles as $key => $individuelle)
                                                     @if ($loop->last)
                                                         {!! $loop->count !!}
                                                     @endif

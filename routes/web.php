@@ -175,8 +175,12 @@ Route::group([
         Route::get('/ageroutezones/list', [AgeroutezoneController::class, 'list'])->name('ageroutezones.list');
         Route::get('/ageroutemodules/list', [AgeroutemoduleController::class, 'list'])->name('ageroutemodules.list');
         Route::get('/agerouteindividuelles/list', [AgerouteindividuelleController::class, 'list'])->name('agerouteindividuelles.list');
-        Route::get('listerparlocalite/{projet}/{localite}', [AgerouteindividuelleController::class, 'listerparlocalite'])->name('listerparlocalite');
+        Route::get('listerparlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'listerparlocalite'])->name('listerparlocalite');
+        Route::get('listerparzone/{projet}/{zone}', [AgeroutezoneController::class, 'listerparzone'])->name('listerparzone');
         Route::get('listerparmodulelocalite/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalite'])->name('listerparmodulelocalite');
+        Route::get('listerparmodulezone/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezone'])->name('listerparmodulezone');
+        Route::get('candidatlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalite'])->name('candidatlocalite');
+        Route::get('candidatzone/{projet}/{localite}', [AgeroutezoneController::class, 'candidatzone'])->name('candidatzone');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 

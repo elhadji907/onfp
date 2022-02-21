@@ -62,17 +62,13 @@
                                                         @endif
                                                     @endforeach
                                                 @endforeach
-                                                <span class="badge badge-info">{!! $i !!}</span>
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatlocalite', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
+                                                    target="_blank">
+                                                    <span class="badge badge-info">{!! $i !!}</span></a>
                                             </td>
                                             <td>
-                                                {{-- @foreach ($localite->zones as $zone)
-                                                    @if ($loop->last)
-                                                    <span class="badge badge-info"> {!! $loop->count !!} </span>
-                                                    @endif
-                                                @endforeach --}}
-                                                {{-- <span data-feather="arrow-right"></span> --}}
                                                 @foreach ($localite->zones as $zone)
-                                                    {{-- <span class="badge badge-success">{{ $zone->nom }}</span> --}}
                                                     {{ $zone->nom }} {{ __(';') }}
                                                 @endforeach
                                             </td>

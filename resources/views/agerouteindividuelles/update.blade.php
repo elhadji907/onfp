@@ -487,7 +487,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <b>{!! Form::label('Composition dossier :') !!}</b>(<span class="text-danger">*</span>)
+                                <b>{!! Form::label('Composition dossier :') !!}</b>
                                 <br />
                                 {{-- @if (isset($dossier[0]))
                                     {{ Form::checkbox('dossier[]', 'Fiche de candidature', $dossier[0] == 'Fiche de candidature' ? 'checked' : '', ['class' => 'name', 'disabled' => 'disabled']) }}
@@ -522,16 +522,17 @@
                                 @endif --}}
 
                                 {{ Form::checkbox('dossier', 'Fiche de candidature', true, ['class' => 'name', 'disabled' => 'disabled']) }}
-                                {{ __('Fiche de candidature') }}
+                                {{ __('Fiche de candidature') }}(<span class="text-danger">*</span>)
                                 <br />
                                 {{ Form::checkbox('dossier', "Copie carte nationale d'identité", true, ['class' => 'name', 'disabled' => 'disabled']) }}
-                                {{ __("Copie carte nationale d'identité") }}
+                                {{ __("Copie carte nationale d'identité") }}(<span class="text-danger">*</span>)
                                 <br />
                                 {{ Form::checkbox('dossier', 'Certificat de résidence', true, ['class' => 'name', 'disabled' => 'disabled']) }}
-                                {{ __('Certificat de résidence') }}
-                                <br />
-                                {{ Form::checkbox('dossier','Copie diplomes ou attestations',$individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '',['class' => 'name']) }}
-                                {{ __('Copie diplomes ou attestations') }}
+                                {{ __('Certificat de résidence') }}(<span class="text-danger">*</span>)
+                               {{--   <br />  --}}
+                                {{--  {{ Form::checkbox('dossier','Copie diplomes ou attestations',$individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '',['class' => 'name']) }}  --}}
+                                {{--  {{ Form::radio('dossier', 'Copie diplomes ou attestations', $individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '', ['class' => 'name']) }}  --}}
+                                {{--  {{ __('Copie diplomes ou attestations') }}  --}}
 
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('dossier'))
@@ -542,10 +543,10 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                                <label for="autre_diplomes_fournis">{{ __('Si autre, précisez :') }}</label>
+                                <label for="autre_diplomes_fournis">{{ __('Si autres, précisez :') }}</label>
                                 <textarea class="form-control  @error('autre_diplomes_fournis') is-invalid @enderror"
                                     name="autre_diplomes_fournis" id="autre_diplomes_fournis" rows="2"
-                                    placeholder="lister les autres diplômes fournis">{{ $individuelle->autre_diplomes_fournis ?? old('autre_diplomes_fournis') }}</textarea>
+                                    placeholder="Enumérer les autres diplômes, certificats, titres, attestations, contrats de travail ou stage">{{ $individuelle->autre_diplomes_fournis ?? old('autre_diplomes_fournis') }}</textarea>
                                 @error('autre_diplomes_fournis')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

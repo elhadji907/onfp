@@ -41,6 +41,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $motif
  * @property int|null $annee_diplome
  * @property int|null $annee_diplome_professionelle
+ * @property int|null $nbre_enfant
  * @property string|null $activite_travail
  * @property string|null $travail_renumeration
  * @property string|null $activite_avenir
@@ -51,9 +52,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $salaire
  * @property string|null $preciser_handicap
  * @property string|null $optiondiplome
- * @property string|null $items1
  * @property string|null $dossier
  * @property string|null $autre_diplomes_fournis
+ * @property string|null $items1
  * @property Carbon|null $date1
  * @property string|null $item1
  * @property string|null $item2
@@ -75,6 +76,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $diplomes_id
  * @property int|null $conventions_id
  * @property int|null $diplomespros_id
+ * @property string|null $module1
+ * @property string|null $statut1
+ * @property string|null $module2
+ * @property string|null $statut2
+ * @property string|null $module3
+ * @property string|null $statut3
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -107,6 +114,7 @@ class Individuelle extends Model
 		'note' => 'float',
 		'annee_diplome' => 'int',
 		'annee_diplome_professionelle' => 'int',
+		'nbre_enfant' => 'int',
 		'nbre_pieces' => 'int',
 		'nbre_enfants' => 'int',
 		'demandeurs_id' => 'int',
@@ -151,6 +159,7 @@ class Individuelle extends Model
 		'motif',
 		'annee_diplome',
 		'annee_diplome_professionelle',
+		'nbre_enfant',
 		'activite_travail',
 		'travail_renumeration',
 		'activite_avenir',
@@ -161,9 +170,9 @@ class Individuelle extends Model
 		'salaire',
 		'preciser_handicap',
 		'optiondiplome',
-		'items1',
 		'dossier',
 		'autre_diplomes_fournis',
+		'items1',
 		'date1',
 		'item1',
 		'item2',
@@ -184,7 +193,13 @@ class Individuelle extends Model
 		'programmes_id',
 		'diplomes_id',
 		'conventions_id',
-		'diplomespros_id'
+		'diplomespros_id',
+		'module1',
+		'statut1',
+		'module2',
+		'statut2',
+		'module3',
+		'statut3'
 	];
 
 	public function antenne()

@@ -48,6 +48,7 @@ class CreateIndividuellesTable extends Migration
             $table->longText('motif')->nullable();
             $table->integer('annee_diplome')->nullable();
             $table->integer('annee_diplome_professionelle')->nullable();
+            $table->integer('nbre_enfant')->nullable();
             $table->string('activite_travail', 200)->nullable();
             $table->string('travail_renumeration', 200)->nullable();
             $table->string('activite_avenir', 200)->nullable();
@@ -58,9 +59,9 @@ class CreateIndividuellesTable extends Migration
             $table->string('salaire', 200)->nullable();
             $table->string('preciser_handicap', 200)->nullable();
             $table->string('optiondiplome', 200)->nullable();
-            $table->string('items1', 200)->nullable();
             $table->longText('dossier')->nullable();
             $table->longText('autre_diplomes_fournis')->nullable();
+            $table->string('items1', 200)->nullable();
             $table->timestamp('date1')->nullable();
             $table->string('item1', 200)->nullable();
             $table->string('item2', 200)->nullable();
@@ -82,6 +83,12 @@ class CreateIndividuellesTable extends Migration
             $table->unsignedInteger('diplomes_id')->nullable();
             $table->unsignedInteger('conventions_id')->nullable();
             $table->unsignedInteger('diplomespros_id')->nullable();
+            $table->string('module1', 200)->nullable();
+            $table->string('statut1', 45)->nullable();
+            $table->string('module2', 200)->nullable();
+            $table->string('statut2', 45)->nullable();
+            $table->string('module3', 200)->nullable();
+            $table->string('statut3', 45)->nullable();
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');
 

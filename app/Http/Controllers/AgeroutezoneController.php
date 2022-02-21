@@ -16,14 +16,13 @@ class AgeroutezoneController extends Controller
      */
     public function index()
     {
-        
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
         /* dd($projet_id); */
 
         $ageroutelocalite = Projet::all()->load(['zones'])
-        ->where('name','=',$projet_name);
+        ->where('name', '=', $projet_name);
 
         /* dd($ageroutelocalite); */
 
@@ -97,5 +96,19 @@ class AgeroutezoneController extends Controller
     public function destroy(Zone $zone)
     {
         //
+    }
+    
+    public function listerparlocalite($projet, $localite)
+    {
+        $projet = Projet::find($projet);
+        
+        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
+    }
+    
+    public function candidatzone($projet, $zone)
+    {
+        $projet = Projet::find($projet);
+        
+        return view('ageroutezones.candidatzone', compact('projet', 'zone'));
     }
 }

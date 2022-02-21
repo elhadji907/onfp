@@ -35,7 +35,7 @@
                                         <th width="35%">Communes</th>
                                         <th width="10%">Effectif</th>
                                         <th width="30%">Départements</th>
-                                        <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -44,7 +44,7 @@
                                         <th>Communes</th>
                                         <th>Effectif</th>
                                         <th>Départements</th>
-                                        <th>Action</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -62,7 +62,10 @@
                                                         @endif
                                                     @endforeach
                                                 @endforeach
-                                                <span class="badge badge-info">{!! $i !!}</span>
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatzone', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
+                                                    target="_blank">
+                                                    <span class="badge badge-info">{!! $i !!}</span></a>
                                             </td>
                                             <td>
                                                 <span>{{ $zone->localite->nom ?? ""}}</span>

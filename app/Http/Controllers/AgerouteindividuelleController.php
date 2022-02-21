@@ -605,6 +605,16 @@ class AgerouteindividuelleController extends Controller
             $civilite = "";
         }
 
+        $dossier = $request->input('autre_diplomes_fournis');
+        $dossier = str_replace(' ', '', $dossier);
+
+        if (($dossier) != "") {
+            $dossier = "Copie diplomes ou attestations";
+        } else {
+            $dossier = "";
+        }
+        
+
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
         $telephone_secondaire = $request->input('telephone_secondaire');
@@ -665,7 +675,7 @@ class AgerouteindividuelleController extends Controller
         $individuelle->victime_social                  =     $request->input('victime_social');
         $individuelle->autre_victime                   =     $request->input('autre_victime');
         $individuelle->salaire                         =     $request->input('salaire');
-        $individuelle->dossier                         =     $request->get('dossier');
+        $individuelle->dossier                         =     $dossier;
         $individuelle->autre_diplomes_fournis          =     $request->input('autre_diplomes_fournis');
         $individuelle->telephone                       =     $telephone_secondaire;
         $individuelle->etudes_id                       =     $etude_id;

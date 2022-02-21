@@ -90,4 +90,18 @@ class AgeroutelocaliteController extends Controller
     {
         //
     }
+
+    public function listerparlocalite($projet, $localite)
+    {
+        $projet = Projet::find($projet);
+        
+        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
+    }
+
+    public function candidatlocalite($projet, $localite)
+    {
+        $projet = Projet::find($projet);
+        
+        return view('ageroutelocalites.candidatlocalite', compact('projet', 'localite'));
+    }
 }

@@ -19,7 +19,7 @@ class IndividuelleSeeder extends Seeder
     public function run()
     {
         Individuelle::factory()
-            ->count(90)
+            ->count(40)
             ->create();
 
         $projets = Projet::all();

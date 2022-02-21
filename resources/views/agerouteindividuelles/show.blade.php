@@ -80,7 +80,8 @@
                     </tr>
                     <tr>
                         <td colspan="3"><b>{{ __('Prénom et Nom') }}</b> :
-                            {{ $individuelle->demandeur->user->firstname ?? '' }}&nbsp;&nbsp;{{ $individuelle->demandeur->user->name ?? '' }}</td>
+                            {{ $individuelle->demandeur->user->firstname ?? '' }}&nbsp;&nbsp;{{ $individuelle->demandeur->user->name ?? '' }}
+                        </td>
                         <td colspan="1"><b>{{ __('Civilité') }}</b> :
                             {{ $individuelle->demandeur->user->civilite ?? '' }}</td>
                     </tr>
@@ -95,15 +96,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2"><b>{{ __('Téléphonedu candidat (Personnel) :  ') }}</b>{{ $individuelle->demandeur->user->telephone ?? '' }}
+                        <td colspan="2">
+                            <b>{{ __('Téléphonedu candidat (Personnel) :  ') }}</b>{{ $individuelle->demandeur->user->telephone ?? '' }}
                         </td>
-                        <td colspan="2"><b>{{ __('Téléphone (Tuteur) :  ') }}</b>{{ $individuelle->telephone ?? '' }}
+                        <td colspan="2">
+                            <b>{{ __('Téléphone (Tuteur) :  ') }}</b>{{ $individuelle->telephone ?? '' }}
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2"><b>{{ __('Situation matrimoniale :  ') }}</b>{{ $individuelle->demandeur->user->familiale->name ?? '' }}
+                        <td colspan="2">
+                            <b>{{ __('Situation matrimoniale :  ') }}</b>{{ $individuelle->demandeur->user->familiale->name ?? '' }}
                         </td>
-                        <td colspan="2"><b>{{ __('Nombre d’enfants en charge :  ') }}</b>{{ $individuelle->nbre_enfants ?? '' }}
+                        <td colspan="2">
+                            <b>{{ __('Nombre d’enfants en charge :  ') }}</b>{{ $individuelle->nbre_enfants ?? '' }}
                         </td>
                     </tr>
                 </tbody>
@@ -236,20 +241,42 @@
                     <tr>
                         <td colspan="4">
                             <?php $h = 1; ?>
-                            @foreach ($individuelle->modules as $module)
+                            @if ($individuelle->statut1 != 'Attente' && isset($individuelle->module1))
+                                <b>{{ __('Module ') }} {{ $h++ }} </b>
+                                {{ $individuelle->module1 ?? '' }} : <label style="color: #ffd000;
+                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut1 }}
+                                </label><br />
+                            @endif
+                            @if ($individuelle->statut2 != 'Attente' && isset($individuelle->module2))
+                                <b>{{ __('Module ') }} {{ $h++ }} </b>
+                                {{ $individuelle->module2 ?? '' }} : <label style="color: #ffd000;
+                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut2 }}
+                                </label><br />
+                            @endif
+                            @if ($individuelle->statut3 != 'Attente' && isset($individuelle->module3))
                             <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                {{ $module->name ?? '' }}<br />
-                            @endforeach
+                                {{ $individuelle->module2 ?? '' }} : <label style="color: #ffd000;
+                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut3 }}
+                                </label><br />
+                            @endif
+                            @if ($individuelle->statut == 'Attente')
+                                @foreach ($individuelle->modules as $module)
+                                <b>{{ __('Module ') }} {{ $h++ }} </b>
+                                    {{ $module->name }}: <label style="color: #ffd000;
+                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut }}
+                                    </label><br />
+                                @endforeach
+                            @endif
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div style="position: fixed; 
-            bottom: -10px; 
-            left: 0px; 
+        <div style="position: fixed;
+            bottom: -10px;
+            left: 0px;
             right: 0px;
-            height: 50px; 
+            height: 50px;
             background-color: white;
             color: white;
             text-align: center;

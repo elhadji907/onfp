@@ -10,6 +10,7 @@ use App\Models\Projet;
 use App\Models\Zone;
 use App\Models\Module;
 use App\Models\Ingenieur;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProjetSeeder extends Seeder
 {
@@ -23,6 +24,9 @@ class ProjetSeeder extends Seeder
         DB::table('projets')->insert([
              "name"=>"Projet d'employabilite des jeunes par l'apprentissage",
              "sigle"=>"PEJA",
+             "description"=> "description",
+             "budjet_lettre"=> "budjet en lettre",
+             "budjet"=> "123",
              'created_at' => now(),
              'updated_at' => now(),
              'uuid' => Str::uuid(),
@@ -31,6 +35,9 @@ class ProjetSeeder extends Seeder
         DB::table('projets')->insert([
              "name"=>"Projet d’appui au Développement des Compétences et de l’Entreprenariat des Jeunes dans les secteurs porteurs",
              "sigle"=>"PDCEJ",
+             "description"=> "description",
+             "budjet_lettre"=> "budjet en lettre",
+             "budjet"=> "123",
              'created_at' => now(),
              'updated_at' => now(),
              'uuid' => Str::uuid(),
@@ -39,6 +46,9 @@ class ProjetSeeder extends Seeder
         DB::table('projets')->insert([
              "name"=>"Accès équitable à la formation professionnelle",
              "sigle"=>"ACEFOP",
+             "description"=> "description",
+             "budjet_lettre"=> "budjet en lettre",
+             "budjet"=> "123",
              'created_at' => now(),
              'updated_at' => now(),
              'uuid' => Str::uuid(),
@@ -46,7 +56,10 @@ class ProjetSeeder extends Seeder
 
         DB::table('projets')->insert([
              "name"=>"PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD",
-             "sigle"=>"SZM",
+             "sigle"=>"AGEROUTE-SENOZIG",
+             "description"=> "description",
+             "budjet_lettre"=> "budjet en lettre",
+             "budjet"=> "123",
              'created_at' => now(),
              'updated_at' => now(),
              'uuid' => Str::uuid(),
