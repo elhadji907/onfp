@@ -745,4 +745,31 @@ class AgerouteindividuelleController extends Controller
         $modules = Module::find($module);
         return view('agerouteindividuelles.listerparmodulelocalite', compact('projet', 'localite', 'module', 'modules'));
     }
+
+    public function agerouteattente($statut)
+    {
+        $individuelles = Individuelle::get()->where('statut', '=', 'Attente');
+
+        $effectif = Individuelle::get()->where('statut', '=', 'Attente')
+                                  ->count();
+
+        return view('agerouteindividuelles.attente', compact('statut', 'individuelles', 'effectif'));
+    }
+
+    public function ageroutepresel($module, $statut, $individuelle)
+    {
+
+        $module = Module::find($module);
+
+        $individuelle = Individuelle::find($individuelle);
+
+        $individuelle->statut    =   $statut;
+        $individuelle->statut1    =   $statut;
+        $individuelle->module1    =   $module->name;
+        
+        $individuelle->save();
+        
+        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été accordée';
+        return back()->with(compact('message'));
+    }
 }

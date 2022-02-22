@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - Demandeurs du département de ' . $localite )
+@section('title', 'AGEROUTE - Demandeurs du département de ' . $localite)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du département de {{$localite}}
+                        Agéroute - Liste des demandeurs du département de {{ $localite }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -169,10 +169,15 @@
                                                                 @foreach ($individuelle->modules as $key => $module)
                                                                     @if (isset($module->name))
                                                                         <a class="nav-link"
-                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Bignona','$module' => $module->id]) }}"
+                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet, '$localite' => 'Bignona', '$module' => $module->id]) }}"
                                                                             target="_blank">
                                                                             {!! $module->name ?? '' !!}<br />
                                                                         </a>
+                                                                        <a href="{{ url('ageroutepresel', ['$module' => $module, '$statut' => 'Présélectionné', '$individuelle' => $individuelle->id]) }}"
+                                                                            title="Présélectionné"
+                                                                            class="btn btn-outline-primary btn-sm mt-0">
+                                                                            <i class="fas fa-check-circle"></i>
+                                                                        </a><br />
                                                                     @else
                                                                     @endif
                                                                 @endforeach

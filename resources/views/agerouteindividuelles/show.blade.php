@@ -86,7 +86,7 @@
                             {{ $individuelle->demandeur->user->civilite ?? '' }}</td>
                     </tr>
                     <tr>
-                        <td><b>{{ __('Date et lieu naissance') }}</b> :
+                        <td colspan="4"><b>{{ __('Date et lieu naissance') }}</b> :
                             {{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') ?? '' }}&nbsp;à&nbsp;
                             {{ $individuelle->demandeur->user->lieu_naissance ?? '' }} </td>
                     </tr>
@@ -162,7 +162,7 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th colspan="2"><b><u>III. PROJET PROFESSIONNEL</b></u></th>
+                        <th colspan="4"><b><u>III. PROJET PROFESSIONNEL</b></u></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -172,10 +172,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><b>{{ __('Etes-vous dans un travail rémunéré ? : ') }}</b>{{ $individuelle->travail_renumeration ?? '' }}
+                        <td colspan="2">
+                            <b>{{ __('Etes-vous dans un travail rémunéré ? : ') }}</b>{{ $individuelle->travail_renumeration ?? '' }}
                         </td>
                         @if (isset($individuelle->travail_renumeration) && $individuelle->travail_renumeration == 'Oui')
-                            <td><b>{{ __('Comment trouvez -vous votre salaire ? : ') }}</b>{{ $individuelle->salaire ?? '' }}
+                            <td colspan="2">
+                                <b>{{ __('Comment trouvez -vous votre salaire ? : ') }}</b>{{ $individuelle->salaire ?? '' }}
                             </td>
                         @else
                         @endif
@@ -190,15 +192,17 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th colspan="2"><b><u>IV. SITUATION SOCIO- ECONOMIQUE</b></u></th>
+                        <th colspan="4"><b><u>IV. SITUATION SOCIO- ECONOMIQUE</b></u></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>{{ __('Souffrez- vous d’un handicap quelconque ? : ') }}</b>{{ $individuelle->handicap ?? '' }}
+                        <td colspan="1">
+                            <b>{{ __('Souffrez- vous d’un handicap quelconque ? : ') }}</b>{{ $individuelle->handicap ?? '' }}
                         </td>
                         @if (isset($individuelle->handicap) && $individuelle->handicap == 'Oui')
-                            <td><b>{{ __('Précisez ? : ') }}</b>{{ $individuelle->preciser_handicap ?? '' }}
+                            <td colspan="3">
+                                <b>{{ __('Précisez ? : ') }}</b>{{ $individuelle->preciser_handicap ?? '' }}
                             </td>
                         @else
                         @endif
@@ -209,10 +213,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><b>{{ __('Avez-vous été victime d’un quelconque problème social ? : ') }}</b>{{ $individuelle->victime_social ?? '' }}
+                        <td colspan="1">
+                            <b>{{ __('Avez-vous été victime d’un quelconque problème social ? : ') }}</b>{{ $individuelle->victime_social ?? '' }}
                         </td>
                         @if (isset($individuelle->autre_victime))
-                            <td><b>{{ __('Précisez ? : ') }}</b>{{ $individuelle->autre_victime ?? '' }}
+                            <td colspan="3">
+                                <b>{{ __('Précisez ? : ') }}</b>{{ $individuelle->autre_victime ?? '' }}
                             </td>
                         @else
                         @endif
@@ -222,52 +228,65 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th colspan="2"><b><u>V. CHOIX DU CANDIDAT</b></u></th>
+                        <th colspan="4"><b><u>V. CHOIX ET LOCALISATION DU CANDIDAT</b></u></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>{{ __('Département : ') }}</b>
+                        <td colspan="2"><b>{{ __('Département : ') }}</b>
                             @foreach ($individuelle->localites as $localite)
                                 {{ $localite->nom ?? '' }}
                             @endforeach
                         </td>
-                        <td><b>{{ __('Commune : ') }}</b>
+                        <td colspan="1"><b>{{ __('Commune : ') }}</b>
                             @foreach ($individuelle->zones as $zone)
                                 {{ $zone->nom ?? '' }}
                             @endforeach
                         </td>
+                        <td colspan="1"></td>
                     </tr>
                     <tr>
-                        <td colspan="4">
+                        <td colspan="1">
                             <?php $h = 1; ?>
                             @if ($individuelle->statut1 != 'Attente' && isset($individuelle->module1))
                                 <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                {{ $individuelle->module1 ?? '' }} : <label style="color: #ffd000;
-                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut1 }}
+                                {{ $individuelle->module1 ?? '' }}<br />
+                            @elseif ($individuelle->statut2 != 'Attente' && isset($individuelle->module2))
+                                <b>{{ __('Module ') }} {{ $h++ }} </b>
+                                {{ $individuelle->module2 ?? '' }}<br />
+                            @elseif ($individuelle->statut3 != 'Attente' && isset($individuelle->module3))
+                                <b>{{ __('Module ') }} {{ $h++ }} </b>
+                                {{ $individuelle->module3 ?? '' }}<br />
+                            @elseif ($individuelle->statut == 'Attente')
+                                @foreach ($individuelle->modules as $module)
+                                    <b>{{ __('Module ') }} {{ $h++ }} </b>
+                                    {{ $module->name }}: <br />
+                                @endforeach
+                            @else
+                            @endif
+                        </td>
+                        <td colspan="1">
+                            <?php $h = 1; ?>
+                            @if ($individuelle->statut1 != 'Attente' && isset($individuelle->module1))
+                                <label>{{ $individuelle->statut1 }}
                                 </label><br />
                             @endif
                             @if ($individuelle->statut2 != 'Attente' && isset($individuelle->module2))
-                                <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                {{ $individuelle->module2 ?? '' }} : <label style="color: #ffd000;
-                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut2 }}
+                                <label>{{ $individuelle->statut2 }}
                                 </label><br />
                             @endif
                             @if ($individuelle->statut3 != 'Attente' && isset($individuelle->module3))
-                            <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                {{ $individuelle->module2 ?? '' }} : <label style="color: #ffd000;
-                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut3 }}
+                                <label>{{ $individuelle->statut3 }}
                                 </label><br />
                             @endif
                             @if ($individuelle->statut == 'Attente')
                                 @foreach ($individuelle->modules as $module)
-                                <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                    {{ $module->name }}: <label style="color: #ffd000;
-                            text-shadow: 16px 22px 11px rgba(0, 0, 0, 0.8);">{{ $individuelle->statut }}
+                                    <label>{{ $individuelle->statut }}
                                     </label><br />
                                 @endforeach
                             @endif
                         </td>
+                        <td colspan="2"></td>
                     </tr>
                 </tbody>
             </table>
@@ -281,7 +300,7 @@
             color: white;
             text-align: center;
             line-height: 35px;">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp4.png'))) }}"
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_page_ageroute_onfp.png'))) }}"
                 style="width: 100%; height: auto;">
         </div>
     </div>
