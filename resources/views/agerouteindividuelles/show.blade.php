@@ -228,7 +228,7 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th colspan="4"><b><u>V. CHOIX ET LOCALISATION DU CANDIDAT</b></u></th>
+                        <th colspan="4"><b><u>V. LOCALISATION DU CANDIDAT</b></u></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -243,50 +243,28 @@
                                 {{ $zone->nom ?? '' }}
                             @endforeach
                         </td>
-                        <td colspan="1"></td>
                     </tr>
+                </tbody>
+            </table>
+            <table class="table table-responsive">
+                <thead>
                     <tr>
-                        <td colspan="1">
+                        <th align="left"> <u>{{ __('Module(s) demandé(s)') }}</u> </th>
+                        <th colspan="2"> <u>{{ __('Module retenu') }}</u> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
                             <?php $h = 1; ?>
-                            @if ($individuelle->statut1 != 'Attente' && isset($individuelle->module1))
-                                <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                {{ $individuelle->module1 ?? '' }}<br />
-                            @elseif ($individuelle->statut2 != 'Attente' && isset($individuelle->module2))
-                                <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                {{ $individuelle->module2 ?? '' }}<br />
-                            @elseif ($individuelle->statut3 != 'Attente' && isset($individuelle->module3))
-                                <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                {{ $individuelle->module3 ?? '' }}<br />
-                            @elseif ($individuelle->statut == 'Attente')
-                                @foreach ($individuelle->modules as $module)
-                                    <b>{{ __('Module ') }} {{ $h++ }} </b>
-                                    {{ $module->name }}: <br />
-                                @endforeach
-                            @else
-                            @endif
+                            @foreach ($individuelle->modules as $module)
+                                <b>{{ __('Module ') }} {{ $h++ }} : </b>
+                                {{ $module->name }} <br />
+                            @endforeach
                         </td>
-                        <td colspan="1">
-                            <?php $h = 1; ?>
-                            @if ($individuelle->statut1 != 'Attente' && isset($individuelle->module1))
-                                <label>{{ $individuelle->statut1 }}
-                                </label><br />
-                            @endif
-                            @if ($individuelle->statut2 != 'Attente' && isset($individuelle->module2))
-                                <label>{{ $individuelle->statut2 }}
-                                </label><br />
-                            @endif
-                            @if ($individuelle->statut3 != 'Attente' && isset($individuelle->module3))
-                                <label>{{ $individuelle->statut3 }}
-                                </label><br />
-                            @endif
-                            @if ($individuelle->statut == 'Attente')
-                                @foreach ($individuelle->modules as $module)
-                                    <label>{{ $individuelle->statut }}
-                                    </label><br />
-                                @endforeach
-                            @endif
+                        <td>
+
                         </td>
-                        <td colspan="2"></td>
                     </tr>
                 </tbody>
             </table>

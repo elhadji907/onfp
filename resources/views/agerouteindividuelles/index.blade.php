@@ -193,13 +193,10 @@
                                                     <?php $h = 1; ?>
                                                     @foreach ($individuelle->modules as $key => $module)
                                                         @if ($loop->last)
-                                                            {!! $loop->count !!}
+                                                            <a class="nav-link badge badge-info"
+                                                                href="{{ url('moduleindividuelle', ['$projet' => $projet, '$individuelle' => $individuelle]) }}"
+                                                                target="_blank">{!! $loop->count !!}</a>
                                                         @endif
-                                                        {{-- @if (isset($module->name))
-                                                            {!! $h++ !!})
-                                                        @else
-                                                        @endif
-                                                        &nbsp;{!! $module->name ?? '' !!}<br /> --}}
                                                     @endforeach
                                                 </td>
                                                 <td ALIGN="CENTER" class="d-flex align-items-baseline">

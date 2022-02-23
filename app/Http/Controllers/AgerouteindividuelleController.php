@@ -756,9 +756,18 @@ class AgerouteindividuelleController extends Controller
         return view('agerouteindividuelles.attente', compact('statut', 'individuelles', 'effectif'));
     }
 
+    public function moduleindividuelle($projet, $individuelle)
+    {
+        $projet = Projet::find($projet);
+        $individuelle = Individuelle::find($individuelle);
+
+        $cin_individuelle = $individuelle->cin;
+
+        return view('agerouteindividuelles.moduleindividuelle', compact('projet', 'cin_individuelle'));
+    }
+
     public function ageroutepresel($module, $statut, $individuelle)
     {
-
         $module = Module::find($module);
 
         $individuelle = Individuelle::find($individuelle);

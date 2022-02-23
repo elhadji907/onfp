@@ -183,6 +183,7 @@ Route::group([
         Route::get('candidatzone/{projet}/{localite}', [AgeroutezoneController::class, 'candidatzone'])->name('candidatzone');
         Route::get('agerouteattente/{statut}', [AgerouteindividuelleController::class, 'agerouteattente'])->name('agerouteattente');
         Route::get('ageroutepresel/{module}/{statut}/{individuelle}', [AgerouteindividuelleController::class, 'ageroutepresel'])->name('ageroutepresel');
+        Route::get('moduleindividuelle/{projet}/{individuelle}', [AgerouteindividuelleController::class, 'moduleindividuelle'])->name('moduleindividuelle');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 

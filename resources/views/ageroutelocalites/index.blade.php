@@ -62,8 +62,7 @@
                                                         @endif
                                                     @endforeach
                                                 @endforeach
-                                                <a class="nav-link"
-                                                    href="{{ url('candidatlocalite', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
+                                                <a class="nav-link" href="{{ url('candidatlocalite', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
                                                     target="_blank">
                                                     <span class="badge badge-info">{!! $i !!}</span></a>
                                             </td>
