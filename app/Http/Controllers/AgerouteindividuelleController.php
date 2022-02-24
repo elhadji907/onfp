@@ -746,7 +746,7 @@ class AgerouteindividuelleController extends Controller
         return view('agerouteindividuelles.listerparmodulelocalite', compact('projet', 'localite', 'module', 'modules'));
     }
 
-    public function agerouteattente($statut)
+  /*   public function agerouteattente($statut)
     {
         $individuelles = Individuelle::get()->where('statut', '=', 'Attente');
 
@@ -754,7 +754,7 @@ class AgerouteindividuelleController extends Controller
                                   ->count();
 
         return view('agerouteindividuelles.attente', compact('statut', 'individuelles', 'effectif'));
-    }
+    } */
 
     public function moduleindividuelle($projet, $individuelle)
     {
@@ -762,8 +762,141 @@ class AgerouteindividuelleController extends Controller
         $individuelle = Individuelle::find($individuelle);
 
         $cin_individuelle = $individuelle->cin;
+        $prenom_individuelle = $individuelle->demandeur->user->firstname;
+        $nom_individuelle = $individuelle->demandeur->user->name;
+        $civilite_individuelle = $individuelle->demandeur->user->civilite;
 
-        return view('agerouteindividuelles.moduleindividuelle', compact('projet', 'cin_individuelle'));
+        return view('agerouteindividuelles.moduleindividuelle', compact('projet', 'cin_individuelle', 'prenom_individuelle', 'nom_individuelle', 'civilite_individuelle'));
+    }
+
+    public function agerouteattente($individuelle, $statut, $module, $numero)
+    {
+        $module = Module::find($module);
+
+        $individuelle = Individuelle::find($individuelle);
+
+        $individuelle->statut     =   $statut;
+        if ($numero == '1') {
+            $individuelle->module1    =   $module->name;
+            $individuelle->statut1    =   $statut;
+        }
+        if ($numero == '2') {
+            $individuelle->module2    =   $module->name;
+            $individuelle->statut2    =   $statut;
+        }
+        if ($numero == '3') {
+            $individuelle->module3    =   $module->name;
+            $individuelle->statut3    =   $statut;
+        }
+        
+        $individuelle->save();
+        
+        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        return back()->with(compact('message'));
+    }
+
+    public function agerouteencours($individuelle, $statut, $module, $numero)
+    {
+        $module = Module::find($module);
+
+        $individuelle = Individuelle::find($individuelle);
+
+        $individuelle->statut     =   $statut;
+        if ($numero == '1') {
+            $individuelle->module1    =   $module->name;
+            $individuelle->statut1    =   $statut;
+        }
+        if ($numero == '2') {
+            $individuelle->module2    =   $module->name;
+            $individuelle->statut2    =   $statut;
+        }
+        if ($numero == '3') {
+            $individuelle->module3    =   $module->name;
+            $individuelle->statut3    =   $statut;
+        }
+        
+        $individuelle->save();
+        
+        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        return back()->with(compact('message'));
+    }
+
+    public function agerouterejeter($individuelle, $statut, $module, $numero)
+    {
+        $module = Module::find($module);
+
+        $individuelle = Individuelle::find($individuelle);
+
+        $individuelle->statut     =   $statut;
+        if ($numero == '1') {
+            $individuelle->module1    =   $module->name;
+            $individuelle->statut1    =   $statut;
+        }
+        if ($numero == '2') {
+            $individuelle->module2    =   $module->name;
+            $individuelle->statut2    =   $statut;
+        }
+        if ($numero == '3') {
+            $individuelle->module3    =   $module->name;
+            $individuelle->statut3    =   $statut;
+        }
+        
+        $individuelle->save();
+        
+        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        return back()->with(compact('message'));
+    }
+
+    public function agerouteretenues($individuelle, $statut, $module, $numero)
+    {
+        $module = Module::find($module);
+
+        $individuelle = Individuelle::find($individuelle);
+
+        $individuelle->statut     =   $statut;
+        if ($numero == '1') {
+            $individuelle->module1    =   $module->name;
+            $individuelle->statut1    =   $statut;
+        }
+        if ($numero == '2') {
+            $individuelle->module2    =   $module->name;
+            $individuelle->statut2    =   $statut;
+        }
+        if ($numero == '3') {
+            $individuelle->module3    =   $module->name;
+            $individuelle->statut3    =   $statut;
+        }
+        
+        $individuelle->save();
+        
+        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        return back()->with(compact('message'));
+    }
+
+    public function agerouteterminer($individuelle, $statut, $module, $numero)
+    {
+        $module = Module::find($module);
+
+        $individuelle = Individuelle::find($individuelle);
+
+        $individuelle->statut     =   $statut;
+        if ($numero == '1') {
+            $individuelle->module1    =   $module->name;
+            $individuelle->statut1    =   $statut;
+        }
+        if ($numero == '2') {
+            $individuelle->module2    =   $module->name;
+            $individuelle->statut2    =   $statut;
+        }
+        if ($numero == '3') {
+            $individuelle->module3    =   $module->name;
+            $individuelle->statut3    =   $statut;
+        }
+        
+        $individuelle->save();
+        
+        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        return back()->with(compact('message'));
     }
 
     public function ageroutepresel($module, $statut, $individuelle)

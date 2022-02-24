@@ -58,7 +58,7 @@
                 color: white;
                 text-align: center;
                 line-height: 35px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete_onfp_ageroute2.png'))) }}"
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete onfp ageroute.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -249,8 +249,12 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th align="left"> <u>{{ __('Module(s) demandé(s)') }}</u> </th>
-                        <th colspan="2"> <u>{{ __('Module retenu') }}</u> </th>
+                        <th align="left" colspan="2"> <u>{{ __('Module(s) demandé(s)') }}</u> </th>
+                        <th align="left" colspan="2"> <u>
+                                @if (isset($individuelle->module1) || isset($individuelle->module2) || isset($individuelle->module3))
+                                    {{ __('Module retenu') }}
+                            </u> </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -262,8 +266,20 @@
                                 {{ $module->name }} <br />
                             @endforeach
                         </td>
-                        <td>
-
+                        <td colspan="2">
+                            @if (isset($individuelle->module1))
+                                <b>{{ __('Module 1 :') }} </b>
+                                {{ $individuelle->module1 }}<br />
+                            @endif
+                            @if (isset($individuelle->module2))
+                                <b>{{ __('Module 2 :') }} </b>
+                                {{ $individuelle->module2 }}<br />
+                            @endif
+                            @if (isset($individuelle->module3) && $individuelle->module3 != null)
+                                <b>{{ __('Module 3 :') }} </b>
+                                {{ $individuelle->module3 }}<br />
+                            @else
+                            @endif
                         </td>
                     </tr>
                 </tbody>
@@ -278,7 +294,7 @@
             color: white;
             text-align: center;
             line-height: 35px;">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_page_ageroute_onfp.png'))) }}"
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp_f.png'))) }}"
                 style="width: 100%; height: auto;">
         </div>
     </div>
