@@ -267,11 +267,11 @@
                             @endforeach
                         </td>
                         <td colspan="2">
-                            @if (isset($individuelle->module1))
+                            @if (isset($individuelle->module1) && $individuelle->module1 != null)
                                 <b>{{ __('Module 1 :') }} </b>
                                 {{ $individuelle->module1 }}<br />
                             @endif
-                            @if (isset($individuelle->module2))
+                            @if (isset($individuelle->module2) && $individuelle->module2 != null)
                                 <b>{{ __('Module 2 :') }} </b>
                                 {{ $individuelle->module2 }}<br />
                             @endif
