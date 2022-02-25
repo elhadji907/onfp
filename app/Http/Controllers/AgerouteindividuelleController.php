@@ -746,15 +746,15 @@ class AgerouteindividuelleController extends Controller
         return view('agerouteindividuelles.listerparmodulelocalite', compact('projet', 'localite', 'module', 'modules'));
     }
 
-  /*   public function agerouteattente($statut)
-    {
-        $individuelles = Individuelle::get()->where('statut', '=', 'Attente');
+    /*   public function agerouteattente($statut)
+      {
+          $individuelles = Individuelle::get()->where('statut', '=', 'Attente');
 
-        $effectif = Individuelle::get()->where('statut', '=', 'Attente')
-                                  ->count();
+          $effectif = Individuelle::get()->where('statut', '=', 'Attente')
+                                    ->count();
 
-        return view('agerouteindividuelles.attente', compact('statut', 'individuelles', 'effectif'));
-    } */
+          return view('agerouteindividuelles.attente', compact('statut', 'individuelles', 'effectif'));
+      } */
 
     public function moduleindividuelle($projet, $individuelle)
     {
@@ -779,14 +779,26 @@ class AgerouteindividuelleController extends Controller
         if ($numero == '1') {
             $individuelle->module1    =   $module->name;
             $individuelle->statut1    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '2') {
             $individuelle->module2    =   $module->name;
             $individuelle->statut2    =   $statut;
+            $individuelle->module1    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut1    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '3') {
             $individuelle->module3    =   $module->name;
             $individuelle->statut3    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module1    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut1    =   '';
         }
         
         $individuelle->save();
@@ -805,14 +817,26 @@ class AgerouteindividuelleController extends Controller
         if ($numero == '1') {
             $individuelle->module1    =   $module->name;
             $individuelle->statut1    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '2') {
             $individuelle->module2    =   $module->name;
             $individuelle->statut2    =   $statut;
+            $individuelle->module1    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut1    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '3') {
             $individuelle->module3    =   $module->name;
             $individuelle->statut3    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module1    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut1    =   '';
         }
         
         $individuelle->save();
@@ -831,14 +855,26 @@ class AgerouteindividuelleController extends Controller
         if ($numero == '1') {
             $individuelle->module1    =   $module->name;
             $individuelle->statut1    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '2') {
             $individuelle->module2    =   $module->name;
             $individuelle->statut2    =   $statut;
+            $individuelle->module1    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut1    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '3') {
             $individuelle->module3    =   $module->name;
             $individuelle->statut3    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module1    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut1    =   '';
         }
         
         $individuelle->save();
@@ -854,17 +890,30 @@ class AgerouteindividuelleController extends Controller
         $individuelle = Individuelle::find($individuelle);
 
         $individuelle->statut     =   $statut;
+
         if ($numero == '1') {
             $individuelle->module1    =   $module->name;
             $individuelle->statut1    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '2') {
             $individuelle->module2    =   $module->name;
             $individuelle->statut2    =   $statut;
+            $individuelle->module1    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut1    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '3') {
             $individuelle->module3    =   $module->name;
             $individuelle->statut3    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module1    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut1    =   '';
         }
         
         $individuelle->save();
@@ -883,14 +932,26 @@ class AgerouteindividuelleController extends Controller
         if ($numero == '1') {
             $individuelle->module1    =   $module->name;
             $individuelle->statut1    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '2') {
             $individuelle->module2    =   $module->name;
             $individuelle->statut2    =   $statut;
+            $individuelle->module1    =   '';
+            $individuelle->module3    =   '';
+            $individuelle->statut1    =   '';
+            $individuelle->statut3    =   '';
         }
         if ($numero == '3') {
             $individuelle->module3    =   $module->name;
             $individuelle->statut3    =   $statut;
+            $individuelle->module2    =   '';
+            $individuelle->module1    =   '';
+            $individuelle->statut2    =   '';
+            $individuelle->statut1    =   '';
         }
         
         $individuelle->save();

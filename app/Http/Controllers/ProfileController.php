@@ -156,9 +156,18 @@ class ProfileController extends Controller
             $sexe = "";
         }
 
-        $familiale_id     = Familiale::where('name', $request->input('familiale'))->first()->id;
-        $professionnelle_id     = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
-        /* dd($professionnelle_id); */
+        if ($request->input('familiale') != null) {
+            $familiale_id     = Familiale::where('name', $request->input('familiale'))->first()->id;
+        } else {
+            $familiale_id  = null;
+        }
+
+        if ($request->input('professionnelle') != null) {
+            $professionnelle_id     = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
+        } else {
+            $professionnelle_id  = null;
+        }
+        
         if (request('image')) {
             $imagePath = request('image')->store('avatars', 'public');
         
