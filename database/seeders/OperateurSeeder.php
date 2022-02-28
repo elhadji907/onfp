@@ -15,7 +15,7 @@ class OperateurSeeder extends Seeder
     public function run()
     {
         Operateur::factory()
-            ->count(1)
+            ->count(15)
             ->create();
     }
 }

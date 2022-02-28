@@ -58,7 +58,7 @@
                 color: white;
                 text-align: center;
                 line-height: 35px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete onfp ageroute.png'))) }}"
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete onfpageroute.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -97,10 +97,10 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <b>{{ __('Téléphonedu candidat (Personnel) :  ') }}</b>{{ $individuelle->demandeur->user->telephone ?? '' }}
+                            <b>{{ __('Téléphone du candidat (Personnel) :  ') }}</b>{{ $individuelle->demandeur->user->telephone ?? '' }}
                         </td>
                         <td colspan="2">
-                            <b>{{ __('Téléphone (Tuteur) :  ') }}</b>{{ $individuelle->telephone ?? '' }}
+                            <b>{{ __('Autre téléphone (Parent / Tuteur) :  ') }}</b>{{ $individuelle->telephone ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -213,14 +213,18 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="1">
-                            <b>{{ __('Avez-vous été victime d’un quelconque problème social ? : ') }}</b>{{ $individuelle->victime_social ?? '' }}
+                        @if(isset($individuelle->victime_social) && $individuelle->victime_social == 'Aucun')
+                        <td colspan="4">
+                            <b>{{ __('Avez-vous été victime d’un quelconque problème social ? : ') }}</b> {{ __('Non') }}
                         </td>
-                        @if (isset($individuelle->autre_victime))
-                            <td colspan="3">
-                                <b>{{ __('Précisez ? : ') }}</b>{{ $individuelle->autre_victime ?? '' }}
+                        @elseif (isset($individuelle->victime_social) && $individuelle->victime_social != 'Autre')
+                            <td colspan="4">
+                                <b>{{ __('Avez-vous été victime d’un quelconque problème social ? ') }}</b>  {{ __("Oui") }}, <b>{{ __('Précisez :') }}</b> {{ $individuelle->victime_social ?? '' }}
                             </td>
                         @else
+                            <td colspan="4">
+                                <b>{{ __('Avez-vous été victime d’un quelconque problème social ? ') }}</b>  {{ __("Autre") }}, <b>{{ __('Précisez :') }}</b> {{ $individuelle->autre_victime ?? '' }}
+                            </td>
                         @endif
                     </tr>
                 </tbody>

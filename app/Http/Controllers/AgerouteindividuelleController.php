@@ -542,7 +542,9 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome'                                =>    'required|numeric',
                 ]
             );
-        } elseif ($diplomespro == "Autre") {
+        } 
+        
+        if ($diplomespro == "Autre") {
             $this->validate(
                 $request,
                 [
@@ -550,14 +552,18 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome_professionelle'                 =>    'required|numeric',
                 ]
             );
-        } elseif ($diplome != "Aucun") {
+        }
+        
+        if ($diplome != "Aucun") {
             $this->validate(
                 $request,
                 [
                     'annee_diplome'                                 =>    'required|numeric',
                 ]
             );
-        } elseif ($diplomespro != "Aucun") {
+        } 
+        
+        if ($diplomespro != "Aucun") {
             $this->validate(
                 $request,
                 [
@@ -565,21 +571,27 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome_professionelle'                 =>    'required|numeric',
                 ]
             );
-        } elseif ($travail_renumeration == "Oui") {
+        } 
+        
+        if ($travail_renumeration == "Oui") {
             $this->validate(
                 $request,
                 [
                     'salaire'                                      =>    'required',
                 ]
             );
-        } elseif ($handicap == "Oui") {
+        } 
+        
+        if ($handicap == "Oui") {
             $this->validate(
                 $request,
                 [
                     'preciser_handicap'                             =>    'required'
                 ]
             );
-        } elseif ($victime_social == "Autre") {
+        } 
+        
+        if ($victime_social == "Autre") {
             $this->validate(
                 $request,
                 [

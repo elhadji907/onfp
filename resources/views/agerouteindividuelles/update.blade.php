@@ -476,7 +476,7 @@
                                 <label for="autre_victime">{{ __('Si autre, précisez :') }}</label>
                                 <textarea class="form-control  @error('autre_victime') is-invalid @enderror"
                                     name="autre_victime" id="autre_victime" rows="1"
-                                    placeholder="autre diplôme professionnel">{{ $individuelle->autre_victime ?? old('autre_victime') }}</textarea>
+                                    placeholder="Autre victime">{{ $individuelle->autre_victime ?? old('autre_victime') }}</textarea>
                                 @error('autre_victime')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

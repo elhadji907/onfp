@@ -30,14 +30,14 @@
                                 id="table-formationcollectives">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>N°</th>
-                                        <th>Code</th>
-                                        <th>Bénéficiares</th>
-                                        <th>Localité</th>
-                                        <th>Adresse</th>
+                                        <th style="width:5%;">N°</th>
+                                        <th style="width:5%;">Code</th>
+                                        <th style="width:15%;">Bénéficiares</th>
+                                        <th style="width:15%;">Localité</th>
+                                        <th style="width:15%;">Adresse</th>
                                         <th style="width:15%;">Période</th>
-                                        <th>Ingénieur</th>
-                                        <th style="width:08%;">Action</th>
+                                        <th style="width:20%;">Ingénieur</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
