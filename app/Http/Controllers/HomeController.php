@@ -37,9 +37,10 @@ class HomeController extends Controller
         $user = Auth::user();
         $demandeurs = Demandeur::all();
 
-        $user_connect = Auth::user();
+        $user_connect = Auth::user();        
         $demandeur  =  $user_connect->demandeur;
         $courriers = $user->courriers;
+        
         if ($user->hasRole('Ageroute')) {
             $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
             $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;

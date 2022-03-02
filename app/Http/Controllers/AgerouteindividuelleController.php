@@ -47,8 +47,14 @@ class AgerouteindividuelleController extends Controller
         $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet = Projet::find($id_projet);
+        $individuelle = Individuelle::all();
+
+        foreach ($individuelle as $key => $individuelles) {
+        }
+
+        /* dd($individuelles->demandeur->user); */
      
-        return view('agerouteindividuelles.index', compact('projet', 'projet_name'));
+        return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'individuelles'));
     }
 
     /**
@@ -314,12 +320,25 @@ class AgerouteindividuelleController extends Controller
         $zones_id = Zone::where('nom', $request->input('zones'))->first()->id;
         $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;
         $modules1_id = Module::where('name', $request->input('modules1'))->first()->id;
-        $modules2_id = Module::where('name', $request->input('modules2'))->first()->id;
-        $modules3_id = Module::where('name', $request->input('modules3'))->first()->id;
+
+        $module2 = $request->input('modules2');
+
+        if (isset($module2)) {
+            $modules2_id = Module::where('name', $module2)->first()->id;
+        }
+        $module3 = $request->input('modules3');
+
+        if (isset($module3)) {
+            $modules3_id = Module::where('name', $module3)->first()->id;
+        }
         
         $individuelle->modules()->attach($modules1_id);
-        $individuelle->modules()->attach($modules2_id);
-        $individuelle->modules()->attach($modules3_id);
+        if (isset($module2)) {
+            $individuelle->modules()->attach($modules2_id);
+        }
+        if (isset($module3)) {
+            $individuelle->modules()->attach($modules3_id);
+        }
         $individuelle->projets()->sync($projet_id);
         $individuelle->zones()->sync($zones_id);
         $individuelle->localites()->sync($localites_id);
@@ -425,7 +444,14 @@ class AgerouteindividuelleController extends Controller
      */
     public function edit(Request $request, $id)
     {
+
+        $auth_user      =       Auth::user();
         $individuelle = Individuelle::find($id);
+        
+        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by) {
+            $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
+            return back()->with(compact('messages'));
+        }        
         $localite = Localite::get();
         $zone = Zone::get();
         $module = Module::get();

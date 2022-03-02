@@ -116,29 +116,22 @@
                                     </small>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    {!! Form::label('Ingénieur') !!}
-                                    {!! Form::select('ingenieur', $ingenieurs, old('ingenieur') ?? null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'ingenieur_projet']) !!}
-                                    @can('user-create')
-                                    @endcan
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('ingenieur'))
-                                            @foreach ($errors->get('ingenieur') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                            </div>
-
                             <div class="col-xs-12 col-sm-12 col-md-12 text-right">
                                 <button type="submit" class="btn btn-outline-primary"><i
                                         class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <strong class="btn btn-success">Localités</strong>
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    <strong class="btn btn-outline-success">Ingénieurs</strong>
+                                    <br />
+                                    @foreach ($ingenieur as $value)
+                                        <label>{{ Form::checkbox('ingenieur[]', $value->id, false, ['class' => 'name']) }}
+                                            {{ $value->name }}</label>
+                                        <br />
+                                    @endforeach
+                                </div>
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    <strong class="btn btn-outline-success">Localités</strong>
                                     <br />
                                     @foreach ($localite as $value)
                                         <label>{{ Form::checkbox('localite[]', $value->id, false, ['class' => 'name']) }}
@@ -146,8 +139,8 @@
                                         <br />
                                     @endforeach
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <strong class="btn btn-success">Zones</strong>
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    <strong class="btn btn-outline-success">Zones</strong>
                                     <br />
                                     @foreach ($zone as $value)
                                         <label>{{ Form::checkbox('zone[]', $value->id, false, ['class' => 'name']) }}
@@ -155,8 +148,8 @@
                                         <br />
                                     @endforeach
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    <strong class="btn btn-success">Modules</strong>
+                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                    <strong class="btn btn-outline-success">Modules</strong>
                                     <br />
                                     @foreach ($module as $value)
                                         <label>{{ Form::checkbox('module[]', $value->id, false, ['class' => 'name']) }}
@@ -196,7 +189,6 @@
                                                         })
                                                     });
                                                 </script>
-
                                             @endpush
                                         @endif
                                     </div>

@@ -527,7 +527,7 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('module 2 :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::label('module 2 :') !!}
                                     {!! Form::select('modules2', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute2']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('modules'))
@@ -538,7 +538,7 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('module 3 :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::label('module 3 :') !!}
                                     {!! Form::select('modules3', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute3']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('modules'))

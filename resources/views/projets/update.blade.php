@@ -118,37 +118,22 @@
                                 </small>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <label for="input-name"><b>{{ __('Ingenieurs') }}:</b></label>
-                                <br />
-                                @foreach ($ingenieur as $value)
-                                    <label>{{ Form::checkbox('ingenieur[]', $value->id, in_array($value->id, $projetIngenieurs) ? true : false, ['class' => 'name']) }}
-                                        {{ $value->name }}</label>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        {{-- <div class="form-row">
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                {!! Form::label('LOCALITES') !!}
-                                {!! Form::select('localites[]', $localites, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'localite']) !!}
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="form-row">
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                {!! Form::label('ZONES') !!}
-                                {!! Form::select('zones[]', $zones, null, ['multiple' => 'multiple', 'class' => 'form-control', 'id' => 'zone']) !!}
-                            </div>
-                        </div> --}}
                         <div class="col-xs-12 col-sm-12 col-md-12 text-right">
                             <button type="submit" class="btn btn-outline-primary"><i
                                     class="far fa-paper-plane"></i>&nbsp;Modifier</button>
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                <label for="input-name"><b>{{ __('Ingenieurs') }}:</b></label>
+                                <br />
+                                @foreach ($ingenieur as $value)
+                                    <label>{{ Form::checkbox('ingenieur[]', $value->id, in_array($value->id, $projetIngenieurs) ? true : false, ['class' => 'name']) }}
+                                        {{ $value->name }}</label>
+                                    <br />
+                                @endforeach
+                            </div>
+                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Localités') }}:</b></label>
                                 <br />
                                 @foreach ($localite as $value)
@@ -157,7 +142,7 @@
                                     <br />
                                 @endforeach
                             </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Zones') }}:</b></label>
                                 <br />
                                 @foreach ($zone as $value)
@@ -166,7 +151,7 @@
                                     <br />
                                 @endforeach
                             </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                 <label for="input-name"><b>{{ __('Modules') }}:</b></label>
                                 <br />
                                 @foreach ($module as $value)
@@ -207,7 +192,6 @@
                                                         })
                                                     });
                                                 </script>
-
                                             @endpush
                                         @endif
                                     </div>
@@ -224,11 +208,3 @@
         </div>
     </div>
 @endsection
-{{-- @section('javascripts')
-    <script type="text/javascript">
-        $('#localite').select2().val({!! json_encode($projet->localites()->allRelatedIds()) !!}).trigger('change');
-    </script>
-    <script type="text/javascript">
-        $('#zone').select2().val({!! json_encode($projet->zones()->allRelatedIds()) !!}).trigger('change');
-    </script>
-@endsection --}}

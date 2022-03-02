@@ -41,9 +41,10 @@ class ProjetController extends Controller
         $localite = Localite::get();
         $zone = Zone::get();
         $module = Module::get();
-        $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
+        /* $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique(); */
+        $ingenieur = Ingenieur::get();
 
-        return view('projets.create', compact('ingenieurs', 'localite', 'zone', 'module'));
+        return view('projets.create', compact('ingenieur', 'localite', 'zone', 'module'));
     }
 
     /**
@@ -71,7 +72,7 @@ class ProjetController extends Controller
             ]
         );
         
-        $budjet = $request->input('budjet');        
+        $budjet = $request->input('budjet');
         $budjet = str_replace(' ', '', $budjet);
 
         $projet = new Projet([
@@ -157,12 +158,6 @@ class ProjetController extends Controller
 
         return view('projets.update', compact('projet', 'localite', 'projetLocalites', 'projetZones', 'zone', 'projetIngenieurs', 'projetModules', 'module', 'ingenieur'));
 
-        /* dd($projetLocalites);
-
-        $localites = Localite::pluck('nom','id');
-        $zones = Zone::pluck('nom','id');
-
-        return view('projets.update', compact('projet', 'localites', 'zones')); */
     }
 
     /**
@@ -191,7 +186,7 @@ class ProjetController extends Controller
             ]
         );
 
-        $budjet = $request->input('budjet');        
+        $budjet = $request->input('budjet');
         $budjet = str_replace(' ', '', $budjet);
 
         $projet->name           =   $request->input('name');
@@ -208,8 +203,6 @@ class ProjetController extends Controller
         $projet->zones()->sync($request->input('zone'));
         $projet->modules()->sync($request->input('module'));
         $projet->ingenieurs()->sync($request->input('ingenieur'));
-
-        /* $projet->syncLocalites($request->input('localite')); */
 
         return redirect()->route('projets.index')->with('success', 'enregistrement modifié avec succès !');
     }

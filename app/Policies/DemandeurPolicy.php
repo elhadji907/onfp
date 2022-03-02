@@ -30,7 +30,7 @@ class DemandeurPolicy
      */
     public function view(User $user, Demandeur $demandeur)
     {
-        return $user->demandeur->id === $demandeur->id;
+        return $user->id === $demandeur->user->id;
     }
 
     /**

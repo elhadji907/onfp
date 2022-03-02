@@ -135,6 +135,10 @@
                     <div class="alert alert-success">
                         {{ session('message') }}
                     </div>
+                @elseif (session('messages'))
+                    <div class="alert alert-danger">
+                        {{ session('messages') }}
+                    </div>
                 @endif
                 <div class="card">
                     <div class="card-header">
