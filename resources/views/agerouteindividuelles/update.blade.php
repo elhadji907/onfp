@@ -12,6 +12,10 @@
                     <div class="alert alert-success">
                         {{ session('message') }}
                     </div>
+                @elseif (session('messages'))
+                    <div class="alert alert-danger">
+                        {{ session('messages') }}
+                    </div>
                 @endif
                 <div class="row justify-content-center pb-2">
                     <div class="col-lg-12 margin-tb">
@@ -524,15 +528,15 @@
                                 {{ Form::checkbox('dossier', 'Fiche de candidature', true, ['class' => 'name', 'disabled' => 'disabled']) }}
                                 {{ __('Fiche de candidature') }}(<span class="text-danger">*</span>)
                                 <br />
-                                {{ Form::checkbox('dossier', "Copie carte nationale d'identité", true, ['class' => 'name', 'disabled' => 'disabled']) }}
+                                {{ Form::checkbox('dossier', "Copie carte nationale d'identité", true, ['class' => 'name','disabled' => 'disabled']) }}
                                 {{ __("Copie carte nationale d'identité") }}(<span class="text-danger">*</span>)
                                 <br />
                                 {{ Form::checkbox('dossier', 'Certificat de résidence', true, ['class' => 'name', 'disabled' => 'disabled']) }}
                                 {{ __('Certificat de résidence') }}(<span class="text-danger">*</span>)
-                               {{--   <br />  --}}
-                                {{--  {{ Form::checkbox('dossier','Copie diplomes ou attestations',$individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '',['class' => 'name']) }}  --}}
-                                {{--  {{ Form::radio('dossier', 'Copie diplomes ou attestations', $individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '', ['class' => 'name']) }}  --}}
-                                {{--  {{ __('Copie diplomes ou attestations') }}  --}}
+                                {{-- <br /> --}}
+                                {{-- {{ Form::checkbox('dossier','Copie diplomes ou attestations',$individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '',['class' => 'name']) }} --}}
+                                {{-- {{ Form::radio('dossier', 'Copie diplomes ou attestations', $individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '', ['class' => 'name']) }} --}}
+                                {{-- {{ __('Copie diplomes ou attestations') }} --}}
 
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('dossier'))
@@ -668,11 +672,11 @@
 @endsection
 @push('scripts')
     <script type="text/javascript">
-$('input[type=checkbox]').on('change', function (e) {
-    if ($('input[type=checkbox]:checked').length > 6) {
-        $(this).prop('checked', false);
-        alert("autorisé seulement 3");
-    }
-});
-</script>
+        $('input[type=checkbox]').on('change', function(e) {
+            if ($('input[type=checkbox]:checked').length > 6) {
+                $(this).prop('checked', false);
+                alert("autorisé seulement 3");
+            }
+        });
+    </script>
 @endpush

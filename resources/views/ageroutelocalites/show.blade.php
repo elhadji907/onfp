@@ -1,9 +1,16 @@
 @extends('layout.default')
-@section('title', 'ONFP - AGEROUTE DEPARTEMENTS')
+@section('title', 'ONFP - Communes du département de ' . $localite->nom)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 margin-tb">
+                        <a class="btn btn-primary" href="{{ route('ageroutelocalites.index') }}"> <i
+                                class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                    </div>
+                </div>
+                <br />
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -15,71 +22,23 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        <span class="badge badge-secondary">{{ $projet_name }}</span>
+                        <span>Département de {{ $localite->nom }}</span>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <div align="right">
-                                {{--  @can('role-create')  --}}
-                                    <a href="{{ route('ageroutelocalites.create') }}">
-                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                        </div>
-                                    </a>
-                               {{--   @endcan  --}}
-                            </div>
-                            <br />
                             <table class="table table-bordered" id="table-ageroutelocalites">
                                 <thead class="table-dark">
                                     <tr>
                                         <th width="5%">N°</th>
-                                        <th width="50%">Départements</th>
-                                        <th width="5%">Effectif</th>
-                                        <th width="5%">Communes</th>
-                                        <th width="15%"></th>
+                                        <th width="50%">Communes</th>ss
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $h = 1; ?>
-                                    @foreach ($projet->localites as $key => $localite)
+                                    @foreach ($localite->zones as $key => $zone)
                                         <tr>
                                             <td>{{ $h++ }}</td>
-                                            <td>{{ $localite->nom }}</td>
-                                            <td ALIGN="CENTER">
-                                                <?php $i = 0; ?>
-                                                @foreach ($localite->individuelles as $individuelle)
-                                                    @foreach ($individuelle->projets as $projet)
-                                                        @if ($loop->last && $projet->name == $projet_name)
-                                                            <?php $i++; ?>
-                                                        @endif
-                                                    @endforeach
-                                                @endforeach
-                                                <a class="nav-link" href="{{ url('candidatlocalite', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
-                                                    target="_blank">
-                                                    <span class="badge badge-info">{!! $i !!}</span></a>
-                                            </td>
-                                            <td ALIGN="CENTER">
-                                                @foreach ($localite->zones as $zone)
-                                                @if($loop->last)
-                                                {!! $loop->count !!}
-                                                @endif
-                                                @endforeach
-                                            </td>
-                                            <td class="d-flex align-items-baseline align-middle">
-                                               {{--   @can('role-edit')  --}}
-                                                    <a class="btn btn-primary btn-sm"
-                                                        href="{{ route('ageroutelocalites.edit', $localite->id) }}"><i
-                                                            class="far fa-edit" title ='modifier'>&nbsp;</i></a>
-                                                {{--  @endcan  --}}
-                                                &nbsp;
-                                                <a class="btn btn-info btn-sm"
-                                                    href="{{ route('ageroutelocalites.show', $localite->id) }}"><i
-                                                        class="far fa-eye" title="détails">&nbsp;</i></a>&nbsp;
-                                                {{--  @can('role-delete')  --}}
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $localite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
-                                                {{--  @endcan  --}}
-                                            </td>
+                                            <td>{{ $zone->nom }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -90,7 +49,6 @@
             </div>
         </div>
     </div>
-    {{-- <p class="text-center text-primary"><small>Tutorial by Tutsmake.com</small></p> --}}
 @endsection
 
 @push('scripts')

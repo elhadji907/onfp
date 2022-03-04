@@ -63,11 +63,11 @@
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                                @can('projet-edit')
+                                                {{--  @can('projet-edit')  --}}
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ route('projets.edit', $projet->id) }}"><i
                                                             class="far fa-edit">&nbsp;</i></a>
-                                                @endcan
+                                                {{--  @endcan  --}}
                                                 &nbsp;
                                                 <a class="btn btn-info btn-sm"
                                                     href="{{ route('projets.show', $projet->id) }}"><i

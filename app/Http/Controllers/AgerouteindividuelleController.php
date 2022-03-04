@@ -519,6 +519,11 @@ class AgerouteindividuelleController extends Controller
         $utilisateur   =   $demandeur->user;
 
         /* $this->authorize('update',  $individuelle); */
+        
+        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by) {
+            $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
+            return back()->with(compact('messages'));
+        }
 
         $this->validate(
             $request,
