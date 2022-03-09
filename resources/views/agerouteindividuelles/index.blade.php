@@ -159,7 +159,6 @@
                                         <tr>
                                             <th style="width:5%;">N°</th>
                                             <th style="width:10%;">N° CIN</th>
-                                            {{-- <th style="width:5%;">Civilité</th> --}}
                                             <th style="width:10%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
@@ -168,7 +167,7 @@
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:13%;">Communes</th>
                                             <th style="width:5%;">Module</th>
-                                            <th style="width:5%;"></th>
+                                            <th style="width:9%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -177,7 +176,6 @@
                                             <tr>
                                                 <td>{!! $individuelle->numero_dossier !!}</td>
                                                 <td>{!! $individuelle->cin !!}</td>
-                                                {{-- <td>{!! $individuelle->demandeur->user->civilite !!}</td> --}}
                                                 <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
@@ -214,11 +212,11 @@
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
-                                                    @can('role-delete')
+                                                    {{--  @can('role-delete')  --}}
                                                         {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                         {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                         {!! Form::close() !!}
-                                                    @endcan
+                                                    {{--  @endcan  --}}
                                                 </td>
                                             </tr>
                                         @endforeach
