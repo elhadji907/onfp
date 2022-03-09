@@ -448,7 +448,7 @@ class AgerouteindividuelleController extends Controller
         $auth_user      =       Auth::user();
         $individuelle = Individuelle::find($id);
         
-        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by) {
+        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
             $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
             return back()->with(compact('messages'));
         }        

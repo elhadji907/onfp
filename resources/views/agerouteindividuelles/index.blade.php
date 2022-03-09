@@ -212,11 +212,11 @@
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
-                                                    {{--  @can('role-delete')  --}}
+                                                    @can('role-delete')
                                                         {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                         {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                         {!! Form::close() !!}
-                                                    {{--  @endcan  --}}
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

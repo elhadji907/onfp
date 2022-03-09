@@ -11,6 +11,10 @@
                     <div class="alert alert-success">
                         {{ session('message') }}
                     </div>
+                @elseif (session('messages'))
+                    <div class="alert alert-danger">
+                        {{ session('messages') }}
+                    </div>
                 @endif
                 <div class="card">
                     <div class="card-header">
@@ -173,11 +177,6 @@
                                                                             target="_blank">
                                                                             {!! $module->name ?? '' !!}<br />
                                                                         </a>
-                                                                        <a href="{{ url('ageroutepresel', ['$module' => $module, '$statut' => 'Présélectionné', '$individuelle' => $individuelle->id]) }}"
-                                                                            title="Présélectionné"
-                                                                            class="btn btn-outline-primary btn-sm mt-0">
-                                                                            <i class="fas fa-check-circle"></i>
-                                                                        </a><br />
                                                                     @else
                                                                     @endif
                                                                 @endforeach
