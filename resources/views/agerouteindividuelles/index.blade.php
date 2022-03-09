@@ -157,17 +157,18 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th width="100px">N°</th>
-                                            <th width="100px">N° CIN</th>
-                                            <th width="100px">Prenom</th>
-                                            <th width="200px">Nom</th>
-                                            <th width="200px">Date nais.</th>
-                                            <th width="250px">Lieu nais.</th>
-                                            <th width="200px">Téléphone</th>
-                                            <th width="200px">Départements</th>
-                                            <th width="200px">Communes</th>
-                                            <th width="100px">Module</th>
-                                            <th width="300px"></th>
+                                            <th style="width:5%;">N°</th>
+                                            <th style="width:10%;">N° CIN</th>
+                                            {{-- <th style="width:5%;">Civilité</th> --}}
+                                            <th style="width:10%;">Prenom</th>
+                                            <th style="width:5%;">Nom</th>
+                                            <th style="width:8%;">Date nais.</th>
+                                            <th style="width:10%;">Lieu nais.</th>
+                                            <th style="width:5%;">Téléphone</th>
+                                            <th style="width:10%;">Départements</th>
+                                            <th style="width:13%;">Communes</th>
+                                            <th style="width:5%;">Module</th>
+                                            <th style="width:5%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -213,11 +214,11 @@
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
-                                                    {{--  @can('role-delete')  --}}
+                                                    @can('role-delete')
                                                         {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                         {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                         {!! Form::close() !!}
-                                                    {{--  @endcan  --}}
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
