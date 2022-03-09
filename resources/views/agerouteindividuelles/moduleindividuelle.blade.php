@@ -35,7 +35,7 @@
                                         <th style="width:18%;">Modules</th>
                                         <th class="text-center" style="width:5%;">Statut</th>
                                         <th class="text-center" style="width:8%;">Validation</th>
-                                        <th style="width:8%;"></th>
+                                        <th style="width:9%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

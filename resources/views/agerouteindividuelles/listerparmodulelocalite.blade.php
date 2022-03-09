@@ -38,7 +38,7 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
                                             <th style="width:24%;">Module</th>
-                                            <th></th>
+                                            <th style="width:9%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
