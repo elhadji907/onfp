@@ -621,7 +621,8 @@
                 <br />
                 <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
                     placeholder="Mot de passe">
-                {!! Form::hidden('username', $individuelle->demandeur->user->username, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
+                {!! Form::hidden('username', $individuelle->demandeur->user->username, ['placeholder' => '', 'class' => 'form-control']) !!}
+                {!! Form::hidden('updated_by', $individuelle->demandeur->user->updated_by, ['placeholder' => '', 'class' => 'form-control']) !!}
                 {!! Form::hidden('numero', $individuelle->demandeur->numero, ['placeholder' => '', 'class' => 'form-control']) !!}
                 {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
                 {!! Form::close() !!}

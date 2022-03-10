@@ -192,14 +192,15 @@ class AgerouteindividuelleController extends Controller
 
         $user_connect           =   Auth::user();
         
-        $created_by1 = $user_connect->firstname;
+       /*  $created_by1 = $user_connect->firstname;
         $created_by2 = $user_connect->name;
         $created_by3 = $user_connect->username;
 
-        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
+        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')'; */
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
+        
 
         $annee = date('y');
         $longueur = strlen($user_id);
@@ -258,8 +259,8 @@ class AgerouteindividuelleController extends Controller
             'adresse'                   =>      $request->input('adresse'),
             'password'                  =>      Hash::make($request->input('email')),
             'familiales_id'             =>      $familiale_id,
-            'created_by'                =>      $created_by,
-            'updated_by'                =>      $created_by
+            'created_by'                =>      $username,
+            'updated_by'                =>      $username
 
         ]);
 
@@ -631,14 +632,15 @@ class AgerouteindividuelleController extends Controller
             );
         }
       
-        $updated_by1 = $user_connect->firstname;
+      /*   $updated_by1 = $user_connect->firstname;
         $updated_by2 = $user_connect->name;
         $updated_by3 = $user_connect->username;
 
-        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
+        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')'; */
 
         $user_id             =   User::latest('id')->first()->id;
-        $username            =   strtolower($request->input('nom').$user_id);
+       /*  $username            =   strtolower($request->input('nom').$user_id);
+        $updated_by          =   strtolower($request->input('nom').$user_id); */
 
         if ($request->input('sexe') == "M") {
             $civilite = "M.";
@@ -684,7 +686,7 @@ class AgerouteindividuelleController extends Controller
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
         $utilisateur->familiales_id             =      $familiale_id;
-        $utilisateur->updated_by                =      $updated_by;
+        $utilisateur->updated_by                =      $request->input('updated_by');
 
         $utilisateur->save();
 
