@@ -533,11 +533,13 @@
                                 <br />
                                 {{ Form::checkbox('dossier', 'Certificat de résidence', true, ['class' => 'name', 'disabled' => 'disabled']) }}
                                 {{ __('Certificat de résidence') }}(<span class="text-danger">*</span>)
+                                <br />
+                                {{ Form::checkbox('dossiers', 'Copie diplomes ou attestations', $individuelle->dossier ? true : false, ['class' => 'name']) }}
+                                {{ __('Copie diplomes ou attestations') }}
                                 {{-- <br /> --}}
                                 {{-- {{ Form::checkbox('dossier','Copie diplomes ou attestations',$individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '',['class' => 'name']) }} --}}
                                 {{-- {{ Form::radio('dossier', 'Copie diplomes ou attestations', $individuelle->dossier == 'Copie diplomes ou attestations' ? 'checked' : '', ['class' => 'name']) }} --}}
                                 {{-- {{ __('Copie diplomes ou attestations') }} --}}
-
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('dossier'))
                                         @foreach ($errors->get('dossier') as $message)
@@ -546,10 +548,21 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                {!! Form::label("Total documents fournis :") !!}
+                                {!! Form::number('nbre_pieces', $individuelle->nbre_pieces, ['placeholder' => 'Ex: 4', 'class' => 'form-control', 'min' => '4', 'max' => '25']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('nbre_pieces'))
+                                        @foreach ($errors->get('nbre_pieces') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="autre_diplomes_fournis">{{ __('Si autres, précisez :') }}</label>
                                 <textarea class="form-control  @error('autre_diplomes_fournis') is-invalid @enderror"
-                                    name="autre_diplomes_fournis" id="autre_diplomes_fournis" rows="2"
+                                    name="autre_diplomes_fournis" id="autre_diplomes_fournis" rows="4"
                                     placeholder="Enumérer les autres diplômes, certificats, titres, attestations, contrats de travail ou stage">{{ $individuelle->autre_diplomes_fournis ?? old('autre_diplomes_fournis') }}</textarea>
                                 @error('autre_diplomes_fournis')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -674,7 +687,7 @@
 @push('scripts')
     <script type="text/javascript">
         $('input[type=checkbox]').on('change', function(e) {
-            if ($('input[type=checkbox]:checked').length > 6) {
+            if ($('input[type=checkbox]:checked').length > 7) {
                 $(this).prop('checked', false);
                 alert("autorisé seulement 3");
             }

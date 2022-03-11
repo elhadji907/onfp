@@ -135,6 +135,7 @@ class AgerouteindividuelleController extends Controller
         $travail_renumeration               =        $request->input('travail_renumeration');
         $victime_social                     =        $request->input('victime_social');
         $autre_victime                      =        $request->input('autre_victime');
+        $dossiers                           =        $request->input('dossiers');
 
         if ($diplome == "Autre") {
             $this->validate(
@@ -144,7 +145,8 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome'                                =>    'required|numeric',
                 ]
             );
-        } elseif ($diplomespro == "Autre") {
+        }
+        if ($diplomespro == "Autre") {
             $this->validate(
                 $request,
                 [
@@ -152,14 +154,16 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome_professionelle'                 =>    'required|numeric',
                 ]
             );
-        } elseif ($diplome != "Aucun") {
+        }
+        if ($diplome != "Aucun") {
             $this->validate(
                 $request,
                 [
                     'annee_diplome'                                 =>    'required|numeric',
                 ]
             );
-        } elseif ($diplomespro != "Aucun") {
+        }
+        if ($diplomespro != "Aucun") {
             $this->validate(
                 $request,
                 [
@@ -167,21 +171,24 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome_professionelle'                 =>    'required|numeric',
                 ]
             );
-        } elseif ($travail_renumeration == "Oui") {
+        }
+        if ($travail_renumeration == "Oui") {
             $this->validate(
                 $request,
                 [
                     'salaire'                                      =>    'required',
                 ]
             );
-        } elseif ($handicap == "Oui") {
+        }
+        if ($handicap == "Oui") {
             $this->validate(
                 $request,
                 [
                     'preciser_handicap'                             =>    'required'
                 ]
             );
-        } elseif ($victime_social == "Autre") {
+        }
+        if ($victime_social == "Autre") {
             $this->validate(
                 $request,
                 [
@@ -189,14 +196,31 @@ class AgerouteindividuelleController extends Controller
                 ]
             );
         }
+        if ($dossiers == "Copie diplomes ou attestations") {
+            $this->validate(
+                $request,
+                [
+                    'autre_diplomes_fournis'                         =>    'required'
+                ]
+            );
+        }
+        if ($dossiers == "Copie diplomes ou attestations") {
+            $this->validate(
+                $request,
+                [
+                    'autre_diplomes_fournis'                         =>    'required',
+                    'nbre_pieces'                                    =>    'required'
+                ]
+            );
+        }
 
         $user_connect           =   Auth::user();
         
-       /*  $created_by1 = $user_connect->firstname;
-        $created_by2 = $user_connect->name;
-        $created_by3 = $user_connect->username;
+        /*  $created_by1 = $user_connect->firstname;
+         $created_by2 = $user_connect->name;
+         $created_by3 = $user_connect->username;
 
-        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')'; */
+         $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')'; */
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
@@ -285,7 +309,6 @@ class AgerouteindividuelleController extends Controller
             'cin'                               =>     $cin,
             'numero_dossier'                    =>     $request->input('numero_dossier'),
             'date_depot'                        =>     $request->input('date_depot'),
-            'nbre_pieces'                       =>     $request->input('nombre_de_piece'),
             'optiondiplome'                     =>     $request->input('specialite'),
             'adresse'                           =>     $request->input('adresse'),
             'autres_diplomes'                   =>     $request->input('autres_diplomes'),
@@ -302,8 +325,9 @@ class AgerouteindividuelleController extends Controller
             'victime_social'                    =>     $request->input('victime_social'),
             'autre_victime'                     =>     $request->input('autre_victime'),
             'salaire'                           =>     $request->input('salaire'),
-            'dossier'                           =>     $request->get('dossier'),
+            'dossier'                           =>     $request->get('dossiers'),
             'autre_diplomes_fournis'            =>     $request->input('autre_diplomes_fournis'),
+            'nbre_pieces'                       =>     $request->input('nbre_pieces'),
             'statut'                            =>     'Attente',
             'telephone'                         =>     $telephone_secondaire,
             'etudes_id'                         =>     $etude_id,
@@ -445,14 +469,13 @@ class AgerouteindividuelleController extends Controller
      */
     public function edit(Request $request, $id)
     {
-
         $auth_user      =       Auth::user();
         $individuelle = Individuelle::find($id);
         
         if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
             $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
             return back()->with(compact('messages'));
-        }        
+        }
         $localite = Localite::get();
         $zone = Zone::get();
         $module = Module::get();
@@ -519,9 +542,10 @@ class AgerouteindividuelleController extends Controller
         $demandeur = $individuelle->demandeur;
         $utilisateur   =   $demandeur->user;
 
+        $auth_user      =       Auth::user();
         /* $this->authorize('update',  $individuelle); */
         
-        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by) {
+        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
             $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
             return back()->with(compact('messages'));
         }
@@ -565,6 +589,7 @@ class AgerouteindividuelleController extends Controller
         $travail_renumeration               =        $request->input('travail_renumeration');
         $victime_social                     =        $request->input('victime_social');
         $autre_victime                      =        $request->input('autre_victime');
+        $dossiers                           =        $request->input('dossiers');
 
         if ($diplome == "Autre") {
             $this->validate(
@@ -574,7 +599,7 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome'                                =>    'required|numeric',
                 ]
             );
-        } 
+        }
         
         if ($diplomespro == "Autre") {
             $this->validate(
@@ -593,7 +618,7 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome'                                 =>    'required|numeric',
                 ]
             );
-        } 
+        }
         
         if ($diplomespro != "Aucun") {
             $this->validate(
@@ -603,7 +628,7 @@ class AgerouteindividuelleController extends Controller
                     'annee_diplome_professionelle'                 =>    'required|numeric',
                 ]
             );
-        } 
+        }
         
         if ($travail_renumeration == "Oui") {
             $this->validate(
@@ -612,7 +637,7 @@ class AgerouteindividuelleController extends Controller
                     'salaire'                                      =>    'required',
                 ]
             );
-        } 
+        }
         
         if ($handicap == "Oui") {
             $this->validate(
@@ -621,7 +646,7 @@ class AgerouteindividuelleController extends Controller
                     'preciser_handicap'                             =>    'required'
                 ]
             );
-        } 
+        }
         
         if ($victime_social == "Autre") {
             $this->validate(
@@ -631,16 +656,25 @@ class AgerouteindividuelleController extends Controller
                 ]
             );
         }
+        if ($dossiers == "Copie diplomes ou attestations") {
+            $this->validate(
+                $request,
+                [
+                    'autre_diplomes_fournis'                         =>    'required',
+                    'nbre_pieces'                                    =>    'required'
+                ]
+            );
+        }
       
-      /*   $updated_by1 = $user_connect->firstname;
-        $updated_by2 = $user_connect->name;
-        $updated_by3 = $user_connect->username;
+        /*   $updated_by1 = $user_connect->firstname;
+          $updated_by2 = $user_connect->name;
+          $updated_by3 = $user_connect->username;
 
-        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')'; */
+          $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')'; */
 
         $user_id             =   User::latest('id')->first()->id;
-       /*  $username            =   strtolower($request->input('nom').$user_id);
-        $updated_by          =   strtolower($request->input('nom').$user_id); */
+        /*  $username            =   strtolower($request->input('nom').$user_id);
+         $updated_by          =   strtolower($request->input('nom').$user_id); */
 
         if ($request->input('sexe') == "M") {
             $civilite = "M.";
@@ -649,16 +683,6 @@ class AgerouteindividuelleController extends Controller
         } else {
             $civilite = "";
         }
-
-        $dossier = $request->input('autre_diplomes_fournis');
-        $dossier = str_replace(' ', '', $dossier);
-
-        if (($dossier) != "") {
-            $dossier = "Copie diplomes ou attestations";
-        } else {
-            $dossier = "";
-        }
-        
 
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
@@ -703,7 +727,7 @@ class AgerouteindividuelleController extends Controller
         $individuelle->cin                             =     $cin;
         $individuelle->numero_dossier                  =     $request->input('numero_dossier');
         $individuelle->date_depot                      =     $request->input('date_depot');
-        $individuelle->nbre_pieces                     =     $request->input('nombre_de_piece');
+        $individuelle->nbre_pieces                     =     $request->input('nbre_pieces');
         $individuelle->optiondiplome                   =     $request->input('specialite');
         $individuelle->adresse                         =     $request->input('adresse');
         $individuelle->autres_diplomes                 =     $request->input('autres_diplomes');
@@ -720,7 +744,7 @@ class AgerouteindividuelleController extends Controller
         $individuelle->victime_social                  =     $request->input('victime_social');
         $individuelle->autre_victime                   =     $request->input('autre_victime');
         $individuelle->salaire                         =     $request->input('salaire');
-        $individuelle->dossier                         =     $dossier;
+        $individuelle->dossier                         =     $request->input('dossiers');
         $individuelle->autre_diplomes_fournis          =     $request->input('autre_diplomes_fournis');
         $individuelle->telephone                       =     $telephone_secondaire;
         $individuelle->etudes_id                       =     $etude_id;
