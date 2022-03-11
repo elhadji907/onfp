@@ -6,6 +6,7 @@ use App\Models\Zone;
 use App\Models\Localite;
 use App\Models\Projet;
 use Illuminate\Http\Request;
+use DB;
 
 class AgeroutezoneController extends Controller
 {
@@ -39,7 +40,15 @@ class AgeroutezoneController extends Controller
      */
     public function create()
     {
-        //
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+        $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+
+        $projetLocalites = Localite::join("projetslocalites", "projetslocalites.localites_id", "=", "localites.id")
+        ->where("projetslocalites.projets_id", $id)
+        ->get()->pluck('nom', 'nom')->unique();
+        
+        $localite = Localite::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        return view('ageroutezones.create', compact('localite', 'projetLocalites'));
     }
 
     /**
@@ -50,7 +59,24 @@ class AgeroutezoneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+        'departement'                         => 'required',
+        'commune'                             => 'required|unique:zones,nom'
+        ]);
+
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        
+        $departement_id = Localite::where('nom', $request->input('departement'))->first()->id;
+        
+        $zone = Zone::create([
+            'nom' => $request->input('commune'),
+            'localites_id' => $departement_id
+        ]);
+
+        $zone->projets()->sync($projet_id);
+
+        return redirect()->route('ageroutezones.index')
+            ->with('success', 'Commune créée avec succès');
     }
 
     /**
@@ -70,9 +96,18 @@ class AgeroutezoneController extends Controller
      * @param  \App\Models\Zone  $zone
      * @return \Illuminate\Http\Response
      */
-    public function edit(Zone $zone)
+    public function edit($id)
     {
-        //
+        $zone = Zone::find($id);
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+        $projet = Projet::find($projet_id);
+
+        $projetLocalites = Localite::join("projetslocalites", "projetslocalites.localites_id", "=", "localites.id")
+        ->where("projetslocalites.projets_id", $projet_id)
+        ->get()->pluck('nom', 'nom')->unique();
+
+        return view('ageroutezones.update', compact('zone', 'projetLocalites'));
     }
 
     /**
@@ -82,9 +117,27 @@ class AgeroutezoneController extends Controller
      * @param  \App\Models\Zone  $zone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Zone $zone)
+    public function update(Request $request, $id)
     {
-        //
+        $zone = Zone::find($id);
+
+        $this->validate($request, [
+        'departement'                         => 'required',
+        'commune'                             => 'required|unique:zones,nom,'.$zone->id
+        ]);
+
+        
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $departement_id = Localite::where('nom', $request->input('departement'))->first()->id;
+
+        $zone->nom              = $request->input('commune');
+        $zone->localites_id     = $departement_id;
+
+        $zone->save();
+
+        $zone->projets()->sync($projet_id);
+        return redirect()->route('ageroutezones.index')
+            ->with('success', 'Commune modifiée avec succès');
     }
 
     /**
@@ -93,9 +146,14 @@ class AgeroutezoneController extends Controller
      * @param  \App\Models\Zone  $zone
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Zone $zone)
+    public function destroy($id)
     {
-        //
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $zone = Zone::find($id);
+        $zone->projets()->detach($projet_id);
+        DB::table("zones")->where('id', $id)->delete();
+        return redirect()->route('ageroutezones.index')
+->with('success', 'Commune supprimé avec succès');
     }
     
     public function listerparlocalite($projet, $localite)

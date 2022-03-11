@@ -48,10 +48,10 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php $i = 1; ?>
+                                    <?php $h = 1; ?>
                                     @foreach ($ageroutezones->zones as $key => $zone)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $h++ }}</td>
                                             <td>{{ $zone->nom }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
@@ -72,9 +72,9 @@
 
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                                <a class="btn btn-info btn-sm"
+                                               {{--   <a class="btn btn-info btn-sm"
                                                     href="{{ route('ageroutezones.show', $zone->id) }}"><i
-                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;
+                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;  --}}
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ route('ageroutezones.edit', $zone->id) }}"><i
