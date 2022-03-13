@@ -70,7 +70,7 @@
                                             <td>{{ $module->domaine->secteur->name }}</td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a class="btn btn-info btn-sm"
-                                                    href="{{ route('ageroutemodules.show', $module->id) }}"><i
+                                                    href="{{ route('ageroutemodules.show', $module->id) }}" target="_blank"><i
                                                         class="far fa-eye">&nbsp;</i></a>&nbsp;
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"

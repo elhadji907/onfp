@@ -6,6 +6,8 @@ use App\Models\Findividuelle;
 use App\Models\TypesFormation;
 use App\Models\Formation;
 use App\Models\Module;
+use App\Models\Projet;
+use App\Models\Programme;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FindividuelleFactory extends Factory
@@ -27,16 +29,29 @@ class FindividuelleFactory extends Factory
         $annee = date('y');
         
         $types_formation_id=TypesFormation::where('name', 'Individuelle')->first()->id;
+
         $modules_id=Module::all()->random()->id;
+        $projets_id=Projet::all()->random()->id;
+        $programmes_id=Programme::all()->random()->id;
     
         return [
             'code' => 'I'."".$annee.$this->faker->unique(true)->numberBetween(0, 300),
             'categorie' => $this->faker->word,
+
             'modules_id' => function () use ($modules_id) {
                 return $modules_id;
             },
+
             'formations_id' => function () use ($types_formation_id) {
                 return Formation::factory()->create(["types_formations_id"=>$types_formation_id])->id;
+            },
+
+            'projets_id' => function () use ($projets_id) {
+                return $projets_id;
+            },
+
+            'programmes_id' => function () use ($programmes_id) {
+                return $programmes_id;
             },
         ];
     }

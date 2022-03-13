@@ -28,10 +28,16 @@ class CreateFcollectivesTable extends Migration
             $table->string('categorie', 200)->nullable();
             $table->unsignedInteger('formations_id');
             $table->unsignedInteger('modules_id')->nullable();
+            $table->unsignedInteger('projets_id')->nullable();
+            $table->unsignedInteger('programmes_id')->nullable();
 
             $table->index(["formations_id"], 'fk_formations_collectives_formations1_idx');
 
             $table->index(["modules_id"], 'fk_fcollectives_modules1_idx');
+
+            $table->index(["projets_id"], 'fk_fcollectives_projets1_idx');
+
+            $table->index(["programmes_id"], 'fk_fcollectives_programmes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -43,6 +49,16 @@ class CreateFcollectivesTable extends Migration
 
             $table->foreign('modules_id', 'fk_fcollectives_modules1_idx')
                 ->references('id')->on('modules')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('projets_id', 'fk_fcollectives_projets1_idx')
+                ->references('id')->on('projets')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('programmes_id', 'fk_fcollectives_programmes1_idx')
+                ->references('id')->on('programmes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

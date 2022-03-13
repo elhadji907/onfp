@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        LISTE BENEFICIAIRES DU MODULE {!! $modules->name !!}
+                        {{--  {{$projet_name}}   --}}Liste des bénéficiaires en <b>{!! $modules->name !!}</b>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

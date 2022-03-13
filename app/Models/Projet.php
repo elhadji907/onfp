@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 /**
  * Class Projet
  * 
@@ -32,6 +33,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Collective[] $collectives
  * @property Collection|Courrier[] $courriers
  * @property Collection|Depense[] $depenses
+ * @property Collection|Fcollective[] $fcollectives
+ * @property Collection|Findividuelle[] $findividuelles
+ * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Ingenieur[] $ingenieurs
  * @property Collection|Localite[] $localites
@@ -84,6 +88,21 @@ class Projet extends Model
 	public function depenses()
 	{
 		return $this->hasMany(Depense::class, 'projets_id');
+	}
+
+	public function fcollectives()
+	{
+		return $this->hasMany(Fcollective::class, 'projets_id');
+	}
+
+	public function findividuelles()
+	{
+		return $this->hasMany(Findividuelle::class, 'projets_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'projets_id');
 	}
 
 	public function individuelles()

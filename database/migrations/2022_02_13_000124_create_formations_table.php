@@ -57,6 +57,7 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('types_formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
+            $table->unsignedInteger('projets_id')->nullable();
 
             $table->index(["agents_id"], 'fk_consommations_agents1_idx');
 
@@ -85,6 +86,8 @@ class CreateFormationsTable extends Migration
             $table->index(["communes_id"], 'fk_formations_communes1_idx');
 
             $table->index(["antennes_id"], 'fk_formations_antennes1_idx');
+
+            $table->index(["projets_id"], 'fk_formations_projets1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -156,6 +159,11 @@ class CreateFormationsTable extends Migration
 
             $table->foreign('antennes_id', 'fk_formations_antennes1_idx')
                 ->references('id')->on('antennes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('projets_id', 'fk_formations_projets1_idx')
+                ->references('id')->on('projets')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

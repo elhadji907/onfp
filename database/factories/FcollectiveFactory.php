@@ -6,6 +6,8 @@ use App\Models\Fcollective;
 use App\Models\TypesFormation;
 use App\Models\Formation;
 use App\Models\Module;
+use App\Models\Projet;
+use App\Models\Programme;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FcollectiveFactory extends Factory
@@ -28,6 +30,8 @@ class FcollectiveFactory extends Factory
     
         $types_formation_id=TypesFormation::where('name', 'Collective')->first()->id;
         $modules_id=Module::all()->random()->id;
+        $projets_id=Projet::all()->random()->id;
+        $programmes_id=Programme::all()->random()->id;
 
         return [
             'code' => 'C'."".$annee.$this->faker->unique(true)->numberBetween(0, 300),
@@ -37,6 +41,14 @@ class FcollectiveFactory extends Factory
             },
             'formations_id' => function () use ($types_formation_id) {
                 return Formation::factory()->create(["types_formations_id"=>$types_formation_id])->id;
+            },
+
+            'projets_id' => function () use ($projets_id) {
+                return $projets_id;
+            },
+
+            'programmes_id' => function () use ($programmes_id) {
+                return $programmes_id;
             },
         ];
     }

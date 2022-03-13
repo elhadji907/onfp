@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 /**
  * Class Formation
  * 
@@ -50,6 +51,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $types_formations_id
  * @property int|null $communes_id
  * @property int|null $antennes_id
+ * @property int|null $projets_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -64,6 +66,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Niveaux|null $niveaux
  * @property Operateur|null $operateur
  * @property Programme|null $programme
+ * @property Projet|null $projet
  * @property Specialite|null $specialite
  * @property Statut|null $statut
  * @property Traitement|null $traitement
@@ -107,7 +110,8 @@ class Formation extends Model
 		'statuts_id' => 'int',
 		'types_formations_id' => 'int',
 		'communes_id' => 'int',
-		'antennes_id' => 'int'
+		'antennes_id' => 'int',
+		'projets_id' => 'int'
 	];
 
 	protected $dates = [
@@ -150,7 +154,8 @@ class Formation extends Model
 		'statuts_id',
 		'types_formations_id',
 		'communes_id',
-		'antennes_id'
+		'antennes_id',
+		'projets_id'
 	];
 
 	public function agent()
@@ -201,6 +206,11 @@ class Formation extends Model
 	public function programme()
 	{
 		return $this->belongsTo(Programme::class, 'programmes_id');
+	}
+
+	public function projet()
+	{
+		return $this->belongsTo(Projet::class, 'projets_id');
 	}
 
 	public function specialite()

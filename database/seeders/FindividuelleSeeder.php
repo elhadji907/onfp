@@ -15,7 +15,7 @@ class FindividuelleSeeder extends Seeder
     public function run()
     {
         Findividuelle::factory()
-            ->count(1)
+            ->count(15)
             ->create();
     }
 }

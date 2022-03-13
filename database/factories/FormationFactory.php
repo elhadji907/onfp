@@ -6,6 +6,7 @@ use App\Models\Formation;
 use App\Models\TypesFormation;
 use App\Models\Commune;
 use App\Models\Ingenieur;
+use App\Models\Individuelle;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FormationFactory extends Factory
@@ -29,6 +30,7 @@ class FormationFactory extends Factory
         $types_formations_id=TypesFormation::all()->random()->id;
         $communes_id=Commune::all()->random()->id;
         $ingenieurs_id=Ingenieur::all()->random()->id;
+        $ingenieurs_id=Individuelle::all()->random()->id;
     
         $prevue_h = $this->faker->numberBetween(5, 9);
         $prevue_f = $this->faker->numberBetween(5, 1);
@@ -39,6 +41,7 @@ class FormationFactory extends Factory
         $forme_f = $this->faker->numberBetween(5, 9);
     
         $total = $forme_h + $forme_f;
+
         return [
             'code' => 'FP'."".$annee.$this->faker->unique(true)->numberBetween(0, 300),
             'name' => $this->faker->company,
@@ -69,5 +72,6 @@ class FormationFactory extends Factory
                 return $communes_id;
             },
         ];
+        
     }
 }
