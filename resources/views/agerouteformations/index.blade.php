@@ -30,14 +30,14 @@
                                 id="table-agerouteformations">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Code</th>
+                                        <th style="width:5%;">Code</th>
                                         <th>Bénéficiares</th>
                                         <th>Localité</th>
                                         <th>Module</th>
-                                        <th style="width:5%;">Effectif</th>
                                         <th style="width:08%;">Début</th>
                                         <th style="width:08%;">Fin</th>
                                         <th>Ingénieur</th>
+                                        <th style="width:5%;">Effectif</th>
                                         <th style="width:10%;">Action</th>
                                     </tr>
                                 </thead>
@@ -47,10 +47,10 @@
                                         <th>Bénéficiares</th>
                                         <th>Localité</th>
                                         <th>Module</th>
-                                        <th>Effectif</th>
                                         <th>Début</th>
                                         <th>Fin</th>
                                         <th>Ingénieur</th>
+                                        <th>Effectif</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -62,6 +62,9 @@
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                             <td>{!! $findividuelle->formation->commune->nom ?? ' ' !!}</td>
                                             <td>{!! $findividuelle->module->name !!}</td>
+                                            <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
+                                            <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td>
+                                            <td>{!! $findividuelle->formation->ingenieur->name ?? ' ' !!}</td>
                                             <td class="text-center">
                                                 @foreach ($findividuelle->formation->individuelles as $individuelle)
                                                     @if ($loop->last)
@@ -69,9 +72,6 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
-                                            <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td>
-                                            <td>{!! $findividuelle->formation->ingenieur->name ?? ' ' !!}</td>
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('agerouteformations/' . $findividuelle->formation->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
