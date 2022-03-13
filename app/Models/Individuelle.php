@@ -258,7 +258,7 @@ class Individuelle extends Model
 	{
 		return $this->belongsToMany(Module::class, 'individuellesmodules', 'individuelles_id', 'modules_id')
 					->withPivot('id', 'individuellemodulestatut_id', 'deleted_at')
-					->withTimestamps();
+					->withTimestamps()->latest();
 	}
 
 	public function programmes()

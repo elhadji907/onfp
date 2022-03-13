@@ -27,19 +27,13 @@
                     {!! Form::model($module, ['method' => 'PATCH', 'route' => ['ageroutemodules.update', $module->id]]) !!}
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            <label for="input-domaine"><b>{{ __("Domaine") }}:</b></label>
-                            <select name="domaine" id="domaine" class="form-control">
-                                <option value="{{ $domaine->id }}">{{ $domaine->name }}</option>
-                                <option value="">{{ __("-----sélectionner-----") }}</option>
-                                @foreach($domaines as $domaine)
-                                    <option value="{{ $domaine->id }}">{{ $domaine->name }}</option>
-                                @endforeach
-                                </select>
+                            {!! Form::label('domaine :') !!}(<span class="text-danger">*</span>)
+                            {!! Form::select('domaine', $domaines, $module->domaine->name ?? old('domaine'), ['placeholder' => '', 'class' => 'form-control', 'id' => 'domaine', 'data-width' => '100%']) !!}
                             <small id="emailHelp" class="form-text text-muted">
                                 @if ($errors->has('domaine'))
-                                @foreach ($errors->get('domaine') as $message)
-                                <p class="text-danger">{{ $message }}</p>
-                                @endforeach
+                                    @foreach ($errors->get('domaine') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
                                 @endif
                             </small>
                         </div>

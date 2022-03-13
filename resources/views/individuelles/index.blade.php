@@ -73,12 +73,12 @@
                                             <td>{!! $individuelle->commune->nom ?? '' !!}</td>
                                             <td>{!! $individuelle->commune->arrondissement->departement->region->sigle ?? '' !!}</td>
                                             <td class="d-flex align-items-baseline text-center-row">
-                                                @can('update', $individuelle->demandeur)
+                                                {{--  @can('update', $individuelle->demandeur)  --}}
                                                 <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
-                                                @endcan
+                                                {{--  @endcan  --}}
                                                 &nbsp;
                                                 <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}" class='btn btn-primary btn-sm'
                                                     title="voir">

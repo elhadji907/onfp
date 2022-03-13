@@ -6,6 +6,7 @@ use App\Models\Module;
 use App\Models\Projet;
 use App\Models\Domaine;
 use Illuminate\Http\Request;
+use DB;
 
 class AgeroutemoduleController extends Controller
 {
@@ -31,11 +32,10 @@ class AgeroutemoduleController extends Controller
      */
     public function create()
     {
-        
         $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
-
-        $domaines = Domaine::get();
+        
+        $domaines = Domaine::distinct('name')->get()->pluck('name', 'name')->unique();
 
         return view('ageroutemodules.create', compact('domaines'));
     }
@@ -55,9 +55,12 @@ class AgeroutemoduleController extends Controller
 
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
 
+        
+        $domaines_id = Domaine::where('name', $request->input('domaine'))->first()->id;
+
         $module = Module::create([
             'name'              => $request->input('module'),
-            'domaines_id'       => $request->input('domaine')
+            'domaines_id'       => $domaines_id
         ]);
 
         $module->projets()->sync($projet_id);
@@ -72,9 +75,15 @@ class AgeroutemoduleController extends Controller
      * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function show(Module $module)
+    public function show($id)
     {
-        //
+        $modules = Module::find($id);
+        $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+        $projets = Projet::find($id_projet);
+        
+        return view('ageroutemodules.show', compact('modules', 'projets', 'projet_name'));
+        
     }
 
     /**
@@ -89,11 +98,9 @@ class AgeroutemoduleController extends Controller
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet = Projet::find($projet_id);
+        $domaines = Domaine::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        $domaines = Domaine::get();
-        $domaine = $module->domaine;
-
-        return view('ageroutemodules.update', compact('module', 'domaines', 'domaine'));
+        return view('ageroutemodules.update', compact('module', 'domaines'));
     }
 
     /**
@@ -115,8 +122,10 @@ class AgeroutemoduleController extends Controller
         
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
 
+        $domaines_id = Domaine::where('name', $request->input('domaine'))->first()->id;
+
         $module->name               = $request->input('module');
-        $module->domaines_id        = $request->input('domaine');
+        $module->domaines_id        = $domaines_id;
 
         $module->save();
 
@@ -132,8 +141,13 @@ class AgeroutemoduleController extends Controller
      * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Module $module)
+    public function destroy($id)
     {
-        //
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $module = Module::find($id);        
+        $module->projets()->detach($projet_id);
+        DB::table("modules")->where('id', $id)->delete();
+        return redirect()->route('ageroutemodules.index')
+->with('success', 'Module supprimé avec succès');
     }
 }

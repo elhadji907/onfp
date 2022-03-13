@@ -12,10 +12,10 @@
                 <div class="alert alert-danger mt-2">
                     <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
                     <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
             <div class="row pt-1"></div>
@@ -26,34 +26,27 @@
                 <div class="card-body">
                     {!! Form::open(['route' => 'ageroutemodules.store', 'method' => 'POST']) !!}
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <label for="input-domaine"><b>{{ __("Domaine") }}:</b></label>
-                            <select name="domaine" id="domaine" class="form-control">
-                                <option value="">{{ ("--sélectionner--") }}</option>
-                                @foreach($domaines as $domaine)
-                                    <option value="{{ $domaine->id }}">{{ $domaine->name }}</option>
-                                @endforeach
-                            </select>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12">
+                            {!! Form::label('domaine :') !!}(<span class="text-danger">*</span>)
+                            {!! Form::select('domaine', $domaines, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'domaine', 'data-width' => '100%']) !!}
                             <small id="emailHelp" class="form-text text-muted">
                                 @if ($errors->has('domaine'))
-                                @foreach ($errors->get('domaine') as $message)
-                                <p class="text-danger">{{ $message }}</p>
-                                @endforeach
+                                    @foreach ($errors->get('domaine') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
                                 @endif
                             </small>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <strong>module:</strong>
-                                {!! Form::text('module', null, ['placeholder' => 'module', 'class' => 'form-control']) !!}
-                                <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('module'))
-                                        @foreach ($errors->get('module') as $message)
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @endforeach
-                                    @endif
-                                </small>
-                            </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12">
+                            {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
+                            {!! Form::text('module', null, ['placeholder' => 'module', 'class' => 'form-control']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('module'))
+                                    @foreach ($errors->get('module') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
                         </div>
                         <div class="table-responsive">
                             <div align="right">

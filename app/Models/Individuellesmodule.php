@@ -49,12 +49,12 @@ class Individuellesmodule extends Model
 
 	public function individuelle()
 	{
-		return $this->belongsTo(Individuelle::class, 'individuelles_id');
+		return $this->belongsTo(Individuelle::class, 'individuelles_id')->latest();
 	}
 
 	public function module()
 	{
-		return $this->belongsTo(Module::class, 'modules_id');
+		return $this->belongsTo(Module::class, 'modules_id')->latest();
 	}
 
 	public function individuellemodulestatut()

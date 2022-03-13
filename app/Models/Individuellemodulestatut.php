@@ -37,6 +37,6 @@ class Individuellemodulestatut extends Model
 
 	public function individuellesmodules()
 	{
-		return $this->hasMany(Individuellesmodule::class);
+		return $this->hasMany(Individuellesmodule::class)->latest();
 	}
 }

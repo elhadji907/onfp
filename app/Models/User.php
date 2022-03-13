@@ -186,17 +186,17 @@ class User extends Authenticatable
 
 	public function courriers()
 	{
-		return $this->hasMany(Courrier::class, 'users_id');
+		return $this->hasMany(Courrier::class, 'users_id')->latest();
 	}
 
 	public function demandeur()
 	{
-		return $this->hasOne(Demandeur::class, 'users_id');
+		return $this->hasOne(Demandeur::class, 'users_id')->latest();
 	}
 
 	public function employee()
 	{
-		return $this->hasOne(Employee::class, 'users_id');
+		return $this->hasOne(Employee::class, 'users_id')->latest()->latest();
 	}
 
 	public function etablissement()
@@ -211,12 +211,12 @@ class User extends Authenticatable
 
 	public function operateur()
 	{
-		return $this->hasOne(Operateur::class, 'users_id');
+		return $this->hasOne(Operateur::class, 'users_id')->latest();
 	}
 
 	public function postes()
 	{
-		return $this->hasMany(Poste::class, 'users_id');
+		return $this->hasMany(Poste::class, 'users_id')->latest();
 	}
 
 	public function profile()

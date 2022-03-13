@@ -80,7 +80,7 @@ class Demandeur extends Model
 
 	public function courrier()
 	{
-		return $this->belongsTo(Courrier::class, 'courriers_id');
+		return $this->belongsTo(Courrier::class, 'courriers_id')->latest();
 	}
 
 	public function item()
@@ -100,12 +100,12 @@ class Demandeur extends Model
 
 	public function collectives()
 	{
-		return $this->hasMany(Collective::class, 'demandeurs_id');
+		return $this->hasMany(Collective::class, 'demandeurs_id')->latest();
 	}
 
 	public function commentaires()
 	{
-		return $this->hasMany(Commentaire::class, 'demandeurs_id');
+		return $this->hasMany(Commentaire::class, 'demandeurs_id')->latest();
 	}
 
 	public function disponibilites()
@@ -119,28 +119,28 @@ class Demandeur extends Model
 	{
 		return $this->belongsToMany(Formation::class, 'demandeursformations', 'demandeurs_id', 'formations_id')
 					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+					->withTimestamps()->latest();
 	}
 
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'demandeursmodules', 'demandeurs_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+					->withTimestamps()->latest();
 	}
 
 	public function individuelles()
 	{
-		return $this->hasMany(Individuelle::class, 'demandeurs_id');
+		return $this->hasMany(Individuelle::class, 'demandeurs_id')->latest();
 	}
 
 	public function pcharges()
 	{
-		return $this->hasMany(Pcharge::class, 'demandeurs_id');
+		return $this->hasMany(Pcharge::class, 'demandeurs_id')->latest();
 	}
 
 	public function titres()
 	{
-		return $this->hasMany(Titre::class, 'demandeurs_id');
+		return $this->hasMany(Titre::class, 'demandeurs_id')->latest();
 	}
 }
