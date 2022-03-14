@@ -30,7 +30,6 @@ class FormationFactory extends Factory
         $types_formations_id=TypesFormation::all()->random()->id;
         $communes_id=Commune::all()->random()->id;
         $ingenieurs_id=Ingenieur::all()->random()->id;
-        $ingenieurs_id=Individuelle::all()->random()->id;
     
         $prevue_h = $this->faker->numberBetween(5, 9);
         $prevue_f = $this->faker->numberBetween(5, 1);

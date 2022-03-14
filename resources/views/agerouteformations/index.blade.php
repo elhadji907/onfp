@@ -60,7 +60,9 @@
                                         <tr>
                                             <td>{!! $findividuelle->code !!}</td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
-                                            <td>{!! $findividuelle->formation->commune->nom ?? ' ' !!}</td>
+                                            <td>
+                                                {!! $findividuelle->formation->commune->nom ?? ' ' !!}
+                                            </td>
                                             <td>{!! $findividuelle->module->name !!}</td>
                                             <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
                                             <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td>

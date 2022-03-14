@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 /**
  * Class Individuelle
  * 
@@ -67,6 +68,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file7
  * @property int|null $nbre_pieces
  * @property int|null $nbre_enfants
+ * @property string|null $module1
+ * @property string|null $module2
+ * @property string|null $module3
+ * @property string|null $statut1
+ * @property string|null $statut2
+ * @property string|null $statut3
  * @property int $demandeurs_id
  * @property int|null $formations_id
  * @property int|null $communes_id
@@ -76,12 +83,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $diplomes_id
  * @property int|null $conventions_id
  * @property int|null $diplomespros_id
- * @property string|null $module1
- * @property string|null $statut1
- * @property string|null $module2
- * @property string|null $statut2
- * @property string|null $module3
- * @property string|null $statut3
+ * @property int|null $findividuelles_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -93,6 +95,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Diplome|null $diplome
  * @property Diplomespro|null $diplomespro
  * @property Etude|null $etude
+ * @property Findividuelle|null $findividuelle
  * @property Formation|null $formation
  * @property Programme|null $programme
  * @property Collection|Localite[] $localites
@@ -125,7 +128,8 @@ class Individuelle extends Model
 		'programmes_id' => 'int',
 		'diplomes_id' => 'int',
 		'conventions_id' => 'int',
-		'diplomespros_id' => 'int'
+		'diplomespros_id' => 'int',
+		'findividuelles_id' => 'int'
 	];
 
 	protected $dates = [
@@ -185,6 +189,12 @@ class Individuelle extends Model
 		'file7',
 		'nbre_pieces',
 		'nbre_enfants',
+		'module1',
+		'module2',
+		'module3',
+		'statut1',
+		'statut2',
+		'statut3',
 		'demandeurs_id',
 		'formations_id',
 		'communes_id',
@@ -194,12 +204,7 @@ class Individuelle extends Model
 		'diplomes_id',
 		'conventions_id',
 		'diplomespros_id',
-		'module1',
-		'statut1',
-		'module2',
-		'statut2',
-		'module3',
-		'statut3'
+		'findividuelles_id'
 	];
 
 	public function antenne()
@@ -237,6 +242,11 @@ class Individuelle extends Model
 		return $this->belongsTo(Etude::class, 'etudes_id');
 	}
 
+	public function findividuelle()
+	{
+		return $this->belongsTo(Findividuelle::class, 'findividuelles_id');
+	}
+
 	public function formation()
 	{
 		return $this->belongsTo(Formation::class, 'formations_id');
@@ -258,7 +268,7 @@ class Individuelle extends Model
 	{
 		return $this->belongsToMany(Module::class, 'individuellesmodules', 'individuelles_id', 'modules_id')
 					->withPivot('id', 'individuellemodulestatut_id', 'deleted_at')
-					->withTimestamps()->latest();
+					->withTimestamps();
 	}
 
 	public function programmes()

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 /**
  * Class Collective
  * 
@@ -49,6 +50,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $programmes_id
  * @property int|null $projets_id
  * @property int|null $conventions_id
+ * @property int|null $fcollectives_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -58,6 +60,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Convention|null $convention
  * @property Demandeur $demandeur
  * @property Etude|null $etude
+ * @property Fcollective|null $fcollective
  * @property Formation|null $formation
  * @property Ingenieur|null $ingenieur
  * @property Programme|null $programme
@@ -86,7 +89,8 @@ class Collective extends Model
 		'antennes_id' => 'int',
 		'programmes_id' => 'int',
 		'projets_id' => 'int',
-		'conventions_id' => 'int'
+		'conventions_id' => 'int',
+		'fcollectives_id' => 'int'
 	];
 
 	protected $dates = [
@@ -127,7 +131,8 @@ class Collective extends Model
 		'antennes_id',
 		'programmes_id',
 		'projets_id',
-		'conventions_id'
+		'conventions_id',
+		'fcollectives_id'
 	];
 
 	public function antenne()
@@ -153,6 +158,11 @@ class Collective extends Model
 	public function etude()
 	{
 		return $this->belongsTo(Etude::class, 'etudes_id');
+	}
+
+	public function fcollective()
+	{
+		return $this->belongsTo(Fcollective::class, 'fcollectives_id');
 	}
 
 	public function formation()

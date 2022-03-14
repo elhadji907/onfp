@@ -74,6 +74,12 @@ class CreateIndividuellesTable extends Migration
             $table->string('file7', 200)->nullable();
             $table->integer('nbre_pieces')->nullable();
             $table->integer('nbre_enfants')->nullable();
+            $table->string('module1', 200)->nullable();
+            $table->string('module2', 200)->nullable();
+            $table->string('module3', 200)->nullable();
+            $table->string('statut1', 45)->nullable();
+            $table->string('statut2', 45)->nullable();
+            $table->string('statut3', 45)->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('formations_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
@@ -83,12 +89,7 @@ class CreateIndividuellesTable extends Migration
             $table->unsignedInteger('diplomes_id')->nullable();
             $table->unsignedInteger('conventions_id')->nullable();
             $table->unsignedInteger('diplomespros_id')->nullable();
-            $table->string('module1', 200)->nullable();
-            $table->string('statut1', 45)->nullable();
-            $table->string('module2', 200)->nullable();
-            $table->string('statut2', 45)->nullable();
-            $table->string('module3', 200)->nullable();
-            $table->string('statut3', 45)->nullable();
+            $table->unsignedInteger('findividuelles_id')->nullable();
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');
 
@@ -107,6 +108,8 @@ class CreateIndividuellesTable extends Migration
             $table->index(["conventions_id"], 'fk_individuelles_conventions1_idx');
 
             $table->index(["diplomespros_id"], 'fk_individuelles_diplomespros1_idx');
+
+            $table->index(["findividuelles_id"], 'fk_individuelles_findividuelles1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -153,6 +156,11 @@ class CreateIndividuellesTable extends Migration
 
             $table->foreign('diplomespros_id', 'fk_individuelles_diplomespros1_idx')
                 ->references('id')->on('diplomespros')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('findividuelles_id', 'fk_individuelles_findividuelles1_idx')
+                ->references('id')->on('findividuelles')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
