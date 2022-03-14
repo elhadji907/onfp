@@ -64,8 +64,6 @@ class DatabaseSeeder extends Seeder
             TypesdemandeSeeder::class,
             TypesFormationSeeder::class,
             NineaSeeder::class,
-            IndividuelleSeeder::class,
-            CollectiveSeeder::class,
             TypesOperateurSeeder::class,
             OperateurSeeder::class,
             EtablissementSeeder::class,
@@ -77,6 +75,8 @@ class DatabaseSeeder extends Seeder
             FilierespecialiteSeeder::class,
             FindividuelleSeeder::class,
             FcollectiveSeeder::class,
+            IndividuelleSeeder::class,
+            CollectiveSeeder::class,
         ]);
     }
 }

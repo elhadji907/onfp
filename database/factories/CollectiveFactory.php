@@ -10,6 +10,7 @@ use App\Models\Demandeur;
 use App\Models\Commune;
 use App\Models\Projet;
 use App\Models\Programme;
+use App\Models\Fcollective;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CollectiveFactory extends Factory
@@ -32,6 +33,7 @@ class CollectiveFactory extends Factory
         $communes_id=Commune::all()->random()->id;
         $projet_id=Projet::all()->random()->id;
         $programmes_id=Programme::all()->random()->id;
+        $fcollectives_id=Fcollective::all()->random()->id;
 
         $nombre = rand(1, 9);
         
@@ -64,6 +66,9 @@ class CollectiveFactory extends Factory
             },
             'programmes_id' => function () use ($programmes_id) {
                 return $programmes_id;
+            },
+            'fcollectives_id' => function () use ($fcollectives_id) {
+                return $fcollectives_id;
             },
         ];
     }

@@ -7,6 +7,7 @@ use App\Models\TypesFormation;
 use App\Models\Commune;
 use App\Models\Ingenieur;
 use App\Models\Individuelle;
+use App\Models\Operateur;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FormationFactory extends Factory
@@ -30,6 +31,7 @@ class FormationFactory extends Factory
         $types_formations_id=TypesFormation::all()->random()->id;
         $communes_id=Commune::all()->random()->id;
         $ingenieurs_id=Ingenieur::all()->random()->id;
+        $operateurs_id=Operateur::all()->random()->id;
     
         $prevue_h = $this->faker->numberBetween(5, 9);
         $prevue_f = $this->faker->numberBetween(5, 1);
@@ -61,14 +63,21 @@ class FormationFactory extends Factory
             'convention_col' => $this->faker->word,
             'decret' => $this->faker->word,
             'beneficiaires' => $this->faker->company,
+            
             'ingenieurs_id' => function () use ($ingenieurs_id) {
                 return $ingenieurs_id;
             },
+
             'types_formations_id' => function () use ($types_formations_id) {
                 return $types_formations_id;
             },
+
             'communes_id' => function () use ($communes_id) {
                 return $communes_id;
+            },
+
+            'operateurs_id' => function () use ($operateurs_id) {
+                return $operateurs_id;
             },
         ];
         

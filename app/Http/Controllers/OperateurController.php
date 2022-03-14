@@ -97,7 +97,6 @@ class OperateurController extends Controller
                 'nom'                       =>       'required|string|max:50',
                 'email'                     =>       'required|email|max:255|unique:users,email,'.$user->id,
                 'telephone'                 =>       'required|string|max:15',
-                'departement'               =>       'required',
                 'regions'                   =>       'required',
                 'type_structure'            =>       'required',
                 'type_operateur'            =>       'required',
@@ -191,7 +190,7 @@ class OperateurController extends Controller
 
         $operateurs->save();
 
-        $operateur->regions()->sync($request->input('regions'));
+        $operateurs->regions()->sync($request->input('regions'));
 
         return redirect()->route('operateurs.index')->with('success', 'opérateur ajouté avec succès !');
     }

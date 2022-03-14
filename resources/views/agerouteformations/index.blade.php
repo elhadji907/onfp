@@ -31,27 +31,25 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:5%;">Code</th>
-                                        <th>Bénéficiares</th>
-                                        <th>Localité</th>
-                                        <th>Module</th>
-                                        <th style="width:08%;">Début</th>
-                                        <th style="width:08%;">Fin</th>
-                                        <th>Ingénieur</th>
+                                        <th style="width:20">Module</th>
+                                        <th style="width:20%;">Bénéficiares</th>
                                         <th style="width:5%;">Effectif</th>
-                                        <th style="width:10%;">Action</th>
+                                       {{--   <th style="width:08%;">Début</th>
+                                        <th style="width:08%;">Fin</th>  --}}
+                                        <th style="width:30">Opérateurs</th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
                                     <tr>
                                         <th>Code</th>
-                                        <th>Bénéficiares</th>
-                                        <th>Localité</th>
                                         <th>Module</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
-                                        <th>Ingénieur</th>
+                                        <th>Bénéficiares</th>
                                         <th>Effectif</th>
-                                        <th>Action</th>
+                                       {{--   <th>Début</th>
+                                        <th>Fin</th>  --}}
+                                        <th>Opérateurs</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -59,21 +57,18 @@
                                     @foreach ($projets->findividuelles as $findividuelle)
                                         <tr>
                                             <td>{!! $findividuelle->code !!}</td>
-                                            <td>{!! $findividuelle->formation->beneficiaires !!}</td>
-                                            <td>
-                                                {!! $findividuelle->formation->commune->nom ?? ' ' !!}
-                                            </td>
                                             <td>{!! $findividuelle->module->name !!}</td>
-                                            <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
-                                            <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td>
-                                            <td>{!! $findividuelle->formation->ingenieur->name ?? ' ' !!}</td>
+                                            <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                             <td class="text-center">
-                                                @foreach ($findividuelle->formation->individuelles as $individuelle)
+                                                @foreach ($findividuelle->individuelles as $individuelle)
                                                     @if ($loop->last)
                                                         {!! $loop->count !!}
                                                     @endif
                                                 @endforeach
                                             </td>
+                                            {{--  <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
+                                            <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td>  --}}
+                                            <td>{!! $findividuelle->formation->operateur->name ?? '' !!} ({!! $findividuelle->formation->operateur->sigle ?? '' !!})</td>
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('agerouteformations/' . $findividuelle->formation->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
