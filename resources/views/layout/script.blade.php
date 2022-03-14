@@ -248,9 +248,14 @@
     });
 </script>
 <script type="text/javascript">
-
 $("#secteur").select2({
       placeholder: "selectione un secteur",
+      allowClear: true
+  });
+</script>
+<script type="text/javascript">
+$("#moduleageroute").select2({
+      placeholder: "Choisir un module de formation",
       allowClear: true
   });
 </script>

@@ -57,8 +57,12 @@ class OperateurController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        
+       $operateur_id=$request->input('operateur');
+       $operateur=Operateur::find($operateur_id);
+
         $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
                         
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
@@ -69,7 +73,7 @@ class OperateurController extends Controller
 
         $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
 
-        return view('operateurs.create', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs'));
+        return view('operateurs.create', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur'));
     }
 
     /**
@@ -350,5 +354,11 @@ class OperateurController extends Controller
           
         $message = $operateur->user->firstname.' '.$operateur->user->name.' a été supprimé(e)';
         return back()->with(compact('message'));
+    }
+
+    public function list(Request $request)
+    {
+        $operateurs=Operateur::withCount('formations')->get();
+        return Datatables::of($operateurs)->make(true);
     }
 }

@@ -190,6 +190,9 @@ Route::group([
         Route::get('ageroutepresel/{module}/{statut}/{individuelle}', [AgerouteindividuelleController::class, 'ageroutepresel'])->name('ageroutepresel');
         Route::get('moduleindividuelle/{projet}/{individuelle}', [AgerouteindividuelleController::class, 'moduleindividuelle'])->name('moduleindividuelle');
         Route::get('/agerouteformations/list', [AgerouteformationController::class, 'list'])->name('formations.list');
+        Route::get('/agerouteformations.selectoperateurs', function () {
+            return view('agerouteformations.selectoperateurs');
+        })->name('agerouteformations.selectoperateurs');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 

@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Findividuelle;
 use App\Models\Projet;
+use App\Models\User;
+use App\Models\Typedemande;
+use App\Models\Module;
+use App\Models\Commune;
+use App\Models\TypesOperateur;
+use App\Models\Region;
+use App\Models\Operateur;
 use Illuminate\Http\Request;
 
 class AgerouteformationController extends Controller
@@ -34,9 +41,23 @@ class AgerouteformationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $operateur_id = $request->input('operateur');
+
+        $operateur = Operateur::find($operateur_id);
+
+        $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
+                        
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        
+        $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+
+        return view('agerouteformations.create', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur'));
     }
 
     /**
