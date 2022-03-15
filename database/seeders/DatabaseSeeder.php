@@ -77,6 +77,7 @@ class DatabaseSeeder extends Seeder
             FcollectiveSeeder::class,
             IndividuelleSeeder::class,
             CollectiveSeeder::class,
+            ChoixoperateurSeeder::class,
         ]);
     }
 }

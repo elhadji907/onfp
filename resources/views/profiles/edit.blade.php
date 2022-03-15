@@ -24,21 +24,15 @@
                             </div> --}}
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="civilite">{{ __('Civilité') }}</label>
-                                    <select name="civilite" id="civilite"
-                                        class="form-control @error('civilite') is-invalid @enderror">
-                                        <option value="{{ Auth::user()->civilite }}">{{ Auth::user()->civilite }}
-                                        </option>
-                                        @foreach ($civilites as $civilite)
-                                            <option value="{{ $civilite->civilite }}">{{ $civilite->civilite }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('civilite')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    {!! Form::label('Civilité :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], Auth::user()->civilite ?? old('civilite'), ['placeholder' => '', 'class' => 'form-control-lg', 'id' => 'civilite', 'data-width' => '100%']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('civilite'))
+                                            @foreach ($errors->get('civilite') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="firstname">{{ __('Prénom') }}</label>

@@ -47,12 +47,12 @@ class FindividuelleController extends Controller
         $nom_formation = Formation::find($id_form);
 
         $individuelles = Individuelle::all()->load(['demandeur'])
-        ->where('demandeur.commune.arrondissement.departement.region.nom','=',$nom_region)
+        ->where('demandeur.commune.arrondissement.departement.region.nom', '=', $nom_region)
         ->where('module', '=', $nom_module)
         ->where('cin', '>', 0);
 
                 
-        return view('findividuelles.selectdindividuelles', compact('individuelles','communes','modules','nom_module','nom_commune','nom_region','nom_formation','id_form'));
+        return view('findividuelles.selectdindividuelles', compact('individuelles', 'communes', 'modules', 'nom_module', 'nom_commune', 'nom_region', 'nom_formation', 'id_form'));
     }
 
     public function adddindividuelles($id_ind, $id_form)
@@ -84,18 +84,25 @@ class FindividuelleController extends Controller
      */
     public function create(Request $request)
     {
-        
-       $ingenieur_id=$request->input('ingenieur');
-       $ingenieur=\App\Models\Ingenieur::find($ingenieur_id);
+        $ingenieur_id=$request->input('ingenieur');
+        $ingenieur=\App\Models\Ingenieur::find($ingenieur_id);
        
-       $modules = Module::distinct('name')->get()->pluck('name','id')->unique();       
-       $programmes = Programme::distinct('name')->get()->pluck('sigle','id')->unique();
-       $communes = Commune::distinct('nom')->get()->pluck('nom','id')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $programmes = Programme::distinct('name')->get()->pluck('sigle', 'id')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
        
-       $date_debut = Carbon::now();
-       $date_fin = Carbon::now()->addMonth();
+        $date_debut = Carbon::now();
+        $date_fin = Carbon::now()->addMonth();
+        $operateur_id = $request->input('operateur');
+        $operateur = Operateur::find($operateur_id);
+        $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
+        $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
+        $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $types_formations = TypesFormation::distinct('name')->get()->pluck('name', 'name')->unique();
+        $choixoperateur = Choixoperateur::distinct('trimestre')->get()->pluck('trimestre', 'trimestre')->unique();
+        $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        return view('findividuelles.create', compact('ingenieur','modules','communes','date_debut','date_fin','programmes'));
+        return view('findividuelles.create', compact('ingenieur', 'modules', 'communes', 'date_debut', 'date_fin', 'programmes', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -106,7 +113,21 @@ class FindividuelleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request,
+            [
+                'date_debut'                        =>    'required|date_format:Y-m-d',
+                'date_fin'                          =>    'required|date_format:Y-m-d',
+                'programme'                         =>    'required',
+                'projet'                            =>    'required',
+                'commune'                           =>    'required',
+                'modules'                           =>    'required',
+                'choixoperateur'                    =>    'required',
+                'adresse'                           =>    'required',
+                'beneficiaire'                      =>    'required',
+                'types_formations'                  =>    'required',
+        ]
+        );
     }
 
     /**
@@ -130,11 +151,11 @@ class FindividuelleController extends Controller
     {
         $name_ingenieur = $findividuelle->formation->ingenieur->name;
 
-        $list_ingenieurs = Ingenieur::distinct('name')->get()->pluck('name','name')->unique();
+        $list_ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $ingenieurs = Ingenieur::all();
 
-        return view('findividuelles.update',compact('findividuelle', 'ingenieurs','list_ingenieurs','name_ingenieur'));
+        return view('findividuelles.update', compact('findividuelle', 'ingenieurs', 'list_ingenieurs', 'name_ingenieur'));
     }
 
     /**
@@ -166,6 +187,5 @@ class FindividuelleController extends Controller
         $individuelles=Individuelle::with('demandeur')->get();
         dd($individuelles);
         return Datatables::of($individuelles)->make(true);
-
     }
 }

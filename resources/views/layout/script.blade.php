@@ -271,6 +271,18 @@ $("#type_structure").select2({
       allowClear: true
   });
 </script>
+<script type="text/javascript">
+$("#types_formations").select2({
+      placeholder: "sélectionner type de formation",
+      allowClear: true
+  });
+</script>
+<script type="text/javascript">
+$("#choixoperateur").select2({
+      placeholder: "choix opérateur",
+      allowClear: true
+  });
+</script>
 
 <script type="text/javascript">
 

@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * Class Formation
  * 
@@ -52,12 +51,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $communes_id
  * @property int|null $antennes_id
  * @property int|null $projets_id
+ * @property int|null $choixoperateurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Agent|null $agent
  * @property Antenne|null $antenne
+ * @property Choixoperateur|null $choixoperateur
  * @property Commune|null $commune
  * @property Convention|null $convention
  * @property Courrier|null $courrier
@@ -111,7 +112,8 @@ class Formation extends Model
 		'types_formations_id' => 'int',
 		'communes_id' => 'int',
 		'antennes_id' => 'int',
-		'projets_id' => 'int'
+		'projets_id' => 'int',
+		'choixoperateurs_id' => 'int'
 	];
 
 	protected $dates = [
@@ -155,7 +157,8 @@ class Formation extends Model
 		'types_formations_id',
 		'communes_id',
 		'antennes_id',
-		'projets_id'
+		'projets_id',
+		'choixoperateurs_id'
 	];
 
 	public function agent()
@@ -166,6 +169,11 @@ class Formation extends Model
 	public function antenne()
 	{
 		return $this->belongsTo(Antenne::class, 'antennes_id');
+	}
+
+	public function choixoperateur()
+	{
+		return $this->belongsTo(Choixoperateur::class, 'choixoperateurs_id');
 	}
 
 	public function commune()
