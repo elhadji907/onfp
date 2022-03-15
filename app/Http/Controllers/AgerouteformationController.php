@@ -121,7 +121,6 @@ class AgerouteformationController extends Controller
         ]);
 
         $findividuelle->save();
-
         
         return redirect()->route('agerouteformations.index')->with('success', 'formation ajoutée avec succès !');
     }
@@ -143,9 +142,20 @@ class AgerouteformationController extends Controller
      * @param  \App\Models\Findividuelle  $findividuelle
      * @return \Illuminate\Http\Response
      */
-    public function edit(Findividuelle $findividuelle)
+    public function edit($id)
     {
-        //
+        $findividuelle = Findividuelle::find($id);
+        $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
+        $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $types_formations = TypesFormation::distinct('name')->get()->pluck('name', 'name')->unique();
+        $choixoperateur = Choixoperateur::distinct('trimestre')->get()->pluck('trimestre', 'trimestre')->unique();
+        $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
+        $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        return view('agerouteformations.update', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -175,7 +185,7 @@ class AgerouteformationController extends Controller
 
         $formation->delete();
 
-        $message = $formation->choixoperateur->trimestre.' a été supprimé';
+        $message = $formation->code.' a été supprimé';
         return redirect()->route('agerouteformations.index')->with(compact('message'));
     }
 }

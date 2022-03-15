@@ -6,21 +6,25 @@
             @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">{{ session('success') }}</div>
             @endif
-            <div class="row pt-1"></div>
-            <div class="card">
-                <div class="card-header card-header-primary text-center">
-                    <h3 class="card-title">Enregistrement</h3>
-                    <p class="card-category">formation individuelle</p>
+            <div class="row justify-content-center pb-2">
+                <div class="col-lg-12 margin-tb">
+                    <a class="btn btn-outline-success" href="{{ route('agerouteformations.index') }}"> <i
+                            class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                </div>
+            </div>
+            <div class="card border-success">
+                <div class="card card-header text-center bg-gradient-default border-success">
+                    <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
+                            class="font-italic">FORMULAIRE DE CREATION DE FORMATION</span></h1>
                 </div>
                 <div class="card-body">
-                    <div class="row pt-5 pl-1">
-                        <h5>
-                            <b>Opérateur choisi : </b>
+                    <div>
+                        <p>
+                            <b><u>Opérateur choisi </u>: </b>
                             {{ $operateur->name ?? 'Non disponible' }}<br />
-                            <b>N° agrément : </b> {{ $operateur->numero_agrement ?? 'Aucun numéro' }}
-                        </h5>
+                            <b><u>N° agrément </u> </b> {{ $operateur->numero_agrement ?? 'Aucun numéro' }}
+                        </p>
                     </div>
-                    <div class="row pt-2"></div>
                     <form method="POST" action="{{ url('agerouteformations') }}">
                         @csrf
                         <div class="form-row">
@@ -37,10 +41,10 @@
                                     </span>
                                 @enderror
                             </div> --}}
-                            {{--  <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                {!! Form::label('Type de formation:') !!}(<span class="text-danger">*</span>)  --}}
-                                {!! Form::hidden('types_formations', $types_formations, null, ['placeholder' => 'types_formations', 'class' => 'form-control', 'id' => 'types_formations', 'data-width' => '100%']) !!}
-                                {{--  <small id="emailHelp" class="form-text text-muted">
+                            {{-- <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                {!! Form::label('Type de formation:') !!}(<span class="text-danger">*</span>) --}}
+                            {!! Form::hidden('types_formations', $types_formations, null, ['placeholder' => 'types_formations', 'class' => 'form-control', 'id' => 'types_formations', 'data-width' => '100%']) !!}
+                            {{-- <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('types_formations'))
                                         @foreach ($errors->get('types_formations') as $message)
                                             <p class="text-danger">{{ $message }}</p>
@@ -168,13 +172,56 @@
                                 @enderror
                             </div>
                         </div>
-
                         {!! Form::hidden('operateur', $operateur->name, null, ['placeholder' => 'operateur', 'class' => 'form-control', 'id' => 'operateur', 'data-width' => '100%']) !!}
-                        <button type="submit" class="btn btn-primary"><i
-                                class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="submit" class="btn btn-outline-primary"><i
+                                    class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
+                        </div>
                     </form>
+                    <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es
+                                        saisies svp</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    @if ($errors->any())
+                                        @if (count($errors) > 0)
+                                            <div class="alert alert-danger mt-2">
+                                                <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                entrées.
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        @push('scripts')
+                                            <script type="text/javascript">
+                                                $(document).ready(function() {
+                                                    $("#error-modal").modal({
+                                                        'show': true,
+                                                    })
+                                                });
+                                            </script>
+                                        @endpush
+                                    @endif
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
