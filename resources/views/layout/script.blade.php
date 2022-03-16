@@ -283,6 +283,12 @@ $("#choixoperateur").select2({
       allowClear: true
   });
 </script>
+<script type="text/javascript">
+$("#operateur").select2({
+      placeholder: "choisir opérateur",
+      allowClear: true
+  });
+</script>
 
 <script type="text/javascript">
 

@@ -131,9 +131,14 @@ class AgerouteformationController extends Controller
      * @param  \App\Models\Findividuelle  $findividuelle
      * @return \Illuminate\Http\Response
      */
-    public function show(Findividuelle $findividuelle)
+    public function show($id)
     {
-        //
+        $findividuelle = Findividuelle::find($id);
+        $formation = $findividuelle->formation;
+        $individuelles = $findividuelle->individuelles;
+        
+        return view('agerouteformations.show', compact('formation', 'findividuelle', 'individuelles'));
+
     }
 
     /**
@@ -146,7 +151,7 @@ class AgerouteformationController extends Controller
     {
         $findividuelle = Findividuelle::find($id);
         $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
-        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
@@ -154,8 +159,9 @@ class AgerouteformationController extends Controller
         $choixoperateur = Choixoperateur::distinct('trimestre')->get()->pluck('trimestre', 'trimestre')->unique();
         $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
+        $operateurs = Operateur::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        return view('agerouteformations.update', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.update', compact('civilites', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -165,9 +171,55 @@ class AgerouteformationController extends Controller
      * @param  \App\Models\Findividuelle  $findividuelle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Findividuelle $findividuelle)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate(
+            $request,
+            [
+                'programme'                         =>    'required',
+                'projet'                            =>    'required',
+                'commune'                           =>    'required',
+                'modules'                           =>    'required',
+                'choixoperateur'                    =>    'required',
+                'adresse'                           =>    'required',
+                'beneficiaire'                      =>    'required',
+                'types_formations'                  =>    'required',
+        ]
+        );
+        
+        $findividuelle = Findividuelle::find($id);
+        $formation = $findividuelle->formation;
+
+        $choixoperateur_id              =       Choixoperateur::where('trimestre', $request->input('choixoperateur'))->first()->id;
+        $types_formations_id            =       TypesFormation::where('name', 'Individuelle')->first()->id;
+        $projet_id                      =       Projet::where('name', $request->input('projet'))->first()->id;
+        $commune_id                     =       Commune::where('nom', $request->input('commune'))->first()->id;
+        $programme_id                   =       Programme::where('name', $request->input('programme'))->first()->id;
+        $operateur_id                   =       Operateur::where('name', $request->input('operateur'))->first()->id;
+        $module_id                      =       Module::where('name', $request->input('modules'))->first()->id;
+
+        
+        $formation->code                      =      $request->input('code');
+        $formation->date_debut                =      $request->input('date_debut');
+        $formation->date_fin                  =      $request->input('date_fin');
+        $formation->adresse                   =      $request->input('adresse');
+        $formation->beneficiaires             =      $request->input('beneficiaire');
+        $formation->choixoperateurs_id        =      $choixoperateur_id;
+        $formation->types_formations_id       =      $types_formations_id;
+        $formation->operateurs_id             =      $operateur_id;
+        $formation->communes_id               =      $commune_id;
+
+        $formation->save();
+        
+        $findividuelle->code                  =      $request->input('code');
+        $findividuelle->modules_id            =      $module_id;
+        $findividuelle->projets_id            =      $projet_id;
+        $findividuelle->programmes_id         =      $programme_id;
+        $findividuelle->formations_id         =      $formation->id;
+
+        $findividuelle->save();
+        
+        return redirect()->route('agerouteformations.index')->with('success', 'formation ajoutée avec succès !');
     }
 
     /**
