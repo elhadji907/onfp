@@ -106,6 +106,7 @@ class AgerouteformationController extends Controller
             'choixoperateurs_id'        =>      $choixoperateur_id,
             'types_formations_id'       =>      $types_formations_id,
             'operateurs_id'             =>      $operateur_id,
+            'communes_id'               =>      $commune_id,
 
         ]);
 

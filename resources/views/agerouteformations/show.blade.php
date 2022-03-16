@@ -117,7 +117,7 @@
             </div>
             <div class="card-body">
                 <table method="POST" cellpadding="0" cellspacing="0">
-                   {{--   <tr class="top">
+                    {{-- <tr class="top">
                         <td colspan="2">
                             <table>
                                 <tr>
@@ -132,7 +132,7 @@
                                 </tr>
                             </table>
                         </td>
-                    </tr>  --}}
+                    </tr> --}}
                     <tr class="information">
                         <td colspan="2">
                             <table>
@@ -147,10 +147,10 @@
                                         {{ $findividuelle->formation->choixoperateur->trimestre ?? 'Aucune' }}<br>
                                         <b>Commune </b>: {{ $findividuelle->formation->commune->nom ?? '' }}<br>
                                         <b>Adresse </b>: {{ $findividuelle->formation->adresse ?? '' }}<br>
-                                        @if ($findividuelle->projet->name && $findividuelle->projet->name != 'Aucun')
+                                        @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
                                             <b>Projet </b>: {{ $findividuelle->projet->name ?? '' }}<br>
                                         @endif
-                                        @if ($findividuelle->programme->name && $findividuelle->programme->name != 'Aucun')
+                                        @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
                                             <b>Programme </b>: {{ $findividuelle->programme->name ?? '' }}<br>
                                         @endif
                                     </td>
