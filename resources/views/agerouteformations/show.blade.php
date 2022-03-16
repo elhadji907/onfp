@@ -134,7 +134,7 @@
                         </td>
                     </tr> --}}
                     <tr class="information">
-                        <td colspan="2">
+                        <td colspan="4">
                             <table>
                                 <tr>
                                     <td><b>CODE </b>#:
@@ -148,13 +148,13 @@
                                         <b>Commune </b>: {{ $findividuelle->formation->commune->nom ?? '' }}<br>
                                         <b>Adresse </b>: {{ $findividuelle->formation->adresse ?? '' }}<br>
                                         @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
-                                            <b>Projet </b>: {{ $findividuelle->projet->name ?? '' }}<br>
+                                            <b>Projet </b>: {{ $findividuelle->projet->name ?? '' }}
+                                            ({{ $findividuelle->projet->sigle ?? '' }})<br>
                                         @endif
                                         @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
-                                            <b>Programme </b>: {{ $findividuelle->programme->name ?? '' }}<br>
+                                            <b>Programme </b>: {{ $findividuelle->programme->name ?? '' }}
+                                            ({{ $findividuelle->programme->sigle ?? '' }})<br>
                                         @endif
-                                    </td>
-                                    <td>
                                     </td>
                                 </tr>
                             </table>
@@ -179,8 +179,12 @@
                                 <th width="10%">Téléphone</th>
                                 <th width="5%">Statut</th>
                                 <th style="text-align: center" width="8%">
-                                    <div class="btn btn-outline-success  btn-sm" title="ajouter"><i
-                                            class="fas fa-plus"></i></i></div>
+                                    <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id, '$projet' => $findividuelle->projet->id, '$programme' => $findividuelle->programme->id]) }}"
+                                        target="_blank">
+                                        <div class="btn btn-outline-success  btn-sm" title="ajouter">
+                                            <i class="fas fa-plus"></i></i>
+                                        </div>
+                                    </a>
                                 </th>
                             </tr>
                         </thead>
@@ -199,10 +203,6 @@
                                     <td>{{ $individuelle->demandeur->user->telephone }}</td>
                                     <td>{{ $individuelle->statut ?? '' }}</td>
                                     <td>
-                                        {{-- <a href="{{ url('deleteindividuelles', ['$id_ind' => $individuelle->id, '$id_form' => $id_form]) }}"
-                                            title="Enlever" class="btn btn-outline-danger btn-sm mt-0">
-                                            <i class="fas fa-trash-alt">&nbsp;Enlever</i>
-                                        </a> --}}
                                     </td>
                                 </tr>
                             @endforeach

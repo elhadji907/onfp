@@ -15,6 +15,7 @@ use App\Models\Operateur;
 use App\Models\TypesFormation;
 use App\Models\Choixoperateur;
 use App\Models\Formation;
+use App\Models\Individuelle;
 use Illuminate\Http\Request;
 
 class AgerouteformationController extends Controller
@@ -240,5 +241,17 @@ class AgerouteformationController extends Controller
 
         $message = $formation->code.' a été supprimé';
         return redirect()->route('agerouteformations.index')->with(compact('message'));
+    }
+
+    public function formationcandidats($module, $projet, $programme)
+    {
+        $individuelles = Individuelle::where('cin', '>', 0)->get();
+        $module             =        Module::find($module);
+        $projet             =        Projet::find($projet);
+        $programme          =        Programme::find($programme);
+        $projet_name        =       $projet->name;
+        $module_name        =       $module->name;
+
+        return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme'));
     }
 }

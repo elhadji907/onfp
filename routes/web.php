@@ -194,6 +194,8 @@ Route::group([
             return view('agerouteformations.selectoperateurs');
         })->name('agerouteformations.selectoperateurs');
 
+        Route::get('formationcandidats/{module}/{projet}/{programme}', [AgerouteformationController::class, 'formationcandidats'])->name('formationcandidats');
+
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
         Route::get('/filieres/list', [FiliereController::class, 'list'])->name('filieres.list');
