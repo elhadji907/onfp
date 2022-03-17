@@ -137,7 +137,7 @@ class AgerouteformationController extends Controller
     {
         $findividuelle = Findividuelle::find($id);
         $formation = $findividuelle->formation;
-        $individuelles = $findividuelle->individuelles;
+        $individuelles = $formation->individuelles;
         
         return view('agerouteformations.show', compact('formation', 'findividuelle', 'individuelles'));
 
@@ -243,15 +243,27 @@ class AgerouteformationController extends Controller
         return redirect()->route('agerouteformations.index')->with(compact('message'));
     }
 
-    public function formationcandidats($module, $projet, $programme)
+    public function formationcandidats($module, $projet, $programme, $findividuelle)
     {
-        $individuelles = Individuelle::where('cin', '>', 0)->get();
-        $module             =        Module::find($module);
-        $projet             =        Projet::find($projet);
-        $programme          =        Programme::find($programme);
-        $projet_name        =       $projet->name;
-        $module_name        =       $module->name;
+        $individuelles      =           Individuelle::where('cin', '>', 0)->get();
+        $module             =           Module::find($module);
+        $projet             =           Projet::find($projet);
+        $findividuelle      =           Findividuelle::find($findividuelle);
+        $programme          =           Programme::find($programme);
+        $projet_name        =           $projet->name;
+        $module_name        =           $module->name;
 
-        return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme'));
+        return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle'));
+    }
+
+    public function formationcandidatsadd($individuelle, $findividuelle)
+    {
+        $individuelle = Individuelle::find($individuelle);
+        $findividuelle = Findividuelle::find($findividuelle);
+        
+        $individuelle->formations()->sync($formation);
+        
+        $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
+        return back()->with(compact('message'));
     }
 }

@@ -179,7 +179,7 @@
                                 <th width="10%">Téléphone</th>
                                 <th width="5%">Statut</th>
                                 <th style="text-align: center" width="8%">
-                                    <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id, '$projet' => $findividuelle->projet->id, '$programme' => $findividuelle->programme->id]) }}"
+                                    <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
                                         target="_blank">
                                         <div class="btn btn-outline-success  btn-sm" title="ajouter">
                                             <i class="fas fa-plus"></i></i>

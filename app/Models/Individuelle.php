@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * Class Individuelle
  * 
@@ -75,7 +74,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $statut2
  * @property string|null $statut3
  * @property int $demandeurs_id
- * @property int|null $formations_id
  * @property int|null $communes_id
  * @property int|null $etudes_id
  * @property int|null $antennes_id
@@ -83,7 +81,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $diplomes_id
  * @property int|null $conventions_id
  * @property int|null $diplomespros_id
- * @property int|null $findividuelles_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -95,9 +92,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Diplome|null $diplome
  * @property Diplomespro|null $diplomespro
  * @property Etude|null $etude
- * @property Findividuelle|null $findividuelle
- * @property Formation|null $formation
  * @property Programme|null $programme
+ * @property Collection|Formation[] $formations
  * @property Collection|Localite[] $localites
  * @property Collection|Module[] $modules
  * @property Collection|Programme[] $programmes
@@ -121,15 +117,13 @@ class Individuelle extends Model
 		'nbre_pieces' => 'int',
 		'nbre_enfants' => 'int',
 		'demandeurs_id' => 'int',
-		'formations_id' => 'int',
 		'communes_id' => 'int',
 		'etudes_id' => 'int',
 		'antennes_id' => 'int',
 		'programmes_id' => 'int',
 		'diplomes_id' => 'int',
 		'conventions_id' => 'int',
-		'diplomespros_id' => 'int',
-		'findividuelles_id' => 'int'
+		'diplomespros_id' => 'int'
 	];
 
 	protected $dates = [
@@ -196,15 +190,13 @@ class Individuelle extends Model
 		'statut2',
 		'statut3',
 		'demandeurs_id',
-		'formations_id',
 		'communes_id',
 		'etudes_id',
 		'antennes_id',
 		'programmes_id',
 		'diplomes_id',
 		'conventions_id',
-		'diplomespros_id',
-		'findividuelles_id'
+		'diplomespros_id'
 	];
 
 	public function antenne()
@@ -242,19 +234,16 @@ class Individuelle extends Model
 		return $this->belongsTo(Etude::class, 'etudes_id');
 	}
 
-	public function findividuelle()
-	{
-		return $this->belongsTo(Findividuelle::class, 'findividuelles_id');
-	}
-
-	public function formation()
-	{
-		return $this->belongsTo(Formation::class, 'formations_id');
-	}
-
 	public function programme()
 	{
 		return $this->belongsTo(Programme::class, 'programmes_id');
+	}
+
+	public function formations()
+	{
+		return $this->belongsToMany(Formation::class, 'individuellesformations', 'individuelles_id', 'formations_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
 	}
 
 	public function localites()

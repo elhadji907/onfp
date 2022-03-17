@@ -8,6 +8,7 @@ use App\Models\Projet;
 use App\Models\Localite;
 use App\Models\Zone;
 use App\Models\Module;
+use App\Models\Formation;
 
 class IndividuelleSeeder extends Seeder
 {
@@ -23,7 +24,6 @@ class IndividuelleSeeder extends Seeder
             ->create();
 
         $projets = Projet::all();
-
         Individuelle::all()->each(function ($individuelle) use ($projets) {
             $individuelle->projets()->attach(
                 $projets->random(rand(1, 4))->pluck('id')->toArray()
@@ -31,7 +31,6 @@ class IndividuelleSeeder extends Seeder
         });
 
         $localites = Localite::all();
-
         Individuelle::all()->each(function ($individuelle) use ($localites) {
             $individuelle->localites()->attach(
                 $localites->random(rand(1, 1))->pluck('id')->toArray()
@@ -39,7 +38,6 @@ class IndividuelleSeeder extends Seeder
         });
 
         $zones = Zone::all();
-
         Individuelle::all()->each(function ($individuelle) use ($zones) {
             $individuelle->zones()->attach(
                 $zones->random(rand(1, 1))->pluck('id')->toArray()
@@ -47,10 +45,16 @@ class IndividuelleSeeder extends Seeder
         });
 
         $modules = Module::all();
-
         Individuelle::all()->each(function ($individuelle) use ($modules) {
             $individuelle->modules()->attach(
                 $modules->random(rand(1, 1))->pluck('id')->toArray()
+            );
+        });
+
+        $formations = Formation::all();
+        Individuelle::all()->each(function ($individuelle) use ($formations) {
+            $individuelle->formations()->attach(
+                $formations->random(rand(1, 1))->pluck('id')->toArray()
             );
         });
     }

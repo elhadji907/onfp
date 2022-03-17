@@ -7,11 +7,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 
 /**
  * Class Findividuelle
@@ -32,7 +30,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Programme|null $programme
  * @property Projet|null $projet
  * @property Formation $formation
- * @property Collection|Individuelle[] $individuelles
  *
  * @package App\Models
  */
@@ -78,10 +75,5 @@ class Findividuelle extends Model
 	public function formation()
 	{
 		return $this->belongsTo(Formation::class, 'formations_id');
-	}
-
-	public function individuelles()
-	{
-		return $this->hasMany(Individuelle::class, 'findividuelles_id');
 	}
 }

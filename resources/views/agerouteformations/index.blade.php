@@ -22,7 +22,8 @@
                         <div class="table-responsive">
                             <div align="right">
                                 <a href="{{ route('agerouteformations.selectoperateurs') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                    </div>
                                 </a>
                             </div>
                             <br />
@@ -34,8 +35,8 @@
                                         <th style="width:20">Module</th>
                                         <th style="width:20%;">Bénéficiares</th>
                                         <th style="width:5%;">Effectif</th>
-                                       {{--   <th style="width:08%;">Début</th>
-                                        <th style="width:08%;">Fin</th>  --}}
+                                        {{-- <th style="width:08%;">Début</th>
+                                        <th style="width:08%;">Fin</th> --}}
                                         <th style="width:30">Opérateurs</th>
                                         <th style="width:10%;"></th>
                                     </tr>
@@ -46,8 +47,8 @@
                                         <th>Module</th>
                                         <th>Bénéficiares</th>
                                         <th>Effectif</th>
-                                       {{--   <th>Début</th>
-                                        <th>Fin</th>  --}}
+                                        {{-- <th>Début</th>
+                                        <th>Fin</th> --}}
                                         <th>Opérateurs</th>
                                         <th></th>
                                     </tr>
@@ -60,14 +61,14 @@
                                             <td>{!! $findividuelle->module->name !!}</td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                             <td class="text-center">
-                                                @foreach ($findividuelle->individuelles as $individuelle)
+                                                @foreach ($findividuelle->formation->individuelles as $individuelle)
                                                     @if ($loop->last)
                                                         {!! $loop->count !!}
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            {{--  <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
-                                            <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td>  --}}
+                                            {{-- <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
+                                            <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td> --}}
                                             <td>{!! $findividuelle->formation->operateur->name ?? '' !!} ({!! $findividuelle->formation->operateur->sigle ?? '' !!})</td>
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('agerouteformations/' . $findividuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
@@ -101,8 +102,7 @@
         $(document).ready(function() {
             $('#table-agerouteformations').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -120,8 +120,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {

@@ -41,7 +41,6 @@ class IndividuelleFactory extends Factory
         $communes_id=Commune::all()->random()->id;
         $diplomes_id=Diplome::all()->random()->id;
         $programmes_id=Programme::all()->random()->id;
-        $findividuelles_id=Findividuelle::all()->random()->id;
             
         $nombre = rand(1, 9);
         $annee = date('y');
@@ -83,9 +82,6 @@ class IndividuelleFactory extends Factory
             },
             'programmes_id' => function () use ($programmes_id) {
                 return $programmes_id;
-            },
-            'findividuelles_id' => function () use ($findividuelles_id) {
-                return $findividuelles_id;
             },
         ];
     }
