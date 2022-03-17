@@ -197,9 +197,8 @@ class AgerouteformationController extends Controller
         $projet_id                      =       Projet::where('name', $request->input('projet'))->first()->id;
         $commune_id                     =       Commune::where('nom', $request->input('commune'))->first()->id;
         $programme_id                   =       Programme::where('name', $request->input('programme'))->first()->id;
-        $operateur_id                   =       Operateur::where('name', $request->input('operateur'))->first()->id;
         $module_id                      =       Module::where('name', $request->input('modules'))->first()->id;
-
+        $operateurs_id                  =       Operateur::where('name', $request->input('operateur'))->first()->id;
         
         $formation->code                      =      $request->input('code');
         $formation->date_debut                =      $request->input('date_debut');
@@ -208,7 +207,7 @@ class AgerouteformationController extends Controller
         $formation->beneficiaires             =      $request->input('beneficiaire');
         $formation->choixoperateurs_id        =      $choixoperateur_id;
         $formation->types_formations_id       =      $types_formations_id;
-        $formation->operateurs_id             =      $operateur_id;
+        $formation->operateurs_id             =      $operateurs_id;
         $formation->communes_id               =      $commune_id;
 
         $formation->save();
@@ -256,11 +255,20 @@ class AgerouteformationController extends Controller
         return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle'));
     }
 
+    public function individuelleformations($findividuelle, $formation)
+    {
+        return view('agerouteformations.individuelleformations');
+    }
+
     public function formationcandidatsadd($individuelle, $findividuelle)
     {
         $individuelle = Individuelle::find($individuelle);
         $findividuelle = Findividuelle::find($findividuelle);
+        $formation = $findividuelle->formation;
         
+        $individuelle->statut    =     "Retenue";
+
+        $individuelle->save();
         $individuelle->formations()->sync($formation);
         
         $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';

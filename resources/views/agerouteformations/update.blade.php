@@ -127,6 +127,19 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            {!! Form::label('Opérateur:') !!}(<span class="text-danger">*</span>)
+                            {!! Form::select('operateur', $operateurs, $findividuelle->formation->operateur->name ?? '', ['placeholder' => ' operateur', 'class' => 'form-control', 'id' => 'operateur', 'data-width' => '100%']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('operateur'))
+                                    @foreach ($errors->get('operateur') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                             {!! Form::label('Projet:') !!}
                             {!! Form::select('projet', $projets, $findividuelle->projet->name ?? '', ['placeholder' => 'projet', 'class' => 'form-control', 'id' => 'projet', 'data-width' => '100%']) !!}
                             <small id="emailHelp" class="form-text text-muted">
@@ -207,7 +220,6 @@
                             </div>
                         @endif
                     </div>
-                    {!! Form::select('operateur', $operateurs, $findividuelle->formation->operateur->name, ['placeholder' => 'operateur', 'class' => 'form-control', 'id' => 'operateur', 'data-width' => '100%']) !!}
                     <br />
                     <br />
                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">

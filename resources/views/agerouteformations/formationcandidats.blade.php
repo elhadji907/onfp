@@ -36,7 +36,7 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:13%;">Communes</th>
-                                            <th style="width:5%;">Module</th>
+                                            <th style="width:5%;">Formations</th>
                                             <th style="width:9%;"></th>
                                         </tr>
                                     </thead>
@@ -69,10 +69,10 @@
                                                         </td>
                                                         <td ALIGN="CENTER">
                                                             <?php $h = 1; ?>
-                                                            @foreach ($individuelle->modules as $key => $module)
+                                                            @foreach ($individuelle->formations as $key => $formation)
                                                                 @if ($loop->last)
                                                                     <a class="nav-link badge badge-info"
-                                                                        href="{{ url('moduleindividuelle', ['$projet' => $projet, '$individuelle' => $individuelle]) }}"
+                                                                        href="{{ url('individuelleformations', ['$individuelle' => $individuelle->id, '$formation' => $formation->id]) }}"
                                                                         target="_blank">{!! $loop->count !!}</a>
                                                                 @endif
                                                             @endforeach
@@ -80,7 +80,12 @@
                                                         <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                             <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
                                                                 title="ajouter" class="btn btn-outline-primary btn-sm mt-0">
-                                                                <i class="fas fa-plus">&nbsp;ajouter</i>
+                                                                <i class="fas fa-check"></i>
+                                                            </a>
+                                                            &nbsp;
+                                                            <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
+                                                                title="retirer" class="btn btn-outline-danger btn-sm mt-0">
+                                                                <i class="fas fa-exclamation-triangle"></i>
                                                             </a>
                                                         </td>
                                                     </tr>

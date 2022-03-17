@@ -38,10 +38,6 @@
             text-align: center;
         }
 
-        .invoice-box table tr td:nth-child(11) {
-            text-align: center;
-        }
-
         .invoice-box table tr.top table td {
             padding-bottom: 20px;
         }
@@ -57,7 +53,7 @@
         }
 
         .invoice-box table tr.heading td {
-            background: #eee;
+            background: rgb(224, 224, 224);
             border-bottom: 1px solid #ddd;
             font-weight: bold;
         }
@@ -117,48 +113,61 @@
             </div>
             <div class="card-body">
                 <table method="POST" cellpadding="0" cellspacing="0">
-                    {{-- <tr class="top">
-                        <td colspan="2">
-                            <table>
-                                <tr>
-                                    <td class="title">
-                                        <img style="width:50%; max-width:100px;"
-                                            src="{{ asset('images/image_onfp.jpg') }}">
-                                    </td>
-                                    <td>
-                                        <b>CODE </b>#:
-                                        <span style="color:red">{!! $findividuelle->code !!}</span><br>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr> --}}
                     <tr class="information">
-                        <td colspan="4">
-                            <table>
-                                <tr>
-                                    <td><b>CODE </b>#:
-                                        <span style="color:red">{!! $findividuelle->code !!}</span><br>
-                                        <b>Module </b>: {{ $findividuelle->module->name ?? '' }}<br>
-                                        <b>Opérateur </b>: {{ $findividuelle->formation->operateur->name ?? '' }}
-                                        ({{ $findividuelle->formation->operateur->sigle }})<br>
-                                        <b>Bénéficiares </b>: {{ $findividuelle->formation->beneficiaires ?? '' }}<br>
-                                        <b>Commission </b>:
-                                        {{ $findividuelle->formation->choixoperateur->trimestre ?? 'Aucune' }}<br>
-                                        <b>Commune </b>: {{ $findividuelle->formation->commune->nom ?? '' }}<br>
-                                        <b>Adresse </b>: {{ $findividuelle->formation->adresse ?? '' }}<br>
-                                        @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
-                                            <b>Projet </b>: {{ $findividuelle->projet->name ?? '' }}
-                                            ({{ $findividuelle->projet->sigle ?? '' }})<br>
-                                        @endif
-                                        @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
-                                            <b>Programme </b>: {{ $findividuelle->programme->name ?? '' }}
-                                            ({{ $findividuelle->programme->sigle ?? '' }})<br>
-                                        @endif
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <tr class="heading">
+                                <td class="pt-3">CODE</td>
+                                <td class="pt-3">Commission</td>
+                            </tr>
+                            <tr class="details">
+                                <td class="pt-3">{!! $findividuelle->code ?? '' !!}</td>
+                                <td class="pt-3">{{ $findividuelle->formation->choixoperateur->trimestre ?? '' }}</td>
+                            </tr>
+                            <tr class="heading">
+                                <td class="pt-3">Module</td>
+                                <td class="pt-3">Bénéficiaires</td>
+                            </tr>
+                            <tr class="details">
+                                <td class="pt-3">{!! $findividuelle->module->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $findividuelle->formation->beneficiaires ?? '' }}</td>
+                            </tr>
+                            <tr class="heading">
+                                <td class="pt-3">Opérateur</td>
+                                <td class="pt-3">Sigle</td>
+                            </tr>
+                            <tr class="details">
+                                <td class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $findividuelle->formation->beneficiaires ?? '' }}</td>
+                            </tr>
+                            <tr class="heading">
+                                <td class="pt-3">Commune</td>
+                                <td class="pt-3">Adresse</td>
+                            </tr>
+                            <tr class="details">
+                                <td class="pt-3">{!! $findividuelle->formation->commune->nom ?? '' !!}</td>
+                                <td class="pt-3">{{ $findividuelle->formation->adresse ?? '' }}</td>
+                            </tr>
+                            @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
+                            <tr class="heading">
+                                <td class="pt-3">Projet</td>
+                                <td class="pt-3">Sigle</td>
+                            </tr>
+                            <tr class="details">
+                                <td class="pt-3">{!! $findividuelle->projet->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $findividuelle->projet->sigle ?? '' }}</td>
+                            </tr>
+                            @endif
+                            @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
+                            <tr class="heading">
+                                <td class="pt-3">Programme</td>
+                                <td class="pt-3">Sigle</td>
+                            </tr>
+                            <tr class="details">
+                                <td class="pt-3">{!! $findividuelle->programme->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}</td>
+                            </tr>
+                            @endif
+                        </table>
                     </tr>
                     <table class="table table-bordered" width="100%" cellspacing="0" id="table-individuelles">
                         @if (session('message'))
@@ -166,6 +175,14 @@
                                 {{ session('message') }}
                             </div>
                         @endif
+                        <div align="right" class="pb-3">
+                            <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+                                target="_blank">
+                                <div class="btn btn-outline-success  btn-md" title="ajouter">
+                                    <i class="fas fa-plus"></i></i>
+                                </div>
+                            </a>
+                        </div>
                         <thead class="heading">
                             <tr>
                                 <th width="2%">N°</th>
@@ -177,15 +194,6 @@
                                 <th width="12%">Lieu naissance</th>
                                 <th width="10%">Email</th>
                                 <th width="10%">Téléphone</th>
-                                <th width="5%">Statut</th>
-                                <th style="text-align: center" width="8%">
-                                    <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
-                                        target="_blank">
-                                        <div class="btn btn-outline-success  btn-sm" title="ajouter">
-                                            <i class="fas fa-plus"></i></i>
-                                        </div>
-                                    </a>
-                                </th>
                             </tr>
                         </thead>
                         <tbody class="details">
@@ -201,9 +209,6 @@
                                     <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
                                     <td>{{ $individuelle->demandeur->user->email }}</td>
                                     <td>{{ $individuelle->demandeur->user->telephone }}</td>
-                                    <td>{{ $individuelle->statut ?? '' }}</td>
-                                    <td>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
