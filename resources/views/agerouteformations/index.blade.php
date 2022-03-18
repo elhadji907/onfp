@@ -32,12 +32,13 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:5%;">Code</th>
-                                        <th style="width:20">Module</th>
+                                        <th style="width:15%;">Module</th>
                                         <th style="width:20%;">Bénéficiares</th>
                                         <th style="width:5%;">Effectif</th>
                                         {{-- <th style="width:08%;">Début</th>
                                         <th style="width:08%;">Fin</th> --}}
-                                        <th style="width:30">Opérateurs</th>
+                                        <th style="width:35%;">Opérateurs</th>
+                                        <th style="width:10%;">Statut</th>
                                         <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
@@ -50,6 +51,7 @@
                                         {{-- <th>Début</th>
                                         <th>Fin</th> --}}
                                         <th>Opérateurs</th>
+                                        <th>Statut</th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -57,7 +59,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($projets->findividuelles as $findividuelle)
                                         <tr>
-                                            <td>{!! $findividuelle->code !!}</td>
+                                            <td>{!! $findividuelle->formation->code !!}</td>
                                             <td>{!! $findividuelle->module->name !!}</td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                             <td class="text-center">
@@ -70,6 +72,7 @@
                                             {{-- <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
                                             <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td> --}}
                                             <td>{!! $findividuelle->formation->operateur->name ?? '' !!} ({!! $findividuelle->formation->operateur->sigle ?? '' !!})</td>
+                                            <td>{!! $findividuelle->formation->statut->name !!}</td>
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('agerouteformations/' . $findividuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">

@@ -47,7 +47,7 @@
                         {{-- <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Type de formation:') !!}(<span class="text-danger">*</span>) --}}
                         {!! Form::hidden('types_formations', $types_formations, null, ['placeholder' => 'types_formations', 'class' => 'form-control', 'id' => 'types_formations', 'data-width' => '100%']) !!}
-                        {!! Form::hidden('code', $findividuelle->code, ['placeholder' => 'types_formations', 'class' => 'form-control', 'id' => 'types_formations', 'data-width' => '100%']) !!}
+                        {!! Form::hidden('code', $findividuelle->formation->code, ['placeholder' => 'types_formations', 'class' => 'form-control', 'id' => 'types_formations', 'data-width' => '100%']) !!}
                         {{-- <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('types_formations'))
                                         @foreach ($errors->get('types_formations') as $message)
@@ -219,6 +219,19 @@
                                 @enderror
                             </div>
                         @endif
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            {!! Form::label('statut:') !!}
+                            {!! Form::select('statut', $statuts, $findividuelle->formation->statut->name ?? '', ['placeholder' => 'statut', 'class' => 'form-control', 'id' => 'statut', 'data-width' => '100%']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('statut'))
+                                    @foreach ($errors->get('statut') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
                     </div>
                     <br />
                     <br />

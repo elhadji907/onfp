@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Evaluateur[] $evaluateurs
  * @property Collection|Fcollective[] $fcollectives
  * @property Collection|Findividuelle[] $findividuelles
+ * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Agrement[] $agrements
  * @property Collection|Niveaux[] $niveauxes
@@ -121,6 +122,11 @@ class Module extends Model
 	public function findividuelles()
 	{
 		return $this->hasMany(Findividuelle::class, 'modules_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'modules_id');
 	}
 
 	public function individuelles()

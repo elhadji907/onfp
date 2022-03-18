@@ -8,6 +8,9 @@ use App\Models\Commune;
 use App\Models\Ingenieur;
 use App\Models\Individuelle;
 use App\Models\Operateur;
+use App\Models\Module;
+use App\Models\Statut;
+use App\Models\Choixoperateur;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FormationFactory extends Factory
@@ -28,10 +31,13 @@ class FormationFactory extends Factory
     {
         $annee = date('y');
     
-        $types_formations_id=TypesFormation::all()->random()->id;
-        $communes_id=Commune::all()->random()->id;
-        $ingenieurs_id=Ingenieur::all()->random()->id;
-        $operateurs_id=Operateur::all()->random()->id;
+        $types_formations_id      =   TypesFormation::all()->random()->id;
+        $communes_id              =   Commune::all()->random()->id;
+        $ingenieurs_id            =   Ingenieur::all()->random()->id;
+        $operateurs_id            =   Operateur::all()->random()->id;
+        $modules_id               =   Module::all()->random()->id;
+        $statuts_id               =   Statut::all()->random()->id;
+        $choixoperateurs_id       =   Choixoperateur::all()->random()->id;
     
         $prevue_h = $this->faker->numberBetween(5, 9);
         $prevue_f = $this->faker->numberBetween(5, 1);
@@ -78,6 +84,18 @@ class FormationFactory extends Factory
 
             'operateurs_id' => function () use ($operateurs_id) {
                 return $operateurs_id;
+            },
+
+            'choixoperateurs_id' => function () use ($choixoperateurs_id) {
+                return $choixoperateurs_id;
+            },
+
+            'modules_id' => function () use ($modules_id) {
+                return $modules_id;
+            },
+
+            'statuts_id' => function () use ($statuts_id) {
+                return $statuts_id;
             },
         ];
         

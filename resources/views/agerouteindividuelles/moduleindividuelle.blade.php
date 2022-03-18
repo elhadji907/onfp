@@ -29,13 +29,13 @@
                             <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:3%;">N°</th>
-                                        <th style="width:10%;">Départements</th>
-                                        <th style="width:10%;">Communes</th>
-                                        <th style="width:18%;">Modules</th>
-                                        <th class="text-center" style="width:5%;">Statut</th>
-                                        <th class="text-center" style="width:8%;">Validation</th>
-                                        <th style="width:9%;"></th>
+                                        <th style="width:5%;">N°</th>
+                                        <th style="width:15%;">Départements</th>
+                                        <th style="width:20%;">Communes</th>
+                                        <th style="width:25%;">Modules</th>
+                                        <th class="text-center" style="width:10%;">Statut</th>
+                                        <th class="text-center" style="width:10%;">Validation</th>
+                                        <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

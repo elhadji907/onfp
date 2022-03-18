@@ -20,13 +20,13 @@ class IndividuelleSeeder extends Seeder
     public function run()
     {
         Individuelle::factory()
-            ->count(40)
+            ->count(100)
             ->create();
 
         $projets = Projet::all();
         Individuelle::all()->each(function ($individuelle) use ($projets) {
             $individuelle->projets()->attach(
-                $projets->random(rand(1, 4))->pluck('id')->toArray()
+                $projets->random(rand(1, 2))->pluck('id')->toArray()
             );
         });
 
@@ -47,14 +47,14 @@ class IndividuelleSeeder extends Seeder
         $modules = Module::all();
         Individuelle::all()->each(function ($individuelle) use ($modules) {
             $individuelle->modules()->attach(
-                $modules->random(rand(1, 1))->pluck('id')->toArray()
+                $modules->random(rand(1, 3))->pluck('id')->toArray()
             );
         });
 
         $formations = Formation::all();
         Individuelle::all()->each(function ($individuelle) use ($formations) {
             $individuelle->formations()->attach(
-                $formations->random(rand(1, 1))->pluck('id')->toArray()
+                $formations->random(rand(1, 3))->pluck('id')->toArray()
             );
         });
     }

@@ -16,6 +16,7 @@ use App\Models\TypesFormation;
 use App\Models\Choixoperateur;
 use App\Models\Formation;
 use App\Models\Individuelle;
+use App\Models\Statut;
 use Illuminate\Http\Request;
 
 class AgerouteformationController extends Controller
@@ -74,51 +75,54 @@ class AgerouteformationController extends Controller
         $this->validate(
             $request,
             [
-                /* 'date_debut'                        =>    'required|date_format:Y-m-d',
-                'date_fin'                          =>    'required|date_format:Y-m-d', */
-                'programme'                         =>    'required',
-                'projet'                            =>    'required',
-                'commune'                           =>    'required',
-                'modules'                           =>    'required',
-                'choixoperateur'                    =>    'required',
-                'adresse'                           =>    'required',
-                'beneficiaire'                      =>    'required',
-                'types_formations'                  =>    'required',
+                /* 'date_debut'          =>    'required|date_format:Y-m-d',
+                'date_fin'            =>    'required|date_format:Y-m-d', */
+                'programme'           =>    'required',
+                'projet'              =>    'required',
+                'commune'             =>    'required',
+                'modules'             =>    'required',
+                'choixoperateur'      =>    'required',
+                'adresse'             =>    'required',
+                'beneficiaire'        =>    'required',
+                'types_formations'    =>    'required',
         ]
         );
 
-        $choixoperateur_id              =       Choixoperateur::where('trimestre', $request->input('choixoperateur'))->first()->id;
-        $types_formations_id            =       TypesFormation::where('name', 'Individuelle')->first()->id;
-        $projet_id                      =       Projet::where('name', $request->input('projet'))->first()->id;
-        $commune_id                     =       Commune::where('nom', $request->input('commune'))->first()->id;
-        $programme_id                   =       Programme::where('name', $request->input('programme'))->first()->id;
-        $operateur_id                   =       Operateur::where('name', $request->input('operateur'))->first()->id;
+        $choixoperateur_id            =       Choixoperateur::where('trimestre', $request->input('choixoperateur'))->first()->id;
+        $types_formations_id          =       TypesFormation::where('name', 'Individuelle')->first()->id;
+        $projet_id                    =       Projet::where('name', $request->input('projet'))->first()->id;
+        $commune_id                   =       Commune::where('nom', $request->input('commune'))->first()->id;
+        $programme_id                 =       Programme::where('name', $request->input('programme'))->first()->id;
+        $operateur_id                 =       Operateur::where('name', $request->input('operateur'))->first()->id;
+        $statuts_id                   =       Statut::where('name', 'Attente')->first()->id;
 
         $nbre = rand(1, 9);
         $annee = date('dmy');
         $code = "FI".$nbre.''.$annee;
 
         $formation = new Formation([
-            'code'                      =>      $code,
-            'date_debut'                =>      $request->input('date_debut'),
-            'date_fin'                  =>      $request->input('date_fin'),
-            'adresse'                   =>      $request->input('adresse'),
-            'beneficiaires'             =>      $request->input('beneficiaire'),
-            'choixoperateurs_id'        =>      $choixoperateur_id,
-            'types_formations_id'       =>      $types_formations_id,
-            'operateurs_id'             =>      $operateur_id,
-            'communes_id'               =>      $commune_id,
+            'code'                     =>      $code,
+            'date_debut'               =>      $request->input('date_debut'),
+            'date_fin'                 =>      $request->input('date_fin'),
+            'adresse'                  =>      $request->input('adresse'),
+            'beneficiaires'            =>      $request->input('beneficiaire'),
+            'modules_id'               =>      $request->input('modules'),
+            'statuts_id'               =>      $statuts_id,
+            'choixoperateurs_id'       =>      $choixoperateur_id,
+            'types_formations_id'      =>      $types_formations_id,
+            'operateurs_id'            =>      $operateur_id,
+            'communes_id'              =>      $commune_id,
 
         ]);
 
         $formation->save();
         
         $findividuelle = new Findividuelle([
-            'code'                  =>      $code,
-            'modules_id'            =>      $request->input('modules'),
-            'projets_id'            =>      $projet_id,
-            'programmes_id'         =>      $programme_id,
-            'formations_id'         =>      $formation->id,
+            'code'                     =>      $code,
+            'modules_id'               =>      $request->input('modules'),
+            'projets_id'               =>      $projet_id,
+            'programmes_id'            =>      $programme_id,
+            'formations_id'            =>      $formation->id,
 
         ]);
 
@@ -162,8 +166,9 @@ class AgerouteformationController extends Controller
         $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
         $operateurs = Operateur::distinct('name')->get()->pluck('name', 'name')->unique();
+        $statuts = Statut::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        return view('agerouteformations.update', compact('civilites', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.update', compact('civilites', 'statuts', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -178,14 +183,14 @@ class AgerouteformationController extends Controller
         $this->validate(
             $request,
             [
-                'programme'                         =>    'required',
-                'projet'                            =>    'required',
-                'commune'                           =>    'required',
-                'modules'                           =>    'required',
-                'choixoperateur'                    =>    'required',
-                'adresse'                           =>    'required',
-                'beneficiaire'                      =>    'required',
-                'types_formations'                  =>    'required',
+                'programme'           =>    'required',
+                'projet'              =>    'required',
+                'commune'             =>    'required',
+                'modules'             =>    'required',
+                'choixoperateur'      =>    'required',
+                'adresse'             =>    'required',
+                'beneficiaire'        =>    'required',
+                'types_formations'    =>    'required',
         ]
         );
         
@@ -199,24 +204,27 @@ class AgerouteformationController extends Controller
         $programme_id                   =       Programme::where('name', $request->input('programme'))->first()->id;
         $module_id                      =       Module::where('name', $request->input('modules'))->first()->id;
         $operateurs_id                  =       Operateur::where('name', $request->input('operateur'))->first()->id;
+        $statuts_id                     =       Statut::where('name', $request->input('statut'))->first()->id;
         
-        $formation->code                      =      $request->input('code');
-        $formation->date_debut                =      $request->input('date_debut');
-        $formation->date_fin                  =      $request->input('date_fin');
-        $formation->adresse                   =      $request->input('adresse');
-        $formation->beneficiaires             =      $request->input('beneficiaire');
-        $formation->choixoperateurs_id        =      $choixoperateur_id;
-        $formation->types_formations_id       =      $types_formations_id;
-        $formation->operateurs_id             =      $operateurs_id;
-        $formation->communes_id               =      $commune_id;
+        $formation->code                =      $request->input('code');
+        $formation->date_debut          =      $request->input('date_debut');
+        $formation->date_fin            =      $request->input('date_fin');
+        $formation->adresse             =      $request->input('adresse');
+        $formation->beneficiaires       =      $request->input('beneficiaire');
+        $formation->modules_id          =      $module_id;
+        $formation->statuts_id          =      $statuts_id;
+        $formation->choixoperateurs_id  =      $choixoperateur_id;
+        $formation->types_formations_id =      $types_formations_id;
+        $formation->operateurs_id       =      $operateurs_id;
+        $formation->communes_id         =      $commune_id;
 
         $formation->save();
         
-        $findividuelle->code                  =      $request->input('code');
-        $findividuelle->modules_id            =      $module_id;
-        $findividuelle->projets_id            =      $projet_id;
-        $findividuelle->programmes_id         =      $programme_id;
-        $findividuelle->formations_id         =      $formation->id;
+        $findividuelle->code            =      $request->input('code');
+        $findividuelle->modules_id      =      $module_id;
+        $findividuelle->projets_id      =      $projet_id;
+        $findividuelle->programmes_id   =      $programme_id;
+        $findividuelle->formations_id   =      $formation->id;
 
         $findividuelle->save();
         
@@ -255,9 +263,10 @@ class AgerouteformationController extends Controller
         return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle'));
     }
 
-    public function individuelleformations($findividuelle, $formation)
+    public function individuelleformations($individuelle)
     {
-        return view('agerouteformations.individuelleformations');
+        $individuelle = Individuelle::find($individuelle);
+        return view('agerouteformations.individuelleformations', compact('individuelle'));
     }
 
     public function formationcandidatsadd($individuelle, $findividuelle)
@@ -273,5 +282,16 @@ class AgerouteformationController extends Controller
         
         $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
         return back()->with(compact('message'));
+    }
+
+    public function codeformations($formation)
+    {
+        $formation = Formation::find($formation);
+        $findividuelles = $formation->findividuelles;
+
+        foreach ($findividuelles as $key => $findividuelle) {
+        }
+        
+        return view('agerouteformations.codeformations', compact('formation', 'findividuelle'));
     }
 }

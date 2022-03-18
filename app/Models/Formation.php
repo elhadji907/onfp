@@ -52,6 +52,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $antennes_id
  * @property int|null $projets_id
  * @property int|null $choixoperateurs_id
+ * @property int|null $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -64,6 +65,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Courrier|null $courrier
  * @property Detf|null $detf
  * @property Ingenieur|null $ingenieur
+ * @property Module|null $module
  * @property Niveaux|null $niveaux
  * @property Operateur|null $operateur
  * @property Programme|null $programme
@@ -113,7 +115,8 @@ class Formation extends Model
 		'communes_id' => 'int',
 		'antennes_id' => 'int',
 		'projets_id' => 'int',
-		'choixoperateurs_id' => 'int'
+		'choixoperateurs_id' => 'int',
+		'modules_id' => 'int'
 	];
 
 	protected $dates = [
@@ -158,7 +161,8 @@ class Formation extends Model
 		'communes_id',
 		'antennes_id',
 		'projets_id',
-		'choixoperateurs_id'
+		'choixoperateurs_id',
+		'modules_id'
 	];
 
 	public function agent()
@@ -199,6 +203,11 @@ class Formation extends Model
 	public function ingenieur()
 	{
 		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
+	}
+
+	public function module()
+	{
+		return $this->belongsTo(Module::class, 'modules_id');
 	}
 
 	public function niveaux()

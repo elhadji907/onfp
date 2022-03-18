@@ -72,7 +72,7 @@
                                                             @foreach ($individuelle->formations as $key => $formation)
                                                                 @if ($loop->last)
                                                                     <a class="nav-link badge badge-info"
-                                                                        href="{{ url('individuelleformations', ['$individuelle' => $individuelle->id, '$formation' => $formation->id]) }}"
+                                                                        href="{{ url('individuelleformations', ['$individuelle' => $individuelle->id]) }}"
                                                                         target="_blank">{!! $loop->count !!}</a>
                                                                 @endif
                                                             @endforeach

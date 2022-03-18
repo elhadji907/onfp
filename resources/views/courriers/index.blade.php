@@ -122,8 +122,7 @@
                                                 {{-- <td>{!! $i++ !!}</td> --}}
                                                 <td>
                                                     <a style="color: darkorange; text-decoration: none;"
-                                                        href="{!! url('courriers/' . $courrier->id) !!}" class="view" title="voir"
-                                                        target="_blank">
+                                                        href="{!! url('courriers/' . $courrier->id) !!}" class="view" title="voir" target="_blank">
                                                         <b>{!! $courrier->numero !!}</b>
                                                     </a>
                                                 </td>
