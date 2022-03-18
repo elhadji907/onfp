@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - Demandeurs du département de ' . $localite)
+@section('title', 'AGEROUTE - demandeurs du département de ' . $localite)
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -10,7 +10,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ __('TOTAL') }}</div>
+                                        {{ __('FEMMES') }}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                       
                                     </div>
@@ -32,7 +32,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        {{ __('INVALIDES') }}
+                                        {{ __('HANDICAPÉS') }}
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                       
@@ -55,7 +55,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        {{ __('VALIDES') }}</div>
+                                        {{ __('DÉPLACÉS DE GUERRE') }}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                       
                                     </div>
@@ -77,7 +77,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        {{ __('RETENUS') }}</div>
+                                        {{ __('EMMIGRATION') }}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     
                                     </div>
@@ -123,14 +123,15 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:10%;">N° CIN</th>
-                                            <th style="width:5%;">Civilité</th>
+                                            <th style="width:5%;">Sexe</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
-                                            <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
-                                            <th style="width:24%;">Module</th>
+                                            <th style="width:20%;">Module</th>
+                                            <th style="width:5%;">Handicap</th>
+                                            <th style="width:5%;">Déplacés</th>
                                             <th style="width:9%;"></th>
                                         </tr>
                                     </thead>
@@ -142,12 +143,11 @@
                                                     @if (isset($localite->nom) && $localite->nom == 'Bounkiling')
                                                         <tr>
                                                             <td>{!! $individuelle->cin !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->sexe !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                             <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                             <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                             <td>
                                                                 @foreach ($individuelle->zones as $key => $zone)
                                                                     {!! $zone->nom ?? '' !!}
@@ -166,6 +166,8 @@
                                                                     @endif
                                                                 @endforeach
                                                             </td>
+                                                            <td>{!! $individuelle->handicap !!}</td>
+                                                            <td>{!! $individuelle->victime_social !!}</td>
                                                             <td class="d-flex align-items-baseline">
                                                                 <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
                                                                     class='btn btn-success btn-sm' title="modifier">
@@ -194,12 +196,11 @@
                                                     @if (isset($localite->nom) && $localite->nom == 'Ziguinchor')
                                                         <tr>
                                                             <td>{!! $individuelle->cin !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->sexe !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                             <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                             <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                             <td>
                                                                 @foreach ($individuelle->zones as $key => $zone)
                                                                     {!! $zone->nom ?? '' !!}
@@ -218,6 +219,8 @@
                                                                     @endif
                                                                 @endforeach
                                                             </td>
+                                                            <td>{!! $individuelle->handicap !!}</td>
+                                                            <td>{!! $individuelle->victime_social !!}</td>
                                                             <td class="d-flex align-items-baseline">
                                                                 <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
                                                                     class='btn btn-success btn-sm' title="modifier">
@@ -246,12 +249,11 @@
                                                     @if (isset($localite->nom) && $localite->nom == 'Bignona')
                                                         <tr>
                                                             <td>{!! $individuelle->cin !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                                            <td>{!! $individuelle->demandeur->user->sexe !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                             <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                             <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                             <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                             <td>
                                                                 @foreach ($individuelle->zones as $key => $zone)
                                                                     {!! $zone->nom ?? '' !!}
@@ -270,6 +272,8 @@
                                                                     @endif
                                                                 @endforeach
                                                             </td>
+                                                            <td>{!! $individuelle->handicap !!}</td>
+                                                            <td>{!! $individuelle->victime_social !!}</td>
                                                             <td class="d-flex align-items-baseline">
                                                                 <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
                                                                     class='btn btn-success btn-sm' title="modifier">

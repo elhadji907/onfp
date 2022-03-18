@@ -37,7 +37,7 @@
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:13%;">Communes</th>
                                             <th style="width:5%;">Formations</th>
-                                            <th style="width:9%;"></th>
+                                            <th style="width:1%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,11 +81,6 @@
                                                             <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
                                                                 title="ajouter" class="btn btn-outline-primary btn-sm mt-0">
                                                                 <i class="fas fa-check"></i>
-                                                            </a>
-                                                            &nbsp;
-                                                            <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
-                                                                title="retirer" class="btn btn-outline-danger btn-sm mt-0">
-                                                                <i class="fas fa-exclamation-triangle"></i>
                                                             </a>
                                                         </td>
                                                     </tr>

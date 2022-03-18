@@ -121,7 +121,8 @@
                             </tr>
                             <tr class="details">
                                 <td class="pt-3">{!! $findividuelle->code ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->formation->choixoperateur->trimestre ?? '' }}</td>
+                                <td class="pt-3">
+                                    {{ $findividuelle->formation->choixoperateur->trimestre ?? '' }}</td>
                             </tr>
                             <tr class="heading">
                                 <td class="pt-3">Module</td>
@@ -148,24 +149,24 @@
                                 <td class="pt-3">{{ $findividuelle->formation->adresse ?? '' }}</td>
                             </tr>
                             @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
-                            <tr class="heading">
-                                <td class="pt-3">Projet</td>
-                                <td class="pt-3">Sigle</td>
-                            </tr>
-                            <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->projet->name ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->projet->sigle ?? '' }}</td>
-                            </tr>
+                                <tr class="heading">
+                                    <td class="pt-3">Projet</td>
+                                    <td class="pt-3">Sigle</td>
+                                </tr>
+                                <tr class="details">
+                                    <td class="pt-3">{!! $findividuelle->projet->name ?? '' !!}</td>
+                                    <td class="pt-3">{{ $findividuelle->projet->sigle ?? '' }}</td>
+                                </tr>
                             @endif
                             @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
-                            <tr class="heading">
-                                <td class="pt-3">Programme</td>
-                                <td class="pt-3">Sigle</td>
-                            </tr>
-                            <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->programme->name ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}</td>
-                            </tr>
+                                <tr class="heading">
+                                    <td class="pt-3">Programme</td>
+                                    <td class="pt-3">Sigle</td>
+                                </tr>
+                                <tr class="details">
+                                    <td class="pt-3">{!! $findividuelle->programme->name ?? '' !!}</td>
+                                    <td class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}</td>
+                                </tr>
                             @endif
                         </table>
                     </tr>
@@ -194,6 +195,7 @@
                                 <th width="12%">Lieu naissance</th>
                                 <th width="10%">Email</th>
                                 <th width="10%">Téléphone</th>
+                                <th width="1%"></th>
                             </tr>
                         </thead>
                         <tbody class="details">
@@ -209,6 +211,12 @@
                                     <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
                                     <td>{{ $individuelle->demandeur->user->email }}</td>
                                     <td>{{ $individuelle->demandeur->user->telephone }}</td>
+                                    <td>
+                                        <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
+                                            title="retirer" class="btn btn-outline-warning btn-sm mt-0">
+                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

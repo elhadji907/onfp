@@ -60,9 +60,21 @@ class SnNameGenerator
     );
 
     public static $typesstructure = array(
-
         "Publique",
         "Privée",
+    );
+
+    public static $handicap = array(
+        "Oui",
+        "Non",
+    );
+
+    public static $victime_social = array(
+        "Emigration irrégulière",
+        "Déplacé ou démobilisé par le conflit",
+        "Emprisonnement",
+        "Aucun",
+        "Autre",
     );
 
     public static $statut = array(
@@ -1557,6 +1569,22 @@ class SnNameGenerator
         $dimension=count(self::$typesstructure);
         $random_index=random_int(0, (int)$dimension-1);
         return self::$typesstructure[$random_index];
+
+    }
+
+    static function getHandicap()
+    {
+        $dimension=count(self::$handicap);
+        $random_index=random_int(0, (int)$dimension-1);
+        return self::$handicap[$random_index];
+
+    }
+
+    static function getVictime_social()
+    {
+        $dimension=count(self::$victime_social);
+        $random_index=random_int(0, (int)$dimension-1);
+        return self::$victime_social[$random_index];
 
     }
 

@@ -29,7 +29,7 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:10%;">N° CIN</th>
+                                            <th style="width:8%;">N° CIN</th>
                                             <th style="width:5%;">Civilité</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
@@ -37,8 +37,9 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
-                                            <th style="width:24%;">Module</th>
-                                            <th style="width:9%;"></th>
+                                            {{--  <th style="width:24%;">Module</th>  --}}
+                                            <th style="width:15%;">Adresse</th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -60,7 +61,8 @@
                                                                     {!! $zone->nom ?? '' !!}
                                                                 @endforeach
                                                             </td>
-                                                            <td>
+                                                            <td>{!! $individuelle->demandeur->user->adresse !!}</td>
+                                                            {{--  <td>
                                                                 <?php $h = 1; ?>
                                                                 @foreach ($individuelle->modules as $key => $module)
                                                                     @if (isset($module->name))
@@ -72,7 +74,7 @@
                                                                     @else
                                                                     @endif
                                                                 @endforeach
-                                                            </td>
+                                                            </td>  --}}
                                                             <td class="d-flex align-items-baseline">
                                                                 <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
                                                                     class='btn btn-success btn-sm' title="modifier">
@@ -112,7 +114,8 @@
                                                                     {!! $zone->nom ?? '' !!}
                                                                 @endforeach
                                                             </td>
-                                                            <td>
+                                                            <td>{!! $individuelle->demandeur->user->adresse !!}</td>
+                                                           {{--   <td>
                                                                 <?php $h = 1; ?>
                                                                 @foreach ($individuelle->modules as $key => $module)
                                                                     @if (isset($module->name))
@@ -124,7 +127,7 @@
                                                                     @else
                                                                     @endif
                                                                 @endforeach
-                                                            </td>
+                                                            </td>  --}}
                                                             <td class="d-flex align-items-baseline">
                                                                 <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
                                                                     class='btn btn-success btn-sm' title="modifier">
@@ -164,7 +167,8 @@
                                                                     {!! $zone->nom ?? '' !!}
                                                                 @endforeach
                                                             </td>
-                                                            <td>
+                                                            <td>{!! $individuelle->demandeur->user->adresse !!}</td>
+                                                           {{--   <td>
                                                                 <?php $h = 1; ?>
                                                                 @foreach ($individuelle->modules as $key => $module)
                                                                     @if (isset($module->name))
@@ -176,7 +180,7 @@
                                                                     @else
                                                                     @endif
                                                                 @endforeach
-                                                            </td>
+                                                            </td>  --}}
                                                             <td class="d-flex align-items-baseline">
                                                                 <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
                                                                     class='btn btn-success btn-sm' title="modifier">

@@ -10,6 +10,7 @@ use App\Models\Programme;
 use App\Models\Diplome;
 use App\Models\Findividuelle;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Helpers\SnNameGenerator as SnmG;
 
 class IndividuelleFactory extends Factory
 {
@@ -69,6 +70,8 @@ class IndividuelleFactory extends Factory
             'fixe' => $this->faker->phoneNumber,
             'motivation' => $this->faker->text,
             'optiondiplome' => $this->faker->word,
+            'handicap' => SnmG::getHandicap(),
+            'victime_social' => SnmG::getVictime_social(),
             'type' => $this->faker->randomElement($array = array('Nouvelle demande','Renouvellement')),
 
             'communes_id' => function () use ($communes_id) {
