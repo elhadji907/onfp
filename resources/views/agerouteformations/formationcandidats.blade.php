@@ -80,7 +80,7 @@
                                                         <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                             <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
                                                                 title="ajouter" class="btn btn-outline-primary btn-sm mt-0">
-                                                                <i class="fas fa-check"></i>
+                                                                <i class="fa fa-reply" aria-hidden="true"></i>
                                                             </a>
                                                         </td>
                                                     </tr>

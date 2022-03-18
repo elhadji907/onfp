@@ -65,19 +65,19 @@
                                                         @if (isset($n) && $n == '1' && $individuelle->module1 != null)
                                                             <label class="badge badge-info">{!! $individuelle->statut1 ?? '' !!} </label>
                                                         @elseif (isset($n) && $n == '1' && $individuelle->module1 == null)
-                                                            <label>{!! __('Attente') !!} </label>
+                                                            {{ $individuelle->statut ?? '' }}
                                                         @endif
                                                         @if (isset($n) && $n == '2' && $individuelle->module2 != null)
                                                             <label class="badge badge-info">{!! $individuelle->statut2 ?? '' !!} </label>
                                                         @elseif (isset($n) && $n == '2' && $individuelle->module2 == null)
-                                                            <label>{!! __('Attente') !!} </label>
+                                                            {{ $individuelle->statut ?? '' }}
                                                         @endif
                                                         @if (isset($n) && $n == '3' && $individuelle->module3 != null)
                                                             <label class="badge badge-info">{!! $individuelle->statut3 ?? '' !!} </label>
                                                         @elseif (isset($n) && $n == '3' && $individuelle->module3 == null)
-                                                            <label>{!! __('Attente') !!} </label>
+                                                            {{ $individuelle->statut ?? '' }}
                                                         @elseif(isset($n) && $n == '1' && $n == '2' && $n == '3')
-                                                            <label>{!! __('Attente') !!} </label>
+                                                            {{ $individuelle->statut ?? '' }}
                                                         @endif
                                                     </td>
                                                     <td ALIGN="CENTER">

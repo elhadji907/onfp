@@ -196,6 +196,7 @@ Route::group([
 
         Route::get('formationcandidats/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'formationcandidats'])->name('formationcandidats');
         Route::get('formationcandidatsadd/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'formationcandidatsadd'])->name('formationcandidatsadd');
+        Route::get('formationcandidatsdelete/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'formationcandidatsdelete'])->name('formationcandidatsdelete');
         Route::get('individuelleformations/{individuelle}', [AgerouteformationController::class, 'individuelleformations'])->name('individuelleformations');
         Route::get('codeformations/{formation}', [AgerouteformationController::class, 'codeformations'])->name('codeformations');
 

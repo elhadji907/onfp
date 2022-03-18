@@ -212,7 +212,7 @@
                                     <td>{{ $individuelle->demandeur->user->email }}</td>
                                     <td>{{ $individuelle->demandeur->user->telephone }}</td>
                                     <td>
-                                        <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
+                                        <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
                                             title="retirer" class="btn btn-outline-warning btn-sm mt-0">
                                             <i class="fa fa-share" aria-hidden="true"></i>
                                         </a>

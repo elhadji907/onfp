@@ -284,6 +284,22 @@ class AgerouteformationController extends Controller
         return back()->with(compact('message'));
     }
 
+    public function formationcandidatsdelete($individuelle, $findividuelle)
+    {
+        $individuelle = Individuelle::find($individuelle);
+        $findividuelle = Findividuelle::find($findividuelle);
+        $formation = $findividuelle->formation;
+        
+        $individuelle->statut    =     "Retirer";
+
+        $individuelle->save();
+
+        $individuelle->formations()->detach($formation);
+        
+        $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
+        return back()->with(compact('message'));
+    }
+
     public function codeformations($formation)
     {
         $formation = Formation::find($formation);
