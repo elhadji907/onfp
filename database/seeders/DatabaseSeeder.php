@@ -72,12 +72,12 @@ class DatabaseSeeder extends Seeder
             FiliereSeeder::class,
             TypepchargeSeeder::class,
             PchargeSeeder::class,
+            ChoixoperateurSeeder::class,
             FilierespecialiteSeeder::class,
             FindividuelleSeeder::class,
             FcollectiveSeeder::class,
             IndividuelleSeeder::class,
             CollectiveSeeder::class,
-            ChoixoperateurSeeder::class,
         ]);
     }
 }
