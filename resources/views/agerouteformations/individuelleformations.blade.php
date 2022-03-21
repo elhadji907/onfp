@@ -1,6 +1,6 @@
 @extends('layout.default')
-@section('title', 'ONFP - Liste des formations de ' . $individuelle->demandeur->user->civilite . ' ' .
-    $individuelle->demandeur->user->firstname . ' ' . $individuelle->demandeur->user->name)
+@section('title', 'ONFP - Liste des formations de ' . $individuelles->demandeur->user->civilite . ' ' .
+    $individuelles->demandeur->user->firstname . ' ' . $individuelles->demandeur->user->name)
 @section('content')
     <div class="container-fluid">
         @if (session()->has('success'))
@@ -18,7 +18,7 @@
                     <div class="card-header">
                         <i class="fas fa-table"></i>
                         Liste des formations du candidat :
-                        {{ $individuelle->demandeur->user->firstname }}&nbsp;{{ $individuelle->demandeur->user->name }}
+                        {{ $individuelles->demandeur->user->firstname }}&nbsp;{{ $individuelles->demandeur->user->name }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -36,7 +36,7 @@
                                 </thead>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($individuelle->formations as $formation)
+                                    @foreach ($individuelles->formations as $formation)
                                         <tr>
                                             <td>{!! $i++ !!}</td>
                                             <td>

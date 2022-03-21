@@ -30,9 +30,9 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:5%;">N°</th>
+                                        <th style="width:25%;">Modules</th>
                                         <th style="width:15%;">Départements</th>
                                         <th style="width:20%;">Communes</th>
-                                        <th style="width:25%;">Modules</th>
                                         <th class="text-center" style="width:10%;">Statut</th>
                                         <th class="text-center" style="width:10%;">Validation</th>
                                         <th style="width:8%;"></th>
@@ -49,6 +49,9 @@
                                                         {!! $i++ ?? '' !!}
                                                     </td>
                                                     <td>
+                                                        {!! $module->name ?? '' !!}
+                                                    </td>
+                                                    <td>
                                                         @foreach ($individuelle->localites as $key => $localite)
                                                             {!! $localite->nom ?? '' !!}
                                                         @endforeach
@@ -58,10 +61,10 @@
                                                             {!! $zone->nom ?? '' !!}
                                                         @endforeach
                                                     </td>
-                                                    <td>
-                                                        {!! $module->name ?? '' !!}
-                                                    </td>
                                                     <td ALIGN="CENTER">
+                                                     {{--     @foreach ($individuelle->formations as $key => $formation)
+                                                        {!! $formation->statut->name ?? '' !!}
+                                                        @endforeach  --}}
                                                         @if (isset($n) && $n == '1' && $individuelle->module1 != null)
                                                             <label class="badge badge-info">{!! $individuelle->statut1 ?? '' !!} </label>
                                                         @elseif (isset($n) && $n == '1' && $individuelle->module1 == null)

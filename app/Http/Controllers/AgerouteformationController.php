@@ -141,9 +141,8 @@ class AgerouteformationController extends Controller
     {
         $findividuelle = Findividuelle::find($id);
         $formation = $findividuelle->formation;
-        $individuelles = $formation->individuelles;
         
-        return view('agerouteformations.show', compact('formation', 'findividuelle', 'individuelles'));
+        return view('agerouteformations.show', compact('formation', 'findividuelle'));
 
     }
 
@@ -265,8 +264,9 @@ class AgerouteformationController extends Controller
 
     public function individuelleformations($individuelle)
     {
-        $individuelle = Individuelle::find($individuelle);
-        return view('agerouteformations.individuelleformations', compact('individuelle'));
+        $individuelles = Individuelle::find($individuelle);
+
+        return view('agerouteformations.individuelleformations', compact('individuelles'));
     }
 
     public function formationcandidatsadd($individuelle, $findividuelle)
@@ -278,7 +278,7 @@ class AgerouteformationController extends Controller
         $individuelle->statut    =     "Retenue";
 
         $individuelle->save();
-        $individuelle->formations()->sync($formation);
+        $individuelle->formations()->attach($formation);
         
         $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
         return back()->with(compact('message'));
@@ -303,11 +303,11 @@ class AgerouteformationController extends Controller
     public function codeformations($formation)
     {
         $formation = Formation::find($formation);
-        $findividuelles = $formation->findividuelles;
+      /*   $findividuelles = $formation->findividuelles;
 
         foreach ($findividuelles as $key => $findividuelle) {
-        }
+        } */
         
-        return view('agerouteformations.codeformations', compact('formation', 'findividuelle'));
+        return view('agerouteformations.codeformations', compact('formation'));
     }
 }

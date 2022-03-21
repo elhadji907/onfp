@@ -72,8 +72,8 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                            <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
-                                            <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td>
+                                            <td></td>
+                                            <td></td>
                                             <td>{!! $findividuelle->formation->ingenieur->name ?? ' ' !!}</td>
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('findividuelles/' . $findividuelle->formation->id . '/edit') !!}" class='btn btn-success btn-sm'

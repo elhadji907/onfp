@@ -2,7 +2,7 @@
 @section('title', 'AGEROUTE - demandeurs du département de ' . $localite)
 @section('content')
     <div class="container-fluid">
-        <div class="row">
+       {{--   <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-80 py-2">
                     <a class="nav-link" href="#">
@@ -90,7 +90,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div>  --}}
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if (session()->has('success'))

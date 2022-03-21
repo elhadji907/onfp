@@ -198,7 +198,7 @@
                 <tbody>
                     <tr>
                         <td colspan="1">
-                            <b>{{ __('Souffrez- vous d’un handicap quelconque ? : ') }}</b>{{ $individuelle->handicap ?? '' }}
+                            <b>{{ __("Souffrez- vous d'un handicap quelconque ? : ") }}</b>{{ $individuelle->handicap ?? '' }}
                         </td>
                         @if (isset($individuelle->handicap) && $individuelle->handicap == 'Oui')
                             <td colspan="3">

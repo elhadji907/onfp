@@ -109,7 +109,7 @@
         <div class="card card border-success">
             <div class="card-header  text-center bg-gradient-default border-success">
                 <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><span
-                        class="font-italic">Formation individuelle</span></h1>
+                        class="font-italic">Formation</span></h1>
             </div>
             <div class="card-body">
                 <table method="POST" cellpadding="0" cellspacing="0">
@@ -120,51 +120,51 @@
                                 <td class="pt-3">Commission</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->code ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->formation->choixoperateur->trimestre ?? '' }}</td>
+                                <td class="pt-3">{!! $formation->code ?? '' !!}</td>
+                                <td class="pt-3">{{ $formation->choixoperateur->trimestre ?? '' }}</td>
                             </tr>
                             <tr class="heading">
                                 <td class="pt-3">Module</td>
                                 <td class="pt-3">Bénéficiaires</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->module->name ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->formation->beneficiaires ?? '' }}</td>
+                                <td class="pt-3">{!! $formation->module->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $formation->beneficiaires ?? '' }}</td>
                             </tr>
                             <tr class="heading">
                                 <td class="pt-3">Opérateur</td>
                                 <td class="pt-3">Sigle</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->formation->beneficiaires ?? '' }}</td>
+                                <td class="pt-3">{!! $formation->operateur->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $formation->beneficiaires ?? '' }}</td>
                             </tr>
                             <tr class="heading">
                                 <td class="pt-3">Commune</td>
                                 <td class="pt-3">Adresse</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->formation->commune->nom ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->formation->adresse ?? '' }}</td>
+                                <td class="pt-3">{!! $formation->commune->nom ?? '' !!}</td>
+                                <td class="pt-3">{{ $formation->adresse ?? '' }}</td>
                             </tr>
-                            @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
+                            @if (isset($formation->projet->name) && $formation->projet->name != 'Aucun')
                             <tr class="heading">
                                 <td class="pt-3">Projet</td>
                                 <td class="pt-3">Sigle</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->projet->name ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->projet->sigle ?? '' }}</td>
+                                <td class="pt-3">{!! $formation->projet->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $formation->projet->sigle ?? '' }}</td>
                             </tr>
                             @endif
-                            @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
+                            @if (isset($formation->programme->name) && $formation->programme->name != 'Aucun')
                             <tr class="heading">
                                 <td class="pt-3">Programme</td>
                                 <td class="pt-3">Sigle</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->programme->name ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}</td>
+                                <td class="pt-3">{!! $formation->programme->name ?? '' !!}</td>
+                                <td class="pt-3">{{ $formation->programme->sigle ?? '' }}</td>
                             </tr>
                             @endif
                         </table>
@@ -175,14 +175,14 @@
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <div align="right" class="pb-3">
-                            <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+                      {{--    <div align="right" class="pb-3">
+                            <a href="{{ url('formationcandidats', ['$module' => $formation->module->id,'$projet' => $formation->projet->id,'$programme' => $formation->programme->id,'$formation' => $formation->id]) }}"
                                 target="_blank">
                                 <div class="btn btn-outline-success  btn-md" title="ajouter">
                                     <i class="fas fa-plus"></i></i>
                                 </div>
                             </a>
-                        </div>
+                        </div>  --}}
                         <thead class="heading">
                             <tr>
                                 <th width="2%">N°</th>

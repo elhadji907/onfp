@@ -73,13 +73,13 @@
                                                                 @if ($loop->last)
                                                                     <a class="nav-link badge badge-info"
                                                                         href="{{ url('individuelleformations', ['$individuelle' => $individuelle->id]) }}"
-                                                                        target="_blank">{!! $loop->count !!}</a>
+                                                                        target="_blank" title="voir formations">{!! $loop->count !!}</a>
                                                                 @endif
                                                             @endforeach
                                                         </td>
                                                         <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                             <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
-                                                                title="ajouter" class="btn btn-outline-primary btn-sm mt-0">
+                                                                title="ajouter à la liste" class="btn btn-outline-primary btn-sm mt-0">
                                                                 <i class="fa fa-reply" aria-hidden="true"></i>
                                                             </a>
                                                         </td>

@@ -80,7 +80,7 @@
                                                 </a>
                                                 &nbsp;
                                                 <a href="{!! url('agerouteformations/' . $findividuelle->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir" target="__blank">
+                                                    title="ouvrir formation" target="__blank">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 &nbsp;

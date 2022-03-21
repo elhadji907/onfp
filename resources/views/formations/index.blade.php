@@ -129,11 +129,11 @@
                                     <?php $i = 1; ?>
                                     @foreach ($formations as $formation)
                                         <tr>
-                                            <td>{!! $formation->code !!}</td>
-                                            <td>{!! $formation->beneficiaires !!}</td>
+                                            <td>{!! $formation->code ?? '' !!}</td>
+                                            <td>{!! $formation->beneficiaires ?? '' !!}</td>
                                             <td>{!! $formation->commune->nom ?? ' ' !!}</td>
                                             <td>{!! $formation->adresse ?? ' ' !!}</td>
-                                            <td>{!! $formation->date_debut->format('d/m/Y') !!}&nbsp;au&nbsp;{!! $formation->date_fin->format('d/m/Y') !!}</td>
+                                            <td></td>
                                             <td>{!! $formation->types_formation->name !!}</td>
                                             {{-- <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('formations/' . $formation->id . '/edit') !!}" class='btn btn-success btn-sm'

@@ -179,7 +179,7 @@
                         <div align="right" class="pb-3">
                             <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
                                 target="_blank">
-                                <div class="btn btn-outline-success  btn-md" title="ajouter">
+                                <div class="btn btn-outline-success  btn-md" title="ajouter candidat">
                                     <i class="fas fa-plus"></i></i>
                                 </div>
                             </a>
@@ -200,7 +200,7 @@
                         </thead>
                         <tbody class="details">
                             <?php $i = 1; ?>
-                            @foreach ($individuelles as $individuelle)
+                            @foreach ($formation->individuelles as $individuelle)
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $individuelle->cin }}</td>
