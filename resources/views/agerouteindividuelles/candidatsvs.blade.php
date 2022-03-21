@@ -1,96 +1,7 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - demandeurs du département de ' . $localite_concernee)
+@section('title', 'AGEROUTE')
 @section('content')
     <div class="container-fluid">
-        {{-- <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-80 py-2">
-                    <a class="nav-link" href="#">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ __('FEMMES') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                      
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="#"
-                        target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        {{ __('HANDICAPÉS') }}
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                      
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="#"
-                        target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        {{ __('DÉPLACÉS DE GUERRE') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                      
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="#"
-                        target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        {{ __('EMMIGRATION') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div> --}}
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if (session()->has('success'))
@@ -108,7 +19,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }}
+                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }} victimes de : {!! $victimes !!}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -130,8 +41,6 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:8%;">Communes</th>
                                             <th style="width:20%;">Module</th>
-                                            <th style="width:5%;">P.M.R</th>
-                                            <th style="width:10%;">Déplacés</th>
                                             <th style="width:9%;"></th>
                                         </tr>
                                     </thead>
@@ -139,7 +48,7 @@
                                         <?php $i = 1; ?>
                                         @foreach ($projet->individuelles as $key => $individuelle)
                                             @foreach ($individuelle->localites as $key => $localite)
-                                                @if (isset($localite->nom) && $localite->nom == $localite_concernee)
+                                                @if (isset($localite->nom) && $localite->nom == $localite_concernee && $individuelle->victime_social == $victimes)
                                                     <tr>
                                                         <td>{!! $individuelle->cin !!}</td>
                                                         <td>{!! $individuelle->demandeur->user->sexe !!}</td>
@@ -164,18 +73,6 @@
                                                                 @else
                                                                 @endif
                                                             @endforeach
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ url('candidatspmr', ['$localite' => $localite->id, '$projet' => $projet->id, '$handicap' => $individuelle->handicap]) }}"
-                                                                title="voir liste" class="nav-link mt-0" target="_blank">
-                                                                {!! $individuelle->handicap !!}
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ url('candidatsvs', ['$localite' => $localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
-                                                                title="voir liste" class="nav-link mt-0" target="_blank">
-                                                                {!! $individuelle->victime_social !!}
-                                                            </a>
                                                         </td>
                                                         <td class="d-flex align-items-baseline">
                                                             <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"

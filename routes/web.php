@@ -199,6 +199,8 @@ Route::group([
         Route::get('formationcandidatsdelete/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'formationcandidatsdelete'])->name('formationcandidatsdelete');
         Route::get('individuelleformations/{individuelle}', [AgerouteformationController::class, 'individuelleformations'])->name('individuelleformations');
         Route::get('codeformations/{formation}', [AgerouteformationController::class, 'codeformations'])->name('codeformations');
+        Route::get('candidatspmr/{localite}/{projet}/{handicap}', [AgerouteindividuelleController::class, 'candidatspmr'])->name('candidatspmr');
+        Route::get('candidatsvs/{localite}/{projet}/{victimes}', [AgerouteindividuelleController::class, 'candidatsvs'])->name('candidatsvs');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 

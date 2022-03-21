@@ -140,8 +140,8 @@ class AgeroutelocaliteController extends Controller
     public function listerparlocalite($projet, $localite)
     {
         $projet = Projet::find($projet);
-        
-        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
+        $localite_concernee = $localite;
+        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite_concernee'));
     }
 
     public function candidatlocalite($projet, $localite)

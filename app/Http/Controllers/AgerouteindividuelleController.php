@@ -801,12 +801,14 @@ class AgerouteindividuelleController extends Controller
     }
 
 
-    public function listerparlocalite($projet, $localite)
+/*     public function listerparlocalite($projet, $localite)
     {
         $projet = Projet::find($projet);
+
+        dd($localite);
         
         return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
-    }
+    } */
 
     public function listerparmodulelocalite($projet, $localite, $module)
     {
@@ -1043,5 +1045,23 @@ class AgerouteindividuelleController extends Controller
         
         $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été accordée';
         return back()->with(compact('message'));
+    }
+
+    public function candidatspmr($localite, $projet, $handicap)
+    {
+        $projet = Projet::find($projet);
+        $localite = Localite::find($localite);
+        $localite_concernee = $localite->nom;
+
+        return view('agerouteindividuelles.candidatspmr', compact('projet', 'localite_concernee', 'handicap'));
+    }
+
+    public function candidatsvs($localite, $projet, $victimes)
+    {
+        $projet = Projet::find($projet);
+        $localite = Localite::find($localite);
+        $localite_concernee = $localite->nom;
+
+        return view('agerouteindividuelles.candidatsvs', compact('projet', 'localite', 'victimes', 'localite_concernee'));
     }
 }
