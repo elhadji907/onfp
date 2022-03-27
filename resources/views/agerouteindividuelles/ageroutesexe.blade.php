@@ -1,82 +1,6 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - demandeurs du département de ' . $localite_concernee)
+@section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-secondary shadow h-100 py-2">
-                    <a class="nav-link" href="#">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Total</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('statutageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'attente']) }}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        attente </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $attente }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('statutageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'rejeter']) }}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        rejeter </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $rejeter }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('statutageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'accepter']) }}" target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        accepter </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $accepter }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -95,7 +19,16 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }}
+                        Liste des demandeurs du département de {{ $localite_concernee }} de sexe <label
+                            class="badge badge-info">
+                            @if (isset($sexe) && $sexe == 'M')
+                                {!! __('Masculin') !!}
+                            @elseif (isset($sexe) && $sexe == 'F')
+                                {{ __('Féminin') }}
+                            @else
+                                $sexe
+                            @endif
+                        </label>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -109,55 +42,82 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:10%;">N° CIN</th>
-                                            <th style="width:5%;">Sexe</th>
-                                            <th style="width:8%;">Prenom</th>
+                                            <th style="width:5%;">N°</th>
+                                            {{-- <th style="width:10%;">N° CIN</th> --}}
+                                            <th style="width:10%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
-                                            <th style="width:8%;">Lieu nais.</th>
-                                            <th style="width:8%;">Communes</th>
-                                            <th style="width:20%;">Module</th>
-                                            <th style="width:5%;">P.M.R</th>
-                                            <th style="width:10%;">Déplacés</th>
+                                            <th style="width:10%;">Lieu nais.</th>
+                                            <th style="width:5%;">Téléphone</th>
+                                            <th style="width:10%;">Départements</th>
+                                            {{-- <th style="width:13%;">Communes</th> --}}
+                                            <th style="width:15%;">Module</th>
+                                            <th style="width:5%;">Statut</th>
                                             <th style="width:9%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($projet->individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee)
+                                            @if (isset($individuelle) && $individuelle->demandeur->user->sexe == $sexe && $individuelle->projet->id == $id_projet && $individuelle->localite->nom == $localite_concernee)
                                                 <tr>
-                                                    <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>
-                                                        <a href="{{ url('ageroutesexe', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite_concernee, '$projet' => $projet->id]) }}"
-                                                            class="btn btn-outline-info btn-sm" target="_blank">{!! $individuelle->demandeur->user->sexe !!}</a>
-
-                                                        </td>
+                                                    <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
+                                                    {{-- <td>{!! $individuelle->demandeur->cin !!}</td> --}}
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
+                                                    {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
+                                                    <td>{!! $individuelle->module->name ?? '' !!}</td>
                                                     <td>
-                                                        <a class="nav-link"
-                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
-                                                            target="_blank">
-                                                            {!! $individuelle->module->name ?? '' !!}<br />
-                                                        </a>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
+                                                                <label
+                                                                    class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
+                                                                <label
+                                                                    class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @else
+                                                                <label
+                                                                    class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @endif
+                                                            &nbsp;
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
+                                                                <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle,'$statut' => 'accepter','$module' => $individuelle->module->id]) }}"
+                                                                    title="accepter"
+                                                                    class="btn btn-outline-primary btn-sm mt-0">
+                                                                    <i class="fas fa-check-circle"></i>
+                                                                </a>
+                                                            @endif
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'rejeter')
+                                                                <a href="{{ url('agerouterejeter', ['$individuelle' => $individuelle,'$statut' => 'rejeter','$module' => $individuelle->module->id]) }}"
+                                                                    title="rejeter"
+                                                                    class="btn btn-outline-danger btn-sm mt-0">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                            @endif
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
+                                                                <a href="{{ url('agerouteattente', ['$individuelle' => $individuelle,'$statut' => 'attente','$module' => $individuelle->module->id]) }}"
+                                                                    title="attente"
+                                                                    class="btn btn-outline-warning btn-sm mt-0">
+                                                                    <i class="fas fa-reply"></i>
+                                                                </a>
+                                                            @endif
+                                                        </div>
                                                     </td>
-                                                    <td>
-                                                        <a href="{{ url('candidatspmr', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap]) }}"
-                                                            title="voir liste" class="nav-link mt-0" target="_blank">
-                                                            {!! $individuelle->handicap !!}
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ url('candidatsvs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
-                                                            title="voir liste" class="nav-link mt-0" target="_blank">
-                                                            {!! $individuelle->victime_social !!}
-                                                        </a>
-                                                    </td>
-                                                    <td class="d-flex align-items-baseline">
+                                                    {{-- <td ALIGN="CENTER">
+                                                    <?php $h = 1; ?>
+                                                    @foreach ($individuelle->module as $key => $module)
+                                                        @if ($loop->last)
+                                                            <a class="nav-link badge badge-info"
+                                                                href="{{ url('moduleindividuelle', ['$projet' => $projet, '$individuelle' => $individuelle]) }}"
+                                                                target="_blank">{!! $loop->count !!}</a>
+                                                        @endif
+                                                    @endforeach
+                                                </td> --}}
+                                                    <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">
                                                             <i class="far fa-edit">&nbsp;</i>
@@ -225,7 +185,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [0, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

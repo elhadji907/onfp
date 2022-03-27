@@ -1102,4 +1102,23 @@ class AgerouteindividuelleController extends Controller
 
         return view('agerouteindividuelles.statutsvs', compact('statut', 'individuelles', 'effectif', 'projet', 'localite_concernee', 'svs'));
     }
+
+    public function ageroutesexe($sexe ,$localite, $projet)
+    {
+        $localites_id = Localite::where('nom', $localite)->first()->id;
+
+        $id_projet = $projet;
+
+        $individuelles = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                    ->where('localites_id', '=', $localites_id);
+
+        /* $effectif =     Individuelle::get()->where('projets_id', '=', $id_projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->count(); */
+
+        $projet                    = Projet::find($projet);
+        $localite_concernee         = $localite;
+
+        return view('agerouteindividuelles.ageroutesexe', compact('sexe', 'individuelles', 'projet', 'localite_concernee', 'id_projet'));
+    }
 }
