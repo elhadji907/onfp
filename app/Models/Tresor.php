@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Tresor extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

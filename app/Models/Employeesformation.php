@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Employeesformation extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

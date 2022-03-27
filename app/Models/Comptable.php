@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Comptable extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

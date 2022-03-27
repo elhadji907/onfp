@@ -49,12 +49,21 @@ class AgerouteindividuelleController extends Controller
         $projet = Projet::find($id_projet);
         $individuelle = Individuelle::all();
 
+        
+        $ziguinchor_id = Localite::where('nom', 'Ziguinchor')->first()->id;
+        $bignona_id = Localite::where('nom', 'Bignona')->first()->id;
+        $bounkiling_id = Localite::where('nom', 'Bounkiling')->first()->id;
+        
+        $ziguinchor_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $ziguinchor_id)->count();
+        $bignona_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $bignona_id)->count();
+        $bounkiling_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $bounkiling_id)->count();
+
+        $total_count = Individuelle::where('projets_id', '=', $id_projet)->count();
+
         foreach ($individuelle as $key => $individuelles) {
         }
-
-        /* dd($individuelles->demandeur->user); */
      
-        return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'individuelles'));
+        return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'individuelles', 'ziguinchor_count', 'bignona_count', 'bounkiling_count', 'total_count'));
     }
 
     /**
@@ -100,8 +109,8 @@ class AgerouteindividuelleController extends Controller
             $request,
             [
                 'sexe'                              =>    'required|string|max:10',
-                'numero_dossier'                    =>    'required|string|min:5|unique:individuelles,numero_dossier',
-                'cin'                               =>    'required|string|min:13|max:15|unique:individuelles,cin',
+                'numero_dossier'                    =>    'required|string|min:5|unique:demandeurs,numero_dossier',
+                'cin'                               =>    'required|string|min:13|max:15|unique:demandeurs,cin',
                 'prenom'                            =>    'required|string|max:50',
                 'nom'                               =>    'required|string|max:50',
                 'date_naiss'                        =>    'required|date_format:Y-m-d',
@@ -125,7 +134,7 @@ class AgerouteindividuelleController extends Controller
                 'handicap'                          =>    'required',
                 'situation_economique'              =>    'required',
                 'victime_social'                    =>    'required',
-                'modules1'                           =>    'required',
+                'modules'                           =>    'required',
         ]
         );
         
@@ -261,6 +270,9 @@ class AgerouteindividuelleController extends Controller
         $diplome_id = Diplome::where('sigle', $request->input('diplome'))->first()->id;
         $diplomepro_id = Diplomespro::where('sigle', $request->input('diplomespro'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
+        $zones_id = Zone::where('nom', $request->input('zones'))->first()->id;
+        $modules_id = Module::where('name', $request->input('modules'))->first()->id;
+        $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;
         $familiale_id = $request->input('familiale');
         $etude_id = $request->input('etude');
         $cin = $request->input('cin');
@@ -296,7 +308,8 @@ class AgerouteindividuelleController extends Controller
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
 
         $demandeur = new Demandeur([
-                    'numero'                    =>     $numero,
+                    'cin'                       =>     $cin,
+                    'numero_dossier'            =>     $request->input('numero_dossier'),
                     'types_demandes_id'         =>     $types_demandes_id,
                     'users_id'                  =>     $user->id
                 ]);
@@ -304,10 +317,10 @@ class AgerouteindividuelleController extends Controller
         $demandeur->save();
 
         /* $dossier = implode(";", $request->get('dossier')); */
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet = Projet::find($projet_id);
         
         $individuelle = new Individuelle([
-            'cin'                               =>     $cin,
-            'numero_dossier'                    =>     $request->input('numero_dossier'),
             'date_depot'                        =>     $request->input('date_depot'),
             'optiondiplome'                     =>     $request->input('specialite'),
             'adresse'                           =>     $request->input('adresse'),
@@ -334,39 +347,40 @@ class AgerouteindividuelleController extends Controller
             'communes_id'                       =>     $commune_id,
             'diplomes_id'                       =>     $diplome_id,
             'diplomespros_id'                   =>     $diplomepro_id,
+            'zones_id'                          =>     $zones_id,
+            'localites_id'                      =>     $localites_id,
+            'projets_id'                        =>     $projet_id,
+            'modules_id'                        =>     $modules_id,
             'demandeurs_id'                     =>     $demandeur->id
             ]);
             
         $individuelle->save();
-        
-        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
-        $projet = Projet::find($projet_id);
 
-        $zones_id = Zone::where('nom', $request->input('zones'))->first()->id;
-        $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;
-        $modules1_id = Module::where('name', $request->input('modules1'))->first()->id;
+        /*  $zones_id = Zone::where('nom', $request->input('zones'))->first()->id;
+         $localites_id = Localite::where('nom', $request->input('localites'))->first()->id;
+         $modules1_id = Module::where('name', $request->input('modules1'))->first()->id;
 
-        $module2 = $request->input('modules2');
+         $module2 = $request->input('modules2');
 
-        if (isset($module2)) {
-            $modules2_id = Module::where('name', $module2)->first()->id;
-        }
-        $module3 = $request->input('modules3');
+         if (isset($module2)) {
+             $modules2_id = Module::where('name', $module2)->first()->id;
+         }
+         $module3 = $request->input('modules3');
 
-        if (isset($module3)) {
-            $modules3_id = Module::where('name', $module3)->first()->id;
-        }
-        
-        $individuelle->modules()->attach($modules1_id);
-        if (isset($module2)) {
-            $individuelle->modules()->attach($modules2_id);
-        }
-        if (isset($module3)) {
-            $individuelle->modules()->attach($modules3_id);
-        }
-        $individuelle->projets()->sync($projet_id);
+         if (isset($module3)) {
+             $modules3_id = Module::where('name', $module3)->first()->id;
+         }
+
+         $individuelle->modules()->attach($modules1_id);
+         if (isset($module2)) {
+             $individuelle->modules()->attach($modules2_id);
+         }
+         if (isset($module3)) {
+             $individuelle->modules()->attach($modules3_id);
+         } */
+        /* $individuelle->projets()->sync($projet_id);
         $individuelle->zones()->sync($zones_id);
-        $individuelle->localites()->sync($localites_id);
+        $individuelle->localites()->sync($localites_id); */
 
         return redirect()->route('agerouteindividuelles.index')->with('success', 'demandeur ajouté avec succès !');
     }
@@ -380,9 +394,9 @@ class AgerouteindividuelleController extends Controller
     public function show($id)
     {
         $individuelle = Individuelle::find($id);
-        $localite = Localite::get();
-        $zone = Zone::get();
-        $module = Module::get();
+        $localites = Localite::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $zones = Zone::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
@@ -393,17 +407,17 @@ class AgerouteindividuelleController extends Controller
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
 
-        $individuelleLocalites = DB::table("individuelleslocalites")->where("individuelleslocalites.individuelles_id", $id)
-        ->pluck('individuelleslocalites.localites_id', 'individuelleslocalites.localites_id')
-        ->all();
+        /*      $individuelleLocalites = DB::table("individuelleslocalites")->where("individuelleslocalites.individuelles_id", $id)
+             ->pluck('individuelleslocalites.localites_id', 'individuelleslocalites.localites_id')
+             ->all();
 
-        $individuelleZones = DB::table("individuelleszones")->where("individuelleszones.individuelles_id", $id)
-        ->pluck('individuelleszones.zones_id', 'individuelleszones.zones_id')
-        ->all();
+             $individuelleZones = DB::table("individuelleszones")->where("individuelleszones.individuelles_id", $id)
+             ->pluck('individuelleszones.zones_id', 'individuelleszones.zones_id')
+             ->all();
 
-        $individuelleModules = DB::table("individuellesmodules")->where("individuellesmodules.individuelles_id", $id)
-        ->pluck('individuellesmodules.modules_id', 'individuellesmodules.modules_id')
-        ->all();
+             $individuelleModules = DB::table("individuellesmodules")->where("individuellesmodules.individuelles_id", $id)
+             ->pluck('individuellesmodules.modules_id', 'individuellesmodules.modules_id')
+             ->all(); */
 
         $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $projet_id)
         ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
@@ -435,18 +449,15 @@ class AgerouteindividuelleController extends Controller
         $dompdf->setOptions($options);
 
         $dompdf->loadHtml(view('agerouteindividuelles.show', compact(
-            'localite',
+            'localites',
             'projetModules',
-            'zone',
-            'module',
+            'zones',
+            'modules',
             'individuelle',
             'etude',
             'familiale',
             'communes',
             'diplomes',
-            'individuelleModules',
-            'individuelleZones',
-            'individuelleLocalites',
             'projet_name',
             'diplomespros'
         )));
@@ -476,9 +487,10 @@ class AgerouteindividuelleController extends Controller
             $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
             return back()->with(compact('messages'));
         }
-        $localite = Localite::get();
-        $zone = Zone::get();
-        $module = Module::get();
+
+        $localites = Localite::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $zones = Zone::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
@@ -489,17 +501,17 @@ class AgerouteindividuelleController extends Controller
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
 
-        $individuelleLocalites = DB::table("individuelleslocalites")->where("individuelleslocalites.individuelles_id", $id)
-        ->pluck('individuelleslocalites.localites_id', 'individuelleslocalites.localites_id')
-        ->all();
+        /*     $individuelleLocalites = DB::table("individuelleslocalites")->where("individuelleslocalites.individuelles_id", $id)
+            ->pluck('individuelleslocalites.localites_id', 'individuelleslocalites.localites_id')
+            ->all();
 
-        $individuelleZones = DB::table("individuelleszones")->where("individuelleszones.individuelles_id", $id)
-        ->pluck('individuelleszones.zones_id', 'individuelleszones.zones_id')
-        ->all();
+            $individuelleZones = DB::table("individuelleszones")->where("individuelleszones.individuelles_id", $id)
+            ->pluck('individuelleszones.zones_id', 'individuelleszones.zones_id')
+            ->all();
 
-        $individuelleModules = DB::table("individuellesmodules")->where("individuellesmodules.individuelles_id", $id)
-        ->pluck('individuellesmodules.modules_id', 'individuellesmodules.modules_id')
-        ->all();
+            $individuelleModules = DB::table("individuellesmodules")->where("individuellesmodules.individuelles_id", $id)
+            ->pluck('individuellesmodules.modules_id', 'individuellesmodules.modules_id')
+            ->all(); */
 
         $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $projet_id)
         ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
@@ -510,18 +522,15 @@ class AgerouteindividuelleController extends Controller
         return view(
             'agerouteindividuelles.update',
             compact(
-                'localite',
+                'localites',
                 'projetModules',
-                'zone',
-                'module',
+                'zones',
+                'modules',
                 'individuelle',
                 'etude',
                 'familiale',
                 'communes',
                 'diplomes',
-                'individuelleModules',
-                'individuelleZones',
-                'individuelleLocalites',
                 'projet_name',
                 'diplomespros'
             )
@@ -540,6 +549,7 @@ class AgerouteindividuelleController extends Controller
         $individuelle = Individuelle::find($id);
         $user_connect           =   Auth::user();
         $demandeur = $individuelle->demandeur;
+        $id_demandeur = $demandeur->id;
         $utilisateur   =   $demandeur->user;
 
         $auth_user      =       Auth::user();
@@ -554,8 +564,8 @@ class AgerouteindividuelleController extends Controller
             $request,
             [
                 'sexe'                              =>    'required|string|max:10',
-                'numero_dossier'                    =>    'required|string|min:5|unique:individuelles,numero_dossier,'.$id,
-                'cin'                               =>    'required|string|min:13|max:15|unique:individuelles,cin,'.$id,
+                'numero_dossier'                    =>    'required|string|min:5|unique:demandeurs,numero_dossier,'.$id_demandeur,
+                'cin'                               =>    'required|string|min:13|max:15|unique:demandeurs,cin,'.$id_demandeur,
                 'prenom'                            =>    'required|string|max:50',
                 'nom'                               =>    'required|string|max:50',
                 'date_naiss'                        =>    'required|date_format:Y-m-d',
@@ -573,13 +583,13 @@ class AgerouteindividuelleController extends Controller
                 'diplomespro'                       =>    'required',
                 'activite_travail'                  =>    'required',
                 'travail_renumeration'              =>    'required',
-                'localite'                         =>    'required',
+                'localite'                          =>    'required',
                 'activite_avenir'                   =>    'required',
-                'zone'                             =>    'required',
+                'zone'                              =>    'required',
                 'handicap'                          =>    'required',
                 'situation_economique'              =>    'required',
                 'victime_social'                    =>    'required',
-                'module'                           =>    'required',
+                'module'                            =>    'required',
         ]
         );
         
@@ -694,6 +704,10 @@ class AgerouteindividuelleController extends Controller
         $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
         $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
         $etude_id = Etude::where('name', $request->input('etude'))->first()->id;
+        $modules_id = Module::where('name', $request->input('module'))->first()->id;
+        $localites_id = Localite::where('nom', $request->input('localite'))->first()->id;
+        $zones_id = Zone::where('nom', $request->input('zone'))->first()->id;
+
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
         
@@ -716,16 +730,17 @@ class AgerouteindividuelleController extends Controller
 
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
         
-        $demandeur->numero                      =      $request->input('numero');
+        $demandeur->cin                         =     $cin;
+        $demandeur->numero_dossier              =     $request->input('numero_dossier');
         $demandeur->types_demandes_id           =      $types_demandes_id;
         $demandeur->users_id                    =      $utilisateur->id;
 
         $demandeur->save();
 
+        $projets_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet = Projet::find($projets_id);
         /* $dossier = implode(";", $request->get('dossier')); */
         
-        $individuelle->cin                             =     $cin;
-        $individuelle->numero_dossier                  =     $request->input('numero_dossier');
         $individuelle->date_depot                      =     $request->input('date_depot');
         $individuelle->nbre_pieces                     =     $request->input('nbre_pieces');
         $individuelle->optiondiplome                   =     $request->input('specialite');
@@ -751,23 +766,22 @@ class AgerouteindividuelleController extends Controller
         $individuelle->communes_id                     =     $commune_id;
         $individuelle->diplomes_id                     =     $diplome_id;
         $individuelle->diplomespros_id                 =     $diplomepro_id;
+        $individuelle->zones_id                        =     $zones_id;
+        $individuelle->modules_id                      =     $modules_id;
+        $individuelle->localites_id                    =     $localites_id;
+        $individuelle->projets_id                      =     $projets_id;
         $individuelle->demandeurs_id                   =     $demandeur->id;
             
         $individuelle->save();
         
-        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
-        $projet = Projet::find($projet_id);
         
         /* $zones_id = Zone::where('nom', $request->input('zone'))->first()->id;
         $localites_id = Localite::where('nom', $request->input('localite'))->first()->id;
         $modules_id = Module::where('name', $request->input('module'))->first()->id; */
         
-        $individuelle->modules()->sync($request->input('module'));
-        $individuelle->projets()->sync($projet_id);
-        $individuelle->zones()->sync($request->input('zone'));
-        $individuelle->localites()->sync($request->input('localite'));
+        /* $individuelle->projets()->sync($projet_id); */
 
-        $message = 'Bénéficiaire '.$utilisateur->firstname.' '.$utilisateur->name.' a été modifié avec succès';
+        $message = 'demandeur '.$utilisateur->firstname.' '.$utilisateur->name.' a été modifié avec succès';
         return redirect()->route('agerouteindividuelles.index')->with(compact('message'));
     }
 
@@ -801,20 +815,55 @@ class AgerouteindividuelleController extends Controller
     }
 
 
-/*     public function listerparlocalite($projet, $localite)
-    {
-        $projet = Projet::find($projet);
+    /*     public function listerparlocalite($projet, $localite)
+        {
+            $projet = Projet::find($projet);
 
-        dd($localite);
-        
-        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
-    } */
+            dd($localite);
+
+            return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite'));
+        } */
 
     public function listerparmodulelocalite($projet, $localite, $module)
     {
+        $id_projet              = $projet;
+        $id_localite            = Localite::where('nom', $localite)->first()->id;
+        $projet                 = Projet::find($projet);
+        $localites              = Projet::find($localite);
+        $individuelles          = $projet->individuelles;
+        $modules                = Module::find($module);
+        $localite_concernee     = $localite;
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'attente')
+                ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'rejeter')
+                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'accepter')
+                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->count();
+
+        return view('agerouteindividuelles.listerparmodulelocalite', compact('projet', 'localite', 'module', 'modules', 'localite_concernee', 'individuelles', 'attente', 'rejeter', 'accepter', 'total'));
+    }
+
+    public function listerparmodulezone($projet, $zone, $module)
+    {
         $projet = Projet::find($projet);
+        $individuelles = $projet->individuelles;
         $modules = Module::find($module);
-        return view('agerouteindividuelles.listerparmodulelocalite', compact('projet', 'localite', 'module', 'modules'));
+        $zone_concernee = $zone;
+
+        return view('agerouteindividuelles.listerparmodulezone', compact('projet', 'zone_concernee', 'module', 'modules', 'individuelles'));
     }
 
     /*   public function agerouteattente($statut)
@@ -840,121 +889,49 @@ class AgerouteindividuelleController extends Controller
         return view('agerouteindividuelles.moduleindividuelle', compact('projet', 'cin_individuelle', 'prenom_individuelle', 'nom_individuelle', 'civilite_individuelle'));
     }
 
-    public function agerouteattente($individuelle, $statut, $module, $numero)
+    public function agerouteattente($individuelle, $statut, $module)
     {
         $module = Module::find($module);
 
         $individuelle = Individuelle::find($individuelle);
 
         $individuelle->statut     =   $statut;
-        if ($numero == '1') {
-            $individuelle->module1    =   $module->name;
-            $individuelle->statut1    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '2') {
-            $individuelle->module2    =   $module->name;
-            $individuelle->statut2    =   $statut;
-            $individuelle->module1    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut1    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '3') {
-            $individuelle->module3    =   $module->name;
-            $individuelle->statut3    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module1    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut1    =   '';
-        }
-        
+
         $individuelle->save();
-        
-        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+
+        $message = "La demande de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
         return back()->with(compact('message'));
     }
 
-    public function agerouteencours($individuelle, $statut, $module, $numero)
+    /*     public function agerouteencours($individuelle, $statut, $module, $numero)
+        {
+            $module = Module::find($module);
+
+            $individuelle = Individuelle::find($individuelle);
+
+            $individuelle->statut     =   $statut;
+
+            $individuelle->save();
+
+            $message = "La demande de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+            return back()->with(compact('message'));
+        } */
+
+    public function agerouterejeter($individuelle, $statut, $module)
     {
         $module = Module::find($module);
 
         $individuelle = Individuelle::find($individuelle);
 
         $individuelle->statut     =   $statut;
-        if ($numero == '1') {
-            $individuelle->module1    =   $module->name;
-            $individuelle->statut1    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '2') {
-            $individuelle->module2    =   $module->name;
-            $individuelle->statut2    =   $statut;
-            $individuelle->module1    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut1    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '3') {
-            $individuelle->module3    =   $module->name;
-            $individuelle->statut3    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module1    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut1    =   '';
-        }
         
         $individuelle->save();
         
-        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        $message = "La demande de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
         return back()->with(compact('message'));
     }
 
-    public function agerouterejeter($individuelle, $statut, $module, $numero)
-    {
-        $module = Module::find($module);
-
-        $individuelle = Individuelle::find($individuelle);
-
-        $individuelle->statut     =   $statut;
-        if ($numero == '1') {
-            $individuelle->module1    =   $module->name;
-            $individuelle->statut1    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '2') {
-            $individuelle->module2    =   $module->name;
-            $individuelle->statut2    =   $statut;
-            $individuelle->module1    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut1    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '3') {
-            $individuelle->module3    =   $module->name;
-            $individuelle->statut3    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module1    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut1    =   '';
-        }
-        
-        $individuelle->save();
-        
-        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
-        return back()->with(compact('message'));
-    }
-
-    public function agerouteretenues($individuelle, $statut, $module, $numero)
+    public function agerouteretenues($individuelle, $statut, $module)
     {
         $module = Module::find($module);
 
@@ -962,34 +939,9 @@ class AgerouteindividuelleController extends Controller
 
         $individuelle->statut     =   $statut;
 
-        if ($numero == '1') {
-            $individuelle->module1    =   $module->name;
-            $individuelle->statut1    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '2') {
-            $individuelle->module2    =   $module->name;
-            $individuelle->statut2    =   $statut;
-            $individuelle->module1    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut1    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '3') {
-            $individuelle->module3    =   $module->name;
-            $individuelle->statut3    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module1    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut1    =   '';
-        }
-        
         $individuelle->save();
         
-        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        $message = "La demande de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
         return back()->with(compact('message'));
     }
 
@@ -1000,34 +952,10 @@ class AgerouteindividuelleController extends Controller
         $individuelle = Individuelle::find($individuelle);
 
         $individuelle->statut     =   $statut;
-        if ($numero == '1') {
-            $individuelle->module1    =   $module->name;
-            $individuelle->statut1    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '2') {
-            $individuelle->module2    =   $module->name;
-            $individuelle->statut2    =   $statut;
-            $individuelle->module1    =   '';
-            $individuelle->module3    =   '';
-            $individuelle->statut1    =   '';
-            $individuelle->statut3    =   '';
-        }
-        if ($numero == '3') {
-            $individuelle->module3    =   $module->name;
-            $individuelle->statut3    =   $statut;
-            $individuelle->module2    =   '';
-            $individuelle->module1    =   '';
-            $individuelle->statut2    =   '';
-            $individuelle->statut1    =   '';
-        }
         
         $individuelle->save();
         
-        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        $message = "La demande de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
         return back()->with(compact('message'));
     }
 
@@ -1037,31 +965,141 @@ class AgerouteindividuelleController extends Controller
 
         $individuelle = Individuelle::find($individuelle);
 
-        $individuelle->statut    =   $statut;
-        $individuelle->statut1    =   $statut;
-        $individuelle->module1    =   $module->name;
+        $individuelle->statut        =   $statut;
+        $individuelle->modules_id    =   $module->name;
         
         $individuelle->save();
         
-        $message = "La demande de prise en charge de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été accordée';
+        $message = "La demande de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été accordée';
         return back()->with(compact('message'));
     }
 
     public function candidatspmr($localite, $projet, $handicap)
     {
-        $projet = Projet::find($projet);
-        $localite = Localite::find($localite);
-        $localite_concernee = $localite->nom;
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $localite_concernee     = $localite->nom;
 
-        return view('agerouteindividuelles.candidatspmr', compact('projet', 'localite_concernee', 'handicap'));
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                               ->where('localites_id', '=', $id_localite)
+                               ->where('handicap', '=', 'Oui')
+                               ->where('statut', '=', 'attente')
+                               ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'rejeter')
+                                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'accepter')
+                                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->count();
+
+        return view('agerouteindividuelles.candidatspmr', compact('projet', 'localite_concernee', 'handicap', 'attente', 'rejeter', 'accepter', 'total'));
     }
 
     public function candidatsvs($localite, $projet, $victimes)
     {
-        $projet = Projet::find($projet);
-        $localite = Localite::find($localite);
-        $localite_concernee = $localite->nom;
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $localite_concernee     = $localite->nom;
 
-        return view('agerouteindividuelles.candidatsvs', compact('projet', 'localite', 'victimes', 'localite_concernee'));
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('victime_social', '=', 'Déplacé ou démobilisé par le conflit')
+                ->where('statut', '=', 'attente')
+                ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('victime_social', '=', 'Déplacé ou démobilisé par le conflit')
+                ->where('statut', '=', 'rejeter')
+                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('victime_social', '=', 'Déplacé ou démobilisé par le conflit')
+                ->where('statut', '=', 'accepter')
+                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('victime_social', '=', 'Déplacé ou démobilisé par le conflit')
+                ->count();
+
+        return view('agerouteindividuelles.candidatsvs', compact('projet', 'localite', 'victimes', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total'));
+    }
+
+    public function statutageroute($localite, $projet, $statut)
+    {
+        $localites_id = Localite::where('nom', $localite)->first()->id;
+
+        $individuelles = Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('statut', '=', $statut);
+
+        $effectif =     Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('statut', '=', $statut)
+                                    ->count();
+
+        $projet                    = Projet::find($projet);
+        $localite_concernee         = $localite;
+
+        return view('agerouteindividuelles.statut', compact('statut', 'individuelles', 'effectif', 'projet', 'localite_concernee'));
+    }
+
+    public function statutageroutepmr($localite, $projet, $statut, $pmr)
+    {
+        $localites_id = Localite::where('nom', $localite)->first()->id;
+
+        $individuelles = Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('handicap', '=', $pmr)
+                                    ->where('statut', '=', $statut);
+
+        $effectif =     Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('handicap', '=', $pmr)
+                                    ->where('statut', '=', $statut)
+                                    ->count();
+
+        $projet                    = Projet::find($projet);
+        $localite_concernee         = $localite;
+
+        return view('agerouteindividuelles.statutpmr', compact('statut', 'individuelles', 'effectif', 'projet', 'localite_concernee', 'pmr'));
+    }
+
+    public function statutageroutesvs($localite, $projet, $statut, $svs)
+    {
+        $localites_id = Localite::where('nom', $localite)->first()->id;
+
+        $individuelles = Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('victime_social', '=', $svs)
+                                    ->where('statut', '=', $statut);
+
+        $effectif =     Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('victime_social', '=', $svs)
+                                    ->where('statut', '=', $statut)
+                                    ->count();
+
+        $projet                    = Projet::find($projet);
+        $localite_concernee         = $localite;
+
+        return view('agerouteindividuelles.statutsvs', compact('statut', 'individuelles', 'effectif', 'projet', 'localite_concernee', 'svs'));
     }
 }

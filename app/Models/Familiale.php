@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Familiale extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

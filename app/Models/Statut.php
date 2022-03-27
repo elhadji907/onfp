@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Statut extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

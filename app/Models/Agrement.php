@@ -67,6 +67,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Agrement extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -159,7 +160,7 @@ class Agrement extends Model
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'modulesagrements', 'agrements_id', 'modules_id')
-					->withPivot('id', 'deleted_at')
+					->withPivot('id', 'moduleagrementstatut_id', 'deleted_at')
 					->withTimestamps();
 	}
 }

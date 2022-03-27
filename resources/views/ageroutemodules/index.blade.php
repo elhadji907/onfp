@@ -36,7 +36,7 @@
                                         <th width="5%">Demandeurs</th>
                                         <th width="30%">Domaine</th>
                                         <th width="20%">Secteur</th>
-                                        <th width="10%">Action</th>
+                                        <th width="7%"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
@@ -51,27 +51,29 @@
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($projets->modules as $key => $module)
+                                    @foreach ($modules as $key => $module)
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $module->name }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $h = 0; ?>
                                                 @foreach ($module->individuelles as $individuelle)
-                                                    @foreach ($individuelle->projets as $projet)
-                                                        @if ($loop->last && $projet->name == $projet_name)
-                                                            <?php $h++; ?>
-                                                        @endif
-                                                    @endforeach
+                                                    @if ($individuelle->projets_id == $projet_id)
+                                                        <?php $h++; ?>
+                                                    @endif
                                                 @endforeach
-                                                <span class="badge badge-info">{!! $h !!}</span>
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatmodule', ['$projet' => $projet, '$module' => $module->name]) }}"
+                                                    target="_blank" title="voir demandeurs">
+                                                    <span class="badge badge-info">{!! $h !!}</span></a>
                                             </td>
+
                                             <td>{{ $module->domaine->name }}</td>
                                             <td>{{ $module->domaine->secteur->name }}</td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                                <a class="btn btn-info btn-sm"
+                                                {{--  <a class="btn btn-info btn-sm"
                                                     href="{{ route('ageroutemodules.show', $module->id) }}" target="_blank"><i
-                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;
+                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;  --}}
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ route('ageroutemodules.edit', $module->id) }}"><i

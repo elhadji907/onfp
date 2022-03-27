@@ -22,15 +22,19 @@ class AgeroutezoneController extends Controller
 
         /* dd($projet_id); */
 
-        $ageroutelocalite = Projet::all()->load(['zones'])
-        ->where('name', '=', $projet_name);
+       /*  $ageroutelocalite = Projet::all()->load(['zones'])
+        ->where('name', '=', $projet_name); */
 
         /* dd($ageroutelocalite); */
 
-        foreach ($ageroutelocalite as $ageroutezones) {
-        }
+        $projet = Projet::find($projet_id);
 
-        return view('ageroutezones.index', compact('ageroutezones', 'projet_name'));
+        $zones = $projet->zones;
+
+      /*   foreach ($ageroutelocalite as $ageroutezones) {
+        } */
+
+        return view('ageroutezones.index', compact('zones', 'projet_name', 'projet_id', 'projet'));
     }
 
     /**
@@ -166,7 +170,11 @@ class AgeroutezoneController extends Controller
     public function candidatzone($projet, $zone)
     {
         $projet = Projet::find($projet);
+
+        $zone_concernee = $zone;
+
+        $individuelles = $projet->individuelles;
         
-        return view('ageroutezones.candidatzone', compact('projet', 'zone'));
+        return view('ageroutezones.candidatzone', compact('projet', 'zone_concernee', 'individuelles'));
     }
 }

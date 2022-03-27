@@ -23,13 +23,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Agrement $agrement
- * @property Moduleagrementstatut|null $moduleagrementstatut
  * @property Module $module
+ * @property Moduleagrementstatut|null $moduleagrementstatut
  *
  * @package App\Models
  */
 class Modulesagrement extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -52,13 +53,13 @@ class Modulesagrement extends Model
 		return $this->belongsTo(Agrement::class, 'agrements_id');
 	}
 
-	public function moduleagrementstatut()
-	{
-		return $this->belongsTo(Moduleagrementstatut::class);
-	}
-
 	public function module()
 	{
 		return $this->belongsTo(Module::class, 'modules_id');
+	}
+
+	public function moduleagrementstatut()
+	{
+		return $this->belongsTo(Moduleagrementstatut::class);
 	}
 }

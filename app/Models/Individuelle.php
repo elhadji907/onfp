@@ -7,7 +7,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,10 +16,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string|null $numero_dossier
- * @property string|null $cin
- * @property string|null $legende
- * @property string|null $reference
  * @property string|null $experience
  * @property string|null $projetprofessionnel
  * @property string|null $prerequis
@@ -67,20 +62,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file7
  * @property int|null $nbre_pieces
  * @property int|null $nbre_enfants
- * @property string|null $module1
- * @property string|null $module2
- * @property string|null $module3
- * @property string|null $statut1
- * @property string|null $statut2
- * @property string|null $statut3
  * @property int $demandeurs_id
  * @property int|null $communes_id
  * @property int|null $etudes_id
  * @property int|null $antennes_id
- * @property int|null $programmes_id
  * @property int|null $diplomes_id
  * @property int|null $conventions_id
  * @property int|null $diplomespros_id
+ * @property int $modules_id
+ * @property int|null $formations_id
+ * @property int|null $zones_id
+ * @property int|null $localites_id
+ * @property int|null $projets_id
+ * @property int|null $programmes_id1
+ * @property int|null $programmes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -92,13 +87,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Diplome|null $diplome
  * @property Diplomespro|null $diplomespro
  * @property Etude|null $etude
+ * @property Formation|null $formation
+ * @property Localite|null $localite
+ * @property Module $module
  * @property Programme|null $programme
- * @property Collection|Formation[] $formations
- * @property Collection|Localite[] $localites
- * @property Collection|Module[] $modules
- * @property Collection|Programme[] $programmes
- * @property Collection|Projet[] $projets
- * @property Collection|Zone[] $zones
+ * @property Projet|null $projet
+ * @property Zone|null $zone
  *
  * @package App\Models
  */
@@ -120,10 +114,16 @@ class Individuelle extends Model
 		'communes_id' => 'int',
 		'etudes_id' => 'int',
 		'antennes_id' => 'int',
-		'programmes_id' => 'int',
 		'diplomes_id' => 'int',
 		'conventions_id' => 'int',
-		'diplomespros_id' => 'int'
+		'diplomespros_id' => 'int',
+		'modules_id' => 'int',
+		'formations_id' => 'int',
+		'zones_id' => 'int',
+		'localites_id' => 'int',
+		'projets_id' => 'int',
+		'programmes_id1' => 'int',
+		'programmes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -133,10 +133,6 @@ class Individuelle extends Model
 
 	protected $fillable = [
 		'uuid',
-		'numero_dossier',
-		'cin',
-		'legende',
-		'reference',
 		'experience',
 		'projetprofessionnel',
 		'prerequis',
@@ -183,20 +179,20 @@ class Individuelle extends Model
 		'file7',
 		'nbre_pieces',
 		'nbre_enfants',
-		'module1',
-		'module2',
-		'module3',
-		'statut1',
-		'statut2',
-		'statut3',
 		'demandeurs_id',
 		'communes_id',
 		'etudes_id',
 		'antennes_id',
-		'programmes_id',
 		'diplomes_id',
 		'conventions_id',
-		'diplomespros_id'
+		'diplomespros_id',
+		'modules_id',
+		'formations_id',
+		'zones_id',
+		'localites_id',
+		'projets_id',
+		'programmes_id1',
+		'programmes_id'
 	];
 
 	public function antenne()
@@ -234,50 +230,33 @@ class Individuelle extends Model
 		return $this->belongsTo(Etude::class, 'etudes_id');
 	}
 
+	public function formation()
+	{
+		return $this->belongsTo(Formation::class, 'formations_id');
+	}
+
+	public function localite()
+	{
+		return $this->belongsTo(Localite::class, 'localites_id');
+	}
+
+	public function module()
+	{
+		return $this->belongsTo(Module::class, 'modules_id');
+	}
+
 	public function programme()
 	{
-		return $this->belongsTo(Programme::class, 'programmes_id');
+		return $this->belongsTo(Programme::class, 'programmes_id1');
 	}
 
-	public function formations()
+	public function projet()
 	{
-		return $this->belongsToMany(Formation::class, 'individuellesformations', 'individuelles_id', 'formations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->belongsTo(Projet::class, 'projets_id');
 	}
 
-	public function localites()
+	public function zone()
 	{
-		return $this->belongsToMany(Localite::class, 'individuelleslocalites', 'individuelles_id', 'localites_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
-
-	public function modules()
-	{
-		return $this->belongsToMany(Module::class, 'individuellesmodules', 'individuelles_id', 'modules_id')
-					->withPivot('id', 'individuellemodulestatut_id', 'deleted_at')
-					->withTimestamps();
-	}
-
-	public function programmes()
-	{
-		return $this->belongsToMany(Programme::class, 'individuellesprogrammes', 'individuelles_id', 'programmes_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
-
-	public function projets()
-	{
-		return $this->belongsToMany(Projet::class, 'individuellesprojets', 'individuelles_id', 'projets_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
-
-	public function zones()
-	{
-		return $this->belongsToMany(Zone::class, 'individuelleszones', 'individuelles_id', 'zones_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->belongsTo(Zone::class, 'zones_id');
 	}
 }

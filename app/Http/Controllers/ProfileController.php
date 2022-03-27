@@ -64,9 +64,9 @@ class ProfileController extends Controller
      */
     public function show(User $user)
     {
-        $individuelles    =      $user->demandeur->individuelles;
+        /* $individuelles    =      $user->demandeur->individuelles;
         $collectives      =      $user->demandeur->collectives;
-        $pcharges         =      $user->demandeur->pcharges;
+        $pcharges         =      $user->demandeur->pcharges; */
 
         
         $recues = Recue::get()->count();

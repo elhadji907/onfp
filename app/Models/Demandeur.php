@@ -17,7 +17,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string|null $numero
+ * @property string|null $cin
+ * @property string|null $numero_dossier
  * @property string|null $statut
  * @property string|null $items1
  * @property string|null $items2
@@ -48,6 +49,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Demandeur extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -66,7 +68,8 @@ class Demandeur extends Model
 
 	protected $fillable = [
 		'uuid',
-		'numero',
+		'cin',
+		'numero_dossier',
 		'statut',
 		'items1',
 		'items2',
@@ -80,7 +83,7 @@ class Demandeur extends Model
 
 	public function courrier()
 	{
-		return $this->belongsTo(Courrier::class, 'courriers_id')->latest();
+		return $this->belongsTo(Courrier::class, 'courriers_id');
 	}
 
 	public function item()
@@ -100,12 +103,12 @@ class Demandeur extends Model
 
 	public function collectives()
 	{
-		return $this->hasMany(Collective::class, 'demandeurs_id')->latest();
+		return $this->hasMany(Collective::class, 'demandeurs_id');
 	}
 
 	public function commentaires()
 	{
-		return $this->hasMany(Commentaire::class, 'demandeurs_id')->latest();
+		return $this->hasMany(Commentaire::class, 'demandeurs_id');
 	}
 
 	public function disponibilites()
@@ -119,28 +122,28 @@ class Demandeur extends Model
 	{
 		return $this->belongsToMany(Formation::class, 'demandeursformations', 'demandeurs_id', 'formations_id')
 					->withPivot('id', 'deleted_at')
-					->withTimestamps()->latest();
+					->withTimestamps();
 	}
 
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'demandeursmodules', 'demandeurs_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
-					->withTimestamps()->latest();
+					->withTimestamps();
 	}
 
 	public function individuelles()
 	{
-		return $this->hasMany(Individuelle::class, 'demandeurs_id')->latest();
+		return $this->hasMany(Individuelle::class, 'demandeurs_id');
 	}
 
 	public function pcharges()
 	{
-		return $this->hasMany(Pcharge::class, 'demandeurs_id')->latest();
+		return $this->hasMany(Pcharge::class, 'demandeurs_id');
 	}
 
 	public function titres()
 	{
-		return $this->hasMany(Titre::class, 'demandeurs_id')->latest();
+		return $this->hasMany(Titre::class, 'demandeurs_id');
 	}
 }

@@ -18,17 +18,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string $uuid
  * @property string $name
  * @property string|null $domaine
- * @property int $filieres_id
+ * @property int|null $filieres_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Filiere $filiere
+ * @property Filiere|null $filiere
  *
  * @package App\Models
  */
 class Filierespecialite extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

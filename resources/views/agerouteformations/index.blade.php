@@ -57,13 +57,13 @@
                                 </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($projets->findividuelles as $findividuelle)
+                                    @foreach ($findividuelles as $findividuelle)
                                         <tr>
                                             <td>{!! $findividuelle->formation->code !!}</td>
                                             <td>{!! $findividuelle->module->name !!}</td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                             <td class="text-center">
-                                                @foreach ($findividuelle->formation->individuelles as $individuelle)
+                                                @foreach ($findividuelle->formation->demandeurs as $demandeur)
                                                     @if ($loop->last)
                                                         {!! $loop->count !!}
                                                     @endif

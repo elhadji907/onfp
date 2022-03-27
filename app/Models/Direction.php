@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Direction extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -79,11 +80,6 @@ class Direction extends Model
 
 	public function employees()
 	{
-		return $this->hasMany(Employee::class, 'directions_id')->latest();
-	}
-
-	public function chef()
-	{
-		return $this->belongsTo(Employee::class, 'chef_id');
+		return $this->hasMany(Employee::class, 'directions_id');
 	}
 }

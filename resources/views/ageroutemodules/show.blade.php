@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        {{--  {{$projet_name}}   --}}Liste des bénéficiaires en <b>{!! $modules->name !!}</b>
+                        {{-- {{$projet_name}} --}}Liste des bénéficiaires en <b>{!! $modules->name !!}</b>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -49,10 +49,10 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($projets->modules as $key => $module)
-                                            @if ($module->name == $modules->name)
-                                                @foreach ($module->individuelles as $individuelle)
-                                                    @foreach ($individuelle->projets as $projet)
-                                                        @if ($projet->name == $projet_name)
+                                            @foreach ($module->individuelles as $individuelle)
+                                                @foreach ($individuelle->projets as $projet)
+                                                    @if ($projet->name == $projet_name)
+                                                        @if ($module->name == $modules->name)
                                                             <tr>
                                                                 <td>{!! $individuelle->numero_dossier !!}</td>
                                                                 <td>{!! $individuelle->cin !!}</td>
@@ -101,9 +101,9 @@
                                                                 </td>
                                                             </tr>
                                                         @endif
-                                                    @endforeach
+                                                    @endif
                                                 @endforeach
-                                            @endif
+                                            @endforeach
                                         @endforeach
                                     </tbody>
                                 </table>

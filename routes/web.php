@@ -181,12 +181,13 @@ Route::group([
         Route::get('listerparmodulelocalite/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalite'])->name('listerparmodulelocalite');
         Route::get('listerparmodulezone/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezone'])->name('listerparmodulezone');
         Route::get('candidatlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalite'])->name('candidatlocalite');
+        Route::get('candidatmodule/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodule'])->name('candidatmodule');
         Route::get('candidatzone/{projet}/{localite}', [AgeroutezoneController::class, 'candidatzone'])->name('candidatzone');
-        Route::get('agerouteattente/{individuelles}/{statut}/{module}/{numero}', [AgerouteindividuelleController::class, 'agerouteattente'])->name('agerouteattente');
-        Route::get('agerouteencours/{individuelles}/{statut}/{module}/{numero}', [AgerouteindividuelleController::class, 'agerouteencours'])->name('agerouteencours');
-        Route::get('agerouterejeter/{individuelles}/{statut}/{module}/{numero}', [AgerouteindividuelleController::class, 'agerouterejeter'])->name('agerouterejeter');
-        Route::get('agerouteretenues/{individuelles}/{statut}/{module}/{numero}', [AgerouteindividuelleController::class, 'agerouteretenues'])->name('agerouteretenues');
-        Route::get('agerouteterminer/{individuelles}/{statut}/{module}/{numero}', [AgerouteindividuelleController::class, 'agerouteterminer'])->name('agerouteterminer');
+        Route::get('agerouteattente/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteattente'])->name('agerouteattente');
+        Route::get('agerouteencours/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteencours'])->name('agerouteencours');
+        Route::get('agerouterejeter/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouterejeter'])->name('agerouterejeter');
+        Route::get('agerouteretenues/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteretenues'])->name('agerouteretenues');
+        Route::get('agerouteterminer/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteterminer'])->name('agerouteterminer');
         Route::get('ageroutepresel/{module}/{statut}/{individuelle}', [AgerouteindividuelleController::class, 'ageroutepresel'])->name('ageroutepresel');
         Route::get('moduleindividuelle/{projet}/{individuelle}', [AgerouteindividuelleController::class, 'moduleindividuelle'])->name('moduleindividuelle');
         Route::get('/agerouteformations/list', [AgerouteformationController::class, 'list'])->name('formations.list');
@@ -198,9 +199,11 @@ Route::group([
         Route::get('formationcandidatsadd/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'formationcandidatsadd'])->name('formationcandidatsadd');
         Route::get('formationcandidatsdelete/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'formationcandidatsdelete'])->name('formationcandidatsdelete');
         Route::get('individuelleformations/{individuelle}', [AgerouteformationController::class, 'individuelleformations'])->name('individuelleformations');
-        Route::get('codeformations/{formation}', [AgerouteformationController::class, 'codeformations'])->name('codeformations');
         Route::get('candidatspmr/{localite}/{projet}/{handicap}', [AgerouteindividuelleController::class, 'candidatspmr'])->name('candidatspmr');
         Route::get('candidatsvs/{localite}/{projet}/{victimes}', [AgerouteindividuelleController::class, 'candidatsvs'])->name('candidatsvs');
+        Route::get('statutageroute/{localite}/{projet}/{statut}', [AgerouteindividuelleController::class, 'statutageroute'])->name('statutageroute');
+        Route::get('statutageroutepmr/{localite}/{projet}/{statut}/{pmr}', [AgerouteindividuelleController::class, 'statutageroutepmr'])->name('statutageroutepmr');
+        Route::get('statutageroutesvs/{localite}/{projet}/{statut}/{svs}', [AgerouteindividuelleController::class, 'statutageroutesvs'])->name('statutageroutesvs');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 

@@ -12,15 +12,7 @@
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         {{ __('TOTAL') }}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <?php $i = 0; ?>
-                                        @foreach ($projet->individuelles as $key => $individuelle)
-                                            @foreach ($individuelle->localites as $key => $localite)
-                                                @if ($loop->last && isset($localite->nom))
-                                                    <?php $i++; ?>
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                        {!! $i !!}
+                                        {{ $total_count }}
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -43,15 +35,7 @@
                                         {{ __('ZIGUINCHOR') }}
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <?php $i = 0; ?>
-                                        @foreach ($projet->individuelles as $key => $individuelle)
-                                            @foreach ($individuelle->localites as $key => $localite)
-                                                @if ($loop->last && isset($localite->nom) && $localite->nom == 'Ziguinchor')
-                                                    <?php $i++; ?>
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                        {!! $i !!}
+                                        {{ $ziguinchor_count }}
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -73,15 +57,7 @@
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                         {{ __('BIGNONA') }}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <?php $i = 0; ?>
-                                        @foreach ($projet->individuelles as $key => $individuelle)
-                                            @foreach ($individuelle->localites as $key => $localite)
-                                                @if ($loop->last && isset($localite->nom) && $localite->nom == 'Bignona')
-                                                    <?php $i++; ?>
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                        {!! $i !!}
+                                        {{ $bignona_count }}
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -104,15 +80,7 @@
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                         {{ __('BOUNKILING') }}</div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <?php $i = 0; ?>
-                                        @foreach ($projet->individuelles as $key => $individuelle)
-                                            @foreach ($individuelle->localites as $key => $localite)
-                                                @if ($loop->last && isset($localite->nom) && $localite->nom == 'Bounkiling')
-                                                    <?php $i++; ?>
-                                                @endif
-                                            @endforeach
-                                        @endforeach
-                                        {!! $i !!}
+                                        {{ $bounkiling_count }}
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -174,33 +142,26 @@
                                         <?php $i = 1; ?>
                                         @foreach ($projet->individuelles as $key => $individuelle)
                                             <tr>
-                                                <td>{!! $individuelle->numero_dossier !!}</td>
-                                                <td>{!! $individuelle->cin !!}</td>
+                                                <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
+                                                <td>{!! $individuelle->demandeur->cin !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                 <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                <td>
-                                                    @foreach ($individuelle->localites as $key => $localite)
-                                                        {!! $localite->nom ?? '' !!}
-                                                    @endforeach
-                                                </td>
-                                                <td>
-                                                    @foreach ($individuelle->zones as $key => $zone)
-                                                        {!! $zone->nom ?? '' !!}
-                                                    @endforeach
-                                                </td>
-                                                <td ALIGN="CENTER">
+                                                <td>{!! $individuelle->localite->nom ?? '' !!}</td>
+                                                <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                <td>{!! $individuelle->module->name ?? '' !!}</td>
+                                                {{-- <td ALIGN="CENTER">
                                                     <?php $h = 1; ?>
-                                                    @foreach ($individuelle->modules as $key => $module)
+                                                    @foreach ($individuelle->module as $key => $module)
                                                         @if ($loop->last)
                                                             <a class="nav-link badge badge-info"
                                                                 href="{{ url('moduleindividuelle', ['$projet' => $projet, '$individuelle' => $individuelle]) }}"
                                                                 target="_blank">{!! $loop->count !!}</a>
                                                         @endif
                                                     @endforeach
-                                                </td>
+                                                </td> --}}
                                                 <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                     <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                         title="modifier">

@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * Class Projet
  * 
@@ -46,6 +45,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Projet extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -107,9 +107,7 @@ class Projet extends Model
 
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuellesprojets', 'projets_id', 'individuelles_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Individuelle::class, 'projets_id');
 	}
 
 	public function ingenieurs()

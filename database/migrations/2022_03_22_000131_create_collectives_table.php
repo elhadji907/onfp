@@ -57,6 +57,7 @@ class CreateCollectivesTable extends Migration
             $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('conventions_id')->nullable();
             $table->unsignedInteger('fcollectives_id')->nullable();
+            $table->unsignedInteger('modules_id');
 
             $table->index(["demandeurs_id"], 'fk_collectives_demandeurs1_idx');
 
@@ -77,6 +78,8 @@ class CreateCollectivesTable extends Migration
             $table->index(["conventions_id"], 'fk_collectives_conventions1_idx');
 
             $table->index(["fcollectives_id"], 'fk_collectives_fcollectives1_idx');
+
+            $table->index(["modules_id"], 'fk_collectives_modules1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -128,6 +131,11 @@ class CreateCollectivesTable extends Migration
 
             $table->foreign('fcollectives_id', 'fk_collectives_fcollectives1_idx')
                 ->references('id')->on('fcollectives')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('modules_id', 'fk_collectives_modules1_idx')
+                ->references('id')->on('modules')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Imputation extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

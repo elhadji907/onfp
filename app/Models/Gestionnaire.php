@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Gestionnaire extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

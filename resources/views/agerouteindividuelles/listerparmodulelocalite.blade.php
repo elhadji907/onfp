@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE, demandeurs du département de ' . $localite. ' en '.$modules->name )
+@section('title', 'AGEROUTE, demandeurs du département de ' . $localite_concernee . ' en ' . $modules->name)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        AGEROUTE, liste des demandeurs du département de {{$localite}} en {{$modules->name}}
+                        AGEROUTE, liste des demandeurs du département de {{ $localite_concernee }} en
+                        {{ $modules->name }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -37,173 +38,79 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
-                                            {{--  <th style="width:24%;">Module</th>  --}}
-                                            <th style="width:15%;">Adresse</th>
+                                            <th style="width:5%;">Statut</th>
                                             <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        @if ($localite == 'Bounkiling')
-                                        @foreach ($modules->individuelles as $key => $individuelle)
-                                            @foreach ($individuelle->localites as $key => $localite)
-                                                @if (isset($localite->nom) && $localite->nom == 'Bounkiling')
-                                                        <tr>
-                                                            <td>{!! $individuelle->cin !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                            <td>
-                                                                @foreach ($individuelle->zones as $key => $zone)
-                                                                    {!! $zone->nom ?? '' !!}
-                                                                @endforeach
-                                                            </td>
-                                                            <td>{!! $individuelle->demandeur->user->adresse !!}</td>
-                                                            {{--  <td>
-                                                                <?php $h = 1; ?>
-                                                                @foreach ($individuelle->modules as $key => $module)
-                                                                    @if (isset($module->name))
-                                                                        <a class="nav-link"
-                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Bounkiling','$module' => $module->name]) }}"
-                                                                            target="_blank">
-                                                                            {!! $module->name ?? '' !!}<br />
-                                                                        </a>
-                                                                    @else
-                                                                    @endif
-                                                                @endforeach
-                                                            </td>  --}}
-                                                            <td class="d-flex align-items-baseline">
-                                                                <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
-                                                                    class='btn btn-success btn-sm' title="modifier">
-                                                                    <i class="far fa-edit">&nbsp;</i>
+                                        @foreach ($individuelles as $key => $individuelle)
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->module->name == $modules->name)
+                                                <tr>
+                                                    <td>{!! $individuelle->demandeur->cin !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
+                                                                <label
+                                                                    class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
+                                                                <label
+                                                                    class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @else
+                                                                <label
+                                                                    class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @endif
+                                                            &nbsp;
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
+                                                                <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle,'$statut' => 'accepter','$module' => $individuelle->module->id]) }}"
+                                                                    title="accepter"
+                                                                    class="btn btn-outline-primary btn-sm mt-0">
+                                                                    <i class="fas fa-check-circle"></i>
                                                                 </a>
-                                                                &nbsp;
-                                                                <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
-                                                                    class='btn btn-primary btn-sm' title="voir"
-                                                                    target="_blank">
-                                                                    <i class="far fa-eye">&nbsp;</i>
+                                                            @endif
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'rejeter')
+                                                                <a href="{{ url('agerouterejeter', ['$individuelle' => $individuelle,'$statut' => 'rejeter','$module' => $individuelle->module->id]) }}"
+                                                                    title="rejeter"
+                                                                    class="btn btn-outline-danger btn-sm mt-0">
+                                                                    <i class="fas fa-times"></i>
                                                                 </a>
-                                                                &nbsp;
-                                                                @can('role-delete')
-                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                                    {!! Form::close() !!}
-                                                                @endcan
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                        @elseif ($localite == 'Ziguinchor')
-                                            @foreach ($modules->individuelles as $key => $individuelle)
-                                                @foreach ($individuelle->localites as $key => $localite)
-                                                    @if (isset($localite->nom) && $localite->nom == 'Ziguinchor')
-                                                        <tr>
-                                                            <td>{!! $individuelle->cin !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                            <td>
-                                                                @foreach ($individuelle->zones as $key => $zone)
-                                                                    {!! $zone->nom ?? '' !!}
-                                                                @endforeach
-                                                            </td>
-                                                            <td>{!! $individuelle->demandeur->user->adresse !!}</td>
-                                                           {{--   <td>
-                                                                <?php $h = 1; ?>
-                                                                @foreach ($individuelle->modules as $key => $module)
-                                                                    @if (isset($module->name))
-                                                                        <a class="nav-link"
-                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Ziguinchor','$module' => $module->name]) }}"
-                                                                            target="_blank">
-                                                                            {!! $module->name ?? '' !!}<br />
-                                                                        </a>
-                                                                    @else
-                                                                    @endif
-                                                                @endforeach
-                                                            </td>  --}}
-                                                            <td class="d-flex align-items-baseline">
-                                                                <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
-                                                                    class='btn btn-success btn-sm' title="modifier">
-                                                                    <i class="far fa-edit">&nbsp;</i>
+                                                            @endif
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
+                                                                <a href="{{ url('agerouteattente', ['$individuelle' => $individuelle,'$statut' => 'attente','$module' => $individuelle->module->id]) }}"
+                                                                    title="attente"
+                                                                    class="btn btn-outline-warning btn-sm mt-0">
+                                                                    <i class="fas fa-reply"></i>
                                                                 </a>
-                                                                &nbsp;
-                                                                <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
-                                                                    class='btn btn-primary btn-sm' title="voir"
-                                                                    target="_blank">
-                                                                    <i class="far fa-eye">&nbsp;</i>
-                                                                </a>
-                                                                &nbsp;
-                                                                @can('role-delete')
-                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                                    {!! Form::close() !!}
-                                                                @endcan
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                        @elseif ($localite == 'Bignona')
-                                        @foreach ($modules->individuelles as $key => $individuelle)
-                                            @foreach ($individuelle->localites as $key => $localite)
-                                                @if (isset($localite->nom) && $localite->nom == 'Bignona')
-                                                        <tr>
-                                                            <td>{!! $individuelle->cin !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                            <td>
-                                                                @foreach ($individuelle->zones as $key => $zone)
-                                                                    {!! $zone->nom ?? '' !!}
-                                                                @endforeach
-                                                            </td>
-                                                            <td>{!! $individuelle->demandeur->user->adresse !!}</td>
-                                                           {{--   <td>
-                                                                <?php $h = 1; ?>
-                                                                @foreach ($individuelle->modules as $key => $module)
-                                                                    @if (isset($module->name))
-                                                                        <a class="nav-link"
-                                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => 'Bignona','$module' => $module->name]) }}"
-                                                                            target="_blank">
-                                                                            {!! $module->name ?? '' !!}<br />
-                                                                        </a>
-                                                                    @else
-                                                                    @endif
-                                                                @endforeach
-                                                            </td>  --}}
-                                                            <td class="d-flex align-items-baseline">
-                                                                <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
-                                                                    class='btn btn-success btn-sm' title="modifier">
-                                                                    <i class="far fa-edit">&nbsp;</i>
-                                                                </a>
-                                                                &nbsp;
-                                                                <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
-                                                                    class='btn btn-primary btn-sm' title="voir"
-                                                                    target="_blank">
-                                                                    <i class="far fa-eye">&nbsp;</i>
-                                                                </a>
-                                                                &nbsp;
-                                                                @can('role-delete')
-                                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                                    {!! Form::close() !!}
-                                                                @endcan
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                        @endif
+                                                            @endif
+                                                        </div>
+                                                    </td>
+                                                    <td class="d-flex align-items-baseline">
+                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="far fa-edit">&nbsp;</i>
+                                                        </a>
+                                                        &nbsp;
+                                                        <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                            class='btn btn-primary btn-sm' title="voir" target="_blank">
+                                                            <i class="far fa-eye">&nbsp;</i>
+                                                        </a>
+                                                        &nbsp;
+                                                        @can('role-delete')
+                                                            {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                            {!! Form::close() !!}
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

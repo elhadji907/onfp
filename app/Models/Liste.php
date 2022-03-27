@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Liste extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

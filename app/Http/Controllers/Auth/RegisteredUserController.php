@@ -88,7 +88,7 @@ class RegisteredUserController extends Controller
             /* 'roles_id'  => $role_id, */
         ]);
 
-        $user->assignRole('Demandeur');
+  /*       $user->assignRole('Demandeur');
         $user->assignRole('Individuelle');
         $user->assignRole('Collective');
         $user->assignRole('Pcharge');
@@ -110,7 +110,7 @@ class RegisteredUserController extends Controller
         $pcharge = Pcharge::create([
             'demandeurs_id'     =>      $demandeur->id,
             'statut'            =>      'Attente',
-        ]);
+        ]); */
 
         event(new Registered($user));
 

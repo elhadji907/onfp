@@ -54,6 +54,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $etudes_id
  * @property int|null $typepcharges_id
  * @property int|null $diplomes_id
+ * @property int|null $diplomespros_id
  * @property string|null $optiondiplome
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
@@ -62,6 +63,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Demandeur|null $demandeur
  * @property Commune|null $commune
  * @property Diplome|null $diplome
+ * @property Diplomespro|null $diplomespro
  * @property Etablissement|null $etablissement
  * @property Etude|null $etude
  * @property Filiere|null $filiere
@@ -74,6 +76,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Pcharge extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -94,7 +97,8 @@ class Pcharge extends Model
 		'scolarites_id' => 'int',
 		'etudes_id' => 'int',
 		'typepcharges_id' => 'int',
-		'diplomes_id' => 'int'
+		'diplomes_id' => 'int',
+		'diplomespros_id' => 'int'
 	];
 
 	protected $dates = [
@@ -141,6 +145,7 @@ class Pcharge extends Model
 		'etudes_id',
 		'typepcharges_id',
 		'diplomes_id',
+		'diplomespros_id',
 		'optiondiplome'
 	];
 
@@ -157,6 +162,11 @@ class Pcharge extends Model
 	public function diplome()
 	{
 		return $this->belongsTo(Diplome::class, 'diplomes_id');
+	}
+
+	public function diplomespro()
+	{
+		return $this->belongsTo(Diplomespro::class, 'diplomespros_id');
 	}
 
 	public function etablissement()

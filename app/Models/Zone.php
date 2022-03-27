@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Zone extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -54,14 +55,12 @@ class Zone extends Model
 
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuelleszones', 'zones_id', 'individuelles_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Individuelle::class, 'zones_id');
 	}
 
 	public function programmes()
 	{
-		return $this->belongsToMany(Programme::class, 'programmes_has_zones', 'zones_id', 'programmes_id')
+		return $this->belongsToMany(Programme::class, 'programmeszones', 'zones_id', 'programmes_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

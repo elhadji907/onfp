@@ -12,44 +12,45 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Formationsevaluation
+ * Class Programmeslocalite
  * 
  * @property int $id
- * @property int $formations_id
- * @property int $evaluations_id
+ * @property int $programmes_id
+ * @property int $localites_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Evaluation $evaluation
- * @property Formation $formation
+ * @property Localite $localite
+ * @property Programme $programme
  *
  * @package App\Models
  */
-class Formationsevaluation extends Model
+class Programmeslocalite extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'formationsevaluations';
+	protected $table = 'programmeslocalites';
 
 	protected $casts = [
-		'formations_id' => 'int',
-		'evaluations_id' => 'int'
+		'programmes_id' => 'int',
+		'localites_id' => 'int'
 	];
 
 	protected $fillable = [
-		'formations_id',
-		'evaluations_id'
+		'programmes_id',
+		'localites_id'
 	];
 
-	public function evaluation()
+	public function localite()
 	{
-		return $this->belongsTo(Evaluation::class, 'evaluations_id');
+		return $this->belongsTo(Localite::class, 'localites_id');
 	}
 
-	public function formation()
+	public function programme()
 	{
-		return $this->belongsTo(Formation::class, 'formations_id');
+		return $this->belongsTo(Programme::class, 'programmes_id');
 	}
 }

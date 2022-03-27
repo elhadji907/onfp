@@ -133,39 +133,33 @@
                                 <td class="pt-3">{{ $findividuelle->formation->beneficiaires ?? '' }}</td>
                             </tr>
                             <tr class="heading">
-                                <td class="pt-3">Opérateur</td>
-                                <td class="pt-3">Sigle</td>
+                                <td colspan="2" class="pt-3">Opérateur</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
-                                <td class="pt-3">{{ $findividuelle->formation->beneficiaires ?? '' }}</td>
+                                <td colspan="2" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!} ({{ $findividuelle->formation->operateur->sigle ?? '' }})</td>
                             </tr>
                             <tr class="heading">
-                                <td class="pt-3">Commune</td>
+                                <td class="pt-3">Département</td>
                                 <td class="pt-3">Adresse</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->formation->commune->nom ?? '' !!}</td>
+                                <td class="pt-3">{!! $findividuelle->formation->commune->arrondissement->departement->nom ?? '' !!}</td>
                                 <td class="pt-3">{{ $findividuelle->formation->adresse ?? '' }}</td>
                             </tr>
                             @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
                                 <tr class="heading">
-                                    <td class="pt-3">Projet</td>
-                                    <td class="pt-3">Sigle</td>
+                                    <td colspan="2" class="pt-3">Projet</td>
                                 </tr>
                                 <tr class="details">
-                                    <td class="pt-3">{!! $findividuelle->projet->name ?? '' !!}</td>
-                                    <td class="pt-3">{{ $findividuelle->projet->sigle ?? '' }}</td>
+                                    <td colspan="2" class="pt-3">{!! strtolower($findividuelle->projet->name) ?? '' !!} ({{ $findividuelle->projet->sigle ?? '' }})</td>
                                 </tr>
                             @endif
                             @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
                                 <tr class="heading">
-                                    <td class="pt-3">Programme</td>
-                                    <td class="pt-3">Sigle</td>
+                                    <td colspan="2" class="pt-3">Programme</td>
                                 </tr>
                                 <tr class="details">
-                                    <td class="pt-3">{!! $findividuelle->programme->name ?? '' !!}</td>
-                                    <td class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}</td>
+                                    <td colspan="2" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!} ({{ $findividuelle->programme->sigle ?? '' }})</td>
                                 </tr>
                             @endif
                         </table>
@@ -201,23 +195,25 @@
                         <tbody class="details">
                             <?php $i = 1; ?>
                             @foreach ($formation->individuelles as $individuelle)
-                                <tr>
-                                    <td>{{ $i++ }}</td>
-                                    <td>{{ $individuelle->cin }}</td>
-                                    <td>{{ $individuelle->demandeur->user->civilite }}</td>
-                                    <td>{{ $individuelle->demandeur->user->firstname }}</td>
-                                    <td>{{ $individuelle->demandeur->user->name }}</td>
-                                    <td>{{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') }}</td>
-                                    <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
-                                    <td>{{ $individuelle->demandeur->user->email }}</td>
-                                    <td>{{ $individuelle->demandeur->user->telephone }}</td>
-                                    <td>
-                                        <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
-                                            title="retirer" class="btn btn-outline-warning btn-sm mt-0">
-                                            <i class="fa fa-share" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->commune->arrondissement->departement->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $individuelle->demandeur->cin }}</td>
+                                        <td>{{ $individuelle->demandeur->user->civilite }}</td>
+                                        <td>{{ $individuelle->demandeur->user->firstname }}</td>
+                                        <td>{{ $individuelle->demandeur->user->name }}</td>
+                                        <td>{{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') }}</td>
+                                        <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
+                                        <td>{{ $individuelle->demandeur->user->email }}</td>
+                                        <td>{{ $individuelle->demandeur->user->telephone }}</td>
+                                        <td>
+                                            <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
+                                                title="retirer" class="btn btn-outline-warning btn-sm mt-0">
+                                                <i class="fa fa-share" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

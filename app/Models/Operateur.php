@@ -82,6 +82,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Operateur extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -208,7 +209,7 @@ class Operateur extends Model
 	public function modules()
 	{
 		return $this->belongsToMany(Module::class, 'modulesoperateurs', 'operateurs_id', 'modules_id')
-					->withPivot('id', 'deleted_at')
+					->withPivot('id', 'moduleoperateurstatut_id', 'specialites', 'deleted_at')
 					->withTimestamps();
 	}
 

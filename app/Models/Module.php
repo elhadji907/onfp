@@ -34,7 +34,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Collective[] $collectives
  * @property Collection|Commune[] $communes
  * @property Collection|Demandeur[] $demandeurs
- * @property Collection|Evaluateur[] $evaluateurs
  * @property Collection|Fcollective[] $fcollectives
  * @property Collection|Findividuelle[] $findividuelles
  * @property Collection|Formation[] $formations
@@ -49,6 +48,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Module extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -88,9 +88,7 @@ class Module extends Model
 
 	public function collectives()
 	{
-		return $this->belongsToMany(Collective::class, 'collectivesmodules', 'modules_id', 'collectives_id')
-					->withPivot('id', 'collectivemodulestatut_id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Collective::class, 'modules_id');
 	}
 
 	public function communes()
@@ -103,13 +101,6 @@ class Module extends Model
 	public function demandeurs()
 	{
 		return $this->belongsToMany(Demandeur::class, 'demandeursmodules', 'modules_id', 'demandeurs_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
-
-	public function evaluateurs()
-	{
-		return $this->belongsToMany(Evaluateur::class, 'evaluateursmodules', 'modules_id', 'evaluateurs_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}
@@ -131,9 +122,7 @@ class Module extends Model
 
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuellesmodules', 'modules_id', 'individuelles_id')
-					->withPivot('id', 'individuellemodulestatut_id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Individuelle::class, 'modules_id');
 	}
 
 	public function agrements()

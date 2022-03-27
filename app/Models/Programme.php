@@ -28,17 +28,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property Ingenieur|null $ingenieur
  * @property Collection|Collective[] $collectives
+ * @property Collection|Fcollective[] $fcollectives
+ * @property Collection|Findividuelle[] $findividuelles
  * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
- * @property Collection|Zone[] $zones
  * @property Collection|Localite[] $localites
  * @property Collection|Module[] $modules
  * @property Collection|Region[] $regions
+ * @property Collection|Zone[] $zones
  *
  * @package App\Models
  */
 class Programme extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -70,6 +73,16 @@ class Programme extends Model
 					->withTimestamps();
 	}
 
+	public function fcollectives()
+	{
+		return $this->hasMany(Fcollective::class, 'programmes_id');
+	}
+
+	public function findividuelles()
+	{
+		return $this->hasMany(Findividuelle::class, 'programmes_id');
+	}
+
 	public function formations()
 	{
 		return $this->hasMany(Formation::class, 'programmes_id');
@@ -77,16 +90,7 @@ class Programme extends Model
 
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuellesprogrammes', 'programmes_id', 'individuelles_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
-
-	public function zones()
-	{
-		return $this->belongsToMany(Zone::class, 'programmes_has_zones', 'programmes_id', 'zones_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Individuelle::class, 'programmes_id1');
 	}
 
 	public function localites()
@@ -106,6 +110,13 @@ class Programme extends Model
 	public function regions()
 	{
 		return $this->belongsToMany(Region::class, 'programmesregions', 'programmes_id', 'regions_id')
+					->withPivot('id', 'deleted_at')
+					->withTimestamps();
+	}
+
+	public function zones()
+	{
+		return $this->belongsToMany(Zone::class, 'programmeszones', 'programmes_id', 'zones_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
 	}

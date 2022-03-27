@@ -20,9 +20,11 @@ class AgeroutemoduleController extends Controller
         $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
-        $projets = Projet::find($projet_id);
+        $projet = Projet::find($projet_id);
 
-        return view('ageroutemodules.index', compact('projets', 'projet_name'));
+        $modules = $projet->modules;
+
+        return view('ageroutemodules.index', compact('projet', 'projet_name', 'modules', 'projet_id'));
     }
 
     /**
@@ -81,8 +83,9 @@ class AgeroutemoduleController extends Controller
         $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projets = Projet::find($id_projet);
+        $individuelles = $projets->individuelles;
         
-        return view('ageroutemodules.show', compact('modules', 'projets', 'projet_name'));
+        return view('ageroutemodules.show', compact('modules', 'projets', 'projet_name', 'individuelles'));
         
     }
 
@@ -150,4 +153,17 @@ class AgeroutemoduleController extends Controller
         return redirect()->route('ageroutemodules.index')
 ->with('success', 'Module supprimé avec succès');
     }
+
+    public function candidatmodule($projet, $module)
+    {
+        $projet = Projet::find($projet);
+
+        $module_concernee = $module;
+
+        $individuelles = $projet->individuelles;
+
+
+        return view('ageroutemodules.candidatmodule', compact('projet', 'module_concernee', 'individuelles'));
+    }
+
 }

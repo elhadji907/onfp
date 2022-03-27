@@ -79,16 +79,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Detail[] $details
  * @property Collection|Employee[] $employees
+ * @property Collection|Evaluation[] $evaluations
  * @property Collection|Facture[] $factures
  * @property Collection|Fcollective[] $fcollectives
  * @property Collection|Findividuelle[] $findividuelles
- * @property Collection|Evaluation[] $evaluations
  * @property Collection|Individuelle[] $individuelles
  *
  * @package App\Models
  */
 class Formation extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -250,13 +251,6 @@ class Formation extends Model
 		return $this->belongsTo(TypesFormation::class, 'types_formations_id');
 	}
 
-	public function beneficiaires()
-	{
-		return $this->belongsToMany(Beneficiaire::class, 'beneficiairesformations', 'formations_id', 'beneficiaires_id')
-					->withPivot('deleted_at')
-					->withTimestamps();
-	}
-
 	public function collectives()
 	{
 		return $this->hasMany(Collective::class, 'formations_id');
@@ -286,6 +280,11 @@ class Formation extends Model
 					->withTimestamps();
 	}
 
+	public function evaluations()
+	{
+		return $this->hasMany(Evaluation::class, 'formations_id');
+	}
+
 	public function factures()
 	{
 		return $this->hasMany(Facture::class, 'formations_id');
@@ -301,17 +300,8 @@ class Formation extends Model
 		return $this->hasMany(Findividuelle::class, 'formations_id');
 	}
 
-	public function evaluations()
-	{
-		return $this->belongsToMany(Evaluation::class, 'formationsevaluations', 'formations_id', 'evaluations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
-
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuellesformations', 'formations_id', 'individuelles_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Individuelle::class, 'formations_id');
 	}
 }

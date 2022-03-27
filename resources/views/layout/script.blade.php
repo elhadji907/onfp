@@ -40,35 +40,30 @@
         });
 </script>  
 <script type="text/javascript">
-
       $("#convention").select2({
             placeholder: "choisir convention",
             allowClear: true
         });
 </script>  
 <script type="text/javascript">
-
       $("#activite").select2({
             placeholder: "choisir activité",
             allowClear: true
         });
 </script>  
 <script type="text/javascript">
-
       $("#filiere").select2({
             placeholder: "choisir filière",
             allowClear: true
         });
 </script>  
 <script type="text/javascript">
-
       $("#ingenieur_projet").select2({
             placeholder: "choisir ingénieur responsable",
             allowClear: true
         });
 </script>  
 <script type="text/javascript">
-
       $("#projet-sigle").select2({
             placeholder: "choisir sigle",
             allowClear: true
@@ -76,7 +71,6 @@
 </script>  
   
 <script type="text/javascript">
-
       $("#classeur").select2({
             placeholder: "sélectionner un classeur",
             allowClear: true
@@ -89,37 +83,38 @@
         });
 </script>  
 <script type="text/javascript">
-
       $("#projet").select2({
             placeholder: "sélectionner un projet",
             allowClear: true
         });
 </script>
 <script type="text/javascript">
-
   $("#matricule_emp").select2({
         placeholder: "sélectionner le matricule du responsable",
         allowClear: true
     });
 </script>
 <script type="text/javascript">
-
   $("#civilite").select2({
         placeholder: "sélectionner civilité",
         allowClear: true
     });
 </script>  
 <script type="text/javascript">
-
   $("#etude").select2({
         placeholder: "Niveau d'étude",
         allowClear: true
     });
 </script>  
 <script type="text/javascript">
-
   $("#region").select2({
         placeholder: "sélectionner region",
+        allowClear: true
+    });
+</script>  
+<script type="text/javascript">
+  $("#module").select2({
+        placeholder: "sélectionner module",
         allowClear: true
     });
 </script>  

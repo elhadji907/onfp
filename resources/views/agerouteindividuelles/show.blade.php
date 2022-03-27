@@ -64,7 +64,7 @@
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <div align="right">
                 <p><b><u>N° Dossier</u></b> : <span style="color: rgb(255, 0, 0); text-shadow: 2px 2px;">
-                        {{ $individuelle->numero_dossier ?? '' }}</span></p>
+                        {{ $individuelle->demandeur->numero_dossier ?? '' }}</span></p>
             </div>
             <table class="table table-responsive">
                 <thead>
@@ -75,7 +75,7 @@
                 <tbody>
                     <tr>
                         <td colspan="4"><b>{{ __("N° carte nationale d'identité (CIN)") }}</b> :
-                            {{ $individuelle->cin ?? '' }}
+                            {{ $individuelle->demandeur->cin ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -213,17 +213,22 @@
                         </td>
                     </tr>
                     <tr>
-                        @if(isset($individuelle->victime_social) && $individuelle->victime_social == 'Aucun')
-                        <td colspan="4">
-                            <b>{{ __('Avez-vous été victime d’un quelconque problème social ? : ') }}</b> {{ __('Non') }}
-                        </td>
+                        @if (isset($individuelle->victime_social) && $individuelle->victime_social == 'Aucun')
+                            <td colspan="4">
+                                <b>{{ __('Avez-vous été victime d’un quelconque problème social ? : ') }}</b>
+                                {{ __('Non') }}
+                            </td>
                         @elseif (isset($individuelle->victime_social) && $individuelle->victime_social != 'Autre')
                             <td colspan="4">
-                                <b>{{ __('Avez-vous été victime d’un quelconque problème social ? ') }}</b>  {{ __("Oui") }}, <b>{{ __('Précisez :') }}</b> {{ $individuelle->victime_social ?? '' }}
+                                <b>{{ __('Avez-vous été victime d’un quelconque problème social ? ') }}</b>
+                                {{ __('Oui') }}, <b>{{ __('Précisez :') }}</b>
+                                {{ $individuelle->victime_social ?? '' }}
                             </td>
                         @else
                             <td colspan="4">
-                                <b>{{ __('Avez-vous été victime d’un quelconque problème social ? ') }}</b>  {{ __("Autre") }}, <b>{{ __('Précisez :') }}</b> {{ $individuelle->autre_victime ?? '' }}
+                                <b>{{ __('Avez-vous été victime d’un quelconque problème social ? ') }}</b>
+                                {{ __('Autre') }}, <b>{{ __('Précisez :') }}</b>
+                                {{ $individuelle->autre_victime ?? '' }}
                             </td>
                         @endif
                     </tr>
@@ -238,14 +243,10 @@
                 <tbody>
                     <tr>
                         <td colspan="2"><b>{{ __('Département : ') }}</b>
-                            @foreach ($individuelle->localites as $localite)
-                                {{ $localite->nom ?? '' }}
-                            @endforeach
+                            {{ $individuelle->localite->nom ?? '' }}
                         </td>
                         <td colspan="1"><b>{{ __('Commune : ') }}</b>
-                            @foreach ($individuelle->zones as $zone)
-                                {{ $zone->nom ?? '' }}
-                            @endforeach
+                            {{ $individuelle->zone->nom ?? '' }}
                         </td>
                     </tr>
                 </tbody>
@@ -253,38 +254,19 @@
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th align="left" colspan="2"> <u>{{ __('Module(s) demandé(s)') }}</u> </th>
-                        <th align="left" colspan="2"> <u>
-                                @if (isset($individuelle->module1) || isset($individuelle->module2) || isset($individuelle->module3))
-                                    {{ __('Module retenu') }}
-                            </u> </th>
-                        @endif
+                        <th align="left" colspan="2"> <u>{{ __('Module demandé') }}</u> </th>
+                       {{--   <th align="left" colspan="2"> <u>
+                                {{ __('Module retenu') }}
+                            </u> </th>  --}}
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td colspan="2">
-                            <?php $h = 1; ?>
-                            @foreach ($individuelle->modules as $module)
-                                <b>{{ __('Module ') }} {{ $h++ }} : </b>
-                                {{ $module->name }} <br />
-                            @endforeach
+                            {{ $individuelle->module->name ?? '' }}
                         </td>
-                        <td colspan="2">
-                            @if (isset($individuelle->module1) && $individuelle->module1 != null)
-                                <b>{{ __('Module 1 :') }} </b>
-                                {{ $individuelle->module1 }}<br />
-                            @endif
-                            @if (isset($individuelle->module2) && $individuelle->module2 != null)
-                                <b>{{ __('Module 2 :') }} </b>
-                                {{ $individuelle->module2 }}<br />
-                            @endif
-                            @if (isset($individuelle->module3) && $individuelle->module3 != null)
-                                <b>{{ __('Module 3 :') }} </b>
-                                {{ $individuelle->module3 }}<br />
-                            @else
-                            @endif
-                        </td>
+                        {{--  <td colspan="2">
+                        </td>  --}}
                     </tr>
                 </tbody>
             </table>

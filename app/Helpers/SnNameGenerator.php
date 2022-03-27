@@ -44,6 +44,15 @@ class SnNameGenerator
         "Direction Administrative et Financiere",
         "Direction de l'Ingenierie et des Operations de Formation",
     );
+
+    public static $situationeconomique = array(
+
+        "Très faible",
+        "Faible",
+        "Moyenne",
+        "Correcte",
+    );
+
     public static $sigledirection = array(
 
         "DG",
@@ -65,6 +74,11 @@ class SnNameGenerator
     );
 
     public static $handicap = array(
+        "Oui",
+        "Non",
+    );
+
+    public static $travailrenumeration = array(
         "Oui",
         "Non",
     );
@@ -533,6 +547,14 @@ class SnNameGenerator
         "Licence 3",
         "Master 1",
         "Master 2",
+    );
+
+    public static $diplomepro = array(
+
+        "BTS",
+        "BT",
+        "BEP",
+        "CAP",
     );
 
     public static $domaine = array(
@@ -1538,11 +1560,21 @@ class SnNameGenerator
 
 
     }
+
     static function getSigledirection()
     {
         $dimension=count(self::$sigledirection);
         $random_index=random_int(0, (int)$dimension-1);
         return self::$sigledirection[$random_index];
+
+
+    }
+
+    static function getSituationeconomique()
+    {
+        $dimension=count(self::$situationeconomique);
+        $random_index=random_int(0, (int)$dimension-1);
+        return self::$situationeconomique[$random_index];
 
 
     }
@@ -1577,6 +1609,14 @@ class SnNameGenerator
         $dimension=count(self::$handicap);
         $random_index=random_int(0, (int)$dimension-1);
         return self::$handicap[$random_index];
+
+    }
+
+    static function getTravailrenumeration()
+    {
+        $dimension=count(self::$travailrenumeration);
+        $random_index=random_int(0, (int)$dimension-1);
+        return self::$travailrenumeration[$random_index];
 
     }
 
@@ -1650,6 +1690,14 @@ class SnNameGenerator
         $dimension=count(self::$diplome);
         $random_index=random_int(0, (int)$dimension-1);
         return self::$diplome[$random_index];
+
+    }
+
+    static function getDiplomepro()
+    {
+        $dimension=count(self::$diplomepro);
+        $random_index=random_int(0, (int)$dimension-1);
+        return self::$diplomepro[$random_index];
 
     }
 }

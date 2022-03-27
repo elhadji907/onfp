@@ -23,14 +23,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Moduleoperateurstatut|null $moduleoperateurstatut
  * @property Module $module
  * @property Operateur $operateur
+ * @property Moduleoperateurstatut|null $moduleoperateurstatut
  *
  * @package App\Models
  */
 class Modulesoperateur extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -49,11 +50,6 @@ class Modulesoperateur extends Model
 		'specialites'
 	];
 
-	public function moduleoperateurstatut()
-	{
-		return $this->belongsTo(Moduleoperateurstatut::class);
-	}
-
 	public function module()
 	{
 		return $this->belongsTo(Module::class, 'modules_id');
@@ -62,5 +58,10 @@ class Modulesoperateur extends Model
 	public function operateur()
 	{
 		return $this->belongsTo(Operateur::class, 'operateurs_id');
+	}
+
+	public function moduleoperateurstatut()
+	{
+		return $this->belongsTo(Moduleoperateurstatut::class);
 	}
 }

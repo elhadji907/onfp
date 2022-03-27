@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * Class Fcollective
  * 
@@ -38,6 +37,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Fcollective extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

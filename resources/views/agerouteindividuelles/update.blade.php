@@ -57,7 +57,7 @@
                                 <input id="numero_dossier" type="text"
                                     class="form-control @error('numero_dossier') is-invalid @enderror" name="numero_dossier"
                                     placeholder="Votre et numero de dossier"
-                                    value="{{ $individuelle->numero_dossier ?? old('numero_dossier') }}"
+                                    value="{{ $individuelle->demandeur->numero_dossier ?? old('numero_dossier') }}"
                                     autocomplete="numero_dossier">
                                 @error('numero_dossier')
                                     <span class="invalid-feedback" role="alert">
@@ -68,7 +68,7 @@
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
                                 <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
-                                    name="cin" placeholder="Votre et cin" value="{{ $individuelle->cin ?? old('cin') }}"
+                                    name="cin" placeholder="Votre et cin" value="{{ $individuelle->demandeur->cin ?? old('cin') }}"
                                     autocomplete="cin">
                                 @error('cin')
                                     <span class="invalid-feedback" role="alert">
@@ -262,7 +262,7 @@
                             </div>
                             <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                 {!! Form::label('Année obtention :') !!}
-                                {!! Form::number('annee_diplome', $individuelle->annee_diplome ?? old('annee_diplome'), ['placeholder' => 'Ex: 2010', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
+                                {!! Form::number('annee_diplome', $individuelle->annee_diplome ?? old('annee_diplome'), ['placeholder' => 'Ex: 2010', 'class' => 'form-control', 'min' => '1980', 'max' => '2022']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('annee_diplome'))
                                         @foreach ($errors->get('annee_diplome') as $message)
@@ -293,7 +293,7 @@
                             </div>
                             <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                 {!! Form::label('Année obtention :') !!}
-                                {!! Form::number('annee_diplome_professionelle', $individuelle->annee_diplome_professionelle ?? old('annee_diplome_professionelle'), ['placeholder' => 'Ex: 2021', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
+                                {!! Form::number('annee_diplome_professionelle', $individuelle->annee_diplome_professionelle ?? old('annee_diplome_professionelle'), ['placeholder' => 'Ex: 2021', 'class' => 'form-control', 'min' => '1980', 'max' => '2022']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('annee_diplome_professionelle'))
                                         @foreach ($errors->get('annee_diplome_professionelle') as $message)
@@ -580,11 +580,24 @@
                             <p class="h5 text-white mb-2">CHOIX ET LOCALISATION</p>
                         </div>
                         <div class="form-row">
+
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {!! Form::label('Localité :') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('localite', $localites, $individuelle->localite->nom ?? old('localite'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'localite']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('localite'))
+                                        @foreach ($errors->get('localite') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+
+                        {{--      <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Lieu dépôt :') !!}(<span class="text-danger">*</span>)
                                 <br />
                                 @foreach ($localite as $value)
-                                    <label>{{ Form::radio('localite', $value->id, in_array($value->id, $individuelleLocalites) ? true : false, ['class' => 'name']) }}
+                                    <label>{{ Form::radio('localite', $value->id, in_array($value->id, $individuelle->localite->nom) ? true : false, ['class' => 'name']) }}
                                         {{ $value->nom }}</label>
                                     <br />
                                 @endforeach
@@ -595,8 +608,19 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>
+                            </div>  --}}
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {!! Form::label('Zone :') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('zone', $zones, $individuelle->zone->nom ?? old('zone'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'zone']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('zone'))
+                                        @foreach ($errors->get('zone') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                     {{--         <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Zone Formation :') !!}(<span class="text-danger">*</span>)
                                 <br />
                                 @foreach ($zone as $value)
@@ -611,8 +635,30 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>
+                            </div>  --}}
+                        {{--      <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {!! Form::label('Module :') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('module', $modules, $individuelle->module->name ?? old('module'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'moduleup']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('module'))
+                                        @foreach ($errors->get('module') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>  --}}
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {!! Form::label('Module :') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('module', $modules, $individuelle->module->name ?? old('module'), ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('module'))
+                                        @foreach ($errors->get('module') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                       {{--       <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
                                 <br />
                                 @foreach ($projetModules as $value)
@@ -627,7 +673,7 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>
+                            </div>  --}}
                         </div>
                     </div>
                 </div>
@@ -694,3 +740,8 @@
         });
     </script>
 @endpush
+{{--  @section('javascripts')
+    <script type="text/javascript">
+        $('#moduleup').select2().val({!! json_encode($individuelle->modules()->allRelatedIds()) !!}).trigger('change');
+    </script>
+@endsection  --}}

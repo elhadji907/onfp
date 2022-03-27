@@ -9,6 +9,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Membre
@@ -39,7 +40,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Membre extends Model
 {
+	
+    use HasFactory;
 	use SoftDeletes;
+	use \App\Helpers\UuidForKey;
 	protected $table = 'membres';
 
 	protected $casts = [

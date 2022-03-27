@@ -36,22 +36,25 @@
                                 </thead>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($individuelles->formations as $formation)
+                                    @foreach ($individuelles->demandeur->formations as $formation)
+                                    @foreach ($formation->findividuelles as $findividuelle)
                                         <tr>
                                             <td>{!! $i++ !!}</td>
                                             <td>
                                                 <a style="color: rgba(255, 140, 0, 0.829); text-decoration: none;" class="view"
                                                     title="ouvrir"
-                                                    href="{{ url('codeformations', ['$formation' => $formation->id]) }}"
-                                                    target="_blank">{!! $formation->code ?? '' !!}</a>
+                                                    href="{!! url('agerouteformations/' . $findividuelle->id) !!}"
+                                                    target="_blank">{!! $findividuelle->formation->code ?? '' !!}</a>
                                             </td>
                                             <td>
-                                                {{ $formation->module->name }}
+                                                {{ $findividuelle->formation->module->name }}
                                             </td>
-                                            <td>{!! $formation->beneficiaires ?? '' !!}</td>
-                                            <td>{!! $formation->operateur->name ?? '' !!} ({!! $formation->operateur->sigle ?? '' !!})</td>
-                                            <td>{!! $formation->statut->name ?? '' !!}</td>
-                                            {{-- <td class="d-flex align-items-baseline text-center-row">
+                                            <td>{!! $findividuelle->formation->beneficiaires ?? '' !!}</td>
+                                            <td>{!! $findividuelle->formation->operateur->name ?? '' !!} ({!! $findividuelle->formation->operateur->sigle ?? '' !!})</td>
+                                            <td>{!! $findividuelle->formation->statut->name ?? '' !!}</td>
+
+                                            {{-- 
+                                                <td class="d-flex align-items-baseline text-center-row">
                                                 <a href="{!! url('agerouteformations/' . $formation->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
@@ -65,8 +68,11 @@
                                                 {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteformations/' . $formation->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                 {!! Form::close() !!}
-                                            </td> --}}
+                                            </td> 
+                                            --}}
+                                            
                                         </tr>
+                                    @endforeach
                                     @endforeach
                                 </tbody>
                             </table>

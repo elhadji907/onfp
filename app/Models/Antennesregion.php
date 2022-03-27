@@ -12,44 +12,45 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Evaluationsevaluateur
+ * Class Antennesregion
  * 
  * @property int $id
- * @property int $evaluations_id
- * @property int $evaluateurs_id
+ * @property int $antennes_id
+ * @property int $regions_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Evaluateur $evaluateur
- * @property Evaluation $evaluation
+ * @property Antenne $antenne
+ * @property Region $region
  *
  * @package App\Models
  */
-class Evaluationsevaluateur extends Model
+class Antennesregion extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'evaluationsevaluateurs';
+	protected $table = 'antennesregions';
 
 	protected $casts = [
-		'evaluations_id' => 'int',
-		'evaluateurs_id' => 'int'
+		'antennes_id' => 'int',
+		'regions_id' => 'int'
 	];
 
 	protected $fillable = [
-		'evaluations_id',
-		'evaluateurs_id'
+		'antennes_id',
+		'regions_id'
 	];
 
-	public function evaluateur()
+	public function antenne()
 	{
-		return $this->belongsTo(Evaluateur::class, 'evaluateurs_id');
+		return $this->belongsTo(Antenne::class, 'antennes_id');
 	}
 
-	public function evaluation()
+	public function region()
 	{
-		return $this->belongsTo(Evaluation::class, 'evaluations_id');
+		return $this->belongsTo(Region::class, 'regions_id');
 	}
 }

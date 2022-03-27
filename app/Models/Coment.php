@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Coment extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -66,15 +67,5 @@ class Coment extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'users_id');
-	}	
-
-	public function commentable()
-	{
-		return $this->morphTo();
-	}
-
-	public function comments()
-	{
-		return $this->morphMany(Comment::class, 'Commentable')->latest();
 	}
 }

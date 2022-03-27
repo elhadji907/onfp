@@ -49,18 +49,16 @@
                                 </tfoot>
                                 <tbody>
                                     <?php $h = 1; ?>
-                                    @foreach ($ageroutezones->zones as $key => $zone)
+                                    @foreach ($zones as $key => $zone)
                                         <tr>
                                             <td>{{ $h++ }}</td>
                                             <td>{{ $zone->nom }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
                                                 @foreach ($zone->individuelles as $individuelle)
-                                                    @foreach ($individuelle->projets as $projet)
-                                                        @if ($loop->last && $projet->name == $projet_name)
-                                                            <?php $i++; ?>
-                                                        @endif
-                                                    @endforeach
+                                                    @if ($individuelle->projets_id == $projet_id)
+                                                        <?php $i++; ?>
+                                                    @endif
                                                 @endforeach
                                                 <a class="nav-link"
                                                     href="{{ url('candidatzone', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
@@ -69,7 +67,6 @@
                                             </td>
                                             <td>
                                                 <span>{{ $zone->localite->nom ?? ""}}</span>
-
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                {{--   <a class="btn btn-info btn-sm"

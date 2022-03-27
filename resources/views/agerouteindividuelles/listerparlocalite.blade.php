@@ -2,18 +2,16 @@
 @section('title', 'AGEROUTE - demandeurs du département de ' . $localite_concernee)
 @section('content')
     <div class="container-fluid">
-        {{-- <div class="row">
+        <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-80 py-2">
+                <div class="card border-left-secondary shadow h-100 py-2">
                     <a class="nav-link" href="#">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ __('FEMMES') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                      
-                                    </div>
+                                        Total</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $total }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -24,19 +22,14 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="#"
-                        target="_blank">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <a class="nav-link" href="{{ url('statutageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'attente']) }}" target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        {{ __('HANDICAPÉS') }}
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                      
-                                    </div>
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        attente </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $attente }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -47,18 +40,14 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="#"
-                        target="_blank">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <a class="nav-link" href="{{ url('statutageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'rejeter']) }}" target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        {{ __('DÉPLACÉS DE GUERRE') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                      
-                                    </div>
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        rejeter </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $rejeter }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -69,18 +58,14 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="#"
-                        target="_blank">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <a class="nav-link" href="{{ url('statutageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'accepter']) }}" target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        {{ __('EMMIGRATION') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    
-                                    </div>
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        accepter </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $accepter }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <span data-feather="mail"></span>
@@ -90,7 +75,9 @@
                     </a>
                 </div>
             </div>
-        </div> --}}
+        </div>
+    </div>
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if (session()->has('success'))
@@ -138,65 +125,53 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($projet->individuelles as $key => $individuelle)
-                                            @foreach ($individuelle->localites as $key => $localite)
-                                                @if (isset($localite->nom) && $localite->nom == $localite_concernee)
-                                                    <tr>
-                                                        <td>{!! $individuelle->cin !!}</td>
-                                                        <td>{!! $individuelle->demandeur->user->sexe !!}</td>
-                                                        <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                        <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                        <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                        <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                        <td>
-                                                            @foreach ($individuelle->zones as $key => $zone)
-                                                                {!! $zone->nom ?? '' !!}
-                                                            @endforeach
-                                                        </td>
-                                                        <td>
-                                                            <?php $h = 1; ?>
-                                                            @foreach ($individuelle->modules as $key => $module)
-                                                                @if (isset($module->name))
-                                                                    <a class="nav-link"
-                                                                        href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $module->id]) }}"
-                                                                        target="_blank">
-                                                                        {!! $module->name ?? '' !!}<br />
-                                                                    </a>
-                                                                @else
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ url('candidatspmr', ['$localite' => $localite->id, '$projet' => $projet->id, '$handicap' => $individuelle->handicap]) }}"
-                                                                title="voir liste" class="nav-link mt-0" target="_blank">
-                                                                {!! $individuelle->handicap !!}
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a href="{{ url('candidatsvs', ['$localite' => $localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
-                                                                title="voir liste" class="nav-link mt-0" target="_blank">
-                                                                {!! $individuelle->victime_social !!}
-                                                            </a>
-                                                        </td>
-                                                        <td class="d-flex align-items-baseline">
-                                                            <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}"
-                                                                class='btn btn-success btn-sm' title="modifier">
-                                                                <i class="far fa-edit">&nbsp;</i>
-                                                            </a>
-                                                            &nbsp;
-                                                            <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
-                                                                class='btn btn-primary btn-sm' title="voir" target="_blank">
-                                                                <i class="far fa-eye">&nbsp;</i>
-                                                            </a>
-                                                            &nbsp;
-                                                            @can('role-delete')
-                                                                {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                                {!! Form::close() !!}
-                                                            @endcan
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee)
+                                                <tr>
+                                                    <td>{!! $individuelle->demandeur->cin !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->sexe !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                    <td>
+                                                        <a class="nav-link"
+                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
+                                                            target="_blank">
+                                                            {!! $individuelle->module->name ?? '' !!}<br />
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ url('candidatspmr', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap]) }}"
+                                                            title="voir liste" class="nav-link mt-0" target="_blank">
+                                                            {!! $individuelle->handicap !!}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ url('candidatsvs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
+                                                            title="voir liste" class="nav-link mt-0" target="_blank">
+                                                            {!! $individuelle->victime_social !!}
+                                                        </a>
+                                                    </td>
+                                                    <td class="d-flex align-items-baseline">
+                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="far fa-edit">&nbsp;</i>
+                                                        </a>
+                                                        &nbsp;
+                                                        <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                            class='btn btn-primary btn-sm' title="voir" target="_blank">
+                                                            <i class="far fa-eye">&nbsp;</i>
+                                                        </a>
+                                                        &nbsp;
+                                                        @can('role-delete')
+                                                            {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                            {!! Form::close() !!}
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

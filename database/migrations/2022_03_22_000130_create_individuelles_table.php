@@ -24,10 +24,6 @@ class CreateIndividuellesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('numero_dossier', 45)->nullable();
-            $table->string('cin', 45)->nullable();
-            $table->longText('legende')->nullable();
-            $table->longText('reference')->nullable();
             $table->longText('experience')->nullable();
             $table->longText('projetprofessionnel')->nullable();
             $table->longText('prerequis')->nullable();
@@ -74,20 +70,19 @@ class CreateIndividuellesTable extends Migration
             $table->string('file7', 200)->nullable();
             $table->integer('nbre_pieces')->nullable();
             $table->integer('nbre_enfants')->nullable();
-            $table->string('module1', 200)->nullable();
-            $table->string('module2', 200)->nullable();
-            $table->string('module3', 200)->nullable();
-            $table->string('statut1', 45)->nullable();
-            $table->string('statut2', 45)->nullable();
-            $table->string('statut3', 45)->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
-            $table->unsignedInteger('programmes_id')->nullable();
             $table->unsignedInteger('diplomes_id')->nullable();
             $table->unsignedInteger('conventions_id')->nullable();
             $table->unsignedInteger('diplomespros_id')->nullable();
+            $table->unsignedInteger('modules_id');
+            $table->unsignedInteger('formations_id')->nullable();
+            $table->unsignedInteger('zones_id')->nullable();
+            $table->unsignedInteger('localites_id')->nullable();
+            $table->unsignedInteger('projets_id')->nullable();
+            $table->unsignedInteger('programmes_id')->nullable();
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');
 
@@ -97,13 +92,23 @@ class CreateIndividuellesTable extends Migration
 
             $table->index(["antennes_id"], 'fk_individuelles_antennes1_idx');
 
-            $table->index(["programmes_id"], 'fk_individuelles_programmes1_idx');
-
             $table->index(["diplomes_id"], 'fk_individuelles_diplomes1_idx');
 
             $table->index(["conventions_id"], 'fk_individuelles_conventions1_idx');
 
             $table->index(["diplomespros_id"], 'fk_individuelles_diplomespros1_idx');
+
+            $table->index(["modules_id"], 'fk_individuelles_modules1_idx');
+
+            $table->index(["formations_id"], 'fk_individuelles_formations1_idx');
+
+            $table->index(["zones_id"], 'fk_individuelles_zones1_idx');
+
+            $table->index(["localites_id"], 'fk_individuelles_localites1_idx');
+
+            $table->index(["projets_id"], 'fk_individuelles_projets1_idx');
+
+            $table->index(["programmes_id"], 'fk_individuelles_programmes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -128,11 +133,6 @@ class CreateIndividuellesTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('programmes_id', 'fk_individuelles_programmes1_idx')
-                ->references('id')->on('programmes')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
             $table->foreign('diplomes_id', 'fk_individuelles_diplomes1_idx')
                 ->references('id')->on('diplomes')
                 ->onDelete('no action')
@@ -145,6 +145,36 @@ class CreateIndividuellesTable extends Migration
 
             $table->foreign('diplomespros_id', 'fk_individuelles_diplomespros1_idx')
                 ->references('id')->on('diplomespros')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('modules_id', 'fk_individuelles_modules1_idx')
+                ->references('id')->on('modules')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('formations_id', 'fk_individuelles_formations1_idx')
+                ->references('id')->on('formations')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('zones_id', 'fk_individuelles_zones1_idx')
+                ->references('id')->on('zones')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('localites_id', 'fk_individuelles_localites1_idx')
+                ->references('id')->on('localites')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('projets_id', 'fk_individuelles_projets1_idx')
+                ->references('id')->on('projets')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('programmes_id', 'fk_individuelles_programmes1_idx')
+                ->references('id')->on('programmes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

@@ -7,7 +7,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,12 +30,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Village|null $village
  * @property Gestionnaire|null $gestionnaire
  * @property User|null $user
- * @property Collection|Formation[] $formations
  *
  * @package App\Models
  */
 class Beneficiaire extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -76,12 +75,5 @@ class Beneficiaire extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'users_id');
-	}
-
-	public function formations()
-	{
-		return $this->belongsToMany(Formation::class, 'beneficiairesformations', 'beneficiaires_id', 'formations_id')
-					->withPivot('deleted_at')
-					->withTimestamps();
 	}
 }

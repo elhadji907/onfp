@@ -39,6 +39,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Commune extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

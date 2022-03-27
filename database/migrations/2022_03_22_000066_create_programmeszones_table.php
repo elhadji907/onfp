@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIndividuelleslocalitesTable extends Migration
+class CreateProgrammeszonesTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'individuelleslocalites';
+    public $tableName = 'programmeszones';
 
     /**
      * Run the migrations.
-     * @table individuelleslocalites
+     * @table programmeszones
      *
      * @return void
      */
@@ -23,23 +23,23 @@ class CreateIndividuelleslocalitesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('individuelles_id');
-            $table->unsignedInteger('localites_id');
+            $table->unsignedInteger('programmes_id');
+            $table->unsignedInteger('zones_id');
 
-            $table->index(["localites_id"], 'fk_individuelles_has_localites_localites1_idx');
+            $table->index(["zones_id"], 'fk_programmes_has_zones_zones1_idx');
 
-            $table->index(["individuelles_id"], 'fk_individuelles_has_localites_individuelles1_idx');
+            $table->index(["programmes_id"], 'fk_programmes_has_zones_programmes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('individuelles_id', 'fk_individuelles_has_localites_individuelles1_idx')
-                ->references('id')->on('individuelles')
+            $table->foreign('programmes_id', 'fk_programmes_has_zones_programmes1_idx')
+                ->references('id')->on('programmes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('localites_id', 'fk_individuelles_has_localites_localites1_idx')
-                ->references('id')->on('localites')
+            $table->foreign('zones_id', 'fk_programmes_has_zones_zones1_idx')
+                ->references('id')->on('zones')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

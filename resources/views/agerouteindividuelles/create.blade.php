@@ -515,31 +515,9 @@
                                         @endif
                                     </small>
                                 </div>                                
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('module 1 :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('modules1', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('modules'))
-                                            @foreach ($errors->get('modules') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('module 2 :') !!}
-                                    {!! Form::select('modules2', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute2']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('modules'))
-                                            @foreach ($errors->get('modules') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('module 3 :') !!}
-                                    {!! Form::select('modules3', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute3']) !!}
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('modules', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('modules'))
                                             @foreach ($errors->get('modules') as $message)

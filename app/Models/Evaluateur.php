@@ -28,13 +28,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|Module[] $modules
  * @property Collection|Evaluation[] $evaluations
  *
  * @package App\Models
  */
 class Evaluateur extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -55,17 +55,8 @@ class Evaluateur extends Model
 		'appreciation'
 	];
 
-	public function modules()
-	{
-		return $this->belongsToMany(Module::class, 'evaluateursmodules', 'evaluateurs_id', 'modules_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
-	}
-
 	public function evaluations()
 	{
-		return $this->belongsToMany(Evaluation::class, 'evaluationsevaluateurs', 'evaluateurs_id', 'evaluations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Evaluation::class, 'evaluateurs_id');
 	}
 }

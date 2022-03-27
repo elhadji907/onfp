@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * Class Collective
  * 
@@ -51,6 +50,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $projets_id
  * @property int|null $conventions_id
  * @property int|null $fcollectives_id
+ * @property int $modules_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -63,9 +63,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Fcollective|null $fcollective
  * @property Formation|null $formation
  * @property Ingenieur|null $ingenieur
+ * @property Module $module
  * @property Programme|null $programme
  * @property Projet|null $projet
- * @property Collection|Module[] $modules
  * @property Collection|Programme[] $programmes
  * @property Collection|Projet[] $projets
  * @property Collection|Membre[] $membres
@@ -74,6 +74,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Collective extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -90,7 +91,8 @@ class Collective extends Model
 		'programmes_id' => 'int',
 		'projets_id' => 'int',
 		'conventions_id' => 'int',
-		'fcollectives_id' => 'int'
+		'fcollectives_id' => 'int',
+		'modules_id' => 'int'
 	];
 
 	protected $dates = [
@@ -132,7 +134,8 @@ class Collective extends Model
 		'programmes_id',
 		'projets_id',
 		'conventions_id',
-		'fcollectives_id'
+		'fcollectives_id',
+		'modules_id'
 	];
 
 	public function antenne()
@@ -175,6 +178,11 @@ class Collective extends Model
 		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
 	}
 
+	public function module()
+	{
+		return $this->belongsTo(Module::class, 'modules_id');
+	}
+
 	public function programme()
 	{
 		return $this->belongsTo(Programme::class, 'programmes_id');
@@ -183,13 +191,6 @@ class Collective extends Model
 	public function projet()
 	{
 		return $this->belongsTo(Projet::class, 'projets_id');
-	}
-
-	public function modules()
-	{
-		return $this->belongsToMany(Module::class, 'collectivesmodules', 'collectives_id', 'modules_id')
-					->withPivot('id', 'collectivemodulestatut_id', 'deleted_at')
-					->withTimestamps();
 	}
 
 	public function programmes()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Localite;
 use App\Models\Zone;
 use App\Models\Projet;
+use App\Models\Individuelle;
 use App\Models\Projetslocalite;
 use Illuminate\Http\Request;
 use DB;
@@ -23,7 +24,13 @@ class AgeroutelocaliteController extends Controller
 
         $projet = Projet::find($projet_id);
 
-        return view('ageroutelocalites.index', compact('projet', 'projet_name'));
+        $localites = $projet->localites;
+
+        /* $individuelles = $localites->individuelles; */
+
+        /* dd($localites); */
+
+        return view('ageroutelocalites.index', compact('projet', 'projet_name', 'localites', 'projet_id'));
     }
 
     /**
@@ -139,15 +146,41 @@ class AgeroutelocaliteController extends Controller
 
     public function listerparlocalite($projet, $localite)
     {
-        $projet = Projet::find($projet);
-        $localite_concernee = $localite;
-        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite_concernee'));
+        $id_projet              = $projet;
+        $id_localite            = Localite::where('nom', $localite)->first()->id;
+        $projet                 = Projet::find($projet);
+        $localite_concernee     = $localite;
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'attente')
+                ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'rejeter')
+                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'accepter')
+                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->count();
+
+        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total'));
     }
 
     public function candidatlocalite($projet, $localite)
     {
         $projet = Projet::find($projet);
-        
-        return view('ageroutelocalites.candidatlocalite', compact('projet', 'localite'));
+
+        $localite_concernee = $localite;
+
+        $individuelles = $projet->individuelles;
+
+        return view('ageroutelocalites.candidatlocalite', compact('projet', 'localite_concernee', 'individuelles'));
     }
 }

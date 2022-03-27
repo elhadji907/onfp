@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Localite extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -43,9 +44,7 @@ class Localite extends Model
 
 	public function individuelles()
 	{
-		return $this->belongsToMany(Individuelle::class, 'individuelleslocalites', 'localites_id', 'individuelles_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->hasMany(Individuelle::class, 'localites_id');
 	}
 
 	public function programmes()

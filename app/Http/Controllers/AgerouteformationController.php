@@ -38,8 +38,9 @@ class AgerouteformationController extends Controller
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
         $projets = Projet::find($projet_id);
+        $findividuelles = $projets->findividuelles;
 
-        return view('agerouteformations.index', compact('projets', 'projet_name'));
+        return view('agerouteformations.index', compact('projets', 'projet_name', 'projet_id', 'findividuelles'));
     }
 
     /**
@@ -240,10 +241,12 @@ class AgerouteformationController extends Controller
     {
         $findividuelle = Findividuelle::find($id);
         $formation = $findividuelle->formation;
+        $demandeurs = $formation->demandeurs;
 
         $findividuelle->delete();
-
         $formation->delete();
+
+        $formation->demandeurs()->detach($demandeurs);
 
         $message = $formation->code.' a été supprimé';
         return redirect()->route('agerouteformations.index')->with(compact('message'));
@@ -251,15 +254,18 @@ class AgerouteformationController extends Controller
 
     public function formationcandidats($module, $projet, $programme, $findividuelle)
     {
-        $individuelles      =           Individuelle::where('cin', '>', 0)->get();
+        $individuelles      =           Individuelle::get();
         $module             =           Module::find($module);
+        $module_id          =           $module->id;
         $projet             =           Projet::find($projet);
         $findividuelle      =           Findividuelle::find($findividuelle);
         $programme          =           Programme::find($programme);
+        $programme_id       =           $programme->id;
         $projet_name        =           $projet->name;
+        $projet_id          =           $projet->id;
         $module_name        =           $module->name;
 
-        return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle'));
+        return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle', 'projet_id', 'module_id', 'programme_id'));
     }
 
     public function individuelleformations($individuelle)
@@ -271,14 +277,17 @@ class AgerouteformationController extends Controller
 
     public function formationcandidatsadd($individuelle, $findividuelle)
     {
-        $individuelle = Individuelle::find($individuelle);
-        $findividuelle = Findividuelle::find($findividuelle);
-        $formation = $findividuelle->formation;
+        $individuelle       =       Individuelle::find($individuelle);
+        $demandeur          =       $individuelle->demandeur;
+        $findividuelle      =       Findividuelle::find($findividuelle);
+        $formation          =       $findividuelle->formation;
         
-        $individuelle->statut    =     "Retenue";
+        $individuelle->statut           =     "Retenue";
+        $individuelle->formations_id    =     $formation->id;
 
         $individuelle->save();
-        $individuelle->formations()->attach($formation);
+
+        $demandeur->formations()->sync($formation);
         
         $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
         return back()->with(compact('message'));
@@ -286,28 +295,19 @@ class AgerouteformationController extends Controller
 
     public function formationcandidatsdelete($individuelle, $findividuelle)
     {
-        $individuelle = Individuelle::find($individuelle);
-        $findividuelle = Findividuelle::find($findividuelle);
-        $formation = $findividuelle->formation;
+        $individuelle       =       Individuelle::find($individuelle);
+        $demandeur          =       $individuelle->demandeur;
+        $findividuelle      =       Findividuelle::find($findividuelle);
+        $formation          =       $findividuelle->formation;
         
-        $individuelle->statut    =     "Retirer";
+        $individuelle->statut           =     "Annulé";
+        $individuelle->formations_id    =     NULL;
 
         $individuelle->save();
 
-        $individuelle->formations()->detach($formation);
+        $demandeur->formations()->detach($formation);
         
         $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
         return back()->with(compact('message'));
-    }
-
-    public function codeformations($formation)
-    {
-        $formation = Formation::find($formation);
-      /*   $findividuelles = $formation->findividuelles;
-
-        foreach ($findividuelles as $key => $findividuelle) {
-        } */
-        
-        return view('agerouteformations.codeformations', compact('formation'));
     }
 }

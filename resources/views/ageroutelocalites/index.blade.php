@@ -20,12 +20,12 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
-                                {{--  @can('role-create')  --}}
-                                    <a href="{{ route('ageroutelocalites.create') }}">
-                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                        </div>
-                                    </a>
-                               {{--   @endcan  --}}
+                                {{-- @can('role-create') --}}
+                                <a href="{{ route('ageroutelocalites.create') }}">
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                    </div>
+                                </a>
+                                {{-- @endcan --}}
                             </div>
                             <br />
                             <table class="table table-bordered" id="table-ageroutelocalites">
@@ -40,45 +40,44 @@
                                 </thead>
                                 <tbody>
                                     <?php $h = 1; ?>
-                                    @foreach ($projet->localites as $key => $localite)
+                                    @foreach ($localites as $key => $localite)
                                         <tr>
                                             <td>{{ $h++ }}</td>
                                             <td>{{ $localite->nom }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
                                                 @foreach ($localite->individuelles as $individuelle)
-                                                    @foreach ($individuelle->projets as $projet)
-                                                        @if ($loop->last && $projet->name == $projet_name)
-                                                            <?php $i++; ?>
-                                                        @endif
-                                                    @endforeach
+                                                    @if ($individuelle->projets_id == $projet_id)
+                                                        <?php $i++; ?>
+                                                    @endif
                                                 @endforeach
-                                                <a class="nav-link" href="{{ url('candidatlocalite', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatlocalite', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
                                                     target="_blank">
                                                     <span class="badge badge-info">{!! $i !!}</span></a>
                                             </td>
                                             <td ALIGN="CENTER">
                                                 @foreach ($localite->zones as $zone)
-                                                @if($loop->last)
-                                                {!! $loop->count !!}
-                                                @endif
+                                                    @if ($loop->last)
+                                                        {!! $loop->count !!}
+                                                    @endif
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                               {{--   @can('role-edit')  --}}
-                                                    <a class="btn btn-primary btn-sm"
-                                                        href="{{ route('ageroutelocalites.edit', $localite->id) }}"><i
-                                                            class="far fa-edit" title ='modifier'>&nbsp;</i></a>
-                                                {{--  @endcan  --}}
+                                                {{-- @can('role-edit') --}}
+                                                <a class="btn btn-primary btn-sm"
+                                                    href="{{ route('ageroutelocalites.edit', $localite->id) }}"><i
+                                                        class="far fa-edit" title='modifier'>&nbsp;</i></a>
+                                                {{-- @endcan --}}
                                                 &nbsp;
                                                 <a class="btn btn-info btn-sm"
                                                     href="{{ route('ageroutelocalites.show', $localite->id) }}"><i
                                                         class="far fa-eye" title="détails">&nbsp;</i></a>&nbsp;
-                                                {{--  @can('role-delete')  --}}
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $localite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
-                                                {{--  @endcan  --}}
+                                                {{-- @can('role-delete') --}}
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $localite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                {!! Form::close() !!}
+                                                {{-- @endcan --}}
                                             </td>
                                         </tr>
                                     @endforeach

@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Convention extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

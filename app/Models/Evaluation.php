@@ -7,7 +7,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,24 +22,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property float|null $note
  * @property string|null $appreciation
  * @property string|null $mention
+ * @property int|null $formations_id
+ * @property int|null $evaluateurs_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collection|Evaluateur[] $evaluateurs
- * @property Collection|Formation[] $formations
+ * @property Evaluateur|null $evaluateur
+ * @property Formation|null $formation
  *
  * @package App\Models
  */
 class Evaluation extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
 	protected $table = 'evaluations';
 
 	protected $casts = [
-		'note' => 'float'
+		'note' => 'float',
+		'formations_id' => 'int',
+		'evaluateurs_id' => 'int'
 	];
 
 	protected $dates = [
@@ -54,20 +58,18 @@ class Evaluation extends Model
 		'date',
 		'note',
 		'appreciation',
-		'mention'
+		'mention',
+		'formations_id',
+		'evaluateurs_id'
 	];
 
-	public function evaluateurs()
+	public function evaluateur()
 	{
-		return $this->belongsToMany(Evaluateur::class, 'evaluationsevaluateurs', 'evaluations_id', 'evaluateurs_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->belongsTo(Evaluateur::class, 'evaluateurs_id');
 	}
 
-	public function formations()
+	public function formation()
 	{
-		return $this->belongsToMany(Formation::class, 'formationsevaluations', 'evaluations_id', 'formations_id')
-					->withPivot('id', 'deleted_at')
-					->withTimestamps();
+		return $this->belongsTo(Formation::class, 'formations_id');
 	}
 }

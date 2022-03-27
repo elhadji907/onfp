@@ -12,40 +12,41 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Individuelleszone
+ * Class Projetszone
  * 
  * @property int $id
- * @property int $individuelles_id
+ * @property int $projets_id
  * @property int $zones_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Individuelle $individuelle
+ * @property Projet $projet
  * @property Zone $zone
  *
  * @package App\Models
  */
-class Individuelleszone extends Model
+class Projetszone extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'individuelleszones';
+	protected $table = 'projetszones';
 
 	protected $casts = [
-		'individuelles_id' => 'int',
+		'projets_id' => 'int',
 		'zones_id' => 'int'
 	];
 
 	protected $fillable = [
-		'individuelles_id',
+		'projets_id',
 		'zones_id'
 	];
 
-	public function individuelle()
+	public function projet()
 	{
-		return $this->belongsTo(Individuelle::class, 'individuelles_id');
+		return $this->belongsTo(Projet::class, 'projets_id');
 	}
 
 	public function zone()

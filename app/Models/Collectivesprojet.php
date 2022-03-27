@@ -12,53 +12,45 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Collectivesmodule
+ * Class Collectivesprojet
  * 
  * @property int $id
  * @property int $collectives_id
- * @property int $modules_id
- * @property int|null $collectivemodulestatut_id
+ * @property int $projets_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Collectivemodulestatut|null $collectivemodulestatut
  * @property Collective $collective
- * @property Module $module
+ * @property Projet $projet
  *
  * @package App\Models
  */
-class Collectivesmodule extends Model
+class Collectivesprojet extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
-	protected $table = 'collectivesmodules';
+	protected $table = 'collectivesprojets';
 
 	protected $casts = [
 		'collectives_id' => 'int',
-		'modules_id' => 'int',
-		'collectivemodulestatut_id' => 'int'
+		'projets_id' => 'int'
 	];
 
 	protected $fillable = [
 		'collectives_id',
-		'modules_id',
-		'collectivemodulestatut_id'
+		'projets_id'
 	];
-
-	public function collectivemodulestatut()
-	{
-		return $this->belongsTo(Collectivemodulestatut::class);
-	}
 
 	public function collective()
 	{
 		return $this->belongsTo(Collective::class, 'collectives_id');
 	}
 
-	public function module()
+	public function projet()
 	{
-		return $this->belongsTo(Module::class, 'modules_id');
+		return $this->belongsTo(Projet::class, 'projets_id');
 	}
 }

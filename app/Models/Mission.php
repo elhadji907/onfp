@@ -50,6 +50,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Mission extends Model
 {
+	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
