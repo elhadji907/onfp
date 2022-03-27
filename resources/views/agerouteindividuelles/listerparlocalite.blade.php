@@ -113,8 +113,7 @@
                                             <th style="width:3%;">Sexe</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
-                                            <th style="width:8%;">Date nais.</th>
-                                            <th style="width:8%;">Lieu nais.</th>
+                                            <th style="width:12%;">Date et lieu nais.</th>
                                             <th style="width:8%;">Commune</th>
                                             <th style="width:10%;">Module</th>
                                             <th style="width:5%;">P.M.R</th>
@@ -136,8 +135,7 @@
                                                         </td>
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!} &nbsp;à&nbsp;{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td ALIGN="CENTER">
                                                         <a class="badge badge-secondary"
