@@ -106,20 +106,21 @@
                                         </div>
                                     </a>
                                 </div>
-                                <table class="table table-bordered" id="table-ageroutebeneficiaires">
+                                <table class="table table-bordered text-center align-middle" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:10%;">N° CIN</th>
-                                            <th style="width:5%;">Sexe</th>
+                                            <th style="width:8%;">N° CIN</th>
+                                            <th style="width:3%;">Sexe</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
-                                            <th style="width:8%;">Communes</th>
-                                            <th style="width:20%;">Module</th>
+                                            <th style="width:8%;">Commune</th>
+                                            <th style="width:10%;">Module</th>
                                             <th style="width:5%;">P.M.R</th>
-                                            <th style="width:10%;">Déplacés</th>
-                                            <th style="width:9%;"></th>
+                                            <th style="width:5%;">Déplacés</th>
+                                            <th style="width:5%;">Statut</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,24 +139,38 @@
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
-                                                    <td>
-                                                        <a class="nav-link"
+                                                    <td ALIGN="CENTER">
+                                                        <a class="badge badge-secondary"
                                                             href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
                                                             target="_blank">
                                                             {!! $individuelle->module->name ?? '' !!}<br />
                                                         </a>
                                                     </td>
-                                                    <td>
+                                                    <td ALIGN="CENTER">
                                                         <a href="{{ url('candidatspmr', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap]) }}"
-                                                            title="voir liste" class="nav-link mt-0" target="_blank">
+                                                            title="voir liste" class="badge badge-info" target="_blank">
                                                             {!! $individuelle->handicap !!}
                                                         </a>
                                                     </td>
-                                                    <td>
+                                                    <td ALIGN="CENTER">
                                                         <a href="{{ url('candidatsvs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
-                                                            title="voir liste" class="nav-link mt-0" target="_blank">
+                                                            title="voir liste" class="badge badge-warning" target="_blank">
                                                             {!! $individuelle->victime_social !!}
                                                         </a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
+                                                                <label
+                                                                    class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
+                                                                <label
+                                                                    class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @else
+                                                                <label
+                                                                    class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
+                                                            @endif
+                                                        </div>
                                                     </td>
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'

@@ -41,6 +41,7 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:8%;">Communes</th>
                                             <th style="width:20%;">Module</th>
+                                            <th style="width:5%;">Note</th>
                                             <th style="width:5%;">Statut</th>
                                             {{-- <th style="width:5%;">P.M.R</th>
                                             <th style="width:10%;">Déplacés</th> --}}
@@ -66,6 +67,7 @@
                                                             {!! $individuelle->module->name ?? '' !!}<br />
                                                         </a>
                                                     </td>
+                                                    <td>{!! $individuelle->note ?? '' !!}</td>
                                                     {{-- <td>
                                                         <a href="{{ url('candidatspmr', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap]) }}"
                                                             title="voir liste" class="nav-link mt-0" target="_blank">
@@ -182,7 +184,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [8, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

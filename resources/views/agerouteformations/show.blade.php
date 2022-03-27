@@ -171,7 +171,7 @@
                             </div>
                         @endif
                         <div align="right" class="pb-3">
-                            <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+                            <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id, '$findividuelle' => $findividuelle->id]) }}"
                                 target="_blank">
                                 <div class="btn btn-outline-success  btn-md" title="ajouter candidat">
                                     <i class="fas fa-plus"></i></i>

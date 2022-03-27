@@ -30,21 +30,21 @@
                                         </div>
                                     </a>
                                 </div>
-                                <table class="table table-bordered" id="table-ageroutebeneficiaires">
+                                <table class="table table-bordered text-center align-middle" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:10%;">N° CIN</th>
-                                            <th style="width:5%;">Sexe</th>
-                                            <th style="width:8%;">Prenom</th>
+                                            <th style="width:8%;">N° CIN</th>
+                                            <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:8%;">Communes</th>
-                                            <th style="width:20%;">Module</th>
+                                            <th style="width:18%;">Module</th>
                                             <th style="width:5%;">Statut</th>
+                                            <th style="width:5%;">Formation</th>
                                             {{-- <th style="width:5%;">P.M.R</th>
                                             <th style="width:10%;">Déplacés</th> --}}
-                                            <th style="width:9%;"></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -53,14 +53,13 @@
                                             @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->statut == $statut)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->sexe !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td>
-                                                        <a class="nav-link"
+                                                        <a class="badge badge-secondary"
                                                             href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
                                                             target="_blank">
                                                             {!! $individuelle->module->name ?? '' !!}<br />
@@ -114,6 +113,7 @@
                                                             @endif
                                                         </div>
                                                     </td>
+                                                    <td align="center"><label class="badge badge-info">{!! $individuelle->formation->statut->name ?? '' !!}</label></td>
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">
@@ -182,7 +182,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [8, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

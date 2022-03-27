@@ -145,6 +145,9 @@ class AgerouteindividuelleController extends Controller
         $victime_social                     =        $request->input('victime_social');
         $autre_victime                      =        $request->input('autre_victime');
         $dossiers                           =        $request->input('dossiers');
+        $salaire                            =        $request->input('salaire');
+        $situation_economique               =        $request->input('situation_economique');
+        $sexe                               =        $request->input('sexe');
 
         if ($diplome == "Autre") {
             $this->validate(
@@ -223,6 +226,99 @@ class AgerouteindividuelleController extends Controller
             );
         }
 
+        $note = 0;
+
+        if($travail_renumeration == "Oui"){
+            $note = $note + 1;
+         }
+         elseif($travail_renumeration == "Non"){
+             $note = $note + 5;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($handicap == "Oui"){
+            $note = $note + 5;
+         }
+         elseif($handicap == "Non"){
+             $note = $note + 0;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($sexe == "M"){
+            $note = $note + 1;
+         }
+         elseif($sexe == "F"){
+             $note = $note + 2;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($salaire == "Indécent"){
+            $note = $note + 5;
+         }
+         elseif($salaire == "Moyen"){
+             $note = $note + 2;
+         }
+         elseif($salaire == "Bien"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($situation_economique == "Très faible"){
+            $note = $note + 5;
+         }
+         elseif($situation_economique == "Faible"){
+             $note = $note + 4;
+         }
+         elseif($situation_economique == "Moyenne"){
+             $note = $note + 2;
+         }
+         elseif($situation_economique == "Correcte"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($situation_economique == "Emigration irrégulière"){
+            $note = $note + 4;
+         }
+         elseif($situation_economique == "Déplacé ou démobilisé par le conflit"){
+             $note = $note + 6;
+         }
+         elseif($situation_economique == "Emprisonnement"){
+             $note = $note + 3;
+         }
+         elseif($situation_economique == "Aucun"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($diplomespro == "Aucun"){
+            $note = $note + 5;
+         }
+         elseif($diplomespro == "CAP"){
+             $note = $note + 3;
+         }
+         elseif($diplomespro == "BEP"){
+             $note = $note + 2;
+         }
+         elseif($diplomespro == "BT"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
+
         $user_connect           =   Auth::user();
         
         /*  $created_by1 = $user_connect->firstname;
@@ -281,7 +377,7 @@ class AgerouteindividuelleController extends Controller
 
 
         $user = new User([
-            'sexe'                      =>      $request->input('sexe'),
+            'sexe'                      =>      $sexe,
             'civilite'                  =>      $civilite,
             'firstname'                 =>      $request->input('prenom'),
             'name'                      =>      $request->input('nom'),
@@ -334,14 +430,15 @@ class AgerouteindividuelleController extends Controller
             'activite_avenir'                   =>     $request->input('activite_avenir'),
             'handicap'                          =>     $request->input('handicap'),
             'preciser_handicap'                 =>     $request->input('preciser_handicap'),
-            'situation_economique'              =>     $request->input('situation_economique'),
-            'victime_social'                    =>     $request->input('victime_social'),
+            'situation_economique'              =>     $situation_economique,
+            'victime_social'                    =>     $victime_social,
             'autre_victime'                     =>     $request->input('autre_victime'),
-            'salaire'                           =>     $request->input('salaire'),
+            'salaire'                           =>     $salaire,
             'dossier'                           =>     $request->get('dossiers'),
             'autre_diplomes_fournis'            =>     $request->input('autre_diplomes_fournis'),
             'nbre_pieces'                       =>     $request->input('nbre_pieces'),
-            'statut'                            =>     'Attente',
+            'statut'                            =>     'attente',
+            'note'                              =>       $note,
             'telephone'                         =>     $telephone_secondaire,
             'etudes_id'                         =>     $etude_id,
             'communes_id'                       =>     $commune_id,
@@ -600,6 +697,9 @@ class AgerouteindividuelleController extends Controller
         $victime_social                     =        $request->input('victime_social');
         $autre_victime                      =        $request->input('autre_victime');
         $dossiers                           =        $request->input('dossiers');
+        $salaire                            =        $request->input('salaire');
+        $situation_economique               =        $request->input('situation_economique');
+        $sexe                               =        $request->input('sexe');
 
         if ($diplome == "Autre") {
             $this->validate(
@@ -675,6 +775,99 @@ class AgerouteindividuelleController extends Controller
                 ]
             );
         }
+        
+        $note = 0;
+
+        if($travail_renumeration == "Oui"){
+            $note = $note + 1;
+         }
+         elseif($travail_renumeration == "Non"){
+             $note = $note + 5;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($handicap == "Oui"){
+            $note = $note + 5;
+         }
+         elseif($handicap == "Non"){
+             $note = $note + 0;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($sexe == "M"){
+            $note = $note + 1;
+         }
+         elseif($sexe == "F"){
+             $note = $note + 2;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($salaire == "Indécent"){
+            $note = $note + 5;
+         }
+         elseif($salaire == "Moyen"){
+             $note = $note + 2;
+         }
+         elseif($salaire == "Bien"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($situation_economique == "Très faible"){
+            $note = $note + 5;
+         }
+         elseif($situation_economique == "Faible"){
+             $note = $note + 4;
+         }
+         elseif($situation_economique == "Moyenne"){
+             $note = $note + 2;
+         }
+         elseif($situation_economique == "Correcte"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($situation_economique == "Emigration irrégulière"){
+            $note = $note + 4;
+         }
+         elseif($situation_economique == "Déplacé ou démobilisé par le conflit"){
+             $note = $note + 6;
+         }
+         elseif($situation_economique == "Emprisonnement"){
+             $note = $note + 3;
+         }
+         elseif($situation_economique == "Aucun"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
+
+        if($diplomespro == "Aucun"){
+            $note = $note + 5;
+         }
+         elseif($diplomespro == "CAP"){
+             $note = $note + 3;
+         }
+         elseif($diplomespro == "BEP"){
+             $note = $note + 2;
+         }
+         elseif($diplomespro == "BT"){
+             $note = $note + 1;
+         }
+         else {
+            $note = $note + 0;
+         }
       
         /*   $updated_by1 = $user_connect->firstname;
           $updated_by2 = $user_connect->name;
@@ -711,7 +904,7 @@ class AgerouteindividuelleController extends Controller
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
         
-        $utilisateur->sexe                      =      $request->input('sexe');
+        $utilisateur->sexe                      =      $sexe;
         $utilisateur->civilite                  =      $civilite;
         $utilisateur->firstname                 =      $request->input('prenom');
         $utilisateur->name                      =      $request->input('nom');
@@ -755,10 +948,11 @@ class AgerouteindividuelleController extends Controller
         $individuelle->activite_avenir                 =     $request->input('activite_avenir');
         $individuelle->handicap                        =     $request->input('handicap');
         $individuelle->preciser_handicap               =     $request->input('preciser_handicap');
-        $individuelle->situation_economique            =     $request->input('situation_economique');
+        $individuelle->situation_economique            =     $situation_economique;
         $individuelle->victime_social                  =     $request->input('victime_social');
         $individuelle->autre_victime                   =     $request->input('autre_victime');
-        $individuelle->salaire                         =     $request->input('salaire');
+        $individuelle->salaire                         =     $salaire;
+        $individuelle->note                            =     $note;
         $individuelle->dossier                         =     $request->input('dossiers');
         $individuelle->autre_diplomes_fournis          =     $request->input('autre_diplomes_fournis');
         $individuelle->telephone                       =     $telephone_secondaire;

@@ -95,7 +95,7 @@ class AgerouteformationController extends Controller
         $commune_id                   =       Commune::where('nom', $request->input('commune'))->first()->id;
         $programme_id                 =       Programme::where('name', $request->input('programme'))->first()->id;
         $operateur_id                 =       Operateur::where('name', $request->input('operateur'))->first()->id;
-        $statuts_id                   =       Statut::where('name', 'Attente')->first()->id;
+        $statuts_id                   =       Statut::where('name', 'attente')->first()->id;
 
         $nbre = rand(1, 9);
         $annee = date('dmy');
@@ -264,8 +264,9 @@ class AgerouteformationController extends Controller
         $projet_name        =           $projet->name;
         $projet_id          =           $projet->id;
         $module_name        =           $module->name;
+        $code               =           $findividuelle->formation->code;
 
-        return view('agerouteformations.formationcandidats', compact('projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle', 'projet_id', 'module_id', 'programme_id'));
+        return view('agerouteformations.formationcandidats', compact('code', 'projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle', 'projet_id', 'module_id', 'programme_id'));
     }
 
     public function individuelleformations($individuelle)
@@ -282,7 +283,7 @@ class AgerouteformationController extends Controller
         $findividuelle      =       Findividuelle::find($findividuelle);
         $formation          =       $findividuelle->formation;
         
-        $individuelle->statut           =     "Retenue";
+        $individuelle->statut           =     "accepter";
         $individuelle->formations_id    =     $formation->id;
 
         $individuelle->save();
@@ -300,7 +301,7 @@ class AgerouteformationController extends Controller
         $findividuelle      =       Findividuelle::find($findividuelle);
         $formation          =       $findividuelle->formation;
         
-        $individuelle->statut           =     "Annulé";
+        $individuelle->statut           =     "rejeter";
         $individuelle->formations_id    =     NULL;
 
         $individuelle->save();

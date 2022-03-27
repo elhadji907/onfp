@@ -43,36 +43,41 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->commune->arrondissement->departement->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
-                                                <tr>
-                                                    <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
-                                                    <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
-                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
-                                                    <td ALIGN="CENTER">
-                                                        <?php $h = 1; ?>
-                                                        @foreach ($individuelle->demandeur->formations as $key => $formation)
-                                                            @if ($loop->last)
+                                            @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->commune->arrondissement->departement->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name) && $individuelle->statut == 'accepter')
+                                                    <tr>
+                                                        <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
+                                                        <td>{!! $individuelle->demandeur->cin !!}</td>
+                                                        <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                        <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                        <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                        <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                        <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                        <td>{!! $individuelle->localite->nom ?? '' !!}</td>
+                                                        <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                        <td ALIGN="CENTER">
+                                                            <?php $h = 1; ?>
+                                                            @foreach ($individuelle->demandeur->formations as $key => $formation)
+                                                                @if (isset($formation) && $formation->code == $code && $loop->last)
+                                                                    <a class="nav-link badge badge-danger"
+                                                                        href="{{ url('individuelleformations', ['$individuelle' => $individuelle->id]) }}"
+                                                                        target="_blank"
+                                                                        title="voir formations">{!! $loop->count !!}</a>
+                                                                @elseif($loop->last)
                                                                 <a class="nav-link badge badge-info"
                                                                     href="{{ url('individuelleformations', ['$individuelle' => $individuelle->id]) }}"
                                                                     target="_blank"
                                                                     title="voir formations">{!! $loop->count !!}</a>
-                                                            @endif
-                                                        @endforeach
-                                                    </td>
-                                                    <td ALIGN="CENTER" class="d-flex align-items-baseline">
-                                                        <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
-                                                            title="ajouter à la liste"
-                                                            class="btn btn-outline-primary btn-sm mt-0">
-                                                            <i class="fa fa-reply" aria-hidden="true"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                                @endif
+                                                            @endforeach
+                                                        </td>
+                                                        <td ALIGN="CENTER" class="d-flex align-items-baseline">
+                                                            <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
+                                                                title="ajouter à la liste"
+                                                                class="btn btn-outline-primary btn-sm mt-0">
+                                                                <i class="fa fa-reply" aria-hidden="true"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                             @endif
                                         @endforeach
                                     </tbody>
