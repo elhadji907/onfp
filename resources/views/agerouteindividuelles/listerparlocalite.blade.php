@@ -109,13 +109,13 @@
                                 <table class="table table-bordered text-center align-middle" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:8%;">N° CIN</th>
-                                            <th style="width:3%;">Sexe</th>
-                                            <th style="width:8%;">Prenom</th>
+                                            <th style="width:5%;">N° CIN</th>
+                                            <th style="width:2%;">Sexe</th>
+                                            <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:12%;">Date et lieu nais.</th>
-                                            <th style="width:8%;">Commune</th>
-                                            <th style="width:10%;">Module</th>
+                                            <th style="width:5%;">Commune</th>
+                                            <th style="width:5%;">Module</th>
                                             <th style="width:5%;">P.M.R</th>
                                             <th style="width:5%;">Déplacés</th>
                                             <th style="width:5%;">Statut</th>
@@ -138,21 +138,20 @@
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!} &nbsp;à&nbsp;{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td ALIGN="CENTER">
-                                                        <a class="badge badge-secondary"
-                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
+                                                        <a href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
                                                             target="_blank">
                                                             {!! $individuelle->module->name ?? '' !!}<br />
                                                         </a>
                                                     </td>
                                                     <td ALIGN="CENTER">
                                                         <a href="{{ url('candidatspmr', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap]) }}"
-                                                            title="voir liste" class="badge badge-info" target="_blank">
+                                                            title="voir liste" target="_blank">
                                                             {!! $individuelle->handicap !!}
                                                         </a>
                                                     </td>
                                                     <td ALIGN="CENTER">
                                                         <a href="{{ url('candidatsvs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
-                                                            title="voir liste" class="badge badge-warning" target="_blank">
+                                                            title="voir liste" target="_blank">
                                                             {!! $individuelle->victime_social !!}
                                                         </a>
                                                     </td>
