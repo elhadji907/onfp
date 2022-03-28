@@ -42,6 +42,7 @@
                                             <th style="width:18%;">Module</th>
                                             <th style="width:5%;">Statut</th>
                                             <th style="width:5%;">Formation</th>
+                                            <th style="width:5%;">Note</th>
                                             {{-- <th style="width:5%;">P.M.R</th>
                                             <th style="width:10%;">Déplacés</th> --}}
                                             <th></th>
@@ -114,6 +115,7 @@
                                                         </div>
                                                     </td>
                                                     <td align="center"><label class="badge badge-info">{!! $individuelle->formation->statut->name ?? '' !!}</label></td>
+                                                    <td>{!! $individuelle->note ?? '' !!}</td>
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">

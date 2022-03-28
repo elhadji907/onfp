@@ -39,7 +39,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <table class="table table-bordered" id="table-ageroutebeneficiaires">
+                                <table class="table table-bordered text-center align-middle" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:5%;">N°</th>
@@ -53,6 +53,7 @@
                                             {{-- <th style="width:13%;">Communes</th> --}}
                                             <th style="width:15%;">Module</th>
                                             <th style="width:5%;">Statut</th>
+                                            <th style="width:5%;">Note</th>
                                             <th style="width:9%;"></th>
                                         </tr>
                                     </thead>
@@ -117,6 +118,7 @@
                                                         @endif
                                                     @endforeach
                                                 </td> --}}
+                                                <td>{!! $individuelle->note ?? '' !!}</td>
                                                     <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">
@@ -185,7 +187,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'asc']
+                    [8, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

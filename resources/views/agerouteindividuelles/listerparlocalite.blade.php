@@ -119,7 +119,7 @@
                                             <th style="width:5%;">P.M.R</th>
                                             <th style="width:5%;">Déplacés</th>
                                             <th style="width:5%;">Statut</th>
-                                            <th></th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
