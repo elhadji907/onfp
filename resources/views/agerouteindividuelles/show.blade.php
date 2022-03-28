@@ -255,9 +255,9 @@
                 <thead>
                     <tr>
                         <th align="left" colspan="2"> <u>{{ __('Module demandé') }}</u> </th>
-                       {{--   <th align="left" colspan="2"> <u>
-                                {{ __('Module retenu') }}
-                            </u> </th>  --}}
+                        <th align="left" colspan="2"> <u>
+                                {{ __('Statut') }}
+                            </u> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -265,8 +265,9 @@
                         <td colspan="2">
                             {{ $individuelle->module->name ?? '' }}
                         </td>
-                        {{--  <td colspan="2">
-                        </td>  --}}
+                        <td colspan="2">
+                            {{ $individuelle->statut ?? '' }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
