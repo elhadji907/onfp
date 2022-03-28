@@ -27,7 +27,6 @@
             width: 100%;
             border-spacing: 0px;
         }
-
         table td,
         table th {
             border-left: 0;
