@@ -45,7 +45,7 @@
                                             <th style="width:5%;">Statut</th>
                                             {{-- <th style="width:5%;">P.M.R</th>
                                             <th style="width:10%;">Déplacés</th> --}}
-                                            <th style="width:9%;"></th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>

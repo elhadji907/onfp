@@ -39,7 +39,7 @@
                                         <th style="width:08%;">Fin</th> --}}
                                         <th style="width:35%;">Opérateurs</th>
                                         <th style="width:10%;">Statut</th>
-                                        <th style="width:10%;"></th>
+                                        <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">

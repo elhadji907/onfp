@@ -35,7 +35,7 @@
                                         <th width="35%">Communes</th>
                                         <th width="10%">Effectif</th>
                                         <th width="30%">Départements</th>
-                                        <th></th>
+                                        <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">

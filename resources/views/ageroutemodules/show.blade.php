@@ -43,7 +43,7 @@
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:13%;">Communes</th>
                                             <th style="width:5%;">Module</th>
-                                            <th style="width:9%;"></th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>

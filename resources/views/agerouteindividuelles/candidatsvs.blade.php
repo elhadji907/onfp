@@ -122,7 +122,7 @@
                                             <th style="width:20%;">Module</th>
                                             <th style="width:5%;">Note</th>
                                             <th style="width:5%;">Statut</th>
-                                            <th style="width:9%;"></th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>

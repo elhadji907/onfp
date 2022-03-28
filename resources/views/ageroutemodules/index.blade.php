@@ -36,7 +36,7 @@
                                         <th width="5%">Demandeurs</th>
                                         <th width="30%">Domaine</th>
                                         <th width="20%">Secteur</th>
-                                        <th width="7%"></th>
+                                        <th width="8%"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">

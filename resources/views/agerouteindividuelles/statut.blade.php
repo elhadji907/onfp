@@ -45,7 +45,7 @@
                                             <th style="width:5%;">Note</th>
                                             {{-- <th style="width:5%;">P.M.R</th>
                                             <th style="width:10%;">Déplacés</th> --}}
-                                            <th></th>
+                                            <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
