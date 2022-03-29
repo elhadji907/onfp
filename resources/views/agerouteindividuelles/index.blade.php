@@ -126,11 +126,11 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:5%;">N°</th>
-                                            <th style="width:10%;">N° CIN</th>
-                                            <th style="width:10%;">Prenom</th>
+                                            <th style="width:8%;">N° CIN</th>
+                                            <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
-                                            <th style="width:10%;">Lieu nais.</th>
+                                            <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:10%;">Communes</th>

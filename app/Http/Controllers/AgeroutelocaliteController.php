@@ -166,11 +166,16 @@ class AgeroutelocaliteController extends Controller
                 ->where('statut', '=', 'accepter')
                 ->count();
 
+        $enlever = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'enlever')
+                ->count();
+
         $total = Individuelle::get()->where('projets_id', '=', $id_projet)
                 ->where('localites_id', '=', $id_localite)
                 ->count();
 
-        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total'));
+        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total', 'enlever'));
     }
 
     public function candidatlocalite($projet, $localite)

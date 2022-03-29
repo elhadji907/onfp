@@ -95,6 +95,12 @@
     });
 </script>
 <script type="text/javascript">
+  $("#convention").select2({
+        placeholder: "sélectionner la convention",
+        allowClear: true
+    });
+</script>
+<script type="text/javascript">
   $("#civilite").select2({
         placeholder: "sélectionner civilité",
         allowClear: true

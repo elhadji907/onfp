@@ -12,6 +12,7 @@ use App\Models\Module;
 use App\Models\Statut;
 use App\Models\Choixoperateur;
 use App\Models\Localite;
+use App\Models\Convention;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FormationFactory extends Factory
@@ -40,6 +41,7 @@ class FormationFactory extends Factory
         $statuts_id               =   Statut::all()->random()->id;
         $choixoperateurs_id       =   Choixoperateur::all()->random()->id;
         $localites_id             =   Localite::all()->random()->id;
+        $conventions_id           =   Convention::all()->random()->id;
     
         $prevue_h = $this->faker->numberBetween(5, 9);
         $prevue_f = $this->faker->numberBetween(5, 1);
@@ -102,6 +104,10 @@ class FormationFactory extends Factory
 
             'localites_id' => function () use ($localites_id) {
                 return $localites_id;
+            },
+
+            'conventions_id' => function () use ($conventions_id) {
+                return $conventions_id;
             },
         ];
         

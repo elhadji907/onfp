@@ -18,6 +18,7 @@ use App\Models\Formation;
 use App\Models\Individuelle;
 use App\Models\Statut;
 use App\Models\Localite;
+use App\Models\Convention;
 use Illuminate\Http\Request;
 
 class AgerouteformationController extends Controller
@@ -63,8 +64,9 @@ class AgerouteformationController extends Controller
         $choixoperateur = Choixoperateur::distinct('trimestre')->get()->pluck('trimestre', 'trimestre')->unique();
         $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
+        $conventions = Convention::distinct('numero')->get()->pluck('numero', 'numero')->unique();
 
-        return view('agerouteformations.create', compact('localites', 'civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.create', compact('conventions', 'localites', 'civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -97,6 +99,7 @@ class AgerouteformationController extends Controller
         $localite_id                  =       Localite::where('nom', $request->input('localite'))->first()->id;
         $programme_id                 =       Programme::where('name', $request->input('programme'))->first()->id;
         $operateur_id                 =       Operateur::where('name', $request->input('operateur'))->first()->id;
+        $conventions_id               =       Convention::where('numero', $request->input('conventions'))->first()->id;
         $statuts_id                   =       Statut::where('name', 'attente')->first()->id;
 
         $nbre = rand(1, 9);
@@ -110,6 +113,7 @@ class AgerouteformationController extends Controller
             'adresse'                  =>      $request->input('adresse'),
             'beneficiaires'            =>      $request->input('beneficiaire'),
             'modules_id'               =>      $request->input('modules'),
+            'conventions_id'           =>      $conventions_id,
             'statuts_id'               =>      $statuts_id,
             'choixoperateurs_id'       =>      $choixoperateur_id,
             'types_formations_id'      =>      $types_formations_id,
@@ -146,7 +150,6 @@ class AgerouteformationController extends Controller
         $formation = $findividuelle->formation;
         
         return view('agerouteformations.show', compact('formation', 'findividuelle'));
-
     }
 
     /**
@@ -170,8 +173,9 @@ class AgerouteformationController extends Controller
         $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
         $operateurs = Operateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $statuts = Statut::distinct('name')->get()->pluck('name', 'name')->unique();
+        $conventions = Convention::distinct('numero')->get()->pluck('numero', 'numero')->unique();
 
-        return view('agerouteformations.update', compact('localites', 'civilites', 'statuts', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.update', compact('conventions', 'localites', 'civilites', 'statuts', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -206,6 +210,7 @@ class AgerouteformationController extends Controller
         $localite_id                    =       Localite::where('nom', $request->input('localite'))->first()->id;
         $programme_id                   =       Programme::where('name', $request->input('programme'))->first()->id;
         $module_id                      =       Module::where('name', $request->input('modules'))->first()->id;
+        $conventions_id                 =       Convention::where('numero', $request->input('conventions'))->first()->id;
         $operateurs_id                  =       Operateur::where('name', $request->input('operateur'))->first()->id;
         $statuts_id                     =       Statut::where('name', $request->input('statut'))->first()->id;
         
@@ -215,11 +220,12 @@ class AgerouteformationController extends Controller
         $formation->adresse             =      $request->input('adresse');
         $formation->beneficiaires       =      $request->input('beneficiaire');
         $formation->modules_id          =      $module_id;
+        $formation->conventions_id      =      $conventions_id;
         $formation->statuts_id          =      $statuts_id;
         $formation->choixoperateurs_id  =      $choixoperateur_id;
         $formation->types_formations_id =      $types_formations_id;
         $formation->operateurs_id       =      $operateurs_id;
-        $formation->localites_id         =      $localite_id;
+        $formation->localites_id        =      $localite_id;
 
         $formation->save();
         
@@ -279,6 +285,23 @@ class AgerouteformationController extends Controller
         return view('agerouteformations.individuelleformations', compact('individuelles'));
     }
 
+    public function individuelleformationsenlever($individuelle)
+    {
+        
+        $formation = Formation::where('code', $individuelle)->first()->id;
+        $formation = Formation::find($formation);
+        $findividuelles = $formation->findividuelles;
+
+        foreach ($findividuelles as $findividuelle)
+        
+        return view('agerouteformations.show', compact('formation', 'findividuelle'));
+
+
+        $individuelles = Individuelle::find($individuelle);
+
+        return view('agerouteformations.individuelleformations', compact('individuelles'));
+    }
+
     public function formationcandidatsadd($individuelle, $findividuelle)
     {
         $individuelle       =       Individuelle::find($individuelle);
@@ -286,15 +309,23 @@ class AgerouteformationController extends Controller
         $findividuelle      =       Findividuelle::find($findividuelle);
         $formation          =       $findividuelle->formation;
         
-        $individuelle->statut           =     "accepter";
-        $individuelle->formations_id    =     $formation->id;
-
-        $individuelle->save();
-
-        $demandeur->formations()->sync($formation);
         
-        $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
-        return back()->with(compact('message'));
+
+        if (isset($individuelle->formation)) {
+            $messages = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est déjà dans une formation';
+            return back()->with(compact('messages'));
+        } else {
+            $individuelle->statut           =     "accepter";
+            $individuelle->item1            =     "accepter";
+            $individuelle->formations_id    =     $formation->id;
+
+            $individuelle->save();
+
+            $demandeur->formations()->sync($formation);
+        
+            $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
+            return back()->with(compact('message'));
+        }
     }
 
     public function formationcandidatsdelete($individuelle, $findividuelle)
@@ -303,9 +334,10 @@ class AgerouteformationController extends Controller
         $demandeur          =       $individuelle->demandeur;
         $findividuelle      =       Findividuelle::find($findividuelle);
         $formation          =       $findividuelle->formation;
-        
-        $individuelle->statut           =     "rejeter";
-        $individuelle->formations_id    =     NULL;
+
+        $individuelle->statut           =     "enlever";
+        $individuelle->item1            =     $individuelle->formation->code;
+        $individuelle->formations_id    =     null;
 
         $individuelle->save();
 

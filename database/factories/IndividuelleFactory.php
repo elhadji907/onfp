@@ -141,9 +141,9 @@ class IndividuelleFactory extends Factory
                 return $modules_id;
             },
 
-            'formations_id' => function () use ($formations_id) {
+        /*     'formations_id' => function () use ($formations_id) {
                 return $formations_id;
-            },
+            }, */
 
             'zones_id' => function () use ($zones_id) {
                 return $zones_id;

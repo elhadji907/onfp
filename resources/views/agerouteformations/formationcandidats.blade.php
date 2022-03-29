@@ -72,15 +72,11 @@
                                                         @endforeach
                                                     </td>
                                                     <td ALIGN="CENTER" class="d-flex align-items-baseline">
-                                                        @if (isset($formation) && $formation->code == $code)
-                                                        <label class="badge badge-info">OK</label>
-                                                        @else
-                                                            <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
-                                                                title="ajouter à la liste"
-                                                                class="btn btn-outline-primary btn-sm mt-0">
-                                                                <i class="fa fa-reply" aria-hidden="true"></i>
-                                                            </a>
-                                                        @endif
+                                                        <a href="{{ url('formationcandidatsadd', ['$individuelle' => $individuelle->id, '$findividuelle' => $findividuelle->id]) }}"
+                                                            title="ajouter à la liste"
+                                                            class="btn btn-outline-primary btn-sm mt-0">
+                                                            <i class="fa fa-reply" aria-hidden="true"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             @endif

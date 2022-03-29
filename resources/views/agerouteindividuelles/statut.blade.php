@@ -19,7 +19,8 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }} : {{ $statut }} avec un effectif de <label class="badge badge-info">{{ $effectif }}</label>
+                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }} : {{ $statut }}
+                        avec un effectif de <label class="badge badge-info">{{ $effectif }}</label>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -30,7 +31,8 @@
                                         </div>
                                     </a>
                                 </div>
-                                <table class="table table-bordered text-center align-middle" id="table-ageroutebeneficiaires">
+                                <table class="table table-bordered text-center align-middle"
+                                    id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:8%;">N° CIN</th>
@@ -60,8 +62,7 @@
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td>
-                                                        <a class="badge badge-secondary"
-                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
+                                                        <a href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
                                                             target="_blank">
                                                             {!! $individuelle->module->name ?? '' !!}<br />
                                                         </a>
@@ -114,7 +115,18 @@
                                                             @endif
                                                         </div>
                                                     </td>
-                                                    <td align="center"><label class="badge badge-info">{!! $individuelle->formation->statut->name ?? '' !!}</label></td>
+                                                    <td align="center">
+                                                        @if ($statut == 'enlever')
+                                                            <a style="color: rgba(255, 140, 0, 0.829); text-decoration: none;"
+                                                                class="view" title="ouvrir"
+                                                                href="{{ url('individuelleformationsenlever', ['$individuelle' => $individuelle->item1]) }}"
+                                                                target="_blank">{!! $individuelle->item1 ?? '' !!}</a>
+                                                        @else
+                                                            <label class="badge badge-info">
+                                                                {!! $individuelle->formation->statut->name ?? 'aucune' !!}
+                                                            </label>
+                                                        @endif
+                                                    </td>
                                                     <td>{!! $individuelle->note ?? '' !!}</td>
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
@@ -184,7 +196,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [8, 'desc']
+                    [9, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

@@ -52,12 +52,23 @@
                                     @endif
                                 </small> 
                             </div> --}}
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('modules', $modules, null, ['placeholder' => 'module', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'moduleageroute']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('modules'))
                                         @foreach ($errors->get('modules') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                {!! Form::label('Convention :') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('conventions', $conventions, null, ['placeholder' => 'convention', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'convention']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('conventions'))
+                                        @foreach ($errors->get('conventions') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
