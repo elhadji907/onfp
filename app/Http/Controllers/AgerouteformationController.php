@@ -20,6 +20,7 @@ use App\Models\Statut;
 use App\Models\Localite;
 use App\Models\Convention;
 use Illuminate\Http\Request;
+use DB;
 
 class AgerouteformationController extends Controller
 {
@@ -148,8 +149,8 @@ class AgerouteformationController extends Controller
     {
         $findividuelle = Findividuelle::find($id);
         $formation = $findividuelle->formation;
-        
-        return view('agerouteformations.show', compact('formation', 'findividuelle'));
+        $EffectifdemandeurFormations = DB::table("demandeursformations")->where("demandeursformations.formations_id", $formation->id)->count();
+        return view('agerouteformations.show', compact('formation', 'findividuelle', 'EffectifdemandeurFormations'));
     }
 
     /**
@@ -287,14 +288,13 @@ class AgerouteformationController extends Controller
 
     public function individuelleformationsenlever($individuelle)
     {
-        
         $formation = Formation::where('code', $individuelle)->first()->id;
         $formation = Formation::find($formation);
         $findividuelles = $formation->findividuelles;
 
-        foreach ($findividuelles as $findividuelle)
-        
-        return view('agerouteformations.show', compact('formation', 'findividuelle'));
+        foreach ($findividuelles as $findividuelle) {
+            return view('agerouteformations.show', compact('formation', 'findividuelle'));
+        }
 
 
         $individuelles = Individuelle::find($individuelle);
@@ -308,8 +308,8 @@ class AgerouteformationController extends Controller
         $demandeur          =       $individuelle->demandeur;
         $findividuelle      =       Findividuelle::find($findividuelle);
         $formation          =       $findividuelle->formation;
-        
-        
+
+        $EffectifdemandeurFormations = DB::table("demandeursformations")->where("demandeursformations.formations_id", $formation->id)->count();
 
         if (isset($individuelle->formation)) {
             $messages = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est déjà dans une formation';
@@ -322,9 +322,14 @@ class AgerouteformationController extends Controller
             $individuelle->save();
 
             $demandeur->formations()->sync($formation);
-        
-            $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
-            return back()->with(compact('message'));
+            $EffectifdemandeurFormations = $EffectifdemandeurFormations +1;
+            if ($EffectifdemandeurFormations > 20) {
+                $messages = "Attention !!! vous avez dépassé l'effectif conseillé pour une formation. ".$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name." a été ajouté, effectif à formé est de ".$EffectifdemandeurFormations;
+                return back()->with(compact('messages'));
+            } else {
+                $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté, effectif à formé est de '.$EffectifdemandeurFormations;
+                return back()->with(compact('message'));
+            }
         }
     }
 

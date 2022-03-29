@@ -106,10 +106,36 @@
     </style>
     <?php $i = 1; ?>
     <div class="invoice-box justify-content-center">
+        <div class="d-flex col-lg-12 margin-tb justify-content-between align-items-center pb-3">
+            <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+                target="_blank">
+                <div class="btn btn-outline-success btn-md" title="ajouter candidat">
+                    {{-- <i class="fas fa-plus"></i> --}}Ajouter demandeurs
+                </div>
+            </a>
+            <a href="#">
+                <div class="btn btn-outline-info btn-md" title="afficher">
+                    Fiche de suivi
+                </div>
+            </a>
+            <a href="#">
+                <div class="btn btn-outline-primary btn-md" title="afficher">
+                    PV Evaluation
+                </div>
+            </a>
+        </div>
         <div class="card card border-success">
             <div class="card-header  text-center bg-gradient-default border-success">
-                <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><span
-                        class="font-italic">Formation individuelle</span></h1>
+                <h1 class="h4 card-title text-center text-black h-100 mb-0"><span class="badge badge-default">
+                        Formation individuelle
+                        @if (isset($EffectifdemandeurFormations) && $EffectifdemandeurFormations >= '1')
+                            pour un effectif de
+                    </span> : <span class="btn btn-outline-default btn-md"><a href="#liste"
+                            style="text-decoration: none">{{ $EffectifdemandeurFormations }}</a></span>
+                @else<span class="btn btn-outline-default btn-md"><a href="#liste"
+                            style="text-decoration: none">aucun demandeur ajouter</a></span>
+                    @endif
+                </h1>
             </div>
             <div class="card-body">
                 <table method="POST" cellpadding="0" cellspacing="0">
@@ -133,13 +159,15 @@
                             </tr>
                             <tr class="details">
                                 <td colspan="2" class="pt-3">{!! $findividuelle->module->name ?? '' !!}</td>
-                                <td colspan="2" class="pt-3">{{ $findividuelle->formation->beneficiaires ?? '' }}</td>
+                                <td colspan="2" class="pt-3">
+                                    {{ $findividuelle->formation->beneficiaires ?? '' }}</td>
                             </tr>
                             <tr class="heading">
                                 <td colspan="3" class="pt-3">Opérateur</td>
                             </tr>
                             <tr class="details">
-                                <td colspan="3" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!} ({{ $findividuelle->formation->operateur->sigle ?? '' }})</td>
+                                <td colspan="3" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}
+                                    ({{ $findividuelle->formation->operateur->sigle ?? '' }})</td>
                             </tr>
                             <tr class="heading">
                                 <td colspan="2" class="pt-3">Département</td>
@@ -154,7 +182,8 @@
                                     <td colspan="3" class="pt-3">Projet</td>
                                 </tr>
                                 <tr class="details">
-                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->projet->name) ?? '' !!} ({{ $findividuelle->projet->sigle ?? '' }})</td>
+                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->projet->name) ?? '' !!}
+                                        ({{ $findividuelle->projet->sigle ?? '' }})</td>
                                 </tr>
                             @endif
                             @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
@@ -162,7 +191,8 @@
                                     <td colspan="3" class="pt-3">Programme</td>
                                 </tr>
                                 <tr class="details">
-                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!} ({{ $findividuelle->programme->sigle ?? '' }})</td>
+                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!}
+                                        ({{ $findividuelle->programme->sigle ?? '' }})</td>
                                 </tr>
                             @endif
                         </table>
@@ -173,14 +203,14 @@
                                 {{ session('message') }}
                             </div>
                         @endif
-                        <div align="right" class="pb-3">
-                            <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id, '$findividuelle' => $findividuelle->id]) }}"
+                        {{-- <div align="right" class="pb-3">
+                            <a href="{{ url('formationcandidats', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
                                 target="_blank">
                                 <div class="btn btn-outline-success  btn-md" title="ajouter candidat">
-                                    <i class="fas fa-plus"></i></i>
+                                    <i class="fas fa-plus"></i>
                                 </div>
                             </a>
-                        </div>
+                        </div> --}}
                         <thead class="heading">
                             <tr>
                                 <th width="2%">N°</th>
@@ -188,19 +218,19 @@
                                 <th width="5%">Civilité</th>
                                 <th width="10%">Prénom</th>
                                 <th width="10%">Nom</th>
-                                <th width="12%">Date naissance</th>
-                                <th width="12%">Lieu naissance</th>
-                                <th width="10%">Email</th>
+                                <th width="8%">Date nais.</th>
+                                <th width="10%">Lieu nais.</th>
+                                <th width="12%">Email</th>
                                 <th width="10%">Téléphone</th>
                                 <th width="1%"></th>
                             </tr>
                         </thead>
-                        <tbody class="details">
+                        <tbody class="details" id="liste">
                             <?php $i = 1; ?>
                             @foreach ($formation->individuelles as $individuelle)
                                 @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td align="center">{{ $i++ }}</td>
                                         <td>{{ $individuelle->demandeur->cin }}</td>
                                         <td>{{ $individuelle->demandeur->user->civilite }}</td>
                                         <td>{{ $individuelle->demandeur->user->firstname }}</td>
