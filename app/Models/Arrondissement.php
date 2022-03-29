@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Arrondissement
@@ -25,15 +24,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property Departement $departement
  * @property Collection|Commune[] $communes
+ * @property Collection|Demandeur[] $demandeurs
+ * @property Collection|Formation[] $formations
+ * @property Collection|Individuelle[] $individuelles
  *
  * @package App\Models
  */
 class Arrondissement extends Model
 {
-	
-    use HasFactory;
 	use SoftDeletes;
-	use \App\Helpers\UuidForKey;
 	protected $table = 'arrondissements';
 
 	protected $casts = [
@@ -54,5 +53,20 @@ class Arrondissement extends Model
 	public function communes()
 	{
 		return $this->hasMany(Commune::class, 'arrondissements_id');
+	}
+
+	public function demandeurs()
+	{
+		return $this->hasMany(Demandeur::class, 'arrondissements_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'arrondissements_id');
+	}
+
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'arrondissements_id');
 	}
 }

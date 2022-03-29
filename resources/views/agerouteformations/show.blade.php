@@ -143,7 +143,7 @@
                                 <td class="pt-3">Adresse</td>
                             </tr>
                             <tr class="details">
-                                <td class="pt-3">{!! $findividuelle->formation->commune->arrondissement->departement->nom ?? '' !!}</td>
+                                <td class="pt-3">{!! $findividuelle->formation->localite->nom ?? '' !!}</td>
                                 <td class="pt-3">{{ $findividuelle->formation->adresse ?? '' }}</td>
                             </tr>
                             @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
@@ -195,7 +195,7 @@
                         <tbody class="details">
                             <?php $i = 1; ?>
                             @foreach ($formation->individuelles as $individuelle)
-                                @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->commune->arrondissement->departement->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
+                                @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $individuelle->demandeur->cin }}</td>

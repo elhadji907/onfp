@@ -28,14 +28,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $items_id
  * @property int|null $types_demandes_id
  * @property int|null $courriers_id
+ * @property int|null $zones_id
+ * @property int|null $localites_id
+ * @property int|null $arrondissements_id
+ * @property int|null $regions_id
+ * @property int|null $departements_id
+ * @property int|null $communes_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Arrondissement|null $arrondissement
+ * @property Commune|null $commune
  * @property Courrier|null $courrier
+ * @property Departement|null $departement
  * @property Item|null $item
+ * @property Localite|null $localite
+ * @property Region|null $region
  * @property TypesDemande|null $types_demande
  * @property User $user
+ * @property Zone|null $zone
  * @property Collection|Collective[] $collectives
  * @property Collection|Commentaire[] $commentaires
  * @property Collection|Disponibilite[] $disponibilites
@@ -49,7 +61,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Demandeur extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -59,7 +70,13 @@ class Demandeur extends Model
 		'users_id' => 'int',
 		'items_id' => 'int',
 		'types_demandes_id' => 'int',
-		'courriers_id' => 'int'
+		'courriers_id' => 'int',
+		'zones_id' => 'int',
+		'localites_id' => 'int',
+		'arrondissements_id' => 'int',
+		'regions_id' => 'int',
+		'departements_id' => 'int',
+		'communes_id' => 'int'
 	];
 
 	protected $dates = [
@@ -78,17 +95,48 @@ class Demandeur extends Model
 		'users_id',
 		'items_id',
 		'types_demandes_id',
-		'courriers_id'
+		'courriers_id',
+		'zones_id',
+		'localites_id',
+		'arrondissements_id',
+		'regions_id',
+		'departements_id',
+		'communes_id'
 	];
+
+	public function arrondissement()
+	{
+		return $this->belongsTo(Arrondissement::class, 'arrondissements_id');
+	}
+
+	public function commune()
+	{
+		return $this->belongsTo(Commune::class, 'communes_id');
+	}
 
 	public function courrier()
 	{
 		return $this->belongsTo(Courrier::class, 'courriers_id');
 	}
 
+	public function departement()
+	{
+		return $this->belongsTo(Departement::class, 'departements_id');
+	}
+
 	public function item()
 	{
 		return $this->belongsTo(Item::class, 'items_id');
+	}
+
+	public function localite()
+	{
+		return $this->belongsTo(Localite::class, 'localites_id');
+	}
+
+	public function region()
+	{
+		return $this->belongsTo(Region::class, 'regions_id');
 	}
 
 	public function types_demande()
@@ -99,6 +147,11 @@ class Demandeur extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'users_id');
+	}
+
+	public function zone()
+	{
+		return $this->belongsTo(Zone::class, 'zones_id');
 	}
 
 	public function collectives()

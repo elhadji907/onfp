@@ -24,8 +24,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Collection|Antenne[] $antennes
+ * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Departement[] $departements
  * @property Collection|Etablissement[] $etablissements
+ * @property Collection|Formation[] $formations
+ * @property Collection|Individuelle[] $individuelles
  * @property Collection|Operateur[] $operateurs
  * @property Collection|Programme[] $programmes
  *
@@ -33,7 +36,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Region extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -52,6 +54,11 @@ class Region extends Model
 					->withTimestamps();
 	}
 
+	public function demandeurs()
+	{
+		return $this->hasMany(Demandeur::class, 'regions_id');
+	}
+
 	public function departements()
 	{
 		return $this->hasMany(Departement::class, 'regions_id');
@@ -60,6 +67,16 @@ class Region extends Model
 	public function etablissements()
 	{
 		return $this->hasMany(Etablissement::class, 'regions_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'regions_id');
+	}
+
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'regions_id');
 	}
 
 	public function operateurs()

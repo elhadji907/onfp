@@ -38,7 +38,7 @@
                                         {{-- <th style="width:08%;">Début</th>
                                         <th style="width:08%;">Fin</th> --}}
                                         <th style="width:20%;">Opérateurs</th>
-                                        <th style="width:10%;">Statut</th>
+                                        <th style="width:8%;">Statut</th>
                                         <th style="width:4%;">Effectif</th>
                                         <th style="width:8%;"></th>
                                     </tr>
@@ -61,7 +61,7 @@
                                             <td>{!! $findividuelle->formation->code !!}</td>
                                             <td>{!! $findividuelle->module->name !!}</td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
-                                            <td>{!! $findividuelle->formation->commune->arrondissement->departement->nom !!}</td>
+                                            <td>{!! $findividuelle->formation->localite->nom !!}</td>
                                             {{-- <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
                                             <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td> --}}
                                             <td>{!! $findividuelle->formation->operateur->name ?? '' !!} ({!! $findividuelle->formation->operateur->sigle ?? '' !!})</td>

@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Agrement[] $agrements
  * @property Collection|Collective[] $collectives
  * @property Collection|Module[] $modules
+ * @property Collection|Demandeur[] $demandeurs
  * @property Collection|Etablissement[] $etablissements
  * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
@@ -39,7 +40,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Commune extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -76,6 +76,11 @@ class Commune extends Model
 		return $this->belongsToMany(Module::class, 'communesmodules', 'communes_id', 'modules_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
+	}
+
+	public function demandeurs()
+	{
+		return $this->hasMany(Demandeur::class, 'communes_id');
 	}
 
 	public function etablissements()

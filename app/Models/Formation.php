@@ -53,27 +53,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $projets_id
  * @property int|null $choixoperateurs_id
  * @property int|null $modules_id
+ * @property int|null $regions_id
+ * @property int|null $departements_id
+ * @property int|null $arrondissements_id
+ * @property int|null $localites_id
+ * @property int|null $zones_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Agent|null $agent
  * @property Antenne|null $antenne
+ * @property Arrondissement|null $arrondissement
  * @property Choixoperateur|null $choixoperateur
  * @property Commune|null $commune
  * @property Convention|null $convention
  * @property Courrier|null $courrier
+ * @property Departement|null $departement
  * @property Detf|null $detf
  * @property Ingenieur|null $ingenieur
+ * @property Localite|null $localite
  * @property Module|null $module
  * @property Niveaux|null $niveaux
  * @property Operateur|null $operateur
  * @property Programme|null $programme
  * @property Projet|null $projet
+ * @property Region|null $region
  * @property Specialite|null $specialite
  * @property Statut|null $statut
  * @property Traitement|null $traitement
  * @property TypesFormation|null $types_formation
+ * @property Zone|null $zone
  * @property Collection|Collective[] $collectives
  * @property Collection|Coment[] $coments
  * @property Collection|Demandeur[] $demandeurs
@@ -89,7 +99,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Formation extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -117,7 +126,12 @@ class Formation extends Model
 		'antennes_id' => 'int',
 		'projets_id' => 'int',
 		'choixoperateurs_id' => 'int',
-		'modules_id' => 'int'
+		'modules_id' => 'int',
+		'regions_id' => 'int',
+		'departements_id' => 'int',
+		'arrondissements_id' => 'int',
+		'localites_id' => 'int',
+		'zones_id' => 'int'
 	];
 
 	protected $dates = [
@@ -163,7 +177,12 @@ class Formation extends Model
 		'antennes_id',
 		'projets_id',
 		'choixoperateurs_id',
-		'modules_id'
+		'modules_id',
+		'regions_id',
+		'departements_id',
+		'arrondissements_id',
+		'localites_id',
+		'zones_id'
 	];
 
 	public function agent()
@@ -174,6 +193,11 @@ class Formation extends Model
 	public function antenne()
 	{
 		return $this->belongsTo(Antenne::class, 'antennes_id');
+	}
+
+	public function arrondissement()
+	{
+		return $this->belongsTo(Arrondissement::class, 'arrondissements_id');
 	}
 
 	public function choixoperateur()
@@ -196,6 +220,11 @@ class Formation extends Model
 		return $this->belongsTo(Courrier::class, 'courriers_id');
 	}
 
+	public function departement()
+	{
+		return $this->belongsTo(Departement::class, 'departements_id');
+	}
+
 	public function detf()
 	{
 		return $this->belongsTo(Detf::class, 'detfs_id');
@@ -204,6 +233,11 @@ class Formation extends Model
 	public function ingenieur()
 	{
 		return $this->belongsTo(Ingenieur::class, 'ingenieurs_id');
+	}
+
+	public function localite()
+	{
+		return $this->belongsTo(Localite::class, 'localites_id');
 	}
 
 	public function module()
@@ -231,6 +265,11 @@ class Formation extends Model
 		return $this->belongsTo(Projet::class, 'projets_id');
 	}
 
+	public function region()
+	{
+		return $this->belongsTo(Region::class, 'regions_id');
+	}
+
 	public function specialite()
 	{
 		return $this->belongsTo(Specialite::class, 'specialites_id');
@@ -249,6 +288,11 @@ class Formation extends Model
 	public function types_formation()
 	{
 		return $this->belongsTo(TypesFormation::class, 'types_formations_id');
+	}
+
+	public function zone()
+	{
+		return $this->belongsTo(Zone::class, 'zones_id');
 	}
 
 	public function collectives()

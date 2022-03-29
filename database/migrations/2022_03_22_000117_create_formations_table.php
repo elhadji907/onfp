@@ -60,6 +60,11 @@ class CreateFormationsTable extends Migration
             $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('choixoperateurs_id')->nullable();
             $table->unsignedInteger('modules_id')->nullable();
+            $table->unsignedInteger('regions_id')->nullable();
+            $table->unsignedInteger('departements_id')->nullable();
+            $table->unsignedInteger('arrondissements_id')->nullable();
+            $table->unsignedInteger('localites_id')->nullable();
+            $table->unsignedInteger('zones_id')->nullable();
 
             $table->index(["agents_id"], 'fk_consommations_agents1_idx');
 
@@ -94,6 +99,16 @@ class CreateFormationsTable extends Migration
             $table->index(["choixoperateurs_id"], 'fk_formations_choixoperateurs1_idx');
 
             $table->index(["modules_id"], 'fk_formations_modules1_idx');
+
+            $table->index(["regions_id"], 'fk_formations_regions1_idx');
+
+            $table->index(["departements_id"], 'fk_formations_departements1_idx');
+
+            $table->index(["arrondissements_id"], 'fk_formations_arrondissements1_idx');
+
+            $table->index(["localites_id"], 'fk_formations_localites1_idx');
+
+            $table->index(["zones_id"], 'fk_formations_zones1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
@@ -180,6 +195,31 @@ class CreateFormationsTable extends Migration
 
             $table->foreign('modules_id', 'fk_formations_modules1_idx')
                 ->references('id')->on('modules')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('regions_id', 'fk_formations_regions1_idx')
+                ->references('id')->on('regions')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('departements_id', 'fk_formations_departements1_idx')
+                ->references('id')->on('departements')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('arrondissements_id', 'fk_formations_arrondissements1_idx')
+                ->references('id')->on('arrondissements')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('localites_id', 'fk_formations_localites1_idx')
+                ->references('id')->on('localites')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('zones_id', 'fk_formations_zones1_idx')
+                ->references('id')->on('zones')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

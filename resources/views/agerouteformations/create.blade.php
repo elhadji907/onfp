@@ -101,10 +101,10 @@
                         <div class="form-row">
                             <div class="form-group col-md-6 col-lg-16 col-xs-12 col-sm-12">
                                 {!! Form::label('Localité:') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('commune', $communes, null, ['placeholder' => 'commune', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
+                                {!! Form::select('localite', $localites, null, ['placeholder' => 'localite', 'class' => 'form-control', 'id' => 'localite', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('commune'))
-                                        @foreach ($errors->get('commune') as $message)
+                                    @if ($errors->has('localite'))
+                                        @foreach ($errors->get('localite') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif

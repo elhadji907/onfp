@@ -71,7 +71,6 @@ class CreateIndividuellesTable extends Migration
             $table->integer('nbre_pieces')->nullable();
             $table->integer('nbre_enfants')->nullable();
             $table->unsignedInteger('demandeurs_id');
-            $table->unsignedInteger('communes_id')->nullable();
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
             $table->unsignedInteger('diplomes_id')->nullable();
@@ -83,10 +82,12 @@ class CreateIndividuellesTable extends Migration
             $table->unsignedInteger('localites_id')->nullable();
             $table->unsignedInteger('projets_id')->nullable();
             $table->unsignedInteger('programmes_id')->nullable();
+            $table->unsignedInteger('communes_id')->nullable();
+            $table->unsignedInteger('arrondissements_id')->nullable();
+            $table->unsignedInteger('departements_id')->nullable();
+            $table->unsignedInteger('regions_id')->nullable();
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');
-
-            $table->index(["communes_id"], 'fk_individuelles_communes1_idx');
 
             $table->index(["etudes_id"], 'fk_individuelles_etudes1_idx');
 
@@ -109,17 +110,20 @@ class CreateIndividuellesTable extends Migration
             $table->index(["projets_id"], 'fk_individuelles_projets1_idx');
 
             $table->index(["programmes_id"], 'fk_individuelles_programmes1_idx');
+
+            $table->index(["arrondissements_id"], 'fk_individuelles_arrondissements1_idx');
+
+            $table->index(["regions_id"], 'fk_individuelles_regions1_idx');
+
+            $table->index(["communes_id"], 'fk_individuelles_communes1_idx');
+
+            $table->index(["departements_id"], 'fk_individuelles_departements1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
             $table->foreign('demandeurs_id', 'fk_individuelles_demandeurs1_idx')
                 ->references('id')->on('demandeurs')
-                ->onDelete('no action')
-                ->onUpdate('no action');
-
-            $table->foreign('communes_id', 'fk_individuelles_communes1_idx')
-                ->references('id')->on('communes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
@@ -175,6 +179,26 @@ class CreateIndividuellesTable extends Migration
 
             $table->foreign('programmes_id', 'fk_individuelles_programmes1_idx')
                 ->references('id')->on('programmes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('arrondissements_id', 'fk_individuelles_arrondissements1_idx')
+                ->references('id')->on('arrondissements')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('regions_id', 'fk_individuelles_regions1_idx')
+                ->references('id')->on('regions')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('communes_id', 'fk_individuelles_communes1_idx')
+                ->references('id')->on('communes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('departements_id', 'fk_individuelles_departements1_idx')
+                ->references('id')->on('departements')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });

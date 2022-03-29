@@ -43,7 +43,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->commune->arrondissement->departement->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name) && $individuelle->statut == 'accepter')
+                                            @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name) && $individuelle->statut == 'accepter')
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>

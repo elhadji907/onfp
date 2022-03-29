@@ -63,7 +63,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $nbre_pieces
  * @property int|null $nbre_enfants
  * @property int $demandeurs_id
- * @property int|null $communes_id
  * @property int|null $etudes_id
  * @property int|null $antennes_id
  * @property int|null $diplomes_id
@@ -74,16 +73,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $zones_id
  * @property int|null $localites_id
  * @property int|null $projets_id
- * @property int|null $programmes_id1
  * @property int|null $programmes_id
+ * @property int|null $communes_id
+ * @property int|null $arrondissements_id
+ * @property int|null $departements_id
+ * @property int|null $regions_id
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Antenne|null $antenne
+ * @property Arrondissement|null $arrondissement
  * @property Commune|null $commune
  * @property Convention|null $convention
  * @property Demandeur $demandeur
+ * @property Departement|null $departement
  * @property Diplome|null $diplome
  * @property Diplomespro|null $diplomespro
  * @property Etude|null $etude
@@ -92,6 +96,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Module $module
  * @property Programme|null $programme
  * @property Projet|null $projet
+ * @property Region|null $region
  * @property Zone|null $zone
  *
  * @package App\Models
@@ -111,7 +116,6 @@ class Individuelle extends Model
 		'nbre_pieces' => 'int',
 		'nbre_enfants' => 'int',
 		'demandeurs_id' => 'int',
-		'communes_id' => 'int',
 		'etudes_id' => 'int',
 		'antennes_id' => 'int',
 		'diplomes_id' => 'int',
@@ -122,8 +126,11 @@ class Individuelle extends Model
 		'zones_id' => 'int',
 		'localites_id' => 'int',
 		'projets_id' => 'int',
-		'programmes_id1' => 'int',
-		'programmes_id' => 'int'
+		'programmes_id' => 'int',
+		'communes_id' => 'int',
+		'arrondissements_id' => 'int',
+		'departements_id' => 'int',
+		'regions_id' => 'int'
 	];
 
 	protected $dates = [
@@ -180,7 +187,6 @@ class Individuelle extends Model
 		'nbre_pieces',
 		'nbre_enfants',
 		'demandeurs_id',
-		'communes_id',
 		'etudes_id',
 		'antennes_id',
 		'diplomes_id',
@@ -191,13 +197,21 @@ class Individuelle extends Model
 		'zones_id',
 		'localites_id',
 		'projets_id',
-		'programmes_id1',
-		'programmes_id'
+		'programmes_id',
+		'communes_id',
+		'arrondissements_id',
+		'departements_id',
+		'regions_id'
 	];
 
 	public function antenne()
 	{
 		return $this->belongsTo(Antenne::class, 'antennes_id');
+	}
+
+	public function arrondissement()
+	{
+		return $this->belongsTo(Arrondissement::class, 'arrondissements_id');
 	}
 
 	public function commune()
@@ -213,6 +227,11 @@ class Individuelle extends Model
 	public function demandeur()
 	{
 		return $this->belongsTo(Demandeur::class, 'demandeurs_id');
+	}
+
+	public function departement()
+	{
+		return $this->belongsTo(Departement::class, 'departements_id');
 	}
 
 	public function diplome()
@@ -247,12 +266,17 @@ class Individuelle extends Model
 
 	public function programme()
 	{
-		return $this->belongsTo(Programme::class, 'programmes_id1');
+		return $this->belongsTo(Programme::class, 'programmes_id');
 	}
 
 	public function projet()
 	{
 		return $this->belongsTo(Projet::class, 'projets_id');
+	}
+
+	public function region()
+	{
+		return $this->belongsTo(Region::class, 'regions_id');
 	}
 
 	public function zone()

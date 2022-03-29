@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $updated_at
  * 
  * @property Localite|null $localite
+ * @property Collection|Demandeur[] $demandeurs
+ * @property Collection|Formation[] $formations
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Programme[] $programmes
  * @property Collection|Projet[] $projets
@@ -32,7 +34,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Zone extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -51,6 +52,16 @@ class Zone extends Model
 	public function localite()
 	{
 		return $this->belongsTo(Localite::class, 'localites_id');
+	}
+
+	public function demandeurs()
+	{
+		return $this->hasMany(Demandeur::class, 'zones_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'zones_id');
 	}
 
 	public function individuelles()

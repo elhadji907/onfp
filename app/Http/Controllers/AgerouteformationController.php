@@ -17,6 +17,7 @@ use App\Models\Choixoperateur;
 use App\Models\Formation;
 use App\Models\Individuelle;
 use App\Models\Statut;
+use App\Models\Localite;
 use Illuminate\Http\Request;
 
 class AgerouteformationController extends Controller
@@ -55,6 +56,7 @@ class AgerouteformationController extends Controller
         $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $localites = Localite::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $types_formations = TypesFormation::distinct('name')->get()->pluck('name', 'name')->unique();
@@ -62,7 +64,7 @@ class AgerouteformationController extends Controller
         $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        return view('agerouteformations.create', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.create', compact('localites', 'civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -80,7 +82,7 @@ class AgerouteformationController extends Controller
                 'date_fin'            =>    'required|date_format:Y-m-d', */
                 'programme'           =>    'required',
                 'projet'              =>    'required',
-                'commune'             =>    'required',
+                'localite'            =>    'required',
                 'modules'             =>    'required',
                 'choixoperateur'      =>    'required',
                 'adresse'             =>    'required',
@@ -92,7 +94,7 @@ class AgerouteformationController extends Controller
         $choixoperateur_id            =       Choixoperateur::where('trimestre', $request->input('choixoperateur'))->first()->id;
         $types_formations_id          =       TypesFormation::where('name', 'Individuelle')->first()->id;
         $projet_id                    =       Projet::where('name', $request->input('projet'))->first()->id;
-        $commune_id                   =       Commune::where('nom', $request->input('commune'))->first()->id;
+        $localite_id                  =       Localite::where('nom', $request->input('localite'))->first()->id;
         $programme_id                 =       Programme::where('name', $request->input('programme'))->first()->id;
         $operateur_id                 =       Operateur::where('name', $request->input('operateur'))->first()->id;
         $statuts_id                   =       Statut::where('name', 'attente')->first()->id;
@@ -112,7 +114,7 @@ class AgerouteformationController extends Controller
             'choixoperateurs_id'       =>      $choixoperateur_id,
             'types_formations_id'      =>      $types_formations_id,
             'operateurs_id'            =>      $operateur_id,
-            'communes_id'              =>      $commune_id,
+            'localites_id'             =>      $localite_id,
 
         ]);
 
@@ -159,6 +161,7 @@ class AgerouteformationController extends Controller
         $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
         $modules = Module::distinct('name')->get()->pluck('name', 'name')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $localites = Localite::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $types_formations = TypesFormation::distinct('name')->get()->pluck('name', 'name')->unique();
@@ -168,7 +171,7 @@ class AgerouteformationController extends Controller
         $operateurs = Operateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $statuts = Statut::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        return view('agerouteformations.update', compact('civilites', 'statuts', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.update', compact('localites', 'civilites', 'statuts', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -185,7 +188,7 @@ class AgerouteformationController extends Controller
             [
                 'programme'           =>    'required',
                 'projet'              =>    'required',
-                'commune'             =>    'required',
+                'localite'             =>    'required',
                 'modules'             =>    'required',
                 'choixoperateur'      =>    'required',
                 'adresse'             =>    'required',
@@ -200,7 +203,7 @@ class AgerouteformationController extends Controller
         $choixoperateur_id              =       Choixoperateur::where('trimestre', $request->input('choixoperateur'))->first()->id;
         $types_formations_id            =       TypesFormation::where('name', 'Individuelle')->first()->id;
         $projet_id                      =       Projet::where('name', $request->input('projet'))->first()->id;
-        $commune_id                     =       Commune::where('nom', $request->input('commune'))->first()->id;
+        $localite_id                    =       Localite::where('nom', $request->input('localite'))->first()->id;
         $programme_id                   =       Programme::where('name', $request->input('programme'))->first()->id;
         $module_id                      =       Module::where('name', $request->input('modules'))->first()->id;
         $operateurs_id                  =       Operateur::where('name', $request->input('operateur'))->first()->id;
@@ -216,7 +219,7 @@ class AgerouteformationController extends Controller
         $formation->choixoperateurs_id  =      $choixoperateur_id;
         $formation->types_formations_id =      $types_formations_id;
         $formation->operateurs_id       =      $operateurs_id;
-        $formation->communes_id         =      $commune_id;
+        $formation->localites_id         =      $localite_id;
 
         $formation->save();
         

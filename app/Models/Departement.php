@@ -25,12 +25,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property Region $region
  * @property Collection|Arrondissement[] $arrondissements
+ * @property Collection|Demandeur[] $demandeurs
+ * @property Collection|Formation[] $formations
+ * @property Collection|Individuelle[] $individuelles
  *
  * @package App\Models
  */
 class Departement extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -54,5 +56,20 @@ class Departement extends Model
 	public function arrondissements()
 	{
 		return $this->hasMany(Arrondissement::class, 'departements_id');
+	}
+
+	public function demandeurs()
+	{
+		return $this->hasMany(Demandeur::class, 'departements_id');
+	}
+
+	public function formations()
+	{
+		return $this->hasMany(Formation::class, 'departements_id');
+	}
+
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'departements_id');
 	}
 }
