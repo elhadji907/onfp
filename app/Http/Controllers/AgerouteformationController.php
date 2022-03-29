@@ -348,7 +348,7 @@ class AgerouteformationController extends Controller
 
         $demandeur->formations()->detach($formation);
         
-        $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été ajouté';
+        $message = $individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' a été retiré de cette formation';
         return back()->with(compact('message'));
     }
 }

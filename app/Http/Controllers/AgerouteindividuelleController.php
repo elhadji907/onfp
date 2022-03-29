@@ -1023,7 +1023,6 @@ class AgerouteindividuelleController extends Controller
         $id_projet              = $projet;
         $id_localite            = Localite::where('nom', $localite)->first()->id;
         $projet                 = Projet::find($projet);
-        $localites              = Projet::find($localite);
         $individuelles          = $projet->individuelles;
         $modules                = Module::find($module);
         $localite_concernee     = $localite;
