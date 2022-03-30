@@ -102,7 +102,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [9, 'asc']
+                    [9, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
