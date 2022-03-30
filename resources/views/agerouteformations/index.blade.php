@@ -32,18 +32,19 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th style="width:5%;">Code</th>
-                                        <th style="width:10%;">Module</th>
+                                        <th style="width:7%;">Année</th>
+                                        <th style="width:15%;">Module</th>
                                         <th style="width:10%;">Bénéficiares</th>
                                         <th style="width:10%;">Département</th>
                                         {{-- <th style="width:08%;">Début</th>
                                         <th style="width:08%;">Fin</th> --}}
-                                        <th style="width:20%;">Opérateurs</th>
+                                        <th style="width:10%;">Opérateurs</th>
                                         <th style="width:8%;">Statut</th>
                                         <th style="width:4%;">Effectif</th>
                                         <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
-                         {{--         <tfoot class="table-dark">
+                                {{-- <tfoot class="table-dark">
                                     <tr>
                                         <th>Code</th>
                                         <th>Module</th>
@@ -53,25 +54,29 @@
                                         <th>Statut</th>
                                         <th></th>
                                     </tr>
-                                </tfoot>  --}}
+                                </tfoot> --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($findividuelles as $findividuelle)
                                         <tr>
                                             <td>{!! $findividuelle->formation->code !!}</td>
+                                            <td> <a href="#" class="btn btn-outline-info btn-sm">
+                                                    {!! $findividuelle->formation->annee !!}
+                                                </a>
+                                            </td>
                                             <td>{!! $findividuelle->module->name !!}</td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                             <td>{!! $findividuelle->formation->localite->nom !!}</td>
                                             {{-- <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
                                             <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td> --}}
-                                            <td>{!! $findividuelle->formation->operateur->name ?? '' !!} ({!! $findividuelle->formation->operateur->sigle ?? '' !!})</td>
-                                            <td><label class="badge badge-default">{!! $findividuelle->formation->statut->name !!}</label></td>
+                                            <td>{{-- {!! $findividuelle->formation->operateur->name ?? '' !!} --}} {!! $findividuelle->formation->operateur->sigle ?? '' !!}</td>
+                                            <td><label class="badge badge-info">{!! $findividuelle->formation->statut->name !!}</label></td>
                                             <td class="text-center"><label class="badge badge-default">
-                                                @foreach ($findividuelle->formation->demandeurs as $demandeur)
-                                                    @if ($loop->last)
-                                                        {!! $loop->count !!}
-                                                    @endif
-                                                @endforeach
+                                                    @foreach ($findividuelle->formation->demandeurs as $demandeur)
+                                                        @if ($loop->last)
+                                                            {!! $loop->count !!}
+                                                        @endif
+                                                    @endforeach
                                                 </label>
                                             </td>
                                             <td class="d-flex align-items-baseline text-center-row">
@@ -139,7 +144,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'asc']
+                    [1, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

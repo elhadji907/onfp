@@ -113,12 +113,12 @@
                     {{-- <i class="fas fa-plus"></i> --}}Ajouter demandeurs
                 </div>
             </a>
-            <a href="#">
+            <a href="{{ url('fichesuivieval', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}">
                 <div class="btn btn-outline-info btn-md" title="afficher">
                     Fiche de suivi
                 </div>
             </a>
-            <a href="#">
+            <a href="{{ url('pvevaluation', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}">
                 <div class="btn btn-outline-primary btn-md" title="afficher">
                     PV Evaluation
                 </div>
@@ -147,27 +147,30 @@
                                 <td colspan="2" class="pt-3">Commission</td>
                             </tr>
                             <tr class="details">
-                                <td colspan="1" class="pt-3">{!! $findividuelle->code ?? '' !!}</td>
+                                <td colspan="1" class="pt-3">{!! $findividuelle->formation->code ?? '' !!}</td>
                                 <td colspan="1" class="pt-3">
                                     {{ $findividuelle->formation->convention->numero ?? '' }}</td>
                                 <td colspan="2" class="pt-3">
                                     {{ $findividuelle->formation->choixoperateur->trimestre ?? '' }}</td>
                             </tr>
                             <tr class="heading">
-                                <td colspan="2" class="pt-3">Module</td>
+                                <td colspan="1" class="pt-3">Année</td>
+                                <td colspan="1" class="pt-3">Module</td>
                                 <td colspan="2" class="pt-3">Bénéficiaires</td>
                             </tr>
                             <tr class="details">
-                                <td colspan="2" class="pt-3">{!! $findividuelle->module->name ?? '' !!}</td>
+                                <td colspan="1" class="pt-3">{!! $findividuelle->formation->annee ?? '' !!}</td>
+                                <td colspan="1" class="pt-3">{!! $findividuelle->module->name ?? '' !!}</td>
                                 <td colspan="2" class="pt-3">
                                     {{ $findividuelle->formation->beneficiaires ?? '' }}</td>
                             </tr>
                             <tr class="heading">
-                                <td colspan="4" class="pt-3">Opérateur</td>
+                                <td colspan="3" class="pt-3">Opérateur</td>
+                                <td colspan="1" class="pt-3">Sigle</td>
                             </tr>
                             <tr class="details">
-                                <td colspan="4" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}
-                                    ({{ $findividuelle->formation->operateur->sigle ?? '' }})</td>
+                                <td colspan="3" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
+                                <td colspan="1" class="pt-3">{{ $findividuelle->formation->operateur->sigle ?? '' }}</td>
                             </tr>
 
                             <tr class="heading">
@@ -202,20 +205,22 @@
                             </tr>
                             @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
                                 <tr class="heading">
-                                    <td colspan="4" class="pt-3">Projet</td>
+                                    <td colspan="3" class="pt-3">Projet</td>
+                                    <td colspan="1" class="pt-3">Sigle</td>
                                 </tr>
                                 <tr class="details">
-                                    <td colspan="4" class="pt-3">{!! strtolower($findividuelle->projet->name) ?? '' !!}
-                                        ({{ $findividuelle->projet->sigle ?? '' }})</td>
+                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->projet->name) ?? '' !!}</td>
+                                    <td colspan="1" class="pt-3">{{ $findividuelle->projet->sigle ?? '' }}</td>
                                 </tr>
                             @endif
                             @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
                                 <tr class="heading">
-                                    <td colspan="4" class="pt-3">Programme</td>
+                                    <td colspan="3" class="pt-3">Programme</td>
+                                    <td colspan="1" class="pt-3">Sigle</td>
                                 </tr>
                                 <tr class="details">
-                                    <td colspan="4" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!}
-                                        ({{ $findividuelle->programme->sigle ?? '' }})</td>
+                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!}</td>
+                                    <td colspan="1" class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}</td>
                                 </tr>
                             @endif
                         </table>

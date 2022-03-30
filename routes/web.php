@@ -207,6 +207,9 @@ Route::group([
         Route::get('statutageroutesvs/{localite}/{projet}/{statut}/{svs}', [AgerouteindividuelleController::class, 'statutageroutesvs'])->name('statutageroutesvs');
         Route::get('ageroutesexe/{sexe}/{localite}/{projet}', [AgerouteindividuelleController::class, 'ageroutesexe'])->name('ageroutesexe');
 
+        Route::get('fichesuivieval/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'fichesuivieval'])->name('fichesuivieval');
+        Route::get('pvevaluation/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'pvevaluation'])->name('pvevaluation');
+
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
         Route::get('/filieres/list', [FiliereController::class, 'list'])->name('filieres.list');

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $id
  * @property string $uuid
  * @property string $code
+ * @property string|null $annee
  * @property string|null $name
  * @property string|null $qualifications
  * @property string|null $effectif_total
@@ -154,6 +155,7 @@ class Formation extends Model
 	protected $fillable = [
 		'uuid',
 		'code',
+		'annee',
 		'name',
 		'qualifications',
 		'effectif_total',

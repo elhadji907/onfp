@@ -47,37 +47,5 @@ class StatutSeeder extends Seeder
             'updated_at' => now(),
             'uuid' => Str::uuid(),
         ]);
-        
-        DB::table('statuts')->insert([
-            "name"=>"Diplôme en cours d'édition",
-            "niveau"=>"Service informatique",
-            'created_at' => now(),
-            'updated_at' => now(),
-            'uuid' => Str::uuid(),
-        ]);
-        
-        DB::table('statuts')->insert([
-            "name"=>"Diplôme en signature",
-            "niveau"=>"DG",
-            'created_at' => now(),
-            'updated_at' => now(),
-            'uuid' => Str::uuid(),
-        ]);
-        
-        DB::table('statuts')->insert([
-            "name"=>"Diplôme disponible",
-            "niveau"=>"DEC",
-            'created_at' => now(),
-            'updated_at' => now(),
-            'uuid' => Str::uuid(),
-        ]);
-        
-        DB::table('statuts')->insert([
-            "name"=>"Diplôme retiré",
-            "niveau"=>"DEC",
-            'created_at' => now(),
-            'updated_at' => now(),
-            'uuid' => Str::uuid(),
-        ]);
     }
 }

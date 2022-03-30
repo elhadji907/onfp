@@ -61,6 +61,7 @@ class FormationFactory extends Factory
 
         return [
             'code' => 'FP'."".$annee.$this->faker->unique(true)->numberBetween(0, 300),
+            'annee' => $this->faker->randomElement($array = array('2020-2021','2021-2022', '2019-2020')),
             'name' => $this->faker->company,
             'qualifications' => $this->faker->word,
             'effectif_total' => $effectif_total,

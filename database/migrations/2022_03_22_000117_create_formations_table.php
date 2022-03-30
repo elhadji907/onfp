@@ -25,6 +25,7 @@ class CreateFormationsTable extends Migration
             $table->increments('id');
             $table->char('uuid', 36);
             $table->string('code', 200);
+            $table->string('annee', 200)->nullable();
             $table->string('name', 200)->nullable();
             $table->string('qualifications', 200)->nullable();
             $table->string('effectif_total', 200)->nullable();
