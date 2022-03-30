@@ -170,6 +170,12 @@
                                     ({{ $findividuelle->formation->operateur->sigle ?? '' }})</td>
                             </tr>
                             <tr class="heading">
+                                <td colspan="3" class="pt-3">Ingénieur en charge</td>
+                            </tr>
+                            <tr class="details">
+                                <td colspan="3" class="pt-3">{!! $findividuelle->formation->ingenieur->name ?? '' !!}
+                            </tr>
+                            <tr class="heading">
                                 <td colspan="2" class="pt-3">Département</td>
                                 <td colspan="2" class="pt-3">Adresse</td>
                             </tr>
@@ -260,6 +266,35 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#table-individuelles').DataTable({
+                dom: 'lBfrtip',
+                buttons: [{
+                        extend: 'copyHtml5',
+                        text: '<i class="fas fa-copy"></i> Copy',
+                        titleAttr: 'Copy'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        titleAttr: 'Excel'
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        text: '<i class="fas fa-file-csv"></i> CSV',
+                        titleAttr: 'CSV'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
+                        titleAttr: 'PDF'
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print"></i> Print',
+                        titleAttr: 'Print'
+                    }
+                ],
                 "lengthMenu": [
                     [5, 10, 25, 50, 100, -1],
                     [5, 10, 25, 50, 100, "Tout"]

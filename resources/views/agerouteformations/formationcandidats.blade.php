@@ -36,6 +36,7 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:10%;">Départements</th>
                                             <th style="width:10%;">Communes</th>
+                                            <th style="width:2%;">Note</th>
                                             <th style="width:5%;">Formations</th>
                                             <th style="width:1%;"></th>
                                         </tr>
@@ -54,6 +55,7 @@
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                     <td>{!! $individuelle->localite->nom ?? '' !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                    <td ALIGN="CENTER">{!! $individuelle->note ?? '' !!}</td>
                                                     <td ALIGN="CENTER">
                                                         <?php $h = 1; ?>
                                                         @foreach ($individuelle->demandeur->formations as $key => $formation)
