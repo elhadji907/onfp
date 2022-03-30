@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Findividuelle;
 use App\Models\Projet;
 use App\Models\Programme;
+use App\Models\Ingenieur;
 use App\Models\User;
 use App\Models\Typedemande;
 use App\Models\Module;
@@ -65,9 +66,10 @@ class AgerouteformationController extends Controller
         $choixoperateur = Choixoperateur::distinct('trimestre')->get()->pluck('trimestre', 'trimestre')->unique();
         $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
+        $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
         $conventions = Convention::distinct('numero')->get()->pluck('numero', 'numero')->unique();
 
-        return view('agerouteformations.create', compact('conventions', 'localites', 'civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.create', compact('ingenieurs', 'conventions', 'localites', 'civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -90,6 +92,9 @@ class AgerouteformationController extends Controller
                 'choixoperateur'      =>    'required',
                 'adresse'             =>    'required',
                 'beneficiaire'        =>    'required',
+                'frais_operateurs'    =>    'numeric',
+                'frais_additionnels'  =>    'numeric',
+                'autres_frais'        =>    'numeric',
                 'types_formations'    =>    'required',
         ]
         );
@@ -99,6 +104,7 @@ class AgerouteformationController extends Controller
         $projet_id                    =       Projet::where('name', $request->input('projet'))->first()->id;
         $localite_id                  =       Localite::where('nom', $request->input('localite'))->first()->id;
         $programme_id                 =       Programme::where('name', $request->input('programme'))->first()->id;
+        $ingenieur_id                 =       Ingenieur::where('name', $request->input('ingenieur'))->first()->id;
         $operateur_id                 =       Operateur::where('name', $request->input('operateur'))->first()->id;
         $conventions_id               =       Convention::where('numero', $request->input('conventions'))->first()->id;
         $statuts_id                   =       Statut::where('name', 'attente')->first()->id;
@@ -107,6 +113,12 @@ class AgerouteformationController extends Controller
         $annee = date('dmy');
         $code = "FI".$nbre.''.$annee;
 
+        $frais_operateurs       =       str_replace(' ', '', $request->input('frais_operateurs'));
+        $frais_additionnels     =       str_replace(' ', '', $request->input('frais_additionnels'));
+        $autres_frais           =       str_replace(' ', '', $request->input('autres_frais'));
+
+        $frais_total            =       $frais_operateurs  + $frais_additionnels + $autres_frais;
+
         $formation = new Formation([
             'code'                     =>      $code,
             'date_debut'               =>      $request->input('date_debut'),
@@ -114,12 +126,19 @@ class AgerouteformationController extends Controller
             'adresse'                  =>      $request->input('adresse'),
             'beneficiaires'            =>      $request->input('beneficiaire'),
             'modules_id'               =>      $request->input('modules'),
+            'frais_operateurs'         =>      $frais_operateurs,
+            'frais_add'                =>      $frais_additionnels,
+            'autes_frais'              =>      $autres_frais,
+            'frais_total'              =>      $frais_total,
             'conventions_id'           =>      $conventions_id,
             'statuts_id'               =>      $statuts_id,
+            'projets_id'               =>      $projet_id,
+            'programmes_id'            =>      $programme_id,
             'choixoperateurs_id'       =>      $choixoperateur_id,
             'types_formations_id'      =>      $types_formations_id,
             'operateurs_id'            =>      $operateur_id,
             'localites_id'             =>      $localite_id,
+            'ingenieurs_id'            =>      $ingenieur_id,
 
         ]);
 
@@ -172,11 +191,12 @@ class AgerouteformationController extends Controller
         $choixoperateur = Choixoperateur::distinct('trimestre')->get()->pluck('trimestre', 'trimestre')->unique();
         $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('name', 'name')->unique();
+        $ingenieurs = Ingenieur::distinct('name')->get()->pluck('name', 'name')->unique();
         $operateurs = Operateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $statuts = Statut::distinct('name')->get()->pluck('name', 'name')->unique();
         $conventions = Convention::distinct('numero')->get()->pluck('numero', 'numero')->unique();
 
-        return view('agerouteformations.update', compact('conventions', 'localites', 'civilites', 'statuts', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        return view('agerouteformations.update', compact('ingenieurs', 'conventions', 'localites', 'civilites', 'statuts', 'modules', 'communes', 'regions', 'operateurs', 'types_operateurs', 'findividuelle', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**
@@ -193,17 +213,25 @@ class AgerouteformationController extends Controller
             [
                 'programme'           =>    'required',
                 'projet'              =>    'required',
-                'localite'             =>    'required',
+                'localite'            =>    'required',
                 'modules'             =>    'required',
                 'choixoperateur'      =>    'required',
                 'adresse'             =>    'required',
                 'beneficiaire'        =>    'required',
+                'frais_operateurs'    =>    'numeric',
+                'frais_additionnels'  =>    'numeric',
+                'autres_frais'        =>    'numeric',
                 'types_formations'    =>    'required',
         ]
         );
         
         $findividuelle = Findividuelle::find($id);
         $formation = $findividuelle->formation;
+        $frais_operateurs       =       str_replace(' ', '', $request->input('frais_operateurs'));
+        $frais_additionnels     =       str_replace(' ', '', $request->input('frais_additionnels'));
+        $autres_frais           =       str_replace(' ', '', $request->input('autres_frais'));
+
+        $frais_total            =       $frais_operateurs  + $frais_additionnels + $autres_frais;
 
         $choixoperateur_id              =       Choixoperateur::where('trimestre', $request->input('choixoperateur'))->first()->id;
         $types_formations_id            =       TypesFormation::where('name', 'Individuelle')->first()->id;
@@ -214,12 +242,17 @@ class AgerouteformationController extends Controller
         $conventions_id                 =       Convention::where('numero', $request->input('conventions'))->first()->id;
         $operateurs_id                  =       Operateur::where('name', $request->input('operateur'))->first()->id;
         $statuts_id                     =       Statut::where('name', $request->input('statut'))->first()->id;
+        $ingenieurs_id                  =       Ingenieur::where('name', $request->input('ingenieur'))->first()->id;
         
         $formation->code                =      $request->input('code');
         $formation->date_debut          =      $request->input('date_debut');
         $formation->date_fin            =      $request->input('date_fin');
         $formation->adresse             =      $request->input('adresse');
         $formation->beneficiaires       =      $request->input('beneficiaire');
+        $formation->frais_operateurs    =      $frais_operateurs;
+        $formation->frais_add           =      $frais_additionnels;
+        $formation->autes_frais         =      $autres_frais;
+        $formation->frais_total         =      $frais_total;
         $formation->modules_id          =      $module_id;
         $formation->conventions_id      =      $conventions_id;
         $formation->statuts_id          =      $statuts_id;
@@ -227,6 +260,9 @@ class AgerouteformationController extends Controller
         $formation->types_formations_id =      $types_formations_id;
         $formation->operateurs_id       =      $operateurs_id;
         $formation->localites_id        =      $localite_id;
+        $formation->ingenieurs_id       =      $ingenieurs_id;
+        $formation->projets_id          =      $projet_id;
+        $formation->programmes_id       =      $programme_id;
 
         $formation->save();
         

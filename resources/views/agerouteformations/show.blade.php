@@ -144,13 +144,13 @@
                             <tr class="heading">
                                 <td colspan="1" class="pt-3">CODE</td>
                                 <td colspan="1" class="pt-3">N° convention</td>
-                                <td colspan="1" class="pt-3">Commission</td>
+                                <td colspan="2" class="pt-3">Commission</td>
                             </tr>
                             <tr class="details">
                                 <td colspan="1" class="pt-3">{!! $findividuelle->code ?? '' !!}</td>
                                 <td colspan="1" class="pt-3">
                                     {{ $findividuelle->formation->convention->numero ?? '' }}</td>
-                                <td colspan="1" class="pt-3">
+                                <td colspan="2" class="pt-3">
                                     {{ $findividuelle->formation->choixoperateur->trimestre ?? '' }}</td>
                             </tr>
                             <tr class="heading">
@@ -163,17 +163,34 @@
                                     {{ $findividuelle->formation->beneficiaires ?? '' }}</td>
                             </tr>
                             <tr class="heading">
-                                <td colspan="3" class="pt-3">Opérateur</td>
+                                <td colspan="4" class="pt-3">Opérateur</td>
                             </tr>
                             <tr class="details">
-                                <td colspan="3" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}
+                                <td colspan="4" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}
                                     ({{ $findividuelle->formation->operateur->sigle ?? '' }})</td>
                             </tr>
+
                             <tr class="heading">
-                                <td colspan="3" class="pt-3">Ingénieur en charge</td>
+                                <td colspan="1" class="pt-3">Frais opérateur</td>
+                                <td colspan="1" class="pt-3">Frais additionnels</td>
+                                <td colspan="1" class="pt-3">Autres frais</td>
+                                <td colspan="1" class="pt-3">Total budget</td>
                             </tr>
                             <tr class="details">
-                                <td colspan="3" class="pt-3">{!! $findividuelle->formation->ingenieur->name ?? '' !!}
+                                <td colspan="1" class="pt-3">{!! $findividuelle->formation->frais_operateurs ?? '' !!}</td>
+                                <td colspan="1" class="pt-3">
+                                    {{ $findividuelle->formation->frais_add ?? '' }}</td>
+                                <td colspan="1" class="pt-3">
+                                    {{ $findividuelle->formation->autes_frais ?? '' }}</td>
+                                <td colspan="1" class="pt-3">
+                                    {{ $findividuelle->formation->frais_total ?? '' }}</td>
+                            </tr>
+
+                            <tr class="heading">
+                                <td colspan="4" class="pt-3">Ingénieur en charge</td>
+                            </tr>
+                            <tr class="details">
+                                <td colspan="4" class="pt-3">{!! $findividuelle->formation->ingenieur->name ?? '' !!}
                             </tr>
                             <tr class="heading">
                                 <td colspan="2" class="pt-3">Département</td>
@@ -185,19 +202,19 @@
                             </tr>
                             @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
                                 <tr class="heading">
-                                    <td colspan="3" class="pt-3">Projet</td>
+                                    <td colspan="4" class="pt-3">Projet</td>
                                 </tr>
                                 <tr class="details">
-                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->projet->name) ?? '' !!}
+                                    <td colspan="4" class="pt-3">{!! strtolower($findividuelle->projet->name) ?? '' !!}
                                         ({{ $findividuelle->projet->sigle ?? '' }})</td>
                                 </tr>
                             @endif
                             @if (isset($findividuelle->programme->name) && $findividuelle->programme->name != 'Aucun')
                                 <tr class="heading">
-                                    <td colspan="3" class="pt-3">Programme</td>
+                                    <td colspan="4" class="pt-3">Programme</td>
                                 </tr>
                                 <tr class="details">
-                                    <td colspan="3" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!}
+                                    <td colspan="4" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!}
                                         ({{ $findividuelle->programme->sigle ?? '' }})</td>
                                 </tr>
                             @endif

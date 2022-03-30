@@ -25,17 +25,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Carbon|null $date_debut
  * @property Carbon|null $date_fin
  * @property string|null $adresse
- * @property int|null $prevue_h
- * @property int|null $prevue_f
  * @property string|null $titre
  * @property string|null $attestation
- * @property int|null $forme_h
- * @property int|null $forme_f
- * @property int|null $total
+ * @property float|null $frais_operateurs
+ * @property float|null $frais_add
+ * @property float|null $autes_frais
+ * @property float|null $frais_total
+ * @property string|null $suivi_dossier
  * @property string|null $lieu
  * @property string|null $convention_col
  * @property string|null $decret
  * @property string|null $beneficiaires
+ * @property string|null $membres_jury
+ * @property string|null $niveau_qualification
+ * @property int|null $prevue_h
+ * @property int|null $prevue_f
+ * @property int|null $forme_h
+ * @property int|null $forme_f
+ * @property int|null $total
  * @property int|null $ingenieurs_id
  * @property int|null $agents_id
  * @property int|null $detfs_id
@@ -105,6 +112,10 @@ class Formation extends Model
 	protected $table = 'formations';
 
 	protected $casts = [
+		'frais_operateurs' => 'float',
+		'frais_add' => 'float',
+		'autes_frais' => 'float',
+		'frais_total' => 'float',
 		'prevue_h' => 'int',
 		'prevue_f' => 'int',
 		'forme_h' => 'int',
@@ -150,17 +161,24 @@ class Formation extends Model
 		'date_debut',
 		'date_fin',
 		'adresse',
-		'prevue_h',
-		'prevue_f',
 		'titre',
 		'attestation',
-		'forme_h',
-		'forme_f',
-		'total',
+		'frais_operateurs',
+		'frais_add',
+		'autes_frais',
+		'frais_total',
+		'suivi_dossier',
 		'lieu',
 		'convention_col',
 		'decret',
 		'beneficiaires',
+		'membres_jury',
+		'niveau_qualification',
+		'prevue_h',
+		'prevue_f',
+		'forme_h',
+		'forme_f',
+		'total',
 		'ingenieurs_id',
 		'agents_id',
 		'detfs_id',

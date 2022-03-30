@@ -89,6 +89,12 @@
         });
 </script>
 <script type="text/javascript">
+      $("#ingenieur").select2({
+            placeholder: "sélectionner un ingenieur",
+            allowClear: true
+        });
+</script>
+<script type="text/javascript">
   $("#matricule_emp").select2({
         placeholder: "sélectionner le matricule du responsable",
         allowClear: true

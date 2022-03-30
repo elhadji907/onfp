@@ -86,6 +86,19 @@
                             </div>
                         </div>
                         <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                {!! Form::label('Ingénieur:') !!}
+                                {!! Form::select('ingenieur', $ingenieurs, null, ['placeholder' => 'ingenieur', 'class' => 'form-control', 'id' => 'ingenieur', 'data-width' => '100%']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('ingenieur'))
+                                        @foreach ($errors->get('ingenieur') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-row">
                             {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Programme :') !!}
                                 {!! Form::select('programme', $programmes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
@@ -110,7 +123,42 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-16 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <label for="adresse">{{ __('Frais opérateur') }}</label>
+                                {!! Form::text('frais_operateurs', '0.00', ['class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('frais_operateurs'))
+                                        @foreach ($errors->get('frais_operateurs') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <label for="adresse">{{ __('Frais additionnels') }}</label>
+                                {!! Form::text('frais_additionnels', '0.00', ['class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('frais_additionnels'))
+                                        @foreach ($errors->get('frais_additionnels') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <label for="adresse">{{ __('Autres frais') }}</label>
+                                {!! Form::text('autres_frais', '0.00', ['class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('autres_frais'))
+                                        @foreach ($errors->get('autres_frais') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Localité:') !!}(<span class="text-danger">*</span>)
                                 {!! Form::select('localite', $localites, null, ['placeholder' => 'localite', 'class' => 'form-control', 'id' => 'localite', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">

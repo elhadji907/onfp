@@ -53,6 +53,12 @@ class FormationFactory extends Factory
     
         $total = $forme_h + $forme_f;
 
+        $frais_operateurs = $this->faker->randomFloat();
+        $frais_add = $this->faker->randomFloat();
+        $autes_frais = $this->faker->randomFloat();
+
+        $frais_total = $frais_operateurs + $frais_add + $autes_frais;
+
         return [
             'code' => 'FP'."".$annee.$this->faker->unique(true)->numberBetween(0, 300),
             'name' => $this->faker->company,
@@ -69,6 +75,10 @@ class FormationFactory extends Factory
             'forme_h' => $forme_h,
             'forme_f' => $forme_f,
             'total' => $total,
+            'frais_operateurs' => $frais_operateurs,
+            'frais_add' => $frais_add,
+            'autes_frais' => $autes_frais,
+            'frais_total' => $frais_total,
             'lieu' => $this->faker->word,
             'convention_col' => $this->faker->word,
             'decret' => $this->faker->word,
