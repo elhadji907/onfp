@@ -228,96 +228,75 @@ class AgerouteindividuelleController extends Controller
 
         $note = 0;
 
-        if($travail_renumeration == "Oui"){
+        if ($travail_renumeration == "Oui") {
             $note = $note + 1;
-         }
-         elseif($travail_renumeration == "Non"){
-             $note = $note + 5;
-         }
-         else {
-            $note = $note + 0;
-         }
-
-        if($handicap == "Oui"){
+        } elseif ($travail_renumeration == "Non") {
             $note = $note + 5;
-         }
-         elseif($handicap == "Non"){
-             $note = $note + 0;
-         }
-         else {
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($sexe == "M"){
+        if ($handicap == "Oui") {
+            $note = $note + 5;
+        } elseif ($handicap == "Non") {
+            $note = $note + 0;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($sexe == "M") {
             $note = $note + 1;
-         }
-         elseif($sexe == "F"){
-             $note = $note + 2;
-         }
-         else {
+        } elseif ($sexe == "F") {
+            $note = $note + 2;
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($salaire == "Indécent"){
+        if ($salaire == "Indécent") {
             $note = $note + 5;
-         }
-         elseif($salaire == "Moyen"){
-             $note = $note + 2;
-         }
-         elseif($salaire == "Bien"){
-             $note = $note + 1;
-         }
-         else {
+        } elseif ($salaire == "Moyen") {
+            $note = $note + 2;
+        } elseif ($salaire == "Bien") {
+            $note = $note + 1;
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($situation_economique == "Très faible"){
+        if ($situation_economique == "Très faible") {
             $note = $note + 5;
-         }
-         elseif($situation_economique == "Faible"){
-             $note = $note + 4;
-         }
-         elseif($situation_economique == "Moyenne"){
-             $note = $note + 2;
-         }
-         elseif($situation_economique == "Correcte"){
-             $note = $note + 1;
-         }
-         else {
-            $note = $note + 0;
-         }
-
-        if($situation_economique == "Emigration irrégulière"){
+        } elseif ($situation_economique == "Faible") {
             $note = $note + 4;
-         }
-         elseif($situation_economique == "Déplacé ou démobilisé par le conflit"){
-             $note = $note + 6;
-         }
-         elseif($situation_economique == "Emprisonnement"){
-             $note = $note + 3;
-         }
-         elseif($situation_economique == "Aucun"){
-             $note = $note + 1;
-         }
-         else {
+        } elseif ($situation_economique == "Moyenne") {
+            $note = $note + 2;
+        } elseif ($situation_economique == "Correcte") {
+            $note = $note + 1;
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($diplomespro == "Aucun"){
-            $note = $note + 5;
-         }
-         elseif($diplomespro == "CAP"){
-             $note = $note + 3;
-         }
-         elseif($diplomespro == "BEP"){
-             $note = $note + 2;
-         }
-         elseif($diplomespro == "BT"){
-             $note = $note + 1;
-         }
-         else {
+        if ($situation_economique == "Emigration irrégulière") {
+            $note = $note + 4;
+        } elseif ($situation_economique == "Déplacé ou démobilisé par le conflit") {
+            $note = $note + 6;
+        } elseif ($situation_economique == "Emprisonnement") {
+            $note = $note + 3;
+        } elseif ($situation_economique == "Aucun") {
+            $note = $note + 1;
+        } else {
             $note = $note + 0;
-         }
+        }
+
+        if ($diplomespro == "Aucun") {
+            $note = $note + 5;
+        } elseif ($diplomespro == "CAP") {
+            $note = $note + 3;
+        } elseif ($diplomespro == "BEP") {
+            $note = $note + 2;
+        } elseif ($diplomespro == "BT") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
 
         $user_connect           =   Auth::user();
         
@@ -649,6 +628,8 @@ class AgerouteindividuelleController extends Controller
         $id_demandeur = $demandeur->id;
         $utilisateur   =   $demandeur->user;
 
+        $formation = $individuelle->formation;
+  
         $auth_user      =       Auth::user();
         /* $this->authorize('update',  $individuelle); */
         
@@ -690,6 +671,11 @@ class AgerouteindividuelleController extends Controller
         ]
         );
         
+        if (isset($formation) && $formation->module->name != $request->input('module')) {
+            $messages = "Désolé ! vous ne pouvez pas changer le module demandé, car ce demandeur bénéficie déjà d'une formation";
+            return back()->with(compact('messages'));
+        }
+
         $handicap                           =        $request->input('handicap');
         $diplome                            =        $request->input('diplome');
         $diplomespro                        =        $request->input('diplomespro');
@@ -778,96 +764,75 @@ class AgerouteindividuelleController extends Controller
         
         $note = 0;
 
-        if($travail_renumeration == "Oui"){
+        if ($travail_renumeration == "Oui") {
             $note = $note + 1;
-         }
-         elseif($travail_renumeration == "Non"){
-             $note = $note + 5;
-         }
-         else {
-            $note = $note + 0;
-         }
-
-        if($handicap == "Oui"){
+        } elseif ($travail_renumeration == "Non") {
             $note = $note + 5;
-         }
-         elseif($handicap == "Non"){
-             $note = $note + 0;
-         }
-         else {
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($sexe == "M"){
+        if ($handicap == "Oui") {
+            $note = $note + 5;
+        } elseif ($handicap == "Non") {
+            $note = $note + 0;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($sexe == "M") {
             $note = $note + 1;
-         }
-         elseif($sexe == "F"){
-             $note = $note + 2;
-         }
-         else {
+        } elseif ($sexe == "F") {
+            $note = $note + 2;
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($salaire == "Indécent"){
+        if ($salaire == "Indécent") {
             $note = $note + 5;
-         }
-         elseif($salaire == "Moyen"){
-             $note = $note + 2;
-         }
-         elseif($salaire == "Bien"){
-             $note = $note + 1;
-         }
-         else {
+        } elseif ($salaire == "Moyen") {
+            $note = $note + 2;
+        } elseif ($salaire == "Bien") {
+            $note = $note + 1;
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($situation_economique == "Très faible"){
+        if ($situation_economique == "Très faible") {
             $note = $note + 5;
-         }
-         elseif($situation_economique == "Faible"){
-             $note = $note + 4;
-         }
-         elseif($situation_economique == "Moyenne"){
-             $note = $note + 2;
-         }
-         elseif($situation_economique == "Correcte"){
-             $note = $note + 1;
-         }
-         else {
-            $note = $note + 0;
-         }
-
-        if($situation_economique == "Emigration irrégulière"){
+        } elseif ($situation_economique == "Faible") {
             $note = $note + 4;
-         }
-         elseif($situation_economique == "Déplacé ou démobilisé par le conflit"){
-             $note = $note + 6;
-         }
-         elseif($situation_economique == "Emprisonnement"){
-             $note = $note + 3;
-         }
-         elseif($situation_economique == "Aucun"){
-             $note = $note + 1;
-         }
-         else {
+        } elseif ($situation_economique == "Moyenne") {
+            $note = $note + 2;
+        } elseif ($situation_economique == "Correcte") {
+            $note = $note + 1;
+        } else {
             $note = $note + 0;
-         }
+        }
 
-        if($diplomespro == "Aucun"){
-            $note = $note + 5;
-         }
-         elseif($diplomespro == "CAP"){
-             $note = $note + 3;
-         }
-         elseif($diplomespro == "BEP"){
-             $note = $note + 2;
-         }
-         elseif($diplomespro == "BT"){
-             $note = $note + 1;
-         }
-         else {
+        if ($situation_economique == "Emigration irrégulière") {
+            $note = $note + 4;
+        } elseif ($situation_economique == "Déplacé ou démobilisé par le conflit") {
+            $note = $note + 6;
+        } elseif ($situation_economique == "Emprisonnement") {
+            $note = $note + 3;
+        } elseif ($situation_economique == "Aucun") {
+            $note = $note + 1;
+        } else {
             $note = $note + 0;
-         }
+        }
+
+        if ($diplomespro == "Aucun") {
+            $note = $note + 5;
+        } elseif ($diplomespro == "CAP") {
+            $note = $note + 3;
+        } elseif ($diplomespro == "BEP") {
+            $note = $note + 2;
+        } elseif ($diplomespro == "BT") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
       
         /*   $updated_by1 = $user_connect->firstname;
           $updated_by2 = $user_connect->name;
@@ -1296,7 +1261,7 @@ class AgerouteindividuelleController extends Controller
         return view('agerouteindividuelles.statutsvs', compact('statut', 'individuelles', 'effectif', 'projet', 'localite_concernee', 'svs'));
     }
 
-    public function ageroutesexe($sexe ,$localite, $projet)
+    public function ageroutesexe($sexe, $localite, $projet)
     {
         $localites_id = Localite::where('nom', $localite)->first()->id;
 

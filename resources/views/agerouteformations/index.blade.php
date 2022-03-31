@@ -34,12 +34,13 @@
                                         <th style="width:5%;">Code</th>
                                         <th style="width:7%;">Année</th>
                                         <th style="width:15%;">Module</th>
+                                        <th style="width:5%;">Qualif.</th>
                                         <th style="width:10%;">Bénéficiares</th>
                                         <th style="width:10%;">Département</th>
                                         {{-- <th style="width:08%;">Début</th>
                                         <th style="width:08%;">Fin</th> --}}
                                         <th style="width:10%;">Opérateurs</th>
-                                        <th style="width:8%;">Statut</th>
+                                        <th style="width:5%;">Statut</th>
                                         <th style="width:4%;">Effectif</th>
                                         <th style="width:8%;"></th>
                                     </tr>
@@ -65,12 +66,21 @@
                                                 </a>
                                             </td>
                                             <td>{!! $findividuelle->module->name !!}</td>
+                                            <td align="center">
+                                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                                    {!! $findividuelle->formation->qualifications !!}
+                                                </a>
+                                            </td>
                                             <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                             <td>{!! $findividuelle->formation->localite->nom !!}</td>
                                             {{-- <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
                                             <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td> --}}
                                             <td>{{-- {!! $findividuelle->formation->operateur->name ?? '' !!} --}} {!! $findividuelle->formation->operateur->sigle ?? '' !!}</td>
-                                            <td><label class="badge badge-info">{!! $findividuelle->formation->statut->name !!}</label></td>
+                                            <td align="center">
+                                                <a href="#" class="btn btn-outline-warning btn-sm">
+                                                    {!! $findividuelle->formation->statut->name !!}
+                                                </a>
+                                            </td>
                                             <td class="text-center"><label class="badge badge-default">
                                                     @foreach ($findividuelle->formation->demandeurs as $demandeur)
                                                         @if ($loop->last)

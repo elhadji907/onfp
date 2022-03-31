@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 /**
  * Class Formation
  * 
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $qualifications
  * @property string|null $effectif_total
  * @property Carbon|null $date_pv
+ * @property Carbon|null $date_suivi
  * @property Carbon|null $date_debut
  * @property Carbon|null $date_fin
  * @property string|null $adresse
@@ -39,6 +41,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $beneficiaires
  * @property string|null $membres_jury
  * @property string|null $niveau_qualification
+ * @property int|null $effectif_prevu
  * @property int|null $prevue_h
  * @property int|null $prevue_f
  * @property int|null $forme_h
@@ -117,6 +120,7 @@ class Formation extends Model
 		'frais_add' => 'float',
 		'autes_frais' => 'float',
 		'frais_total' => 'float',
+		'effectif_prevu' => 'int',
 		'prevue_h' => 'int',
 		'prevue_f' => 'int',
 		'forme_h' => 'int',
@@ -148,6 +152,7 @@ class Formation extends Model
 
 	protected $dates = [
 		'date_pv',
+		'date_suivi',
 		'date_debut',
 		'date_fin'
 	];
@@ -160,6 +165,7 @@ class Formation extends Model
 		'qualifications',
 		'effectif_total',
 		'date_pv',
+		'date_suivi',
 		'date_debut',
 		'date_fin',
 		'adresse',
@@ -176,6 +182,7 @@ class Formation extends Model
 		'beneficiaires',
 		'membres_jury',
 		'niveau_qualification',
+		'effectif_prevu',
 		'prevue_h',
 		'prevue_f',
 		'forme_h',

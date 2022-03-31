@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+
 /**
  * Class Individuelle
  * 
@@ -78,6 +79,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $arrondissements_id
  * @property int|null $departements_id
  * @property int|null $regions_id
+ * @property float|null $note_obtenue
+ * @property string|null $niveau_maitrise
+ * @property string|null $observations
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -130,7 +134,8 @@ class Individuelle extends Model
 		'communes_id' => 'int',
 		'arrondissements_id' => 'int',
 		'departements_id' => 'int',
-		'regions_id' => 'int'
+		'regions_id' => 'int',
+		'note_obtenue' => 'float'
 	];
 
 	protected $dates = [
@@ -201,7 +206,10 @@ class Individuelle extends Model
 		'communes_id',
 		'arrondissements_id',
 		'departements_id',
-		'regions_id'
+		'regions_id',
+		'note_obtenue',
+		'niveau_maitrise',
+		'observations'
 	];
 
 	public function antenne()

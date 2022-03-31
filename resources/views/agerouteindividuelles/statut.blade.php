@@ -121,6 +121,10 @@
                                                                 class="view" title="ouvrir"
                                                                 href="{{ url('individuelleformationsenlever', ['$individuelle' => $individuelle->item1]) }}"
                                                                 target="_blank">{!! $individuelle->item1 ?? '' !!}</a>
+                                                        @elseif(!isset($individuelle->formation->statut->name))
+                                                            <label class="badge badge-default">
+                                                                {!! $individuelle->formation->statut->name ?? 'aucune' !!}
+                                                            </label>
                                                         @else
                                                             <label class="badge badge-info">
                                                                 {!! $individuelle->formation->statut->name ?? 'aucune' !!}

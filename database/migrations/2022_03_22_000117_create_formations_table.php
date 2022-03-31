@@ -30,6 +30,7 @@ class CreateFormationsTable extends Migration
             $table->string('qualifications', 200)->nullable();
             $table->string('effectif_total', 200)->nullable();
             $table->dateTime('date_pv')->nullable();
+            $table->timestamp('date_suivi')->nullable();
             $table->dateTime('date_debut')->nullable();
             $table->dateTime('date_fin')->nullable();
             $table->string('adresse', 200)->nullable();
@@ -46,6 +47,7 @@ class CreateFormationsTable extends Migration
             $table->string('beneficiaires', 200)->nullable();
             $table->string('membres_jury', 200)->nullable();
             $table->string('niveau_qualification', 200)->nullable();
+            $table->integer('effectif_prevu')->nullable();
             $table->integer('prevue_h')->nullable();
             $table->integer('prevue_f')->nullable();
             $table->integer('forme_h')->nullable();

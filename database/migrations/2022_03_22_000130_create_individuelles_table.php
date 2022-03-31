@@ -86,6 +86,9 @@ class CreateIndividuellesTable extends Migration
             $table->unsignedInteger('arrondissements_id')->nullable();
             $table->unsignedInteger('departements_id')->nullable();
             $table->unsignedInteger('regions_id')->nullable();
+            $table->double('note_obtenue')->nullable();
+            $table->string('niveau_maitrise', 200)->nullable();
+            $table->string('observations', 200)->nullable();
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');
 

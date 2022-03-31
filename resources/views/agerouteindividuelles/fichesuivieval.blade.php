@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Contrat</title>
+    <title>{{ $beneficiaires }}</title>
     <style>
         .invoice-box {
             max-width: 1500px;
@@ -38,6 +38,19 @@
             border-bottom: 1px solid rgb(0, 0, 0);
             text-align: left;
             line-height: 20px;
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 75;
+            width: 100%;
+            height: 60px;
+            /* Height of the footer */
+            background: rgb(255, 255, 255);
+            display: inline-block;
+            align-self: flex-end;
+            display: inline-flex;
+            align-content: space-evenly;
         }
 
     </style>
@@ -111,6 +124,7 @@
             <br />
             <center><b>LISTE DES BENEFICIAIRES</b></center>
             <br />
+            @if (isset($formation->individuelles) && $formation->individuelles != "[]")
             <table class="table table-bordered" width="100%" cellspacing="0">
                 @if (session('message'))
                     <div class="alert alert-success">
@@ -125,7 +139,7 @@
                         <th width="10%">Prénom</th>
                         <th width="10%">Nom</th>
                         <th width="8%">Date nais.</th>
-                        <th width="10%">Lieu nais.</th>
+                        <th width="15%">Lieu nais.</th>
                         <th width="10%">Téléphone</th>
                         <th width="5%">Emmargement</th>
                     </tr>
@@ -135,7 +149,7 @@
                     @foreach ($formation->individuelles as $individuelle)
                         @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
                             <tr>
-                                <td align="center">{{ $i++ }}</td>
+                                <td>{{ $i++ }}</td>
                                 <td>{{ $individuelle->demandeur->cin }}</td>
                                 <td>{{ $individuelle->demandeur->user->civilite }}</td>
                                 <td>{{ $individuelle->demandeur->user->firstname }}</td>
@@ -149,6 +163,16 @@
                     @endforeach
                 </tbody>
             </table>
+            @else
+                <center> Aucun bénéficiaire pour le momement </center>
+            @endif
+        </div>
+        <div id="footer">
+            <span align="left"> <b>Observations :</b>
+            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span align="center"> <b>Agent de suivi :</b> {{ $formation->ingenieur->name}}
+            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span align="right"><b> Date :</b></span>
         </div>
         <div style="position: fixed;
             bottom: -10px;
