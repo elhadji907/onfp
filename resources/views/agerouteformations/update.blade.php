@@ -78,13 +78,21 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                             <label for="beneficiaire">{{ __('Bénéficiaires') }}(<span
                                     class="text-danger">*</span>)</label>
                             <textarea class="form-control  @error('beneficiaire') is-invalid @enderror" name="beneficiaire" id="beneficiaire"
                                 rows="1"
                                 placeholder="Ex : Jeune de la région de dakar">{{ $findividuelle->formation->beneficiaires ?? old('beneficiaire') }}</textarea>
                             @error('beneficiaire')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <label for="adresse">{{ __('Adresse') }}(<span class="text-danger">*</span>)</label>
+                            <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
+                                placeholder="adresse exacte des bénéficiares">{{ $findividuelle->formation->adresse ?? old('adresse') }}</textarea>
+                            @error('adresse')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -101,16 +109,6 @@
                                     @endif
                                 </small>
                             </div> --}}
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                            <label for="adresse">{{ __('Localisation') }}(<span class="text-danger">*</span>)</label>
-                            <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
-                                placeholder="Votre adresse complète">{{ $findividuelle->formation->adresse ?? old('adresse') }}</textarea>
-                            @error('adresse')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
@@ -178,6 +176,27 @@
                             <small id="emailHelp" class="form-text text-muted">
                                 @if ($errors->has('ingenieur'))
                                     @foreach ($errors->get('ingenieur') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
+                    </div>         <div class="form-row">
+                        <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                            <label for="lieu">{{ __('Lieu formation') }}(<span
+                                    class="text-danger">*</span>)</label>
+                            <textarea class="form-control  @error('lieu') is-invalid @enderror" name="lieu" id="lieu" rows="1"
+                                placeholder="Lieu de la formation">{{ $findividuelle->formation->lieu ?? old('lieu') }}</textarea>
+                            @error('lieu')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <label for="total">{{ __('Effectif à former') }}</label>
+                            {!! Form::number('total', $findividuelle->formation->total ?? old('total'), ['placeholder' => 'Ex: 20', 'class' => 'form-control', 'min' => '10', 'max' => '25']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('total'))
+                                    @foreach ($errors->get('total') as $message)
                                         <p class="text-danger">{{ $message }}</p>
                                     @endforeach
                                 @endif

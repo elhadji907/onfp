@@ -11,18 +11,20 @@
             padding: 30px;
             font-size: 12px;
             line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
             color: #555;
         }
 
         /** RTL **/
         .rtl {
             imputation: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
         }
 
         table {
-            border-left: 0px solid rgb(0, 0, 0);
+            border-left: 1px solid rgb(0, 0, 0);
             border-right: 0;
-            border-top: 0px solid rgb(0, 0, 0);
+            border-top: 1px solid rgb(0, 0, 0);
             border-bottom: 0;
             width: 100%;
             border-spacing: 0px;
@@ -31,9 +33,11 @@
         table td,
         table th {
             border-left: 0;
-            border-right: 0px solid rgb(0, 0, 0);
+            border-right: 1px solid rgb(0, 0, 0);
             border-top: 0;
-            border-bottom: 0px solid rgb(0, 0, 0);
+            border-bottom: 1px solid rgb(0, 0, 0);
+            text-align: left;
+            line-height: 20px;
         }
 
     </style>
@@ -49,7 +53,7 @@
 <body>
     <div class="invoice-box">
         <div>
-            <div class="" style="position: fixed;
+            <div style="position: fixed;
                 top: -10px;
                 left: 0px;
                 right: 0px;
@@ -58,10 +62,93 @@
                 color: white;
                 text-align: center;
                 line-height: 35px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/enteteonfp.png'))) }}"
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete_onfp_suivi.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
-            En cours de construction ...
+            <br /><br /><br /><br /><br />
+            <table class="table table-responsive">
+                <tr>
+                    <td colspan="2"><b>{{ __('Réf convention') }}</b> :
+                        {{ $formation->convention->numero ?? '' }}
+                    </td>
+                    <td colspan="2"><b>{{ __('Opérateur') }}</b> :
+                        {{ $formation->operateur->name ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>{{ __('Module') }}</b> :
+                        {{ $formation->module->name ?? '' }}
+                    </td>
+                    <td colspan="2"><b>{{ __('Lieu') }}</b> :
+                        {{ $formation->lieu ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>{{ __('Effectif prévu') }}</b> :
+                        {{ $formation->total ?? '' }}
+                    </td>
+                    <td colspan="2"><b>{{ __('Bénéficiaires') }}</b> :
+                        {{ $formation->beneficiaires ?? '' }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><b>{{ __('Date début') }}</b> :
+                        @if (isset($formation->date_debut))
+                            {{ $formation->date_debut->format('d/m/Y') ?? '' }}
+                        @else
+                            non connue
+                        @endif
+                    </td>
+                    <td colspan="2"><b>{{ __('Date fin') }}</b> :
+                        @if (isset($formation->date_fin))
+                            {{ $formation->date_fin->format('d/m/Y') ?? '' }}
+                        @else
+                            non connue
+                        @endif
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <center><b>LISTE DES BENEFICIAIRES</b></center>
+            <br />
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+                <thead class="heading">
+                    <tr>
+                        <th width="2%">N°</th>
+                        <th width="10%">CIN</th>
+                        <th width="5%">Civilité</th>
+                        <th width="10%">Prénom</th>
+                        <th width="10%">Nom</th>
+                        <th width="8%">Date nais.</th>
+                        <th width="10%">Lieu nais.</th>
+                        <th width="10%">Téléphone</th>
+                        <th width="5%">Emmargement</th>
+                    </tr>
+                </thead>
+                <tbody class="details" id="liste">
+                    <?php $i = 1; ?>
+                    @foreach ($formation->individuelles as $individuelle)
+                        @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
+                            <tr>
+                                <td align="center">{{ $i++ }}</td>
+                                <td>{{ $individuelle->demandeur->cin }}</td>
+                                <td>{{ $individuelle->demandeur->user->civilite }}</td>
+                                <td>{{ $individuelle->demandeur->user->firstname }}</td>
+                                <td>{{ $individuelle->demandeur->user->name }}</td>
+                                <td>{{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') }}</td>
+                                <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
+                                <td>{{ $individuelle->demandeur->user->telephone }}</td>
+                                <td></td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
         </div>
         <div style="position: fixed;
             bottom: -10px;

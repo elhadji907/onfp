@@ -74,13 +74,23 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="beneficiaire">{{ __('Bénéficiaires') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <textarea class="form-control  @error('beneficiaire') is-invalid @enderror" name="beneficiaire" id="beneficiaire"
                                     rows="1"
                                     placeholder="Ex : Jeune de la région de dakar">{{ old('beneficiaire') }}</textarea>
                                 @error('beneficiaire')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label for="adresse">{{ __('Adresse') }}(<span
+                                        class="text-danger">*</span>)</label>
+                                <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse"
+                                    rows="1"
+                                    placeholder="adresse exacte des bénéficiares">{{ old('adresse') }}</textarea>
+                                @error('adresse')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -112,19 +122,30 @@
                             </div> --}}
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                <label for="adresse">{{ __('Localisation') }}(<span
+                            <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                                <label for="lieu">{{ __('Lieu formation') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
-                                    placeholder="Votre adresse complète">{{ old('adresse') }}</textarea>
-                                @error('adresse')
+                                <textarea class="form-control  @error('lieu') is-invalid @enderror" name="lieu" id="lieu" rows="1"
+                                    placeholder="Lieu de la formation">{{ old('lieu') }}</textarea>
+                                @error('lieu')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                            </div>
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <label for="total">{{ __('Effectif à former') }}</label>
+                                {!! Form::number('total', null, ['placeholder' => 'Ex: 20', 'class' => 'form-control', 'min' => '10', 'max' => '25']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('total'))
+                                        @foreach ($errors->get('total') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="adresse">{{ __('Frais opérateur') }}</label>
+                                <label for="frais_operateurs">{{ __('Frais opérateur') }}</label>
                                 {!! Form::text('frais_operateurs', '0.00', ['class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('frais_operateurs'))
@@ -135,7 +156,7 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="adresse">{{ __('Frais additionnels') }}</label>
+                                <label for="frais_additionnels">{{ __('Frais additionnels') }}</label>
                                 {!! Form::text('frais_additionnels', '0.00', ['class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('frais_additionnels'))
@@ -146,7 +167,7 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="adresse">{{ __('Autres frais') }}</label>
+                                <label for="autres_frais">{{ __('Autres frais') }}</label>
                                 {!! Form::text('autres_frais', '0.00', ['class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('autres_frais'))

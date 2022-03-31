@@ -113,12 +113,12 @@
                     {{-- <i class="fas fa-plus"></i> --}}Ajouter demandeurs
                 </div>
             </a>
-            <a href="{{ url('fichesuivieval', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}">
+            <a href="{{ url('fichesuivieval', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}" target="_blank">
                 <div class="btn btn-outline-info btn-md" title="afficher">
                     Fiche de suivi
                 </div>
             </a>
-            <a href="{{ url('pvevaluation', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}">
+            <a href="{{ url('pvevaluation', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}" target="_blank">
                 <div class="btn btn-outline-primary btn-md" title="afficher">
                     PV Evaluation
                 </div>

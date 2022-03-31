@@ -94,8 +94,10 @@ class AgerouteformationController extends Controller
                 'modules'             =>    'required',
                 'choixoperateur'      =>    'required',
                 'adresse'             =>    'required',
+                'lieu'                =>    'required',
                 'beneficiaire'        =>    'required',
                 'frais_operateurs'    =>    'numeric',
+                'total'               =>    'numeric',
                 'frais_additionnels'  =>    'numeric',
                 'autres_frais'        =>    'numeric',
                 'types_formations'    =>    'required',
@@ -128,6 +130,8 @@ class AgerouteformationController extends Controller
             'date_fin'                 =>      $request->input('date_fin'),
             'adresse'                  =>      $request->input('adresse'),
             'beneficiaires'            =>      $request->input('beneficiaire'),
+            'total'                    =>      $request->input('total'),
+            'lieu'                     =>      $request->input('lieu'),
             'modules_id'               =>      $request->input('modules'),
             'frais_operateurs'         =>      $frais_operateurs,
             'frais_add'                =>      $frais_additionnels,
@@ -220,10 +224,12 @@ class AgerouteformationController extends Controller
                 'modules'             =>    'required',
                 'choixoperateur'      =>    'required',
                 'adresse'             =>    'required',
+                'lieu'                =>    'required',
                 'beneficiaire'        =>    'required',
                 'frais_operateurs'    =>    'numeric',
                 'frais_additionnels'  =>    'numeric',
                 'autres_frais'        =>    'numeric',
+                'total'               =>    'numeric',
                 'types_formations'    =>    'required',
         ]
         );
@@ -252,6 +258,8 @@ class AgerouteformationController extends Controller
         $formation->date_fin            =      $request->input('date_fin');
         $formation->adresse             =      $request->input('adresse');
         $formation->beneficiaires       =      $request->input('beneficiaire');
+        $formation->total               =      $request->input('total');
+        $formation->lieu                =      $request->input('lieu');
         $formation->frais_operateurs    =      $frais_operateurs;
         $formation->frais_add           =      $frais_additionnels;
         $formation->autes_frais         =      $autres_frais;

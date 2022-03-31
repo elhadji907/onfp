@@ -58,7 +58,7 @@
                 color: white;
                 text-align: center;
                 line-height: 35px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/enteteonfp.png'))) }}"
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete_onfp_pv.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
             En cours de construction ...
