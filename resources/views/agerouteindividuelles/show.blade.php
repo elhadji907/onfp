@@ -57,7 +57,7 @@
                 color: white;
                 text-align: center;
                 line-height: 35px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/entete onfpageroute.png'))) }}"
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/enteteonfpageroute.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
