@@ -5,15 +5,15 @@
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
                 @if (count($errors) > 0)
-                <div class="alert alert-danger mt-2">
-                    <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                    <div class="alert alert-danger mt-2">
+                        <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -33,8 +33,7 @@
                                 <div class="form-group col-md-10">
                                     <label for="operateur">{{ __('Opérateur') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <textarea id="operateur" rows="2"
-                                        class="form-control @error('operateur') is-invalid @enderror" name="operateur"
+                                    <textarea id="operateur" rows="2" class="form-control @error('operateur') is-invalid @enderror" name="operateur"
                                         placeholder="Opérateur" autocomplete="operateur"
                                         autofocus>{{ old('operateur') }}</textarea>
                                     @error('operateur')
@@ -45,8 +44,7 @@
                                 </div>
                                 <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                     <label for="sigle">{{ __('Sigle') }}(<span class="text-danger">*</span>)</label>
-                                    <textarea id="sigle" rows="2" class="form-control @error('sigle') is-invalid @enderror"
-                                        name="sigle" placeholder="Sigle"
+                                    <textarea id="sigle" rows="2" class="form-control @error('sigle') is-invalid @enderror" name="sigle" placeholder="Sigle"
                                         autocomplete="sigle">{{ old('sigle') }}</textarea>
                                     @error('sigle')
                                         <span class="invalid-feedback" role="alert">
@@ -84,7 +82,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="operateur">{{ __('Type opérateur') }}(<span
-                                        class="text-danger">*</span>)</label>
+                                            class="text-danger">*</span>)</label>
                                     {!! Form::select('type_operateur', $types_operateurs, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'type_operateur', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('type_operateur'))
@@ -96,7 +94,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="operateur">{{ __('Type structure') }}(<span
-                                        class="text-danger">*</span>)</label>
+                                            class="text-danger">*</span>)</label>
                                     {!! Form::select('type_structure', ['Publique' => 'Publique', 'Privé' => 'Privé'], null, ['placeholder' => 'sélectionner type structure', 'class' => 'form-control', 'id' => 'type_structure', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('type_structure'))
@@ -122,8 +120,7 @@
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     <label for="adresse">{{ __('Adresse complète') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <textarea id="adresse_op" rows="2"
-                                        class="form-control @error('adresse_op') is-invalid @enderror" name="adresse_op"
+                                    <textarea id="adresse_op" rows="2" class="form-control @error('adresse_op') is-invalid @enderror" name="adresse_op"
                                         placeholder="adresse de la structure" autocomplete="adresse_op"
                                         autofocus>{{ old('adresse_op') }}</textarea>
                                     @error('adresse_op')
@@ -136,7 +133,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     <label for="operateur">{{ __('Région d\'intervention') }}(<span
-                                        class="text-danger">*</span>)</label>
+                                            class="text-danger">*</span>)</label>
                                     {!! Form::select('regions[]', $regions, null, ['multiple' => 'multiple', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'regions_op']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('regions'))
@@ -211,8 +208,8 @@
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label for="ninea">{{ __('Ninéa ') }}</label>
                                     <input id="ninea" type="text" class="form-control @error('ninea') is-invalid @enderror"
-                                        name="ninea" placeholder="Ninea" value="{{ old('ninea') }}"
-                                        autocomplete="ninea" autofocus>
+                                        name="ninea" placeholder="Ninea" value="{{ old('ninea') }}" autocomplete="ninea"
+                                        autofocus>
                                     @error('ninea')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -269,11 +266,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
-                                    {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
+                                    {!! Form::label('civilite :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], null, ['placeholder' => 'sélectionner civilite', 'class' => 'form-control', 'id' => 'civilite', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('sexe'))
-                                            @foreach ($errors->get('sexe') as $message)
+                                        @if ($errors->has('civilite'))
+                                            @foreach ($errors->get('civilite') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
@@ -317,8 +314,9 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="email">{{ __('E-mail  ') }}</label>
-                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
-                                        name="email" placeholder="Votre numero de email" value="{{ old('email') }}"
+                                    <input id="email" type="text"
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        placeholder="Votre numero de email" value="{{ old('email') }}"
                                         autocomplete="email" autofocus>
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -355,10 +353,10 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="date_naiss">{{ __('Date de naissance') }}</label>
-                                    <input id="date_naiss" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
-                                        class="form-control @error('date_naiss') is-invalid @enderror" name="date_naiss"
-                                        placeholder="Votre date de naissance" value="{{ old('date_naiss') }}"
-                                        autocomplete="username" autofocus>
+                                    <input id="date_naiss" {{ $errors->has('date_naiss') ? 'is-invalid' : '' }}
+                                        type="date" class="form-control @error('date_naiss') is-invalid @enderror"
+                                        name="date_naiss" placeholder="Votre date de naissance"
+                                        value="{{ old('date_naiss') }}" autocomplete="username" autofocus>
                                     @error('date_naiss')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -379,8 +377,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="adresse">{{ __('Adresse') }}</label>
-                                    <textarea id="adresse" rows="1"
-                                        class="form-control @error('adresse') is-invalid @enderror" name="adresse"
+                                    <textarea id="adresse" rows="1" class="form-control @error('adresse') is-invalid @enderror" name="adresse"
                                         placeholder="adresse du responsable" autocomplete="adresse"
                                         autofocus>{{ old('adresse') }}</textarea>
                                     @error('adresse')

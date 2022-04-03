@@ -59,9 +59,8 @@ class OperateurController extends Controller
      */
     public function create(Request $request)
     {
-        
-       $operateur_id=$request->input('operateur');
-       $operateur=Operateur::find($operateur_id);
+        $operateur_id=$request->input('operateur');
+        $operateur=Operateur::find($operateur_id);
 
         $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
                         
@@ -130,16 +129,16 @@ class OperateurController extends Controller
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
 
-        if ($request->input('sexe') == "M") {
-            $civilite = "M.";
-        } elseif ($request->input('sexe') == "F") {
-            $civilite = "Mme";
+        if ($civilite == "M.") {
+            $sexe = "M";
+        } elseif ($civilite == "Mme") {
+            $sexe = "F";
         } else {
-            $civilite = "";
+            $sexe = "";
         }
 
         $utilisateur = new User([
-        'sexe'                      =>      $request->input('sexe'),
+        'sexe'                      =>      $sexe,
         'civilite'                  =>      $civilite,
         'firstname'                 =>      $request->input('prenom'),
         'name'                      =>      $request->input('nom'),
@@ -169,9 +168,10 @@ class OperateurController extends Controller
         $operateurs = new Operateur([
         'cin_responsable'               =>      $request->input('cin'),
         'numero_agrement'               =>      $request->input('numero_agrement'),
-        'date_debut'                    =>      $request->input('date_depot'),
+        'debut_quitus'                  =>      $request->input('debut_quitus'),
+        'fin_quitus'                    =>      $request->input('fin_quitus'),
         'name'                          =>      $request->input('operateur'),
-        'typestructure'                =>      $request->input('type_structure'),
+        'typestructure'                 =>      $request->input('type_structure'),
         'sigle'                         =>      $request->input('sigle'),
         'fixe'                          =>      $request->input('fixe_op'),
         'ninea'                         =>      $request->input('ninea'),
@@ -277,20 +277,24 @@ class OperateurController extends Controller
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
 
-        if ($request->input('sexe') == "M") {
-            $civilite = "M.";
-        } elseif ($request->input('sexe') == "F") {
-            $civilite = "Mme";
+        $civilite = $request->input('civilite');
+
+        if ($civilite == "M.") {
+            $sexe = "M";
+        } elseif ($civilite == "Mme") {
+            $sexe = "F";
         } else {
-            $civilite = "";
+            $sexe = "";
         }
 
-        $utilisateur->sexe                  =      $request->input('sexe');
+        $utilisateur->sexe                  =      $sexe;
         $utilisateur->civilite              =      $civilite;
         $utilisateur->firstname             =      $request->input('prenom');
         $utilisateur->name                  =      $request->input('nom');
         $utilisateur->email                 =      $request->input('email');
         $utilisateur->telephone             =      $request->input('telephone');
+        $utilisateur->date_naissance        =      $request->input('date_naiss');
+        $utilisateur->lieu_naissance        =      $request->input('lieu_naissance');
         $utilisateur->adresse               =      $request->input('adresse');
         $utilisateur->bp                    =      $request->input('bp');
         $utilisateur->fax                   =      $request->input('fax');
@@ -304,6 +308,8 @@ class OperateurController extends Controller
         $operateur->ninea                   =      $request->input('ninea');
         $operateur->rccm                    =      $request->input('registre');
         $operateur->quitus                  =      $request->input('quitus');
+        $operateur->debut_quitus            =      $request->input('debut_quitus');
+        $operateur->fin_quitus              =      $request->input('fin_quitus');
         $operateur->email1                  =      $request->input('email1');
         $operateur->email2                  =      $request->input('email2');
         $operateur->telephone1              =      $request->input('telephone1');
@@ -316,9 +322,9 @@ class OperateurController extends Controller
         $operateur->telephone_responsable   =      $request->input('telephone');
         $operateur->email_responsable       =      $request->input('email');
         $operateur->fonction_responsable    =      $request->input('fonction_responsable');
-        $operateur->communes_id         =      $communes_id;
+        $operateur->communes_id             =      $communes_id;
         $operateur->types_operateurs_id     =      $types_operateurs_id;
-        $operateur->typestructure          =      $request->input('type_structure');
+        $operateur->typestructure           =      $request->input('type_structure');
         $operateur->users_id                =      $utilisateur->id;
 
         $operateur->save();

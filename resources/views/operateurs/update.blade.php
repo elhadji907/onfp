@@ -5,15 +5,15 @@
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
                 @if (count($errors) > 0)
-                <div class="alert alert-danger mt-2">
-                    <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                    <div class="alert alert-danger mt-2">
+                        <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -31,9 +31,9 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-10">
-                                <label for="operateur">{{ __('Opérateur') }}(<span class="text-danger">*</span>)</label>
-                                <textarea id="operateur" rows="2"
-                                    class="form-control @error('operateur') is-invalid @enderror" name="operateur"
+                                <label for="operateur">{{ __('Opérateur') }}(<span
+                                        class="text-danger">*</span>)</label>
+                                <textarea id="operateur" rows="2" class="form-control @error('operateur') is-invalid @enderror" name="operateur"
                                     placeholder="Opérateur" autocomplete="operateur"
                                     autofocus>{{ $operateur->name ?? old('operateur') }}</textarea>
                                 @error('operateur')
@@ -44,8 +44,7 @@
                             </div>
                             <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                 <label for="sigle">{{ __('Sigle') }}(<span class="text-danger">*</span>)</label>
-                                <textarea id="sigle" rows="2" class="form-control @error('sigle') is-invalid @enderror"
-                                    name="sigle" placeholder="Sigle"
+                                <textarea id="sigle" rows="2" class="form-control @error('sigle') is-invalid @enderror" name="sigle" placeholder="Sigle"
                                     autocomplete="sigle">{{ $operateur->sigle ?? old('sigle') }}</textarea>
                                 @error('sigle')
                                     <span class="invalid-feedback" role="alert">
@@ -106,7 +105,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Commune :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('commune', $communes, $operateur->commune->nom ?? "", ['placeholder' => 'sélectionner régions de résidence', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
+                                {!! Form::select('commune', $communes, $operateur->commune->nom ?? '', ['placeholder' => 'sélectionner régions de résidence', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('commune'))
                                         @foreach ($errors->get('commune') as $message)
@@ -120,8 +119,8 @@
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 <label for="adresse">{{ __('Adresse complète') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <textarea id="adresse" rows="2" class="form-control @error('adresse') is-invalid @enderror"
-                                    name="adresse" placeholder="adresse de la structure" autocomplete="adresse"
+                                <textarea id="adresse" rows="2" class="form-control @error('adresse') is-invalid @enderror" name="adresse"
+                                    placeholder="adresse de la structure" autocomplete="adresse"
                                     autofocus>{{ $operateur->adresse ?? old('adresse') }}</textarea>
                                 @error('adresse')
                                     <span class="invalid-feedback" role="alert">
@@ -167,9 +166,8 @@
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="bp">{{ __('Boite postale') }}</label>
                                 <input id="bp" type="text" class="form-control @error('bp') is-invalid @enderror" name="bp"
-                                    placeholder="Votre adresse postale"
-                                    value="{{ $operateur->user->bp ?? old('bp') }}" autocomplete="bp"
-                                    autofocus>
+                                    placeholder="Votre adresse postale" value="{{ $operateur->user->bp ?? old('bp') }}"
+                                    autocomplete="bp" autofocus>
                                 @error('bp')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -180,8 +178,7 @@
                                 <label for="fax">{{ __('Téléphone fax') }}</label>
                                 <input id="fax" type="text" class="form-control @error('fax') is-invalid @enderror"
                                     name="fax" placeholder="Votre numero de fax"
-                                    value="{{ $operateur->user->fax ?? old('fax') }}" autocomplete="fax"
-                                    autofocus>
+                                    value="{{ $operateur->user->fax ?? old('fax') }}" autocomplete="fax" autofocus>
                                 @error('fax')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -218,44 +215,77 @@
                                 {!! Form::label('Numéro quitus fiscal:') !!}<span class="text-danger"> <b>*</b> </span>
                                 {!! Form::text('quitus', $operateur->quitus, ['placeholder' => 'Le numéro du quitus fiscal de votre structure', 'class' => 'form-control']) !!}
                             </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="debut_quitus">{{ __('Date délivrance') }}(<span
-                                        class="text-danger">*</span>)</label>
-                                <input id="debut_quitus" {{ $errors->has('debut_quitus') ? 'is-invalid' : '' }}
-                                    type="date" class="form-control @error('debut_quitus') is-invalid @enderror"
-                                    name="debut_quitus" placeholder="Votre date de naissance"
-                                    value="{{ $operateur->debut_quitus->format('Y-m-d') ?? old('debut_quitus') }}"
-                                    autocomplete="username" autofocus>
-                                @error('debut_quitus')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                <label for="fin_quitus">{{ __('Date fin') }}(<span class="text-danger">*</span>)</label>
-                                <input id="fin_quitus" {{ $errors->has('fin_quitus') ? 'is-invalid' : '' }} type="date"
-                                    class="form-control @error('fin_quitus') is-invalid @enderror" name="fin_quitus"
-                                    placeholder="Votre date de naissance"
-                                    value="{{ $operateur->fin_quitus->format('Y-m-d') ?? old('fin_quitus') }}"
-                                    autocomplete="username" autofocus>
-                                @error('fin_quitus')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
+                            @if (isset($operateur->debut_quitus))
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="debut_quitus">{{ __('Date délivrance') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <input id="debut_quitus" {{ $errors->has('debut_quitus') ? 'is-invalid' : '' }}
+                                        type="date" class="form-control @error('debut_quitus') is-invalid @enderror"
+                                        name="debut_quitus" placeholder="Votre date de naissance"
+                                        value="{{ $operateur->debut_quitus->format('Y-m-d') ?? old('debut_quitus') }}"
+                                        autocomplete="username" autofocus>
+                                    @error('debut_quitus')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @else
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="debut_quitus">{{ __('Date délivrance') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <input id="debut_quitus" {{ $errors->has('debut_quitus') ? 'is-invalid' : '' }}
+                                        type="date" class="form-control @error('debut_quitus') is-invalid @enderror"
+                                        name="debut_quitus" placeholder="Votre date de naissance"
+                                        value="{{ old('debut_quitus') }}" autocomplete="username" autofocus>
+                                    @error('debut_quitus')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @endif
+                            @if (isset($operateur->fin_quitus))
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="fin_quitus">{{ __('Date fin') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <input id="fin_quitus" {{ $errors->has('fin_quitus') ? 'is-invalid' : '' }}
+                                        type="date" class="form-control @error('fin_quitus') is-invalid @enderror"
+                                        name="fin_quitus" placeholder="Votre date de naissance"
+                                        value="{{ $operateur->fin_quitus->format('Y-m-d') ?? old('fin_quitus') }}"
+                                        autocomplete="username" autofocus>
+                                    @error('fin_quitus')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @else
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                    <label for="fin_quitus">{{ __('Date fin') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                    <input id="fin_quitus" {{ $errors->has('fin_quitus') ? 'is-invalid' : '' }}
+                                        type="date" class="form-control @error('fin_quitus') is-invalid @enderror"
+                                        name="fin_quitus" placeholder="Votre date de naissance"
+                                        value="{{ old('fin_quitus') }}" autocomplete="username" autofocus>
+                                    @error('fin_quitus')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @endif
                         </div>
                         <div class="bg-gradient-secondary text-center">
                             <p class="h4 text-white mb-2">RESPONSABLE</p>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
-                                {!! Form::label('sexe :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], $operateur->user->sexe, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control', 'id' => 'sexe', 'data-width' => '100%']) !!}
+                                {!! Form::label('civilite :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], $operateur->user->civilite, ['placeholder' => 'sélectionner civilite', 'class' => 'form-control', 'id' => 'civilite', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
-                                    @if ($errors->has('sexe'))
-                                        @foreach ($errors->get('sexe') as $message)
+                                    @if ($errors->has('civilite'))
+                                        @foreach ($errors->get('civilite') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
