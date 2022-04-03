@@ -16,7 +16,8 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des formations du projet AGEROUTE
+                        {{ __("Liste des formations du projet AGEROUTE : ") }} <label
+                            class="badge badge-info">{{ $attestation }}</label>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -34,7 +35,6 @@
                                         <th style="width:5%;">Code</th>
                                         <th style="width:5%;">Année</th>
                                         <th style="width:15%;">Module</th>
-                                        <th style="width:5%;">Qualif.</th>
                                         <th style="width:10%;">Bénéficiares</th>
                                         <th style="width:10%;">Département</th>
                                         {{-- <th style="width:08%;">Début</th>
@@ -59,7 +59,7 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($findividuelles as $findividuelle)
-                                        @if (isset($findividuelle) && $findividuelle->formation->projet->name == $projet_name)
+                                    @if (isset($findividuelle) && $findividuelle->formation->projet->name == $projet_name && $findividuelle->formation->qualifications == $attestation)
                                             <tr>
                                                 <td>{!! $findividuelle->formation->code !!}</td>
                                                 <td>
@@ -69,20 +69,13 @@
                                                     </a>
                                                 </td>
                                                 <td>{!! $findividuelle->module->name !!}</td>
-                                                <td align="center">
-                                                    <a href="{{ url('formationsattestations', ['$findividuelle' => $findividuelle->id, '$attestation' => $findividuelle->formation->qualifications]) }}" 
-                                                        class="btn btn-outline-primary btn-sm" target="_blank">
-                                                        {!! $findividuelle->formation->qualifications !!}
-                                                    </a>
-                                                </td>
                                                 <td>{!! $findividuelle->formation->beneficiaires !!}</td>
                                                 <td>{!! $findividuelle->formation->localite->nom !!}</td>
                                                 {{-- <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
                                             <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td> --}}
                                                 <td>{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
                                                 <td align="center">
-                                                    <a href="{{ url('formationsstatut', ['$findividuelle' => $findividuelle->id, '$statut' => $findividuelle->formation->statut->name ]) }}" 
-                                                        class="btn btn-outline-warning btn-sm" target="_blank">
+                                                    <a href="#" class="btn btn-outline-warning btn-sm">
                                                         {!! $findividuelle->formation->statut->name !!}
                                                     </a>
                                                 </td>

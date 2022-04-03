@@ -70,7 +70,6 @@ class IndividuellenoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $individuelle = Individuelle::find($id);
 
         $this->validate(
@@ -86,7 +85,7 @@ class IndividuellenoteController extends Controller
         $individuelle->appreciation          =     $request->input('appreciations');
             
         $individuelle->save();
-
+        
         $message = "Modifications de  " .$individuelle->demandeur->user->civilite.' '.$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' prises en comptes';
         return back()->with(compact('message'));
     }

@@ -445,7 +445,6 @@ class AgerouteformationController extends Controller
 
         // Output the generated PDF to Browser
         $dompdf->stream('Fiche de suivi evaluation pour les '.$beneficiaires.' du '.$anne.'.pdf', ['Attachment' => false]);
-
     }
     public function pvevaluation($module, $projet, $programme, $findividuelle)
     {
@@ -492,7 +491,37 @@ class AgerouteformationController extends Controller
 
         // Output the generated PDF to Browser
         $dompdf->stream('PV evaluation pour les '.$beneficiaires.' du '.$anne.'.pdf', ['Attachment' => false]);
-
     }
-    
+
+    public function formationsannee($findividuelle, $annee)
+    {
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+
+        $projets = Projet::find($projet_id);
+        $findividuelles = $projets->findividuelles;
+
+        return view('agerouteformations.formationsannee', compact('annee', 'findividuelles', 'projet_name'));
+    }
+
+    public function formationsattestations($findividuelle, $attestation)
+    {
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+
+        $projets = Projet::find($projet_id);
+        $findividuelles = $projets->findividuelles;
+
+        return view('agerouteformations.formationsattestations', compact('attestation', 'findividuelles', 'projet_name'));
+    }
+    public function formationsstatut($findividuelle, $statut)
+    {
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+
+        $projets = Projet::find($projet_id);
+        $findividuelles = $projets->findividuelles;
+
+        return view('agerouteformations.formationsstatut', compact('statut', 'findividuelles', 'projet_name'));
+    }
 }

@@ -13,6 +13,7 @@ use App\Models\Statut;
 use App\Models\Choixoperateur;
 use App\Models\Localite;
 use App\Models\Convention;
+use App\Models\Projet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Helpers\SnNameGenerator as SnmG;
 
@@ -43,6 +44,7 @@ class FormationFactory extends Factory
         $choixoperateurs_id       =   Choixoperateur::all()->random()->id;
         $localites_id             =   Localite::all()->random()->id;
         $conventions_id           =   Convention::all()->random()->id;
+        $projets_id               =   Projet::all()->random()->id;
     
         $prevue_h = $this->faker->numberBetween(5, 9);
         $prevue_f = $this->faker->numberBetween(5, 1);
@@ -121,6 +123,10 @@ class FormationFactory extends Factory
 
             'conventions_id' => function () use ($conventions_id) {
                 return $conventions_id;
+            },
+
+            'projets_id' => function () use ($projets_id) {
+                return $projets_id;
             },
         ];
         

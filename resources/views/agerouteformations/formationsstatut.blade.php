@@ -16,7 +16,8 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des formations du projet AGEROUTE
+                        {{ __('Liste des formations du projet AGEROUTE : ') }} <label
+                            class="badge badge-info">{{ $statut }}</label>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -40,7 +41,6 @@
                                         {{-- <th style="width:08%;">Début</th>
                                         <th style="width:08%;">Fin</th> --}}
                                         <th style="width:22%;">Opérateurs</th>
-                                        <th style="width:5%;">Statut</th>
                                         <th style="width:4%;">Effectif</th>
                                         <th style="width:8%;"></th>
                                     </tr>
@@ -59,18 +59,18 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($findividuelles as $findividuelle)
-                                        @if (isset($findividuelle) && $findividuelle->formation->projet->name == $projet_name)
+                                        @if (isset($findividuelle) && $findividuelle->formation->projet->name == $projet_name && $findividuelle->formation->statut->name == $statut)
                                             <tr>
                                                 <td>{!! $findividuelle->formation->code !!}</td>
                                                 <td>
-                                                    <a href="{{ url('formationsannee', ['$findividuelle' => $findividuelle->id, '$annee' => $findividuelle->formation->annee]) }}"
+                                                    <a href="{{ url('formationsannee', ['$findividuelle' => $findividuelle->id,'$annee' => $findividuelle->formation->annee]) }}"
                                                         class="btn btn-outline-info btn-sm" target="_blank">
                                                         {!! $findividuelle->formation->annee !!}
                                                     </a>
                                                 </td>
                                                 <td>{!! $findividuelle->module->name !!}</td>
                                                 <td align="center">
-                                                    <a href="{{ url('formationsattestations', ['$findividuelle' => $findividuelle->id, '$attestation' => $findividuelle->formation->qualifications]) }}" 
+                                                    <a href="{{ url('formationsattestations', ['$findividuelle' => $findividuelle->id,'$attestation' => $findividuelle->formation->qualifications]) }}"
                                                         class="btn btn-outline-primary btn-sm" target="_blank">
                                                         {!! $findividuelle->formation->qualifications !!}
                                                     </a>
@@ -80,12 +80,6 @@
                                                 {{-- <td>{!! $findividuelle->formation->date_debut->format('d/m/Y') !!}</td>
                                             <td>{!! $findividuelle->formation->date_fin->format('d/m/Y') !!}</td> --}}
                                                 <td>{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
-                                                <td align="center">
-                                                    <a href="{{ url('formationsstatut', ['$findividuelle' => $findividuelle->id, '$statut' => $findividuelle->formation->statut->name ]) }}" 
-                                                        class="btn btn-outline-warning btn-sm" target="_blank">
-                                                        {!! $findividuelle->formation->statut->name !!}
-                                                    </a>
-                                                </td>
                                                 <td class="text-center"><label class="badge badge-default">
                                                         @foreach ($findividuelle->formation->demandeurs as $demandeur)
                                                             @if ($loop->last)
