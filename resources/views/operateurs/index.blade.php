@@ -33,6 +33,7 @@
                                         <th width="12%">Numéro agrément</th>
                                         <th width="50%">Opérateur</th>
                                         <th width="10%">Sigle</th>
+                                        <th width="5%">Modules</th>
                                         <th width="5%">Formations</th>
                                         <th width="8%"></th>
                                     </tr>
@@ -42,6 +43,7 @@
                                         <th>Numéro agrément</th>
                                         <th>Opérateur</th>
                                         <th>Sigle</th>
+                                        <th>Modules</th>
                                         <th>Formations</th>
                                         <th></th>
                                     </tr>
@@ -54,11 +56,20 @@
                                             <td>{!! $operateur->name !!}</td>
                                             <td>{!! $operateur->sigle !!}</td>
                                             <td align="center">
-                                              @foreach ($operateur->formations as $key => $formation)
-                                                  @if ($loop->last)
-                                                      <a class="nav-link badge badge-info" href="#" target="_blank">{!! $loop->count !!}</a>
-                                                  @endif
-                                              @endforeach
+                                                @foreach ($operateur->modules as $key => $module)
+                                                    @if ($loop->last)
+                                                        <a class="nav-link badge badge-default" href="#"
+                                                            target="_blank">{!! $loop->count !!}</a>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td align="center">
+                                                @foreach ($operateur->formations as $key => $formation)
+                                                    @if ($loop->last)
+                                                        <a class="nav-link badge badge-default" href="#"
+                                                            target="_blank">{!! $loop->count !!}</a>
+                                                    @endif
+                                                @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-content-center">
                                                 {{-- @can('update', $operateur) --}}

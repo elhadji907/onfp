@@ -71,7 +71,7 @@ class OperateurController extends Controller
         
         $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        $regions = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $regions = Region::distinct('nom')->get()->pluck('nom', 'id')->unique();
 
         return view('operateurs.create', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur'));
     }

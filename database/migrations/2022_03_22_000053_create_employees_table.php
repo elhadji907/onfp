@@ -34,6 +34,7 @@ class CreateEmployeesTable extends Migration
             $table->unsignedInteger('categories_id')->nullable();
             $table->unsignedInteger('fonctions_id')->nullable();
             $table->unsignedInteger('directions_id')->nullable();
+            $table->string('dirrection_employee', 200)->nullable();
 
             $table->index(["users_id"], 'fk_employees_users1_idx');
 

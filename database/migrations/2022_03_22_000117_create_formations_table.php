@@ -53,6 +53,7 @@ class CreateFormationsTable extends Migration
             $table->integer('forme_h')->nullable();
             $table->integer('forme_f')->nullable();
             $table->integer('total')->nullable();
+            $table->string('appreciations', 200)->nullable();
             $table->unsignedInteger('ingenieurs_id')->nullable();
             $table->unsignedInteger('agents_id')->nullable();
             $table->unsignedInteger('detfs_id')->nullable();

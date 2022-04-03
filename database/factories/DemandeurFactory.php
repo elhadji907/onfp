@@ -47,7 +47,7 @@ class DemandeurFactory extends Factory
 
         return [
             'cin' => $cin,
-            'numero_dossier' => $this->faker->unique(true)->numberBetween(100, 999)."".$annee,
+            'numero_dossier' => $this->faker->unique(true)->numberBetween(100, 999).rand(10, 99)."".$annee,
             'date1' => $this->faker->dateTime(),         
             'users_id' => function () {
                 return User::factory()->create()->id;

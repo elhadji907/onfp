@@ -70,6 +70,10 @@ class CreateIndividuellesTable extends Migration
             $table->string('file7', 200)->nullable();
             $table->integer('nbre_pieces')->nullable();
             $table->integer('nbre_enfants')->nullable();
+            $table->double('note_obtenue')->nullable();
+            $table->string('niveau_maitrise', 200)->nullable();
+            $table->string('observations', 200)->nullable();
+            $table->string('appreciation', 200)->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();
@@ -86,9 +90,6 @@ class CreateIndividuellesTable extends Migration
             $table->unsignedInteger('arrondissements_id')->nullable();
             $table->unsignedInteger('departements_id')->nullable();
             $table->unsignedInteger('regions_id')->nullable();
-            $table->double('note_obtenue')->nullable();
-            $table->string('niveau_maitrise', 200)->nullable();
-            $table->string('observations', 200)->nullable();
 
             $table->index(["demandeurs_id"], 'fk_individuelles_demandeurs1_idx');
 

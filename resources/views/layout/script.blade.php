@@ -290,12 +290,12 @@ $("#choixoperateur").select2({
       allowClear: true
   });
 </script>
-<script type="text/javascript">
+{{--  <script type="text/javascript">
 $("#operateur").select2({
       placeholder: "choisir opérateur",
       allowClear: true
   });
-</script>
+</script>  --}}
 
 <script type="text/javascript">
 

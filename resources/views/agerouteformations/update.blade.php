@@ -181,10 +181,10 @@
                                 @endif
                             </small>
                         </div>
-                    </div>         <div class="form-row">
+                    </div>
+                    <div class="form-row">
                         <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                            <label for="lieu">{{ __('Lieu formation') }}(<span
-                                    class="text-danger">*</span>)</label>
+                            <label for="lieu">{{ __('Lieu formation') }}(<span class="text-danger">*</span>)</label>
                             <textarea class="form-control  @error('lieu') is-invalid @enderror" name="lieu" id="lieu" rows="1"
                                 placeholder="Lieu de la formation">{{ $findividuelle->formation->lieu ?? old('lieu') }}</textarea>
                             @error('lieu')
@@ -246,7 +246,7 @@
                                 <label for="date_debut">{{ __('Début') }}</label>
                                 <input id="date_debut" {{ $errors->has('date_debut') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_debut') is-invalid @enderror" name="date_debut"
-                                    placeholder="Votre date de debutance"
+                                    placeholder="Votre date de debut"
                                     value="{{ $findividuelle->formation->date_debut->format('Y-m-d') ?? old('date_debut') }}"
                                     autocomplete="username">
                                 @error('date_debut')
@@ -260,7 +260,7 @@
                                 <label for="date_debut">{{ __('Début') }}</label>
                                 <input id="date_debut" {{ $errors->has('date_debut') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_debut') is-invalid @enderror" name="date_debut"
-                                    placeholder="Votre date de debutance" value="{{ old('date_debut') }}"
+                                    placeholder="Votre date de debut" value="{{ old('date_debut') }}"
                                     autocomplete="username">
                                 @error('date_debut')
                                     <span class="invalid-feedback" role="alert">
@@ -274,7 +274,7 @@
                                 <label for="date_fin">{{ __('Fin') }}</label>
                                 <input id="date_fin" {{ $errors->has('date_fin') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_fin') is-invalid @enderror" name="date_fin"
-                                    placeholder="Votre date de finance"
+                                    placeholder="Votre date de fin"
                                     value="{{ $findividuelle->formation->date_fin->format('Y-m-d') ?? old('date_fin') }}"
                                     autocomplete="username">
                                 @error('date_fin')
@@ -288,9 +288,65 @@
                                 <label for="date_fin">{{ __('Fin') }}</label>
                                 <input id="date_fin" {{ $errors->has('date_fin') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_fin') is-invalid @enderror" name="date_fin"
-                                    placeholder="Votre date de finance" value="{{ old('date_fin') }}"
+                                    placeholder="Votre date de fin" value="{{ old('date_fin') }}"
                                     autocomplete="username">
                                 @error('date_fin')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        @endif
+                    </div>
+                    <div class="form-row">
+                        @if (isset($findividuelle->formation->date_suivi))
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label for="date_suivi">{{ __('Date suivi') }}</label>
+                                <input id="date_suivi" {{ $errors->has('date_suivi') ? 'is-invalid' : '' }} type="date"
+                                    class="form-control @error('date_suivi') is-invalid @enderror" name="date_suivi"
+                                    placeholder="Date de suivi"
+                                    value="{{ $findividuelle->formation->date_suivi->format('Y-m-d') ?? old('date_suivi') }}"
+                                    autocomplete="username">
+                                @error('date_suivi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label for="date_suivi">{{ __('Date suivi') }}</label>
+                                <input id="date_suivi" {{ $errors->has('date_suivi') ? 'is-invalid' : '' }} type="date"
+                                    class="form-control @error('date_suivi') is-invalid @enderror" name="date_suivi"
+                                    placeholder="Date de suivi" value="{{ old('date_suivi') }}" autocomplete="username">
+                                @error('date_suivi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        @endif
+                        @if (isset($findividuelle->formation->date_pv))
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label for="date_pv">{{ __('Date PV') }}</label>
+                                <input id="date_pv" {{ $errors->has('date_pv') ? 'is-invalid' : '' }} type="date"
+                                    class="form-control @error('date_pv') is-invalid @enderror" name="date_pv"
+                                    placeholder="La date du pv"
+                                    value="{{ $findividuelle->formation->date_pv->format('Y-m-d') ?? old('date_pv') }}"
+                                    autocomplete="username">
+                                @error('date_pv')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        @else
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label for="date_pv">{{ __('Date PV') }}</label>
+                                <input id="date_pv" {{ $errors->has('date_pv') ? 'is-invalid' : '' }} type="date"
+                                    class="form-control @error('date_pv') is-invalid @enderror" name="date_pv"
+                                    placeholder="La date du pv" value="{{ old('date_pv') }}" autocomplete="username">
+                                @error('date_pv')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>

@@ -28,6 +28,8 @@ class CreateOperateursTable extends Migration
             $table->string('name', 200)->nullable();
             $table->string('sigle', 200)->nullable();
             $table->string('typestructure', 200)->nullable();
+            $table->timestamp('date_depot')->nullable();
+            $table->timestamp('annee_agrement')->nullable();
             $table->timestamp('date')->nullable();
             $table->timestamp('date_debut')->nullable();
             $table->timestamp('date_fin')->nullable();
@@ -49,6 +51,8 @@ class CreateOperateursTable extends Migration
             $table->string('telephone_responsable', 45)->nullable();
             $table->string('email_responsable', 45)->nullable();
             $table->string('fonction_responsable', 200)->nullable();
+            $table->string('operateur_type', 200)->nullable();
+            $table->string('statut', 200)->nullable();
             $table->longText('qualification')->nullable();
             $table->unsignedInteger('users_id')->nullable();
             $table->unsignedInteger('rccms_id')->nullable();
@@ -57,7 +61,6 @@ class CreateOperateursTable extends Migration
             $table->unsignedInteger('specialites_id')->nullable();
             $table->unsignedInteger('courriers_id')->nullable();
             $table->unsignedInteger('communes_id')->nullable();
-            $table->unsignedInteger('fichiers_id')->nullable();
             $table->string('file1', 200)->nullable();
             $table->string('file2', 200)->nullable();
             $table->string('file3', 200)->nullable();

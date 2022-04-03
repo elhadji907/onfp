@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $categories_id
  * @property int|null $fonctions_id
  * @property int|null $directions_id
+ * @property string|null $dirrection_employee
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -53,7 +54,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Employee extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -81,7 +81,8 @@ class Employee extends Model
 		'users_id',
 		'categories_id',
 		'fonctions_id',
-		'directions_id'
+		'directions_id',
+		'dirrection_employee'
 	];
 
 	public function category()

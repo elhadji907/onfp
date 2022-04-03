@@ -14,6 +14,7 @@ use App\Models\Choixoperateur;
 use App\Models\Localite;
 use App\Models\Convention;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Helpers\SnNameGenerator as SnmG;
 
 class FormationFactory extends Factory
 {
@@ -61,11 +62,12 @@ class FormationFactory extends Factory
 
         return [
             'code' => 'FP'."".$annee.$this->faker->unique(true)->numberBetween(0, 300),
-            'annee' => $this->faker->randomElement($array = array('2020-2021','2021-2022', '2019-2020')),
+            'annee' => $this->faker->randomElement($array = array('2020','2021', '2022')),
             'name' => $this->faker->company,
             'qualifications' => $this->faker->randomElement($array = array('RC','Titre')),
             'effectif_total' => $effectif_total,
             'date_pv' => $this->faker->dateTime(),
+            'date_suivi' => $this->faker->dateTime(),
             'date_debut' => $this->faker->dateTimeBetween('-3 week', '+1 week'),
             'date_fin' => $this->faker->dateTimeBetween('-1 week', '+5 week'),
             'adresse' => $this->faker->address,
@@ -80,7 +82,7 @@ class FormationFactory extends Factory
             'frais_add' => $frais_add,
             'autes_frais' => $autes_frais,
             'frais_total' => $frais_total,
-            'lieu' => $this->faker->word,
+            'lieu' => SnmG::getLieunaissance(),
             'convention_col' => $this->faker->word,
             'decret' => $this->faker->word,
             'beneficiaires' => $this->faker->company,

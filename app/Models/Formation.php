@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * Class Formation
  * 
@@ -47,6 +46,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $forme_h
  * @property int|null $forme_f
  * @property int|null $total
+ * @property string|null $appreciations
  * @property int|null $ingenieurs_id
  * @property int|null $agents_id
  * @property int|null $detfs_id
@@ -188,6 +188,7 @@ class Formation extends Model
 		'forme_h',
 		'forme_f',
 		'total',
+		'appreciations',
 		'ingenieurs_id',
 		'agents_id',
 		'detfs_id',

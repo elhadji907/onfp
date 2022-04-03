@@ -256,6 +256,8 @@ class AgerouteformationController extends Controller
         $formation->code                =      $request->input('code');
         $formation->date_debut          =      $request->input('date_debut');
         $formation->date_fin            =      $request->input('date_fin');
+        $formation->date_suivi            =      $request->input('date_suivi');
+        $formation->date_pv            =      $request->input('date_pv');
         $formation->adresse             =      $request->input('adresse');
         $formation->beneficiaires       =      $request->input('beneficiaire');
         $formation->total               =      $request->input('total');

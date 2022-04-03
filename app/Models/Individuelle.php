@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-
 /**
  * Class Individuelle
  * 
@@ -63,6 +62,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file7
  * @property int|null $nbre_pieces
  * @property int|null $nbre_enfants
+ * @property float|null $note_obtenue
+ * @property string|null $niveau_maitrise
+ * @property string|null $observations
+ * @property string|null $appreciation
  * @property int $demandeurs_id
  * @property int|null $etudes_id
  * @property int|null $antennes_id
@@ -79,9 +82,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $arrondissements_id
  * @property int|null $departements_id
  * @property int|null $regions_id
- * @property float|null $note_obtenue
- * @property string|null $niveau_maitrise
- * @property string|null $observations
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -119,6 +119,7 @@ class Individuelle extends Model
 		'nbre_enfant' => 'int',
 		'nbre_pieces' => 'int',
 		'nbre_enfants' => 'int',
+		'note_obtenue' => 'float',
 		'demandeurs_id' => 'int',
 		'etudes_id' => 'int',
 		'antennes_id' => 'int',
@@ -134,8 +135,7 @@ class Individuelle extends Model
 		'communes_id' => 'int',
 		'arrondissements_id' => 'int',
 		'departements_id' => 'int',
-		'regions_id' => 'int',
-		'note_obtenue' => 'float'
+		'regions_id' => 'int'
 	];
 
 	protected $dates = [
@@ -191,6 +191,10 @@ class Individuelle extends Model
 		'file7',
 		'nbre_pieces',
 		'nbre_enfants',
+		'note_obtenue',
+		'niveau_maitrise',
+		'observations',
+		'appreciation',
 		'demandeurs_id',
 		'etudes_id',
 		'antennes_id',
@@ -206,10 +210,7 @@ class Individuelle extends Model
 		'communes_id',
 		'arrondissements_id',
 		'departements_id',
-		'regions_id',
-		'note_obtenue',
-		'niveau_maitrise',
-		'observations'
+		'regions_id'
 	];
 
 	public function antenne()

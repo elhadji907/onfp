@@ -43,7 +43,7 @@ class OperateurFactory extends Factory
         return [
             'numero_agrement' => $this->faker->unique(true)->numberBetween(1000, 9999).'/ONFP/DG/DEC/'.$annee,
             'name' => SnmG::getEtablissement(),
-            'sigle' => $this->faker->word,
+            'sigle' => "SIGLE",
             'typestructure' => SnmG::getTypesstructure(),
             'ninea' => $this->faker->word,
             'rccm' => $this->faker->word,

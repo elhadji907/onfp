@@ -83,7 +83,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('type operateur :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    <label for="operateur">{{ __('Type opérateur') }}(<span
+                                        class="text-danger">*</span>)</label>
                                     {!! Form::select('type_operateur', $types_operateurs, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'type_operateur', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('type_operateur'))
@@ -94,7 +95,8 @@
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                    {!! Form::label('type structure :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
+                                    <label for="operateur">{{ __('Type structure') }}(<span
+                                        class="text-danger">*</span>)</label>
                                     {!! Form::select('type_structure', ['Publique' => 'Publique', 'Privé' => 'Privé'], null, ['placeholder' => 'sélectionner type structure', 'class' => 'form-control', 'id' => 'type_structure', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('type_structure'))
@@ -122,7 +124,7 @@
                                             class="text-danger">*</span>)</label>
                                     <textarea id="adresse_op" rows="2"
                                         class="form-control @error('adresse_op') is-invalid @enderror" name="adresse_op"
-                                        placeholder="adresse_op de la structure" autocomplete="adresse_op"
+                                        placeholder="adresse de la structure" autocomplete="adresse_op"
                                         autofocus>{{ old('adresse_op') }}</textarea>
                                     @error('adresse_op')
                                         <span class="invalid-feedback" role="alert">
@@ -133,7 +135,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('Régions d\'intervention :') !!}(<span class="text-danger">*</span>)
+                                    <label for="operateur">{{ __('Région d\'intervention') }}(<span
+                                        class="text-danger">*</span>)</label>
                                     {!! Form::select('regions[]', $regions, null, ['multiple' => 'multiple', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'regions_op']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('regions'))
@@ -208,7 +211,7 @@
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label for="ninea">{{ __('Ninéa ') }}</label>
                                     <input id="ninea" type="text" class="form-control @error('ninea') is-invalid @enderror"
-                                        name="ninea" placeholder="Votre adresse postale" value="{{ old('ninea') }}"
+                                        name="ninea" placeholder="Ninea" value="{{ old('ninea') }}"
                                         autocomplete="ninea" autofocus>
                                     @error('ninea')
                                         <span class="invalid-feedback" role="alert">
@@ -226,7 +229,7 @@
                                     <label for="quitus">{{ __('Quitus ') }}</label>
                                     <input id="quitus" type="text"
                                         class="form-control @error('quitus') is-invalid @enderror" name="quitus"
-                                        placeholder="Votre adresse postale" value="{{ old('quitus') }}"
+                                        placeholder="Votre numero de quitus" value="{{ old('quitus') }}"
                                         autocomplete="quitus" autofocus>
                                     @error('quitus')
                                         <span class="invalid-feedback" role="alert">

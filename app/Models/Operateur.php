@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $name
  * @property string|null $sigle
  * @property string|null $typestructure
+ * @property Carbon|null $date_depot
+ * @property Carbon|null $annee_agrement
  * @property Carbon|null $date
  * @property Carbon|null $date_debut
  * @property Carbon|null $date_fin
@@ -42,6 +44,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $telephone_responsable
  * @property string|null $email_responsable
  * @property string|null $fonction_responsable
+ * @property string|null $operateur_type
+ * @property string|null $statut
  * @property string|null $qualification
  * @property int|null $users_id
  * @property int|null $rccms_id
@@ -50,7 +54,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $specialites_id
  * @property int|null $courriers_id
  * @property int|null $communes_id
- * @property int|null $fichiers_id
  * @property string|null $file1
  * @property string|null $file2
  * @property string|null $file3
@@ -82,7 +85,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Operateur extends Model
 {
-	
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
@@ -95,11 +97,12 @@ class Operateur extends Model
 		'types_operateurs_id' => 'int',
 		'specialites_id' => 'int',
 		'courriers_id' => 'int',
-		'communes_id' => 'int',
-		'fichiers_id' => 'int'
+		'communes_id' => 'int'
 	];
 
 	protected $dates = [
+		'date_depot',
+		'annee_agrement',
 		'date',
 		'date_debut',
 		'date_fin',
@@ -114,6 +117,8 @@ class Operateur extends Model
 		'name',
 		'sigle',
 		'typestructure',
+		'date_depot',
+		'annee_agrement',
 		'date',
 		'date_debut',
 		'date_fin',
@@ -135,6 +140,8 @@ class Operateur extends Model
 		'telephone_responsable',
 		'email_responsable',
 		'fonction_responsable',
+		'operateur_type',
+		'statut',
 		'qualification',
 		'users_id',
 		'rccms_id',
@@ -143,7 +150,6 @@ class Operateur extends Model
 		'specialites_id',
 		'courriers_id',
 		'communes_id',
-		'fichiers_id',
 		'file1',
 		'file2',
 		'file3',

@@ -42,7 +42,6 @@
 
         #footer {
             position: absolute;
-            bottom: 75;
             width: 100%;
             height: 60px;
             /* Height of the footer */
@@ -81,18 +80,23 @@
             <br /><br /><br /><br /><br />
             <table class="table table-responsive">
                 <tr>
+                    <td colspan="2"><b>{{ __('Code formation') }}</b> :
+                        {{ $formation->code ?? '' }}
+                    </td>
                     <td colspan="2"><b>{{ __('Réf convention') }}</b> :
                         {{ $formation->convention->numero ?? '' }}
                     </td>
-                    <td colspan="2"><b>{{ __('Opérateur') }}</b> :
-                        {{ $formation->operateur->name ?? '' }}
+                </tr>
+                <tr>
+                    <td colspan="4"><b>{{ __('Opérateur') }}</b> :
+                        {{ $formation->operateur->name ?? '' }} &nbsp; ({{ $formation->operateur->sigle ?? '' }})
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2"><b>{{ __('Module') }}</b> :
                         {{ $formation->module->name ?? '' }}
                     </td>
-                    <td colspan="2"><b>{{ __('Lieu') }}</b> :
+                    <td colspan="2"><b>{{ __('Lieu formation') }}</b> :
                         {{ $formation->lieu ?? '' }}
                     </td>
                 </tr>
@@ -109,14 +113,14 @@
                         @if (isset($formation->date_debut))
                             {{ $formation->date_debut->format('d/m/Y') ?? '' }}
                         @else
-                            non connue
+                            .................
                         @endif
                     </td>
                     <td colspan="2"><b>{{ __('Date fin') }}</b> :
                         @if (isset($formation->date_fin))
                             {{ $formation->date_fin->format('d/m/Y') ?? '' }}
                         @else
-                            non connue
+                            .................
                         @endif
                     </td>
                 </tr>
@@ -124,55 +128,64 @@
             <br />
             <center><b>LISTE DES BENEFICIAIRES</b></center>
             <br />
-            @if (isset($formation->individuelles) && $formation->individuelles != "[]")
-            <table class="table table-bordered" width="100%" cellspacing="0">
-                @if (session('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
-                @endif
-                <thead class="heading">
-                    <tr>
-                        <th width="2%">N°</th>
-                        <th width="10%">CIN</th>
-                        <th width="5%">Civilité</th>
-                        <th width="10%">Prénom</th>
-                        <th width="10%">Nom</th>
-                        <th width="8%">Date nais.</th>
-                        <th width="15%">Lieu nais.</th>
-                        <th width="10%">Téléphone</th>
-                        <th width="5%">Emmargement</th>
-                    </tr>
-                </thead>
-                <tbody class="details" id="liste">
-                    <?php $i = 1; ?>
-                    @foreach ($formation->individuelles as $individuelle)
-                        @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
-                            <tr>
-                                <td>{{ $i++ }}</td>
-                                <td>{{ $individuelle->demandeur->cin }}</td>
-                                <td>{{ $individuelle->demandeur->user->civilite }}</td>
-                                <td>{{ $individuelle->demandeur->user->firstname }}</td>
-                                <td>{{ $individuelle->demandeur->user->name }}</td>
-                                <td>{{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') }}</td>
-                                <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
-                                <td>{{ $individuelle->demandeur->user->telephone }}</td>
-                                <td></td>
-                            </tr>
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
+            @if (isset($formation->individuelles) && $formation->individuelles != '[]')
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    @if (session('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+                    <thead class="heading">
+                        <tr>
+                            <th width="2%">N°</th>
+                            <th width="10%">CIN</th>
+                            <th width="5%">Civilité</th>
+                            <th width="10%">Prénom</th>
+                            <th width="10%">Nom</th>
+                            <th width="8%">Date nais.</th>
+                            <th width="15%">Lieu nais.</th>
+                            <th width="10%">Téléphone</th>
+                            <th width="5%">Emmargement</th>
+                        </tr>
+                    </thead>
+                    <tbody class="details" id="liste">
+                        <?php $i = 1; ?>
+                        @foreach ($formation->individuelles as $individuelle)
+                            @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $individuelle->demandeur->cin }}</td>
+                                    <td>{{ $individuelle->demandeur->user->civilite }}</td>
+                                    <td>{{ $individuelle->demandeur->user->firstname }}</td>
+                                    <td>{{ $individuelle->demandeur->user->name }}</td>
+                                    <td>{{ $individuelle->demandeur->user->date_naissance->format('d/m/Y') }}</td>
+                                    <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
+                                    <td>{{ $individuelle->demandeur->user->telephone }}</td>
+                                    <td></td>
+                                </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
             @else
                 <center> Aucun bénéficiaire pour le momement </center>
             @endif
-        </div>
-        <div id="footer">
-            <span align="left"> <b>Observations :</b>
-            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span align="center"> <b>Agent de suivi :</b> {{ $formation->ingenieur->name}}
-            </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span align="right"><b> Date :</b></span>
+            @if (isset($formation->individuelles) && $formation->individuelles != '[]')
+                <div id="footer">
+                    <span> <b>Observations :</b>
+                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span> <b>Agent de suivi :</b> {{ $formation->ingenieur->name }}
+                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span><b> Date :</b>
+                        @if (isset($formation->date_suivi))
+                            {{ $formation->date_suivi->format('d/m/Y') ?? '' }}
+                        @else
+                            .................
+                        @endif
+                    </span>
+                </div>
+            @else
+            @endif
         </div>
         <div style="position: fixed;
             bottom: -10px;

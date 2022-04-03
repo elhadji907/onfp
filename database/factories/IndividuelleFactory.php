@@ -68,7 +68,7 @@ class IndividuelleFactory extends Factory
             'option' => $this->faker->randomElement($array = array('Littéraire','Science', 'Technologie', 'Arabe')),
             'autres_diplomes' => SnmG::getDiplome(),
             'autres_diplomes_pros' => SnmG::getDiplomepro(),
-            'telephone' => $this->faker->e164PhoneNumber,
+            'telephone' => $this->faker->unique(true)->numberBetween(70, 79).rand(10, 99).rand(10, 99).rand(0, 9).rand(0, 9).rand(0, 9),
             'fixe' => $this->faker->phoneNumber,
             'motivation' => $this->faker->text,
             'motif' => $this->faker->text,

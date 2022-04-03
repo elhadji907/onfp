@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Operateur;
+use App\Models\Module;
 
 class OperateurSeeder extends Seeder
 {
@@ -17,5 +18,13 @@ class OperateurSeeder extends Seeder
         Operateur::factory()
             ->count(15)
             ->create();
+            
+        $modules = Module::all();
+
+        Operateur::all()->each(function ($operateur) use ($modules) {
+            $operateur->modules()->attach(
+                $modules->random(rand(1, 3))->pluck('id')->toArray()
+            );
+        });
     }
 }

@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'name' => SnmG::getName(),
             'username' => Str::random(7),
             'email' => $this->faker->unique()->email(),
-            'telephone' => $this->faker->e164PhoneNumber,
+            'telephone' => $this->faker->unique(true)->numberBetween(70, 79).rand(10, 99).rand(10, 99).rand(0, 9).rand(0, 9).rand(0, 9),
             'fixe' => $this->faker->phoneNumber,
             'sexe' => SnmG::getSexe(),
             'date_naissance' => $this->faker->dateTimeBetween('-35 years', '-18 years'),
