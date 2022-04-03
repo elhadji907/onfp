@@ -64,6 +64,7 @@ use App\Http\Controllers\AgeroutezoneController;
 use App\Http\Controllers\AgeroutemoduleController;
 use App\Http\Controllers\AgerouteindividuelleController;
 use App\Http\Controllers\AgerouteformationController;
+use App\Http\Controllers\IndividuellenoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -209,6 +210,8 @@ Route::group([
 
         Route::get('fichesuivieval/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'fichesuivieval'])->name('fichesuivieval');
         Route::get('pvevaluation/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'pvevaluation'])->name('pvevaluation');
+        
+        Route::get('ajouternote/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'ajouternote'])->name('ajouternote');
 
         Route::get('create-pdf-file', [PchargeController::class, 'index'])->name('create-pdf-file');
 
@@ -289,6 +292,7 @@ Route::group([
         Route::resource('/ageroutemodules', AgeroutemoduleController::class);
         Route::resource('/agerouteindividuelles', AgerouteindividuelleController::class);
         Route::resource('/agerouteformations', AgerouteformationController::class);
+        Route::resource('/individuellenotes', IndividuellenoteController::class);
     });
 
 require __DIR__.'/auth.php';

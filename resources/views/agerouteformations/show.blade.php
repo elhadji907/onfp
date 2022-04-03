@@ -113,12 +113,14 @@
                     {{-- <i class="fas fa-plus"></i> --}}Ajouter demandeurs
                 </div>
             </a>
-            <a href="{{ url('fichesuivieval', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}" target="_blank">
+            <a href="{{ url('fichesuivieval', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+                target="_blank">
                 <div class="btn btn-outline-info btn-md" title="afficher">
                     Fiche de suivi
                 </div>
             </a>
-            <a href="{{ url('pvevaluation', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}" target="_blank">
+            <a href="{{ url('pvevaluation', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+                target="_blank">
                 <div class="btn btn-outline-primary btn-md" title="afficher">
                     PV Evaluation
                 </div>
@@ -132,8 +134,8 @@
                             pour un effectif de
                     </span> : <span class="btn btn-outline-default btn-md"><a href="#liste"
                             style="text-decoration: none">{{ $EffectifdemandeurFormations }}</a></span>
-                @else<span class="btn btn-outline-default btn-md"><a href="#liste"
-                            style="text-decoration: none">aucun demandeur ajouter</a></span>
+                @else<span class="btn btn-outline-default btn-md"><a href="#liste" style="text-decoration: none">aucun
+                            demandeur ajouter</a></span>
                     @endif
                 </h1>
             </div>
@@ -170,7 +172,8 @@
                             </tr>
                             <tr class="details">
                                 <td colspan="3" class="pt-3">{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
-                                <td colspan="1" class="pt-3">{{ $findividuelle->formation->operateur->sigle ?? '' }}</td>
+                                <td colspan="1" class="pt-3">
+                                    {{ $findividuelle->formation->operateur->sigle ?? '' }}</td>
                             </tr>
 
                             <tr class="heading">
@@ -201,7 +204,8 @@
                             </tr>
                             <tr class="details">
                                 <td colspan="2" class="pt-3">{!! $findividuelle->formation->localite->nom ?? '' !!}</td>
-                                <td colspan="2" class="pt-3">{{ $findividuelle->formation->adresse ?? '' }}</td>
+                                <td colspan="2" class="pt-3">{{ $findividuelle->formation->adresse ?? '' }}
+                                </td>
                             </tr>
                             @if (isset($findividuelle->projet->name) && $findividuelle->projet->name != 'Aucun')
                                 <tr class="heading">
@@ -220,7 +224,8 @@
                                 </tr>
                                 <tr class="details">
                                     <td colspan="3" class="pt-3">{!! strtolower($findividuelle->programme->name) ?? '' !!}</td>
-                                    <td colspan="1" class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}</td>
+                                    <td colspan="1" class="pt-3">{{ $findividuelle->programme->sigle ?? '' }}
+                                    </td>
                                 </tr>
                             @endif
                         </table>
@@ -250,7 +255,7 @@
                                 <th width="10%">Lieu nais.</th>
                                 <th width="12%">Email</th>
                                 <th width="10%">Téléphone</th>
-                                <th width="1%"></th>
+                                <th width="5%"></th>
                             </tr>
                         </thead>
                         <tbody class="details" id="liste">
@@ -259,7 +264,13 @@
                                 @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
                                     <tr>
                                         <td align="center">{{ $i++ }}</td>
-                                        <td>{{ $individuelle->demandeur->cin }}</td>
+                                        <td>
+                                            <a style="color: darkorange; text-decoration: none;"
+                                                href="{!! url('agerouteindividuelles/' . $individuelle->id) !!}" class="view" title="voir"
+                                                target="_blank">
+                                                {{ $individuelle->demandeur->cin }}
+                                            </a>
+                                        </td>
                                         <td>{{ $individuelle->demandeur->user->civilite }}</td>
                                         <td>{{ $individuelle->demandeur->user->firstname }}</td>
                                         <td>{{ $individuelle->demandeur->user->name }}</td>
@@ -268,6 +279,10 @@
                                         <td>{{ $individuelle->demandeur->user->email }}</td>
                                         <td>{{ $individuelle->demandeur->user->telephone }}</td>
                                         <td>
+                                            <a href=" {!! url('individuellenotes/' . $individuelle->id . '/edit') !!}" title="ajouter note"
+                                                class="btn btn-outline-info btn-sm mt-0" target="_blank">
+                                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                            </a>
                                             <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
                                                 title="retirer" class="btn btn-outline-warning btn-sm mt-0">
                                                 <i class="fa fa-share" aria-hidden="true"></i>
