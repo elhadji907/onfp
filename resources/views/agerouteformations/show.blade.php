@@ -253,9 +253,12 @@
                                 <th width="10%">Nom</th>
                                 <th width="8%">Date nais.</th>
                                 <th width="10%">Lieu nais.</th>
-                                <th width="12%">Email</th>
-                                <th width="10%">Téléphone</th>
-                                <th width="5%"></th>
+                                <th width="10%">Email</th>
+                                <th width="8%">Téléphone</th>
+                                @if (isset($findividuelle->formation->statut->name) && $findividuelle->formation->statut->name == 'Terminée')
+                                    <th width="2%">Note</th>
+                                @endif
+                                <th width="2%"></th>
                             </tr>
                         </thead>
                         <tbody class="details" id="liste">
@@ -278,15 +281,21 @@
                                         <td>{{ $individuelle->demandeur->user->lieu_naissance }}</td>
                                         <td>{{ $individuelle->demandeur->user->email }}</td>
                                         <td>{{ $individuelle->demandeur->user->telephone }}</td>
+                                        @if (isset($findividuelle->formation->statut->name) && $findividuelle->formation->statut->name == 'Terminée')
+                                            <td>{{ $individuelle->note_obtenue ?? '' }}</td>
+                                        @endif
                                         <td>
-                                            <a href=" {!! url('individuellenotes/' . $individuelle->id . '/edit') !!}" title="ajouter note"
-                                                class="btn btn-outline-info btn-sm mt-0" target="_blank">
-                                                <i class="fa fa-plus-square" aria-hidden="true"></i>
-                                            </a>
-                                            <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
-                                                title="retirer" class="btn btn-outline-warning btn-sm mt-0">
-                                                <i class="fa fa-share" aria-hidden="true"></i>
-                                            </a>
+                                            @if (isset($findividuelle->formation->statut->name) && $findividuelle->formation->statut->name == 'Terminée')
+                                                <a href=" {!! url('individuellenotes/' . $individuelle->id . '/edit') !!}" title="ajouter note"
+                                                    class="btn btn-outline-info btn-sm mt-0" target="_blank">
+                                                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
+                                                    title="retirer" class="btn btn-outline-warning btn-sm mt-0">
+                                                    <i class="fa fa-share" aria-hidden="true"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endif
@@ -337,7 +346,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'asc']
+                    [9, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
