@@ -55,7 +55,12 @@ class RegisteredUserController extends Controller
         /* dd($request->input('date_naissance')); */
         
         $annee = date('y');
-        $user_id             =      User::latest('id')->first()->id;
+        $user = User::get()->count();
+        if (isset($user) && $user <= "0") {
+            $user_id = $user;
+        } else {
+            $user_id             =      User::latest('id')->first()->id;
+        }
         $longueur            =      strlen($user_id);
 
         if ($longueur <= 1) {
@@ -88,29 +93,29 @@ class RegisteredUserController extends Controller
             /* 'roles_id'  => $role_id, */
         ]);
 
-  /*       $user->assignRole('Demandeur');
-        $user->assignRole('Individuelle');
-        $user->assignRole('Collective');
-        $user->assignRole('Pcharge');
-        $user->assignRole('Operateur');
-        
-        $demandeur = Demandeur::create([
-            'numero'            =>      $numero,
-            'users_id'          =>      $user->id,
-        ]);
+        /*       $user->assignRole('Demandeur');
+              $user->assignRole('Individuelle');
+              $user->assignRole('Collective');
+              $user->assignRole('Pcharge');
+              $user->assignRole('Operateur');
 
-        $individuelle = Individuelle::create([
-            'demandeurs_id'     =>      $demandeur->id,
-        ]);
+              $demandeur = Demandeur::create([
+                  'numero'            =>      $numero,
+                  'users_id'          =>      $user->id,
+              ]);
 
-        $collective = Collective::create([
-            'demandeurs_id'     =>      $demandeur->id,
-        ]);
+              $individuelle = Individuelle::create([
+                  'demandeurs_id'     =>      $demandeur->id,
+              ]);
 
-        $pcharge = Pcharge::create([
-            'demandeurs_id'     =>      $demandeur->id,
-            'statut'            =>      'Attente',
-        ]); */
+              $collective = Collective::create([
+                  'demandeurs_id'     =>      $demandeur->id,
+              ]);
+
+              $pcharge = Pcharge::create([
+                  'demandeurs_id'     =>      $demandeur->id,
+                  'statut'            =>      'Attente',
+              ]); */
 
         event(new Registered($user));
 
