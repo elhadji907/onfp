@@ -15,7 +15,7 @@ class AdministrateurSeeder extends Seeder
     public function run()
     {
         Administrateur::factory()
-            ->count(1)
+            ->count(0)
             ->create();
     }
 }

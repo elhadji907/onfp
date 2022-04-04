@@ -15,7 +15,7 @@ class DepenseSeeder extends Seeder
     public function run()
     {
         Depense::factory()
-            ->count(1)
+            ->count(0)
             ->create();
     }
 }

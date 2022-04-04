@@ -20,7 +20,7 @@ class EtablissementSeeder extends Seeder
 
         
         Etablissement::factory()
-            ->count(1)
+            ->count(0)
             ->create();
 
         /*
