@@ -15,7 +15,7 @@ class BordereauSeeder extends Seeder
     public function run()
     {
         Bordereau::factory()
-            ->count(1)
+            ->count(0)
             ->create();
     }
 }

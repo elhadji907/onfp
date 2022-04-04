@@ -15,7 +15,7 @@ class EtatSeeder extends Seeder
     public function run()
     {
         Etat::factory()
-            ->count(1)
+            ->count(0)
             ->create();
     }
 }

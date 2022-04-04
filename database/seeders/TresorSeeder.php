@@ -15,7 +15,7 @@ class TresorSeeder extends Seeder
     public function run()
     {
         Tresor::factory()
-            ->count(1)
+            ->count(0)
             ->create();
     }
 }
