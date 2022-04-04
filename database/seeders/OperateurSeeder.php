@@ -16,15 +16,15 @@ class OperateurSeeder extends Seeder
     public function run()
     {
         Operateur::factory()
-            ->count(15)
+            ->count(0)
             ->create();
             
         $modules = Module::all();
 
-        Operateur::all()->each(function ($operateur) use ($modules) {
+    /*     Operateur::all()->each(function ($operateur) use ($modules) {
             $operateur->modules()->attach(
                 $modules->random(rand(1, 3))->pluck('id')->toArray()
             );
-        });
+        }); */
     }
 }

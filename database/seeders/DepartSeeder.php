@@ -15,7 +15,7 @@ class DepartSeeder extends Seeder
     public function run()
     {
         Depart::factory()
-            ->count(1)
+            ->count(0)
             ->create();
     }
 }

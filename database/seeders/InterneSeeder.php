@@ -15,7 +15,7 @@ class InterneSeeder extends Seeder
     public function run()
     {
         Interne::factory()
-            ->count(1)
+            ->count(0)
             ->create();
     }
 }

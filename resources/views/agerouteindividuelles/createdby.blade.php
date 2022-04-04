@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - demandeurs du département de ' . $localite_concernee)
+@section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -19,8 +19,8 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }} : {{ $statut }}
-                        avec un effectif de <label class="badge badge-info">{{ $effectif }}</label>
+                        Liste des bénéficiaires enregistrés par {{ $user->civilite }} {{ $user->firstname }}
+                        {{ $user->name }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -34,94 +34,45 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:10%;">N° CIN</th>
-                                            <th style="width:5%;">Sexe</th>
-                                            <th style="width:8%;">Prenom</th>
+                                            <th style="width:5%;">N°</th>
+                                            <th style="width:5%;">N° CIN</th>
+                                            <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
-                                            <th style="width:8%;">Communes</th>
-                                            <th style="width:20%;">Module</th>
-                                            @can('role-delete')
-                                                <th style="width:5%;">Note</th>
-                                                <th style="width:5%;">Statut</th>
-                                            @endcan
-                                            {{-- <th style="width:5%;">P.M.R</th>
-                                            <th style="width:10%;">Déplacés</th> --}}
+                                            <th style="width:5%;">Téléphone</th>
+                                            <th style="width:10%;">Départements</th>
+                                            {{-- <th style="width:10%;">Communes</th> --}}
+                                            <th style="width:15%;">Module</th>
                                             <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($projet->individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->statut == $statut && $individuelle->victime_social == $svs)
+                                            @if (isset($individuelle) && $individuelle->created_by == $createdby)
                                                 <tr>
+                                                    <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->sexe !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
-                                                    <td>
-                                                        <a class="nav-link"
-                                                            href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
-                                                            target="_blank">
-                                                            {!! $individuelle->module->name ?? '' !!}<br />
-                                                        </a>
-                                                    </td>
-                                                    @can('role-delete')
-                                                        <td>{!! $individuelle->note ?? '' !!}</td>
-                                                        {{-- <td>
-                                                        <a href="{{ url('candidatspmr', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap]) }}"
-                                                            title="voir liste" class="nav-link mt-0" target="_blank">
-                                                            {!! $individuelle->handicap !!}
-                                                        </a>
-                                                    </td> --}}
-                                                        {{-- <td>
-                                                        <a href="{{ url('candidatsvs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
-                                                            title="voir liste" class="nav-link mt-0" target="_blank">
-                                                            {!! $individuelle->victime_social !!}
-                                                        </a>
-                                                    </td> --}}
-                                                        <td>
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
-                                                                    <label
-                                                                        class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
-                                                                @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
-                                                                    <label
-                                                                        class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
-                                                                @else
-                                                                    <label
-                                                                        class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
-                                                                @endif
-                                                                &nbsp;
-                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
-                                                                    <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle,'$statut' => 'accepter','$module' => $individuelle->module->id]) }}"
-                                                                        title="accepter"
-                                                                        class="btn btn-outline-primary btn-sm mt-0">
-                                                                        <i class="fas fa-check-circle"></i>
-                                                                    </a>
-                                                                @endif
-                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'rejeter')
-                                                                    <a href="{{ url('agerouterejeter', ['$individuelle' => $individuelle,'$statut' => 'rejeter','$module' => $individuelle->module->id]) }}"
-                                                                        title="rejeter"
-                                                                        class="btn btn-outline-danger btn-sm mt-0">
-                                                                        <i class="fas fa-times"></i>
-                                                                    </a>
-                                                                @endif
-                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
-                                                                    <a href="{{ url('agerouteattente', ['$individuelle' => $individuelle,'$statut' => 'attente','$module' => $individuelle->module->id]) }}"
-                                                                        title="attente"
-                                                                        class="btn btn-outline-warning btn-sm mt-0">
-                                                                        <i class="fas fa-reply"></i>
-                                                                    </a>
-                                                                @endif
-                                                            </div>
-                                                        </td>
-                                                    @endcan
-                                                    <td class="d-flex align-items-baseline">
+                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
+                                                    {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
+                                                    <td>{!! $individuelle->module->name ?? '' !!}</td>
+                                                    {{-- <td ALIGN="CENTER">
+                                                    <?php $h = 1; ?>
+                                                    @foreach ($individuelle->module as $key => $module)
+                                                        @if ($loop->last)
+                                                            <a class="nav-link badge badge-info"
+                                                                href="{{ url('moduleindividuelle', ['$projet' => $projet, '$individuelle' => $individuelle]) }}"
+                                                                target="_blank">{!! $loop->count !!}</a>
+                                                        @endif
+                                                    @endforeach
+                                                </td> --}}
+                                                    <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">
                                                             <i class="far fa-edit">&nbsp;</i>
@@ -189,7 +140,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [8, 'desc']
+                    [0, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

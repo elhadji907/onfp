@@ -210,6 +210,7 @@ Route::group([
         Route::get('formationsannee/{findividuelle}/{annee}', [AgerouteformationController::class, 'formationsannee'])->name('formationsannee');
         Route::get('formationsattestations/{findividuelle}/{attestation}', [AgerouteformationController::class, 'formationsattestations'])->name('formationsattestations');
         Route::get('formationsstatut/{findividuelle}/{statut}', [AgerouteformationController::class, 'formationsstatut'])->name('formationsstatut');
+        Route::get('createdby/{createdby}', [AgerouteindividuelleController::class, 'createdby'])->name('createdby');
 
         Route::get('fichesuivieval/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'fichesuivieval'])->name('fichesuivieval');
         Route::get('pvevaluation/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'pvevaluation'])->name('pvevaluation');

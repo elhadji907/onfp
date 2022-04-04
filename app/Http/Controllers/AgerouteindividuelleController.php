@@ -47,7 +47,7 @@ class AgerouteindividuelleController extends Controller
         $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet = Projet::find($id_projet);
-        $individuelle = Individuelle::all();
+        $individuelles = Individuelle::all();
 
         
         $ziguinchor_id = Localite::where('nom', 'Ziguinchor')->first()->id;
@@ -59,9 +59,6 @@ class AgerouteindividuelleController extends Controller
         $bounkiling_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $bounkiling_id)->count();
 
         $total_count = Individuelle::where('projets_id', '=', $id_projet)->count();
-
-        foreach ($individuelle as $key => $individuelles) {
-        }
      
         return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'individuelles', 'ziguinchor_count', 'bignona_count', 'bounkiling_count', 'total_count'));
     }
@@ -308,7 +305,9 @@ class AgerouteindividuelleController extends Controller
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
-        
+
+        $created_by  = strtolower($user_connect->username);
+        $updated_by  = strtolower($user_connect->username);
 
         $annee = date('y');
         $longueur = strlen($user_id);
@@ -370,15 +369,15 @@ class AgerouteindividuelleController extends Controller
             'adresse'                   =>      $request->input('adresse'),
             'password'                  =>      Hash::make($request->input('email')),
             'familiales_id'             =>      $familiale_id,
-            'created_by'                =>      $username,
-            'updated_by'                =>      $username
+            'created_by'                =>      $created_by,
+            'updated_by'                =>      $updated_by
 
         ]);
 
         $user->save();
 
-        $user->assignRole('Individuelle');
-        $user->assignRole('Demandeur');
+        /*  $user->assignRole('Individuelle');
+         $user->assignRole('Demandeur'); */
         
         $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
 
@@ -427,6 +426,8 @@ class AgerouteindividuelleController extends Controller
             'localites_id'                      =>     $localites_id,
             'projets_id'                        =>     $projet_id,
             'modules_id'                        =>     $modules_id,
+            'created_by'                        =>     $created_by,
+            'updated_by'                        =>     $updated_by,
             'demandeurs_id'                     =>     $demandeur->id
             ]);
             
@@ -458,7 +459,10 @@ class AgerouteindividuelleController extends Controller
         $individuelle->zones()->sync($zones_id);
         $individuelle->localites()->sync($localites_id); */
 
-        return redirect()->route('agerouteindividuelles.index')->with('success', 'demandeur ajouté avec succès !');
+        $success = "demandeur ajouté avec succès !";
+        return back()->with(compact('success'));
+
+        /* return redirect()->route('agerouteindividuelles.index')->with('success', 'demandeur ajouté avec succès !'); */
     }
 
     /**
@@ -869,6 +873,9 @@ class AgerouteindividuelleController extends Controller
         $cin = $request->input('cin');
         $cin = str_replace(' ', '', $cin);
         
+        $user_connect           =              Auth::user();
+        $updated_by             =              strtolower($user_connect->username);
+        
         $utilisateur->sexe                      =      $sexe;
         $utilisateur->civilite                  =      $civilite;
         $utilisateur->firstname                 =      $request->input('prenom');
@@ -1278,5 +1285,33 @@ class AgerouteindividuelleController extends Controller
         $localite_concernee         = $localite;
 
         return view('agerouteindividuelles.ageroutesexe', compact('sexe', 'individuelles', 'projet', 'localite_concernee', 'id_projet'));
+    }
+
+    public function createdby($createdby)
+    {
+        $user_id = User::where('username', $createdby)->first()->id;
+
+        $user = User::find($user_id);
+
+        $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+        $projet = Projet::find($id_projet);
+        $individuelle = Individuelle::all();
+
+        
+        $ziguinchor_id = Localite::where('nom', 'Ziguinchor')->first()->id;
+        $bignona_id = Localite::where('nom', 'Bignona')->first()->id;
+        $bounkiling_id = Localite::where('nom', 'Bounkiling')->first()->id;
+        
+        $ziguinchor_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $ziguinchor_id)->count();
+        $bignona_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $bignona_id)->count();
+        $bounkiling_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $bounkiling_id)->count();
+
+        $total_count = Individuelle::where('projets_id', '=', $id_projet)->count();
+
+        foreach ($individuelle as $key => $individuelles) {
+        }
+     
+        return view('agerouteindividuelles.createdby', compact('projet', 'createdby', 'user', 'projet_name', 'individuelles', 'ziguinchor_count', 'bignona_count', 'bounkiling_count', 'total_count'));
     }
 }

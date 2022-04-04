@@ -66,6 +66,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $niveau_maitrise
  * @property string|null $observations
  * @property string|null $appreciation
+ * @property string|null $motif_rejet
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property string|null $deleted_by
  * @property int $demandeurs_id
  * @property int|null $etudes_id
  * @property int|null $antennes_id
@@ -195,6 +199,10 @@ class Individuelle extends Model
 		'niveau_maitrise',
 		'observations',
 		'appreciation',
+		'motif_rejet',
+		'created_by',
+		'updated_by',
+		'deleted_by',
 		'demandeurs_id',
 		'etudes_id',
 		'antennes_id',

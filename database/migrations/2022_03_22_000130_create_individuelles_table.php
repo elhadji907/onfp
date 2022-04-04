@@ -75,6 +75,9 @@ class CreateIndividuellesTable extends Migration
             $table->string('observations', 200)->nullable();
             $table->string('appreciation', 200)->nullable();
             $table->string('motif_rejet', 200)->nullable();
+            $table->string('created_by', 200)->nullable();
+            $table->string('updated_by', 200)->nullable();
+            $table->string('deleted_by', 200)->nullable();
             $table->unsignedInteger('demandeurs_id');
             $table->unsignedInteger('etudes_id')->nullable();
             $table->unsignedInteger('antennes_id')->nullable();

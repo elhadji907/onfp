@@ -17,18 +17,18 @@ class ConventionSeeder extends Seeder
     {
 
         DB::table('conventions')->insert([
-            "numero"=>"NUM1",
-            "name"=>"Convention 1",
-            "sigle"=>"Conv 1",
+            "numero"=>"00201 du 25 novembre 2020",
+            "name"=>"00201 du 25 novembre 2020",
+            "sigle"=>"sigle",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),
        ]);
 
         DB::table('conventions')->insert([
-            "numero"=>"NUM2",
-            "name"=>"Convention 2",
-            "sigle"=>"Conv 2",
+            "numero"=>"00035 du 10 janvier 2021",
+            "name"=>"00035 du 10 janvier 2021",
+            "sigle"=>"sigle",
             'created_at' => now(),
             'updated_at' => now(),
             'uuid' => Str::uuid(),

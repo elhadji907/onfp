@@ -19,7 +19,8 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }} : {{ $statut }} avec un effectif de <label class="badge badge-info">{{ $effectif }}</label>
+                        Agéroute - Liste des demandeurs du département de {{ $localite_concernee }} : {{ $statut }}
+                        avec un effectif de <label class="badge badge-info">{{ $effectif }}</label>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -41,8 +42,10 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:8%;">Communes</th>
                                             <th style="width:20%;">Module</th>
-                                            <th style="width:5%;">Note</th>
-                                            <th style="width:5%;">Statut</th>
+                                            @can('role-delete')
+                                                <th style="width:5%;">Note</th>
+                                                <th style="width:5%;">Statut</th>
+                                            @endcan
                                             {{-- <th style="width:5%;">P.M.R</th>
                                             <th style="width:10%;">Déplacés</th> --}}
                                             <th style="width:8%;"></th>
@@ -67,55 +70,57 @@
                                                             {!! $individuelle->module->name ?? '' !!}<br />
                                                         </a>
                                                     </td>
-                                                    <td>{!! $individuelle->note ?? '' !!}</td>
-                                                    {{-- <td>
+                                                    @can('role-delete')
+                                                        <td>{!! $individuelle->note ?? '' !!}</td>
+                                                        {{-- <td>
                                                         <a href="{{ url('candidatspmr', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap]) }}"
                                                             title="voir liste" class="nav-link mt-0" target="_blank">
                                                             {!! $individuelle->handicap !!}
                                                         </a>
                                                     </td> --}}
-                                                    {{-- <td>
+                                                        {{-- <td>
                                                         <a href="{{ url('candidatsvs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$victimes' => $individuelle->victime_social]) }}"
                                                             title="voir liste" class="nav-link mt-0" target="_blank">
                                                             {!! $individuelle->victime_social !!}
                                                         </a>
                                                     </td> --}}
-                                                    <td>
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
-                                                                <label
-                                                                    class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
-                                                            @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
-                                                                <label
-                                                                    class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
-                                                            @else
-                                                                <label
-                                                                    class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
-                                                            @endif
-                                                            &nbsp;
-                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
-                                                                <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle,'$statut' => 'accepter','$module' => $individuelle->module->id]) }}"
-                                                                    title="accepter"
-                                                                    class="btn btn-outline-primary btn-sm mt-0">
-                                                                    <i class="fas fa-check-circle"></i>
-                                                                </a>
-                                                            @endif
-                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'rejeter')
-                                                                <a href="{{ url('agerouterejeter', ['$individuelle' => $individuelle,'$statut' => 'rejeter','$module' => $individuelle->module->id]) }}"
-                                                                    title="rejeter"
-                                                                    class="btn btn-outline-danger btn-sm mt-0">
-                                                                    <i class="fas fa-times"></i>
-                                                                </a>
-                                                            @endif
-                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
-                                                                <a href="{{ url('agerouteattente', ['$individuelle' => $individuelle,'$statut' => 'attente','$module' => $individuelle->module->id]) }}"
-                                                                    title="attente"
-                                                                    class="btn btn-outline-warning btn-sm mt-0">
-                                                                    <i class="fas fa-reply"></i>
-                                                                </a>
-                                                            @endif
-                                                        </div>
-                                                    </td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
+                                                                    <label
+                                                                        class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
+                                                                @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
+                                                                    <label
+                                                                        class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
+                                                                @else
+                                                                    <label
+                                                                        class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
+                                                                @endif
+                                                                &nbsp;
+                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
+                                                                    <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle,'$statut' => 'accepter','$module' => $individuelle->module->id]) }}"
+                                                                        title="accepter"
+                                                                        class="btn btn-outline-primary btn-sm mt-0">
+                                                                        <i class="fas fa-check-circle"></i>
+                                                                    </a>
+                                                                @endif
+                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'rejeter')
+                                                                    <a href="{{ url('agerouterejeter', ['$individuelle' => $individuelle,'$statut' => 'rejeter','$module' => $individuelle->module->id]) }}"
+                                                                        title="rejeter"
+                                                                        class="btn btn-outline-danger btn-sm mt-0">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </a>
+                                                                @endif
+                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
+                                                                    <a href="{{ url('agerouteattente', ['$individuelle' => $individuelle,'$statut' => 'attente','$module' => $individuelle->module->id]) }}"
+                                                                        title="attente"
+                                                                        class="btn btn-outline-warning btn-sm mt-0">
+                                                                        <i class="fas fa-reply"></i>
+                                                                    </a>
+                                                                @endif
+                                                            </div>
+                                                        </td>
+                                                    @endcan
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">

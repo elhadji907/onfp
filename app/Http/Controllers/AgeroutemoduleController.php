@@ -10,6 +10,12 @@ use DB;
 
 class AgeroutemoduleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin|Administrateur|Ageroute|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']);
+    }
+    /*
     /**
      * Display a listing of the resource.
      *

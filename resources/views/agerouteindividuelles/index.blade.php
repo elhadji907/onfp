@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-80 py-2">
-                    <a class="nav-link" href="{{ route('agerouteindividuelles.index') }}">
+                    <a class="nav-link" href="#">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
@@ -117,7 +117,7 @@
                         <div class="table-responsive">
                             <div class="table-responsive">
                                 <div align="right">
-                                    <a href="{{ route('agerouteindividuelles.create') }}">
+                                    <a href="{{ route('agerouteindividuelles.create') }}" target="_blank">
                                         <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
                                         </div>
                                     </a>
@@ -126,15 +126,18 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:5%;">N°</th>
-                                            <th style="width:8%;">N° CIN</th>
-                                            <th style="width:8%;">Prenom</th>
+                                            <th style="width:5%;">N° CIN</th>
+                                            <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
-                                            <th style="width:10%;">Départements</th>
-                                            <th style="width:10%;">Communes</th>
-                                            <th style="width:5%;">Module</th>
+                                            <th style="width:5%;">Départements</th>
+                                            {{--  <th style="width:10%;">Communes</th>  --}}
+                                            <th style="width:15%;">Module</th>
+                                            @can('role-delete')
+                                                <th style="width:3%;">Op. saisie</th>
+                                            @endcan
                                             <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
@@ -150,8 +153,17 @@
                                                 <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->localite->nom ?? '' !!}</td>
-                                                <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                {{--  <td>{!! $individuelle->zone->nom ?? '' !!}</td>  --}}
                                                 <td>{!! $individuelle->module->name ?? '' !!}</td>
+                                                @can('role-delete')
+                                                    <td>                                                        
+                                                        <a class="nav-link"
+                                                            href="{{ url('createdby', ['$createdby' => $individuelle->created_by]) }}"
+                                                            target="_blank">
+                                                            {!!  $individuelle->created_by ?? '' !!}<br />
+                                                        </a>
+                                                    </td>
+                                                @endcan
                                                 {{-- <td ALIGN="CENTER">
                                                     <?php $h = 1; ?>
                                                     @foreach ($individuelle->module as $key => $module)

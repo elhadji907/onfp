@@ -31,7 +31,7 @@ class AgerouteformationController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Demandeur']);
+        $this->middleware(['role:super-admin|Administrateur']);
         /* $this->middleware('permission:edit courriers|delete courriers|delete demandes', ['only' => ['index','show']]); */
     }
     /**
