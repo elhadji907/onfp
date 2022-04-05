@@ -124,6 +124,7 @@
                                         </div>
                                     </a>
                                 </div>
+                                <br />
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
@@ -182,12 +183,12 @@
                                                         <i class="far fa-edit">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
+                                                    @can('role-delete')
                                                     <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                         class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                         <i class="far fa-eye">&nbsp;</i>
                                                     </a>
                                                     &nbsp;
-                                                    @can('role-delete')
                                                         {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                         {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                         {!! Form::close() !!}
@@ -209,35 +210,6 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#table-ageroutebeneficiaires').DataTable({
-                dom: 'lBfrtip',
-                buttons: [{
-                        extend: 'copyHtml5',
-                        text: '<i class="fas fa-copy"></i> Copy',
-                        titleAttr: 'Copy'
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> Excel',
-                        titleAttr: 'Excel'
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        text: '<i class="fas fa-file-csv"></i> CSV',
-                        titleAttr: 'CSV'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation: 'landscape',
-                        pageSize: 'RA4',
-                        titleAttr: 'PDF'
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fas fa-print"></i> Print',
-                        titleAttr: 'Print'
-                    }
-                ],
                 "lengthMenu": [
                     [5, 10, 25, 50, 100, -1],
                     [5, 10, 25, 50, 100, "Tout"]
