@@ -35,7 +35,8 @@ class AgerouteindividuelleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur|Ageroute|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']);
+        $this->middleware(['role:super-admin|Administrateur']);
+        /* $this->middleware(['role:super-admin|Administrateur|Ageroute|Gestionnaire|Demandeur|Individuelle|Collective|Pcharge']); */
     }
     /**
      * Display a listing of the resource.
@@ -648,7 +649,7 @@ class AgerouteindividuelleController extends Controller
             $request,
             [
                 'sexe'                              =>    'required|string|max:10',
-                'numero_dossier'                    =>    'required|string|min:5|unique:demandeurs,numero_dossier,'.$id_demandeur,
+                'numero_dossier'                    =>    'required|string|min:4|max:4||unique:demandeurs,numero_dossier,'.$id_demandeur,
                 'cin'                               =>    'required|string|min:13|max:15|unique:demandeurs,cin,'.$id_demandeur,
                 'prenom'                            =>    'required|string|max:50',
                 'nom'                               =>    'required|string|max:50',
