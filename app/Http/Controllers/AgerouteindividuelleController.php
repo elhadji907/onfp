@@ -106,7 +106,7 @@ class AgerouteindividuelleController extends Controller
             $request,
             [
                 'sexe'                              =>    'required|string|max:10',
-                'numero_dossier'                    =>    'required|string|min:5|unique:demandeurs,numero_dossier',
+                'numero_dossier'                    =>    'required|string|min:4|max:4|unique:demandeurs,numero_dossier',
                 'cin'                               =>    'required|string|min:13|max:15|unique:demandeurs,cin',
                 'prenom'                            =>    'required|string|max:50',
                 'nom'                               =>    'required|string|max:50',
@@ -116,7 +116,7 @@ class AgerouteindividuelleController extends Controller
                 'telephone'                         =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
                 'telephone_secondaire'              =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
                 'adresse'                           =>    'required|string|max:100',
-                'email'                             =>    'required|string|email|max:255|unique:users,email',
+                /* 'email'                             =>    'required|string|email|max:255|unique:users,email', */
                 'familiale'                         =>    'required',
                 'enfant'                            =>    'required|numeric',
                 'etude'                             =>    'required',
@@ -305,6 +305,8 @@ class AgerouteindividuelleController extends Controller
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
+        $numero_dossier      =   $request->input('numero_dossier');
+        $email               =   $username.".".$numero_dossier."@gmail.com";
 
         $created_by  = strtolower($user_connect->username);
         $updated_by  = strtolower($user_connect->username);
@@ -359,7 +361,7 @@ class AgerouteindividuelleController extends Controller
             'civilite'                  =>      $civilite,
             'firstname'                 =>      $request->input('prenom'),
             'name'                      =>      $request->input('nom'),
-            'email'                     =>      $request->input('email'),
+            'email'                     =>      $email,
             'username'                  =>      $username,
             'telephone'                 =>      $telephone,
             'bp'                        =>      $request->input('bp'),
@@ -367,7 +369,7 @@ class AgerouteindividuelleController extends Controller
             'date_naissance'            =>      $request->input('date_naiss'),
             'lieu_naissance'            =>      $request->input('lieu_naissance'),
             'adresse'                   =>      $request->input('adresse'),
-            'password'                  =>      Hash::make($request->input('email')),
+            'password'                  =>      Hash::make($email),
             'familiales_id'             =>      $familiale_id,
             'created_by'                =>      $created_by,
             'updated_by'                =>      $updated_by
@@ -383,7 +385,7 @@ class AgerouteindividuelleController extends Controller
 
         $demandeur = new Demandeur([
                     'cin'                       =>     $cin,
-                    'numero_dossier'            =>     $request->input('numero_dossier'),
+                    'numero_dossier'            =>     $numero_dossier,
                     'types_demandes_id'         =>     $types_demandes_id,
                     'users_id'                  =>     $user->id
                 ]);

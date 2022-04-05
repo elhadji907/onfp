@@ -112,7 +112,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                {{--  <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="email">{{ __('Addresse E-Mail') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
@@ -124,7 +124,7 @@
                                         </span>
                                     @enderror
                                     </small>
-                                </div>
+                                </div>  --}}
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="telephone">{{ __('Telephone') }}(<span
                                             class="text-danger">*</span>)</label>
