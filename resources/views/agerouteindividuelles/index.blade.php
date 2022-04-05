@@ -1,98 +1,100 @@
 @extends('layout.default')
 @section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-80 py-2">
-                    <a class="nav-link" href="#">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        {{ __('TOTAL') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        {{ $total_count }}
+    @can('role-delete')
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-80 py-2">
+                        <a class="nav-link" href="#">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ __('TOTAL') }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ $total_count }}
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Ziguinchor']) }}"
-                        target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                        {{ __('ZIGUINCHOR') }}
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-80 py-2">
+                        <a class="nav-link"
+                            href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Ziguinchor']) }}"
+                            target="_blank">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            {{ __('ZIGUINCHOR') }}
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ $ziguinchor_count }}
+                                        </div>
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        {{ $ziguinchor_count }}
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
                                     </div>
-                                </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bignona']) }}"
-                        target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                        {{ __('BIGNONA') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        {{ $bignona_count }}
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-80 py-2">
+                        <a class="nav-link"
+                            href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bignona']) }}"
+                            target="_blank">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            {{ __('BIGNONA') }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ $bignona_count }}
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-80 py-2">
-                    <a class="nav-link"
-                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}"
-                        target="_blank">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        {{ __('BOUNKILING') }}</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        {{ $bounkiling_count }}
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-80 py-2">
+                        <a class="nav-link"
+                            href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}"
+                            target="_blank">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            {{ __('BOUNKILING') }}</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ $bounkiling_count }}
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span data-feather="mail"></span>
                                     </div>
                                 </div>
-                                <div class="col-auto">
-                                    <span data-feather="mail"></span>
-                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endcan
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -133,7 +135,7 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:5%;">Départements</th>
-                                            {{--  <th style="width:10%;">Communes</th>  --}}
+                                            {{-- <th style="width:10%;">Communes</th> --}}
                                             <th style="width:15%;">Module</th>
                                             @can('role-delete')
                                                 <th style="width:3%;">Op. saisie</th>
@@ -153,14 +155,14 @@
                                                 <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->localite->nom ?? '' !!}</td>
-                                                {{--  <td>{!! $individuelle->zone->nom ?? '' !!}</td>  --}}
+                                                {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
                                                 <td>{!! $individuelle->module->name ?? '' !!}</td>
                                                 @can('role-delete')
-                                                    <td>                                                        
+                                                    <td>
                                                         <a class="nav-link"
                                                             href="{{ url('createdby', ['$createdby' => $individuelle->created_by]) }}"
                                                             target="_blank">
-                                                            {!!  $individuelle->created_by ?? '' !!}<br />
+                                                            {!! $individuelle->created_by ?? '' !!}<br />
                                                         </a>
                                                     </td>
                                                 @endcan
