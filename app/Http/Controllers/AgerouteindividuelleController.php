@@ -106,8 +106,9 @@ class AgerouteindividuelleController extends Controller
             $request,
             [
                 'sexe'                              =>    'required|string|max:10',
-                'numero_dossier'                    =>    'required|string|min:4|max:4|unique:demandeurs,numero_dossier',
                 'cin'                               =>    'required|string|min:13|max:15|unique:demandeurs,cin',
+                /* 'numero_dossier'                    =>    'required|string|min:4|max:4|unique:demandeurs,numero_dossier', */
+                'numero_dossier'                    =>    'required|string|min:4|max:4',
                 'prenom'                            =>    'required|string|max:50',
                 'nom'                               =>    'required|string|max:50',
                 'date_naiss'                        =>    'required|date_format:Y-m-d',

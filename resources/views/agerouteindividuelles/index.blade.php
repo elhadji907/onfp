@@ -182,6 +182,7 @@
                                                         title="modifier">
                                                         <i class="far fa-edit">&nbsp;</i>
                                                     </a>
+                                                    &nbsp;
                                                     @can('role-delete')
                                                     <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                         class='btn btn-primary btn-sm' title="voir" target="_blank">
