@@ -440,6 +440,9 @@
                                 <br />
                                 {{ Form::radio('situation_economique','Correcte',$individuelle->situation_economique == 'Correcte' ? 'checked' : '',['class' => 'name']) }}
                                 {{ __('Correcte') }}
+                                <br />
+                                {{ Form::radio('situation_economique','Aucun',$individuelle->situation_economique == 'Aucun' ? 'checked' : '',['class' => 'name']) }}
+                                {{ __('Aucun') }}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('situation_economique'))
                                         @foreach ($errors->get('situation_economique') as $message)
