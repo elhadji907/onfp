@@ -431,6 +431,9 @@
                                         <br />
                                         {{ Form::radio('situation_economique', 'Correcte', false, ['class' => 'name']) }}
                                         {{ __('Correcte') }}
+                                        <br />
+                                        {{ Form::radio('situation_economique', 'Aucune', false, ['class' => 'name']) }}
+                                        {{ __('Aucune') }}
                                     </label>
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('situation_economique'))
