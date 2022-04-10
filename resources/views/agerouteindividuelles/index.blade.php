@@ -128,7 +128,7 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:5%;">N°</th>
+                                            {{--  <th style="width:5%;">N°</th>  --}}
                                             <th style="width:5%;">N° CIN</th>
                                             <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
@@ -149,7 +149,7 @@
                                         @foreach ($individuelles as $key => $individuelle)
                                             @if (isset($individuelle) && $individuelle->projet->name == $projet_name)
                                                 <tr>
-                                                    <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
+                                                    {{--  <td>{!! $individuelle->demandeur->numero_dossier !!}</td>  --}}
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>

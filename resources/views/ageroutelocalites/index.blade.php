@@ -14,9 +14,7 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        <span class="badge badge-secondary">{{ $projet_name }}</span>
-                    </div>
+                        <i class="fas fa-table"></i>{{ $projet_name }}</div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
@@ -130,7 +128,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'asc']
+                    [2, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
