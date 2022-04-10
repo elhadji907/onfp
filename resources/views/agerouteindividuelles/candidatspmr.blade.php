@@ -125,14 +125,14 @@
                                             <th style="width:3%;">Sexe</th>
                                             <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
-                                            <th style="width:8%;">Date et lieu nais.</th>
+                                            <th style="width:15%;">Date et lieu nais.</th>
                                             <th style="width:8%;">Département</th>
-                                            <th style="width:20%;">Module</th>
+                                            <th style="width:10%;">Module</th>
                                             @can('role-delete')
                                                 <th style="width:5%;">Note</th>
                                                 <th style="width:5%;">Statut</th>
                                                 @if (isset($handicap) && $handicap == 'Oui')
-                                                    <th style="width:8%;">Type handicap</th>
+                                                    <th style="width:12%;">Type handicap</th>
                                                 @endif
                                             @endcan
                                             <th style="width:8%;"></th>
