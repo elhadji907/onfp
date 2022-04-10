@@ -126,6 +126,9 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:8%;">Département</th>
                                             <th style="width:20%;">Module</th>
+                                            @if (isset($victimes) && $victimes == 'Autre')
+                                            <th style="width:5%;">Victime</th>                                                
+                                            @endif
                                             @can('role-delete')
                                                 <th style="width:5%;">Note</th>
                                                 <th style="width:5%;">Statut</th>
@@ -152,6 +155,9 @@
                                                             {!! $individuelle->module->name ?? '' !!}<br />
                                                         </a>
                                                     </td>
+                                                    @if (isset($victimes) && $victimes == 'Autre')                                                    
+                                                    <td>{!! $individuelle->autre_victime !!}</td>                                                
+                                                    @endif
                                                     @can('role-delete')
                                                         <td>{!! $individuelle->note ?? '' !!}</td>
                                                         <td>

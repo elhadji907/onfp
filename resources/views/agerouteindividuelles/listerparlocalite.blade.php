@@ -117,7 +117,7 @@
                                             <th style="width:5%;">Commune</th>
                                             <th style="width:5%;">Module</th>
                                             <th style="width:5%;">P.M.R</th>
-                                            <th style="width:5%;">Déplacés</th>
+                                            <th style="width:5%;">Victime</th>
                                             <th style="width:5%;">Statut</th>
                                             <th style="width:8%;"></th>
                                         </tr>
