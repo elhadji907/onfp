@@ -132,6 +132,9 @@
                                             @can('role-delete')
                                                 <th style="width:5%;">Note</th>
                                                 <th style="width:5%;">Statut</th>
+                                                @if (isset($handicap) && $handicap == 'Oui')
+                                                    <th style="width:8%;">Type handicap</th>
+                                                @endif
                                             @endcan
                                             <th style="width:8%;"></th>
                                         </tr>
@@ -193,6 +196,9 @@
                                                                 @endif
                                                             </div>
                                                         </td>
+                                                        @if (isset($handicap) && $handicap == 'Oui')
+                                                            <td>{!! $individuelle->preciser_handicap ?? '' !!}</td>
+                                                        @endif
                                                     @endcan
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
