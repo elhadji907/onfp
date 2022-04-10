@@ -58,10 +58,10 @@
                                             @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->statut == $statut)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                    <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                    <td>{!! strtoupper($individuelle->demandeur->user->name) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! strtoupper($individuelle->demandeur->user->lieu_naissance) !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td>
                                                         <a href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"

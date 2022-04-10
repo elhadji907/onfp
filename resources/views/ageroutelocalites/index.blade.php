@@ -29,7 +29,7 @@
                             <table class="table table-bordered" id="table-ageroutelocalites">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th width="5%">N°</th>
+                                        {{--  <th width="5%">N°</th>  --}}
                                         <th width="50%">Départements</th>
                                         <th width="5%">Effectif</th>
                                         <th width="5%">Communes</th>
@@ -40,7 +40,7 @@
                                     <?php $h = 1; ?>
                                     @foreach ($localites as $key => $localite)
                                         <tr>
-                                            <td>{{ $h++ }}</td>
+                                            {{--  <td>{{ $h++ }}</td>  --}}
                                             <td>{{ $localite->nom }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>

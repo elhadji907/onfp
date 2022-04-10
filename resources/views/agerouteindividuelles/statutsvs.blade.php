@@ -58,10 +58,10 @@
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->sexe !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                    <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                    <td>{!! strtoupper($individuelle->demandeur->user->name) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! strtoupper($individuelle->demandeur->user->lieu_naissance) !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td>
                                                         <a class="nav-link"

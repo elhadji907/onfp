@@ -133,9 +133,9 @@
                                                             class="btn btn-outline-info btn-sm" target="_blank">{!! $individuelle->demandeur->user->sexe !!}</a>
 
                                                         </td>
-                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!} &nbsp;à&nbsp;{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                        <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                        <td>{!! strtoupper($individuelle->demandeur->user->name) !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!} &nbsp;à&nbsp;{!! strtoupper($individuelle->demandeur->user->lieu_naissance )!!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td ALIGN="CENTER">
                                                         <a href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"

@@ -128,7 +128,7 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            {{--  <th style="width:5%;">N°</th>  --}}
+                                            {{-- <th style="width:5%;">N°</th> --}}
                                             <th style="width:5%;">N° CIN</th>
                                             <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
@@ -149,12 +149,12 @@
                                         @foreach ($individuelles as $key => $individuelle)
                                             @if (isset($individuelle) && $individuelle->projet->name == $projet_name)
                                                 <tr>
-                                                    {{--  <td>{!! $individuelle->demandeur->numero_dossier !!}</td>  --}}
+                                                    {{-- <td>{!! $individuelle->demandeur->numero_dossier !!}</td> --}}
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                    <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                    <td>{!! strtoupper($individuelle->demandeur->user->name) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! strtoupper($individuelle->demandeur->user->lieu_naissance) !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                     <td>{!! $individuelle->localite->nom ?? '' !!}</td>
                                                     {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}

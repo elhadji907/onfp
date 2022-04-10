@@ -31,7 +31,7 @@
                             <table class="table table-bordered" id="table-ageroutemodules">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th width="5%">N°</th>
+                                        {{--  <th width="5%">N°</th>  --}}
                                         <th width="30%">Modules</th>
                                         <th width="5%">Demandeurs</th>
                                         <th width="30%">Domaine</th>
@@ -53,7 +53,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($modules as $key => $module)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
+                                            {{--  <td>{{ $i++ }}</td>  --}}
                                             <td>{{ $module->name }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $h = 0; ?>
@@ -137,7 +137,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [2, 'desc']
+                    [1, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
