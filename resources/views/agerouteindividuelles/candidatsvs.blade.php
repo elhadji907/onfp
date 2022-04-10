@@ -119,7 +119,9 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:10%;">N° CIN</th>
-                                            {{--  <th style="width:5%;">Sexe</th>  --}}
+                                            @if (isset($victimes) && $victimes != 'Autre')
+                                                <th style="width:5%;">Sexe</th>
+                                            @endif
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
@@ -131,7 +133,7 @@
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             @if (isset($victimes) && $victimes == 'Autre')
-                                            <th style="width:10%;">Victime</th>                                                
+                                                <th style="width:10%;">Victime</th>
                                             @endif
                                             <th style="width:8%;"></th>
                                         </tr>
@@ -142,7 +144,9 @@
                                             @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->victime_social == $victimes)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    {{--  <td>{!! $individuelle->demandeur->user->sexe !!}</td>  --}}
+                                                    @if (isset($victimes) && $victimes != 'Autre')
+                                                        <td>{!! $individuelle->demandeur->user->sexe !!}</td>
+                                                    @endif
                                                     <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                     <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
@@ -194,8 +198,8 @@
                                                             </div>
                                                         </td>
                                                     @endcan
-                                                    @if (isset($victimes) && $victimes == 'Autre')                                                    
-                                                    <td>{!! $individuelle->autre_victime !!}</td>                                                
+                                                    @if (isset($victimes) && $victimes == 'Autre')
+                                                        <td>{!! $individuelle->autre_victime !!}</td>
                                                     @endif
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
