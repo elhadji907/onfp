@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        {{ $projet_name }}
+                        AGEROUTE, liste des modules concernées
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -127,7 +127,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [1, 'desc']
+                    [2, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

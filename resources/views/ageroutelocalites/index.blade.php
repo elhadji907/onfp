@@ -14,7 +14,9 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-table"></i>{{ $projet_name }}</div>
+                        <i class="fas fa-table"></i>
+                        AGEROUTE, liste des localités impactées
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
@@ -128,7 +130,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [2, 'desc']
+                    [1, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        <span class="badge badge-secondary">{{ $projet_name }}</span>
+                        AGEROUTE, liste des zones impactées
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

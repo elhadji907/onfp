@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des formations du projet AGEROUTE
+                        AGEROUTE, liste des formations
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
