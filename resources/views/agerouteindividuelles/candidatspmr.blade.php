@@ -122,11 +122,10 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:10%;">N° CIN</th>
-                                            <th style="width:5%;">Sexe</th>
-                                            <th style="width:8%;">Prenom</th>
+                                            <th style="width:3%;">Sexe</th>
+                                            <th style="width:5%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
-                                            <th style="width:8%;">Date nais.</th>
-                                            <th style="width:8%;">Lieu nais.</th>
+                                            <th style="width:8%;">Date et lieu nais.</th>
                                             <th style="width:8%;">Département</th>
                                             <th style="width:20%;">Module</th>
                                             @can('role-delete')
@@ -148,8 +147,8 @@
                                                     <td>{!! $individuelle->demandeur->user->sexe !!}</td>
                                                     <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                     <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}&nbsp; {!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                                    {{--  <td></td>  --}}
                                                     <td>{!! $individuelle->localite->nom ?? '' !!}</td>
                                                     <td>
                                                         <a class="nav-link"
