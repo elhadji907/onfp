@@ -145,7 +145,7 @@
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->sexe !!}</td>
-                                                    <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                    <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                     <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}&nbsp;à&nbsp;{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     {{--  <td></td>  --}}
@@ -165,11 +165,9 @@
                                                                     <label
                                                                         class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
                                                                 @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
-                                                                    <label
-                                                                        class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
+                                                                    <label class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
                                                                 @else
-                                                                    <label
-                                                                        class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
+                                                                    <label class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
                                                                 @endif
                                                                 &nbsp;
                                                                 @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')

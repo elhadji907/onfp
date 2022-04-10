@@ -133,7 +133,7 @@
                                                             class="btn btn-outline-info btn-sm" target="_blank">{!! $individuelle->demandeur->user->sexe !!}</a>
 
                                                         </td>
-                                                        <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                        <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                         <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!} &nbsp;à&nbsp;{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
@@ -158,14 +158,11 @@
                                                     <td>
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
-                                                                <label
-                                                                    class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
+                                                                <label class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
                                                             @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
-                                                                <label
-                                                                    class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
+                                                                <label class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
                                                             @else
-                                                                <label
-                                                                    class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
+                                                                <label class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
                                                             @endif
                                                         </div>
                                                     </td>
