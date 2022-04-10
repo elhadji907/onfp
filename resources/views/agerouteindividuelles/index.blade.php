@@ -19,8 +19,8 @@
                                     <div class="col-auto">
                                         {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div>  --}}
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-info">{{ $total_p }} {{__("%")}}</label>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                            <label class="badge badge-pill badge-info">{{ $total_p }} {{__("%")}}</label>
                                         </div>
                                     </div>
                                    {{--   <div class="col-auto">
@@ -49,8 +49,8 @@
                                     <div class="col-auto">
                                         {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div>  --}}
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-info">{{ $ziguinchor_p }} {{__("%")}}</label>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                            <label class="badge badge-pill badge-info">{{ $ziguinchor_p }} {{__("%")}}</label>
                                         </div>
                                     </div>
                                     {{--  <div class="col-auto">
@@ -78,8 +78,8 @@
                                     <div class="col-auto">
                                         {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div>  --}}
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-info">{{ $bignona_p }} {{__("%")}}</label>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                            <label class="badge badge-pill badge-info">{{ $bignona_p }} {{__("%")}}</label>
                                         </div>
                                     </div>
                                     {{--  <div class="col-auto">
@@ -108,8 +108,8 @@
                                     <div class="col-auto">
                                         {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div>  --}}
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-info">{{ $bounkiling_p }} {{__("%")}}</label>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                            <label class="badge badge-pill badge-info">{{ $bounkiling_p }} {{__("%")}}</label>
                                         </div>
                                     </div>
                                     {{--  <div class="col-auto">
