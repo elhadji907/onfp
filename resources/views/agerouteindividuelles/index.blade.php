@@ -146,28 +146,29 @@
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        @foreach ($projet->individuelles as $key => $individuelle)
-                                            <tr>
-                                                <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
-                                                <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                <td>{!! $individuelle->localite->nom ?? '' !!}</td>
-                                                {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
-                                                <td>{!! $individuelle->module->name ?? '' !!}</td>
-                                                @can('role-delete')
-                                                    <td>
-                                                        <a class="nav-link"
-                                                            href="{{ url('createdby', ['$createdby' => $individuelle->created_by]) }}"
-                                                            target="_blank">
-                                                            {!! $individuelle->created_by ?? '' !!}<br />
-                                                        </a>
-                                                    </td>
-                                                @endcan
-                                                {{-- <td ALIGN="CENTER">
+                                        @foreach ($individuelles as $key => $individuelle)
+                                            @if (isset($individuelle) && $individuelle->projet->name == $projet_name)
+                                                <tr>
+                                                    <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
+                                                    <td>{!! $individuelle->demandeur->cin !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
+                                                    {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
+                                                    <td>{!! $individuelle->module->name ?? '' !!}</td>
+                                                    @can('role-delete')
+                                                        <td>
+                                                            <a class="nav-link"
+                                                                href="{{ url('createdby', ['$createdby' => $individuelle->created_by]) }}"
+                                                                target="_blank">
+                                                                {!! $individuelle->created_by ?? '' !!}<br />
+                                                            </a>
+                                                        </td>
+                                                    @endcan
+                                                    {{-- <td ALIGN="CENTER">
                                                     <?php $h = 1; ?>
                                                     @foreach ($individuelle->module as $key => $module)
                                                         @if ($loop->last)
@@ -177,24 +178,25 @@
                                                         @endif
                                                     @endforeach
                                                 </td> --}}
-                                                <td ALIGN="CENTER" class="d-flex align-items-baseline">
-                                                    <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                        title="modifier">
-                                                        <i class="far fa-edit">&nbsp;</i>
-                                                    </a>
-                                                    &nbsp;
-                                                    @can('role-delete')
-                                                    <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
-                                                        class='btn btn-primary btn-sm' title="voir" target="_blank">
-                                                        <i class="far fa-eye">&nbsp;</i>
-                                                    </a>
-                                                    &nbsp;
-                                                        {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                        {!! Form::close() !!}
-                                                    @endcan
-                                                </td>
-                                            </tr>
+                                                    <td ALIGN="CENTER" class="d-flex align-items-baseline">
+                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="far fa-edit">&nbsp;</i>
+                                                        </a>
+                                                        &nbsp;
+                                                        @can('role-delete')
+                                                            <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                                class='btn btn-primary btn-sm' title="voir" target="_blank">
+                                                                <i class="far fa-eye">&nbsp;</i>
+                                                            </a>
+                                                            &nbsp;
+                                                            {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                            {!! Form::close() !!}
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

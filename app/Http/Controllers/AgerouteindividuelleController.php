@@ -47,8 +47,7 @@ class AgerouteindividuelleController extends Controller
         $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet = Projet::find($id_projet);
-        $individuelles = Individuelle::all();
-
+        $individuelles = Individuelle::skip(0)->take(100)->get();
         
         $ziguinchor_id = Localite::where('nom', 'Ziguinchor')->first()->id;
         $bignona_id = Localite::where('nom', 'Bignona')->first()->id;
@@ -419,7 +418,7 @@ class AgerouteindividuelleController extends Controller
             'autre_diplomes_fournis'            =>     $request->input('autre_diplomes_fournis'),
             'nbre_pieces'                       =>     $request->input('nbre_pieces'),
             'statut'                            =>     'attente',
-            'note'                              =>       $note,
+            'note'                              =>     $note,
             'telephone'                         =>     $telephone_secondaire,
             'etudes_id'                         =>     $etude_id,
             'communes_id'                       =>     $commune_id,
@@ -640,10 +639,10 @@ class AgerouteindividuelleController extends Controller
         $auth_user      =       Auth::user();
         /* $this->authorize('update',  $individuelle); */
         
-        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
+    /*     if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
             $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
             return back()->with(compact('messages'));
-        }
+        } */
 
         $this->validate(
             $request,
