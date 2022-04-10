@@ -135,7 +135,7 @@
                                                         </td>
                                                         <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                         <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!} &nbsp;à&nbsp;{!! strtoupper($individuelle->demandeur->user->lieu_naissance )!!}</td>
+                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!} &nbsp;à&nbsp;{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td ALIGN="CENTER">
                                                         <a href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
