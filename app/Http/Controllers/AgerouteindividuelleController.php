@@ -58,8 +58,13 @@ class AgerouteindividuelleController extends Controller
         $bounkiling_count = Individuelle::where('projets_id', '=', $id_projet)->where('localites_id', '=', $bounkiling_id)->count();
 
         $total_count = Individuelle::where('projets_id', '=', $id_projet)->count();
+
+        $ziguinchor_p               =       ($ziguinchor_count / $total_count) * 100;
+        $bignona_p                  =       ($bignona_count / $total_count) * 100;
+        $bounkiling_p               =       ($bounkiling_count / $total_count) * 100;
+        $total_p                    =       ($total_count / $total_count) * 100;
      
-        return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'individuelles', 'ziguinchor_count', 'bignona_count', 'bounkiling_count', 'total_count'));
+        return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'individuelles', 'ziguinchor_count', 'bignona_count', 'bounkiling_count', 'total_count', 'ziguinchor_p', 'bignona_p', 'bounkiling_p', 'total_p'));
     }
 
     /**
@@ -639,10 +644,10 @@ class AgerouteindividuelleController extends Controller
         $auth_user      =       Auth::user();
         /* $this->authorize('update',  $individuelle); */
         
-    /*     if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
-            $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
-            return back()->with(compact('messages'));
-        } */
+        /*     if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
+                $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
+                return back()->with(compact('messages'));
+            } */
 
         $this->validate(
             $request,
