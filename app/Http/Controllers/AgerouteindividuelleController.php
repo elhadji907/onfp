@@ -59,10 +59,14 @@ class AgerouteindividuelleController extends Controller
 
         $total_count = Individuelle::where('projets_id', '=', $id_projet)->count();
 
-        $ziguinchor_p               =       round((($ziguinchor_count / $total_count) * 100), 2);
-        $bignona_p                  =       round((($bignona_count / $total_count) * 100), 2);
-        $bounkiling_p               =       round((($bounkiling_count / $total_count) * 100), 2);
-        $total_p                    =       ($total_count / $total_count) * 100;
+        $ziguinchor_p               =      ($ziguinchor_count / $total_count) * 100;
+        $bignona_p                  =      ($bignona_count / $total_count) * 100;
+        $bounkiling_p               =      ($bounkiling_count / $total_count) * 100;
+        $total_p                    =      ($total_count / $total_count) * 100;
+        
+        $ziguinchor_p               =       round($ziguinchor_p, 2);
+        $bignona_p                  =       round($bignona_p, 2);
+        $bounkiling_p               =       round($bounkiling_p, 2);
      
         return view('agerouteindividuelles.index', compact('projet', 'projet_name', 'individuelles', 'ziguinchor_count', 'bignona_count', 'bounkiling_count', 'total_count', 'ziguinchor_p', 'bignona_p', 'bounkiling_p', 'total_p'));
     }
