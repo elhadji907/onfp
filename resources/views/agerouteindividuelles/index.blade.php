@@ -167,7 +167,7 @@
                                             {{-- <th style="width:10%;">Communes</th> --}}
                                             <th style="width:15%;">Module</th>
                                             @can('role-delete')
-                                                <th style="width:3%;">Op. saisie</th>
+                                                {{--  <th style="width:3%;">Op. saisie</th>  --}}
                                             @endcan
                                             <th style="width:8%;"></th>
                                         </tr>
@@ -188,13 +188,13 @@
                                                     {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
                                                     <td>{!! $individuelle->module->name ?? '' !!}</td>
                                                     @can('role-delete')
-                                                        <td>
+                                                        {{--  <td>
                                                             <a class="nav-link"
                                                                 href="{{ url('createdby', ['$createdby' => $individuelle->created_by]) }}"
                                                                 target="_blank">
                                                                 {!! $individuelle->created_by ?? '' !!}<br />
                                                             </a>
-                                                        </td>
+                                                        </td>  --}}
                                                     @endcan
                                                     {{-- <td ALIGN="CENTER">
                                                     <?php $h = 1; ?>
