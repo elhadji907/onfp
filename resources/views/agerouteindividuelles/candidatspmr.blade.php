@@ -144,7 +144,7 @@
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->sexe !!}</td>
                                                     <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
-                                                    <td>{!! strtoupper($individuelle->demandeur->user->name) !!} </td>
+                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! strtoupper($individuelle->demandeur->user->lieu_naissance) !!}</td>
                                                     <td>{!! $individuelle->localite->nom ?? '' !!}</td>

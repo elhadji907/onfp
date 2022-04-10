@@ -39,16 +39,6 @@
                                         <th width="8%"></th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
-                                    <tr>
-                                        <th>N°</th>
-                                        <th>Modules</th>
-                                        <th>Demandeurs</th>
-                                        <th>Domaine</th>
-                                        <th>Secteur</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($modules as $key => $module)
