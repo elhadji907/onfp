@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users      =   User::skip(0)->take(1000)->get();
+        $users      =   User::skip(0)->take(10000)->get();
         return view('users.index', compact('users'));
     }
 
