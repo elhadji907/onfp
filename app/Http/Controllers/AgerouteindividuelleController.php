@@ -48,7 +48,7 @@ class AgerouteindividuelleController extends Controller
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
         $projet = Projet::find($id_projet);
         $individuelles = Individuelle::skip(0)->take(1000)->get();
-        
+
         $ziguinchor_id = Localite::where('nom', 'Ziguinchor')->first()->id;
         $bignona_id = Localite::where('nom', 'Bignona')->first()->id;
         $bounkiling_id = Localite::where('nom', 'Bounkiling')->first()->id;
