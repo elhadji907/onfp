@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
-    @can('role-delete')
+    {{--  @can('role-delete')  --}}
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-md-6 mb-4">
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-    @endcan
+    {{--  @endcan  --}}
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -168,8 +168,8 @@
                                             <th style="width:15%;">Module</th>
                                             @can('role-delete')
                                                 {{--  <th style="width:3%;">Op. saisie</th>  --}}
-                                            @endcan
                                             <th style="width:8%;"></th>
+                                            @endcan
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -206,13 +206,13 @@
                                                         @endif
                                                     @endforeach
                                                 </td> --}}
+                                                @can('role-delete')
                                                     <td ALIGN="CENTER" class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">
                                                             <i class="far fa-edit">&nbsp;</i>
                                                         </a>
                                                         &nbsp;
-                                                        @can('role-delete')
                                                             <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                                 class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                                 <i class="far fa-eye">&nbsp;</i>
@@ -221,8 +221,8 @@
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}
-                                                        @endcan
                                                     </td>
+                                                    @endcan
                                                 </tr>
                                             @endif
                                         @endforeach
