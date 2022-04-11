@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
-    {{--  @can('role-delete')  --}}
+    @can('role-delete')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-3 col-md-6 mb-4">
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </div>
-    {{--  @endcan  --}}
+    @endcan
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
