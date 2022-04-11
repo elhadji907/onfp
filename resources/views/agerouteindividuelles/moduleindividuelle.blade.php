@@ -35,7 +35,7 @@
                                         <th style="width:20%;">Communes</th>
                                         <th class="text-center" style="width:10%;">Statut</th>
                                         <th class="text-center" style="width:10%;">Validation</th>
-                                        <th style="width:8%;"></th>
+                                            <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -110,17 +110,17 @@
                                                         </div>
                                                     </td>
                                                     <td ALIGN="CENTER" class="d-flex align-items-baseline">
-                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                            title="modifier">
-                                                            <i class="far fa-edit">&nbsp;</i>
-                                                        </a>
-                                                        &nbsp;
                                                         <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                             <i class="far fa-eye">&nbsp;</i>
                                                         </a>
                                                         &nbsp;
                                                         @can('role-delete')
+                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="far fa-edit">&nbsp;</i>
+                                                        </a>
+                                                        &nbsp;
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}

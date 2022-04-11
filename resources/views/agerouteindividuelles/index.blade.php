@@ -17,15 +17,16 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ __('%') }}</div>  --}}
+                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ __('%') }}</div> --}}
                                         <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $total_p }} {{__("%")}}</label>
+                                            <label class="badge badge-pill badge-info">{{ $total_p }}
+                                                {{ __('%') }}</label>
                                         </div>
                                     </div>
-                                   {{--   <div class="col-auto">
+                                    {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
-                                    </div>  --}}
+                                    </div> --}}
                                 </div>
                             </div>
                         </a>
@@ -47,15 +48,16 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ __('%') }}</div>  --}}
+                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ __('%') }}</div> --}}
                                         <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $ziguinchor_p }} {{__("%")}}</label>
+                                            <label class="badge badge-pill badge-info">{{ $ziguinchor_p }}
+                                                {{ __('%') }}</label>
                                         </div>
                                     </div>
-                                    {{--  <div class="col-auto">
+                                    {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
-                                    </div>  --}}
+                                    </div> --}}
                                 </div>
                             </div>
                         </a>
@@ -76,21 +78,21 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ __('%') }}</div>  --}}
+                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ __('%') }}</div> --}}
                                         <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $bignona_p }} {{__("%")}}</label>
+                                            <label class="badge badge-pill badge-info">{{ $bignona_p }}
+                                                {{ __('%') }}</label>
                                         </div>
                                     </div>
-                                    {{--  <div class="col-auto">
+                                    {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
-                                    </div>  --}}
+                                    </div> --}}
                                 </div>
                             </div>
                         </a>
                     </div>
                 </div>
-
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-warning shadow h-80 py-2">
                         <a class="nav-link"
@@ -106,15 +108,16 @@
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        {{--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ __('%') }}</div>  --}}
+                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            {{ __('%') }}</div> --}}
                                         <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $bounkiling_p }} {{__("%")}}</label>
+                                            <label class="badge badge-pill badge-info">{{ $bounkiling_p }}
+                                                {{ __('%') }}</label>
                                         </div>
                                     </div>
-                                    {{--  <div class="col-auto">
+                                    {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
-                                    </div>  --}}
+                                    </div> --}}
                                 </div>
                             </div>
                         </a>
@@ -167,8 +170,8 @@
                                             {{-- <th style="width:10%;">Communes</th> --}}
                                             <th style="width:15%;">Module</th>
                                             @can('role-delete')
-                                                {{--  <th style="width:3%;">Op. saisie</th>  --}}
-                                            <th style="width:8%;"></th>
+                                                {{-- <th style="width:3%;">Op. saisie</th> --}}
+                                                <th style="width:8%;"></th>
                                             @endcan
                                         </tr>
                                     </thead>
@@ -188,13 +191,13 @@
                                                     {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
                                                     <td>{!! $individuelle->module->name ?? '' !!}</td>
                                                     @can('role-delete')
-                                                        {{--  <td>
+                                                        {{-- <td>
                                                             <a class="nav-link"
                                                                 href="{{ url('createdby', ['$createdby' => $individuelle->created_by]) }}"
                                                                 target="_blank">
                                                                 {!! $individuelle->created_by ?? '' !!}<br />
                                                             </a>
-                                                        </td>  --}}
+                                                        </td> --}}
                                                     @endcan
                                                     {{-- <td ALIGN="CENTER">
                                                     <?php $h = 1; ?>
@@ -206,13 +209,13 @@
                                                         @endif
                                                     @endforeach
                                                 </td> --}}
-                                                @can('role-delete')
-                                                    <td ALIGN="CENTER" class="d-flex align-items-baseline">
-                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                            title="modifier">
-                                                            <i class="far fa-edit">&nbsp;</i>
-                                                        </a>
-                                                        &nbsp;
+                                                    @can('role-delete')
+                                                        <td ALIGN="CENTER" class="d-flex align-items-baseline">
+                                                            <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                                title="modifier">
+                                                                <i class="far fa-edit">&nbsp;</i>
+                                                            </a>
+                                                            &nbsp;
                                                             <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                                 class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                                 <i class="far fa-eye">&nbsp;</i>
@@ -221,7 +224,7 @@
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}
-                                                    </td>
+                                                        </td>
                                                     @endcan
                                                 </tr>
                                             @endif
