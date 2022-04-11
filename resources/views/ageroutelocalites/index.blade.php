@@ -31,7 +31,7 @@
                             <table class="table table-bordered" id="table-ageroutelocalites">
                                 <thead class="table-dark">
                                     <tr>
-                                        {{--  <th width="5%">N°</th>  --}}
+                                        {{-- <th width="5%">N°</th> --}}
                                         <th width="50%">Départements</th>
                                         <th width="5%">Effectif</th>
                                         <th width="5%">Communes</th>
@@ -42,7 +42,7 @@
                                     <?php $h = 1; ?>
                                     @foreach ($localites as $key => $localite)
                                         <tr>
-                                            {{--  <td>{{ $h++ }}</td>  --}}
+                                            {{-- <td>{{ $h++ }}</td> --}}
                                             <td>{{ $localite->nom }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
@@ -64,20 +64,21 @@
                                                 @endforeach
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                                {{-- @can('role-edit') --}}
-                                                <a class="btn btn-primary btn-sm"
-                                                    href="{{ route('ageroutelocalites.edit', $localite->id) }}"><i
-                                                        class="far fa-edit" title='modifier'>&nbsp;</i></a>
-                                                {{-- @endcan --}}
-                                                &nbsp;
                                                 <a class="btn btn-info btn-sm"
                                                     href="{{ route('ageroutelocalites.show', $localite->id) }}"><i
-                                                        class="far fa-eye" title="détails">&nbsp;</i></a>&nbsp;
-                                                {{-- @can('role-delete') --}}
-                                                {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $localite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                {!! Form::close() !!}
-                                                {{-- @endcan --}}
+                                                        class="far fa-eye" title="détails">&nbsp;</i>
+                                                </a>
+                                                &nbsp;
+                                                @can('role-delete')
+                                                    <a class="btn btn-primary btn-sm"
+                                                        href="{{ route('ageroutelocalites.edit', $localite->id) }}"><i
+                                                            class="far fa-edit" title='modifier'>&nbsp;</i>
+                                                    </a>
+                                                    &nbsp;
+                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['ageroutelocalites.destroy', $localite->id], 'style' => 'display:inline', 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
+                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                    {!! Form::close() !!}
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
