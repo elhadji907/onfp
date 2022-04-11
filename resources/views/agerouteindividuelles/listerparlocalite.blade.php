@@ -118,7 +118,7 @@
                                             <th style="width:5%;">Module</th>
                                             <th style="width:5%;">P.M.R</th>
                                             <th style="width:5%;">Victime</th>
-                                            <th style="width:5%;">Statut</th>
+                                            <th style="width:5%;">S.E</th>
                                             <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
@@ -156,7 +156,11 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex justify-content-between align-items-center">
+                                                        <a href="{{ url('candidatse', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$situation_eco' => $individuelle->situation_economique]) }}"
+                                                            title="voir liste" target="_blank">
+                                                            {!! $individuelle->situation_economique !!}
+                                                        </a>
+                                                        {{--  <div class="d-flex justify-content-between align-items-center">
                                                             @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
                                                                 <label class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
                                                             @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
@@ -164,7 +168,7 @@
                                                             @else
                                                                 <label class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
                                                             @endif
-                                                        </div>
+                                                        </div>  --}}
                                                     </td>
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'

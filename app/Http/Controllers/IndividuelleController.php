@@ -46,7 +46,7 @@ class IndividuelleController extends Controller
     public function index()
     {
         /* $individuelles = Individuelle::where('cin', '>', 0)->get(); */
-        $individuelles = Individuelle::all();
+        $individuelles = Individuelle::::skip(0)->take(1000)->get();
 
         $user = Auth::user();
         $user_connect = $user;

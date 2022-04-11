@@ -1217,6 +1217,16 @@ class AgerouteindividuelleController extends Controller
 
         return view('agerouteindividuelles.candidatsvs', compact('projet', 'localite', 'victimes', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total'));
     }
+    public function candidatse($localite, $projet, $situation_eco)
+    {
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $localite_concernee     = $localite->nom;
+
+        return view('agerouteindividuelles.candidatse', compact('projet', 'localite', 'situation_eco', 'localite_concernee'));
+    }
 
     public function statutageroute($localite, $projet, $statut)
     {

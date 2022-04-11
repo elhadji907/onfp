@@ -203,6 +203,7 @@ Route::group([
         Route::get('individuelleformationsenlever/{individuelle}', [AgerouteformationController::class, 'individuelleformationsenlever'])->name('individuelleformationsenlever');
         Route::get('candidatspmr/{localite}/{projet}/{handicap}', [AgerouteindividuelleController::class, 'candidatspmr'])->name('candidatspmr');
         Route::get('candidatsvs/{localite}/{projet}/{victimes}', [AgerouteindividuelleController::class, 'candidatsvs'])->name('candidatsvs');
+        Route::get('candidatse/{localite}/{projet}/{situation_eco}', [AgerouteindividuelleController::class, 'candidatse'])->name('candidatse');
         Route::get('statutageroute/{localite}/{projet}/{statut}', [AgerouteindividuelleController::class, 'statutageroute'])->name('statutageroute');
         Route::get('statutageroutepmr/{localite}/{projet}/{statut}/{pmr}', [AgerouteindividuelleController::class, 'statutageroutepmr'])->name('statutageroutepmr');
         Route::get('statutageroutesvs/{localite}/{projet}/{statut}/{svs}', [AgerouteindividuelleController::class, 'statutageroutesvs'])->name('statutageroutesvs');
