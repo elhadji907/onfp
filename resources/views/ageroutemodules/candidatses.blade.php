@@ -77,7 +77,7 @@
                                                         <td ALIGN="CENTER">
                                                             <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
                                                                 title="voir liste" target="_blank">
-                                                                {!! $individuelle->diplomepro->name ?? '' !!}
+                                                                {!! $individuelle->diplomespro->name ?? '' !!}
                                                             </a>
                                                         </td>
                                                         <td>
