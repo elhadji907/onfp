@@ -46,7 +46,7 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
                                             @can('role-delete')
-                                                <th style="width:20%;">Victime</th>
+                                                <th style="width:15%;">Victime</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             <th style="width:8%;"></th>

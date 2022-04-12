@@ -44,7 +44,7 @@
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
-                                            <th style="width:8%;">Lieu nais.</th>
+                                            <th style="width:5%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
                                             @can('role-delete')
@@ -77,7 +77,7 @@
                                                         <td ALIGN="CENTER">
                                                             <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
                                                                 title="voir liste" target="_blank">
-                                                                {!! $individuelle->diplomepros->name ?? '' !!}
+                                                                {!! $individuelle->diplomepro->name ?? '' !!}
                                                             </a>
                                                         </td>
                                                         <td>
