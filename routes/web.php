@@ -180,6 +180,7 @@ Route::group([
         Route::get('listerparlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'listerparlocalite'])->name('listerparlocalite');
         Route::get('listerparzone/{projet}/{zone}', [AgeroutezoneController::class, 'listerparzone'])->name('listerparzone');
         Route::get('listerparmodulelocalite/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalite'])->name('listerparmodulelocalite');
+        Route::get('listerparmodulelocalites/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalites'])->name('listerparmodulelocalites');
         Route::get('listerparmodulezone/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezone'])->name('listerparmodulezone');
         Route::get('candidatlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalite'])->name('candidatlocalite');
         Route::get('candidatmodule/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodule'])->name('candidatmodule');

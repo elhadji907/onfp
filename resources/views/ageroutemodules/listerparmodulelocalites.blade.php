@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - Demandeurs du département de ' . $module_concernee)
+@section('title', 'AGEROUTE, demandeurs du département de ' . $localite . ' en ' . $module)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du module : {{ $module_concernee }}
+                        AGEROUTE, liste des demandeurs du département de {{ $localite }} en
+                        {{ $module }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -29,35 +30,71 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:10%;">N° CIN</th>
+                                            <th style="width:8%;">N° CIN</th>
                                             <th style="width:5%;">Civilité</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
-                                            <th style="width:8%;">Département</th>
+                                            <th style="width:8%;">Communes</th>
+                                            @can('role-delete')
+                                                <th style="width:5%;">Statut</th>
+                                            @endcan
                                             <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->module->name == $module_concernee)
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->civilite !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                                    <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td ALIGN="CENTER">
-                                                        <a href="{{ url('listerparmodulelocalites', ['$projet' => $projet,'$localite' => $individuelle->localite->nom,'$module' => $module_concernee]) }}"
-                                                            target="_blank">
-                                                            {!! $individuelle->localite->nom ?? '' !!}<br />
-                                                        </a>
-                                                    </td>
+                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                    @can('role-delete')
+                                                        <td>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
+                                                                    <label
+                                                                        class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
+                                                                @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
+                                                                    <label
+                                                                        class="badge badge-danger">{!! $individuelle->statut ?? '' !!}</label>
+                                                                @else
+                                                                    <label
+                                                                        class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
+                                                                @endif
+                                                                &nbsp;
+                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
+                                                                    <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle,'$statut' => 'accepter','$module' => $individuelle->module->id]) }}"
+                                                                        title="accepter"
+                                                                        class="btn btn-outline-primary btn-sm mt-0">
+                                                                        <i class="fas fa-check-circle"></i>
+                                                                    </a>
+                                                                @endif
+                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'rejeter')
+                                                                    <a href="{{ url('agerouterejeter', ['$individuelle' => $individuelle,'$statut' => 'rejeter','$module' => $individuelle->module->id]) }}"
+                                                                        title="rejeter"
+                                                                        class="btn btn-outline-danger btn-sm mt-0">
+                                                                        <i class="fas fa-times"></i>
+                                                                    </a>
+                                                                @endif
+                                                                @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
+                                                                    <a href="{{ url('agerouteattente', ['$individuelle' => $individuelle,'$statut' => 'attente','$module' => $individuelle->module->id]) }}"
+                                                                        title="attente"
+                                                                        class="btn btn-outline-warning btn-sm mt-0">
+                                                                        <i class="fas fa-reply"></i>
+                                                                    </a>
+                                                                @endif
+                                                            </div>
+                                                        </td>
+                                                    @endcan
                                                     <td class="d-flex align-items-baseline">
                                                         <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
@@ -65,11 +102,11 @@
                                                         </a>
                                                         &nbsp;
                                                         @can('role-delete')
-                                                            <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                                title="modifier">
-                                                                <i class="far fa-edit">&nbsp;</i>
-                                                            </a>
-                                                            &nbsp;
+                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                            title="modifier">
+                                                            <i class="far fa-edit">&nbsp;</i>
+                                                        </a>
+                                                        &nbsp;
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}
