@@ -48,7 +48,8 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
                                             @can('role-delete')
-                                                <th style="width:15%;">Situation économique</th>
+                                                <th style="width:10%;">Dipôme aca.</th>
+                                                <th style="width:10%;">Dipôme pro.</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             <th style="width:8%;"></th>
@@ -70,7 +71,13 @@
                                                         <td ALIGN="CENTER">
                                                             <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
                                                                 title="voir liste" target="_blank">
-                                                                {!! $individuelle->situation_economique !!}
+                                                                {!! $individuelle->diplome->name ?? '' !!}
+                                                            </a>
+                                                        </td>
+                                                        <td ALIGN="CENTER">
+                                                            <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
+                                                                title="voir liste" target="_blank">
+                                                                {!! $individuelle->diplomepros->name ?? '' !!}
                                                             </a>
                                                         </td>
                                                         <td>
