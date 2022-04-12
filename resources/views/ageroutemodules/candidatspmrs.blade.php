@@ -1,5 +1,6 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE, demandeurs du département de ' . $localite . ' en ' . $module)
+@section('title', 'AGEROUTE, demandeurs du département de ' . $localite->nom . ' en ' . $module . 'de sexe ' . $sexe . '
+    victime handicap : ' . $handicap)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,8 +16,15 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        AGEROUTE, liste des demandeurs du département de {{ $localite }} en
-                        {{ $module }}
+                        AGEROUTE, liste des demandeurs du département de {{ $localite->nom }} en
+                        {{ $module }} qui sont de sexe @if (isset($sexe) && $sexe == 'M')
+                            {!! __('masculin') !!}
+                        @elseif (isset($sexe) && $sexe == 'F')
+                            {{ __('féminin') }}
+                        @else
+                            $sexe
+                        @endif
+                        victime handicap : {{ $handicap }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -31,7 +39,6 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th style="width:8%;">N° CIN</th>
-                                            <th style="width:5%;">Sexe</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
@@ -39,6 +46,7 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
                                             @can('role-delete')
+                                                <th style="width:20%;">Victime</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             <th style="width:8%;"></th>
@@ -47,14 +55,9 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module)
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite->nom && $individuelle->module->name == $module && $individuelle->demandeur->user->sexe == $sexe && $individuelle->handicap == $handicap)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>
-                                                        
-                                                        <a href="{{ url('ageroutesexes', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite, '$projet' => $projet->id, '$module' => $module]) }}"
-                                                            class="btn btn-outline-info btn-sm" target="_blank">{!! $individuelle->demandeur->user->sexe !!}</a>
-                                                    </td>
                                                     <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                     <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
@@ -62,6 +65,12 @@
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     @can('role-delete')
+                                                        <td ALIGN="CENTER">
+                                                            <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
+                                                                title="voir liste" target="_blank">
+                                                                {!! $individuelle->victime_social !!}
+                                                            </a>
+                                                        </td>
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
@@ -106,11 +115,11 @@
                                                         </a>
                                                         &nbsp;
                                                         @can('role-delete')
-                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                            title="modifier">
-                                                            <i class="far fa-edit">&nbsp;</i>
-                                                        </a>
-                                                        &nbsp;
+                                                            <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                                title="modifier">
+                                                                <i class="far fa-edit">&nbsp;</i>
+                                                            </a>
+                                                            &nbsp;
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}

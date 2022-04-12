@@ -129,9 +129,9 @@
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>
-                                                        <a href="{{ url('ageroutesexe', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite_concernee, '$projet' => $projet->id]) }}"
-                                                            class="btn btn-outline-info btn-sm" target="_blank">{!! $individuelle->demandeur->user->sexe !!}</a>
-
+                                                        {{--  <a href="{{ url('ageroutesexe', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite_concernee, '$projet' => $projet->id]) }}"
+                                                            class="btn btn-outline-info btn-sm" target="_blank">{!! $individuelle->demandeur->user->sexe !!}</a>  --}}
+                                                            {!! $individuelle->demandeur->user->sexe !!}
                                                         </td>
                                                         <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                         <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>

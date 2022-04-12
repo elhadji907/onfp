@@ -1212,6 +1212,40 @@ class AgerouteindividuelleController extends Controller
         return view('agerouteindividuelles.candidatspmr', compact('projet', 'localite_concernee', 'handicap', 'attente', 'rejeter', 'accepter', 'total'));
     }
 
+    public function candidatspmrs($localite, $projet, $handicap, $module, $sexe)
+    {
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $individuelles          = $projet->individuelles;
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                               ->where('localites_id', '=', $id_localite)
+                               ->where('handicap', '=', 'Oui')
+                               ->where('statut', '=', 'attente')
+                               ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'rejeter')
+                                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'accepter')
+                                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->count();
+
+        return view('ageroutemodules.candidatspmrs', compact('projet', 'localite', 'handicap', 'attente', 'rejeter', 'accepter', 'total', 'module', 'sexe', 'individuelles'));
+    }
+
     public function candidatsvs($localite, $projet, $victimes)
     {
         $id_projet              = $projet;
@@ -1245,6 +1279,77 @@ class AgerouteindividuelleController extends Controller
 
         return view('agerouteindividuelles.candidatsvs', compact('projet', 'localite', 'victimes', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total'));
     }
+
+    public function candidatsvss($localite, $projet, $handicap, $module, $sexe, $victime)
+    {        
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $individuelles          = $projet->individuelles;
+
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                               ->where('localites_id', '=', $id_localite)
+                               ->where('handicap', '=', 'Oui')
+                               ->where('statut', '=', 'attente')
+                               ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'rejeter')
+                                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'accepter')
+                                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->count();
+
+        return view('ageroutemodules.candidatsvss', compact('projet', 'localite', 'handicap', 'attente', 'rejeter', 'accepter', 'total', 'module', 'sexe', 'individuelles', 'victime'));
+    }
+
+    public function candidatses($localite, $projet, $handicap, $module, $sexe, $victime, $situation_eco)
+    {
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $individuelles          = $projet->individuelles;
+
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                               ->where('localites_id', '=', $id_localite)
+                               ->where('handicap', '=', 'Oui')
+                               ->where('statut', '=', 'attente')
+                               ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'rejeter')
+                                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'accepter')
+                                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->count();
+
+        return view('ageroutemodules.candidatses', compact('projet', 'localite', 'handicap', 'attente', 'rejeter', 'accepter', 'total', 'module', 'sexe', 'individuelles', 'victime', 'situation_eco'));
+    }
+
     public function candidatse($localite, $projet, $situation_eco)
     {
         $id_projet              = $projet;
@@ -1334,6 +1439,24 @@ class AgerouteindividuelleController extends Controller
         $localite_concernee         = $localite;
 
         return view('agerouteindividuelles.ageroutesexe', compact('sexe', 'individuelles', 'projet', 'localite_concernee', 'id_projet'));
+    }
+
+    public function ageroutesexes($sexe, $localite, $projet, $module)
+    {
+        $localites_id = Localite::where('nom', $localite)->first()->id;
+
+        $id_projet = $projet;
+
+        $individuelles = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                    ->where('localites_id', '=', $localites_id);
+
+        /* $effectif =     Individuelle::get()->where('projets_id', '=', $id_projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->count(); */
+
+        $projet                    = Projet::find($projet);
+
+        return view('ageroutemodules.ageroutesexes', compact('sexe', 'individuelles', 'projet', 'localite', 'id_projet', 'module'));
     }
 
     public function createdby($createdby)

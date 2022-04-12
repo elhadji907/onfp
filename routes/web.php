@@ -203,12 +203,16 @@ Route::group([
         Route::get('individuelleformations/{individuelle}', [AgerouteformationController::class, 'individuelleformations'])->name('individuelleformations');
         Route::get('individuelleformationsenlever/{individuelle}', [AgerouteformationController::class, 'individuelleformationsenlever'])->name('individuelleformationsenlever');
         Route::get('candidatspmr/{localite}/{projet}/{handicap}', [AgerouteindividuelleController::class, 'candidatspmr'])->name('candidatspmr');
+        Route::get('candidatspmrs/{localite}/{projet}/{handicap}/{module}/{sexe}', [AgerouteindividuelleController::class, 'candidatspmrs'])->name('candidatspmrs');
         Route::get('candidatsvs/{localite}/{projet}/{victimes}', [AgerouteindividuelleController::class, 'candidatsvs'])->name('candidatsvs');
+        Route::get('candidatsvss/{localite}/{projet}/{handicap}/{module}/{sexe}/{victime}', [AgerouteindividuelleController::class, 'candidatsvss'])->name('candidatsvss');
+        Route::get('candidatses/{localite}/{projet}/{handicap}/{module}/{sexe}/{victime}/{situation_eco}', [AgerouteindividuelleController::class, 'candidatses'])->name('candidatses');
         Route::get('candidatse/{localite}/{projet}/{situation_eco}', [AgerouteindividuelleController::class, 'candidatse'])->name('candidatse');
         Route::get('statutageroute/{localite}/{projet}/{statut}', [AgerouteindividuelleController::class, 'statutageroute'])->name('statutageroute');
         Route::get('statutageroutepmr/{localite}/{projet}/{statut}/{pmr}', [AgerouteindividuelleController::class, 'statutageroutepmr'])->name('statutageroutepmr');
         Route::get('statutageroutesvs/{localite}/{projet}/{statut}/{svs}', [AgerouteindividuelleController::class, 'statutageroutesvs'])->name('statutageroutesvs');
         Route::get('ageroutesexe/{sexe}/{localite}/{projet}', [AgerouteindividuelleController::class, 'ageroutesexe'])->name('ageroutesexe');
+        Route::get('ageroutesexes/{sexe}/{localite}/{projet}/{module}', [AgerouteindividuelleController::class, 'ageroutesexes'])->name('ageroutesexes');
         Route::get('formationsannee/{findividuelle}/{annee}', [AgerouteformationController::class, 'formationsannee'])->name('formationsannee');
         Route::get('formationsattestations/{findividuelle}/{attestation}', [AgerouteformationController::class, 'formationsattestations'])->name('formationsattestations');
         Route::get('formationsstatut/{findividuelle}/{statut}', [AgerouteformationController::class, 'formationsstatut'])->name('formationsstatut');
