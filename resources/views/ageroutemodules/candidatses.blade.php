@@ -71,13 +71,13 @@
                                                         <td ALIGN="CENTER">
                                                             <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
                                                                 title="voir liste" target="_blank">
-                                                                {!! $individuelle->diplome->name ?? '' !!}
+                                                                {!! $individuelle->diplome->sigle ?? '' !!}
                                                             </a>
                                                         </td>
                                                         <td ALIGN="CENTER">
                                                             <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
                                                                 title="voir liste" target="_blank">
-                                                                {!! $individuelle->diplomespro->name ?? '' !!}
+                                                                {!! $individuelle->diplomespro->sigle ?? '' !!}
                                                             </a>
                                                         </td>
                                                         <td>
