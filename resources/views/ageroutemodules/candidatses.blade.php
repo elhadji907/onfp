@@ -1,6 +1,18 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE, demandeurs du département de ' . $localite->nom . ' en ' . $module . 'de sexe ' . $sexe . '
-    victime handicap : ' . $handicap. 'victime sociale : '.$victime. ',situation économique :'.$situation_eco)
+@section('title',
+    'AGEROUTE, demandeurs du département de ' .
+    $localite->nom .
+    ' en ' .
+    $module .
+    'de sexe ' .
+    $sexe .
+    '
+    victime handicap : ' .
+    $handicap .
+    'victime sociale : ' .
+    $victime .
+    ',situation économique :' .
+    $situation_eco,)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -58,7 +70,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite->nom && $individuelle->module->name == $module && $individuelle->demandeur->user->sexe == $sexe)
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite->nom && $individuelle->module->name == $module && $individuelle->demandeur->user->sexe == $sexe && $individuelle->handicap == $handicap && $individuelle->victime_social == $victime && $individuelle->situation_economique == $situation_eco)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
@@ -69,13 +81,13 @@
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     @can('role-delete')
                                                         <td ALIGN="CENTER">
-                                                            <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
+                                                            <a href="{{ url('diplomes', ['$localite' => $localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap,'$module' => $module,'$sexe' => $sexe,'$victime' => $individuelle->victime_social,'$situation_eco' => $situation_eco,'$diplomes' => $individuelle->diplome->sigle]) }}"
                                                                 title="voir liste" target="_blank">
                                                                 {!! $individuelle->diplome->sigle ?? '' !!}
                                                             </a>
                                                         </td>
                                                         <td ALIGN="CENTER">
-                                                            <a href="{{ url('candidatsvss', ['$localite' => $localite->id, '$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe, '$victime' =>$individuelle->victime_social]) }}"
+                                                            <a href="{{ url('diplomespros', ['$localite' => $localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap,'$module' => $module,'$sexe' => $sexe,'$victime' => $individuelle->victime_social,'$situation_eco' => $situation_eco,'$diplomespros' => $individuelle->diplomespro->sigle]) }}"
                                                                 title="voir liste" target="_blank">
                                                                 {!! $individuelle->diplomespro->sigle ?? '' !!}
                                                             </a>

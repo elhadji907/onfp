@@ -1350,6 +1350,76 @@ class AgerouteindividuelleController extends Controller
         return view('ageroutemodules.candidatses', compact('projet', 'localite', 'handicap', 'attente', 'rejeter', 'accepter', 'total', 'module', 'sexe', 'individuelles', 'victime', 'situation_eco'));
     }
 
+    public function diplomes($localite, $projet, $handicap, $module, $sexe, $victime, $situation_eco, $diplomes)
+    {
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $individuelles          = $projet->individuelles;
+
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                               ->where('localites_id', '=', $id_localite)
+                               ->where('handicap', '=', 'Oui')
+                               ->where('statut', '=', 'attente')
+                               ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'rejeter')
+                                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'accepter')
+                                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->count();
+
+        return view('ageroutemodules.diplomes', compact('projet', 'localite', 'handicap', 'attente', 'rejeter', 'accepter', 'total', 'module', 'sexe', 'individuelles', 'victime', 'situation_eco', 'diplomes'));
+    }
+
+    public function diplomespros($localite, $projet, $handicap, $module, $sexe, $victime, $situation_eco, $diplomespros)
+    {
+        $id_projet              = $projet;
+        $id_localite            = $localite;
+        $projet                 = Projet::find($projet);
+        $localite               = Localite::find($localite);
+        $individuelles          = $projet->individuelles;
+
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                               ->where('localites_id', '=', $id_localite)
+                               ->where('handicap', '=', 'Oui')
+                               ->where('statut', '=', 'attente')
+                               ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'rejeter')
+                                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->where('statut', '=', 'accepter')
+                                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                                ->where('localites_id', '=', $id_localite)
+                                ->where('handicap', '=', 'Oui')
+                                ->count();
+
+        return view('ageroutemodules.diplomespros', compact('projet', 'localite', 'handicap', 'attente', 'rejeter', 'accepter', 'total', 'module', 'sexe', 'individuelles', 'victime', 'situation_eco', 'diplomespros'));
+    }
+
     public function candidatse($localite, $projet, $situation_eco)
     {
         $id_projet              = $projet;
