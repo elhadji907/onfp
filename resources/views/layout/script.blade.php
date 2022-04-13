@@ -254,6 +254,15 @@
         maximumSelectionLength: 14
     });
 </script>
+
+<script type="text/javascript">    
+  $("#modules_op").select2({
+        placeholder: "sélectionner modules d'intervention",
+        language: "fr",
+        allowClear: true,
+        maximumSelectionLength: 14
+    });
+</script>
 <script type="text/javascript">
 $("#secteur").select2({
       placeholder: "selectione un secteur",

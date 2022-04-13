@@ -4,7 +4,7 @@
     <div class="content">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
-                @if (count($errors) > 0)
+                {{--  @if (count($errors) > 0)
                     <div class="alert alert-danger mt-2">
                         <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
                         <ul>
@@ -16,7 +16,7 @@
                 @endif
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
+                @endif  --}}
                 <div class="row pt-0"></div>
                 <div class="card">
                     <div class="card-header card-header-primary text-center">
@@ -136,6 +136,19 @@
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('region'))
                                         @foreach ($errors->get('region') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                {!! Form::label('Modules :') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('modules[]', $modules, null, ['multiple' => 'multiple', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'modules_op']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('module'))
+                                        @foreach ($errors->get('module') as $message)
                                             <p class="text-danger">{{ $message }}</p>
                                         @endforeach
                                     @endif
@@ -323,6 +336,47 @@
                         {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
                         {!! Form::submit('Modifier', ['class' => 'btn btn-outline-primary pull-right']) !!}
                         {!! Form::close() !!}
+                        <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es
+                                            saisies svp</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @if ($errors->any())
+                                            @if (count($errors) > 0)
+                                                <div class="alert alert-danger mt-2">
+                                                    <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                    entrées.
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            @push('scripts')
+                                                <script type="text/javascript">
+                                                    $(document).ready(function() {
+                                                        $("#error-modal").modal({
+                                                            'show': true,
+                                                        })
+                                                    });
+                                                </script>
+                                            @endpush
+                                        @endif
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -332,5 +386,6 @@
 @section('javascripts')
     <script type="text/javascript">
         $('#regions_op').select2().val({!! json_encode($operateur->regions()->allRelatedIds()) !!}).trigger('change');
+        $('#modules_op').select2().val({!! json_encode($operateur->modules()->allRelatedIds()) !!}).trigger('change');
     </script>
 @endsection

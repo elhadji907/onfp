@@ -179,7 +179,7 @@ class OperateurController extends Controller
         'email2'                        =>      $request->input('email2'),
         'telephone1'                    =>      $request->input('telephone1'),
         'telephone2'                    =>      $request->input('telephone2'),
-        'adresse'                       =>      $request->input('adresse'),
+        'adresse'                       =>      $request->input('adresse_op'),
         'fonction_responsable'          =>      $request->input('fonction_responsable'),
         'prenom_responsable'            =>      $request->input('prenom'),
         'nom_responsable'               =>      $request->input('nom'),
@@ -328,6 +328,9 @@ class OperateurController extends Controller
         $operateur->save();
 
         $operateur->regions()->sync($request->input('regions'));
+        $operateur->modules()->sync($request->input('modules'));
+
+        /* dd($request->input('modules')); */
 
         return redirect()->route('operateurs.index')->with('success', 'operateur modifiée avec succès !');
     }
