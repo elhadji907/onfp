@@ -4,7 +4,7 @@
     <div class="content">
         <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
             <div class="container-fluid">
-                @if (count($errors) > 0)
+               {{--   @if (count($errors) > 0)
                     <div class="alert alert-danger mt-2">
                         <strong>Oups!</strong> Il y a eu quelques problèmes avec vos entrées.<br><br>
                         <ul>
@@ -16,7 +16,7 @@
                 @endif
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
+                @endif  --}}
                 <div class="row pt-0"></div>
                 <div class="card">
                     <div class="card-header card-header-primary text-center">
@@ -393,6 +393,47 @@
                             <button type="submit" class="btn btn-primary"><i
                                     class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
                         </form>
+                        <div class="modal fade" id="error-modal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Verifier les donn&eacute;es
+                                            saisies svp</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @if ($errors->any())
+                                            @if (count($errors) > 0)
+                                                <div class="alert alert-danger mt-2">
+                                                    <strong>Oups!</strong> Il y a eu quelques problèmes avec vos
+                                                    entrées.
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            @push('scripts')
+                                                <script type="text/javascript">
+                                                    $(document).ready(function() {
+                                                        $("#error-modal").modal({
+                                                            'show': true,
+                                                        })
+                                                    });
+                                                </script>
+                                            @endpush
+                                        @endif
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

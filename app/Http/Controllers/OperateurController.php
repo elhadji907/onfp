@@ -94,7 +94,7 @@ class OperateurController extends Controller
                 'sigle'                     =>       "required|string|max:50|unique:operateurs,sigle,NULL,id,deleted_at,NULL",
                 'ninea'                     =>       "required|string|max:255|unique:operateurs,ninea,NULL,id,deleted_at,NULL",
                 'quitus'                    =>       "required|string|max:255|unique:operateurs,quitus,NULL,id,deleted_at,NULL",
-                'telephone1'                =>       'required|string|max:15',
+                'cin'                       =>       'required|string|min:13|max:15|unique:operateurs,cin_responsable',
                 'adresse_op'                =>       'required|string',
                 'prenom'                    =>       'required|string|max:50',
                 'nom'                       =>       'required|string|max:50',
@@ -103,11 +103,8 @@ class OperateurController extends Controller
                 'regions'                   =>       'required',
                 'type_structure'            =>       'required',
                 'type_operateur'            =>       'required',
-                'sexe'                      =>       'required',
-                'cin'                       =>       'required',
                 'fonction_responsable'      =>       'required',
                 'fixe_op'                   =>       'required',
-                'telephone1'                =>       'required',
                 'debut_quitus'              =>       'required|date',
                 'fin_quitus'                =>       'required|date',
             ]
@@ -128,6 +125,7 @@ class OperateurController extends Controller
 
         $telephone = $request->input('telephone');
         $telephone = str_replace(' ', '', $telephone);
+        $civilite = $request->input('civilite');
 
         if ($civilite == "M.") {
             $sexe = "M";

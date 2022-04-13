@@ -1,6 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE, demandeurs du département de ' . $localite->nom . ' en ' . $module . 'de sexe ' . $sexe . '
-    victime handicap : ' . $handicap)
+@section('title', 'AGEROUTE, demandeurs du département de ' . $localite->nom . ' victime de handicap : '.$handicap)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
