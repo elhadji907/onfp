@@ -69,7 +69,7 @@
                                             <td ALIGN="CENTER">
                                                 <?php $a = 0; ?>
                                                 @foreach ($zone->individuelles as $individuelle)
-                                                    @if ($individuelle->projets_id == $projet_id)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "accepter")
                                                         <?php $a++; ?>
                                                     @endif
                                                 @endforeach
