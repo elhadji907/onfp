@@ -1,5 +1,6 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE, demandeurs du département de ' . $localite->nom . ' avec une situation économique : '.$situation_eco)
+@section('title', 'AGEROUTE, demandeurs du département de ' . $localite->nom . ' avec une situation économique : ' .
+    $situation_eco)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -49,6 +50,7 @@
                                             <th style="width:8%;">Communes</th>
                                             @can('role-delete')
                                                 <th style="width:10%;">Dipôme pro.</th>
+                                                <th style="width:3%;">Note</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             <th style="width:8%;"></th>
@@ -57,7 +59,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                        @if (isset($individuelle) && $individuelle->localite->nom == $localite->nom && $individuelle->module->name == $module && $individuelle->demandeur->user->sexe == $sexe && $individuelle->handicap == $handicap && $individuelle->victime_social == $victime && $individuelle->situation_economique == $situation_eco && $individuelle->diplome->sigle == $diplomes)
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite->nom && $individuelle->module->name == $module && $individuelle->demandeur->user->sexe == $sexe && $individuelle->handicap == $handicap && $individuelle->victime_social == $victime && $individuelle->situation_economique == $situation_eco && $individuelle->diplome->sigle == $diplomes)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
@@ -73,6 +75,7 @@
                                                                 {!! $individuelle->diplomespro->sigle ?? '' !!}
                                                             </a>
                                                         </td>
+                                                        <td>{!! $individuelle->note ?? '' !!}</td>
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
@@ -178,7 +181,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [8, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

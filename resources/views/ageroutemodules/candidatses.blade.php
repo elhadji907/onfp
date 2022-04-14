@@ -49,6 +49,7 @@
                                             @can('role-delete')
                                                 <th style="width:10%;">Dipôme aca.</th>
                                                 <th style="width:10%;">Dipôme pro.</th>
+                                                <th style="width:3%;">Note</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             <th style="width:8%;"></th>
@@ -79,6 +80,7 @@
                                                                 {!! $individuelle->diplomespro->sigle ?? '' !!}
                                                             </a>
                                                         </td>
+                                                        <td>{!! $individuelle->note ?? '' !!}</td>
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
@@ -184,7 +186,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [8, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

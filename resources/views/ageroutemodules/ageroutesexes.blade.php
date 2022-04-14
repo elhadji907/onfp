@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE, demandeurs du département de ' . $localite . ' en ' . $module . 'de sexe '.$sexe)
+@section('title', 'AGEROUTE, demandeurs du département de ' . $localite . ' en ' . $module . 'de sexe ' . $sexe)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -17,12 +17,12 @@
                         <i class="fas fa-table"></i>
                         AGEROUTE, liste des demandeurs du département de {{ $localite }} en
                         {{ $module }} qui sont de sexe @if (isset($sexe) && $sexe == 'M')
-                        {!! __('masculin') !!}
-                    @elseif (isset($sexe) && $sexe == 'F')
-                        {{ __('féminin') }}
-                    @else
-                        $sexe
-                    @endif
+                            {!! __('masculin') !!}
+                        @elseif (isset($sexe) && $sexe == 'F')
+                            {{ __('féminin') }}
+                        @else
+                            $sexe
+                        @endif
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -44,7 +44,8 @@
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Communes</th>
                                             @can('role-delete')
-                                            <th style="width:3%;">P.M.R</th>
+                                                <th style="width:3%;">P.M.R</th>
+                                                <th style="width:3%;">Note</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             <th style="width:8%;"></th>
@@ -63,12 +64,13 @@
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     @can('role-delete')
-                                                    <td ALIGN="CENTER">
-                                                        <a href="{{ url('candidatspmrs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap, '$module' => $module, '$sexe' => $sexe]) }}"
-                                                            title="voir liste" target="_blank">
-                                                            {!! $individuelle->handicap !!}
-                                                        </a>
-                                                    </td>
+                                                        <td ALIGN="CENTER">
+                                                            <a href="{{ url('candidatspmrs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap,'$module' => $module,'$sexe' => $sexe]) }}"
+                                                                title="voir liste" target="_blank">
+                                                                {!! $individuelle->handicap !!}
+                                                            </a>
+                                                        </td>
+                                                        <td>{!! $individuelle->note ?? '' !!}</td>
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
@@ -113,11 +115,11 @@
                                                         </a>
                                                         &nbsp;
                                                         @can('role-delete')
-                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                            title="modifier">
-                                                            <i class="far fa-edit">&nbsp;</i>
-                                                        </a>
-                                                        &nbsp;
+                                                            <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                                title="modifier">
+                                                                <i class="far fa-edit">&nbsp;</i>
+                                                            </a>
+                                                            &nbsp;
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}
@@ -174,7 +176,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [8, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
