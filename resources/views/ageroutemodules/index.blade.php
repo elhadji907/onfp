@@ -67,7 +67,7 @@
                                                 @endforeach
                                                 <a class="nav-link"
                                                     href="{{ url('candidatmoduleaccepter', ['$projet' => $projet, '$module' => $module->name]) }}"
-                                                    target="_blank" title="voir demandeurs">
+                                                    target="_blank" title="voir demandeurs acceptés">
                                                     <span class="badge badge-success">{!! $a !!}</span></a>
                                             </td>
                                             <td>{{ $module->domaine->name }}</td>

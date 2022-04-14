@@ -43,7 +43,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->module->name == $module_concernee)
+                                            @if (isset($individuelle) && $individuelle->module->name == $module_concernee && $individuelle->statut == "accepter")
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->civilite !!}</td>
