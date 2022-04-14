@@ -172,4 +172,16 @@ class AgeroutemoduleController extends Controller
         return view('ageroutemodules.candidatmodule', compact('projet', 'module_concernee', 'individuelles'));
     }
 
+    public function candidatmoduleaccepter($projet, $module)
+    {
+        $projet = Projet::find($projet);
+
+        $module_concernee = $module;
+
+        $individuelles = $projet->individuelles;
+
+
+        return view('ageroutemodules.candidatmoduleaccepter', compact('projet', 'module_concernee', 'individuelles'));
+    }
+
 }

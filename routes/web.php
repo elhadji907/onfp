@@ -181,9 +181,11 @@ Route::group([
         Route::get('listerparzone/{projet}/{zone}', [AgeroutezoneController::class, 'listerparzone'])->name('listerparzone');
         Route::get('listerparmodulelocalite/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalite'])->name('listerparmodulelocalite');
         Route::get('listerparmodulelocalites/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalites'])->name('listerparmodulelocalites');
+        Route::get('listerparmodulelocalitesaccepter/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalitesaccepter'])->name('listerparmodulelocalitesaccepter');
         Route::get('listerparmodulezone/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezone'])->name('listerparmodulezone');
         Route::get('candidatlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalite'])->name('candidatlocalite');
         Route::get('candidatmodule/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodule'])->name('candidatmodule');
+        Route::get('candidatmoduleaccepter/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmoduleaccepter'])->name('candidatmoduleaccepter');
         Route::get('candidatzone/{projet}/{localite}', [AgeroutezoneController::class, 'candidatzone'])->name('candidatzone');
         Route::get('agerouteattente/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteattente'])->name('agerouteattente');
         Route::get('agerouteencours/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteencours'])->name('agerouteencours');

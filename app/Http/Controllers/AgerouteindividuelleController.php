@@ -1059,6 +1059,34 @@ class AgerouteindividuelleController extends Controller
 
         return view('ageroutemodules.listerparmodulelocalites', compact('projet', 'localite', 'module', 'individuelles', 'attente', 'rejeter', 'accepter', 'total'));
     }
+    public function listerparmodulelocalitesaccepter($projet, $localite, $module)
+    {
+        $id_projet              = $projet;
+        $id_localite            = Localite::where('nom', $localite)->first()->id;
+        $projet                 = Projet::find($projet);
+        $individuelles          = $projet->individuelles;
+
+        $attente = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'attente')
+                ->count();
+
+        $rejeter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'rejeter')
+                ->count();
+
+        $accepter = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'accepter')
+                ->count();
+
+        $total = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->count();
+
+        return view('ageroutemodules.listerparmodulelocalitesaccepter', compact('projet', 'localite', 'module', 'individuelles', 'attente', 'rejeter', 'accepter', 'total'));
+    }
 
     public function listerparmodulezone($projet, $zone, $module)
     {

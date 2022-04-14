@@ -34,6 +34,7 @@
                                         {{--  <th width="5%">N°</th>  --}}
                                         <th width="30%">Modules</th>
                                         <th width="5%">Demandeurs</th>
+                                        <th width="5%">Valide</th>
                                         <th width="30%">Domaine</th>
                                         <th width="20%">Secteur</th>
                                         <th width="8%"></th>
@@ -57,7 +58,18 @@
                                                     target="_blank" title="voir demandeurs">
                                                     <span class="badge badge-info">{!! $h !!}</span></a>
                                             </td>
-
+                                            <td ALIGN="CENTER">
+                                                <?php $a = 0; ?>
+                                                @foreach ($module->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "accepter")
+                                                        <?php $a++; ?>
+                                                    @endif
+                                                @endforeach
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatmoduleaccepter', ['$projet' => $projet, '$module' => $module->name]) }}"
+                                                    target="_blank" title="voir demandeurs">
+                                                    <span class="badge badge-success">{!! $a !!}</span></a>
+                                            </td>
                                             <td>{{ $module->domaine->name }}</td>
                                             <td>{{ $module->domaine->secteur->name }}</td>
                                             <td class="d-flex align-items-baseline align-middle">
