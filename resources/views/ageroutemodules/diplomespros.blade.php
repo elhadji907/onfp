@@ -44,8 +44,8 @@
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
                                             <th style="width:8%;">Date nais.</th>
-                                            <th style="width:5%;">Lieu nais.</th>
-                                            <th style="width:5%;">Téléphone</th>
+                                            {{--  <th style="width:5%;">Lieu nais.</th>
+                                            <th style="width:5%;">Téléphone</th>  --}}
                                             <th style="width:8%;">Communes</th>
                                             @can('role-delete')
                                                 <th style="width:10%;">Dipôme aca.</th>
@@ -66,8 +66,8 @@
                                                     <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                     <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                    {{--  <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>  --}}
                                                     <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     @can('role-delete')
                                                         <td ALIGN="CENTER">
