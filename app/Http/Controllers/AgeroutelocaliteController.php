@@ -194,4 +194,15 @@ class AgeroutelocaliteController extends Controller
 
         return view('ageroutelocalites.candidatlocalite', compact('projet', 'localite_concernee', 'individuelles'));
     }
+
+    public function candidatlocalitevalides($projet, $localite)
+    {
+        $projet = Projet::find($projet);
+
+        $localite_concernee = $localite;
+
+        $individuelles = $projet->individuelles;
+
+        return view('ageroutelocalites.candidatlocalitevalides', compact('projet', 'localite_concernee', 'individuelles'));
+    }
 }

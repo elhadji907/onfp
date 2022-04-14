@@ -34,7 +34,7 @@
                                         {{--  <th width="10%">N°</th>  --}}
                                         <th width="25%">Communes</th>
                                         <th width="10%">Effectif</th>
-                                        <th width="5%">Valide</th>
+                                        <th width="3%">Valide</th>
                                         <th width="25%">Départements</th>
                                         <th style="width:8%;"></th>
                                     </tr>
