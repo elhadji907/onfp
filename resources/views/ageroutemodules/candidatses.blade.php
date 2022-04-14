@@ -50,6 +50,8 @@
                                                 <th style="width:10%;">Dipôme aca.</th>
                                                 <th style="width:10%;">Dipôme pro.</th>
                                                 <th style="width:3%;">Note</th>
+                                                <th style="width:2%;">NE</th>
+                                                <th style="width:2%;">Employé</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
                                             <th style="width:8%;"></th>
@@ -81,6 +83,8 @@
                                                             </a>
                                                         </td>
                                                         <td>{!! $individuelle->note ?? '' !!}</td>
+                                                        <td>{!! $individuelle->nbre_enfants ?? '' !!}</td>
+                                                        <td>{!! $individuelle->travail_renumeration ?? '' !!}</td>
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
