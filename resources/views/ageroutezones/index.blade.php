@@ -32,9 +32,10 @@
                                 <thead class="table-dark">
                                     <tr>
                                         {{--  <th width="10%">N°</th>  --}}
-                                        <th width="35%">Communes</th>
+                                        <th width="25%">Communes</th>
                                         <th width="10%">Effectif</th>
-                                        <th width="30%">Départements</th>
+                                        <th width="5%">Valide</th>
+                                        <th width="25%">Départements</th>
                                         <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
@@ -64,6 +65,16 @@
                                                     href="{{ url('candidatzone', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
                                                     target="_blank">
                                                     <span class="badge badge-info">{!! $i !!}</span></a>
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $a = 0; ?>
+                                                @foreach ($zone->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id)
+                                                        <?php $a++; ?>
+                                                    @endif
+                                                @endforeach
+                                                
+                                                    <span class="badge badge-success">{!! $a !!}</span>
                                             </td>
                                             <td>
                                                 <span>{{ $zone->localite->nom ?? ""}}</span>
