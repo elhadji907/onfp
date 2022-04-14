@@ -39,18 +39,22 @@
                                             <th style="width:8%;">N° CIN</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
-                                            <th style="width:8%;">Date nais.</th>
+                                           {{--   <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
-                                            <th style="width:8%;">Communes</th>
+                                            <th style="width:8%;">Communes</th>  --}}
                                             @can('role-delete')
                                                 <th style="width:3%;">P.M.R</th>
                                                 <th style="width:3%;">Note</th>
+                                                <th style="width:10%;">Situation éco.</th>
+                                                <th style="width:10%;">Dipôme aca.</th>
+                                                <th style="width:10%;">Dipôme pro.</th>
                                                 <th style="width:2%;">NE</th>
                                                 <th style="width:2%;">Employé</th>
+                                                <th style="width:10%;">Victime socia.</th>
                                                 <th style="width:5%;">Statut</th>
                                             @endcan
-                                            <th style="width:8%;"></th>
+                                            {{--  <th style="width:8%;"></th>  --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -61,10 +65,10 @@
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
                                                     <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                   {{--   <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>  --}}
                                                     @can('role-delete')
                                                         <td ALIGN="CENTER">
                                                             <a href="{{ url('candidatspmrs', ['$localite' => $individuelle->localite->id,'$projet' => $projet->id,'$handicap' => $individuelle->handicap,'$module' => $module,'$sexe' => $sexe]) }}"
@@ -73,8 +77,16 @@
                                                             </a>
                                                         </td>
                                                         <td>{!! $individuelle->note ?? '' !!}</td>
+                                                        <td>{!! $individuelle->situation_economique ?? '' !!}</td>
+                                                        <td ALIGN="CENTER">
+                                                                {!! $individuelle->diplome->sigle ?? '' !!}
+                                                        </td>
+                                                        <td ALIGN="CENTER">
+                                                                {!! $individuelle->diplomespro->sigle ?? '' !!}
+                                                        </td>
                                                         <td>{!! $individuelle->nbre_enfants ?? '' !!}</td>
                                                         <td>{!! $individuelle->travail_renumeration ?? '' !!}</td>
+                                                        <td>{!! $individuelle->victime_social !!}</td>
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
@@ -112,7 +124,7 @@
                                                             </div>
                                                         </td>
                                                     @endcan
-                                                    <td class="d-flex align-items-baseline">
+                                                   {{--   <td class="d-flex align-items-baseline">
                                                         <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                             <i class="far fa-eye">&nbsp;</i>
@@ -128,7 +140,7 @@
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}
                                                         @endcan
-                                                    </td>
+                                                    </td>  --}}
                                                 </tr>
                                             @endif
                                         @endforeach
