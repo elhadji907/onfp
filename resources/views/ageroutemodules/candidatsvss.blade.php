@@ -84,13 +84,14 @@
                                                                 title="voir liste" target="_blank">
                                                                 {!! $individuelle->situation_economique !!}
                                                             </a>
-                                                        </td>  <td ALIGN="CENTER">
+                                                        </td>                                                        
+                                                        <td>{!! $individuelle->note ?? '' !!}</td>
+                                                        <td ALIGN="CENTER">
                                                                 {!! $individuelle->diplome->sigle ?? '' !!}
                                                         </td>
                                                         <td ALIGN="CENTER">
                                                                 {!! $individuelle->diplomespro->sigle ?? '' !!}
                                                         </td>
-                                                        <td>{!! $individuelle->note ?? '' !!}</td>
                                                         <td>{!! $individuelle->nbre_enfants ?? '' !!}</td>
                                                         <td>{!! $individuelle->travail_renumeration ?? '' !!}</td>
                                                         <td>
