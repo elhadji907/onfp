@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE, demandeurs du département de ' . $localite . ' en ' . $module)
+@section('title', 'Liste des candidats présélectionnés pour les entretiens  en ' . $module . ' dans le département de ' . $localite)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
