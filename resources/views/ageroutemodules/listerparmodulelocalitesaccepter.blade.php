@@ -13,10 +13,10 @@
                     </div>
                 @endif
                 <div class="card">
-                    <div class="card-header">
+                    {{--  <div class="card-header">
                         <i class="fas fa-table"></i>
                         Liste des candidats présélectionnés pour les entretiens  en {{ $module }} dans le département de {{ $localite }}
-                    </div>
+                    </div>  --}}
                     <div class="card-body">
                         <div class="table-responsive">
                             <div class="table-responsive">
