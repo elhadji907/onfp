@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'Liste des candidats présélectionnés pour les entretiens  en ' . $module . ' dans le département de ' . $localite)
+@section('title', 'Présélectionnés en ' . $module . ' à ' . $localite)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -13,10 +13,10 @@
                     </div>
                 @endif
                 <div class="card">
-                    {{--  <div class="card-header">
+                    <div class="card-header">
                         <i class="fas fa-table"></i>
                         Liste des candidats présélectionnés pour les entretiens  en {{ $module }} dans le département de {{ $localite }}
-                    </div>  --}}
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <div class="table-responsive">
