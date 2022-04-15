@@ -30,7 +30,8 @@
                                 <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th style="width:8%;">N° CIN</th>
+                                            <th style="width:3%;">N°</th>
+                                            <th style="width:8%;">CIN</th>
                                             <th style="width:5%;">Civilité</th>
                                             <th style="width:8%;">Prenom</th>
                                             <th style="width:5%;">Nom</th>
@@ -50,6 +51,7 @@
                                         @foreach ($individuelles as $key => $individuelle)
                                             @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module && $individuelle->statut == "accepter")
                                                 <tr>
+                                                    <td>{{ $i++ }}</td>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>                                                        
                                                        {{--   <a href="{{ url('ageroutesexes', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite, '$projet' => $projet->id, '$module' => $module]) }}"
