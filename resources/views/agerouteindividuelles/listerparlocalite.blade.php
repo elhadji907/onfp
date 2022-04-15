@@ -124,7 +124,7 @@
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        @foreach ($projet->individuelles as $key => $individuelle)
+                                        @foreach ($individuelles as $key => $individuelle)
                                             @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>

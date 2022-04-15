@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        AGEROUTE, liste des demandeurs du département de {{ $localite }} en
+                        Agéroute, liste des demandeurs du département de {{ $localite }} en
                         {{ $module }}
                     </div>
                     <div class="card-body">
