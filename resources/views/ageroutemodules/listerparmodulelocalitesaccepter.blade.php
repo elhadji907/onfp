@@ -168,11 +168,11 @@
                     }
                 ],
                 "lengthMenu": [
-                    [5, 10, 25, 50, 100, -1],
-                    [5, 10, 25, 50, 100, "Tout"]
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'desc']
+                    [0, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
