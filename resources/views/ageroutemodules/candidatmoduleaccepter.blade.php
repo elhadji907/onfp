@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - Demandeurs du département de ' . $module_concernee)
+@section('title', 'AGEROUTE - candidats du département de ' . $module_concernee)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs du module : {{ $module_concernee }}
+                        Agéroute, liste des candidats présélectionnés en {{ $module_concernee }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

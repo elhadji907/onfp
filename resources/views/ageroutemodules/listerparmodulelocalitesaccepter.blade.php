@@ -15,8 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute, liste des demandeurs du département de {{ $localite }}, présélectionnés en
-                        {{ $module }}
+                        Liste des candidats présélectionnés pour les entretiens  en {{ $module }} dans le département de {{ $localite }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
