@@ -559,6 +559,6 @@ class AgerouteformationController extends Controller
         $dompdf->render();
 
         // Output the generated PDF to Browser
-        $dompdf->stream('Liste des candidats présélectionnés en '.$module.' dans le département de '.$localite.' du '.$anne.'.pdf', ['Attachment' => false]);
+        $dompdf->stream($localite.', liste des candidats présélectionnés en '.$module.'.pdf', ['Attachment' => false]);
     }
 }
