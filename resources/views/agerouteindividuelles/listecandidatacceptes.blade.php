@@ -34,7 +34,7 @@
         table th {
             border-left: 0;
             border-right: 1px solid rgb(0, 0, 0);
-            border-top: 0;
+            border-right: 1px solid rgb(0, 0, 0);
             border-bottom: 1px solid rgb(0, 0, 0);
             text-align: center;
             line-height: 25px;
