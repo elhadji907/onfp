@@ -22,20 +22,14 @@
         }
 
         table {
-            border-left: 1px solid rgb(0, 0, 0);
-            border-right: 0;
-            border-top: 1px solid rgb(0, 0, 0);
-            border-top: 1px solid rgb(0, 0, 0);
+            border: 1px solid rgb(0, 0, 0);
             width: 100%;
             border-spacing: 0px;
         }
 
         table td,
         table th {
-            border-left: 0;
-            border-right: 1px solid rgb(0, 0, 0);
-            border-right: 1px solid rgb(0, 0, 0);
-            border-bottom: 1px solid rgb(0, 0, 0);
+            border: 1px solid rgb(0, 0, 0);
             text-align: center;
             line-height: 25px;
         }
@@ -79,18 +73,19 @@
             </div>
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
             <h3 align="center">
-                <span style="color: rgb(255, 0, 0); text-shadow: 1px 1px;"> <u>{{ $localite }}</u>: liste des candidats présélectionnés pour les
+                <span style="color: rgb(255, 0, 0); text-shadow: 1px 1px;"> <u>{{ $localite }}</u>: liste des
+                    candidats présélectionnés pour les
                     entretiens en {{ $module }}</span>
             </h3>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="table-ageroutebeneficiaires">
-                        <thead class="table-dark">
+                        <thead class="thead-dark">
                             <tr>
                                 <th style="width:3%;">N°</th>
                                 <th style="width:5%;">Civilité</th>
-                                <th style="width:8%;">Prenom</th>
-                                <th style="width:5%;">Nom</th>
+                                <th style="width:10%;">Prenom</th>
+                                <th style="width:7%;">Nom</th>
                                 <th style="width:8%;">Date nais.</th>
                                 <th style="width:8%;">Lieu nais.</th>
                                 <th style="width:5%;">Téléphone</th>
@@ -116,7 +111,7 @@
                                         <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                         <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                         <td>{!! $individuelle->zone->nom ?? '' !!}</td>
-                                        <td>{!! $individuelle->adresse ?? '' !!}</td>
+                                        <td>{!! ucfirst(strtolower($individuelle->adresse)) ?? '' !!}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
