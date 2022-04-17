@@ -15,57 +15,62 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des candidats présélectionnés pour les entretiens  en {{ $module }} dans le département de {{ $localite }}
+                        Liste des candidats présélectionnés pour les entretiens en {{ $module }} dans le département
+                        de {{ $localite }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <div class="table-responsive">
-                                <div align="right">
-                                    <a href="{{ route('agerouteindividuelles.create') }}">
-                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                        </div>
-                                    </a>
-                                </div>
-                                <table class="table table-bordered" id="table-ageroutebeneficiaires">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th style="width:3%;">N°</th>
-                                            <th style="width:8%;">CIN</th>
-                                            <th style="width:5%;">Civilité</th>
-                                            <th style="width:8%;">Prenom</th>
-                                            <th style="width:5%;">Nom</th>
-                                            <th style="width:8%;">Date nais.</th>
-                                            <th style="width:8%;">Lieu nais.</th>
-                                            <th style="width:5%;">Téléphone</th>
-                                            <th style="width:8%;">Communes</th>
-                                            <th style="width:12%;">Adresse</th>
-                                            {{--  @can('role-delete')
+                            <div class="d-flex col-lg-12 margin-tb justify-content-between align-items-center pb-3">
+                                <a
+                                    href="{{ url('listecandidatacceptes', ['$projet' => $projet, '$localite' => $localite, '$module' => $module]) }}" target="_blank">
+                                    <div class="btn btn-info btn-sm"><i class="fas fa-print"></i>&nbsp;Imprimer</i>
+                                    </div>
+                                </a>
+                                <a href="{{ route('agerouteindividuelles.create') }}">
+                                    <div class="btn btn-success btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                    </div>
+                                </a>
+                            </div>
+                            <table class="table table-bordered" id="table-ageroutebeneficiaires">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th style="width:3%;">N°</th>
+                                        <th style="width:8%;">CIN</th>
+                                        <th style="width:5%;">Civilité</th>
+                                        <th style="width:8%;">Prenom</th>
+                                        <th style="width:5%;">Nom</th>
+                                        <th style="width:8%;">Date nais.</th>
+                                        <th style="width:8%;">Lieu nais.</th>
+                                        <th style="width:5%;">Téléphone</th>
+                                        <th style="width:8%;">Communes</th>
+                                        <th style="width:12%;">Adresse</th>
+                                        {{-- @can('role-delete')
                                                 <th style="width:5%;">Statut</th>
-                                            @endcan  --}}
-                                           {{--   <th style="width:8%;"></th>  --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $i = 1; ?>
-                                        @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module && $individuelle->statut == "accepter")
-                                                <tr>
-                                                    <td>{{ $i++ }}</td>
-                                                    <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>                                                        
-                                                       {{--   <a href="{{ url('ageroutesexes', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite, '$projet' => $projet->id, '$module' => $module]) }}"
-                                                            class="btn btn-outline-info btn-sm" target="_blank">  --}}
-                                                            {!! $individuelle->demandeur->user->civilite !!}
-                                                       {{--   </a>  --}}
-                                                    </td>
-                                                    <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
-                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
-                                                    <td>{!! $individuelle->adresse ?? '' !!}</td>
-                                                    {{--  @can('role-delete')
+                                            @endcan --}}
+                                        {{-- <th style="width:8%;"></th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; ?>
+                                    @foreach ($individuelles as $key => $individuelle)
+                                        @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module && $individuelle->statut == 'accepter')
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
+                                                <td>{!! $individuelle->demandeur->cin !!}</td>
+                                                <td>
+                                                    {{-- <a href="{{ url('ageroutesexes', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite, '$projet' => $projet->id, '$module' => $module]) }}"
+                                                            class="btn btn-outline-info btn-sm" target="_blank"> --}}
+                                                    {!! $individuelle->demandeur->user->civilite !!}
+                                                    {{-- </a> --}}
+                                                </td>
+                                                <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                                <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                                <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                                <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                                <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                                <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                <td>{!! $individuelle->adresse ?? '' !!}</td>
+                                                {{-- @can('role-delete')
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
@@ -102,8 +107,8 @@
                                                                 @endif
                                                             </div>
                                                         </td>
-                                                    @endcan  --}}
-                                                   {{--   <td class="d-flex align-items-baseline">
+                                                    @endcan --}}
+                                                {{-- <td class="d-flex align-items-baseline">
                                                         <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                             <i class="far fa-eye">&nbsp;</i>
@@ -119,13 +124,12 @@
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}
                                                         @endcan
-                                                    </td>  --}}
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                    </td> --}}
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

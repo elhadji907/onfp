@@ -53,7 +53,7 @@
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                     <td ALIGN="CENTER">
-                                                        <a href="{{ url('listerparmodulelocalitesaccepter', ['$projet' => $projet,'$localite' => $individuelle->localite->nom,'$module' => $module_concernee]) }}"
+                                                        <a href="{{ url('listerparmodulelocalitesaccepter', ['$projet' => $projet, '$localite' => $individuelle->localite->nom, '$module' => $module_concernee]) }}"
                                                             target="_blank">
                                                             {!! $individuelle->localite->nom ?? '' !!}<br />
                                                         </a>

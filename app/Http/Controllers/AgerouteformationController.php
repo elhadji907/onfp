@@ -445,6 +445,7 @@ class AgerouteformationController extends Controller
         // Output the generated PDF to Browser
         $dompdf->stream('Fiche de suivi evaluation pour les '.$beneficiaires.' du '.$anne.'.pdf', ['Attachment' => false]);
     }
+
     public function pvevaluation($module, $projet, $programme, $findividuelle)
     {
         $individuelles      =           Individuelle::get();
@@ -522,5 +523,42 @@ class AgerouteformationController extends Controller
         $findividuelles = $projets->findividuelles;
 
         return view('agerouteformations.formationsstatut', compact('statut', 'findividuelles', 'projet_name'));
+    }
+
+    
+
+    public function listecandidatacceptes($projet, $localite, $module)
+    {
+        $individuelles      =           Individuelle::get();
+        $module_id          =           Module::where('name', $module)->first()->id;
+        $projet             =           Projet::find($projet);
+        $projet_name        =           $projet->name;
+        $projet_id          =           $projet->id;
+        $module_name        =           $module;
+        $individuelles      =           $projet->individuelles;
+        
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('agerouteindividuelles.listecandidatacceptes', compact('individuelles', 'module', 'localite', 'projet')));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('Liste des candidats présélectionnés en '.$module.' dans le département de '.$localite.' du '.$anne.'.pdf', ['Attachment' => false]);
     }
 }

@@ -224,6 +224,7 @@ Route::group([
         Route::get('createdby/{createdby}', [AgerouteindividuelleController::class, 'createdby'])->name('createdby');
 
         Route::get('fichesuivieval/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'fichesuivieval'])->name('fichesuivieval');
+        Route::get('listecandidatacceptes/{projet}/{localite}/{module}', [AgerouteformationController::class, 'listecandidatacceptes'])->name('listecandidatacceptes');
         Route::get('pvevaluation/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'pvevaluation'])->name('pvevaluation');
         
         Route::get('ajouternote/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'ajouternote'])->name('ajouternote');
