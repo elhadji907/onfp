@@ -25,7 +25,7 @@
             border-left: 1px solid rgb(0, 0, 0);
             border-right: 0;
             border-top: 1px solid rgb(0, 0, 0);
-            border-bottom: 0;
+            border-top: 1px solid rgb(0, 0, 0);
             width: 100%;
             border-spacing: 0px;
         }
