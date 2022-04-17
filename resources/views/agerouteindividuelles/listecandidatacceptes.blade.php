@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    {{-- <title>{{ $beneficiaires }}</title> --}}
+    <title>{{ $module }} {{$localite}} </title>
     <style>
         .invoice-box {
             max-width: 1500px;
@@ -12,7 +12,7 @@
             font-size: 12px;
             line-height: 24px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-            color: #555;
+            color: rgb(0, 0, 0);
         }
 
         /** RTL **/
@@ -22,14 +22,14 @@
         }
 
         table {
-            border: 1px solid rgb(0, 0, 0);
+            border: 0.3px solid rgb(0, 0, 0);
             width: 100%;
             border-spacing: 0px;
         }
 
         table td,
         table th {
-            border: 1px solid rgb(0, 0, 0);
+            border: 0.3px solid rgb(0, 0, 0);
             text-align: center;
             line-height: 25px;
         }
