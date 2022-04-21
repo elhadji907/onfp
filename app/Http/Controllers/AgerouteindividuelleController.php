@@ -951,7 +951,6 @@ class AgerouteindividuelleController extends Controller
             
         $individuelle->save();
         
-        
         /* $zones_id = Zone::where('nom', $request->input('zone'))->first()->id;
         $localites_id = Localite::where('nom', $request->input('localite'))->first()->id;
         $modules_id = Module::where('name', $request->input('module'))->first()->id; */
@@ -961,7 +960,6 @@ class AgerouteindividuelleController extends Controller
         $message = 'demandeur '.$utilisateur->firstname.' '.$utilisateur->name.' a été modifié avec succès';
         return redirect()->route('agerouteindividuelles.index')->with(compact('message'));
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -990,7 +988,6 @@ class AgerouteindividuelleController extends Controller
 
         return redirect()->route('agerouteindividuelles.index')->with('success', $message);
     }
-
 
     /*     public function listerparlocalite($projet, $localite)
         {
