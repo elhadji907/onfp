@@ -187,6 +187,8 @@ Route::group([
         Route::get('candidatlocalitevalides/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalitevalides'])->name('candidatlocalitevalides');
         Route::get('candidatmodule/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodule'])->name('candidatmodule');
         Route::get('candidatmoduleaccepter/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmoduleaccepter'])->name('candidatmoduleaccepter');
+        Route::get('candidatmoduleattente/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmoduleattente'])->name('candidatmoduleattente');
+        Route::get('candidatmodulerejeter/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodulerejeter'])->name('candidatmodulerejeter');
         Route::get('candidatzone/{projet}/{localite}', [AgeroutezoneController::class, 'candidatzone'])->name('candidatzone');
         Route::get('agerouteattente/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteattente'])->name('agerouteattente');
         Route::get('agerouteencours/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteencours'])->name('agerouteencours');

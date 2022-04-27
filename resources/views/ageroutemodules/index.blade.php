@@ -35,8 +35,10 @@
                                         <th width="30%">Modules</th>
                                         <th width="5%">Demandeurs</th>
                                         <th width="5%">Valide</th>
-                                        <th width="30%">Domaine</th>
-                                        <th width="20%">Secteur</th>
+                                        <th width="5%">Attente</th>
+                                        <th width="5%">Rejeter</th>
+                                        <th width="20%">Domaine</th>
+                                        <th width="15%">Secteur</th>
                                         <th width="8%"></th>
                                     </tr>
                                 </thead>
@@ -56,7 +58,7 @@
                                                 <a class="nav-link"
                                                     href="{{ url('candidatmodule', ['$projet' => $projet, '$module' => $module->name]) }}"
                                                     target="_blank" title="voir demandeurs">
-                                                    <span class="badge badge-info">{!! $h !!}</span></a>
+                                                    <span class="badge badge-primary">{!! $h !!}</span></a>
                                             </td>
                                             <td ALIGN="CENTER">
                                                 <?php $a = 0; ?>
@@ -69,6 +71,30 @@
                                                     href="{{ url('candidatmoduleaccepter', ['$projet' => $projet, '$module' => $module->name]) }}"
                                                     target="_blank" title="voir demandeurs acceptés">
                                                     <span class="badge badge-success">{!! $a !!}</span></a>
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $a = 0; ?>
+                                                @foreach ($module->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "attente")
+                                                        <?php $a++; ?>
+                                                    @endif
+                                                @endforeach
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatmoduleattente', ['$projet' => $projet, '$module' => $module->name]) }}"
+                                                    target="_blank" title="voir demandeurs acceptés">
+                                                    <span class="badge badge-info">{!! $a !!}</span></a>
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $a = 0; ?>
+                                                @foreach ($module->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "rejeter")
+                                                        <?php $a++; ?>
+                                                    @endif
+                                                @endforeach
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatmodulerejeter', ['$projet' => $projet, '$module' => $module->name]) }}"
+                                                    target="_blank" title="voir demandeurs rejetés">
+                                                    <span class="badge badge-danger">{!! $a !!}</span></a>
                                             </td>
                                             <td>{{ $module->domaine->name }}</td>
                                             <td>{{ $module->domaine->secteur->name }}</td>
