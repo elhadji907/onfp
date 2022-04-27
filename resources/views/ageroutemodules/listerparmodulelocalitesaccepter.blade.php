@@ -44,6 +44,9 @@
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:8%;">Communes</th>
                                         <th style="width:12%;">Adresse</th>
+                                        @can('role-delete')
+                                            <th style="width:5%;">Statut</th>
+                                        @endcan
                                         {{-- @can('role-delete')
                                                 <th style="width:5%;">Statut</th>
                                             @endcan --}}
@@ -70,10 +73,10 @@
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                 <td>{!! $individuelle->adresse ?? '' !!}</td>
-                                                {{-- @can('role-delete')
+                                                @can('role-delete')
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
-                                                                @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
+                                                              {{--    @if (isset($individuelle->statut) && $individuelle->statut == 'accepter')
                                                                     <label
                                                                         class="badge badge-success">{!! $individuelle->statut ?? '' !!}</label>
                                                                 @elseif(isset($individuelle->statut) && $individuelle->statut == 'rejeter')
@@ -83,7 +86,7 @@
                                                                     <label
                                                                         class="badge badge-info">{!! $individuelle->statut ?? '' !!}</label>
                                                                 @endif
-                                                                &nbsp;
+                                                                &nbsp;  --}}
                                                                 @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
                                                                     <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle,'$statut' => 'accepter','$module' => $individuelle->module->id]) }}"
                                                                         title="accepter"
@@ -107,7 +110,7 @@
                                                                 @endif
                                                             </div>
                                                         </td>
-                                                    @endcan --}}
+                                                    @endcan
                                                 {{-- <td class="d-flex align-items-baseline">
                                                         <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
