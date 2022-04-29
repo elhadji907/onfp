@@ -65,6 +65,8 @@ use App\Http\Controllers\AgeroutemoduleController;
 use App\Http\Controllers\AgerouteindividuelleController;
 use App\Http\Controllers\AgerouteformationController;
 use App\Http\Controllers\IndividuellenoteController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TypedirectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -297,6 +299,8 @@ Route::group([
         Route::resource('/arrondissements', ArrondissementController::class);
         Route::resource('/communes', CommuneController::class);
         Route::resource('/roles', RoleController::class);
+        Route::resource('/categories', CategoryController::class);
+        Route::resource('/typedirections', TypedirectionController::class);
         Route::resource('/permissions', PermissionController::class);
         Route::resource('/etablissements', EtablissementController::class);
         Route::resource('/filieres', FiliereController::class);
