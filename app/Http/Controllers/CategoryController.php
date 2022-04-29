@@ -94,10 +94,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $categorie = Category::find($id);
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|unique:categories,name,'.$categorie->id,
             ]);
-            $categorie = Category::find($id);
+            
         $categorie->name = $request->input('name');
         $categorie->save();
         return redirect()->route('categories.index')

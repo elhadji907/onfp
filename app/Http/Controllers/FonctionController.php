@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fonction;
 use Illuminate\Http\Request;
+use DB;
 
 class FonctionController extends Controller
 {
@@ -39,7 +40,7 @@ class FonctionController extends Controller
      */
     public function create()
     {
-        //
+        return view('fonctions.create');
     }
 
     /**
@@ -50,7 +51,17 @@ class FonctionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->query('id');
+
+        $this->validate($request, [
+            'name' => 'required|unique:fonctions,name',
+            ]);
+        $fonction = Fonction::create([
+            'name' => $request->input('name'),
+            'sigle' => $request->input('sigle'),
+        ]);
+        return redirect()->route('fonctions.index')
+            ->with('success', 'Fonction créée avec succès');
     }
 
     /**
@@ -70,9 +81,11 @@ class FonctionController extends Controller
      * @param  \App\Models\Fonction  $fonction
      * @return \Illuminate\Http\Response
      */
-    public function edit(Fonction $fonction)
+    public function edit($id)
     {
-        //
+        $fonction = Fonction::find($id);
+
+        return view('fonctions.edit', compact('fonction'));
     }
 
     /**
@@ -82,9 +95,19 @@ class FonctionController extends Controller
      * @param  \App\Models\Fonction  $fonction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fonction $fonction)
+    public function update(Request $request, $id)
     {
-        //
+        $fonction = Fonction::find($id);
+
+        $this->validate($request, [
+            'name' => 'required|unique:fonctions,name,'.$fonction->id,
+            'sigle' => 'sometimes|unique:fonctions,sigle,'.$fonction->id,
+            ]);
+        $fonction->name = $request->input('name');
+        $fonction->sigle = $request->input('sigle');
+        $fonction->save();
+        return redirect()->route('fonctions.index')
+            ->with('success', 'Fonction modification avec succès');
     }
 
     /**
@@ -93,8 +116,10 @@ class FonctionController extends Controller
      * @param  \App\Models\Fonction  $fonction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fonction $fonction)
+    public function destroy($id)
     {
-        //
+        DB::table("fonctions")->where('id', $id)->delete();
+        return redirect()->route('fonctions.index')
+->with('success', 'Fonction supprimée avec succès');
     }
 }

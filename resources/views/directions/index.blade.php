@@ -44,7 +44,7 @@
                                             <td>{!! $i++ !!}</td>
                                             <td>{!! $direction->name !!}</td>
                                             <td>{!! $direction->sigle !!}</td>
-                                            <td>{!! $direction->types_direction->name !!}</td>
+                                            <td>{!! $direction->types_direction->name ?? '' !!}</td>
                                             <td>
                                                 @if (isset($direction->chef))
                                                 {!! $direction->chef->user->firstname . '   ' . $direction->chef->user->name !!}                                                    

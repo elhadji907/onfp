@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group col col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Type direction') !!}<span class="text-danger"> <b>*</b> </span>
-                                {!! Form::select('type_direction', $types_directions, $directions->types_direction->name, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'type_direction']) !!}
+                                {!! Form::select('type_direction', $types_directions, $directions->types_direction->name ?? '', ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'type_direction']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('type_direction'))
                                         @foreach ($errors->get('type_direction') as $message)

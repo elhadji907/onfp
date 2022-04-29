@@ -1,10 +1,11 @@
 @extends('layout.default')
+@section('title', 'ONFP - Création fonctions')
 @section('content')
     <div class="container col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-lg-12 margin-tb">
-                    <a class="btn btn-primary" href="{{ route('categories.index') }}"> <i
+                    <a class="btn btn-primary" href="{{ route('fonctions.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
                 </div>
             </div>
@@ -21,16 +22,16 @@
             <div class="row pt-1"></div>
             <div class="card border-primary">
                 <div class="card-header card-header-primary text-center border-primary">
-                    <h3 class="card-title">{{ 'Enregistrement catégorie' }}</h3>
+                    <h3 class="card-title">{{ 'Enregistrement fonction' }}</h3>
                 </div>
                 <div class="card-body">
 
-                    {!! Form::open(['route' => 'categories.store', 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => 'fonctions.store', 'method' => 'POST']) !!}
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-xs-12 col-sm-12 col-md-8">
                             <div class="form-group">
-                                <strong>Catégorie:</strong>
-                                {!! Form::text('name', null, ['placeholder' => 'Catégorie', 'class' => 'form-control']) !!}
+                                <strong>Fonction:</strong>
+                                {!! Form::text('name', null, ['placeholder' => 'Fonction', 'class' => 'form-control']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('name'))
                                         @foreach ($errors->get('name') as $message)
@@ -40,9 +41,22 @@
                                 </small>
                             </div>
                         </div>
+                        <div class="col-xs-12 col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <strong>Sigle:</strong>
+                                {!! Form::text('sigle', null, ['placeholder' => 'Sigle', 'class' => 'form-control']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('sigle'))
+                                        @foreach ($errors->get('sigle') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <div align="right">
-                                <a href="{{ route('categories.create') }}">
+                                <a href="{{ route('fonctions.create') }}">
 
                                     <button type="submit" class="btn btn-primary btn-sm"><i
                                             class="far fa-paper-plane"></i>&nbsp;Soumettre</button>

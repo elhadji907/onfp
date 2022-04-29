@@ -1,4 +1,5 @@
 @extends('layout.default')
+@section('title', 'ONFP - Liste des catégories')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">

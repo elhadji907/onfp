@@ -1,4 +1,5 @@
 @extends('layout.default')
+@section('title', 'ONFP - Liste des types de direction')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">

@@ -1,4 +1,5 @@
 @extends('layout.default')
+@section('title', 'ONFP - Liste des fonctions')
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -32,6 +33,7 @@
                                     <tr>
                                         <th style="width:5%;">N°</th>
                                         <th style="width:30%;">Name</th>
+                                        <th style="width:5%;">Sigle</th>
                                         <th style="width:5%;"></th>
                                     </tr>
                                 </thead>
@@ -41,6 +43,7 @@
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $fonction->name }}</td>
+                                            <td>{{ $fonction->sigle ?? ''}}</td>
                                             <td class="d-flex align-items-baseline align-middle">
                                                 <a class="btn btn-primary btn-sm"
                                                     href="{{ route('fonctions.edit', $fonction->id) }}"><i

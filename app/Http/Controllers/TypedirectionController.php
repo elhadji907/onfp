@@ -94,10 +94,10 @@ class TypedirectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $typedirection = TypesDirection::find($id);
         $this->validate($request, [
-            'name' => 'required',
+            'name'                  => 'required|unique:types_directions,name,'.$typedirection->id,
             ]);
-            $typedirection = TypesDirection::find($id);
         $typedirection->name = $request->input('name');
         $typedirection->save();
         return redirect()->route('typedirections.index')

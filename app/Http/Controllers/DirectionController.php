@@ -155,16 +155,16 @@ class DirectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $direction = Direction::find($id);
+
         $this->validate(
             $request,
             [
-                'name'             => 'required|string|max:250',
-                'sigle'                 => 'required|string|max:10',
+                'name'                  => 'required|unique:directions,name,'.$direction->id,
+                'sigle'                 => 'sometimes|unique:directions,sigle,'.$direction->id,
                 'type_direction'        => 'required',
             ]
         );
-
-        $direction = Direction::find($id);
             
         $types_directions_id = TypesDirection::where('name', $request->input('type_direction'))->first()->id;
 
