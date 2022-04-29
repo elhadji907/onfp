@@ -106,6 +106,9 @@
                     <a class="collapse-item" href="{{ route('directions.index') }}">
                         <span>Directions</span>
                     </a>
+                    <a class="collapse-item" href="{{ route('fonctions.index') }}">
+                        <span>Fonctions</span>
+                    </a>
                     <a class="collapse-item" href="{{ route('typedirections.index') }}">
                         <span>Type direction</span>
                     </a>
