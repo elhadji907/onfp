@@ -34,19 +34,9 @@
                                         <th>Sigle</th>
                                         <th>Type direction</th>
                                         <th>Responsable</th>
-                                        <th style="width:10%;">Action</th>
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
-                                    <tr>
-                                        <th>N°</th>
-                                        <th>Name</th>
-                                        <th>Sigle</th>
-                                        <th>Type direction</th>
-                                        <th>Responsable</th>
-                                        <th style="width:10%;">Action</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($directions as $direction)

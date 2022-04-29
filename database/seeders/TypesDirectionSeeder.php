@@ -33,5 +33,11 @@ class TypesDirectionSeeder extends Seeder
             'updated_at' => now(),
             'uuid' => Str::uuid(),
         ]);
+        DB::table('types_directions')->insert([
+            'name' => "Antenne régionale",
+            'created_at' => now(),
+            'updated_at' => now(),
+            'uuid' => Str::uuid(),
+        ]);
     }
 }

@@ -75,6 +75,43 @@
         <hr class="sidebar-divider my-0">
     @else
     @endhasrole
+    @hasrole('super-admin|Administrateur|Gestionnaire|Employee')
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePages_employee"
+                aria-expanded="true" aria-controls="collapsePages_employee">
+                <span data-feather="users"></span>
+                <span>Gestion des employés</span>
+            </a>
+            <div id="collapsePages_employee" class="collapse" aria-labelledby="headingPages"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('employees.index') }}">
+                        <span>Employés</span>
+                    </a>
+                    <a class="collapse-item" href="#">
+                        <span>Prestataires</span>
+                    </a>
+                    <a class="collapse-item" href="#">
+                        <span>Stagiaires</span>
+                    </a>
+                    <a class="collapse-item" href="#">
+                        <span>Mission</span>
+                    </a>
+                    <a class="collapse-item" href="#">
+                        <span>Prise en charge</span>
+                    </a>
+                    <a class="collapse-item" href="#">
+                        <span>Congés</span>
+                    </a>
+                    <a class="collapse-item" href="{{ route('directions.index') }}">
+                        <span>Directions</span>
+                    </a>
+                </div>
+            </div>
+        </li>
+        <hr class="sidebar-divider my-0">
+    @else
+    @endhasrole
     @hasrole('super-admin|Administrateur|Gestionnaire|DIOF|ADIOF')
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('demandeurs.index') }}" data-toggle="collapse"
@@ -371,16 +408,6 @@
             <a class="nav-link" href="{{ route('filierespecialites.index') }}">
                 <span data-feather="layers"></span>
                 <span>Filières spécialités</span>
-            </a>
-        </li>
-        <hr class="sidebar-divider my-0">
-    @else
-    @endhasrole
-    @hasrole('super-admin|Administrateur|DAF|RHDAF')
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('employees.index') }}">
-                <span data-feather="users"></span>
-                <span>Gestion des employees</span>
             </a>
         </li>
         <hr class="sidebar-divider my-0">

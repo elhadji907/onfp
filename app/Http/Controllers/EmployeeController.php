@@ -14,6 +14,7 @@ use App\Models\Interne;
 use App\Models\Depart;
 use App\Models\Category;
 use App\Models\Fonction;
+use App\Models\Familiale;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\Hash;
@@ -47,12 +48,12 @@ class EmployeeController extends Controller
         $departs = Depart::all();
         $courriers = Courrier::get()->count();
 
-       /*  $chart      = Courrier::all();
-        $chart = new Courrierchart;
-        $chart->labels(['Départs', 'Arrivés', 'Internes']);
-        $chart->dataset('STATISTIQUES', 'bar', [$internes, $recues, $departs])->options([
-            'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-        ]); */
+        /*  $chart      = Courrier::all();
+         $chart = new Courrierchart;
+         $chart->labels(['Départs', 'Arrivés', 'Internes']);
+         $chart->dataset('STATISTIQUES', 'bar', [$internes, $recues, $departs])->options([
+             'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
+         ]); */
 
         $employees = Employee::all();
 
@@ -67,19 +68,20 @@ class EmployeeController extends Controller
     public function create()
     {
         $roles = Role::get();
-        $civilites = User::distinct('civilite')->get()->pluck('civilite','civilite')->unique();
-        $directions = Direction::pluck('sigle','id');
-        $categories = Category::pluck('name','id');
-        $fonctions = Fonction::pluck('name','id');
+        $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
+        $directions = Direction::pluck('sigle', 'id');
+        $categories = Category::pluck('name', 'id');
+        $fonctions = Fonction::pluck('name', 'id');
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
 
-     /*    $chart      = Courrier::all();
-        $chart = new Courrierchart;
-        $chart->labels(['', '', '']);
-        $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
-            'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-        ]); */
+        /*    $chart      = Courrier::all();
+           $chart = new Courrierchart;
+           $chart->labels(['', '', '']);
+           $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
+               'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
+           ]); */
 
-        return view('employees.create',compact('roles', 'civilites','directions','categories','fonctions'));
+        return view('employees.create', compact('roles', 'civilites', 'directions', 'categories', 'fonctions', 'familiale'));
     }
 
     /**
@@ -89,9 +91,10 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {      
+    {
         $this->validate(
-            $request, [
+            $request,
+            [
                 'civilite'      =>  'required|string|max:10',
                 'matricule'     =>  'required|string|max:50',
                 'categorie'     =>  'required|string|max:50',
@@ -109,37 +112,36 @@ class EmployeeController extends Controller
                 'date_embauche' =>  'required|date',
                 'lieu'          =>  'required|string',
             ]
-        ); 
+        );
         
-        $roles_id = Role::where('name','Administrateur')->first()->id;
+        $roles_id = Role::where('name', 'Administrateur')->first()->id;
 
         $civilite = $request->input('civilite');
         
         if ($civilite == "Mme") {
-           $sexe = "F";
+            $sexe = "F";
         } elseif ($civilite == "M.") {
             $sexe = "M";
         } else {
-               $sexe = "";
+            $sexe = "";
         }
 
+        $user_connect           =   Auth::user();
         
-       
-       $created_by1 = Auth::user()->firstname;
-       $created_by2 = Auth::user()->name;
-       $created_by3 = Auth::user()->username;
+        $created_by  = strtolower($user_connect->username);
+        $updated_by  = strtolower($user_connect->username);
 
-       $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
+        $familiale_id = $request->input('familiale');
 
-        $utilisateur = new User([      
-            'civilite'              =>      $request->input('civilite'),      
-            'sexe'                  =>      $sexe,      
+        $utilisateur = new User([
+            'civilite'              =>      $request->input('civilite'),
+            'sexe'                  =>      $sexe,
             'firstname'             =>      $request->input('firstname'),
             'name'                  =>      $request->input('name'),
             'username'              =>      $request->input('username'),
             'date_naissance'        =>      $request->input('date_naiss'),
             'lieu_naissance'        =>      $request->input('lieu'),
-            'situation_familiale'   =>      $request->input('familiale'),
+            'familiales_id'         =>      $familiale_id,
             'adresse'               =>      $request->input('adresse'),
             'email'                 =>      $request->input('email'),
             'telephone'             =>      $request->input('telephone'),
@@ -149,7 +151,7 @@ class EmployeeController extends Controller
             'password'              =>      Hash::make($request->input('password')),
             'roles_id'              =>      $roles_id,
             'created_by'            =>      $created_by,
-            'updated_by'            =>      $created_by
+            'updated_by'            =>      $updated_by
         ]);
         
         $utilisateur->save();
@@ -170,7 +172,7 @@ class EmployeeController extends Controller
         ]);
         
         $employee->save();
-        return redirect()->route('employees.index')->with('success','employee ajouté avec succès !');
+        return redirect()->route('employees.index')->with('success', 'employee ajouté avec succès !');
     }
 
     /**
@@ -192,21 +194,22 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        $civilites = User::distinct('civilite')->get()->pluck('civilite','civilite')->unique();
-        $directions = Direction::pluck('sigle','sigle');
-        $categories = Category::pluck('name','name');
-        $fonctions = Fonction::pluck('name','name');
+        $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
+        $directions = Direction::pluck('sigle', 'sigle');
+        $categories = Category::pluck('name', 'name');
+        $fonctions = Fonction::pluck('name', 'name');
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
 
         //dd($employee);
 
-    /*     $chart      = Courrier::all();
-        $chart = new Courrierchart;
-        $chart->labels(['', '', '']);
-        $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
-            'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-        ]); */
+        /*     $chart      = Courrier::all();
+            $chart = new Courrierchart;
+            $chart->labels(['', '', '']);
+            $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
+                'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
+            ]); */
 
-        return view('employees.update', compact('employee', 'directions', 'civilites', 'categories', 'fonctions'));
+        return view('employees.update', compact('employee', 'directions', 'civilites', 'categories', 'fonctions', 'familiale'));
     }
 
     /**
@@ -217,8 +220,9 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Employee $employee)
-    {         
-        $data = request()->validate([
+    {
+        $data = request()->validate(
+            [
                 'civilite'      =>  'required|string|max:10',
                 'direction'     =>  'required|string',
                 'matricule'     =>  'required|string|max:15',
@@ -253,7 +257,7 @@ class EmployeeController extends Controller
         $categorie=$request->input('categorie');
         $categories_id = Category::where('name', $categorie)->first()->id;
 
-        $roles_id = Role::where('name','Administrateur')->first()->id;
+        $roles_id = Role::where('name', 'Administrateur')->first()->id;
 
         $date = Carbon::createFromFormat('Y-m-d', $request->input('date_naiss'));
         $fin = $date->addYears(60);
@@ -261,19 +265,21 @@ class EmployeeController extends Controller
         $civilite = $request->input('civilite');
         
         if ($civilite == "Mme") {
-           $sexe = "F";
+            $sexe = "F";
         } elseif ($civilite == "M.") {
             $sexe = "M";
         } else {
-               $sexe = "";
+            $sexe = "";
         }
 
-        $updated_by1 = Auth::user()->firstname;
+       /*  $updated_by1 = Auth::user()->firstname;
         $updated_by2 = Auth::user()->name;
         $updated_by3 = Auth::user()->username;
 
-        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
-
+        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';     */    
+        $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
+        $user_connect           =              Auth::user();
+        $updated_by             =              strtolower($user_connect->username);
                 
         if (request('image')) {
             $imagePath = request('image')->store('avatars', 'public');
@@ -281,29 +287,29 @@ class EmployeeController extends Controller
             $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
             $image->save();
     
-                $user->profile->update([
+            $user->profile->update([
                 'image' => $imagePath
                 ]);
     
-                $user->update([
-                'civilite' => $data['civilite'],
-                'sexe' => $sexe,
-                'firstname' => $data['firstname'],
-                'name' => $data['name'],
-                'date_naissance' => $data['date_naiss'],
-                'lieu_naissance' => $data['lieu'],
-                'situation_familiale' => $data['familiale'],
-                'adresse' => $data['adresse'],
-                'telephone' => $data['telephone'],
-                'fixe' => $data['fixe'],
-                'bp' => $data['bp'],
-                'fax' => $data['fax'],
-                'roles_id' => $roles_id,
-                'updated_by' =>     $updated_by,
+            $user->update([
+                'civilite'          => $data['civilite'],
+                'sexe'              => $sexe,
+                'firstname'         => $data['firstname'],
+                'name'              => $data['name'],
+                'date_naissance'    => $data['date_naiss'],
+                'lieu_naissance'    => $data['lieu'],
+                'familiales_id'     => $familiale_id,
+                'adresse'           => $data['adresse'],
+                'telephone'         => $data['telephone'],
+                'fixe'              => $data['fixe'],
+                'bp'                => $data['bp'],
+                'fax'               => $data['fax'],
+                'roles_id'          => $roles_id,
+                'updated_by'        => $updated_by,
 
                 ]);
                 
-                $employee->update([
+            $employee->update([
                 'matricule'         =>      $data['matricule'],
                 'cin'               =>      $data['cin'],
                 'date_embauche'     =>      $data['date_embauche'],
@@ -315,29 +321,28 @@ class EmployeeController extends Controller
                 'roles_id'          =>      $roles_id,
 
                 ]);
-    
-            }  else {
-                $user->profile->update($data);
+        } else {
+            $user->profile->update($data);
 
-                $user->update([
-                'civilite' => $data['civilite'],
-                'sexe' => $sexe,
-                'firstname' => $data['firstname'],
-                'name' => $data['name'],
-                'date_naissance' => $data['date_naiss'],
-                'lieu_naissance' => $data['lieu'],
-                'situation_familiale' => $data['familiale'],    
-                'adresse' => $data['adresse'],            
-                'bp' => $data['bp'],
-                'fax' => $data['fax'],
-                'telephone' => $data['telephone'],
-                'fixe' => $data['fixe'],
-                'roles_id' => $roles_id,
-                'updated_by'   =>     $updated_by,
+            $user->update([
+                'civilite'          => $data['civilite'],
+                'sexe'              => $sexe,
+                'firstname'         => $data['firstname'],
+                'name'              => $data['name'],
+                'date_naissance'    => $data['date_naiss'],
+                'lieu_naissance'    => $data['lieu'],
+                'familiales_id'     => $familiale_id,
+                'adresse'           => $data['adresse'],
+                'bp'                => $data['bp'],
+                'fax'               => $data['fax'],
+                'telephone'         => $data['telephone'],
+                'fixe'              => $data['fixe'],
+                'roles_id'          => $roles_id,
+                'updated_by'        => $updated_by,
 
                 ]);
 
-                $employee->update([
+            $employee->update([
                 'matricule'         =>      $data['matricule'],
                 'cin'               =>      $data['cin'],
                 'date_embauche'     =>      $data['date_embauche'],
@@ -349,7 +354,7 @@ class EmployeeController extends Controller
                 'roles_id'          =>      $roles_id,
 
                 ]);
-            }
+        }
 
         $success = $employee->user->firstname.' '.$employee->user->name.' a été modifié(e) avec succès';
         return redirect()->route('employees.index')->with(compact('success'));
@@ -376,8 +381,8 @@ class EmployeeController extends Controller
 
         $utilisateurs->save();
        
-            $employee->user->delete();
-            $employee->delete();
+        $employee->user->delete();
+        $employee->delete();
 
         $message = $employee->user->firstname.' '.$employee->user->name.' a été supprimé(e)';
         return redirect()->route('employees.index')->with('success', 'employé supprimée avec succès !');

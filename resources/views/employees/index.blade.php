@@ -30,33 +30,21 @@
                                 id="table-employees">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th>Matricule</th>
-                                        <th width="150px">Nom</th>
+                                        <th style="width:5%;">Matricule</th>
+                                        <th style="width:20%;">Nom</th>
                                         {{--  <th>Prenom</th>
                                         <th>Nom</th>  --}}
-                                        <th width="200px">Date et lieu nais.</th>
+                                        <th style="width:20%;">Date et lieu naissance</th>
                                         {{--  <th>Lieu Nais.</th>  --}}
                                         {{--  <th>Email</th>  --}}
-                                        <th>Telephone</th>
-                                        <th width="300px">Fonction</th>
-                                        <th>Direction</th>
-                                        <th width="100px">Action</th>
+                                        <th style="width:10%;">Telephone</th>
+                                        <th style="width:20%;">Fonction</th>
+                                        <th style="width:12%;">Direction</th>
+                                        <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
-                                    <tr>
-                                        <th>Matricule</th>
-                                        <th>Nom</th>
-                                        {{--  <th>Prenom</th>
-                                        <th>Nom</th>  --}}
-                                        <th>Date et lieu nais.</th>
-                                        {{--  <th>Lieu Nais.</th>  --}}
-                                        {{--  <th>Email</th>  --}}
-                                        <th>Telephone</th>
-                                        <th>Fonction</th>
-                                        <th>Direction</th>
-                                        <th>Action</th>
-                                    </tr>
+                             
                                 </tfoot>
                                 <tbody>
                                     @foreach ($employees as $employee)

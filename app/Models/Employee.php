@@ -175,4 +175,9 @@ class Employee extends Model
 	{
 		return $this->hasMany(Stagiaire::class, 'employees_id');
 	}
+		
+	public function chef()
+	{
+		return $this->belongsTo(Direction::class, 'chef_id');
+	}
 }

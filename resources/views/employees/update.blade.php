@@ -140,9 +140,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             {!! Form::label('Situation familiale') !!}
-                            {!! Form::select('familiale', ['Marié(e)' => 'Marié(e)', 'Célibataire' => 'Célibataire'], $employee->user->situation_familiale,
-                            ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' =>
-                            'familiale']) !!}
+                            {!! Form::select('familiale', $familiale, $employee->user->familiale->name ?? old('familiale'), ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                             <small id="emailHelp" class="form-text text-muted">
                                 @if ($errors->has('familiale'))
                                     @foreach ($errors->get('familiale') as $message)

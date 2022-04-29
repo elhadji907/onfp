@@ -51,15 +51,15 @@ class DirectionController extends Controller
               'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
           ]); */
     
-        $direction_id=$request->input('direction');
-        $direction = Direction::find($direction_id);
+        $direction_id  =  $request->input('direction');
+        $direction     =  Direction::find($direction_id);
     
-        $types_directions = TypesDirection::distinct('name')->get()->pluck('name', 'id')->unique();
-        $fonctions = Fonction::distinct('name')->get()->pluck('name', 'id')->unique();
+        $types_directions   = TypesDirection::distinct('name')->get()->pluck('name', 'id')->unique();
+        $fonctions          = Fonction::distinct('name')->get()->pluck('name', 'id')->unique();
            
-        $employee_id=$request->input('employee');
-        $employee= Employee::find($employee_id);
-        $user = $employee->user;
+        $employee_id        =   $request->input('employee');
+        $employee           =   Employee::find($employee_id);
+        $user               =   $employee->user;
     
         /*  dd($employee); */
     
@@ -141,10 +141,8 @@ class DirectionController extends Controller
         
         //dd($types_directions);
 
-        $employees = Employee::distinct('matricule')->get()->pluck('matricule', 'matricule')->unique();
-
-        //dd($employees);
-
+        /* $employees = Employee::distinct('matricule')->get()->pluck('matricule', 'matricule')->unique(); */
+        $employees = Employee::all();
         return view('directions.update', compact('directions', 'id', 'types_directions', 'employees'));
     }
 
@@ -160,26 +158,20 @@ class DirectionController extends Controller
         $this->validate(
             $request,
             [
-                'direction'     => 'required|string|max:250',
-                'sigle'         => 'required|string|max:10',
-                'type_direction'      => 'required',
+                'name'             => 'required|string|max:250',
+                'sigle'                 => 'required|string|max:10',
+                'type_direction'        => 'required',
             ]
         );
 
         $direction = Direction::find($id);
             
         $types_directions_id = TypesDirection::where('name', $request->input('type_direction'))->first()->id;
-            
-        /*  dd($types_directions_id); */
 
-        //dd($request->input('employee'));
-           
-        $employee = Employee::where('matricule', $request->input('employee'))->first()->id;
-
-        $direction->name                    =     $request->input('direction');
+        $direction->name                    =     $request->input('name');
         $direction->sigle                   =     $request->input('sigle');
         $direction->types_directions_id     =     $types_directions_id;
-        $direction->chef_id                 =     $employee;
+        $direction->chef_id                 =     $request->input('employee');
 
         $direction->save();
         
@@ -194,6 +186,7 @@ class DirectionController extends Controller
      */
     public function destroy(Direction $direction)
     {
+        dd("ok");
         $direction->delete();
         $message = $direction->sigle.' a été supprimé(e)';
         return redirect()->route('directions.index')->with(compact('message'));
