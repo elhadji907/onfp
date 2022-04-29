@@ -99,11 +99,9 @@ class EmployeeController extends Controller
                 'matricule'     =>  'required|string|max:50',
                 'categorie'     =>  'required|string|max:50',
                 'firstname'     =>  'required|string|max:50',
-                'fonction'      =>  'required|string',
                 'name'          =>  'required|string|max:50',
-                'username'      =>  'required|string|max:50',
                 'telephone'     =>  'required|string|max:50',
-                'fixe'          =>  'required|string|max:50',
+                'fixe'          =>  'sometimes',
                 'email'         =>  'required|email|max:255|unique:users,email',
                 'cin'           =>  'required|string|min:12|max:15',
                 'adresse'       =>  'string',
@@ -133,12 +131,22 @@ class EmployeeController extends Controller
 
         $familiale_id = $request->input('familiale');
 
+        $employee = Employee::all()->count();
+
+        if (isset($employee) && $employee > 0) {
+            $user_id = 0;
+        } else {
+            $user_id             =   Employee::latest('id')->first()->id;
+        }
+
+        $username            =   strtolower($request->input('name').$user_id);
+
         $utilisateur = new User([
             'civilite'              =>      $request->input('civilite'),
             'sexe'                  =>      $sexe,
             'firstname'             =>      $request->input('firstname'),
             'name'                  =>      $request->input('name'),
-            'username'              =>      $request->input('username'),
+            'username'              =>      $username,
             'date_naissance'        =>      $request->input('date_naiss'),
             'lieu_naissance'        =>      $request->input('lieu'),
             'familiales_id'         =>      $familiale_id,
@@ -231,11 +239,10 @@ class EmployeeController extends Controller
                 'fonction'      =>  'required|string',
                 'name'          =>  'required|string|max:50',
                 'telephone'     =>  'required|string|max:50',
-                'fixe'          =>  'required|string|max:50',
+                'fixe'          =>  'sometimes',
                 'cin'           =>  'required|string|min:12|max:15',
                 'familiale'     =>  'required|string',
                 'adresse'       =>  'string',
-                'autre_adresse' =>  '',
                 'date_naiss'    =>  'required|date',
                 'date_embauche' =>  'required|date',
                 'lieu'          =>  'required|string',
@@ -272,11 +279,11 @@ class EmployeeController extends Controller
             $sexe = "";
         }
 
-       /*  $updated_by1 = Auth::user()->firstname;
-        $updated_by2 = Auth::user()->name;
-        $updated_by3 = Auth::user()->username;
+        /*  $updated_by1 = Auth::user()->firstname;
+         $updated_by2 = Auth::user()->name;
+         $updated_by3 = Auth::user()->username;
 
-        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';     */    
+         $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';     */
         $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
         $user_connect           =              Auth::user();
         $updated_by             =              strtolower($user_connect->username);
@@ -313,7 +320,7 @@ class EmployeeController extends Controller
                 'matricule'         =>      $data['matricule'],
                 'cin'               =>      $data['cin'],
                 'date_embauche'     =>      $data['date_embauche'],
-                'adresse'           =>      $data['autre_adresse'],
+                'adresse'           =>      $data['adresse'],
                 'fin'               =>      $fin,
                 'directions_id'     =>      $directions_id,
                 'fonctions_id'      =>      $fonctions_id,
@@ -347,7 +354,7 @@ class EmployeeController extends Controller
                 'cin'               =>      $data['cin'],
                 'date_embauche'     =>      $data['date_embauche'],
                 'fin'               =>      $fin,
-                'adresse'           =>      $data['autre_adresse'],
+                'adresse'           =>      $data['adresse'],
                 'directions_id'     =>      $directions_id,
                 'fonctions_id'      =>      $fonctions_id,
                 'categories_id'     =>      $categories_id,

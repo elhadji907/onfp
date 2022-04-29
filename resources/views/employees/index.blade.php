@@ -63,8 +63,8 @@
                                                 {!! $employee->user->date_naissance->format('d/m/Y') !!} à {!! $employee->user->lieu_naissance !!}</td>
                                             {{--  <td></td>  --}}
                                             {{--  <td>{!! $employee->user->email !!}</td>  --}}
-                                            <td>{!! $employee->user->telephone !!}</td>
-                                            <td>{!! $employee->fonction->name !!}</td>
+                                            <td>{!! $employee->user->telephone ?? '' !!}</td>
+                                            <td>{!! $employee->fonction->name ?? '' !!}</td>
                                             <td>
                                                 @if(isset($employee->direction->sigle ))
                                                     {!! $employee->direction->sigle !!}
