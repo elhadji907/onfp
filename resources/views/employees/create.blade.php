@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title', 'ONFP - Enregistrement Employes')
 @section('content')
-    <div class="container">
+<div class="container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="container-fluid">
             {{-- @if ($errors->any())
             <div class="alert alert-danger">

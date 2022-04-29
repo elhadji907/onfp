@@ -74,13 +74,6 @@ class EmployeeController extends Controller
         $fonctions = Fonction::pluck('name', 'id');
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
 
-        /*    $chart      = Courrier::all();
-           $chart = new Courrierchart;
-           $chart->labels(['', '', '']);
-           $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
-               'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-           ]); */
-
         return view('employees.create', compact('roles', 'civilites', 'directions', 'categories', 'fonctions', 'familiale'));
     }
 
@@ -112,6 +105,26 @@ class EmployeeController extends Controller
             ]
         );
         
+        $employee = Employee::all()->count();
+
+        if (isset($employee) && $employee <= 0) {
+            $user_id = 0;
+        } else {
+            $user_id             =   Employee::latest('id')->first()->id;
+        }
+
+        $longueur            =      strlen($user_id);
+
+        if ($longueur <= 1) {
+            $user_id   =   strtolower("00".$user_id);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $user_id   =   strtolower("0".$user_id);
+        } else {
+            $user_id   =   strtolower($user_id);
+        }
+
+        $username            =   strtolower($request->input('name').$user_id.'E');
+
         $roles_id = Role::where('name', 'Administrateur')->first()->id;
 
         $civilite = $request->input('civilite');
@@ -131,15 +144,6 @@ class EmployeeController extends Controller
 
         $familiale_id = $request->input('familiale');
 
-        $employee = Employee::all()->count();
-
-        if (isset($employee) && $employee > 0) {
-            $user_id = 0;
-        } else {
-            $user_id             =   Employee::latest('id')->first()->id;
-        }
-
-        $username            =   strtolower($request->input('name').$user_id);
 
         $utilisateur = new User([
             'civilite'              =>      $request->input('civilite'),
@@ -208,15 +212,6 @@ class EmployeeController extends Controller
         $fonctions = Fonction::pluck('name', 'name');
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        //dd($employee);
-
-        /*     $chart      = Courrier::all();
-            $chart = new Courrierchart;
-            $chart->labels(['', '', '']);
-            $chart->dataset('STATISTIQUES', 'bar', ['','',''])->options([
-                'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
-            ]); */
-
         return view('employees.update', compact('employee', 'directions', 'civilites', 'categories', 'fonctions', 'familiale'));
     }
 
@@ -233,6 +228,7 @@ class EmployeeController extends Controller
             [
                 'civilite'      =>  'required|string|max:10',
                 'direction'     =>  'required|string',
+                'email'         =>  'required|email|max:255|unique:users,email,'.$employee->user->id,
                 'matricule'     =>  'required|string|max:15',
                 'categorie'     =>  'required|string|max:50',
                 'firstname'     =>  'required|string|max:50',
@@ -279,11 +275,6 @@ class EmployeeController extends Controller
             $sexe = "";
         }
 
-        /*  $updated_by1 = Auth::user()->firstname;
-         $updated_by2 = Auth::user()->name;
-         $updated_by3 = Auth::user()->username;
-
-         $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';     */
         $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
         $user_connect           =              Auth::user();
         $updated_by             =              strtolower($user_connect->username);
@@ -303,6 +294,7 @@ class EmployeeController extends Controller
                 'sexe'              => $sexe,
                 'firstname'         => $data['firstname'],
                 'name'              => $data['name'],
+                'email'             => $data['email'],
                 'date_naissance'    => $data['date_naiss'],
                 'lieu_naissance'    => $data['lieu'],
                 'familiales_id'     => $familiale_id,

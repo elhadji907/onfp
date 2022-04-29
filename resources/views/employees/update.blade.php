@@ -18,7 +18,7 @@
                 <div class="card-body">
                     {!! Form::open(['url' => 'employees/' . $employee->id, 'method' => 'PATCH', 'files' => true]) !!}
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('civilite') !!}
                             {!! Form::select('civilite', $civilites, $employee->user->civilite, ['placeholder' => '', 'class' => 'form-control', 'id' => 'civilite']) !!}
                             <small id="emailHelp" class="form-text text-muted">
@@ -29,20 +29,18 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
-                            {!! Form::label('direction') !!}
-                            {!! Form::select('direction', $directions, $employee->direction->sigle ?? '', ['placeholder' => '', 'class' => 'form-control', 'id' => 'direction']) !!}
+                        <div class="form-group col-md-4">
+                            {!! Form::label('Situation familiale') !!}
+                            {!! Form::select('familiale', $familiale, $employee->user->familiale->name ?? old('familiale'), ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
                             <small id="emailHelp" class="form-text text-muted">
-                                @if ($errors->has('direction'))
-                                    @foreach ($errors->get('direction') as $message)
+                                @if ($errors->has('familiale'))
+                                    @foreach ($errors->get('familiale') as $message)
                                         <p class="text-danger">{{ $message }}</p>
                                     @endforeach
                                 @endif
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('categorie') !!}
                             {!! Form::select('categorie', $categories, $employee->category->name, ['placeholder' => '', 'class' => 'form-control', 'id' => 'categorie']) !!}
                             <small id="emailHelp" class="form-text text-muted">
@@ -53,19 +51,6 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
-                            {!! Form::label('fonction') !!}
-                            {!! Form::select('fonction', $fonctions, $employee->fonction->name ?? '', ['placeholder' => '', 'class' => 'form-control', 'id' => 'fonction']) !!}
-                            <small id="emailHelp" class="form-text text-muted">
-                                @if ($errors->has('fonction'))
-                                    @foreach ($errors->get('fonction') as $message)
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @endforeach
-                                @endif
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             {!! Form::label('prenom') !!}
                             {!! Form::text('firstname', $employee->user->firstname, ['placeholder' => 'Votre prenom', 'class' => 'form-control']) !!}
@@ -88,8 +73,6 @@
                                 @endif
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             {!! Form::label('Date de naissance', null, ['class' => 'control-label']) !!}
                             {!! Form::date('date_naiss', Carbon\Carbon::parse($employee->user->date_naissance)->format('Y-m-d'), ['placeholder' => 'La date de naissance', 'class' => 'form-control']) !!}
@@ -112,8 +95,17 @@
                                 @endif
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {!! Form::label('votre adresse e-mail') !!}(<span class="text-danger">*</span>)
+                            {!! Form::email('email', $employee->user->email, ['placeholder' => 'Votre adresse e-mail', 'class' => 'form-control', 'id' => 'email']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('email'))
+                                    @foreach ($errors->get('email') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
                         <div class="form-group col-md-6">
                             {!! Form::label('cin') !!}
                             {!! Form::text('cin', $employee->cin, ['placeholder' => 'Votre cin', 'class' => 'form-control']) !!}
@@ -139,19 +131,6 @@
                                 @endif
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {!! Form::label('Situation familiale') !!}
-                            {!! Form::select('familiale', $familiale, $employee->user->familiale->name ?? old('familiale'), ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
-                            <small id="emailHelp" class="form-text text-muted">
-                                @if ($errors->has('familiale'))
-                                    @foreach ($errors->get('familiale') as $message)
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @endforeach
-                                @endif
-                            </small>
-                        </div>
                         <div class="form-group col-md-6">
                             {!! Form::label('date embauche', null, ['class' => 'control-label']) !!}
                             {!! Form::date('date_embauche', Carbon\Carbon::parse($employee->date_embauche)->format('Y-m-d'), ['placeholder' => 'La date de recrutement', 'class' => 'form-control']) !!}
@@ -163,8 +142,6 @@
                                 @endif
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-12">
                             {!! Form::label('Adresse') !!}
                             {!! Form::text('adresse', $employee->user->adresse, ['placeholder' => 'Votre adresse', 'class' => 'form-control']) !!}
@@ -176,8 +153,6 @@
                                 @endif
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             {!! Form::label('Telephone portable') !!}
                             {!! Form::text('telephone', $employee->user->telephone, ['placeholder' => 'Numero de telephone portable', 'class' => 'form-control']) !!}
@@ -200,8 +175,6 @@
                                 @endif
                             </small>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
                             {!! Form::label('Numero fax') !!}
                             {!! Form::text('fax', $employee->user->fax, ['placeholder' => 'Votre numero fax', 'class' => 'form-control']) !!}
@@ -210,8 +183,28 @@
                             {!! Form::label('Boite postale') !!}
                             {!! Form::text('bp', $employee->user->bp, ['placeholder' => 'Votre Boite postale', 'class' => 'form-control']) !!}
                         </div>
-                    </div>
-                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {!! Form::label('direction') !!}
+                            {!! Form::select('direction', $directions, $employee->direction->sigle ?? '', ['placeholder' => '', 'class' => 'form-control', 'id' => 'direction']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('direction'))
+                                    @foreach ($errors->get('direction') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
+                        <div class="form-group col-md-6">
+                            {!! Form::label('fonction') !!}
+                            {!! Form::select('fonction', $fonctions, $employee->fonction->name ?? '', ['placeholder' => '', 'class' => 'form-control', 'id' => 'fonction']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('fonction'))
+                                    @foreach ($errors->get('fonction') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
                         <div class="form-group col-md-6">
                             {!! Form::label('Image de profile') !!}<br />
                             {!! Form::file('image', null, ['class' => 'form-control-file rounded-circle w-100']) !!}
