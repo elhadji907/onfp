@@ -30,6 +30,7 @@
                                 id="table-employees">
                                 <thead class="table-dark">
                                     <tr>
+                                        <th style="width:5%;"></th>
                                         <th style="width:5%;">Matricule</th>
                                         <th style="width:20%;">Nom</th>
                                         {{--  <th>Prenom</th>
@@ -39,7 +40,7 @@
                                         {{--  <th>Email</th>  --}}
                                         <th style="width:10%;">Telephone</th>
                                         <th style="width:20%;">Fonction</th>
-                                        <th style="width:12%;">Direction</th>
+                                        <th style="width:5%;">Direction</th>
                                         <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
@@ -49,6 +50,10 @@
                                 <tbody>
                                     @foreach ($employees as $employee)
                                         <tr>
+                                            <td>
+                                                <img style="width:50%; max-width:50px;" class="rounded-circle w-100"
+                                                src="{{ asset($employee->user->profile->getImage()) }}" />
+                                            </td>
                                             <td>{!! $employee->matricule !!}</td>
                                             <td>{!! $employee->user->civilite !!} {!! $employee->user->firstname !!} {!! mb_strtoupper($employee->user->name) !!}</td>
                                             {{--  <td></td>
