@@ -83,13 +83,12 @@
                             <tr>
                                 <th style="width:3%;">N°</th>
                                 <th style="width:5%;">Civilité</th>
-                                <th style="width:10%;">Prenom</th>
-                                <th style="width:7%;">Nom</th>
-                                <th style="width:8%;">Date nais.</th>
-                                <th style="width:8%;">Lieu nais.</th>
+                                <th style="width:12%;">Prenom</th>
+                                <th style="width:10%;">Nom</th>
+                                <th style="width:10%;">Date naissance</th>
+                                <th style="width:10%;">Lieu naissance</th>
                                 <th style="width:5%;">Téléphone</th>
-                                <th style="width:8%;">Communes</th>
-                                <th style="width:10%;">Adresse</th>
+                                <th style="width:15%;">Adresse</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,7 +103,6 @@
                                         <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                         <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
                                         <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                        <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                         <td>{!! ucfirst(strtolower($individuelle->adresse)) ?? '' !!}</td>
                                     </tr>
                                 @endif
