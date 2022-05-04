@@ -19,7 +19,7 @@
                         département de {{ $zones->localite->nom }}
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive"  align="right">
+                        <div class="table-responsive" align="right">
                             <a href="{{ url('listecandidatretenus', ['$projet' => $projet, '$zone' => $zone_concernee, '$module' => $module]) }}"
                                 target="_blank">
                                 <div class="btn btn-info btn-sm"><i class="fas fa-print"></i>&nbsp;Imprimer</i>
@@ -81,7 +81,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 @push('scripts')
