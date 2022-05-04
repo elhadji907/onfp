@@ -15,62 +15,52 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des demandeurs retenus dans la commune de {{ $zone_concernee }}
+                        {{ $modules->name }} : liste des demandeurs retenus dans la commune de {{ $zone_concernee }},
+                        département de {{ $zones->localite->nom }}
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <div class="table-responsive">
-                                <div align="right">
-                                    <a href="{{ route('agerouteindividuelles.create') }}">
-                                        <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
-                                        </div>
-                                    </a>
+                        <div class="table-responsive"  align="right">
+                            <a href="{{ url('listecandidatretenus', ['$projet' => $projet, '$zone' => $zone_concernee, '$module' => $module]) }}"
+                                target="_blank">
+                                <div class="btn btn-info btn-sm"><i class="fas fa-print"></i>&nbsp;Imprimer</i>
                                 </div>
-                                <table class="table table-bordered" id="table-ageroutebeneficiaires">
-                                    <thead class="table-dark">
+                            </a>
+                        </div>
+                        <table class="table table-bordered" id="table-ageroutebeneficiaires">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th style="width:2%;">N°</th>
+                                    <th style="width:10%;">N° CIN</th>
+                                    <th style="width:4%;">Civilité</th>
+                                    <th style="width:10%;">Prenom</th>
+                                    <th style="width:8%;">Nom</th>
+                                    <th style="width:8%;">Date naissance</th>
+                                    <th style="width:8%;">Lieu naissance</th>
+                                    <th style="width:5%;">Téléphone</th>
+                                    <th style="width:15%;">Adresse</th>
+                                    {{-- <th style="width:8%;"></th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $h = 1; ?>
+                                @foreach ($individuelles as $key => $individuelle)
+                                    @if (isset($individuelle) && $individuelle->zone->nom == $zone_concernee && $individuelle->module->name == $modules->name && $individuelle->statut == 'accepter')
                                         <tr>
-                                            <th style="width:10%;">N° CIN</th>
-                                            <th style="width:5%;">Civilité</th>
-                                            <th style="width:8%;">Prenom</th>
-                                            <th style="width:5%;">Nom</th>
-                                            <th style="width:8%;">Date nais.</th>
-                                            <th style="width:8%;">Lieu nais.</th>
-                                            <th style="width:5%;">Téléphone</th>
-                                            <th style="width:8%;">Département</th>
-                                            <th style="width:24%;">Module</th>
-                                            <th style="width:8%;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $i = 1; ?>
-                                        @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->zone->nom == $zone_concernee && $individuelle->statut == "accepter")
-                                                <tr>
-                                                    <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->civilite !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                                    <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
-                                                    <td>
-                                                        <?php $h = 1; ?>
-                                                            @if (isset($individuelle->module->name))
-                                                                <a class="nav-link"
-                                                                    href="{{ url('listerparmodulezoneretenues', ['$projet' => $projet,'$zone' => $zone_concernee,'$module' => $individuelle->module->id]) }}"
-                                                                    target="_blank">
-                                                                    {!! $individuelle->module->name ?? '' !!}<br />
-                                                                </a>
-                                                            @else
-                                                            @endif
-                                                    </td>
-                                                    <td class="d-flex align-items-baseline">
-                                                        {{--  <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                            <td>{{ $h++ }}</td>
+                                            <td>{!! $individuelle->demandeur->cin !!}</td>
+                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
+                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
+                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                            <td>{!! $individuelle->demandeur->user->adresse ?? '' !!}</td>
+                                            {{-- <td class="d-flex align-items-baseline">
+                                                        <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                             <i class="far fa-eye">&nbsp;</i>
                                                         </a>
-                                                        &nbsp;  --}}
+                                                        &nbsp;
                                                         @can('role-delete')
                                                         <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                             title="modifier">
@@ -81,18 +71,17 @@
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}
                                                         @endcan
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                                    </td> --}}
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 @push('scripts')

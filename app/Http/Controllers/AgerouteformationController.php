@@ -20,6 +20,7 @@ use App\Models\Individuelle;
 use App\Models\Statut;
 use App\Models\Localite;
 use App\Models\Convention;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use DB;
 use PDF;
@@ -560,5 +561,44 @@ class AgerouteformationController extends Controller
 
         // Output the generated PDF to Browser
         $dompdf->stream($localite.', liste des candidats présélectionnés en '.$module.'.pdf', ['Attachment' => false]);
+    }
+    
+
+    public function listecandidatretenus($projet, $zone, $module)
+    {
+        $individuelles      =           Individuelle::get();
+        $module             =           Module::find($module);
+        $projet             =           Projet::find($projet);
+        $projet_name        =           $projet->name;
+        $projet_id          =           $projet->id;
+        $module_name        =           $module->name;
+        $individuelles      =           $projet->individuelles;
+
+        $zones = Zone::where('nom', $zone)->first()->id;
+        $zones = Zone::find($zones);
+        
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('agerouteindividuelles.listecandidatretenus', compact('individuelles', 'module_name', 'zone', 'projet', 'zones')));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($zone.', liste des candidats retenus en '.$module_name.'.pdf', ['Attachment' => false]);
     }
 }

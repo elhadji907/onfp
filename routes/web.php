@@ -186,6 +186,7 @@ Route::group([
         Route::get('listerparmodulelocalites/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalites'])->name('listerparmodulelocalites');
         Route::get('listerparmodulelocalitesaccepter/{projet}/{localite}/{module}', [AgerouteindividuelleController::class, 'listerparmodulelocalitesaccepter'])->name('listerparmodulelocalitesaccepter');
         Route::get('listerparmodulezone/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezone'])->name('listerparmodulezone');
+        Route::get('listerparmodulezoneretenues/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezoneretenues'])->name('listerparmodulezoneretenues');
         Route::get('candidatlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalite'])->name('candidatlocalite');
         Route::get('candidatlocalitevalides/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalitevalides'])->name('candidatlocalitevalides');
         Route::get('candidatzonevalides/{projet}/{zone}', [AgeroutelocaliteController::class, 'candidatzonevalides'])->name('candidatzonevalides');
@@ -231,6 +232,7 @@ Route::group([
 
         Route::get('fichesuivieval/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'fichesuivieval'])->name('fichesuivieval');
         Route::get('listecandidatacceptes/{projet}/{localite}/{module}', [AgerouteformationController::class, 'listecandidatacceptes'])->name('listecandidatacceptes');
+        Route::get('listecandidatretenus/{projet}/{zone}/{module}', [AgerouteformationController::class, 'listecandidatretenus'])->name('listecandidatretenus');
         Route::get('pvevaluation/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'pvevaluation'])->name('pvevaluation');
         
         Route::get('ajouternote/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'ajouternote'])->name('ajouternote');
