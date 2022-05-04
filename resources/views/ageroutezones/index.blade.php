@@ -31,7 +31,7 @@
                             <table class="table table-bordered" id="table-ageroutezones">
                                 <thead class="table-dark">
                                     <tr>
-                                        {{--  <th width="10%">N°</th>  --}}
+                                        {{-- <th width="10%">N°</th> --}}
                                         <th width="25%">Communes</th>
                                         <th width="10%">Effectif</th>
                                         <th width="3%">Valide</th>
@@ -39,7 +39,7 @@
                                         <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
-                          {{--        <tfoot class="table-dark">
+                                {{-- <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
                                         <th>Communes</th>
@@ -47,12 +47,12 @@
                                         <th>Départements</th>
                                         <th></th>
                                     </tr>
-                                </tfoot>  --}}
+                                </tfoot> --}}
                                 <tbody>
                                     <?php $h = 1; ?>
                                     @foreach ($zones as $key => $zone)
                                         <tr>
-                                            {{--  <td>{{ $h++ }}</td>  --}}
+                                            {{-- <td>{{ $h++ }}</td> --}}
                                             <td>{{ $zone->nom }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
@@ -69,20 +69,22 @@
                                             <td ALIGN="CENTER">
                                                 <?php $a = 0; ?>
                                                 @foreach ($zone->individuelles as $individuelle)
-                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "accepter")
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == 'accepter')
                                                         <?php $a++; ?>
                                                     @endif
                                                 @endforeach
-                                                
-                                                    <span class="badge badge-success">{!! $a !!}</span>
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatzonevalides', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
+                                                    target="_blank">
+                                                    <span class="badge badge-success">{!! $a !!}</span></a>
                                             </td>
                                             <td>
-                                                <span>{{ $zone->localite->nom ?? ""}}</span>
+                                                <span>{{ $zone->localite->nom ?? '' }}</span>
                                             </td>
                                             <td class="d-flex align-items-baseline align-middle">
-                                               {{--   <a class="btn btn-info btn-sm"
+                                                {{-- <a class="btn btn-info btn-sm"
                                                     href="{{ route('ageroutezones.show', $zone->id) }}"><i
-                                                        class="far fa-eye">&nbsp;</i></a>&nbsp;  --}}
+                                                        class="far fa-eye">&nbsp;</i></a>&nbsp; --}}
                                                 @can('role-edit')
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ route('ageroutezones.edit', $zone->id) }}"><i
