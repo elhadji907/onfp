@@ -193,10 +193,12 @@
                             </tr>
 
                             <tr class="heading">
-                                <td colspan="4" class="pt-3">Ingénieur en charge</td>
+                                <td colspan="3" class="pt-3">Ingénieur en charge</td>
+                                <td colspan="1" class="pt-3">Type de qualification</td>
                             </tr>
                             <tr class="details">
-                                <td colspan="4" class="pt-3">{!! $findividuelle->formation->ingenieur->name ?? '' !!}
+                                <td colspan="3" class="pt-3">{!! $findividuelle->formation->ingenieur->name ?? '' !!}
+                                <td colspan="1" class="pt-3">{!! $findividuelle->formation->qualifications ?? '' !!}
                             </tr>
                             <tr class="heading">
                                 <td colspan="2" class="pt-3">Département</td>
@@ -291,8 +293,12 @@
                                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                                                 </a>
                                             @else
-                                                <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
-                                                    title="retirer" class="btn btn-outline-warning btn-sm mt-0">
+                                               {{--   <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
+                                                    title="retirer" class="btn btn-outline-warning btn-sm mt-0" target="_blank">
+                                                    <i class="fa fa-share" aria-hidden="true"></i>
+                                                </a>  --}}
+                                                <a href=" {!! url('agerouteindividuellesmotif/' . $individuelle->id . '/edit') !!}" title="retirer"
+                                                    class="btn btn-outline-warning btn-sm mt-0" target="_blank">
                                                     <i class="fa fa-share" aria-hidden="true"></i>
                                                 </a>
                                             @endif

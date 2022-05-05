@@ -68,6 +68,8 @@ use App\Http\Controllers\IndividuellenoteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TypedirectionController;
 use App\Http\Controllers\FonctionController;
+use App\Http\Controllers\IndividuellemotifController;
+use App\Http\Controllers\IndividuellerangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -318,6 +320,8 @@ Route::group([
         Route::resource('/ageroutezones', AgeroutezoneController::class);
         Route::resource('/ageroutemodules', AgeroutemoduleController::class);
         Route::resource('/agerouteindividuelles', AgerouteindividuelleController::class);
+        Route::resource('/agerouteindividuellesmotif', IndividuellemotifController::class);
+        Route::resource('/agerouteindividuellesrang', IndividuellerangController::class);
         Route::resource('/agerouteformations', AgerouteformationController::class);
         Route::resource('/individuellenotes', IndividuellenoteController::class);
     });

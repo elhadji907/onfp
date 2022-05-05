@@ -101,6 +101,8 @@ class AgerouteformationController extends Controller
                 'frais_additionnels'  =>    'numeric',
                 'autres_frais'        =>    'numeric',
                 'types_formations'    =>    'required',
+                'annee'               =>    'numeric',
+                'qualification'       =>    'required',
         ]
         );
 
@@ -133,6 +135,8 @@ class AgerouteformationController extends Controller
             'total'                    =>      $request->input('total'),
             'lieu'                     =>      $request->input('lieu'),
             'modules_id'               =>      $request->input('modules'),
+            'annee'                    =>      $request->input('annee'),
+            'qualifications'           =>      $request->input('qualification'),
             'frais_operateurs'         =>      $frais_operateurs,
             'frais_add'                =>      $frais_additionnels,
             'autes_frais'              =>      $autres_frais,
@@ -231,6 +235,8 @@ class AgerouteformationController extends Controller
                 'autres_frais'        =>    'numeric',
                 'total'               =>    'numeric',
                 'types_formations'    =>    'required',
+                'annee'               =>    'numeric',
+                'qualification'       =>    'required',
         ]
         );
         
@@ -256,12 +262,14 @@ class AgerouteformationController extends Controller
         $formation->code                =      $request->input('code');
         $formation->date_debut          =      $request->input('date_debut');
         $formation->date_fin            =      $request->input('date_fin');
-        $formation->date_suivi            =      $request->input('date_suivi');
-        $formation->date_pv            =      $request->input('date_pv');
+        $formation->date_suivi          =      $request->input('date_suivi');
+        $formation->date_pv             =      $request->input('date_pv');
         $formation->adresse             =      $request->input('adresse');
         $formation->beneficiaires       =      $request->input('beneficiaire');
         $formation->total               =      $request->input('total');
         $formation->lieu                =      $request->input('lieu');
+        $formation->annee               =      $request->input('annee');
+        $formation->qualifications      =      $request->input('qualification');
         $formation->frais_operateurs    =      $frais_operateurs;
         $formation->frais_add           =      $frais_additionnels;
         $formation->autes_frais         =      $autres_frais;
@@ -384,6 +392,9 @@ class AgerouteformationController extends Controller
 
     public function formationcandidatsdelete($individuelle, $findividuelle)
     {
+
+        return view('agerouteindividuelles.enlevermotif', compact('individuelle'));
+
         $individuelle       =       Individuelle::find($individuelle);
         $demandeur          =       $individuelle->demandeur;
         $findividuelle      =       Findividuelle::find($findividuelle);

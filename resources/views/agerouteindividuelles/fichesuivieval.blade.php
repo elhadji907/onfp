@@ -109,6 +109,14 @@
                     </td>
                 </tr>
                 <tr>
+                    <td colspan="2"><b>{{ __('Type de qualification') }}</b> :
+                        {{ $formation->qualifications ?? '' }}
+                    </td>
+                    <td colspan="2"><b>{{ __('Ingénieur en charge') }}</b> :
+                        {{ $formation->ingenieur->name ?? '' }}
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2"><b>{{ __('Date début') }}</b> :
                         @if (isset($formation->date_debut))
                             {{ $formation->date_debut->format('d/m/Y') ?? '' }}
@@ -174,13 +182,13 @@
                 <div id="footer">
                     <span> <b>Observations :</b>
                     </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span> <b>Agent de suivi :</b> {{ $formation->ingenieur->name }}
-                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span> <b>Agent de suivi :</b> ............. .............................{{--  {{ $formation->ingenieur->name }}  --}}
+                    </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <span><b> Date :</b>
                         @if (isset($formation->date_suivi))
                             {{ $formation->date_suivi->format('d/m/Y') ?? '' }}
                         @else
-                            .................
+                            ................................
                         @endif
                     </span>
                 </div>

@@ -34,7 +34,6 @@
                             <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:3%;">N°</th>
                                         <th style="width:8%;">CIN</th>
                                         <th style="width:5%;">Civilité</th>
                                         <th style="width:8%;">Prenom</th>
@@ -44,6 +43,7 @@
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:8%;">Communes</th>
                                         <th style="width:12%;">Adresse</th>
+                                        <th style="width:2%;">Rang</th>
                                         @can('role-delete')
                                             <th style="width:5%;">Statut</th>
                                         @endcan
@@ -58,7 +58,7 @@
                                     @foreach ($individuelles as $key => $individuelle)
                                         @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module && $individuelle->statut == 'accepter')
                                             <tr>
-                                                <td>{{ $i++ }}</td>
+                                                {{--  <td>{{ $i++ }}</td>  --}}
                                                 <td>{!! $individuelle->demandeur->cin !!}</td>
                                                 <td>
                                                     {{-- <a href="{{ url('ageroutesexes', ['$sexe' => $individuelle->demandeur->user->sexe, '$localite' => $localite, '$projet' => $projet->id, '$module' => $module]) }}"
@@ -73,6 +73,16 @@
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                 <td>{!! $individuelle->adresse ?? '' !!}</td>
+                                                <td> 
+                                                    @if ($individuelle->items1)
+                                                        {{ $individuelle->items1 }}
+                                                    @else                                                        
+                                                    <a href=" {!! url('agerouteindividuellesrang/' . $individuelle->id . '/edit') !!}" title="classer"
+                                                        class="btn btn-outline-info btn-sm mt-0" target="_blank">
+                                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                                    </a>
+                                                    @endif
+                                                </td>
                                                 @can('role-delete')
                                                         <td>
                                                             <div class="d-flex justify-content-between align-items-center">
@@ -178,7 +188,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'asc']
+                    [9, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

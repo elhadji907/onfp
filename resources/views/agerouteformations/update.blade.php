@@ -31,6 +31,48 @@
                     {!! Form::open(['url' => 'agerouteformations/' . $findividuelle->id, 'method' => 'PATCH', 'files' => true]) !!}
                     @csrf
                     <div class="form-row">
+                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            {!! Form::label('Changer opérateur :') !!}(<span class="text-danger">*</span>)
+                            {!! Form::select('operateur', $operateurs, $findividuelle->formation->operateur->name ?? '', ['placeholder' => ' operateur', 'class' => 'form-control', 'id' => 'operateur', 'data-width' => '100%']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('operateur'))
+                                    @foreach ($errors->get('operateur') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <label for="annee">{{ __('Année') }}</label>(<span class="text-danger">*</span>)
+                            {!! Form::number('annee', $findividuelle->formation->annee ?? '', ['placeholder' => 'année', 'class' => 'form-control', 'min' => '2018', 'max' => '2030']) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('annee'))
+                                    @foreach ($errors->get('annee') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>                        
+                        <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <label>{{ __("Type de qualification ")}}</label> :(<span class="text-danger">*</span>)
+                            <br />
+                            {{ Form::radio('qualification', 'Titre', $findividuelle->formation->qualifications == 'Titre' ? 'checked' : '', ['class' => 'name']) }}
+                            {{ __('Titre') }}
+                            {{ Form::radio('qualification', 'Attestation', $findividuelle->formation->qualifications == 'Attestation' ? 'checked' : '', ['class' => 'name']) }}
+                            {{ __('Attestation') }}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('qualification'))
+                                    @foreach ($errors->get('qualification') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
                         {{-- <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="code">{{ __('CODE') }}(<span
                                         class="text-danger">*</span>)</label>
@@ -197,19 +239,6 @@
                             <small id="emailHelp" class="form-text text-muted">
                                 @if ($errors->has('total'))
                                     @foreach ($errors->get('total') as $message)
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @endforeach
-                                @endif
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                            {!! Form::label('Opérateur:') !!}(<span class="text-danger">*</span>)
-                            {!! Form::select('operateur', $operateurs, $findividuelle->formation->operateur->name ?? '', ['placeholder' => ' operateur', 'class' => 'form-control', 'id' => 'operateur', 'data-width' => '100%']) !!}
-                            <small id="emailHelp" class="form-text text-muted">
-                                @if ($errors->has('operateur'))
-                                    @foreach ($errors->get('operateur') as $message)
                                         <p class="text-danger">{{ $message }}</p>
                                     @endforeach
                                 @endif
@@ -419,6 +448,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

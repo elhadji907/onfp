@@ -27,6 +27,36 @@
                     </div>
                     <form method="POST" action="{{ url('agerouteformations') }}">
                         @csrf
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label for="annee">{{ __('Année') }}</label>(<span class="text-danger">*</span>)
+                                {!! Form::number('annee', null, ['placeholder' => 'année', 'class' => 'form-control', 'min' => '2018', 'max' => '2030']) !!}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('annee'))
+                                        @foreach ($errors->get('annee') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label>{{ __('Type de qualification ') }}</label> :(<span class="text-danger">*</span>)
+                                <br />
+                                {{ Form::radio('qualification', 'Titre', false, ['class' => 'name']) }}
+                                {{ __('Titre') }}
+                                {{ Form::radio('qualification', 'Attestation', false, ['class' => 'name']) }}
+                                {{ __('Attestation') }}
+                                <small id="emailHelp" class="form-text text-muted">
+                                    @if ($errors->has('qualification'))
+                                        @foreach ($errors->get('qualification') as $message)
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @endforeach
+                                    @endif
+                                </small>
+                            </div>
+
+                        </div>
                         <div class="form-row">
                             {{-- <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="code">{{ __('CODE') }}(<span
@@ -85,10 +115,8 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                <label for="adresse">{{ __('Adresse') }}(<span
-                                        class="text-danger">*</span>)</label>
-                                <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse"
-                                    rows="1"
+                                <label for="adresse">{{ __('Adresse') }}(<span class="text-danger">*</span>)</label>
+                                <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
                                     placeholder="adresse exacte des bénéficiares">{{ old('adresse') }}</textarea>
                                 @error('adresse')
                                     <div class="invalid-feedback">{{ $message }}</div>

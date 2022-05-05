@@ -294,7 +294,7 @@ $("#types_formations").select2({
   });
 </script>
 <script type="text/javascript">
-$("#choixoperateur").select2({
+$("#operateur").select2({
       placeholder: "choix opérateur",
       allowClear: true
   });
