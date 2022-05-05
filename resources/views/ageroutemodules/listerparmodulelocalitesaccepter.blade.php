@@ -73,12 +73,7 @@
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                 <td>{!! $individuelle->adresse ?? '' !!}</td>
-                                                <td>
-                                                    @if ($individuelle->items1)
-                                                        {{ $individuelle->items1 }}
-                                                    @else
-                                                    @endif
-                                                </td>
+                                                <td>{{ $individuelle->items1 ?? '' }}</td>
                                                 @can('role-delete')
                                                     <td>
                                                         <div class="d-flex justify-content-between align-items-center">
