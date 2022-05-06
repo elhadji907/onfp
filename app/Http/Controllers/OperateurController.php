@@ -11,12 +11,13 @@ use App\Models\Module;
 use App\Models\Commune;
 use App\Models\TypesOperateur;
 use App\Models\Region;
-use Auth;
-use PDF;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Auth;
+use PDF;
+use DB;
 
 class OperateurController extends Controller
 {
@@ -227,8 +228,18 @@ class OperateurController extends Controller
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $regions = Region::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        
+        $module = Module::get();
+        $operateurModules = DB::table("modulesoperateurs")->where("modulesoperateurs.operateurs_id", $operateur->id)
+        ->pluck('modulesoperateurs.modules_id', 'modulesoperateurs.modules_id')
+        ->all();
 
-        return view('operateurs.update', compact('operateur', 'modules', 'utilisateurs', 'civilites', 'communes', 'regions', 'types_operateurs'));
+        $region = Region::get();
+        $operateurRegions = DB::table("operateursregions")->where("operateursregions.operateurs_id", $operateur->id)
+        ->pluck('operateursregions.regions_id', 'operateursregions.regions_id')
+        ->all();
+
+        return view('operateurs.update', compact('operateur', 'modules', 'utilisateurs', 'civilites', 'communes', 'regions', 'types_operateurs', 'module', 'region', 'operateurRegions', 'operateurModules'));
     }
 
     /**
@@ -269,7 +280,7 @@ class OperateurController extends Controller
 
         $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
         $communes_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $types_operateurs_id = TypesOperateur::where('name', $request->input('type_operateur'))->first()->id;
+        /* $types_operateurs_id = TypesOperateur::where('name', $request->input('type_operateur'))->first()->id; */
 
         
         $telephone = $request->input('telephone');
@@ -320,15 +331,17 @@ class OperateurController extends Controller
         $operateur->telephone_responsable   =      $request->input('telephone');
         $operateur->email_responsable       =      $request->input('email');
         $operateur->fonction_responsable    =      $request->input('fonction_responsable');
+        $operateur->operateur_type          =      $request->input('type_operateur');
+        $operateur->file10                  =      $request->input('autres_type_operateur');
         $operateur->communes_id             =      $communes_id;
-        $operateur->types_operateurs_id     =      $types_operateurs_id;
+        /* $operateur->types_operateurs_id     =      $types_operateurs_id; */
         $operateur->typestructure           =      $request->input('type_structure');
         $operateur->users_id                =      $utilisateur->id;
 
         $operateur->save();
 
-        $operateur->regions()->sync($request->input('regions'));
-        $operateur->modules()->sync($request->input('modules'));
+        $operateur->regions()->sync($request->input('region'));
+        $operateur->modules()->sync($request->input('module'));
 
         /* dd($request->input('modules')); */
 
