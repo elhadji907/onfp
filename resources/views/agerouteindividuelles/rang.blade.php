@@ -19,8 +19,8 @@
                 @endif
                 <div class="card border-success">
                     <div class="card card-header text-center bg-gradient-default border-success">
-                        <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
-                                class="font-italic">Faire un classement</span></h1>
+                       {{--   <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
+                                class="font-italic">Faire un classement</span></h1>  --}}
                                 <span>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} {!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!}</span>
                     </div>
                     <div class="card-body">
