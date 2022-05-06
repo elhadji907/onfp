@@ -21,6 +21,7 @@
                     <div class="card card-header text-center bg-gradient-default border-success">
                         <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
                                 class="font-italic">Faire un classement</span></h1>
+                                <span>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} {!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!}</span>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires
@@ -29,7 +30,7 @@
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                <label for="rang">{{ __('Rang') }}</label>(<span class="text-danger">*</span>)
+                                <label for="rang"><b>{{ __('Rang : ') }}</b></label>(<span class="text-danger">*</span>)
                                 {!! Form::number('rang', $individuelle->items1 ?? '', ['placeholder' => 'rang', 'class' => 'form-control', 'min' => '1']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('rang'))
