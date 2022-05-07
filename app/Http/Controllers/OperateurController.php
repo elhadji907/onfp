@@ -72,8 +72,9 @@ class OperateurController extends Controller
         $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
 
         $regions = Region::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $region = Region::get();
 
-        return view('operateurs.create', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur'));
+        return view('operateurs.create', compact('civilites', 'modules', 'communes', 'regions', 'types_operateurs', 'operateur', 'region'));
     }
 
     /**
@@ -101,7 +102,7 @@ class OperateurController extends Controller
                 'nom'                       =>       'required|string|max:50',
                 'email'                     =>       'required|email|max:255|unique:users,email,'.$user->id,
                 'telephone'                 =>       'required|string|max:15',
-                'regions'                   =>       'required',
+                'region'                    =>       'required',
                 'type_structure'            =>       'required',
                 'type_operateur'            =>       'required',
                 'fonction_responsable'      =>       'required',
@@ -162,7 +163,7 @@ class OperateurController extends Controller
 
     
         $communes_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $types_operateurs_id = TypesOperateur::where('name', $request->input('type_operateur'))->first()->id;
+        /* $types_operateurs_id = TypesOperateur::where('name', $request->input('type_operateur'))->first()->id; */
 
         $operateurs = new Operateur([
         'cin_responsable'               =>      $request->input('cin'),
@@ -185,8 +186,10 @@ class OperateurController extends Controller
         'prenom_responsable'            =>      $request->input('prenom'),
         'nom_responsable'               =>      $request->input('nom'),
         'email_responsable'             =>      $request->input('email'),
-        'telephone_responsable'         =>      $request->input('email'),
-        'types_operateurs_id'           =>      $types_operateurs_id,
+        'telephone_responsable'         =>      $request->input('telephone'),
+        'operateur_type'                =>      $request->input('type_operateur'),
+        'file10'                       =>      $request->input('autres_type_operateur'),
+        /* 'types_operateurs_id'           =>      $types_operateurs_id, */
         'communes_id'                   =>      $communes_id,
         'users_id'                      =>      $utilisateur->id,
     ]);
