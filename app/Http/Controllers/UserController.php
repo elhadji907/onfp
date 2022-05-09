@@ -19,11 +19,11 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|Administrateur']);
+     /*    $this->middleware(['role:super-admin|Administrateur']);
         $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
         $this->middleware('permission:user-create', ['only' => ['create','store']]);
         $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]); */
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users      =   User::skip(0)->take(10000)->get();
+        $users      =   User::all();
         return view('users.index', compact('users'));
     }
 
@@ -158,7 +158,7 @@ class UserController extends Controller
             'username'      =>  'required|string|max:255|unique:users,username,'.$user->id,
             'email'         => 'required|email|unique:users,email,'.$user->id,
             'password'      => 'same:confirm-password',
-            /* 'roles'         => 'required' */
+            'roles'         => 'required'
             ]);
 
         $input = $request->all();
