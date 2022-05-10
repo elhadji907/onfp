@@ -31,7 +31,7 @@
                             <table class="table table-bordered" id="table-ageroutezones">
                                 <thead class="table-dark">
                                     <tr>
-                                        {{-- <th width="10%">N°</th> --}}
+                                        <th width="2%">N°</th>
                                         <th width="25%">Communes</th>
                                         <th width="10%">Effectif</th>
                                         <th width="3%">Valide</th>
@@ -52,7 +52,7 @@
                                     <?php $h = 1; ?>
                                     @foreach ($zones as $key => $zone)
                                         <tr>
-                                            {{-- <td>{{ $h++ }}</td> --}}
+                                            <td>{{ $h++ }}</td>
                                             <td>{{ $zone->nom }}</td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
@@ -148,7 +148,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [1, 'desc']
+                    [3, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
