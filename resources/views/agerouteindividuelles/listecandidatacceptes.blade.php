@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <title>{{ $module }} {{$localite}} </title>
@@ -71,11 +70,10 @@
                 <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/enteteonfpagerouteliste.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br />
             <h3 align="center">
                 <span style="color: rgb(255, 0, 0); text-shadow: 1px 1px;"> <u>{{ $localite }}</u>: liste des
-                    candidats présélectionnés pour les
-                    entretiens en {{ $module }}</span>
+                    candidats retenus pour la formation en {{ $module }}</span>
             </h3>
             <div class="card-body">
                 <div class="table-responsive">
@@ -91,11 +89,11 @@
                                 <th style="width:5%;">Téléphone</th>
                                 <th style="width:8%;">Communes</th>
                                 <th style="width:10%;">Adresse</th>
-                                <th style="width:5%;">Moti.</th>
-                                <th style="width:5%;">Projet</th>
+                                <th style="width:2%;">Rang</th>
+                           {{--       <th style="width:5%;">Projet</th>
                                 <th style="width:5%;">SE</th>
                                 <th style="width:5%;">Dispo.</th>
-                                <th style="width:5%;">Cumul</th>
+                                <th style="width:5%;">Cumul</th>  --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -112,11 +110,11 @@
                                         <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                         <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                         <td>{!! ucfirst(strtolower($individuelle->adresse)) ?? '' !!}</td>
+                                        <td>{{ $individuelle->items1 ?? '' }}</td>
+                                      {{--    <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td></td>  --}}
                                     </tr>
                                 @endif
                             @endforeach

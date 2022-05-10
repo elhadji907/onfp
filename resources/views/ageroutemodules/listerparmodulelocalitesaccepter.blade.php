@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des candidats présélectionnés pour les entretiens en {{ $module }} dans le département
+                        Liste des candidats retenus pour la formation en {{ $module }} dans le département
                         de {{ $localite }}
                     </div>
                     <div class="card-body">
