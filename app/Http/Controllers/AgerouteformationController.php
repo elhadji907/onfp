@@ -549,8 +549,7 @@ class AgerouteformationController extends Controller
         $module_name        =           $module;
         $individuelles      =           $projet->individuelles->sortBy('items1');
 
-        dd($individuelles);
-
+       // dd($individuelles);
         
         $anne = date('d');
         $anne = $anne.' '.date('m');
