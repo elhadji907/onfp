@@ -573,7 +573,7 @@ class AgerouteformationController extends Controller
         $dompdf->render();
 
         // Output the generated PDF to Browser
-        $dompdf->stream($localite.', liste des candidats renus en '.$module.'.pdf', ['Attachment' => false]);
+        $dompdf->stream($localite.', liste des candidats retenus en '.$module.'.pdf', ['Attachment' => false]);
     }
     
 
