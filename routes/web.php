@@ -190,6 +190,8 @@ Route::group([
         Route::get('listerparmodulezone/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezone'])->name('listerparmodulezone');
         Route::get('listerparmodulezoneretenues/{projet}/{zone}/{module}', [AgerouteindividuelleController::class, 'listerparmodulezoneretenues'])->name('listerparmodulezoneretenues');
         Route::get('listercandidatzonevalidesexes/{projet}/{zone}/{module}/{civilite}', [AgerouteindividuelleController::class, 'listercandidatzonevalidesexes'])->name('listercandidatzonevalidesexes');
+        Route::get('listercandidatzonevalidepmr/{projet}/{zone}/{module}/{pmr}', [AgerouteindividuelleController::class, 'listercandidatzonevalidepmr'])->name('listercandidatzonevalidepmr');
+        Route::get('listercandidatzonevalidevictimesocial/{projet}/{zone}/{module}/{victimesocial}', [AgerouteindividuelleController::class, 'listercandidatzonevalidevictimesocial'])->name('listercandidatzonevalidevictimesocial');
         Route::get('candidatlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalite'])->name('candidatlocalite');
         Route::get('candidatlocalitevalides/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalitevalides'])->name('candidatlocalitevalides');
         Route::get('candidatzonevalides/{projet}/{zone}', [AgeroutelocaliteController::class, 'candidatzonevalides'])->name('candidatzonevalides');

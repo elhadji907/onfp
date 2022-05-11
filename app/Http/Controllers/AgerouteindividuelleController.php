@@ -1121,6 +1121,32 @@ class AgerouteindividuelleController extends Controller
         return view('ageroutezones.listercandidatzonevalidesexes', compact('projet', 'zone_concernee', 'module', 'modules', 'individuelles', 'zones', 'civilite'));
     }
 
+    public function listercandidatzonevalidepmr($projet, $zone, $module, $pmr)
+    {
+        $projet = Projet::find($projet);
+        $individuelles = $projet->individuelles;
+        $modules = Module::find($module);
+        $zone_concernee = $zone;
+
+        $zones = Zone::where('nom', $zone)->first()->id;
+        $zones = Zone::find($zones);
+
+        return view('ageroutezones.listercandidatzonevalidepmr', compact('projet', 'zone_concernee', 'module', 'modules', 'individuelles', 'zones', 'pmr'));
+    }
+
+    public function listercandidatzonevalidevictimesocial($projet, $zone, $module, $victimesocial)
+    {
+        $projet = Projet::find($projet);
+        $individuelles = $projet->individuelles;
+        $modules = Module::find($module);
+        $zone_concernee = $zone;
+
+        $zones = Zone::where('nom', $zone)->first()->id;
+        $zones = Zone::find($zones);
+
+        return view('ageroutezones.listercandidatzonevalidevictimesocial', compact('projet', 'zone_concernee', 'module', 'modules', 'individuelles', 'zones', 'victimesocial'));
+    }
+
     /*   public function agerouteattente($statut)
       {
           $individuelles = Individuelle::get()->where('statut', '=', 'Attente');
