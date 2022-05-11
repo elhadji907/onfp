@@ -50,7 +50,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->module->name == $modules->name && $individuelle->demandeur->user->civilite == $civilite && $individuelle->statut == "accepter")
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->demandeur->user->civilite == $civilite && $individuelle->statut == "accepter")
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
