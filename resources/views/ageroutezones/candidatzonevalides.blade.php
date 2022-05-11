@@ -37,7 +37,9 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Département</th>
-                                            <th style="width:24%;">Module</th>
+                                            <th style="width:20%;">Module</th>
+                                            <th style="width:3%;">PMR</th>
+                                            <th style="width:10%;">Victime Social</th>
                                             <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
@@ -47,7 +49,18 @@
                                             @if (isset($individuelle) && $individuelle->zone->nom == $zone_concernee && $individuelle->statut == "accepter")
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                                    <td>
+                                                        
+                                                        @if (isset($individuelle->module->name))
+                                                        <a class="nav-link"
+                                                            href="{{ url('listercandidatzonevalidesexes', ['$projet' => $projet,'$zone' => $zone_concernee,'$module' => $individuelle->module->id, '$civilite' => $individuelle->demandeur->user->civilite]) }}"
+                                                            target="_blank">
+                                                            {!! $individuelle->demandeur->user->civilite ?? '' !!}<br />
+                                                        </a>
+                                                    @else
+                                                    @endif
+
+                                                        </td>
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
@@ -65,6 +78,8 @@
                                                             @else
                                                             @endif
                                                     </td>
+                                                    <td>{{ $individuelle->handicap ?? '' }} </td>
+                                                    <td>{{ $individuelle->victime_social ?? '' }} </td>
                                                     <td class="d-flex align-items-baseline">
                                                         {{--  <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">

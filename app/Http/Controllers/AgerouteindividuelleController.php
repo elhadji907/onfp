@@ -1108,6 +1108,19 @@ class AgerouteindividuelleController extends Controller
         return view('ageroutezones.listerparmodulezoneretenues', compact('projet', 'zone_concernee', 'module', 'modules', 'individuelles', 'zones'));
     }
 
+    public function listercandidatzonevalidesexes($projet, $zone, $module, $civilite)
+    {
+        $projet = Projet::find($projet);
+        $individuelles = $projet->individuelles;
+        $modules = Module::find($module);
+        $zone_concernee = $zone;
+
+        $zones = Zone::where('nom', $zone)->first()->id;
+        $zones = Zone::find($zones);
+
+        return view('ageroutezones.listercandidatzonevalidesexes', compact('projet', 'zone_concernee', 'module', 'modules', 'individuelles', 'zones', 'civilite'));
+    }
+
     /*   public function agerouteattente($statut)
       {
           $individuelles = Individuelle::get()->where('statut', '=', 'Attente');
