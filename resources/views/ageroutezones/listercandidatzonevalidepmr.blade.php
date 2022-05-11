@@ -50,7 +50,8 @@
                             <tbody>
                                 <?php $h = 1; ?>
                                 @foreach ($individuelles as $key => $individuelle)
-                                    @if (isset($individuelle) && $individuelle->zone->nom == $zone_concernee && $individuelle->module->name == $modules->name && $individuelle->statut == 'accepter' && $individuelle->handicap == $pmr)
+                                    {{--  @if (isset($individuelle) && $individuelle->zone->nom == $zone_concernee && $individuelle->module->name == $modules->name && $individuelle->statut == 'accepter' && $individuelle->handicap == $pmr)  --}}
+                                    @if (isset($individuelle) && $individuelle->zone->nom == $zone_concernee && $individuelle->statut == 'accepter' && $individuelle->handicap == $pmr)
                                         <tr>
                                             <td>{{ $h++ }}</td>
                                             <td>{!! $individuelle->demandeur->cin !!}</td>

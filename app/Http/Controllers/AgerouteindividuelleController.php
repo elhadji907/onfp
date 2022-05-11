@@ -1121,6 +1121,19 @@ class AgerouteindividuelleController extends Controller
         return view('ageroutezones.listercandidatzonevalidesexes', compact('projet', 'zone_concernee', 'module', 'modules', 'individuelles', 'zones', 'civilite'));
     }
 
+    public function listercandidatlocalitevalidesexes($projet, $localite, $module, $civilite)
+    {
+        $projet = Projet::find($projet);
+        $individuelles = $projet->individuelles;
+        $modules = Module::find($module);
+        $localite_concernee = $localite;
+
+        $localites = Localite::where('nom', $localite)->first()->id;
+        $localites = localite::find($localites);
+
+        return view('ageroutelocalites.listercandidatlocalitevalidesexes', compact('projet', 'localite_concernee', 'module', 'modules', 'individuelles', 'localites', 'civilite'));
+    }
+
     public function listercandidatzonevalidepmr($projet, $zone, $module, $pmr)
     {
         $projet = Projet::find($projet);
