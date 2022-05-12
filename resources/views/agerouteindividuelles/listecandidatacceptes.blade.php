@@ -88,7 +88,7 @@
                                 <th style="width:8%;">Lieu nais.</th>
                                 <th style="width:5%;">Téléphone</th>
                                 <th style="width:8%;">Communes</th>
-                                <th style="width:10%;">Adresse</th>
+                                <th style="width:12%;">Adresse</th>
                                 <th style="width:2%;">Rang</th>
                            {{--       <th style="width:5%;">Projet</th>
                                 <th style="width:5%;">SE</th>
@@ -139,7 +139,7 @@
                                 <th style="width:8%;">Lieu nais.</th>
                                 <th style="width:5%;">Téléphone</th>
                                 <th style="width:8%;">Communes</th>
-                                <th style="width:10%;">Adresse</th>
+                                <th style="width:12%;">Adresse</th>
                                 <th style="width:2%;">Rang</th>
                            {{--       <th style="width:5%;">Projet</th>
                                 <th style="width:5%;">SE</th>
