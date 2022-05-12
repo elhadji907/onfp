@@ -42,7 +42,8 @@
                                         <th style="width:8%;">Lieu nais.</th>
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:8%;">Communes</th>
-                                        <th style="width:12%;">Adresse</th>
+                                        <th style="width:10%;">Adresse</th>
+                                        <th style="width:10%;">Statut</th>
                                         <th style="width:2%;">Rang</th>
                                         @can('role-delete')
                                             <th style="width:5%;">Statut</th>
@@ -56,7 +57,7 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($individuelles as $key => $individuelle)
-                                        @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module && $individuelle->statut == 'accepter')
+                                        @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module && $individuelle->statut != 'attente' && $individuelle->statut != 'rejeter' && $individuelle->statut != 'enlever')
                                             <tr>
                                                 {{-- <td>{{ $i++ }}</td> --}}
                                                 <td>{!! $individuelle->demandeur->cin !!}</td>
@@ -73,6 +74,7 @@
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                 <td>{!! $individuelle->adresse ?? '' !!}</td>
+                                                <td>{!! $individuelle->statut ?? '' !!}</td>
                                                 <td>{{ $individuelle->items1 ?? '' }}</td>
                                                 @can('role-delete')
                                                     <td>
@@ -93,7 +95,7 @@
                                                                 class="btn btn-outline-info btn-sm mt-0" target="_blank">
                                                                 <i class="fa fa-plus-square" aria-hidden="true"></i>
                                                             </a>
-                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'liste attente')
                                                                 <a href="{{ url('ageroutelisteattente', ['$individuelle' => $individuelle, '$statut' => 'liste attente', '$module' => $individuelle->module->id]) }}"
                                                                     title="liste d'attente" class="btn btn-outline-secondary btn-sm mt-0">
                                                                     <i class="fa fa-share" aria-hidden="true"></i>
@@ -188,7 +190,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [9, 'asc']
+                    [10, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
