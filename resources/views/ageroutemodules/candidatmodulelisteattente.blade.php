@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - Demandeurs du département de ' . $localite_concernee)
+@section('title', 'AGEROUTE - candidats du département de ' . $module_concernee)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs retenus du département de {{ $localite_concernee }}
+                        {{ __("Agéroute, liste des candidats sur la liste d'attente en") }} {{ $module_concernee }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -37,55 +37,39 @@
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
                                             <th style="width:8%;">Département</th>
-                                            <th style="width:24%;">Module</th>
                                             <th style="width:8%;"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->statut == "accepter")
+                                            @if (isset($individuelle) && $individuelle->module->name == $module_concernee && $individuelle->statut == 'liste attente')
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
-                                                    <td>
-                                                        @if (isset($individuelle->module->name))
-                                                            <a class="nav-link"
-                                                                href="{{ url('listercandidatlocalitevalidesexes', ['$projet' => $projet, '$localite' => $localite_concernee, '$module' => $individuelle->module->id, '$civilite' => $individuelle->demandeur->user->civilite]) }}"
-                                                                target="_blank">
-                                                                {!! $individuelle->demandeur->user->civilite ?? '' !!}<br />
-                                                            </a>
-                                                        @else
-                                                        @endif
-                                                    </td>
+                                                    <td>{!! $individuelle->demandeur->user->civilite !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
-                                                    <td>
-                                                        <?php $h = 1; ?>
-                                                            @if (isset($individuelle->module->name))
-                                                                <a class="nav-link"
-                                                                    href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
-                                                                    target="_blank">
-                                                                    {!! $individuelle->module->name ?? '' !!}<br />
-                                                                </a>
-                                                            @else
-                                                            @endif
+                                                    <td ALIGN="CENTER">
+                                                        {{-- <a href="{{ url('listerparmodulelocalitesaccepter', ['$projet' => $projet, '$localite' => $individuelle->localite->nom, '$module' => $module_concernee]) }}"
+                                                            target="_blank"> --}}
+                                                        {!! $individuelle->localite->nom ?? '' !!}<br />
+                                                        {{-- </a> --}}
                                                     </td>
                                                     <td class="d-flex align-items-baseline">
-                                                        {{--  <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                        <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                             <i class="far fa-eye">&nbsp;</i>
                                                         </a>
-                                                        &nbsp;  --}}
-                                                        @can('role-delete')
-                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                            title="modifier">
-                                                            <i class="far fa-edit">&nbsp;</i>
-                                                        </a>
                                                         &nbsp;
+                                                        @can('role-delete')
+                                                            <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                                title="modifier">
+                                                                <i class="far fa-edit">&nbsp;</i>
+                                                            </a>
+                                                            &nbsp;
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}

@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Agéroute - Liste des demandeurs retenus du département de {{ $localite_concernee }}
+                        Agéroute - Liste des demandeurs en attentes du département de {{ $localite_concernee }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -44,18 +44,11 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->statut == "accepter")
+                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->statut == 'liste attente')
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>
-                                                        @if (isset($individuelle->module->name))
-                                                            <a class="nav-link"
-                                                                href="{{ url('listercandidatlocalitevalidesexes', ['$projet' => $projet, '$localite' => $localite_concernee, '$module' => $individuelle->module->id, '$civilite' => $individuelle->demandeur->user->civilite]) }}"
-                                                                target="_blank">
-                                                                {!! $individuelle->demandeur->user->civilite ?? '' !!}<br />
-                                                            </a>
-                                                        @else
-                                                        @endif
+                                                        {!! $individuelle->demandeur->user->civilite ?? '' !!}<br />
                                                     </td>
                                                     <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->name !!} </td>
@@ -64,28 +57,20 @@
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                     <td>{!! $individuelle->localite->nom ?? '' !!}</td>
                                                     <td>
-                                                        <?php $h = 1; ?>
-                                                            @if (isset($individuelle->module->name))
-                                                                <a class="nav-link"
-                                                                    href="{{ url('listerparmodulelocalite', ['$projet' => $projet,'$localite' => $localite_concernee,'$module' => $individuelle->module->id]) }}"
-                                                                    target="_blank">
-                                                                    {!! $individuelle->module->name ?? '' !!}<br />
-                                                                </a>
-                                                            @else
-                                                            @endif
+                                                        {!! $individuelle->module->name ?? '' !!}<br />
                                                     </td>
                                                     <td class="d-flex align-items-baseline">
-                                                        {{--  <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
+                                                        {{-- <a href="{{ url('agerouteindividuelles', ['$id' => $individuelle->id]) }}"
                                                             class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                             <i class="far fa-eye">&nbsp;</i>
                                                         </a>
-                                                        &nbsp;  --}}
+                                                        &nbsp; --}}
                                                         @can('role-delete')
-                                                        <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                            title="modifier">
-                                                            <i class="far fa-edit">&nbsp;</i>
-                                                        </a>
-                                                        &nbsp;
+                                                            <a href="{!! url('agerouteindividuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                                title="modifier">
+                                                                <i class="far fa-edit">&nbsp;</i>
+                                                            </a>
+                                                            &nbsp;
                                                             {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
                                                             {!! Form::close() !!}

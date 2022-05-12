@@ -32,13 +32,14 @@
                                 <thead class="table-dark">
                                     <tr>
                                         {{--  <th width="5%">N°</th>  --}}
-                                        <th width="30%">Modules</th>
+                                        <th width="20%">Modules</th>
                                         <th width="5%">Demandeurs</th>
                                         <th width="5%">Valide</th>
                                         <th width="5%">Attente</th>
                                         <th width="5%">Rejeter</th>
-                                        <th width="20%">Domaine</th>
-                                        <th width="15%">Secteur</th>
+                                        <th width="8%">Liste attente</th>
+                                        <th width="15%">Domaine</th>
+                                        <th width="10%">Secteur</th>
                                         <th width="8%"></th>
                                     </tr>
                                 </thead>
@@ -95,6 +96,18 @@
                                                     href="{{ url('candidatmodulerejeter', ['$projet' => $projet, '$module' => $module->name]) }}"
                                                     target="_blank" title="voir demandeurs rejetés">
                                                     <span class="badge badge-danger">{!! $a !!}</span></a>
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $a = 0; ?>
+                                                @foreach ($module->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "liste attente")
+                                                        <?php $a++; ?>
+                                                    @endif
+                                                @endforeach
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatmodulelisteattente', ['$projet' => $projet, '$module' => $module->name]) }}"
+                                                    target="_blank" title="voir demandeurs sur la liste d'attente">
+                                                    <span class="badge badge-warning">{!! $a !!}</span></a>
                                             </td>
                                             <td>{{ $module->domaine->name }}</td>
                                             <td>{{ $module->domaine->secteur->name }}</td>

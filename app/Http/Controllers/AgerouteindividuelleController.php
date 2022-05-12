@@ -1197,6 +1197,20 @@ class AgerouteindividuelleController extends Controller
         return back()->with(compact('message'));
     }
 
+    public function ageroutelisteattente($individuelle, $statut, $module)
+    {
+        $module = Module::find($module);
+
+        $individuelle = Individuelle::find($individuelle);
+
+        $individuelle->statut     =   $statut;
+
+        $individuelle->save();
+
+        $message = "La demande de " .$individuelle->demandeur->user->firstname.' '.$individuelle->demandeur->user->name.' est ' .$statut;
+        return back()->with(compact('message'));
+    }
+
     /*     public function agerouteencours($individuelle, $statut, $module, $numero)
         {
             $module = Module::find($module);

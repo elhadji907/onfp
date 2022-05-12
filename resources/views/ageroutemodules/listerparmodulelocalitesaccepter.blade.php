@@ -93,6 +93,12 @@
                                                                 class="btn btn-outline-info btn-sm mt-0" target="_blank">
                                                                 <i class="fa fa-plus-square" aria-hidden="true"></i>
                                                             </a>
+                                                            @if (isset($individuelle->statut) && $individuelle->statut != 'attente')
+                                                                <a href="{{ url('ageroutelisteattente', ['$individuelle' => $individuelle, '$statut' => 'liste attente', '$module' => $individuelle->module->id]) }}"
+                                                                    title="liste d'attente" class="btn btn-outline-secondary btn-sm mt-0">
+                                                                    <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </a>
+                                                            @endif
                                                             @if (isset($individuelle->statut) && $individuelle->statut != 'accepter')
                                                                 <a href="{{ url('agerouteretenues', ['$individuelle' => $individuelle, '$statut' => 'accepter', '$module' => $individuelle->module->id]) }}"
                                                                     title="accepter"

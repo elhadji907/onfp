@@ -122,6 +122,58 @@
                     </table>
                 </div>
             </div>
+            <h3 align="center">
+                <span style="color: rgb(255, 0, 0); text-shadow: 1px 1px;"> <u>{{ $localite }}</u>: liste des
+                    candidats en attantes pour la formation en {{ $module }}</span>
+            </h3>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="table-ageroutebeneficiaires">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="width:3%;">N°</th>
+                                <th style="width:5%;">Civilité</th>
+                                <th style="width:10%;">Prenom</th>
+                                <th style="width:7%;">Nom</th>
+                                <th style="width:8%;">Date nais.</th>
+                                <th style="width:8%;">Lieu nais.</th>
+                                <th style="width:5%;">Téléphone</th>
+                                <th style="width:8%;">Communes</th>
+                                <th style="width:10%;">Adresse</th>
+                                <th style="width:2%;">Rang</th>
+                           {{--       <th style="width:5%;">Projet</th>
+                                <th style="width:5%;">SE</th>
+                                <th style="width:5%;">Dispo.</th>
+                                <th style="width:5%;">Cumul</th>  --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1; ?>
+                            @foreach ($individuelles as $key => $individuelle)
+                                @if (isset($individuelle) && $individuelle->localite->nom == $localite && $individuelle->module->name == $module && $individuelle->statut == 'liste attente')
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{!! $individuelle->demandeur->user->civilite !!}</td>
+                                        <td>{!! ucfirst(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
+                                        <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                        <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                        <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                        <td>{!! $individuelle->demandeur->user->telephone !!}</td>
+                                        <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                        <td>{!! ucfirst(strtolower($individuelle->adresse)) ?? '' !!}</td>
+                                        <td>{{ $individuelle->items1 ?? '' }}</td>
+                                      {{--    <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>  --}}
+                                    </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
         </div>
         <div style="position: fixed;
             bottom: -10px;

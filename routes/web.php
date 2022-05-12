@@ -195,13 +195,16 @@ Route::group([
         Route::get('listercandidatzonevalidevictimesocial/{projet}/{zone}/{module}/{victimesocial}', [AgerouteindividuelleController::class, 'listercandidatzonevalidevictimesocial'])->name('listercandidatzonevalidevictimesocial');
         Route::get('candidatlocalite/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalite'])->name('candidatlocalite');
         Route::get('candidatlocalitevalides/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalitevalides'])->name('candidatlocalitevalides');
+        Route::get('candidatlocalitevalidesattente/{projet}/{localite}', [AgeroutelocaliteController::class, 'candidatlocalitevalidesattente'])->name('candidatlocalitevalidesattente');
         Route::get('candidatzonevalides/{projet}/{zone}', [AgeroutelocaliteController::class, 'candidatzonevalides'])->name('candidatzonevalides');
         Route::get('candidatmodule/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodule'])->name('candidatmodule');
         Route::get('candidatmoduleaccepter/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmoduleaccepter'])->name('candidatmoduleaccepter');
         Route::get('candidatmoduleattente/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmoduleattente'])->name('candidatmoduleattente');
         Route::get('candidatmodulerejeter/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodulerejeter'])->name('candidatmodulerejeter');
+        Route::get('candidatmodulelisteattente/{projet}/{module}', [AgeroutemoduleController::class, 'candidatmodulelisteattente'])->name('candidatmodulelisteattente');
         Route::get('candidatzone/{projet}/{localite}', [AgeroutezoneController::class, 'candidatzone'])->name('candidatzone');
         Route::get('agerouteattente/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteattente'])->name('agerouteattente');
+        Route::get('ageroutelisteattente/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'ageroutelisteattente'])->name('ageroutelisteattente');
         Route::get('agerouteencours/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteencours'])->name('agerouteencours');
         Route::get('agerouterejeter/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouterejeter'])->name('agerouterejeter');
         Route::get('agerouteretenues/{individuelles}/{statut}/{module}', [AgerouteindividuelleController::class, 'agerouteretenues'])->name('agerouteretenues');

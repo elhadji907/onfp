@@ -178,11 +178,16 @@ class AgeroutelocaliteController extends Controller
                 ->where('statut', '=', 'enlever')
                 ->count();
 
+        $listeattante = Individuelle::get()->where('projets_id', '=', $id_projet)
+                ->where('localites_id', '=', $id_localite)
+                ->where('statut', '=', 'liste attente')
+                ->count();
+
         $total = Individuelle::get()->where('projets_id', '=', $id_projet)
                 ->where('localites_id', '=', $id_localite)
                 ->count();
 
-        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'individuelles', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total', 'enlever'));
+        return view('agerouteindividuelles.listerparlocalite', compact('projet', 'individuelles', 'localite_concernee', 'attente', 'rejeter', 'accepter', 'total', 'enlever', 'listeattante'));
     }
 
     public function candidatlocalite($projet, $localite)
@@ -205,6 +210,17 @@ class AgeroutelocaliteController extends Controller
         $individuelles = $projet->individuelles;
 
         return view('ageroutelocalites.candidatlocalitevalides', compact('projet', 'localite_concernee', 'individuelles'));
+    }
+
+    public function candidatlocalitevalidesattente($projet, $localite)
+    {
+        $projet = Projet::find($projet);
+
+        $localite_concernee = $localite;
+
+        $individuelles = $projet->individuelles;
+
+        return view('ageroutelocalites.candidatlocalitevalidesattente', compact('projet', 'localite_concernee', 'individuelles'));
     }
 
     public function candidatzonevalides($projet, $zone)

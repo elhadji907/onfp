@@ -32,9 +32,10 @@
                                 <thead class="table-dark">
                                     <tr>
                                         {{-- <th width="5%">N°</th> --}}
-                                        <th width="30%">Départements</th>
+                                        <th width="20%">Départements</th>
                                         <th width="5%">Effectif</th>
                                         <th width="3%">Valide</th>
+                                        <th width="8%">Liste attente</th>
                                         <th width="5%">Communes</th>
                                         <th width="8%"></th>
                                     </tr>
@@ -68,6 +69,18 @@
                                                     href="{{ url('candidatlocalitevalides', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
                                                     target="_blank">
                                                     <span class="badge badge-success">{!! $i !!}</span></a>
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $i = 0; ?>
+                                                @foreach ($localite->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "liste attente")
+                                                        <?php $i++; ?>
+                                                    @endif
+                                                @endforeach
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatlocalitevalidesattente', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
+                                                    target="_blank">
+                                                    <span class="badge badge-primary">{!! $i !!}</span></a>
                                             </td>
                                             <td ALIGN="CENTER">
                                                 @foreach ($localite->zones as $zone)
