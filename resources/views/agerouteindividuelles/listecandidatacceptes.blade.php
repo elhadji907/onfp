@@ -70,7 +70,7 @@
                 <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/enteteonfpagerouteliste.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br />
             <h3 align="center">
                 <span style="color: rgb(255, 0, 0); text-shadow: 1px 1px;"> <u>{{ $localite }}</u>: liste des
                     candidats retenus pour la formation en {{ $module }}</span>
