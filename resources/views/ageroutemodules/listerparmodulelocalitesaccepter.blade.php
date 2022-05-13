@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'Présélectionnés en ' . $module . ' à ' . $localite)
+@section('title', $localite . ', liste des candidats retenus pour la formation en ' . $module)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,8 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des candidats retenus pour la formation en {{ $module }} dans le département
-                        de {{ $localite }}
+                        {{ $localite }}, liste des candidats retenus pour la formation en {{ $module }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
