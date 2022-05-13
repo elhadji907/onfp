@@ -34,7 +34,7 @@
                             <table class="table table-bordered" id="table-ageroutebeneficiaires">
                                 <thead class="table-dark">
                                     <tr>
-                                        <th style="width:8%;">CIN</th>
+                                        <th style="width:6%;">CIN</th>
                                         <th style="width:5%;">Civilité</th>
                                         <th style="width:8%;">Prenom</th>
                                         <th style="width:5%;">Nom</th>
@@ -43,10 +43,14 @@
                                         <th style="width:5%;">Téléphone</th>
                                         <th style="width:8%;">Communes</th>
                                         <th style="width:10%;">Adresse</th>
-                                        <th style="width:10%;">Statut</th>
+                                        <th style="width:5%;">PMR</th>
+                                        <th style="width:5%;">Victime sociale</th>
+                                        <th style="width:5%;">Situation économique</th>
+                                        <th style="width:5%;">Projet</th>
+                                        <th style="width:5%;">Statut</th>
                                         <th style="width:2%;">Rang</th>
                                         @can('role-delete')
-                                            <th style="width:5%;">Statut</th>
+                                            <th style="width:5%;"></th>
                                         @endcan
                                         {{-- @can('role-delete')
                                                 <th style="width:5%;">Statut</th>
@@ -74,6 +78,10 @@
                                                 <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                 <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                 <td>{!! $individuelle->adresse ?? '' !!}</td>
+                                                <td>{!! $individuelle->handicap ?? '' !!}</td>
+                                                <td>{!! $individuelle->victime_social ?? '' !!}</td>
+                                                <td>{!! $individuelle->situation_economique ?? '' !!}</td>
+                                                <td>{!! $individuelle->activite_avenir ?? '' !!}</td>
                                                 <td>{!! $individuelle->statut ?? '' !!}</td>
                                                 <td>{{ $individuelle->items1 ?? '' }}</td>
                                                 @can('role-delete')
@@ -97,7 +105,8 @@
                                                             </a>
                                                             @if (isset($individuelle->statut) && $individuelle->statut != 'liste attente')
                                                                 <a href="{{ url('ageroutelisteattente', ['$individuelle' => $individuelle, '$statut' => 'liste attente', '$module' => $individuelle->module->id]) }}"
-                                                                    title="liste d'attente" class="btn btn-outline-secondary btn-sm mt-0">
+                                                                    title="liste d'attente"
+                                                                    class="btn btn-outline-secondary btn-sm mt-0">
                                                                     <i class="fa fa-share" aria-hidden="true"></i>
                                                                 </a>
                                                             @endif
@@ -190,7 +199,7 @@
                     [10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [10, 'asc']
+                    [14, 'asc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",
