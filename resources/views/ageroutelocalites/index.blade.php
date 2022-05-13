@@ -34,7 +34,7 @@
                                         {{-- <th width="5%">N°</th> --}}
                                         <th width="20%">Départements</th>
                                         <th width="5%">Effectif</th>
-                                        <th width="3%">Valide</th>
+                                        <th width="3%">Acceptés</th>
                                         <th width="8%">Liste attente</th>
                                         <th width="5%">Communes</th>
                                         <th width="8%"></th>

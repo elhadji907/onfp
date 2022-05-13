@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -34,8 +34,9 @@
                                         <th width="2%">N°</th>
                                         <th width="25%">Communes</th>
                                         <th width="10%">Effectif</th>
-                                        <th width="3%">Valide</th>
-                                        <th width="25%">Départements</th>
+                                        <th width="3%">Acceptés</th>
+                                        <th width="8%">Liste attente</th>
+                                        <th width="15%">Départements</th>
                                         <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
@@ -77,6 +78,18 @@
                                                     href="{{ url('candidatzonevalides', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
                                                     target="_blank">
                                                     <span class="badge badge-success">{!! $a !!}</span></a>
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $i = 0; ?>
+                                                @foreach ($zone->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "liste attente")
+                                                        <?php $i++; ?>
+                                                    @endif
+                                                @endforeach
+                                                <a class="nav-link"
+                                                    href="{{ url('candidatzonevalidesattente', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
+                                                    target="_blank">
+                                                    <span class="badge badge-primary">{!! $i !!}</span></a>
                                             </td>
                                             <td>
                                                 <span>{{ $zone->localite->nom ?? '' }}</span>

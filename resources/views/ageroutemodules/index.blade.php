@@ -34,7 +34,7 @@
                                         {{--  <th width="5%">N°</th>  --}}
                                         <th width="20%">Modules</th>
                                         <th width="5%">Demandeurs</th>
-                                        <th width="5%">Valide</th>
+                                        <th width="5%">Acceptés</th>
                                         <th width="5%">Attente</th>
                                         <th width="5%">Rejeter</th>
                                         <th width="8%">Liste attente</th>

@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'AGEROUTE - Demandeurs du département de ' . $localite_concernee)
+@section('title', 'AGEROUTE - Demandeurs du département de ' . $zone_concernee)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Liste des demandeurs en attentes du département de {{ $localite_concernee }}
+                        Liste des demandeurs en attentes de la commune de {{ $zone_concernee }}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -44,7 +44,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->localite->nom == $localite_concernee && $individuelle->statut == 'liste attente')
+                                            @if (isset($individuelle) && $individuelle->zone->nom == $zone_concernee && $individuelle->statut == 'liste attente')
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>
@@ -55,7 +55,7 @@
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
+                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td>
                                                         {!! $individuelle->module->name ?? '' !!}<br />
                                                     </td>

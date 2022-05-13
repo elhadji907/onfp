@@ -183,4 +183,16 @@ class AgeroutezoneController extends Controller
         
         return view('ageroutezones.candidatzone', compact('projet', 'zone_concernee', 'individuelles'));
     }
+
+    
+    public function candidatzonevalidesattente($projet, $zone)
+    {
+        $projet = Projet::find($projet);
+
+        $zone_concernee = $zone;
+
+        $individuelles = $projet->individuelles;
+
+        return view('ageroutezones.candidatzonevalidesattente', compact('projet', 'zone_concernee', 'individuelles'));
+    }
 }
