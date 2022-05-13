@@ -121,9 +121,9 @@
                             @endforeach
                             <tr>
                                 <td colspan="10">
-                                    <h2 align="center"><br />
-                                        <span style="color: rgb(255, 0, 0); text-shadow: 1px 1px;"> {{ __("Liste d'attente") }}</span>
-                                    </h2>
+                                    <h3 align="center">
+                                        {{ __("liste d'attente") }}
+                                    </h3>
                                 </td>
                             </tr>
                             <?php $h = 0; ?>
