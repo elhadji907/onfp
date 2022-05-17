@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
                 @endif
@@ -34,7 +34,8 @@
                                         {{-- <th width="5%">N°</th> --}}
                                         <th width="20%">Départements</th>
                                         <th width="5%">Effectif</th>
-                                        <th width="3%">Acceptés</th>
+                                        <th width="3%">Retenus</th>
+                                        <th width="3%">Rejets</th>
                                         <th width="8%">Liste attente</th>
                                         <th width="5%">Communes</th>
                                         <th width="8%"></th>
@@ -77,10 +78,20 @@
                                                         <?php $i++; ?>
                                                     @endif
                                                 @endforeach
-                                                <a class="nav-link"
+                                                {{--  <a class="nav-link"
                                                     href="{{ url('candidatlocalitevalidesattente', ['$projet' => $projet, '$localite' => $localite->nom]) }}"
-                                                    target="_blank">
-                                                    <span class="badge badge-primary">{!! $i !!}</span></a>
+                                                    target="_blank">  --}}
+                                                    <span class="badge badge-danger">{!! $i !!}</span>
+                                                {{--  </a>  --}}
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $i = 0; ?>
+                                                @foreach ($localite->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == "rejeter")
+                                                        <?php $i++; ?>
+                                                    @endif
+                                                @endforeach
+                                                    <span class="badge badge-primary">{!! $i !!}</span>
                                             </td>
                                             <td ALIGN="CENTER">
                                                 @foreach ($localite->zones as $zone)

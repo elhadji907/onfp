@@ -35,6 +35,7 @@
                                         <th width="25%">Communes</th>
                                         <th width="10%">Effectif</th>
                                         <th width="3%">Acceptés</th>
+                                        <th width="3%">Rejets</th>
                                         <th width="8%">Liste attente</th>
                                         <th width="15%">Départements</th>
                                         <th style="width:8%;"></th>
@@ -78,6 +79,19 @@
                                                     href="{{ url('candidatzonevalides', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
                                                     target="_blank">
                                                     <span class="badge badge-success">{!! $a !!}</span></a>
+                                            </td>
+                                            <td ALIGN="CENTER">
+                                                <?php $a = 0; ?>
+                                                @foreach ($zone->individuelles as $individuelle)
+                                                    @if ($individuelle->projets_id == $projet_id && $individuelle->statut == 'rejeter')
+                                                        <?php $a++; ?>
+                                                    @endif
+                                                @endforeach
+                                               {{--   <a class="nav-link"
+                                                    href="{{ url('candidatzonevalides', ['$projet' => $projet, '$zone' => $zone->nom]) }}"
+                                                    target="_blank">  --}}
+                                                    <span class="badge badge-danger">{!! $a !!}</span>
+                                                {{--  </a>  --}}
                                             </td>
                                             <td ALIGN="CENTER">
                                                 <?php $i = 0; ?>
