@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <title>{{ $module }} {{ $localite }} </title>
@@ -145,7 +144,7 @@
                                         <td></td>
                                         <td></td> --}}
                                     </tr>
-                               {{--   @elseif ($h <= 0)
+                                    {{-- @elseif ($h <= 0)
                                     <tr>
                                         <td colspan="10">
                                             <h3 align="center">
@@ -155,15 +154,15 @@
                                             </h3>
                                         </td>
                                     </tr>
-                                @break  --}}
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                                @break --}}
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div style="position: fixed;
+        <div style="position: fixed;
 bottom: -10px;
 left: 0px;
 right: 0px;
@@ -172,10 +171,10 @@ background-color: white;
 color: white;
 text-align: center;
 line-height: 35px;">
-        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp_f.png'))) }}"
-            style="width: 100%; height: auto;">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/pied_ageroute_onfp_f.png'))) }}"
+                style="width: 100%; height: auto;">
+        </div>
     </div>
-</div>
 </body>
 
 </html>

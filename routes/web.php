@@ -70,6 +70,8 @@ use App\Http\Controllers\TypedirectionController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\IndividuellemotifController;
 use App\Http\Controllers\IndividuellerangController;
+use App\Http\Controllers\AgerouteretenuController;
+use App\Http\Controllers\AgeroutelisteattenteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -332,6 +334,8 @@ Route::group([
         Route::resource('/agerouteindividuellesrang', IndividuellerangController::class);
         Route::resource('/agerouteformations', AgerouteformationController::class);
         Route::resource('/individuellenotes', IndividuellenoteController::class);
+        Route::resource('/individuelleretenus', AgerouteretenuController::class);
+        Route::resource('/individuelleattentes', AgeroutelisteattenteController::class);
     });
 
 require __DIR__.'/auth.php';

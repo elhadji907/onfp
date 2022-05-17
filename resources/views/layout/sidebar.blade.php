@@ -223,6 +223,12 @@
                     <a class="collapse-item" href="{{ route('agerouteformations.index') }}">
                         <span>Formations</span>
                     </a>
+                    <a class="collapse-item" href="{{ route('individuelleretenus.index') }}">
+                        <span>Retenus</span>
+                    </a>
+                    <a class="collapse-item" href="{{ route('individuelleattentes.index') }}">
+                        <span>Liste attente</span>
+                    </a>
                 </div>
             </div>
         </li>
