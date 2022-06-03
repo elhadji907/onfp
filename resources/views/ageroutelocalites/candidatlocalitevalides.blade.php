@@ -36,7 +36,7 @@
                                             <th style="width:8%;">Date nais.</th>
                                             <th style="width:8%;">Lieu nais.</th>
                                             <th style="width:5%;">Téléphone</th>
-                                            <th style="width:8%;">Département</th>
+                                            <th style="width:8%;">Commune</th>
                                             <th style="width:24%;">Module</th>
                                             <th style="width:8%;"></th>
                                         </tr>
@@ -62,7 +62,7 @@
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
+                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
                                                     <td>
                                                         <?php $h = 1; ?>
                                                             @if (isset($individuelle->module->name))
