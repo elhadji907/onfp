@@ -1554,6 +1554,25 @@ class AgerouteindividuelleController extends Controller
         return view('agerouteindividuelles.statut', compact('statut', 'individuelles', 'effectif', 'projet', 'localite_concernee'));
     }
 
+    public function statut_ageroute($localite, $projet, $statut)
+    {
+        $localites_id = Localite::where('nom', $localite)->first()->id;
+
+        $individuelles = Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('statut', '=', $statut);
+
+        $effectif =     Individuelle::get()->where('projets_id', '=', $projet)
+                                    ->where('localites_id', '=', $localites_id)
+                                    ->where('statut', '=', $statut)
+                                    ->count();
+
+        $projet                    = Projet::find($projet);
+        $localite_concernee         = $localite;
+
+        return view('agerouteindividuelles.statut_ageroute', compact('statut', 'individuelles', 'effectif', 'projet', 'localite_concernee'));
+    }
+
     public function statutageroutepmr($localite, $projet, $statut, $pmr)
     {
         $localites_id = Localite::where('nom', $localite)->first()->id;

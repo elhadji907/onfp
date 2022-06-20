@@ -233,6 +233,7 @@ Route::group([
         Route::get('diplomespros/{localite}/{projet}/{handicap}/{module}/{sexe}/{victime}/{situation_eco}/{diplomespros}', [AgerouteindividuelleController::class, 'diplomespros'])->name('diplomespros');
         Route::get('candidatse/{localite}/{projet}/{situation_eco}', [AgerouteindividuelleController::class, 'candidatse'])->name('candidatse');
         Route::get('statutageroute/{localite}/{projet}/{statut}', [AgerouteindividuelleController::class, 'statutageroute'])->name('statutageroute');
+        Route::get('statut_ageroute/{localite}/{projet}/{statut}', [AgerouteindividuelleController::class, 'statut_ageroute'])->name('statut_ageroute');
         Route::get('statutageroutepmr/{localite}/{projet}/{statut}/{pmr}', [AgerouteindividuelleController::class, 'statutageroutepmr'])->name('statutageroutepmr');
         Route::get('statutageroutesvs/{localite}/{projet}/{statut}/{svs}', [AgerouteindividuelleController::class, 'statutageroutesvs'])->name('statutageroutesvs');
         Route::get('ageroutesexe/{sexe}/{localite}/{projet}', [AgerouteindividuelleController::class, 'ageroutesexe'])->name('ageroutesexe');

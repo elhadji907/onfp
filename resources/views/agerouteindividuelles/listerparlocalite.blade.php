@@ -59,7 +59,7 @@
             </div>
             <div class="col-xl-2 col-md-6 mb-4">
                 <div class="card border-left-danger shadow h-100 py-2">
-                    <a class="nav-link" href="{{ url('statutageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'enlever']) }}" target="_blank">
+                    <a class="nav-link" href="{{ url('statut_ageroute', ['$localite' => $localite_concernee, '$projet' => $projet->id, '$statut' => 'enlever']) }}" target="_blank">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
