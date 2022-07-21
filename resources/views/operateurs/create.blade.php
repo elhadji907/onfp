@@ -442,6 +442,13 @@
                                             {{ $value->nom }}</label>
                                             <br />
                                         @endforeach
+                                        <small id="emailHelp" class="form-text text-muted">
+                                            @if ($errors->has('region'))
+                                                @foreach ($errors->get('region') as $message)
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @endforeach
+                                            @endif
+                                        </small>
                                     </div>
                                 </div>
                             </form>

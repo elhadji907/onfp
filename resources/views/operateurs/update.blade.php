@@ -192,7 +192,7 @@
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Téléphone :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::text('telephone1', $utilisateurs->telephone, ['placeholder' => 'Numero de telephone de la structure', 'class' => 'form-control']) !!}
+                                    {!! Form::text('telephone1', $utilisateurs->telephone ?? "", ['placeholder' => 'Numero de telephone de la structure', 'class' => 'form-control']) !!}
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('E-mail secondaire:') !!}<span class="text-danger"> <b>*</b> </span>
@@ -317,7 +317,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('civilite :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], $operateur->user->civilite, ['placeholder' => 'sélectionner civilite', 'class' => 'form-control', 'id' => 'civilite', 'data-width' => '100%']) !!}
+                                    {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], $operateur->user->civilite ?? '', ['placeholder' => 'sélectionner civilite', 'class' => 'form-control', 'id' => 'civilite', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('civilite'))
                                             @foreach ($errors->get('civilite') as $message)
@@ -328,27 +328,27 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Prénom :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::text('prenom', $utilisateurs->firstname, ['placeholder' => 'Votre prénom', 'class' => 'form-control']) !!}
+                                    {!! Form::text('prenom', $utilisateurs->firstname ?? '', ['placeholder' => 'Votre prénom', 'class' => 'form-control']) !!}
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Nom :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::text('nom', $utilisateurs->name, ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
+                                    {!! Form::text('nom', $utilisateurs->name ?? '', ['placeholder' => 'Votre nom', 'class' => 'form-control']) !!}
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('CIN :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::text('cin', $operateur->cin_responsable, ['placeholder' => 'numéro de CIN', 'class' => 'form-control']) !!}
+                                    {!! Form::text('cin', $operateur->cin_responsable ?? '', ['placeholder' => 'numéro de CIN', 'class' => 'form-control']) !!}
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('E-mail :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::email('email', $utilisateurs->email, ['placeholder' => 'Votre adresse e-mail', 'class' => 'form-control', 'id' => 'email']) !!}
+                                    {!! Form::email('email', $utilisateurs->email ?? '', ['placeholder' => 'Votre adresse e-mail', 'class' => 'form-control', 'id' => 'email']) !!}
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Téléphone :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::text('telephone', $utilisateurs->telephone, ['placeholder' => 'Numero de telephone', 'class' => 'form-control']) !!}
+                                    {!! Form::text('telephone', $utilisateurs->telephone ?? '', ['placeholder' => 'Numero de telephone', 'class' => 'form-control']) !!}
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Fonction :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::text('fonction_responsable', $operateur->fonction_responsable, ['placeholder' => 'Ex: Directeur', 'class' => 'form-control']) !!}
+                                    {!! Form::text('fonction_responsable', $operateur->fonction_responsable ?? '', ['placeholder' => 'Ex: Directeur', 'class' => 'form-control']) !!}
                                 </div>
                             </div>
                             <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
