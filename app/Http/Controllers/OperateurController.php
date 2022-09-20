@@ -94,22 +94,21 @@ class OperateurController extends Controller
                 'email1'                    =>       "required|email|unique:operateurs,email1,NULL,id,deleted_at,NULL",
                 'operateur'                 =>       "required|string|max:255|unique:operateurs,name,NULL,id,deleted_at,NULL",
                 'sigle'                     =>       "required|string|max:50|unique:operateurs,sigle,NULL,id,deleted_at,NULL",
-                /* 'ninea'                     =>       "required|string|max:255|unique:operateurs,ninea,NULL,id,deleted_at,NULL",
+                'ninea'                     =>       "required|string|max:255|unique:operateurs,ninea,NULL,id,deleted_at,NULL",
                 'quitus'                    =>       "required|string|max:255|unique:operateurs,quitus,NULL,id,deleted_at,NULL",
-                'cin'                       =>       'required|string|min:13|max:15|unique:operateurs,cin_responsable', */
+                'cin'                       =>       'required|string|min:13|max:15|unique:operateurs,cin_responsable',
                 'adresse_op'                =>       'required|string',
-                /* 'prenom'                    =>       'required|string|max:50',
-                'nom'                       =>       'required|string|max:50', */
-                /* 'email'                     =>       'required|email|max:255|unique:users,email,'.$user->id, */
-                /* 'telephone'                 =>       'required|string|max:15', */
+                'prenom'                    =>       'required|string|max:50',
+                'nom'                       =>       'required|string|max:50',
+                'email'                     =>       'required|email|max:255|unique:users,email,'.$user->id,
+                'telephone'                 =>       'required|string|max:15',
                 'region'                    =>       'required',
                 'type_structure'            =>       'required',
                 'type_operateur'            =>       'required',
-                'commune'                   =>       'required',
-                /* 'fonction_responsable'      =>       'required', */
+                'fonction_responsable'      =>       'required',
                 'fixe_op'                   =>       'required',
-                /* 'debut_quitus'              =>       'required|date',
-                'fin_quitus'                =>       'required|date', */
+                'debut_quitus'              =>       'required|date',
+                'fin_quitus'                =>       'required|date',
             ]
         );
 
@@ -156,7 +155,7 @@ class OperateurController extends Controller
         'updated_by'                =>      $created_by
     ]);
     
-        /* $utilisateur->save(); */
+        $utilisateur->save();
 
     
         $telephone = $request->input('telephone');
@@ -192,7 +191,7 @@ class OperateurController extends Controller
         'file10'                       =>      $request->input('autres_type_operateur'),
         /* 'types_operateurs_id'           =>      $types_operateurs_id, */
         'communes_id'                   =>      $communes_id,
-        /* 'users_id'                      =>      $utilisateur->id, */
+        'users_id'                      =>      $utilisateur->id,
     ]);
 
         $operateurs->save();
@@ -264,17 +263,16 @@ class OperateurController extends Controller
                 'email1'              =>  "required|email|unique:operateurs,email1,{$operateur->id},id,deleted_at,NULL",
                 'operateur'           =>  "required|string|max:255|unique:operateurs,name,{$operateur->id},id,deleted_at,NULL",
                 'sigle'               =>  "required|string|max:50|unique:operateurs,sigle,{$operateur->id},id,deleted_at,NULL",
-                /* 'ninea'               =>  "required|string|max:255|unique:operateurs,ninea,{$operateur->id},id,deleted_at,NULL",
+                'ninea'               =>  "required|string|max:255|unique:operateurs,ninea,{$operateur->id},id,deleted_at,NULL",
                 'registre'            =>  "required|string|max:50|unique:operateurs,rccm,{$operateur->id},id,deleted_at,NULL",
                 'quitus'              =>  "required|string|max:255|unique:operateurs,quitus,{$operateur->id},id,deleted_at,NULL",
-                'telephone1'          =>  'required|string|max:15', */
+                'telephone1'          =>  'required|string|max:15',
                 'adresse'             =>  'required|string',
                 'type_structure'      =>  'required|string',
-                'commune'             =>  'required|string',
-                /* 'prenom'              =>  'required|string|max:50',
-                'nom'                 =>  'required|string|max:50', */
-                /* 'email'               =>  "required|email|max:255|unique:users,email,{$operateur->user->id},id,deleted_at,NULL", */
-                /* 'telephone'           =>  'required|string|max:15', */
+                'prenom'              =>  'required|string|max:50',
+                'nom'                 =>  'required|string|max:50',
+                'email'               =>  "required|email|max:255|unique:users,email,{$operateur->user->id},id,deleted_at,NULL",
+                'telephone'           =>  'required|string|max:15',
             ]
         );
 
@@ -301,7 +299,7 @@ class OperateurController extends Controller
             $sexe = "";
         }
 
-       /*  $utilisateur->sexe                  =      $sexe;
+        $utilisateur->sexe                  =      $sexe;
         $utilisateur->civilite              =      $civilite;
         $utilisateur->firstname             =      $request->input('prenom');
         $utilisateur->name                  =      $request->input('nom');
@@ -312,9 +310,9 @@ class OperateurController extends Controller
         $utilisateur->adresse               =      $request->input('adresse');
         $utilisateur->bp                    =      $request->input('bp');
         $utilisateur->fax                   =      $request->input('fax');
-        $utilisateur->updated_by            =      $updated_by; */
+        $utilisateur->updated_by            =      $updated_by;
 
-        /* $utilisateur->save(); */
+        $utilisateur->save();
 
         $operateur->name                    =      $request->input('operateur');
         $operateur->sigle                   =      $request->input('sigle');
@@ -341,7 +339,7 @@ class OperateurController extends Controller
         $operateur->communes_id             =      $communes_id;
         /* $operateur->types_operateurs_id     =      $types_operateurs_id; */
         $operateur->typestructure           =      $request->input('type_structure');
-        /* $operateur->users_id                =      $utilisateur->id; */
+        $operateur->users_id                =      $utilisateur->id;
 
         $operateur->save();
 
@@ -374,11 +372,10 @@ class OperateurController extends Controller
         $utilisateurs->deleted_by      =      $deleted_by;
   
         $utilisateurs->save();
-        /* $operateur->user->delete(); */
+        $operateur->user->delete();
         $operateur->delete();
           
-       /*  $message = $operateur->user->firstname.' '.$operateur->user->name.' a été supprimé(e)'; */
-        $message = "L'opérateur ".$operateur->name.' a été supprimé';
+        $message = $operateur->user->firstname.' '.$operateur->user->name.' a été supprimé(e)';
         return back()->with(compact('message'));
     }
 
