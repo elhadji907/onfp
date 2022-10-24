@@ -117,7 +117,9 @@ class RecueController extends Controller
 
         // dd($users_id);
 
-        $courrier_id = Courrier::get()->last()->id;
+        //$courrier_id = Courrier::get()->last()->id;
+        $courrier_id = $users_id;
+
         $annee = date('Y');
         $numCourrier = $courrier_id;
 
