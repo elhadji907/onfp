@@ -35,12 +35,12 @@
                         {!! Form::open(['url' => 'recues/' . $recue->id, 'method' => 'PATCH', 'files' => true]) !!}
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label for="date_recep">{{ __('DATE D\'ARRIVEE') }}(<span
+                                <label for="date_recep">{{ __('DATE ARRIVEE') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <input id="date_recep" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
+                                <input id="date_recep" {{ $errors->has('date_recep') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_recep') is-invalid @enderror" name="date_recep"
                                     placeholder="Votre date dépôt"
-                                    value="{{ Carbon\Carbon::parse($recue->courrier->date_recep)->format('Y-m-d') ?? old('date_recep') }}"
+                                    value="{{ optional($recue->courrier->date_recep)->format('Y-m-d') ?? old('date_recep') }}"
                                     autocomplete="date_recep">
                                 @error('date_recep')
                                     <span class="invalid-feedback" role="alert">
@@ -57,10 +57,10 @@
                             <div class="form-group col-md-4">
                                 <label for="date_cores">{{ __('DATE CORRESPONDANCE') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <input id="date_cores" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
+                                <input id="date_cores" {{ $errors->has('date_cores') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_cores') is-invalid @enderror" name="date_cores"
                                     placeholder="Votre date dépôt"
-                                    value="{{ Carbon\Carbon::parse($recue->courrier->date_cores)->format('Y-m-d') ?? old('date_cores') }}"
+                                    value="{{ optional($recue->courrier->date_cores)->format('Y-m-d') ?? old('date_cores') }}"
                                     autocomplete="date_cores">
                                 @error('date_cores')
                                     <span class="invalid-feedback" role="alert">
@@ -141,12 +141,18 @@
                                 ]) !!}
                             </div>
                             <div class="form-group col-md-6">
-                                {!! Form::label('DATE REPONSE', null, ['class' => 'control-label']) !!}
-                                {{--  {!! Form::date('date_cores', $date_r->format('Y-m-d'), ['placeholder'=>"La date de correspondance du courrier", 'class'=>'form-control']) !!}                      --}}
-                                {!! Form::date('date_reponse', Carbon\Carbon::parse($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_reponse'), [
-                                    'placeholder' => 'La date réponse du courrier',
-                                    'class' => 'form-control',
-                                ]) !!}
+                                <label for="date_reponse">{{ __('DATE REPONSE') }}(<span
+                                    class="text-danger">*</span>)</label>
+                            <input id="date_reponse" {{ $errors->has('date_reponse') ? 'is-invalid' : '' }} type="date"
+                                class="form-control @error('date_reponse') is-invalid @enderror" name="date_reponse"
+                                placeholder="Votre date dépôt"
+                                value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_reponse') }}"
+                                autocomplete="date_reponse">
+                            @error('date_reponse')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
                             </div>
                             <div class="form-group col-md-12">
                                 {!! Form::label('INFORMATIONS COMPLEMENTAIRES') !!}

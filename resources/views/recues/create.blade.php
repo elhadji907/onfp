@@ -79,11 +79,11 @@
                                 ]) !!}  --}}
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }}(<span
+                                <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }} (<span
                                         class="text-danger">*</span>)</label>
                                 <input id="numero_cores" type="number" min="1"
                                     class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
-                                    placeholder="NUMERO CORRESPONDANCE" value="{{ old('numero_cores') }}"
+                                    placeholder="NUMERO CORRESPONDANCE" value="{{ $numCourrier ?? old('numero_cores') }}"
                                     autocomplete="numero_cores">
                                 @error('numero_cores')
                                     <span class="invalid-feedback" role="alert">

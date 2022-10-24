@@ -42,14 +42,15 @@
                                 <?php $i = 1; ?>
                                 @foreach ($recues as $recue)
                                     <tr>
-                                        <td>{!! Carbon\Carbon::parse($recue->courrier->date_recep)->format('d/m/yy') !!}</td>
-                                        <td>{!!  Carbon\Carbon::parse($recue->courrier->date_cores )->format('d/m/yy') !!}</td>
+                                        <td>{!! optional($recue->courrier->date_recep)->format('d/m/yy') !!}</td>
+                                        <td>{!! optional($recue->courrier->date_cores)->format('d/m/yy') !!}</td>
                                         <td>{!! $recue->numero !!}</td>
                                         <td>{!! $recue->courrier->expediteur !!}</td>
                                         <td>{!! $recue->courrier->objet !!}</td>
                                         <td>
                                             @foreach ($recue->courrier->imputations as $imputation)
-                                                <span class="btn btn-default">{!! $imputation->sigle !!}</span>
+                                                {{--  <span class="btn btn-default">{!! $imputation->sigle !!}</span>  --}}
+                                                <span>{!! $imputation->sigle !!},</span>
                                             @endforeach
                                         </td>
                                         <td class="d-flex align-items-baseline">
@@ -119,7 +120,7 @@
                 [10, 25, 50, 100, "Tout"]
             ],
             "order": [
-                [0, 'asc']
+                [2, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",
