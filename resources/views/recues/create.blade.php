@@ -24,14 +24,34 @@
             <div class="card">
                 <div class="card-header card-header-primary text-center">
                     <h3 class="card-title">Enregistrement</h3>
-                    <p class="card-category">Courriers arrivés</p>
+                    <p class="card-category">Courrier arrivée</p>
                 </div>
 
                 <div class="card-body">
                 {!! Form::open(['url'=>'recues','files' => true]) !!}
+                <div class="form-row">
+                <div class="form-group col-md-4">
+                    {!! Form::label('DATE D\'ARRIVEE', null, ['class' => 'control-label']) !!}                    
+                    {{--  {!! Form::date('date_recep', $date_r->format('Y-m-d'), ['placeholder'=>"La date de reception du courrier", 'class'=>'form-control']) !!}                      --}}
+                    {!! Form::date('date_recep', null, ['placeholder'=>"La date de reception du courrier", 'class'=>'form-control']) !!}                    
+                </div>                
+                <div class="form-group col-md-4">
+                    {!! Form::label('DATE CORRESPONDANCE', null, ['class' => 'control-label']) !!}                    
+                    {{--  {!! Form::date('date_cores', $date_r->format('Y-m-d'), ['placeholder'=>"La date de correspondance du courrier", 'class'=>'form-control']) !!}                      --}}
+                    {!! Form::date('date_cores', null, ['placeholder'=>"La date de correspondance du courrier", 'class'=>'form-control']) !!}                    
+                </div>
+                <div class="form-group col-md-4">
+                    {!! Form::label('NUMERO CORRESPONDANCE') !!}                  
+                    {!! Form::number('numero', null, ['placeholder'=>"Numéro de correspondance", 'class'=>'form-control', 'min' => '1']) !!}                    
+                </div>                
+                <div class="form-group col-md-12">
+                    {!! Form::label('EXPEDITEUR') !!}                    
+                    {!! Form::text('expediteur', null, ['placeholder'=>"Expéditeur du courrier", 'class'=>'form-control']) !!}                    
+                </div>
+                </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            {!! Form::label('Objet') !!}                    
+                            {!! Form::label('OBJET') !!}                    
                             {!! Form::text('objet', null, ['placeholder'=>'Objet du courrier', 'class'=>'form-control', 'id'=>'objet']) !!}                    
                         </div> 
                     </div>
@@ -44,10 +64,6 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            {!! Form::label('Expéditeur') !!}                    
-                            {!! Form::text('expediteur', null, ['placeholder'=>"Nom et prénom de l'expéditeur", 'class'=>'form-control']) !!}                    
-                        </div>
                         <div class="form-group col-md-6">
                             {!! Form::label('Imputation') !!}                    
                             {!! Form::select('directions[]', $directions, null, ['multiple'=>'multiple', 'class'=>'form-control', 'id'=>'direction']) !!}                    
@@ -70,14 +86,6 @@
                         <div class="form-group col-md-6">
                             {!! Form::label('Adresse') !!}                    
                             {!! Form::text('adresse', null, ['placeholder'=>'Votre adresse de résidence', 'class'=>'form-control']) !!}                    
-                        </div>
-                        <div class="form-group col-md-3">
-                            {!! Form::label('Date correspondance', null, ['class' => 'control-label']) !!}                    
-                            {!! Form::date('date_cores', $date_r->format('Y-m-d'), ['placeholder'=>"La date de correspondance du courrier", 'class'=>'form-control']) !!}                    
-                        </div>
-                        <div class="form-group col-md-3">
-                            {!! Form::label('Date réception', null, ['class' => 'control-label']) !!}                    
-                            {!! Form::date('date_recep', $date_r->format('Y-m-d'), ['placeholder'=>"La date de reception du courrier", 'class'=>'form-control']) !!}                    
                         </div> 
                     </div>
                     <div class="form-row">
