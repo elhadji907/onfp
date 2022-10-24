@@ -26,7 +26,7 @@
                 <div class="card border-success">
                     <div class="card card-header text-center bg-gradient-default border-success">
                         <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
-                                class="font-italic">FORMULAIRE DE CANDIDATURE</span></h1>
+                                class="font-italic">FORMULAIRE DE MODIFICATION</span></h1>
                     </div>
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires

@@ -16,6 +16,12 @@
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
+        <div class="row justify-content-center pb-2">
+            <div class="col-lg-12 margin-tb">
+                <a class="btn btn-outline-success" href="{{ route('recues.index') }}"> <i
+                        class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+            </div>
+        </div>
         <div class="card">
             @foreach ($recues as $recue)
                 <div class="card-body">

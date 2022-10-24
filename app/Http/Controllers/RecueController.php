@@ -102,14 +102,14 @@ class RecueController extends Controller
 
         $this->validate(
             $request, [
-                'objet'         =>  'required|string|max:100',
-                'message'       =>  'required|string|max:255',
-                'expediteur'    =>  'required|string|max:100',
-                'adresse'       =>  'required|string|max:100',
-                'telephone'     =>  'required|string|max:50',
-                'email'         =>  'required|email|max:255',
                 'date_recep'    =>  'required|date',
                 'date_cores'    =>  'required|date',
+                'numero_cores'  =>  'required|string|min:4|max:4|unique:courriers,numero',
+                'expediteur'    =>  'required|string|max:100',
+                'objet'         =>  'required|string|max:100',
+                /* 'adresse'       =>  'required|string|max:100',
+                'telephone'     =>  'required|string|max:50',
+                'email'         =>  'required|email|max:255', */
             ]
         );
         $types_courrier_id = TypesCourrier::where('name','Courriers arrives')->first()->id;
@@ -129,17 +129,14 @@ class RecueController extends Controller
 
         // $filePath = request('file')->store('recues', 'public');
         $courrier = new Courrier([
-            'numero'             =>     "CA-".$annee."-".$numCourrier,
+            'numero'             =>      $request->input('numero_cores'),
             'objet'              =>      $request->input('objet'),
             'message'            =>      $request->input('message'),
             'expediteur'         =>      $request->input('expediteur'),
-            'telephone'          =>      $request->input('telephone'),
-            'email'              =>      $request->input('email'),
-            'adresse'            =>      $request->input('adresse'),
-            'fax'                =>      $request->input('fax'),
-            'bp'                 =>      $request->input('bp'),
             'date_recep'         =>      $request->input('date_recep'),
             'date_cores'         =>      $request->input('date_cores'),
+            'date_imp'           =>      $request->input('date_reponse'), //date reponse du courrier
+            'name'               =>      $request->input('numero_reponse'), //date reponse du courrier
             //'legende'         =>      $request->input('legende'),
             'types_courriers_id' =>      $types_courrier_id,
             'users_id'           =>      $users_id,
@@ -149,7 +146,7 @@ class RecueController extends Controller
         $courrier->save();
 
         $recue = new Recue([
-            'numero'        =>  "CA-".$annee."-".$numCourrier,
+            'numero'        =>  "CA-".$annee."-".$request->input('numero_cores'),
             'courriers_id'  =>   $courrier->id
         ]);
         
@@ -216,18 +213,20 @@ class RecueController extends Controller
 
         $this->validate(
             $request, [
-                'objet'         =>  'required|string|max:200',
-                'message'       =>  'required|string|max:550',
-                'expediteur'    =>  'required|string|max:100',
-                'adresse'       =>  'required|string|max:100',
-                'telephone'     =>  'required|string|max:50',
-                'email'         =>  'required|email|max:255',
                 'date_recep'    =>  'required|date',
                 'date_cores'    =>  'required|date',
+                'numero_cores'  =>  'required|string|min:4|max:4|unique:courriers,numero,'.$recue->courrier->id,
+                'expediteur'    =>  'required|string|max:100',
+                'objet'         =>  'required|string|max:100',
+                /* 'adresse'       =>  'required|string|max:100',
+                'telephone'     =>  'required|string|max:50',
+                'email'         =>  'required|email|max:255', */
                 'file'          =>  'sometimes|required|file|max:30000|mimes:pdf,doc,txt,xlsx,xls,jpeg,jpg,jif,docx,png,svg,csv,rtf,bmp|max:100000',
 
             ]
         );
+
+        $annee = date('Y');
 
         if (request('file')) {
              $filePath = request('file')->store('recues', 'public');
@@ -241,21 +240,19 @@ class RecueController extends Controller
         //dd($courrier);
 
         $courrier->objet              =      $request->input('objet');
+        $courrier->numero             =      $request->input('numero_cores');
         $courrier->message            =      $request->input('message');
-        $courrier->expediteur         =      $request->input('expediteur');
-        $courrier->telephone          =      $request->input('telephone');
-        $courrier->email              =      $request->input('email');
-        $courrier->adresse            =      $request->input('adresse');
-        $courrier->fax                =      $request->input('fax');
-        $courrier->bp                 =      $request->input('bp');
         $courrier->date_recep         =      $request->input('date_r');
         $courrier->date               =      $request->input('date_c');
-        $courrier->legende            =      $request->input('legende');
         $courrier->types_courriers_id =      $types_courrier_id;
         $courrier->users_id           =      $user_id;
         $courrier->file               =      $filePath;
+        $courrier->date_imp           =      $request->input('date_reponse'); //date reponse du courrier
+        $courrier->name               =      $request->input('numero_reponse'); //date reponse du courrier
+
         $courrier->save(); 
 
+        $recue->numero                =      "CA-".$annee."-".$request->input('numero_cores');
         $recue->courriers_id          =      $courrier->id; 
 
         $recue->save();
@@ -276,21 +273,20 @@ class RecueController extends Controller
         /* dd($user_id); */
  
         $courrier->objet              =      $request->input('objet');
+        $courrier->numero             =      $request->input('numero_cores');
         $courrier->message            =      $request->input('message');
         $courrier->expediteur         =      $request->input('expediteur');
-        $courrier->telephone          =      $request->input('telephone');
-        $courrier->email              =      $request->input('email');
-        $courrier->adresse            =      $request->input('adresse');
-        $courrier->fax                =      $request->input('fax');
-        $courrier->bp                 =      $request->input('bp');
-        $courrier->date_recep             =      $request->input('date_r');
-        $courrier->date             =      $request->input('date_c');
+        $courrier->date_recep         =      $request->input('date_r');
+        $courrier->date               =      $request->input('date_c');
         $courrier->legende            =      $request->input('legende');
         $courrier->types_courriers_id =      $types_courrier_id;
         $courrier->users_id           =      $user_id;
+        $courrier->date_imp           =      $request->input('date_reponse'); //date reponse du courrier
+        $courrier->name               =      $request->input('numero_reponse'); //date reponse du courrier
         
         $courrier->save();
 
+        $recue->numero                =      "CA-".$annee."-".$request->input('numero_cores');
         $recue->courriers_id          =      $courrier->id;
  
         $recue->save();
@@ -301,7 +297,7 @@ class RecueController extends Controller
         
          }
 
-       return redirect()->route('courriers.show', $recue->courrier->id)->with('success','courrier modifié avec succès !');
+       return redirect()->route('recues.index', $recue->courrier->id)->with('success','courrier modifié avec succès !');
 
     }
 

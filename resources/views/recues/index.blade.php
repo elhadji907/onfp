@@ -29,29 +29,24 @@
                         <table class="table table-bordered table-striped" id="table-recus" width="100%" cellspacing="0">
                             <thead class="table-dark">
                                 <tr>
-                                    <th style="width:10%;">Numero</th>
-                                    <th>Objet</th>
-                                    <th style="width:15%;">Expéditeur</th>
-                                    <th style="width:20%;">Imputation</th>
-                                    <th style="width:10%;">Action</th>
+                                    <th style="width:11%;">{{ __("DATE ARRIVEE") }} </th>
+                                    <th style="width:11%;">{{ __("DATE CORRESP.") }}</th>
+                                    <th style="width:10%;">{{ __("N° CORRESP.") }}</th>
+                                    <th style="width:15%;">EXPEDITEUR</th>
+                                    <th>OBJET</th>
+                                    <th style="width:15%;">IMPUTATION</th>
+                                    <th style="width:10%;"></th>
                                 </tr>
                             </thead>
-                            <tfoot class="table-dark">
-                                <tr>
-                                    <th>Numero</th>
-                                    <th>Objet</th>
-                                    <th>Expéditeur</th>
-                                    <th>Imputation</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($recues as $recue)
                                     <tr>
+                                        <td>{!! Carbon\Carbon::parse($recue->courrier->date_recep)->format('d/m/yy') !!}</td>
+                                        <td>{!!  Carbon\Carbon::parse($recue->courrier->date_cores )->format('d/m/yy') !!}</td>
                                         <td>{!! $recue->numero !!}</td>
-                                        <td>{!! $recue->courrier->objet !!}</td>
                                         <td>{!! $recue->courrier->expediteur !!}</td>
+                                        <td>{!! $recue->courrier->objet !!}</td>
                                         <td>
                                             @foreach ($recue->courrier->imputations as $imputation)
                                                 <span class="btn btn-default">{!! $imputation->sigle !!}</span>
