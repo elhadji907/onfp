@@ -63,7 +63,7 @@ class RecueController extends Controller
     {
         $types = TypesCourrier::get();
         // $numCourrier = date('YmdHis').rand(1,99999);
-        $numCourrier = date('YmdHis');
+        //$numCourrier = date('YmdHis');
 
         $date = Carbon::parse('now');
         $date = $date->format('Y-m-d');

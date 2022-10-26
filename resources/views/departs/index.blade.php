@@ -27,14 +27,17 @@
               <table class="table table-bordered table-striped" id="table-departs" width="100%" cellspacing="0">
                 <thead class="table-dark">
                   <tr>
-                    <th style="width:10%;">Numero</th>
-                    <th style="width:40%;">Objet</th>
-                    <th style="width:15%;">Expéditeur</th>
-                    <th style="width:20%;">Imputation</th>
+                    <th style="width:10%;">N° ORDRE</th>
+                    <th style="width:7%;">NBRE PC</th>
+                    <th style="width:10%;">DATE DEPART</th>
+                    <th style="width:12%;">DESTINATAIRE</th>
+                    <th style="width:22%;">OBJET</th>
+                    <th style="width:10%;">N° ARCHIVES</th>
+                    <th style="width:15%;">Imputation</th>
                     <th style="width:10%;">Action</th>
                   </tr>
                 </thead>
-                <tfoot class="table-dark">
+               {{--   <tfoot class="table-dark">
                   <tr>
                     <th>Numero</th>
                     <th>Objet</th>
@@ -42,14 +45,17 @@
                     <th>Imputation</th>
                     <th>Action</th>
                   </tr>
-                </tfoot>
+                </tfoot>  --}}
                 <tbody>
                   <?php $i = 1 ?>
                   @foreach ($departs as $depart)
                   <tr>
                     <td>{!! $depart->numero !!}</td>
+                    <td>{!! $depart->courrier->nb_pc !!}</td>
+                    <td>{!! optional($depart->courrier->date_imp)->format('d/m/yy') !!}</td>
+                    <td>{!! $depart->destinataire !!}</td>
                     <td>{!! $depart->courrier->objet !!}</td>
-                    <td>{!! $depart->courrier->expediteur !!}</td>
+                    <td>{!! $depart->courrier->num_bord !!}</td>
                     <td>
                       @foreach ($depart->courrier->imputations as $imputation)
                           <span class="btn btn-default">{!! $imputation->sigle !!}</span> 

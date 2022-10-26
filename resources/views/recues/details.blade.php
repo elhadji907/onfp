@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Fiche Courier arrives')
+@section('title', 'ONFP - Fiche Courier arrivées')
 @section('content')
 
     <style>

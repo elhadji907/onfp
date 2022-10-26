@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Enregistrement des courriers arrivees')
+@section('title', 'ONFP - Enregistrement des courriers arrivées')
 
 @section('extra-js')
     {!! NoCaptcha::renderJs() !!}
@@ -7,7 +7,7 @@
 
 @section('content')
     <div class="content mb-5">
-        <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
+        <div class="container col-12 col-md-12 col-lg-8 col-xl-8 col-xs-12">
             <div class="container-fluid">
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
@@ -46,7 +46,7 @@
                                         class="text-danger">*</span>)</label>
                                 <input id="date_recep" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_recep') is-invalid @enderror" name="date_recep"
-                                    placeholder="Votre date dépôt" value="{{ old('date_recep') }}" autocomplete="username">
+                                    placeholder="La date dépôt" value="{{ old('date_recep') }}" autocomplete="username">
                                 @error('date_recep')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -137,7 +137,7 @@
                                     class="form-control @error('numero_reponse') is-invalid @enderror" name="numero_reponse"
                                     placeholder="NUMERO CORRESPONDANCE" value="{{ old('numero_reponse') }}"
                                     autocomplete="numero_reponse">
-                                @error('numero_cores')
+                                @error('numero_reponse')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>

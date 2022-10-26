@@ -29,7 +29,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            {{ 'Courriers (ARRIVES)' }}
+                                            {{ 'Courriers (ARRIVÉES)' }}
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $recues }}</div>
                                     </div>
@@ -107,11 +107,8 @@
                                         <tr>
                                             {{-- <th style="width:5%;">N°</th> --}}
                                             <th style="width:8%;">N°</th>
-                                            <th>Objet</th>
-                                            <th style="width:10%;">Expediteur</th>
-                                            <th style="width:11%;">Email</th>
-                                            <th style="width:11%;">Telephone</th>
-                                            <th style="width:12%;">Type de courrier</th>
+                                            <th>OBJET</th>
+                                            <th style="width:12%;">TYPE COURRIER</th>
                                             {{-- <th style="width:5%;"></th> --}}
                                         </tr>
                                     </thead>
@@ -127,9 +124,6 @@
                                                     </a>
                                                 </td>
                                                 <td>{!! $courrier->objet !!}</td>
-                                                <td>{!! $courrier->expediteur !!}</td>
-                                                <td>{!! $courrier->email !!}</td>
-                                                <td>{!! $courrier->telephone !!}</td>
                                                 <td>
                                                     <b>{!! $courrier->types_courrier->name !!}</b>
                                                 </td>

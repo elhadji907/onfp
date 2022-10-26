@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Fiche Couriers arrives')
+@section('title', 'ONFP - Fiche Couriers arrivées')
 
 @section('extra-js')
 <script>
