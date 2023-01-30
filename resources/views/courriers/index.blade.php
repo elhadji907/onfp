@@ -6,12 +6,12 @@
             <div class="row">
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-primary shadow h-100 py-2">
-                        <a class="nav-link" href="{{ route('courriers.index') }}" target="_blank">
+                        <a class="nav-link" href="#">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ 'Courriers (ANNUELS)' }}</div>
+                                            {{ 'TOTAL' }}</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $courrier }}</div>
                                     </div>
                                     <div class="col-auto">
@@ -29,7 +29,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            {{ 'Courriers (ARRIVÉES)' }}
+                                            {{ 'Courriers (ARRIVÉS)' }}
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $recues }}</div>
                                     </div>
@@ -67,7 +67,8 @@
 
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-warning shadow h-100 py-2">
-                        <a class="nav-link" href="{{ route('internes.index') }}" target="_blank">
+                        {{--  <a class="nav-link" href="{{ route('internes.index') }}" target="_blank">  --}}
+                        <a class="nav-link" href="#">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
@@ -87,7 +88,7 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-table"></i>
@@ -95,20 +96,21 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <div align="right">
+                                {{--  <div align="right">
                                     <a href="{{ route('courriers.create') }}">
                                         <div class="btn btn-success btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
                                         </div>
                                     </a>
-                                </div>
+                                </div>  --}}
                                 <table class="table table-bordered table-striped" width="100%" cellspacing="0"
                                     id="table-courriers">
                                     <thead class="table-dark">
                                         <tr>
-                                            {{-- <th style="width:5%;">N°</th> --}}
-                                            <th style="width:8%;">N°</th>
+                                            {{--  <th style="width:5%;">N°</th>  --}}
+                                            <th style="width:5%;">NUMERO</th>
+                                            <th style="width:5%;">ANNEE</th>
                                             <th>OBJET</th>
-                                            <th style="width:12%;">TYPE COURRIER</th>
+                                            <th style="width:22%;">TYPE</th>
                                             {{-- <th style="width:5%;"></th> --}}
                                         </tr>
                                     </thead>
@@ -116,16 +118,18 @@
                                         <?php $i = 1; ?>
                                         @foreach ($courriers as $courrier)
                                             <tr>
-                                                {{-- <td>{!! $i++ !!}</td> --}}
+                                                {{--  <td>{!! $i++ !!}</td>  --}}
                                                 <td>
                                                     <a style="color: darkorange; text-decoration: none;"
-                                                        href="{!! url('courriers/' . $courrier->id) !!}" class="view" title="voir" target="_blank">
-                                                        <b>{!! $courrier->numero !!}</b>
+                                                        href="{!! url('courriers/' . $courrier->id) !!}" class="view" title="voir"
+                                                        target="_blank">
+                                                        <b>{!! $courrier->numero ?? '' !!}</b>
                                                     </a>
                                                 </td>
-                                                <td>{!! $courrier->objet !!}</td>
+                                                <td>{!! $courrier->type ?? '' !!}</td>
+                                                <td>{!! $courrier->objet ?? '' !!}</td>
                                                 <td>
-                                                    <b>{!! $courrier->types_courrier->name !!}</b>
+                                                    <b>{!! $courrier->types_courrier->name ?? '' !!}</b>
                                                 </td>
                                                 {{-- <td class="d-flex align-items-baseline align-content-center">    
                             @can('courrier-edit')
@@ -142,27 +146,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <br />
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
+                <div class="col-md-6">
+                    <!-- Pie Chart -->
+                    <div class="card card-chart">
                         <div class="card-header">
-                            {{-- <i class="fas fa-table"></i> --}}
-                            <img src="{{ asset('img/stats_15267.png') }}" class="w-5" />
-                            Statistiques des courriers
+                            <h4 class="card-title text-center">Ressources</h4>
                         </div>
                         <div class="card-body">
-                            {{-- {!! $chart->container() !!} --}}
-                            {{-- <canvas id="bar-chart" width="800" height="450"></canvas> --}}
+                            <div style="">
+                                {!! $pieChart->render() !!}
+                            </div>
                         </div>
                     </div>
+                    <!-- /Pie Chart -->
                 </div>
             </div>
         </div>
-        <br />
     @else
     @endhasrole
 @endsection
@@ -173,29 +172,29 @@
                 dom: 'lBfrtip',
                 buttons: [{
                         extend: 'copyHtml5',
-                        text: '<i class="fas fa-copy"></i> Copy',
+                        text: '<i class="fas fa-copy"></i>',
                         titleAttr: 'Copy'
                     },
                     {
                         extend: 'excelHtml5',
-                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        text: '<i class="fas fa-file-excel"></i>',
                         titleAttr: 'Excel'
                     },
                     {
                         extend: 'csvHtml5',
-                        text: '<i class="fas fa-file-csv"></i> CSV',
+                        text: '<i class="fas fa-file-csv"></i>',
                         titleAttr: 'CSV'
                     },
                     {
                         extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        text: '<i class="fas fa-file-pdf"></i>',
                         orientation: 'landscape',
                         pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
                         extend: 'print',
-                        text: '<i class="fas fa-print"></i> Print',
+                        text: '<i class="fas fa-print"></i>',
                         titleAttr: 'Print'
                     }
                 ],
@@ -204,7 +203,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'asc']
+                    [0, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

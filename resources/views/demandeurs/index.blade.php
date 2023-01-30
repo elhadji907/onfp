@@ -120,7 +120,7 @@
                                         <th style="width:4%;"></th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                                {{--  <tfoot class="table-dark">
                                     <tr>
                                         <th>Civilité</th>
                                         <th>Prenom</th>
@@ -131,7 +131,7 @@
                                         <th>Téléphone</th>
                                         <th></th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($demandeurs as $demandeur)

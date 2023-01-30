@@ -13,6 +13,7 @@
         "fakerphp/faker": "^1.9.1",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "fx3costa/laravelchartjs": "^2.9",
         "fzaninotto/faker": "^1.6",
         "guzzlehttp/guzzle": "^7.0.1",
         "h4cc/wkhtmltoimage-i386": "0.12.x",

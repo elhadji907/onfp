@@ -82,6 +82,9 @@ class ProfileController extends Controller
         $demandeur  =  $user->demandeur;
         $courriers  = $user->courriers;
         
+        $courrierss = Courrier::latest()->paginate(5);
+
+
         /* if ($user->hasRole('Ageroute')) {
             $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
             $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
@@ -93,7 +96,7 @@ class ProfileController extends Controller
             $courriers = Courrier::all();
             return view('courriers.index', compact('courriers', 'courrier', 'recues', 'internes', 'departs'));
         } */
-        return view('profiles.show', compact('user', 'courriers'));
+        return view('profiles.show', compact('user', 'courriers', 'courrierss'));
     }
 
     /**

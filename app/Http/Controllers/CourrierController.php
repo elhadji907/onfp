@@ -44,6 +44,21 @@ class CourrierController extends Controller
         
         $courriers = Courrier::all();
 
+        $pieChart = app()->chartjs
+                ->name('pieChart')
+                ->type('pie')
+                ->size(['width' => 400, 'height' => 200])
+                ->labels(['Courriers arrivés', 'Courriers départs','Courriers internes'])
+                ->datasets([
+                    [
+                        'backgroundColor' => ['#FF6384', '#36A2EB','#7bb13c'],
+                        'hoverBackgroundColor' => ['#FF6384', '#36A2EB','#7bb13c'],
+                        'data' => [$recues, $departs,$internes]
+                    ]
+                ])
+                ->options([]);
+
+
      /*    $chart      = Courrier::all();
 
         $chart = new Courrierchart;
@@ -52,7 +67,7 @@ class CourrierController extends Controller
             'backgroundColor'=>["#3e95cd", "#8e5ea2","#3cba9f"],
         ]); */
         
-        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'bordereaus','facturesdafs','tresors'));
+        return view('courriers.index', compact('courriers','courrier', 'recues', 'internes', 'departs', 'bordereaus','facturesdafs','tresors', 'pieChart'));
     }
 
     /**

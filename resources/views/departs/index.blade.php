@@ -28,11 +28,12 @@
                 <thead class="table-dark">
                   <tr>
                     <th style="width:10%;">N° ORDRE</th>
-                    <th style="width:7%;">NBRE PC</th>
-                    <th style="width:10%;">DATE DEPART</th>
+                    <th style="width:8%;">NBRE PC</th>
+                    <th style="width:11%;">DATE DEPART</th>
                     <th style="width:12%;">DESTINATAIRE</th>
                     <th style="width:22%;">OBJET</th>
                     <th style="width:10%;">N° ARCHIVES</th>
+                    <th style="width:2%;">SCAN</th>
                     <th style="width:15%;">Imputation</th>
                     <th style="width:10%;">Action</th>
                   </tr>
@@ -52,10 +53,19 @@
                   <tr>
                     <td>{!! $depart->numero !!}</td>
                     <td>{!! $depart->courrier->nb_pc !!}</td>
-                    <td>{!! optional($depart->courrier->date_imp)->format('d/m/yy') !!}</td>
+                    <td>{!! optional($depart->courrier->date_imp)->format('d/m/Y') !!}</td>
                     <td>{!! $depart->destinataire !!}</td>
                     <td>{!! $depart->courrier->objet !!}</td>
                     <td>{!! $depart->courrier->num_bord !!}</td>
+                    <td>
+                      @if ($depart->courrier->file !== '')
+                          <a class="btn btn-outline-secondary btn-sm"
+                              title="télécharger le fichier joint" target="_blank"
+                              href="{{ asset($depart->courrier->getFile()) }}">
+                              <i class="fas fa-download"></i>
+                          </a>
+                      @endif
+                    </td>
                     <td>
                       @foreach ($depart->courrier->imputations as $imputation)
                           <span class="btn btn-default">{!! $imputation->sigle !!}</span> 

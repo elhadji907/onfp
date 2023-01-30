@@ -71,8 +71,17 @@
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 &nbsp;
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'regions/' . $region->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                {!! Form::open([
+                                                    'method' => 'DELETE',
+                                                    'url' => 'regions/' . $region->id,
+                                                    'id' => 'deleteForm',
+                                                    'onsubmit' => 'return ConfirmDelete()',
+                                                ]) !!}
+                                                {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                    'type' => 'submit',
+                                                    'class' => 'btn btn-danger btn-sm',
+                                                    'title' => 'supprimer',
+                                                ]) !!}
                                                 {!! Form::close() !!}
                                             </td>
                                         </tr>

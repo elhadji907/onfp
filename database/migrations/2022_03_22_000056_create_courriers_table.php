@@ -54,7 +54,7 @@ class CreateCourriersTable extends Migration
             $table->string('nb_pc', 45)->nullable();
             $table->string('destinataire', 200)->nullable();
             $table->dateTime('date_paye')->nullable();
-            $table->integer('num_bord')->nullable();
+            $table->string('num_bord',200)->nullable();
             $table->double('montant')->nullable();
             $table->double('autres_montant')->nullable();
             $table->double('total')->nullable();

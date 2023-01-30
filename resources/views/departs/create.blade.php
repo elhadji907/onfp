@@ -37,7 +37,20 @@
                         <hr class="sidebar-divider my-0"><br>
                         {!! Form::open(['url' => 'departs', 'files' => true]) !!}
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
+                                <label for="annee">{{ __("ANNEE") }} (<span
+                                        class="text-danger">*</span>)</label>
+                                <input id="annee" type="number" min="1"
+                                    class="form-control @error('annee') is-invalid @enderror" name="annee" min="2022"
+                                    placeholder="ANNEE" value="{{ $annee ?? old('annee') }}"
+                                    autocomplete="annee">
+                                @error('annee')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label for="numero_ordre">{{ __("NUMERO D'ORDRE") }} (<span
                                         class="text-danger">*</span>)</label>
                                 <input id="numero_ordre" type="number" min="1"
@@ -50,7 +63,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="nbre_pieces">{{ __('NOMBRE DE PIECES') }} (<span
                                         class="text-danger">*</span>)</label>
                                 <input id="nbre_pieces" type="number" min="1"
@@ -63,7 +76,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="date_depart">{{ __('DATE DEPART') }}(<span class="text-danger">*</span>)</label>
                                 <input id="date_depart" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
                                     class="form-control @error('date_depart') is-invalid @enderror" name="date_depart"

@@ -2,7 +2,7 @@
 @section('title', 'ONFP - Modification des courriers arrivées')
 @section('content')
     <div class="content mb-5">
-        <div class="container col-12 col-md-12 col-lg-8 col-xl-12">
+        <div class="container col-6 col-md-6 col-lg-8 col-xl-8">
             <div class="container-fluid">
                 @if (session('success'))
                     <div class="alert alert-success">
@@ -34,7 +34,7 @@
                         <hr class="sidebar-divider my-0"><br>
                         {!! Form::open(['url' => 'recues/' . $recue->id, 'method' => 'PATCH', 'files' => true]) !!}
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="date_recep">{{ __('DATE ARRIVEE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="date_recep" {{ $errors->has('date_recep') ? 'is-invalid' : '' }} type="date"
@@ -54,7 +54,7 @@
                                     'class' => 'form-control',
                                 ]) !!}  --}}
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="date_cores">{{ __('DATE CORRESPONDANCE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="date_cores" {{ $errors->has('date_cores') ? 'is-invalid' : '' }} type="date"
@@ -75,11 +75,11 @@
                                     'class' => 'form-control',
                                 ]) !!}  --}}
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
 
                                 <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <input id="numero_cores" type="number" min="1"
+                                <input id="numero_cores" type="text" min="1"
                                     class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
                                     placeholder="NUMERO CORRESPONDANCE"
                                     value="{{ $recue->courrier->numero ?? old('numero_cores') }}"
@@ -96,6 +96,21 @@
                                     'class' => 'form-control',
                                     'min' => '1',
                                 ]) !!}  --}}
+                            </div>
+                            <div class="form-group col-md-6">
+
+                                <label for="annee">{{ __('ANNEE') }}(<span
+                                        class="text-danger">*</span>)</label>
+                                <input id="annee" type="number" min="2022"
+                                    class="form-control @error('annee') is-invalid @enderror" name="annee"
+                                    placeholder="ANNEE"
+                                    value="{{ $recue->courrier->type ?? old('annee') }}"
+                                    autocomplete="annee">
+                                @error('annee')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group col-md-12">
                                 {{--  {!! Form::label('EXPEDITEUR') !!}

@@ -29,7 +29,7 @@
                     @endif
                     <div class="mt-0">
                         <div class="mr-3"><b>{{ __("Nom d'utilisateur") }}:</b> {{ auth::user()->username }}</div>
-                        <div class="mr-3"><b>Adresse e-mail:</b> {{ auth::user()->email }}</div>
+                        <div class="mr-3"><b>E-mail:</b> {{ auth::user()->email }}</div>
                         <div class="mr-3"><b>Téléphone:</b> {{ auth::user()->telephone }}</div>
                     </div>
                     @if (auth::user()->civilite == null or auth::user()->fixe == null)
@@ -42,6 +42,23 @@
                 </div>
             @endcan
         </div>
+        <div class="list-group mt-5">
+            @foreach ($courriers as $courrier)
+                <div class="list-group-item">
+                    <h4><a href="{!! route('courriers.show', $courrier->id) !!}">{!! $courrier->objet ?? '' !!}</a></h4>
+                    <p>{!! $courrier->message !!}</p>
+                    <p><strong>Type de courrier : </strong> {!! $courrier->types_courrier->name ?? '' !!}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        {{--  <small>Posté le {!! $courrier->created_at->format('d/m/Y à H:m') !!}</small>  --}}
+                        <small>Posté le {!! $courrier->created_at->diffForHumans() !!}</small>
+                        <span class="badge badge-primary">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name ?? '' !!}</span>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        {{--  <div class="d-flex justify-content-center pt-2">
+            {!! $courrierss->links() !!}
+        </div>  --}}
     </div>
     <div class="container-fluid col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="mt-5">
@@ -54,7 +71,6 @@
                 </div>
             @endif
         </div>
-
         <div class="mt-5">
             @if (session()->has('attention'))
                 <div class="alert alert-danger" role="alert">

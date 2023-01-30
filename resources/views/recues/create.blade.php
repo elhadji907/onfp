@@ -41,7 +41,7 @@
                         <hr class="sidebar-divider my-0"><br>
                         {!! Form::open(['url' => 'recues', 'files' => true]) !!}
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="date_recep">{{ __('DATE D\'ARRIVEE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="date_recep" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
@@ -59,7 +59,7 @@
                                     'class' => 'form-control',
                                 ]) !!}  --}}
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="date_cores">{{ __('DATE CORRESPONDANCE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="date_cores" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
@@ -78,14 +78,34 @@
                                     'class' => 'form-control',
                                 ]) !!}  --}}
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }} (<span
                                         class="text-danger">*</span>)</label>
-                                <input id="numero_cores" type="number" min="1"
+                                <input id="numero_cores" type="text" min="1"
                                     class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
                                     placeholder="NUMERO CORRESPONDANCE" value="{{ $numCourrier ?? old('numero_cores') }}"
                                     autocomplete="numero_cores">
                                 @error('numero_cores')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+
+                                {{--    {!! Form::label('NUMERO CORRESPONDANCE') !!}
+                                {!! Form::number('numero_cores', null, [
+                                    'placeholder' => 'Numéro de correspondance',
+                                    'class' => 'form-control',
+                                    'min' => '1',
+                                ]) !!}  --}}
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="annee">{{ __('ANNEE') }} (<span
+                                        class="text-danger">*</span>)</label>
+                                <input id="annee" type="number" min="2022"
+                                    class="form-control @error('annee') is-invalid @enderror" name="annee"
+                                    placeholder="ANNEE" value="{{ $annee ?? old('annee') }}"
+                                    autocomplete="annee">
+                                @error('annee')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
                                     </span>

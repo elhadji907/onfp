@@ -42,6 +42,21 @@ class HomeController extends Controller
         $user_connect = Auth::user();
         $demandeur  =  $user_connect->demandeur;
         $courriers = $user->courriers;
+
+
+        $pieChart = app()->chartjs
+        ->name('pieChart')
+        ->type('pie')
+        ->size(['width' => 400, 'height' => 200])
+        ->labels(['Courriers arrivés', 'Courriers départs','Courriers internes'])
+        ->datasets([
+            [
+                'backgroundColor' => ['#FF6384', '#36A2EB','#7bb13c'],
+                'hoverBackgroundColor' => ['#FF6384', '#36A2EB','#7bb13c'],
+                'data' => [$recues, $departs,$internes]
+            ]
+        ])
+        ->options([]);
         
         if ($user->hasRole('Ageroute')) {
             $id_projet = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
@@ -73,7 +88,7 @@ class HomeController extends Controller
             return view('profiles.show', compact('user', 'courriers'));
         } else {
             $courriers = Courrier::all();
-            return view('courriers.index', compact('courriers', 'courrier', 'recues', 'internes', 'departs'));
+            return view('courriers.index', compact('courriers', 'courrier', 'recues', 'internes', 'departs', 'pieChart'));
         }
     }
 }

@@ -96,7 +96,6 @@ class Courrier extends Model
 	protected $casts = [
 		'tva' => 'float',
 		'ir' => 'float',
-		'num_bord' => 'int',
 		'montant' => 'float',
 		'autres_montant' => 'float',
 		'total' => 'float',
@@ -121,6 +120,7 @@ class Courrier extends Model
 	protected $fillable = [
 		'uuid',
 		'numero',
+		'num_bord',
 		'objet',
 		'expediteur',
 		'name',
