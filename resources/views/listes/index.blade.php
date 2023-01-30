@@ -27,7 +27,7 @@
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
                                 id="table-listes">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
                                         <th style="width:10%;">N°</th>
                                         <th style="width:75%;">{!! __('Feuil') !!}</th>
@@ -35,14 +35,14 @@
                                         <th style="width:10%;">Action</th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                                {{--  <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
                                         <th>{!! __('Feuil') !!}</th>
                                         <th>{!! __('Quantité') !!}</th>
                                         <th>Action</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($listes as $liste)

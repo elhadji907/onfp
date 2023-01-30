@@ -35,7 +35,7 @@
                             </div>
                             <table class="table table-bordered table-striped" id="table-bordereaus" width="100%"
                                 cellspacing="0">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
                                         <th style="width:7%;">N° MP</th>
                                         <th style="width:8%;">Date MP</th>
@@ -48,7 +48,7 @@
                                         <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                                {{--  <tfoot class="table-dark">
                                     <tr>
                                         <th>N° MP</th>
                                         <th>Date MP</th>
@@ -60,7 +60,7 @@
                                         <th>Classeur</th>
                                         <th></th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($bordereaus as $bordereau)

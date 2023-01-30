@@ -27,7 +27,7 @@
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
                                 id="table-bordereaus">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
                                         <th style="width:8%;">{!! __('Numéro') !!}</th>
                                         <th style="width:8%;">{!! __('Date/MP') !!}</th>
@@ -39,7 +39,7 @@
                                         <th style="width:10%;">Action</th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                               {{--   <tfoot class="table-dark">
                                     <tr>
                                         <th>{!! __('Numéro') !!}</th>
                                         <th>{!! __('Date/MP') !!}</th>
@@ -50,7 +50,7 @@
                                         <th>{!! __('Observation') !!}</th>
                                         <th>Action</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($bordereaus as $bordereau)

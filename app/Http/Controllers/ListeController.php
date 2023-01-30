@@ -36,19 +36,30 @@ class ListeController extends Controller
      */
     public function create()
     {
-        $anne = Carbon::today()->format('y');
+        /* $anne = Carbon::today()->format('y');
 
         $anne_suivant = ++$anne;
 
-        //dd($anne_suivant);
+        $liste = Liste::get(); */
 
-        $liste = Liste::all();
+        $date = Carbon::parse('now');
+        $date = $date->format('Y-m-d');
 
-        $liste_id = Liste::latest('id')->first()->id;
+        $date_r = Carbon::now();
+        $annee = date('y');
 
-        $liste_id = ++$liste_id;
+        $feuil = Liste::get()->last();
 
-        $feuil = 'Feuil'.$liste_id.'_'.$anne;
+        if (isset($feuil)) {
+            $feuil = Liste::get()->last()->numero;
+                $feuil = ++$feuil;
+                $feuil = $feuil;
+           
+        } else {
+            $feuil = "0001";
+            $feuil = 'Feuil'.$annee.'_'.$feuil;
+
+        }
 
         return view('listes.create',compact('feuil'));
     }

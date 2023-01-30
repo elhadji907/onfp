@@ -89,7 +89,7 @@
                             <div class="form-group col-md-6">
                                 {!! Form::label('', null, ['class' => 'control-label']) !!}
                                 {!! Form::file('file', null, ['class' => 'form-control-file', 'data-width' => '100%']) !!}
-                                @if ($bordereau->courrier->file !== '')
+                                @if ($bordereau->courrier->file != '')
                                     <a class="btn btn-outline-secondary mt-2" title="télécharger le fichier joint"
                                         target="_blank" href="{{ asset($bordereau->courrier->getFile()) }}">
                                         <i class="fas fa-download">&nbsp;Télécharger le courrier</i>

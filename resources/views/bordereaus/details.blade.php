@@ -168,7 +168,7 @@
                                 {{ $bordereau->courrier->objet }}
                             </td>
                             <td>
-                                @if ($bordereau->courrier->file !== '')
+                                @if ($bordereau->courrier->file != '')
                                     <a class="btn btn-outline-secondary mt-0" title="télécharger le fichier joint"
                                         target="_blank" href="{{ asset($bordereau->courrier->getFile()) }}">
                                         <i class="fas fa-download">&nbsp;cliquez ici pour télécharger</i>

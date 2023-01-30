@@ -57,12 +57,33 @@ class BordereauController extends Controller
         $projets = Projet::distinct('name')->get()->pluck('sigle','id')->unique();
         $listes = Liste::distinct('numero')->get()->pluck('numero','id')->unique();
         $types = TypesCourrier::get();
-        $numCourrier = date('YmdHis');
         $date = Carbon::parse('now');
         $date = $date->format('Y-m-d');
         $directions = Direction::pluck('sigle','id');
         $imputations = Imputation::pluck('sigle','id');
         $date_r = Carbon::now();
+
+        $numCourrier = Courrier::get()->last();
+        if (isset($numCourrier)) {
+            $numCourrier = Courrier::get()->last()->numero;
+                $numCourrier = ++$numCourrier;
+           
+        } else {
+            $numCourrier = "0001";
+
+        }
+
+        $longueur = strlen($numCourrier);
+
+        if ($longueur <= 1) {
+            $numCourrier   =   strtolower("000".$numCourrier);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numCourrier   =   strtolower("00".$numCourrier);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("0".$numCourrier);
+        } else {
+            $numCourrier   =   strtolower($numCourrier);
+        }
 
         return view('bordereaus.create',compact('numCourrier', 'date', 'directions','imputations', 'date_r','projets','types','listes'));
     }
@@ -91,15 +112,13 @@ class BordereauController extends Controller
 
         $types_courrier_id = TypesCourrier::where('name','Bordereau')->first()->id;
         $user_id  = Auth::user()->id;
-        $courrier_id = Courrier::get()->last()->id;
-        $annee = date('Y');
-        $numCourrier = $courrier_id;
+        /* $courrier_id = Courrier::get()->last()->id; */
+       /*  $annee = date('Y'); */
+        /* $numCourrier = $courrier_id; */
 
         $direction = \App\Models\Direction::first();
         $imputation = \App\Models\Imputation::first();
-        $courrier = \App\Models\Courrier::first();
-
-        
+        $courrier = \App\Models\Courrier::first();       
 
         $courrier = new Courrier([
             'numero'                    =>      $request->input('numero_mandat'),
