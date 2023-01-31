@@ -37,70 +37,6 @@
                         {!! Form::open(['url' => 'bordereaus/' . $bordereau->id, 'method' => 'PATCH', 'files' => true]) !!}
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col-md-12">
-                                {!! Form::label('OBJET') !!} <span class="text-danger"> <b>*</b> </span>
-                                {!! Form::textarea('objet', $bordereau->courrier->objet, [
-                                    'placeholder' => '',
-                                    'class' => 'form-control',
-                                    'rows' => 2,
-                                    'id' => 'objets',
-                                ]) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Adresse e-mail') !!} <span class="text-danger"> <b>*</b> </span>
-                                {!! Form::email('email', $bordereau->courrier->email, [
-                                    'placeholder' => 'Votre adresse e-mail',
-                                    'class' => 'form-control',
-                                    'id' => 'email',
-                                ]) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Téléphone') !!}<span class="text-danger"> <b>*</b> </span>
-                                {!! Form::text('telephone', $bordereau->courrier->telephone, [
-                                    'placeholder' => 'Votre numero de téléphone',
-                                    'class' => 'form-control',
-                                ]) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Expéditeur') !!} <span class="text-danger"> <b>*</b> </span>
-                                {!! Form::text('expediteur', $bordereau->courrier->expediteur, [
-                                    'placeholder' => "Nom et prénom de l'expéditeur",
-                                    'class' => 'form-control',
-                                ]) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Imputation') !!}
-                                {!! Form::select('directions[]', $directions, null, [
-                                    'multiple' => 'multiple',
-                                    'data-width' => '100%',
-                                    'class' => 'form-control',
-                                    'id' => 'direction',
-                                ]) !!}
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }} (<span
-                                        class="text-danger">*</span>)</label>
-                                <input id="numero_cores" type="text" min="1"
-                                    class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
-                                    placeholder="NUMERO CORRESPONDANCE" value="{{ $bordereau->courrier->numero ?? old('numero_cores') }}"
-                                    autocomplete="numero_cores">
-                                @error('numero_cores')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                <label for="annee">{{ __('ANNEE') }} (<span class="text-danger">*</span>)</label>
-                                <input id="annee" type="number" min="2022"
-                                    class="form-control @error('annee') is-invalid @enderror" name="annee"
-                                    placeholder="ANNEE" value="{{ $bordereau->courrier->type ?? old('annee') }}" autocomplete="annee">
-                                @error('annee')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
                             <div class="form-group col-md-6">
                                 {!! Form::label('Numéro mandat :') !!}<span class="text-danger"> <b>*</b> </span>
                                 {!! Form::text('numero_mandat', $bordereau->numero_mandat, [
@@ -112,6 +48,14 @@
                                 {!! Form::label('Date de mandatement :', null, ['class' => 'control-label']) !!}
                                 {!! Form::date('date_mandat', Carbon\Carbon::parse($bordereau->date_mandat)->format('Y-m-d'), [
                                     'placeholder' => 'La date de naissance',
+                                    'class' => 'form-control',
+                                ]) !!}
+                            </div>
+                            <div class="form-group col-md-12">
+                                {!! Form::label('Désignation :') !!}<span class="text-danger"> <b>*</b> </span>
+                                {!! Form::textarea('designation', $bordereau->designation, [
+                                    'placeholder' => 'Désignation pour le réglement',
+                                    'rows' => 5,
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
@@ -131,23 +75,81 @@
                                     'max' => '100',
                                 ]) !!}
                             </div>
-
-                            <div class="form-group col-md-6">
-                                {!! Form::label('Désignation :') !!}<span class="text-danger"> <b>*</b> </span>
-                                {!! Form::textarea('designation', $bordereau->designation, [
-                                    'placeholder' => 'Désignation pour le réglement',
-                                    'rows' => 5,
-                                    'class' => 'form-control',
-                                ]) !!}
-                            </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 {!! Form::label('Observations :') !!}
                                 {!! Form::textarea('observation', $bordereau->observation, [
                                     'placeholder' => 'observations éventuelles',
-                                    'rows' => 5,
+                                    'rows' => 2,
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>
+                            {{--  <div class="form-group col-md-12">
+                                {!! Form::label('OBJET') !!} <span class="text-danger"> <b>*</b> </span>
+                                {!! Form::textarea('objet', $bordereau->courrier->objet, [
+                                    'placeholder' => '',
+                                    'class' => 'form-control',
+                                    'rows' => 2,
+                                    'id' => 'objets',
+                                ]) !!}
+                            </div>  --}}
+                          {{--    <div class="form-group col-md-6">
+                                {!! Form::label('Adresse e-mail') !!} <span class="text-danger"> <b>*</b> </span>
+                                {!! Form::email('email', $bordereau->courrier->email, [
+                                    'placeholder' => 'Votre adresse e-mail',
+                                    'class' => 'form-control',
+                                    'id' => 'email',
+                                ]) !!}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {!! Form::label('Téléphone') !!}<span class="text-danger"> <b>*</b> </span>
+                                {!! Form::text('telephone', $bordereau->courrier->telephone, [
+                                    'placeholder' => 'Votre numero de téléphone',
+                                    'class' => 'form-control',
+                                ]) !!}
+                            </div>  --}}
+                            {{--  <div class="form-group col-md-6">
+                                {!! Form::label('Expéditeur') !!} <span class="text-danger"> <b>*</b> </span>
+                                {!! Form::text('expediteur', $bordereau->courrier->expediteur, [
+                                    'placeholder' => "Nom et prénom de l'expéditeur",
+                                    'class' => 'form-control',
+                                ]) !!}
+                            </div>  --}}
+                            <div class="form-group col-md-6">
+                                {!! Form::label('Imputation') !!}
+                                {!! Form::select('directions[]', $directions, null, [
+                                    'multiple' => 'multiple',
+                                    'data-width' => '100%',
+                                    'class' => 'form-control',
+                                    'id' => 'direction',
+                                ]) !!}
+                            </div>
+                            {{--  <div class="form-group col-md-6">
+                                <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }} (<span
+                                        class="text-danger">*</span>)</label>  --}}
+                                <input id="numero_cores" type="hidden" min="1"
+                                    class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
+                                    placeholder="NUMERO CORRESPONDANCE"
+                                    value="{{ $bordereau->courrier->numero ?? old('numero_cores') }}"
+                                    autocomplete="numero_cores">
+                               {{--   @error('numero_cores')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>  --}}
+                            {{--  <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <label for="annee">{{ __('ANNEE') }} (<span class="text-danger">*</span>)</label>  --}}
+                                <input id="annee" type="hidden" min="2022"
+                                    class="form-control @error('annee') is-invalid @enderror" name="annee"
+                                    placeholder="ANNEE" value="{{ $bordereau->courrier->type ?? old('annee') }}"
+                                    autocomplete="annee">
+                                {{--  @error('annee')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>  --}}
+
                             {{--  <div class="bg-gradient-secondary text-center">
                             <p class="h4 text-white mb-2">PROJET</p>
                         </div>  --}}

@@ -48,12 +48,12 @@ class CourrierController extends Controller
                 ->name('pieChart')
                 ->type('pie')
                 ->size(['width' => 400, 'height' => 200])
-                ->labels(['Courriers arrivés', 'Courriers départs','Courriers internes'])
+                ->labels(['Courriers arrivés', 'Courriers départs','Courriers internes', 'Bordereau'])
                 ->datasets([
                     [
-                        'backgroundColor' => ['#FF6384', '#36A2EB','#7bb13c'],
-                        'hoverBackgroundColor' => ['#FF6384', '#36A2EB','#7bb13c'],
-                        'data' => [$recues, $departs,$internes]
+                        'backgroundColor' => ['#FF6384', '#36A2EB','#7bb13c', '#6384ff'],
+                        'hoverBackgroundColor' => ['#FF6384', '#36A2EB','#7bb13c', '#6384ff'],
+                        'data' => [$recues, $departs, $internes, $bordereaus]
                     ]
                 ])
                 ->options([]);

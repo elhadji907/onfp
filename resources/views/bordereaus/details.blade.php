@@ -225,18 +225,18 @@
                                 @endforeach
                             </td>
                             <td>
-                                @foreach ($bordereau->courrier->directions as $direction)
-                                       {!! $direction->chef->user->firstname. '   ' . $direction->chef->user->name !!}<br>
-                                @endforeach
+                               {{--   @foreach ($bordereau->courrier->directions as $direction)
+                                       {!! $direction->chef->user->firstname ?? ''. '   ' . $direction->chef->user->name ?? '' !!}<br>
+                                @endforeach  --}}
                             </td>
                         </tr>
                     </table>
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        @can('update', $bordereau->courrier)
+                        {{--  @can('update', $bordereau->courrier)  --}}
                             <a href="{!! url('bordereaus/' . $bordereau->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning mt-0">
                                 <i class="far fa-edit">&nbsp;Modifier</i>
                             </a>
-                        @endcan
+                        {{--  @endcan  --}}
                         <a href="{!! route('courriers.show', $bordereau->courrier->id) !!}" title="modifier" class="btn btn-outline-primary mt-0">
                             <i class="far fa-eye">&nbsp;M&eacute;ssage</i>
                         </a>

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
         <!-- Page Heading -->
-       {{--   <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+        {{--   <h1 class="h3 mb-2 text-gray-800">Tables</h1>
         <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the 
         <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>  --}}
         <div class="row">
@@ -37,14 +37,15 @@
                                 cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th style="width:7%;">N° MP</th>
-                                        <th style="width:8%;">Date MP</th>
-                                        <th style="width:25%;">Désignation réglement</th>
+                                        <th style="width:5%;">N°/C</th>
+                                        <th style="width:3%;">N°/MP</th>
+                                        <th style="width:5%;">Date/MP</th>
+                                        <th>Désignation</th>
                                         <th style="width:5%;">Projet</th>
-                                        <th style="width:10%;">Montant</th>
-                                        <th style="width:5%;">Nb/Pc</th>
-                                        <th style="width:2%;">SCAN</th>
-                                        <th>Bobservations</th>
+                                        <th style="width:5%;">Montant</th>
+                                        <th style="width:2%;">Nb/Pc</th>
+                                        {{--  <th style="width:2%;">SCAN</th>  --}}
+                                        {{--  <th>Bobservations</th>  --}}
                                         <th style="width:5%;">Classeur</th>
                                         <th style="width:10%;"></th>
                                     </tr>
@@ -66,14 +67,14 @@
                                     <?php $i = 1; ?>
                                     @foreach ($bordereaus as $bordereau)
                                         <tr>
-                                            {{-- <td class="align-middle">{!! $i++ !!}</td> --}}
+                                            <td class="align-middle">{!! $bordereau->numero !!}</td>
                                             <td class="align-middle">{!! $bordereau->numero_mandat !!}</td>
                                             <td class="align-middle">{!! Carbon\Carbon::parse($bordereau->date_mandat)->format('d/m/Y') !!}</td>
                                             <td class="align-middle">{!! $bordereau->designation !!}</td>
                                             <td class="align-middle">{!! $bordereau->courrier->projet->sigle !!}</td>
                                             <td class="align-middle">{!! $bordereau->montant !!}</td>
                                             <td class="align-middle">{!! $bordereau->nombre_de_piece !!}</td>
-                                            <td>
+                                           {{--   <td>
                                                 @if ($bordereau->courrier->file != '')
                                                     <a class="btn btn-outline-secondary btn-sm"
                                                         title="télécharger le fichier joint" target="_blank"
@@ -81,21 +82,21 @@
                                                         <i class="fas fa-download"></i>
                                                     </a>
                                                 @endif
-                                            </td>
-                                            <td class="align-middle">{!! $bordereau->observation !!}</td>
+                                            </td>  --}}
+                                            {{--  <td class="align-middle">{!! $bordereau->observation !!}</td>  --}}
                                             <td class="align-middle">
                                                 <a style="color: darkorange; text-decoration: none;"
-                                                href="{!! url('listes/'. $bordereau->liste->id) !!}" class="view" title="voir"
-                                                target="_blank">                                                
-                                                {!! $bordereau->liste->numero !!}
-                                            </a>
+                                                    href="{!! url('listes/' . $bordereau->liste->id) !!}" class="view" title="voir"
+                                                    target="_blank">
+                                                    {!! $bordereau->liste->numero !!}
+                                                </a>
                                             </td>
                                             <td class="align-middle d-flex align-items-baseline">
                                                 {{--  @can('update', $bordereau->courrier)  --}}
-                                                    <a href="{!! url('bordereaus/' . $bordereau->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                        title="modifier">
-                                                        <i class="far fa-edit"></i>
-                                                    </a>
+                                                <a href="{!! url('bordereaus/' . $bordereau->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                    title="modifier">
+                                                    <i class="far fa-edit"></i>
+                                                </a>
                                                 {{--  @endcan  --}}
                                                 &nbsp
                                                 <a href="{!! url('courriers/' . $bordereau->courrier->id) !!}" class='btn btn-primary btn-sm'
@@ -104,9 +105,18 @@
                                                 </a>
                                                 &nbsp;
                                                 {{--  @can('delete', $bordereau->courrier)  --}}
-                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'bordereaus/' . $bordereau->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
+                                                {!! Form::open([
+                                                    'method' => 'DELETE',
+                                                    'url' => 'bordereaus/' . $bordereau->id,
+                                                    'id' => 'deleteForm',
+                                                    'onsubmit' => 'return ConfirmDelete()',
+                                                ]) !!}
+                                                {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                    'type' => 'submit',
+                                                    'class' => 'btn btn-danger btn-sm',
+                                                    'title' => 'supprimer',
+                                                ]) !!}
+                                                {!! Form::close() !!}
                                                 {{--  @endcan  --}}
                                             </td>
                                         </tr>
@@ -127,8 +137,7 @@
         $(document).ready(function() {
             $('#table-bordereaus').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -146,8 +155,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
@@ -194,6 +203,5 @@
                 }
             });
         });
-
     </script>
 @endpush

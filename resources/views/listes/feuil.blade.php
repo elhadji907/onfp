@@ -29,14 +29,16 @@
                                 id="table-bordereaus">
                                 <thead>
                                     <tr>
-                                        <th style="width:8%;">{!! __('Numéro') !!}</th>
+                                        <th style="width:5%;">{!! __('N°') !!}</th>
+                                        <th style="width:5%;">{!! __('N°/MP') !!}</th>
                                         <th style="width:8%;">{!! __('Date/MP') !!}</th>
-                                        <th style="width:30%;">{!! __('Désignation') !!}</th>
-                                        <th>{!! __('Projet') !!}</th>
-                                        <th>{!! __('Montant') !!}</th>
-                                        <th style="width:5%;">{!! __('Nb/Pc') !!}</th>
-                                        <th>{!! __('Observation') !!}</th>
-                                        <th style="width:10%;">Action</th>
+                                        <th>{!! __('Désignation') !!}</th>
+                                       {{--   <th>{!! __('SCAN') !!}</th>  --}}
+                                        <th style="width:8%;">{!! __('Projet') !!}</th>
+                                        <th style="width:8%;">{!! __('Montant') !!}</th>
+                                        <th style="width:2%;">{!! __('Nb/Pc') !!}</th>
+                                        {{--  <th>{!! __('Observation') !!}</th>  --}}
+                                        <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
                                {{--   <tfoot class="table-dark">
@@ -55,14 +57,23 @@
                                     <?php $i = 1; ?>
                                     @foreach ($bordereaus as $bordereau)
                                         <tr>
-                                            {{-- <td>{!! $i++ !!}</td> --}}
-                                            <td>{!! $bordereau->numero !!}</td>
+                                            <td>{!!$bordereau->numero !!}</td>
+                                            <td>{!! $bordereau->numero_mandat !!}</td>
                                             <td>{!! Carbon\Carbon::parse($bordereau->date_mandat)->format('d/m/Y') !!}</td>
-                                            <td>{!! $bordereau->designation !!}</td>
+                                            <td>{!! $bordereau->designation !!}</td>                                            
+                                            {{--  <td>
+                                                @if ($bordereau->courrier->file != '')
+                                                    <a class="btn btn-outline-secondary btn-sm"
+                                                        title="télécharger le fichier joint" target="_blank"
+                                                        href="{{ asset($bordereau->courrier->getFile()) }}">
+                                                        <i class="fas fa-download"></i>
+                                                    </a>
+                                                @endif
+                                            </td>  --}}
                                             <td>{!! $bordereau->courrier->projet->sigle !!}</td>
                                             <td>{!! $bordereau->montant !!}</td>
                                             <td>{!! $bordereau->nombre_de_piece !!}</td>
-                                            <td>{!! $bordereau->observation !!}</td>
+                                            {{--  <td>{!! $bordereau->observation !!}</td>  --}}
                                             <td class="align-middle d-flex align-items-baseline">
                                                 {{--  @can('update', $bordereau->courrier)  --}}
                                                     <a href="{!! url('bordereaus/' . $bordereau->id . '/edit') !!}" class='btn btn-success btn-sm'

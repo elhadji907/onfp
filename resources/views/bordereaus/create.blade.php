@@ -27,83 +27,6 @@
                         <form method="POST" action="{{ url('bordereaus') }}">
                             @csrf
                             <div class="form-row">
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('OBJET') !!} <span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::textarea('objet', null, [
-                                        'placeholder' => 'Objet',
-                                        'class' => 'form-control',
-                                        'rows' => 2,
-                                        'id' => 'objets',
-                                    ]) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('objet'))
-                                            @foreach ($errors->get('objet') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                                    {!! Form::label('Expéditeur') !!} <span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::textarea('expediteur', null, [
-                                        'placeholder' => "Nom et prénom de l'expéditeur",
-                                        'rows' => 1,
-                                        'class' => 'form-control',
-                                    ]) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('expediteur'))
-                                            @foreach ($errors->get('expediteur') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }} (<span
-                                            class="text-danger">*</span>)</label>
-                                    <input id="numero_cores" type="text" min="1"
-                                        class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
-                                        placeholder="NUMERO CORRESPONDANCE"
-                                        value="{{ $numCourrier ?? old('numero_cores') }}" autocomplete="numero_cores">
-                                    @error('numero_cores')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="annee">{{ __('ANNEE') }} (<span class="text-danger">*</span>)</label>
-                                    <input id="annee" type="number" min="2022"
-                                        class="form-control @error('annee') is-invalid @enderror" name="annee"
-                                        placeholder="ANNEE" value="{{ $annee ?? old('annee') }}" autocomplete="annee">
-                                    @error('annee')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Adresse e-mail') !!} <span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::email('email', null, ['placeholder' => 'adresse e-mail', 'class' => 'form-control', 'id' => 'email']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('email'))
-                                            @foreach ($errors->get('email') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Téléphone') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::text('telephone', null, ['placeholder' => 'numero de téléphone', 'class' => 'form-control']) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('telephone'))
-                                            @foreach ($errors->get('telephone') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Numéro mandat :') !!}<span class="text-danger"> <b>*</b> </span>
                                     {!! Form::text('numero_mandat', null, ['placeholder' => 'Le numéro du mandat', 'class' => 'form-control']) !!}
@@ -126,6 +49,21 @@
                                         @endif
                                     </small>
                                 </div>
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    {!! Form::label('Désignation :') !!}<span class="text-danger"> <b>*</b> </span>
+                                    {!! Form::textarea('designation', null, [
+                                        'placeholder' => 'Désignation pour le réglement',
+                                        'rows' => 5,
+                                        'class' => 'form-control',
+                                    ]) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('designation'))
+                                            @foreach ($errors->get('designation') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Montant :') !!}<span class="text-danger"> <b>*</b> </span>
                                     {!! Form::text('montant', null, ['placeholder' => 'Le montant en F CFA', 'class' => 'form-control']) !!}
@@ -139,7 +77,7 @@
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Nbre de pièces :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::number('nombre_de_piece', 1, [
+                                    {!! Form::number('nombre_de_piece', 0, [
                                         'placeholder' => 'Le nombre de pièces',
                                         'class' => 'form-control',
                                         'min' => '0',
@@ -153,37 +91,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Désignation :') !!}<span class="text-danger"> <b>*</b> </span>
-                                    {!! Form::textarea('designation', null, [
-                                        'placeholder' => 'Désignation pour le réglement',
-                                        'rows' => 3,
-                                        'class' => 'form-control',
-                                    ]) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('designation'))
-                                            @foreach ($errors->get('designation') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    {!! Form::label('Observations :') !!}
-                                    {!! Form::textarea('observation', null, [
-                                        'placeholder' => 'observations éventuelles',
-                                        'rows' => 3,
-                                        'class' => 'form-control',
-                                    ]) !!}
-                                    <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('observation'))
-                                            @foreach ($errors->get('observation') as $message)
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @endforeach
-                                        @endif
-                                    </small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Projet :', null, ['class' => 'control-label']) !!}
                                     {!! Form::select('projet', $projets, null, [
                                         'placeholder' => '',
@@ -199,7 +107,101 @@
                                         @endif
                                     </small>
                                 </div>
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    {!! Form::label('Observations :') !!}
+                                    {!! Form::textarea('observation', null, [
+                                        'placeholder' => 'Observations éventuelles',
+                                        'rows' => 2,
+                                        'class' => 'form-control',
+                                    ]) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('observation'))
+                                            @foreach ($errors->get('observation') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
+                                {{--  <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    {!! Form::label('OBJET') !!} <span class="text-danger"> <b>*</b> </span>
+                                    {!! Form::textarea('objet', null, [
+                                        'placeholder' => 'Objet',
+                                        'class' => 'form-control',
+                                        'rows' => 2,
+                                        'id' => 'objets',
+                                    ]) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('objet'))
+                                            @foreach ($errors->get('objet') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>  --}}
+                               {{--   <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    {!! Form::label('Expéditeur') !!} <span class="text-danger"> <b>*</b> </span>
+                                    {!! Form::textarea('expediteur', null, [
+                                        'placeholder' => "Nom et prénom de l'expéditeur",
+                                        'rows' => 1,
+                                        'class' => 'form-control',
+                                    ]) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('expediteur'))
+                                            @foreach ($errors->get('expediteur') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>  --}}
+
+                                {{--  <div class="form-group col-md-6">
+                                    <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }} (<span
+                                            class="text-danger">*</span>)</label>  --}}
+                                    <input id="numero_cores" type="hidden" min="1"
+                                        class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
+                                        placeholder="NUMERO CORRESPONDANCE"
+                                        value="{{ $numCourrier ?? old('numero_cores') }}" autocomplete="numero_cores">
+                                   {{--   @error('numero_cores')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>  --}}
+
+                               {{--   <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <label for="annee">{{ __('ANNEE') }} (<span class="text-danger">*</span>)</label>  --}}
+                                    <input id="annee" type="hidden" min="2022"
+                                        class="form-control @error('annee') is-invalid @enderror" name="annee"
+                                        placeholder="ANNEE" value="{{ $annee ?? old('annee') }}" autocomplete="annee">
+                                    {{--  @error('annee')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>  --}}
+                                {{--  <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('Adresse e-mail') !!} <span class="text-danger"> <b>*</b> </span>
+                                    {!! Form::email('email', null, ['placeholder' => 'adresse e-mail', 'class' => 'form-control', 'id' => 'email']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('email'))
+                                            @foreach ($errors->get('email') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {!! Form::label('Téléphone') !!}<span class="text-danger"> <b>*</b> </span>
+                                    {!! Form::text('telephone', null, ['placeholder' => 'numero de téléphone', 'class' => 'form-control']) !!}
+                                    <small id="emailHelp" class="form-text text-muted">
+                                        @if ($errors->has('telephone'))
+                                            @foreach ($errors->get('telephone') as $message)
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @endforeach
+                                        @endif
+                                    </small>
+                                </div>  --}}
+                                <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('Classeur :', null, ['class' => 'control-label']) !!}
                                     {!! Form::select('liste', $listes, null, [
                                         'placeholder' => '',

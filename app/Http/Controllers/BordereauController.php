@@ -99,10 +99,11 @@ class BordereauController extends Controller
     {
         $this->validate(
             $request, [
-                'objet'                 =>  'required|string|max:200',
-                'expediteur'            =>  'required|string|max:100',
-                'telephone'             =>  'required|string|max:50',
-                'email'                 =>  'required|email|max:255',
+                /* 'objet'                 =>  'required|string|max:200', */
+                /* 'expediteur'            =>  'required|string|max:100', */
+               /*  'telephone'             =>  'required|string|max:50',
+                'email'                 =>  'required|email|max:255', */
+                'date_mandat'           =>     'required|date|max:10',
                 'numero_mandat'         =>  'required|unique:bordereaus,numero_mandat',
                 'montant'               =>  'required',
                 'nombre_de_piece'       =>  'required',
@@ -212,10 +213,10 @@ class BordereauController extends Controller
     {
         $this->validate(
             $request, [
-                'objet'                 =>  'required|string|max:200',
-                'expediteur'            =>  'required|string|max:100',
-                'telephone'             =>  'required|string|max:50',
-                'email'                 =>  'required|email|max:255',
+               /*  'objet'                 =>  'required|string|max:200', */
+                /* 'expediteur'            =>  'required|string|max:100', */
+                /* 'telephone'             =>  'required|string|max:50',
+                'email'                 =>  'required|email|max:255', */
                 'numero_mandat'         =>  'required|string|max:30|unique:bordereaus,numero_mandat,'.$bordereau->id,
                 'montant'               =>  'required',
                 'nombre_de_piece'       =>  'required',

@@ -99,12 +99,10 @@
                                 ]) !!}  --}}
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="annee">{{ __('ANNEE') }} (<span
-                                        class="text-danger">*</span>)</label>
+                                <label for="annee">{{ __('ANNEE') }} (<span class="text-danger">*</span>)</label>
                                 <input id="annee" type="number" min="2022"
                                     class="form-control @error('annee') is-invalid @enderror" name="annee"
-                                    placeholder="ANNEE" value="{{ $annee ?? old('annee') }}"
-                                    autocomplete="annee">
+                                    placeholder="ANNEE" value="{{ $annee ?? old('annee') }}" autocomplete="annee">
                                 @error('annee')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
