@@ -28,7 +28,7 @@
                             </div>
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0" id="table-users">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
                                         <th>Civilité</th>
                                         <th>Prenom & Nom</th>
@@ -41,19 +41,6 @@
                                         <th width="70px">Action</th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
-                                    <tr>
-                                        <th>Civilité</th>
-                                        <th>Prenom & Nom</th>
-                                        {{-- <th>Date et lieu naissance</th> --}}
-                                        <th>Email</th>
-                                        <th>Téléphone</th>
-                                        {{-- <th>Username</th> --}}
-                                        <th>Role</th>
-                                        {{--  <th>Permission</th>  --}}
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>

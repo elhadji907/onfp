@@ -21,22 +21,22 @@
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12" style="margin:auto">
-                                    {!! Form::label('Date imputation :', null, ['class' => 'control-label']) !!}
-                                    {!! Form::date('date_imp', null, ['placeholder' => '', 'class' => 'form-control']) !!}
+                                    {!! Form::label('Date reception :', null, ['class' => 'control-label']) !!}
+                                    {!! Form::date('date_recep', null, ['placeholder' => '', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('date_imp'))
-                                            @foreach ($errors->get('date_imp') as $message)
+                                        @if ($errors->has('date_recep'))
+                                            @foreach ($errors->get('date_recep') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif
                                     </small>
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12" style="margin:auto">
-                                    {!! Form::label('Date reception :', null, ['class' => 'control-label']) !!}
-                                    {!! Form::date('date_recep', null, ['placeholder' => '', 'class' => 'form-control']) !!}
+                                    {!! Form::label('Date imputation :', null, ['class' => 'control-label']) !!}
+                                    {!! Form::date('date_imp', null, ['placeholder' => '', 'class' => 'form-control']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
-                                        @if ($errors->has('date_recep'))
-                                            @foreach ($errors->get('date_recep') as $message)
+                                        @if ($errors->has('date_imp'))
+                                            @foreach ($errors->get('date_imp') as $message)
                                                 <p class="text-danger">{{ $message }}</p>
                                             @endforeach
                                         @endif

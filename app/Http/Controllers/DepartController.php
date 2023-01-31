@@ -65,7 +65,7 @@ class DepartController extends Controller
         $date_r = Carbon::now();
 
         /* $numCourrier = Courrier::get()->last()->numero; */
-        $numCourrier = Courrier::get()->last();
+        $numCourrier = Depart::get()->last();
         if (isset($numCourrier)) {
             $numCourrier = Courrier::get()->last()->numero;
             $numCourrier = ++$numCourrier;
@@ -99,7 +99,7 @@ class DepartController extends Controller
     {
         $this->validate(
             $request, [
-                'numero_ordre'    =>  'required|string|min:4|max:4|unique:courriers,numero,Null,id,deleted_at,NULL',
+                'numero_ordre'    =>  'required|string|min:4|max:4|unique:departs,numero,Null,id,deleted_at,NULL',
                 'nbre_pieces'     =>  'required|numeric',
                 'annee'           =>  'required|numeric|min:2022',
                 'destinataire'    =>  'required|string|max:100',
@@ -149,7 +149,8 @@ class DepartController extends Controller
         $courrier->save();
 
         $depart = new Depart([
-            'numero'            =>  "CD-".$request->input('annee')."-".$request->input('numero_ordre'),
+            /* 'numero'            =>  "CD-".$request->input('annee')."-".$request->input('numero_ordre'), */
+            'numero'            =>   $request->input('numero_ordre'),
             'destinataire'      =>   $request->input('destinataire'),
             'courriers_id'      =>   $courrier->id
         ]);
@@ -206,11 +207,10 @@ class DepartController extends Controller
         $this->validate(
             $request, [
                 'annee'           =>  'required|numeric|min:2022',
-                'numero_ordre'    =>  'required|string|min:4|max:4|unique:courriers,numero,'.$depart->courrier->id.',id,deleted_at,NULL',
+                'numero_ordre'    =>  'required|string|min:4|max:4|unique:departs,numero,'.$depart->id.',id,deleted_at,NULL',
                 'nbre_pieces'     =>  'required|numeric',
                 'destinataire'    =>  'required|string|max:100',
                 'objet'           =>  'required|string|max:200',
-                'numero_archive'  =>  'required|string|min:4|max:4|unique:courriers,numero,Null,id,deleted_at,NULL',
                 'numero_archive'  =>  'required|string|min:4|max:4|unique:courriers,num_bord,'.$depart->courrier->id.',id,deleted_at,NULL',
                 'date_depart'     =>  'required|date',
                 'file'            =>  'sometimes|required|file|max:30000|mimes:pdf,doc,txt,xlsx,xls,jpeg,jpg,jif,docx,png,svg,csv,rtf,bmp',
@@ -253,7 +253,8 @@ class DepartController extends Controller
        $courrier->save(); 
 
        $depart->courriers_id          =      $courrier->id; 
-       $depart->destinataire           =      $request->input('destinataire'); 
+       $depart->numero                 =      $request->input('numero_ordre');
+       $depart->destinataire          =      $request->input('destinataire'); 
 
        $depart->save();
        //$courrier->directions()->sync($request->input('directions'));
@@ -279,6 +280,7 @@ class DepartController extends Controller
             $courrier->save();
      
             $depart->courriers_id          =      $courrier->id;
+            $depart->numero                 =      $request->input('numero_ordre');
             $depart->destinataire           =      $request->input('destinataire'); 
      
             $depart->save();

@@ -76,7 +76,6 @@ class RecueController extends Controller
         $date_r = Carbon::now();
         $annee = date('Y');
 
-
         /*  dd($date_r); */
         /*      $chart      = Courrier::all();
              $chart = new Courrierchart;
@@ -87,7 +86,7 @@ class RecueController extends Controller
  */
 
         /* $numCourrier = Courrier::get()->last()->numero; */
-        $numCourrier = Courrier::get()->last();
+        $numCourrier = Recue::get()->last();
         if (isset($numCourrier)) {
             $numCourrier = Courrier::get()->last()->numero;
                 $numCourrier = ++$numCourrier;
@@ -125,9 +124,6 @@ class RecueController extends Controller
 
                 dd($imputation); */
 
-                
-        $annee = date('Y');
-
             $this->validate(
                 $request,
                 [
@@ -150,8 +146,6 @@ class RecueController extends Controller
 
         //$courrier_id = Courrier::get()->last()->id;
         $courrier_id = $users_id;
-
-        $annee = date('Y');
 
         $direction = \App\Models\Direction::first();
         $imputation = \App\Models\Imputation::first();
@@ -177,8 +171,9 @@ class RecueController extends Controller
         $courrier->save();
 
         $recue = new Recue([
-            'numero'        =>  "CA-".$request->input('annee')."-".$request->input('numero_cores'),
-            'courriers_id'  =>   $courrier->id
+            /* 'numero'        =>  "CA-".$request->input('annee')."-".$request->input('numero_cores'), */
+            'numero'             =>      $request->input('numero_cores'),
+            'courriers_id'       =>      $courrier->id
         ]);
 
         $recue->save();
@@ -237,13 +232,8 @@ class RecueController extends Controller
      */
     public function update(Request $request, Recue $recue)
     {
-        /* $this->authorize('update',  $recue->courrier); */
-
         $annee = date('Y');
         $annee_precedente = $request->input('annee');
-
-        /* dd($annee_precedente); */
-
 
         if($annee == $annee_precedente){
             $this->validate(
@@ -307,7 +297,8 @@ class RecueController extends Controller
 
             $courrier->save();
 
-            $recue->numero                =      "CA-".$request->input('annee')."-".$request->input('numero_cores');
+            /* $recue->numero                =      "CA-".$request->input('annee')."-".$request->input('numero_cores'); */
+            $recue->numero                =      $request->input('numero_cores');
             $recue->courriers_id          =      $courrier->id;
 
             $recue->save();
@@ -340,7 +331,9 @@ class RecueController extends Controller
 
             $courrier->save();
 
-            $recue->numero                =      "CA-".$request->input('annee')."-".$request->input('numero_cores');
+            /* $recue->numero                =      "CA-".$request->input('annee')."-".$request->input('numero_cores'); */
+            
+            $recue->numero                =      $request->input('numero_cores');
             $recue->courriers_id          =      $courrier->id;
 
             $recue->save();

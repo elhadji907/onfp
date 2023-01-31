@@ -137,7 +137,7 @@
                 <a href="{!! url('dafs/create') !!}"><div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</div></a> 
               </div>
               <table class="table table-bordered table-striped" id="table-dafs" width="100%" cellspacing="0">
-                <thead class="table-dark">
+                <thead>
                   <tr>
                     {{--  <th style="width:5%;">N°</th>  --}}
                     <th style="width:10%;">N° Courrier</th>
@@ -148,17 +148,6 @@
                     <th style="width:10%;">Action</th>
                   </tr>
                 </thead>
-                <tfoot class="table-dark">
-                  <tr>
-                    {{--  <th>N°</th>  --}}
-                    <th>N° Courrier</th>
-                    <th>Date MP</th>
-                    <th>Désignation</th>
-                    <th>Observations</th>
-                    <th>Date Imput.</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
                 <tbody>              
                   <?php $i = 1 ?>
                   @foreach ($dafs as $daf)

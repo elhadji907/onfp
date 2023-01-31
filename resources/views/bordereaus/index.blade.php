@@ -39,11 +39,12 @@
                                     <tr>
                                         <th style="width:7%;">N° MP</th>
                                         <th style="width:8%;">Date MP</th>
-                                        <th style="width:30%;">Désignation réglement</th>
+                                        <th style="width:25%;">Désignation réglement</th>
                                         <th style="width:5%;">Projet</th>
                                         <th style="width:10%;">Montant</th>
                                         <th style="width:5%;">Nb/Pc</th>
-                                        <th style="width:20%;">Bobservations</th>
+                                        <th style="width:2%;">SCAN</th>
+                                        <th>Bobservations</th>
                                         <th style="width:5%;">Classeur</th>
                                         <th style="width:10%;"></th>
                                     </tr>
@@ -72,6 +73,15 @@
                                             <td class="align-middle">{!! $bordereau->courrier->projet->sigle !!}</td>
                                             <td class="align-middle">{!! $bordereau->montant !!}</td>
                                             <td class="align-middle">{!! $bordereau->nombre_de_piece !!}</td>
+                                            <td>
+                                                @if ($bordereau->courrier->file != '')
+                                                    <a class="btn btn-outline-secondary btn-sm"
+                                                        title="télécharger le fichier joint" target="_blank"
+                                                        href="{{ asset($bordereau->courrier->getFile()) }}">
+                                                        <i class="fas fa-download"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
                                             <td class="align-middle">{!! $bordereau->observation !!}</td>
                                             <td class="align-middle">
                                                 <a style="color: darkorange; text-decoration: none;"

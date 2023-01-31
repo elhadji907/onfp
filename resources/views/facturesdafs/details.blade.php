@@ -94,7 +94,6 @@
         .rtl table tr td:nth-child(2) {
             text-align: left;
         }
-
     </style>
 
     @foreach ($facturesdafs as $facturesdaf)
@@ -242,7 +241,6 @@
                                 RESPONSABLE
                             </td>
                         </tr>
-
                         <tr class="item">
                             <td>
                                 @foreach ($facturesdaf->courrier->directions as $direction)
@@ -255,29 +253,24 @@
                                 @endforeach
                             </td>
                         </tr>
-
                         <tr class="heading">
                             <td>Montant</td>
 
                             <td>Prix</td>
                         </tr>
-
                         <tr class="item">
                             <td>Montant HT</td>
-
                             <td>{!! number_format($facturesdaf->courrier->montant, 3, ',', ' ') . ' ' . 'F CFA' !!}</td>
                         </tr>
                         @if (isset($facturesdaf->courrier->tva) && $facturesdaf->courrier->tva != '0')
                             <tr class="item">
-                                <td>{{__("TVA (18%)")}}</td>
-
+                                <td>{{ __('TVA (18%)') }}</td>
                                 <td>{!! number_format($facturesdaf->courrier->tva, 3, ',', ' ') . ' ' . 'F CFA' !!}</td>
                             </tr>
                         @endif
                         @if (isset($facturesdaf->courrier->ir) && $facturesdaf->courrier->ir != '0')
                             <tr class="item">
-                                <td>{{__("IR")}}</td>
-
+                                <td>{{ __('IR') }}</td>
                                 <td>{!! number_format($facturesdaf->courrier->ir, 3, ',', ' ') . ' ' . 'F CFA' !!}</td>
                             </tr>
                         @endif

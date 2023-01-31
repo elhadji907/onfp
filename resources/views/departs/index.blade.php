@@ -25,7 +25,7 @@
               </div>
                 <br />
               <table class="table table-bordered table-striped" id="table-departs" width="100%" cellspacing="0">
-                <thead class="table-dark">
+                <thead>
                   <tr>
                     <th style="width:10%;">N° ORDRE</th>
                     <th style="width:8%;">NBRE PC</th>
@@ -58,7 +58,7 @@
                     <td>{!! $depart->courrier->objet !!}</td>
                     <td>{!! $depart->courrier->num_bord !!}</td>
                     <td>
-                      @if ($depart->courrier->file !== '')
+                      @if ($depart->courrier->file != '')
                           <a class="btn btn-outline-secondary btn-sm"
                               title="télécharger le fichier joint" target="_blank"
                               href="{{ asset($depart->courrier->getFile()) }}">
@@ -68,7 +68,7 @@
                     </td>
                     <td>
                       @foreach ($depart->courrier->imputations as $imputation)
-                          <span class="btn btn-default">{!! $imputation->sigle !!}</span> 
+                          <span>{!! $imputation->sigle !!},</span> 
                       @endforeach
                     </td>             
                     <td class="d-flex align-items-baseline align-content-center">

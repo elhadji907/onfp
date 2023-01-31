@@ -62,8 +62,9 @@ class BordereauController extends Controller
         $directions = Direction::pluck('sigle','id');
         $imputations = Imputation::pluck('sigle','id');
         $date_r = Carbon::now();
+        $annee = date('Y');
 
-        $numCourrier = Courrier::get()->last();
+        $numCourrier = Bordereau::get()->last();
         if (isset($numCourrier)) {
             $numCourrier = Courrier::get()->last()->numero;
                 $numCourrier = ++$numCourrier;
@@ -85,7 +86,7 @@ class BordereauController extends Controller
             $numCourrier   =   strtolower($numCourrier);
         }
 
-        return view('bordereaus.create',compact('numCourrier', 'date', 'directions','imputations', 'date_r','projets','types','listes'));
+        return view('bordereaus.create',compact('numCourrier', 'date', 'directions','imputations', 'date_r','projets','types','listes', 'annee'));
     }
 
     /**
@@ -105,6 +106,7 @@ class BordereauController extends Controller
                 'numero_mandat'         =>  'required|unique:bordereaus,numero_mandat',
                 'montant'               =>  'required',
                 'nombre_de_piece'       =>  'required',
+                'annee'                 =>  'required|numeric|min:2022',
                 'designation'           =>  'required',
                 //'projet'                =>  'exists:projets,id',
             ]
@@ -121,9 +123,11 @@ class BordereauController extends Controller
         $courrier = \App\Models\Courrier::first();       
 
         $courrier = new Courrier([
-            'numero'                    =>      $request->input('numero_mandat'),
+            'numero'                    =>      $request->input('numero_cores'),
             'objet'                     =>      $request->input('objet'),
+            'type'                      =>      $request->input('annee'),
             'message'                   =>      $request->input('message'),
+            'type'                      =>      $request->input('annee'),
             'expediteur'                =>      $request->input('expediteur'),
             'telephone'                 =>      $request->input('telephone'),
             'email'                     =>      $request->input('email'),
@@ -135,7 +139,7 @@ class BordereauController extends Controller
         $courrier->save();
 
         $bordereaus = new Bordereau([      
-            'numero'                    =>      $request->input('numero_mandat'),
+            'numero'                    =>      $request->input('numero_cores'),
             'numero_mandat'             =>      $request->input('numero_mandat'),  
             'date_mandat'               =>      $request->input('date_mandat'),    
             'montant'                   =>      $request->input('montant'),
@@ -231,7 +235,8 @@ class BordereauController extends Controller
        $types_courrier_id = TypesCourrier::where('name','Bordereau')->first()->id;
        $user_id  = Auth::user()->id;
 
-       $courrier->numero                    =      $request->input('numero_mandat');
+       $courrier->numero                    =      $request->input('numero_cores');
+       $courrier->type                      =      $request->input('annee');
        $courrier->objet                     =      $request->input('objet');
        $courrier->message                   =      $request->input('message');
        $courrier->expediteur                =      $request->input('expediteur');
@@ -245,7 +250,7 @@ class BordereauController extends Controller
     
        $courrier->save();
 
-       $bordereau->numero                   =      $request->input('numero_mandat');
+       $bordereau->numero                   =      $request->input('numero_cores');
        $bordereau->numero_mandat            =      $request->input('numero_mandat');
        $bordereau->date_mandat              =      $request->input('date_mandat');
        $bordereau->montant                  =      $request->input('montant');
@@ -267,7 +272,7 @@ class BordereauController extends Controller
         $types_courrier_id = TypesCourrier::where('name','Bordereau')->first()->id;
         $user_id  = Auth::user()->id;
 
-       $courrier->numero                    =      $request->input('numero_mandat');
+       $courrier->numero                    =      $request->input('numero_cores');
        $courrier->objet                     =      $request->input('objet');
        $courrier->message                   =      $request->input('message');
        $courrier->expediteur                =      $request->input('expediteur');
@@ -279,7 +284,7 @@ class BordereauController extends Controller
     
        $courrier->save();
 
-       $bordereau->numero                   =      $request->input('numero_mandat');
+       $bordereau->numero                   =      $request->input('numero_cores');
        $bordereau->numero_mandat            =      $request->input('numero_mandat');
        $bordereau->date_mandat              =      $request->input('date_mandat');
        $bordereau->montant                  =      $request->input('montant');
@@ -298,7 +303,7 @@ class BordereauController extends Controller
 
          }
          
-       return redirect()->route('courriers.show', $bordereau->courrier->id)->with('success','courrier modifié avec succès !');
+       return redirect()->route('bordereaus.index', $bordereau->courrier->id)->with('success','Bordereau modifié avec succès !');
     }
 
     /**

@@ -30,7 +30,7 @@
             @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">{{ session('success') }}</div>
             @endif  --}}
-                <div class="row pt-5"></div>
+                <div class="row"></div>
                 <div class="card border-success">
                     <div class="card card-header text-center bg-gradient-default border-success">
                         <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span

@@ -23,7 +23,7 @@
                 <a href="{!! url('facturesdafs/create') !!}"><div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</div></a> 
               </div>
               <table class="table table-bordered table-striped" id="table-facturesdafs" width="100%" cellspacing="0">
-                <thead class="table-dark">
+                <thead>
                   <tr>
                     <th style="width:8%;">N° Cour.</th>
                     <th style="width:8%;">Date imp.</th>
@@ -36,7 +36,7 @@
                     <th style="width:10%;"></th>
                   </tr>
                 </thead>
-                <tfoot class="table-dark">
+                {{--  <tfoot class="table-dark">
                   <tr>
                     <th>N° Cour.</th>
                     <th>Date imp.</th>
@@ -48,7 +48,7 @@
                     <th>Date AC</th>
                     <th></th>
                   </tr>
-                </tfoot>
+                </tfoot>  --}}
                 <tbody>              
                   <?php $i = 1 ?>
                   @foreach ($facturesdafs as $facturesdaf)

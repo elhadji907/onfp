@@ -28,11 +28,11 @@
                             <br />
                             <table class="table table-bordered table-striped" id="table-recus" width="100%"
                                 cellspacing="0">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
                                         <th style="width:11%;">{{ __('DATE ARRIVEE') }} </th>
                                         <th style="width:11%;">{{ __('DATE CORRESP.') }}</th>
-                                        <th style="width:10%;">{{ __('N° CORRESP.') }}</th>
+                                        <th style="width:8%;">{{ __('N° COR.') }}</th>
                                         <th style="width:15%;">EXPEDITEUR</th>
                                         <th>OBJET</th>
                                         <th style="width:2%;">SCAN</th>
@@ -50,7 +50,7 @@
                                             <td>{!! $recue->courrier->expediteur !!}</td>
                                             <td>{!! $recue->courrier->objet !!}</td>
                                             <td>
-                                                @if ($recue->courrier->file !== '')
+                                                @if ($recue->courrier->file != '')
                                                     <a class="btn btn-outline-secondary btn-sm"
                                                         title="télécharger le fichier joint" target="_blank"
                                                         href="{{ asset($recue->courrier->getFile()) }}">

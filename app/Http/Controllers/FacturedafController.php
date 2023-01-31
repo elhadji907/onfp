@@ -61,7 +61,7 @@ public function __construct()
         $imputations = Imputation::pluck('sigle','id');
         $date_r = Carbon::now();
 
-        return view('facturesdafs.create',compact('numCourrier', 'date', 'directions','imputations', 'date_r','projets','types','listes'));
+        return view('facturesdafs.create',compact('numCourrier', 'date', 'directions','imputations', 'date_r','projets','types'));
     }
 
     /**
