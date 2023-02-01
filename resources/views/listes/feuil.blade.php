@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'B. DAF' . ' ' . $liste->numero)
+@section('title', 'Bordereau' . ' ' . $liste->numero)
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -20,11 +20,16 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
+                                <a href="{!! url('feuille/' . $liste->id) !!}">
+                                    <div class="btn btn-outline-secondary btn-sm"><i
+                                            class="fas fa-download"></i>&nbsp;Télécharger
+                                    </div>
+                                </a>
                                 <a href="{{ route('bordereaus.create') }}">
-                                    <div class="btn btn-success btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                    <div class="btn btn-success btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter
+                                    </div>
                                 </a>
                             </div>
-                            <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
                                 id="table-bordereaus">
                                 <thead>
@@ -33,15 +38,15 @@
                                         <th style="width:5%;">{!! __('N°/MP') !!}</th>
                                         <th style="width:8%;">{!! __('Date/MP') !!}</th>
                                         <th>{!! __('Désignation') !!}</th>
-                                       {{--   <th>{!! __('SCAN') !!}</th>  --}}
+                                        {{--   <th>{!! __('SCAN') !!}</th>  --}}
                                         <th style="width:8%;">{!! __('Projet') !!}</th>
                                         <th style="width:8%;">{!! __('Montant') !!}</th>
-                                        <th style="width:2%;">{!! __('Nb/Pc') !!}</th>
+                                        <th style="width:2%;">{!! __('NB/PC') !!}</th>
                                         {{--  <th>{!! __('Observation') !!}</th>  --}}
                                         <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
-                               {{--   <tfoot class="table-dark">
+                                {{--   <tfoot class="table-dark">
                                     <tr>
                                         <th>{!! __('Numéro') !!}</th>
                                         <th>{!! __('Date/MP') !!}</th>
@@ -57,10 +62,10 @@
                                     <?php $i = 1; ?>
                                     @foreach ($bordereaus as $bordereau)
                                         <tr>
-                                            <td>{!!$bordereau->numero !!}</td>
+                                            <td>{!! $bordereau->numero !!}</td>
                                             <td>{!! $bordereau->numero_mandat !!}</td>
                                             <td>{!! Carbon\Carbon::parse($bordereau->date_mandat)->format('d/m/Y') !!}</td>
-                                            <td>{!! $bordereau->designation !!}</td>                                            
+                                            <td>{!! $bordereau->designation !!}</td>
                                             {{--  <td>
                                                 @if ($bordereau->courrier->file != '')
                                                     <a class="btn btn-outline-secondary btn-sm"
@@ -76,10 +81,10 @@
                                             {{--  <td>{!! $bordereau->observation !!}</td>  --}}
                                             <td class="align-middle d-flex align-items-baseline">
                                                 {{--  @can('update', $bordereau->courrier)  --}}
-                                                    <a href="{!! url('bordereaus/' . $bordereau->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                        title="modifier" target="_blank">
-                                                        <i class="far fa-edit"></i>
-                                                    </a>
+                                                <a href="{!! url('bordereaus/' . $bordereau->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                    title="modifier" target="_blank">
+                                                    <i class="far fa-edit"></i>
+                                                </a>
                                                 {{--  @endcan  --}}
                                                 &nbsp
                                                 <a href="{!! url('courriers/' . $bordereau->courrier->id) !!}" class='btn btn-primary btn-sm'
@@ -88,9 +93,18 @@
                                                 </a>
                                                 &nbsp;
                                                 {{--  @can('delete', $bordereau->courrier)  --}}
-                                                    {!! Form::open(['method' => 'DELETE', 'url' => 'bordereaus/' . $bordereau->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                    {!! Form::close() !!}
+                                                {!! Form::open([
+                                                    'method' => 'DELETE',
+                                                    'url' => 'bordereaus/' . $bordereau->id,
+                                                    'id' => 'deleteForm',
+                                                    'onsubmit' => 'return ConfirmDelete()',
+                                                ]) !!}
+                                                {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                    'type' => 'submit',
+                                                    'class' => 'btn btn-danger btn-sm',
+                                                    'title' => 'supprimer',
+                                                ]) !!}
+                                                {!! Form::close() !!}
                                                 {{--  @endcan  --}}
                                             </td>
                                         </tr>
@@ -110,8 +124,7 @@
         $(document).ready(function() {
             $('#table-bordereaus').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -129,8 +142,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
@@ -177,6 +190,5 @@
                 }
             });
         });
-
     </script>
 @endpush

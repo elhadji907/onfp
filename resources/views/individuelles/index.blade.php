@@ -28,7 +28,7 @@
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
                                 id="table-individuelles">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
                                         <th style="width:5%;">N°</th>
                                         <th>Cin</th>
@@ -43,7 +43,7 @@
                                         <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                                {{--  <tfoot class="table-dark">
                                     <tr>
                                         <th>N°</th>
                                         <th>Cin</th>
@@ -57,13 +57,13 @@
                                         <th>Région</th>
                                         <th></th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($individuelles as $individuelle)
                                         <tr>
-                                            <td>{!! $individuelle->demandeur->numero !!}</td>
-                                            <td>{!! $individuelle->cin !!}</td>
+                                            <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
+                                            <td>{!! $individuelle->demandeur->cin !!}</td>
                                             <td>{!! $individuelle->demandeur->user->civilite !!}</td>
                                             <td>{!! $individuelle->demandeur->user->firstname !!} </td>
                                             <td>{!! $individuelle->demandeur->user->name !!} </td>

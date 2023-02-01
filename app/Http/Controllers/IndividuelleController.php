@@ -83,8 +83,9 @@ class IndividuelleController extends Controller
         $user = auth::user();
         
         $civilites = User::pluck('civilite', 'civilite');
+        return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
 
-        if (isset($user->demandeur->individuelles)) {
+ /*        if (isset($user->demandeur->individuelles)) {
             foreach ($user->demandeur->individuelles as $key => $individuelle) {
             }
         }
@@ -103,7 +104,7 @@ class IndividuelleController extends Controller
             return view('individuelles.icreate', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
         } else {
             return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
-        }
+        } */
     }
 
     public function findNomDept(Request $request)
@@ -120,87 +121,66 @@ class IndividuelleController extends Controller
      */
     public function store(Request $request)
     {
-        $user_connect = Auth::user();
-        
-        $individuelles = $user_connect->demandeur->individuelles;
-        $demandeur = $user_connect->demandeur;
-
-        foreach ($individuelles as $individuelle) {
-        }
-
-        
-        if (isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')) {
-            $this->validate(
-                $request,
-                [
-                    /* 'cin'                 =>  "required|string|min:13|max:15", */
-                    'date_depot'          =>  'required|date_format:Y-m-d',
-                    'autre_tel'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
-                    'etablissement'       =>  'required|string|max:100',
-                    'adresse'             =>  'required|string|max:100',
-                    'prerequis'           =>  'required|string|max:1500',
-                    'motivation'          =>  'required|string|max:1500',
-                    'etude'               =>  'required',
-                    'commune'             =>  'required',
-                    'modules'             =>  'required',
-                    'diplome'             =>  'required',
-                    'optiondiplome'       =>  'required',
-                    'projet_professionnel'=>  'required|string|min:100',
-                ]
-            );
-        } else {
-            $this->validate(
-                $request,
-                [
-                    'sexe'                =>  'required|string|max:10',
-                    'cin'                 =>  "required|string|min:13|max:15|unique:individuelles,cin,{$individuelle->id},id,deleted_at,NULL",
-                    'prenom'              =>  'required|string|max:50',
-                    'nom'                 =>  'required|string|max:50',
-                    'date_naiss'          =>  'required|date_format:Y-m-d',
-                    'date_depot'          =>  'required|date_format:Y-m-d',
-                    'lieu_naissance'      =>  'required|string|max:50',
-                    'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
-                    'etablissement'       =>  'required|string|max:100',
-                    'adresse'             =>  'required|string|max:100',
-                    'prerequis'           =>  'required|string|max:1500',
-                    'motivation'          =>  'required|string|max:1500',
-                    'email'               =>  "required|string|email|max:255|unique:users,email,{$user_connect->id},id,deleted_at,NULL",
-                    'professionnelle'     =>  'required',
-                    'etude'               =>  'required',
-                    'commune'             =>  'required',
-                    'modules'             =>  'required',
-                    'diplome'             =>  'required',
-                    'optiondiplome'       =>  'required',
-                    'projet_professionnel'=>  'required|string|max:1000',
-                ]
-            );
-        }
+        $this->validate(
+            $request,
+            [
+                'sexe'                =>  'required|string|max:10',
+                'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin',
+                'prenom'              =>  'required|string|max:50',
+                'nom'                 =>  'required|string|max:50',
+                'date_naiss'          =>  'required|date_format:Y-m-d',
+                'date_depot'          =>  'required|date_format:Y-m-d',
+                'lieu_naissance'      =>  'required|string|max:50',
+                'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
+                'etablissement'       =>  'required|string|max:100',
+                'adresse'             =>  'required|string|max:100',
+                'prerequis'           =>  'required|string|max:1500',
+                'motivation'          =>  'required|string|max:1500',
+                'email'               =>  "required|string|email|max:255|unique:users,email",
+                'professionnelle'     =>  'required',
+                'etude'               =>  'required',
+                'commune'             =>  'required',
+                'diplome'             =>  'required',
+                'optiondiplome'       =>  'required',
+                'projet_professionnel'=>  'required|string|max:1000',
+            ]
+        );
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
 
-        $annee = date('y');
-        $longueur = strlen($user_id);
 
-        if ($longueur <= 1) {
-            $numero   =   "I".strtolower($annee."000000".$user_id);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero   =   "I".strtolower($annee."00000".$user_id);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-            $numero   =   "I".strtolower($annee."0000".$user_id);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-            $numero   =   "I".strtolower($annee."000".$user_id);
-        } elseif ($longueur >= 5 && $longueur < 6) {
-            $numero   =   "I".strtolower($annee."00".$user_id);
-        } elseif ($longueur >= 6 && $longueur < 7) {
-            $numero   =   "I".strtolower($annee."0".$user_id);
+        $numero = Demandeur::get()->last();
+
+        if (isset($numero)) {
+            $numero = Demandeur::get()->last()->numero_dossier;
+            $numero = ++$numero;
         } else {
-            $numero   =   "I".strtolower($annee.$user_id);
+            $numero = "0000001";
+
         }
 
-        $created_by1 = $user_connect->firstname;
-        $created_by2 = $user_connect->name;
-        $created_by3 = $user_connect->username;
+        $longueur = strlen($numero);
+
+        if ($longueur <= 1) {
+            $numero   =   strtolower("000000".$user_id);
+        } elseif ($longueur >= 2 && $longueur < 3) {
+            $numero   =   strtolower("00000".$user_id);
+        } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero   =   strtolower("0000".$user_id);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero   =   strtolower("000".$user_id);
+        } elseif ($longueur >= 5 && $longueur < 6) {
+            $numero   =   strtolower("00".$user_id);
+        } elseif ($longueur >= 6 && $longueur < 7) {
+            $numero   =   strtolower("0".$user_id);
+        } else {
+            $numero   =   strtolower($user_id);
+        }
+
+        $created_by1 = Auth::user()->firstname;
+        $created_by2 = Auth::user()->name;
+        $created_by3 = Auth::user()->username;
 
         $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
 
@@ -244,7 +224,7 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-        if (isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')) {
+      /*   if (isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')) {
             $individuelle = new Individuelle([
                 'cin'                       =>     $cin,
                 'experience'                =>     $request->input('experience'),
@@ -274,7 +254,7 @@ class IndividuelleController extends Controller
             
             $individuelle->modules()->sync($request->input('modules'));
             return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
-        } else {
+        } else { */
             $user = new User([
                 'sexe'                      =>      $request->input('sexe'),
                 'civilite'                  =>      $civilite,
@@ -301,7 +281,8 @@ class IndividuelleController extends Controller
             $user->assignRole('Individuelle');
                 
             $demandeur = new Demandeur([
-                    'numero'                    =>     $numero,
+                    'cin'                       =>     $cin,
+                    'numero_dossier'            =>     $numero,
                     'types_demandes_id'         =>     $types_demandes_id,
                     'users_id'                  =>     $user->id
                 ]);
@@ -309,7 +290,6 @@ class IndividuelleController extends Controller
             $demandeur->save();
 
             $individuelle = new Individuelle([
-                'cin'                       =>     $cin,
                 'experience'                =>     $request->input('experience'),
                 'information'               =>     $request->input('information'),
                 'date_depot'                =>     $request->input('date_depot'),
@@ -334,10 +314,11 @@ class IndividuelleController extends Controller
                 ]);
         
             $individuelle->save();
+
             
-            $individuelle->modules()->sync($request->input('modules'));
+            /* $individuelle->modules()->sync($request->input('modules')); */
             return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
-        }
+       /*  } */
     }
 
     /**

@@ -114,7 +114,7 @@
                                     'class' => 'form-control',
                                 ]) !!}
                             </div>  --}}
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 {!! Form::label('Imputation') !!}
                                 {!! Form::select('directions[]', $directions, null, [
                                     'multiple' => 'multiple',

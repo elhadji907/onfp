@@ -43,7 +43,7 @@
                                         <th>Désignation</th>
                                         <th style="width:5%;">Projet</th>
                                         <th style="width:5%;">Montant</th>
-                                        <th style="width:2%;">Nb/Pc</th>
+                                        <th style="width:2%;">NB/PC</th>
                                         {{--  <th style="width:2%;">SCAN</th>  --}}
                                         {{--  <th>Bobservations</th>  --}}
                                         <th style="width:5%;">Classeur</th>

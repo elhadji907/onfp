@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Auth;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use DB;
 
 
 class ListeController extends Controller
@@ -153,5 +155,38 @@ class ListeController extends Controller
         $listes=Liste::get();
         return Datatables::of($listes)->make(true);
 
+    }
+
+    public function feuille($id){
+        
+        $liste = Liste::find($id);
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('listes.feuille', compact(
+            'liste'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $name = $liste->numero.', Bordereau du '.$anne.'.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
     }
 }

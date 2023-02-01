@@ -121,11 +121,15 @@ class BordereauController extends Controller
 
         $direction = \App\Models\Direction::first();
         $imputation = \App\Models\Imputation::first();
-        $courrier = \App\Models\Courrier::first();       
+        $courrier = \App\Models\Courrier::first();
+
+        $projet = Projet::find($request->input('projet'));
+
+        $objet = $projet->name;
 
         $courrier = new Courrier([
             'numero'                    =>      $request->input('numero_cores'),
-            'objet'                     =>      $request->input('objet'),
+            'objet'                     =>      $objet,
             'type'                      =>      $request->input('annee'),
             'message'                   =>      $request->input('message'),
             'type'                      =>      $request->input('annee'),
@@ -167,19 +171,14 @@ class BordereauController extends Controller
      */
     public function show(Bordereau $bordereau)
     {
-
-        $directions = $bordereau->courrier->directions;
-
-        //dd($directions);
-
-
         
-        //$directions = Direction::pluck('sigle','id');
+        dd("En cours de construction...");
+        
+        $directions = $bordereau->courrier->directions;
         $projets = Projet::distinct('sigle')->get()->pluck('sigle','sigle')->unique();
         $listes = Liste::distinct('numero')->get()->pluck('numero','numero')->unique();
         $imputations = Imputation::pluck('sigle','id');
         
-        dd("En ours de construction...");
         
         return view('bordereaus.imputations', compact('bordereau', 'directions','imputations', 'projets','listes'));
     }
@@ -238,7 +237,7 @@ class BordereauController extends Controller
 
        $courrier->numero                    =      $request->input('numero_cores');
        $courrier->type                      =      $request->input('annee');
-       $courrier->objet                     =      $request->input('objet');
+       $courrier->objet                     =      $projet;
        $courrier->message                   =      $request->input('message');
        $courrier->expediteur                =      $request->input('expediteur');
        $courrier->email                     =      $request->input('email');
@@ -274,7 +273,7 @@ class BordereauController extends Controller
         $user_id  = Auth::user()->id;
 
        $courrier->numero                    =      $request->input('numero_cores');
-       $courrier->objet                     =      $request->input('objet');
+       $courrier->objet                     =      $projet;
        $courrier->message                   =      $request->input('message');
        $courrier->expediteur                =      $request->input('expediteur');
        $courrier->email                     =      $request->input('email');

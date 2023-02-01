@@ -192,7 +192,7 @@
                                         @endif
                                     </small>
                                 </div> --}}
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                               {{--   <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('module demandé :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('modules', $modules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -202,7 +202,7 @@
                                             @endforeach
                                         @endif
                                     </small>
-                                </div>
+                                </div>  --}}
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Niveau :') !!}(<span class="text-danger">*</span>)
                                     {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
@@ -314,15 +314,15 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Programme :') !!}
-                                    {!! Form::select('programme', $programmes, null, ['placeholder' => 'sélectionner un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
+                                    {!! Form::select('programme', $programmes ?? '', null, ['placeholder' => 'sélectionner un programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Projet :') !!}
-                                    {!! Form::select('projet', $projets, null, ['placeholder' => 'sélectionner un projet', 'class' => 'form-control', 'id' => 'projet', 'data-width' => '100%']) !!}
+                                    {!! Form::select('projet', $projets ?? '', null, ['placeholder' => 'sélectionner un projet', 'class' => 'form-control', 'id' => 'projet', 'data-width' => '100%']) !!}
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Convention :') !!}
-                                    {!! Form::select('convention', $conventions, null, ['placeholder' => 'sélectionner une convention', 'class' => 'form-control', 'id' => 'convention', 'data-width' => '100%']) !!}
+                                    {!! Form::select('convention', $conventions ?? '', null, ['placeholder' => 'sélectionner une convention', 'class' => 'form-control', 'id' => 'convention', 'data-width' => '100%']) !!}
                                 </div>
                             </div>
                             <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
