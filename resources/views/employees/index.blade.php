@@ -50,15 +50,15 @@
                                 <tbody>
                                     @foreach ($employees as $employee)
                                         <tr>
-                                            <td>
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 <img style="width:50%; max-width:50px;" class="rounded-circle w-100"
                                                 src="{{ asset($employee->user->profile->getImage()) }}" />
                                             </td>
-                                            <td>{!! $employee->matricule !!}</td>
-                                            <td>{!! $employee->user->civilite !!} {!! $employee->user->firstname !!} {!! mb_strtoupper($employee->user->name) !!}</td>
-                                            {{--  <td></td>
-                                            <td></td>  --}}
-                                            <td>
+                                            <td style="text-align: center; vertical-align: middle;">{!! $employee->matricule !!}</td>
+                                            <td style="vertical-align: middle;">{!! $employee->user->civilite !!} {!! $employee->user->firstname !!} {!! mb_strtoupper($employee->user->name) !!}</td>
+                                            {{--  <td style="vertical-align: middle;"></td>
+                                            <td style="vertical-align: middle;"></td>  --}}
+                                            <td style="vertical-align: middle;">
                                                 @if ($employee->user->civilite == 'M.')
                                                     né le
                                                 @endif
@@ -66,11 +66,11 @@
                                                     née le
                                                 @endif
                                                 {!! $employee->user->date_naissance->format('d/m/Y') !!} à {!! $employee->user->lieu_naissance !!}</td>
-                                            {{--  <td></td>  --}}
-                                            {{--  <td>{!! $employee->user->email !!}</td>  --}}
-                                            <td>{!! $employee->user->telephone ?? '' !!}</td>
-                                            <td>{!! $employee->fonction->name ?? '' !!}</td>
-                                            <td>
+                                            {{--  <td style="vertical-align: middle;"></td>  --}}
+                                            {{--  <td style="vertical-align: middle;">{!! $employee->user->email !!}</td>  --}}
+                                            <td style="vertical-align: middle;">{!! $employee->user->telephone ?? '' !!}</td>
+                                            <td style="vertical-align: middle;">{!! $employee->fonction->name ?? '' !!}</td>
+                                            <td style="vertical-align: middle;">
                                                 @if(isset($employee->direction->sigle ))
                                                     {!! $employee->direction->sigle !!}
                                                 @else

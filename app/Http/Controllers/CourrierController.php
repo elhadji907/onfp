@@ -9,6 +9,7 @@ use Yajra\Datatables\Datatables;
 use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 use App\Charts\Courrierchart;
 use Illuminate\Notifications\DatabaseNotification;
+use DB;
 
 class CourrierController extends Controller
 {
@@ -304,5 +305,40 @@ class CourrierController extends Controller
         $courriers=Courrier::with('types_courrier')->get();
         return Datatables::of($courriers)->make(true);
         
+    }
+
+    public function imputations($id)
+    {
+        $courrier = Courrier::find($id);
+
+        return view('courriers.impuation', compact('courrier'));
+    }
+
+    
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      $data = DB::table('courriers')      
+      ->where('expediteur', 'LIKE', "%{$query}%")
+        ->get();
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+        
+        $product = $row->expediteur;
+
+
+       $output .= '
+       
+       <li><a href="#">'.$product.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
     }
 }

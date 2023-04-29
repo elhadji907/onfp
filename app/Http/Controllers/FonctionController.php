@@ -122,4 +122,34 @@ class FonctionController extends Controller
         return redirect()->route('fonctions.index')
 ->with('success', 'Fonction supprimée avec succès');
     }
+
+    
+    
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      $data = DB::table('fonctions')
+        ->where('name', 'LIKE', "%{$query}%")
+        ->get();
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+        
+        $product = $row->name;
+
+
+       $output .= '
+       
+       <li><a href="#">'.$product.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
+    }
+
 }

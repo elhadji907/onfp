@@ -29,7 +29,6 @@
         .invoice-box table tr.headingg td {
             background: rgb(255, 255, 255);
             border: 0.5px solid rgb(255, 255, 255);
-            font-weight: bold;
         }
 
         .invoice-box table tr.total td {
@@ -123,20 +122,18 @@
             <tbody>
                 <tr class="headingg">
                     <td style="width:50%;" align="center">
-                        <b>{{ __('REPUBLIQUE DU SENEGAL') }}<br>{{ __('UN PEUPLE - UN BUT - UNE FOI') }}<br>
+                        {{ __('REPUBLIQUE DU SENEGAL') }}<br>{{ __('UN PEUPLE - UN BUT - UNE FOI') }}<br>
                             ----------<br>
                             {{ __('MINISTERE DE L’EMPLOI, DE LA FORMATION') }} <br>
                             {{ __("PROFESSIONNELLE, DE L'APPRENTISSAGE ET DE L'INSERTION") }}<br>
                             ----------
-                        </b>
-
                     </td>
-                    <td style="width:50%;" align="right"><b>{{ __('ONFP/DG/DAF') }}</b><br><br><br><br><br><br>
+                    <td style="width:50%;" align="right">{{ __('ONFP/DG/DAF') }}<br><br><br><br><br><br><br><br>
 
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="4"><b>
+                    <td colspan="4">
                     </td>
                 </tr>
             </tbody>
@@ -152,13 +149,13 @@
                     </td>
                     <td style="width:65%;" align="right">
                         <p>
-                            <b> {{ __('Direction Administrative et Financière') }} </b>
+                             {{ __('Direction Administrative et Financière') }} <br><br>
                         </p>
                         <p align="center">
-                            <b> {{ __('BORDEREAU D’ENVOI N°') }} </b>
+                             {{ __('BORDEREAU D’ENVOI N°') }} 
                         </p>
                         <p align="right">
-                            <b> {{ __("Pièces adressées : Madame l’Agent Comptable de l’ONFP - DAKAR") }} </b>
+                             {{ __("Pièces adressées : Madame l’Agent Comptable de l’ONFP - DAKAR") }} 
                         </p>
                     </td>
                     <td align="right">
@@ -171,25 +168,25 @@
         <table class="table table-responsive table-striped">
             <tbody>
                 <tr class="heading">
-                    <td style="width:3%;" align="center"><b>{{ __('N°/MP') }}</b>
+                    <td style="width:3%;" align="center">{{ __('N°/MP') }}
 
                     </td>
-                    <td style="width:5%;" align="center"><b>{{ __('Date/MP') }}</b>
+                    <td style="width:5%;" align="center">{{ __('Date/MP') }}
 
                     </td>
-                    <td align="center"><b>{{ __('Désignation') }}</b>
+                    <td align="center">{{ __('Désignation') }}
 
                     </td>
-                    <td style="width:5%;" align="center"><b>{{ __('Projet') }}</b>
+                    <td style="width:5%;" align="center">{{ __('Projet') }}
 
                     </td>
-                    <td style="width:5%;" align="center"><b>{{ __('Montant') }}</b>
+                    <td style="width:5%;" align="center">{{ __('Montant') }}
 
                     </td>
-                    <td style="width:2%;" align="center"><b>{{ __('NB/PC') }}</b>
+                    <td style="width:2%;" align="center">{{ __('NB/PC') }}
 
                     </td>
-                    <td style="width:5%;" align="center"><b>{{ __('Obervations') }}</b>
+                    <td style="width:5%;" align="center">{{ __('Obervations') }}
 
                     </td>
                 </tr>

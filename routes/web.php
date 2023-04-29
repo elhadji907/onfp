@@ -266,7 +266,9 @@ Route::group([
             return view('etablissements.selectefilieres');
         })->name('etablissements.selectefilieres');
 
-
+        Route::get('imputations/{id}', [CourrierController::class, 'imputations'])->name('imputations');
+        Route::post('/courrier/fetch', [CourrierController::class, 'fetch'])->name('courrier.fetch');
+        Route::post('/fonction/fetch', [FonctionController::class, 'fetch'])->name('fonction.fetch');
 
         Route::get('preview', [PDFController::class,  'preview']);
         Route::get('download', [PDFController::class, 'download'])->name('download');

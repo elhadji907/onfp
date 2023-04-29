@@ -35,8 +35,9 @@
                                         <th style="width:8%;">{{ __('N° COR.') }}</th>
                                         <th style="width:15%;">EXPEDITEUR</th>
                                         <th>OBJET</th>
-                                        <th style="width:2%;">SCAN</th>
-                                        <th style="width:15%;">IMPUTATION</th>
+                                        {{--  <th style="width:2%;">SCAN</th>  --}}
+                                        <th style="width:10%;">IMPUTATION</th>
+                                        <th style="width:2%;">IMPUTER</th>
                                         <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
@@ -44,12 +45,17 @@
                                     <?php $i = 1; ?>
                                     @foreach ($recues as $recue)
                                         <tr>
-                                            <td>{!! optional($recue->courrier->date_recep)->format('d/m/Y') !!}</td>
-                                            <td>{!! optional($recue->courrier->date_cores)->format('d/m/Y') !!}</td>
-                                            <td>{!! $recue->numero !!}</td>
-                                            <td>{!! $recue->courrier->expediteur !!}</td>
-                                            <td>{!! $recue->courrier->objet !!}</td>
-                                            <td>
+                                            <td style="text-align: center; vertical-align: middle;">{!! optional($recue->courrier->date_recep)->format('d/m/Y') !!}
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">{!! optional($recue->courrier->date_cores)->format('d/m/Y') !!}
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">{!! $recue->numero !!}
+                                            </td>
+                                            <td style="vertical-align: middle;">{!! $recue->courrier->expediteur !!}
+                                            </td>
+                                            <td style="vertical-align: middle;">{!! $recue->courrier->objet !!}
+                                            </td>
+                                            {{--   <td>
                                                 @if ($recue->courrier->file != '')
                                                     <a class="btn btn-outline-secondary btn-sm"
                                                         title="télécharger le fichier joint" target="_blank"
@@ -57,14 +63,19 @@
                                                         <i class="fas fa-download"></i>
                                                     </a>
                                                 @endif
-                                            </td>
-                                            <td>
+                                            </td>  --}}
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 @foreach ($recue->courrier->imputations as $imputation)
                                                     {{--  <span class="btn btn-default">{!! $imputation->sigle !!}</span>  --}}
-                                                    <span>{!! $imputation->sigle !!},</span>
+                                                    <span>{!! $imputation->sigle !!} <br /></span>
                                                 @endforeach
                                             </td>
-                                            <td class="d-flex align-items-baseline">
+                                            <td style="text-align: center; vertical-align: middle;"> <a
+                                                    href="{!! url('imputations', ['$id' => $recue->courrier->id]) !!}" class='btn btn-warning btn-sm'
+                                                    title="imputer">
+                                                    <i class="fa fa-retweet"></i>
+                                                </a></td>
+                                            <td class="d-flex align-items-center">
                                                 @can('courrier-edit')
                                                     <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                         title="modifier">

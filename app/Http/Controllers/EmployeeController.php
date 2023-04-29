@@ -20,6 +20,7 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\Datatables\Datatables;
 use Intervention\Image\Facades\Image;
+use DB;
 
 class EmployeeController extends Controller
 {
@@ -144,6 +145,20 @@ class EmployeeController extends Controller
 
         $familiale_id = $request->input('familiale');
 
+        $fonction=$request->input('fonction');
+
+        if (Fonction::where('name', $fonction)->exists()) {
+            $fonctions_id = Fonction::where('name', $fonction)->first()->id;
+         }
+         else {
+            $fonction = new Fonction([
+                'name'     =>     $request->input('fonction')
+            ]);
+            
+            $fonction->save();
+            $fonctions_id = $fonction->id;
+         }
+
 
         $utilisateur = new User([
             'civilite'              =>      $request->input('civilite'),
@@ -180,7 +195,7 @@ class EmployeeController extends Controller
             'adresse'       =>      $request->input('autre_adresse'),
             'categories_id' =>     $request->input('categorie'),
             'directions_id' =>     $request->input('direction'),
-            'fonctions_id'  =>     $request->input('fonction')
+            'fonctions_id'  =>     $fonctions_id
         ]);
         
         $employee->save();
@@ -207,7 +222,7 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $civilites = User::distinct('civilite')->get()->pluck('civilite', 'civilite')->unique();
-        $directions = Direction::pluck('sigle', 'sigle');
+        $directions = Direction::pluck('name', 'name');
         $categories = Category::pluck('name', 'name');
         $fonctions = Fonction::pluck('name', 'name');
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
@@ -252,10 +267,22 @@ class EmployeeController extends Controller
         $user = $employee->user;
 
         $direction=$request->input('direction');
-        $directions_id = Direction::where('sigle', $direction)->first()->id;
+        $directions_id = Direction::where('name', $direction)->first()->id;
 
         $fonction=$request->input('fonction');
-        $fonctions_id = Fonction::where('name', $fonction)->first()->id;
+
+        if (Fonction::where('name', $fonction)->exists()) {
+            $fonctions_id = Fonction::where('name', $fonction)->first()->id;
+         }
+         else {
+            $fonction = new Fonction([
+                'name'     =>     $request->input('fonction')
+            ]);
+            
+            $fonction->save();
+            $fonctions_id = $fonction->id;
+         }
+
 
         $categorie=$request->input('categorie');
         $categories_id = Category::where('name', $categorie)->first()->id;
@@ -392,4 +419,5 @@ class EmployeeController extends Controller
         $employees=Employee::with('user.employee.fonction')->get();
         return Datatables::of($employees)->make(true);
     }
+
 }
