@@ -2,7 +2,7 @@
 @section('title', 'ONFP - Modification des courriers arrivées')
 @section('content')
     <div class="content mb-5">
-        <div class="container col-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="container col-8 col-md-8 col-lg-8 col-xl-8">
             <div class="container-fluid">
                 @if (session('success'))
                     <div class="alert alert-success">
@@ -38,13 +38,13 @@
                             <div class="card-body custom-edit-service">
                                 @csrf
                                 <div class="row form-row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                    <div class="col-xs-6 col-sm-6 col-md-6 text-center">
                                         <div class="form-group">
                                             <label for="">Imputation</label>
                                             <input type="text" placeholder="Imputation"
                                                 class="form-control form-control-sm @error('product') is-invalid @enderror"
                                                 name="product" id="product" value="">
-                                            <div class="col-lg-12" id="productList">
+                                            <div class="col-lg-6" id="productList">
                                             </div>
                                             @error('product')
                                                 <span class="invalid-feedback" role="alert">
@@ -53,9 +53,27 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="">Chef</label>
+                                            <input type="text" placeholder="Entrer prix de vente"
+                                                class="form-control form-control-sm @error('chef') is-invalid @enderror"
+                                                name="chef" id="chef" value="">
+                                            @error('chef')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <input type="hidden" placeholder="ID"
                                         class="form-control form-control-sm @error('id_direction') is-invalid @enderror"
                                         name="id_direction" id="id_direction" value="0.0" min="0">
+                                    <input type="hidden" placeholder="ID"
+                                        class="form-control form-control-sm @error('id_employe') is-invalid @enderror"
+                                        name="id_employe" id="id_employe" value="" min="0">
                                     <input type="hidden" placeholder="imp"
                                         class="form-control form-control-sm @error('imp') is-invalid @enderror"
                                         name="imp" id="imp" value="1">
@@ -87,7 +105,8 @@
                             <table class="table table-bordered" style="display: none;">
                                 <thead>
                                     <tr>
-                                        <th>Direction</th>
+                                        <th style="width: 50%">Direction</th>
+                                        <th>Responsable</th>
                                         <th style="width: 5%"></th>
                                     </tr>
                                 </thead>
@@ -115,10 +134,14 @@
                     <script id="document-template" type="text/x-handlebars-template">
                     <tr class="delete_add_more_item" id="delete_add_more_item">    
                         <td>
-                            <input type="hidden" name="id_direction[]" value="@{{ id_direction }}" required placeholder="Id direction" class="form-control form-control-sm" readonly>
+                            <input type="hidden" name="id_direction[]" value="@{{ id_direction }}" required placeholder="Id direction" class="form-control form-control-sm">
+                            <input type="hidden" name="id_employe[]" value="@{{ id_employe }}" required placeholder="Id employe" class="form-control form-control-sm">
                             <input type="text" name="product[]" value="@{{ product }}" required placeholder="Direction" class="form-control form-control-sm">                            
                             <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
+                        <td>
+                        <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="le prix total" readonly>
+                      </td>
                         <td>
                         <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>
                         </td>    
@@ -129,12 +152,16 @@
                             $('.table').show();
                             var product = $("#product").val();
                             var id_direction = $("#id_direction").val();
+                            var id_employe = $("#id_employe").val();
+                            var chef = $("#chef").val();
                             var imp = $("#imp").val();
                             var source = $("#document-template").html();
                             var template = Handlebars.compile(source);
                             var data = {
                                 product: product,
                                 id_direction: id_direction,
+                                id_employe: id_employe,
+                                chef: chef,
                                 imp: imp,
                             }
                             var html = template(data);
@@ -167,6 +194,8 @@
                         $(document).on('click', 'li', function() {
                             $('#product').val($(this).text());
                             $('#id_direction').val($(this).data("id"));
+                            $('#id_employe').val($(this).data("employeeid"));
+                            $('#chef').val($(this).data("chef"));
                             $('#productList').fadeOut();
                         });
                     </script>

@@ -12,6 +12,8 @@ use Auth;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use DB;
+use App\Models\Employee;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
@@ -241,6 +243,7 @@ class RecueController extends Controller
             $courrier = $recue->courrier;
             $count = count($request->product);
                 $courrier->directions()->sync($request->id_direction);
+                $courrier->employees()->sync($request->id_employe);
                 return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'Courrier imputé !');
             
             //solution, récuper l'id à partir de blade avec le mode hidden
@@ -396,14 +399,22 @@ class RecueController extends Controller
         ->get();
 
       $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-      foreach($data as $row)
+      foreach($data as $direction)
       {
-        $id = $row->id;
-        $product = $row->name;                                              
-                                                
+        $id = $direction->id;
+        $name = $direction->name;                                              
+        $chef_id = $direction->chef_id;
+        $chef = Employee::findOrFail($chef_id);
+
+        $matricule = $chef->matricule;
+        $employee_id = $chef_id;
+        $user_id = $chef->users_id;
+        $user = User::findOrFail($user_id);
+        $user = $user->firstname.' '.$user->name;
+
        $output .= '
        
-       <li data-id="'.$id.'"><a href="#">'.$product.'</a></li>
+       <li data-id="'.$id.'" data-chef="'.$user.'" data-matricule="'.$matricule.'" data-employeeid="'.$employee_id.'"><a href="#">'.$name.'</a></li>
        ';
       }
       $output .= '</ul>';

@@ -38,7 +38,9 @@
                                         {{--  <th style="width:2%;">SCAN</th>  --}}
                                         <th style="width:15%;">IMPUTATION</th>
                                         <th style="width:2%;">IMPUTER</th>
-                                        <th style="width:10%;"></th>
+                                        <th style="width:1%;"></th>
+                                        <th style="width:1%;"></th>
+                                        <th style="width:1%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,27 +77,31 @@
                                                     title="imputer">
                                                     <i class="fa fa-retweet"></i>
                                                 </a></td>
-                                            <td class="d-flex align-items-center" style="text-align: center; vertical-align: middle;">
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 @can('courrier-edit')
-                                                    <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                    <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class=''
                                                         title="modifier">
-                                                        <i class="far fa-edit">&nbsp;</i>
+                                                        <i class="far fa-edit"></i>
                                                     </a>
                                                 @endcan
-                                                &nbsp; <a href="{!! url('courriers/' . $recue->courrier->id) !!}" class='btn btn-primary btn-sm'
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                 <a href="{!! url('courriers/' . $recue->courrier->id) !!}" class=''
                                                     title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
+                                                    <i class="far fa-eye"></i>
                                                 </a>
-                                                &nbsp;@can('courrier-delete')
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                @can('courrier-delete')
                                                     {!! Form::open([
                                                         'method' => 'DELETE',
                                                         'url' => 'recues/' . $recue->id,
                                                         'id' => 'deleteForm',
                                                         'onsubmit' => 'return ConfirmDelete()',
                                                     ]) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                    {!! Form::button('<i class="fa fa-times" aria-hidden="true" style="color:red"></i>', [
                                                         'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-sm',
+                                                        'class' => 'btn btn-default btn-sm',
                                                         'title' => 'supprimer',
                                                     ]) !!}
                                                     {!! Form::close() !!}
