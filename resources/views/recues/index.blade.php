@@ -65,13 +65,13 @@
                                                 @endif
                                             </td>  --}}
                                             <td style="text-align: center; vertical-align: middle;">
-                                                @foreach ($recue->courrier->imputations as $imputation)
-                                                    {{--  <span class="btn btn-default">{!! $imputation->sigle !!}</span>  --}}
-                                                    <span>{!! $imputation->sigle !!} <br /></span>
+                                                @foreach ($recue->courrier->directions as $imputation)
+                                                    {{--  <span class="btn btn-default">{!! $imputation->sigle ?? '' !!}</span>  --}}
+                                                    <span>{!! $imputation->sigle ?? '' !!} <br /></span>
                                                 @endforeach
                                             </td>
                                             <td style="text-align: center; vertical-align: middle;"> <a
-                                                    href="{!! url('imputations', ['$id' => $recue->courrier->id]) !!}" class='btn btn-warning btn-sm'
+                                                    href="{!! url('imputations', ['$id' => $recue->id]) !!}" class='btn btn-warning btn-sm'
                                                     title="imputer">
                                                     <i class="fa fa-retweet"></i>
                                                 </a></td>

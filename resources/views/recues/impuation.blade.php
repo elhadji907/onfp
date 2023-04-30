@@ -2,7 +2,7 @@
 @section('title', 'ONFP - Modification des courriers arrivées')
 @section('content')
     <div class="content mb-5">
-        <div class="container col-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="container col-6 col-md-6 col-lg-6 col-xl-6">
             <div class="container-fluid">
                 @if (session('success'))
                     <div class="alert alert-success">
@@ -32,7 +32,7 @@
                             <div class="card-body custom-edit-service">
                                 @csrf
                                 <div class="row form-row">
-                                    <div class="col-lg-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                         <div class="form-group">
                                             <label for="">Imputation</label>
                                             <input type="text" placeholder="Imputation"
@@ -47,29 +47,13 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="">Personne ressource</label>
-                                            <input type="text" placeholder="Nom du responsable"
-                                                class="form-control form-control-sm @error('total_price') is-invalid @enderror"
-                                                name="total_price" id="total_price" value="" readonly>
-                                            @error('total_price')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <input type="hidden" placeholder="Entrer quantite"
-                                        class="form-control form-control-sm @error('quantite') is-invalid @enderror"
-                                        name="quantite" id="quantite" value="0.0" min="0">
                                     <input type="hidden" placeholder="ID"
-                                        class="form-control form-control-sm @error('id_produit') is-invalid @enderror"
-                                        name="id_produit" id="id_produit" value="0.0" min="0">
+                                    class="form-control form-control-sm @error('id_direction') is-invalid @enderror" name="id_direction"
+                                    id="id_direction" value="0.0" min="0">
+                                    <input type="hidden" placeholder="imp"
+                                    class="form-control form-control-sm @error('imp') is-invalid @enderror" name="imp"
+                                    id="imp" value="1">
 
-                                    <input type="hidden" placeholder=""
-                                        class="form-control form-control-sm @error('quantite_insuffisante') is-invalid @enderror"
-                                        name="quantite_insuffisante" id="quantite_insuffisante" value="">
                                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                         <button id="addMore" class="btn btn-success btn-sm"><i class="fa fa-plus"
                                                 aria-hidden="true"></i>&nbsp;Ajouter</button>
@@ -90,31 +74,32 @@
                                 @endforeach  --}}
                     </small>
                     <div class="col-lg-12">
-                        <form method="POST" action="#">
-                            @csrf
-                            <div class="table-responsive">
-                                <table class="table table-bordered" style="display: none;">
-                                    <thead>
-                                        <tr>
-                                            <th>Prénom</th>
-                                            <th>Nom</th>
-                                            <th>Direction</th>
-                                            <th style="width: 5%"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="addRow" class="addRow">
-                                    </tbody>
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="4" class="text-center">
-                                                <button type="submit" class="btn btn-success btn-sm">
-                                                    Imputer</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </form>
+                        {{--  <form method="POST" action="{{ route('sales.store') }}">  --}}
+                        {!! Form::open(['url' => 'recues/' . $recue->id, 'method' => 'PATCH', 'files' => true]) !!}
+                        @csrf
+                        <div class="table-responsive">
+                            <table class="table table-bordered" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th>Direction</th>
+                                        <th style="width: 5%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="addRow" class="addRow">
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            {{--  <button type="submit" class="btn btn-success btn-sm">
+                                                    Imputer</button>  --}}
+                                            {!! Form::submit('Imputer', ['class' => 'btn btn-outline-primary pull-right']) !!}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {!! Form::close() !!}
                     </div>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
@@ -124,14 +109,10 @@
                     <script id="document-template" type="text/x-handlebars-template">
                     <tr class="delete_add_more_item" id="delete_add_more_item">    
                         <td>
-                            <input type="text" name="product[]" value="@{{ product }}" placeholder="Prénom" class="form-control form-control-sm" readonly>
+                            <input type="hidden" name="id_direction[]" value="@{{ id_direction }}" required placeholder="Id direction" class="form-control form-control-sm" readonly>
+                            <input type="text" name="product[]" value="@{{ product }}" placeholder="Direction" class="form-control form-control-sm" readonly>                            
+                            <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
-                            <td>
-                            <input type="text" class="quantity form-control form-control-sm" name="quantity[]" value="@{{ quantity }}" required min="1" placeholder="Nom" readonly>
-                            </td>
-                            <td>
-                            <input type="text" class="tva_app form-control form-control-sm" name="tva_app[]" value="@{{ tva_app }}" required min="0" placeholder="Direction" readonly>
-                            </td>
                         <td>
                         <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>
                         </td>    
@@ -141,10 +122,14 @@
                         $(document).on('click', '#addMore', function() {
                             $('.table').show();
                             var product = $("#product").val();
+                            var id_direction = $("#id_direction").val();
+                            var imp = $("#imp").val();
                             var source = $("#document-template").html();
                             var template = Handlebars.compile(source);
                             var data = {
                                 product: product,
+                                id_direction: id_direction,
+                                imp: imp,
                             }
                             var html = template(data);
                             $("#addRow").append(html)
@@ -160,7 +145,7 @@
                             if (query != '') {
                                 var _token = $('input[name="_token"]').val();
                                 $.ajax({
-                                    url: "{{ route('courrier.fetch') }}",
+                                    url: "{{ route('arrive.fetch') }}",
                                     method: "POST",
                                     data: {
                                         query: query,
@@ -175,6 +160,7 @@
                         });
                         $(document).on('click', 'li', function() {
                             $('#product').val($(this).text());
+                            $('#id_direction').val($(this).data("id"));
                             $('#productList').fadeOut();
                         });
                     </script>

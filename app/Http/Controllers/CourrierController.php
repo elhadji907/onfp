@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Courrier;
+use App\Models\Recue;
 use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
@@ -309,36 +310,10 @@ class CourrierController extends Controller
 
     public function imputations($id)
     {
-        $courrier = Courrier::find($id);
+        $recue = Recue::find($id);
+        $courrier = $recue->courrier;
 
-        return view('courriers.impuation', compact('courrier'));
+        return view('recues.impuation', compact('courrier', 'recue'));
     }
 
-    
-    function fetch(Request $request)
-    {
-     if($request->get('query'))
-     {
-      $query = $request->get('query');
-
-      $data = DB::table('courriers')      
-      ->where('expediteur', 'LIKE', "%{$query}%")
-        ->get();
-
-      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-      foreach($data as $row)
-      {
-        
-        $product = $row->expediteur;
-
-
-       $output .= '
-       
-       <li><a href="#">'.$product.'</a></li>
-       ';
-      }
-      $output .= '</ul>';
-      echo $output;
-     }
-    }
 }

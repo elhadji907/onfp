@@ -11,6 +11,7 @@ use App\Models\Imputation;
 use Auth;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use DB;
 
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
@@ -234,6 +235,17 @@ class RecueController extends Controller
     {
         $annee = date('Y');
         $annee_precedente = $request->input('annee');
+        $imp = $request->input('imp');
+
+        if (isset($imp) && $imp == "1") {
+            $courrier = $recue->courrier;
+            $count = count($request->product);
+
+                $courrier->directions()->sync($request->id_direction);
+                return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'Courrier imputé !');
+            
+            //solution, récuper l'id à partir de blade avec le mode hidden
+        }
 
         if($annee == $annee_precedente){
             $this->validate(
@@ -271,6 +283,7 @@ class RecueController extends Controller
             );
         }
 
+        dd($annee);
 
         if (request('file')) {
             $filePath = request('file')->store('recues', 'public');
@@ -371,5 +384,33 @@ class RecueController extends Controller
 
         $recues=Recue::with('courrier')->get();
         return Datatables::of($recues)->make(true);
+    }
+
+    
+    
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      $data = DB::table('directions')      
+      ->where('name', 'LIKE', "%{$query}%")
+        ->get();
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+        $id = $row->id;
+        $product = $row->name;                                              
+                                                
+       $output .= '
+       
+       <li data-id="'.$id.'"><a href="#">'.$product.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
     }
 }
