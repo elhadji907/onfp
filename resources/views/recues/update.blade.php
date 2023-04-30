@@ -180,10 +180,10 @@
                             </div>
                             <div class="form-group col-md-12">
                                 {!! Form::label('Imputation') !!}
-                                {!! Form::select('imputations[]', $imputations, null, [
+                                {!! Form::select('directions[]', $directions, null, [
                                     'multiple' => 'multiple',
                                     'class' => 'form-control',
-                                    'id' => 'imputation',
+                                    'id' => 'direction',
                                 ]) !!}
                             </div>
                         </div>
@@ -253,6 +253,6 @@
 
 @section('javascripts')
     <script type="text/javascript">
-        $('#imputation').select2().val({!! json_encode($recue->courrier->imputations()->allRelatedIds()) !!}).trigger('change');
+        $('#direction').select2().val({!! json_encode($recue->courrier->directions()->allRelatedIds()) !!}).trigger('change');
     </script>
 @endsection

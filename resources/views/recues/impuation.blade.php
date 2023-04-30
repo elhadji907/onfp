@@ -20,14 +20,20 @@
                 <div class="row pb-2">
                     <div class="col-sm-12">
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('recues.index') }}">Retour</a></li>
+                            <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                                    href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
                             <li class="breadcrumb-item active">Imputer ce courrier</li>
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
                         <span class="card-category"><b>Date réception </b>: {!! optional($courrier->date_recep)->format('d/m/Y') !!}</span><br />
                         <span class="card-category"><b>Expéditeur </b>: {!! $courrier->expediteur !!}</span> <br />
-                        <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br /><br />
+                        <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
+                        <span class="card-category"><b>Imputation </b>:
+                            @foreach ($recue->courrier->directions as $imputation)
+                                <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
+                            @endforeach
+                        </span><br /><br />
                         <div class="card">
                             <div class="card-body custom-edit-service">
                                 @csrf
@@ -48,11 +54,11 @@
                                         </div>
                                     </div>
                                     <input type="hidden" placeholder="ID"
-                                    class="form-control form-control-sm @error('id_direction') is-invalid @enderror" name="id_direction"
-                                    id="id_direction" value="0.0" min="0">
+                                        class="form-control form-control-sm @error('id_direction') is-invalid @enderror"
+                                        name="id_direction" id="id_direction" value="0.0" min="0">
                                     <input type="hidden" placeholder="imp"
-                                    class="form-control form-control-sm @error('imp') is-invalid @enderror" name="imp"
-                                    id="imp" value="1">
+                                        class="form-control form-control-sm @error('imp') is-invalid @enderror"
+                                        name="imp" id="imp" value="1">
 
                                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                         <button id="addMore" class="btn btn-success btn-sm"><i class="fa fa-plus"
@@ -110,7 +116,7 @@
                     <tr class="delete_add_more_item" id="delete_add_more_item">    
                         <td>
                             <input type="hidden" name="id_direction[]" value="@{{ id_direction }}" required placeholder="Id direction" class="form-control form-control-sm" readonly>
-                            <input type="text" name="product[]" value="@{{ product }}" placeholder="Direction" class="form-control form-control-sm" readonly>                            
+                            <input type="text" name="product[]" value="@{{ product }}" required placeholder="Direction" class="form-control form-control-sm">                            
                             <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
                         <td>

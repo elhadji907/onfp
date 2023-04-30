@@ -36,7 +36,7 @@
                                         <th style="width:15%;">EXPEDITEUR</th>
                                         <th>OBJET</th>
                                         {{--  <th style="width:2%;">SCAN</th>  --}}
-                                        <th style="width:10%;">IMPUTATION</th>
+                                        <th style="width:15%;">IMPUTATION</th>
                                         <th style="width:2%;">IMPUTER</th>
                                         <th style="width:10%;"></th>
                                     </tr>
@@ -64,10 +64,10 @@
                                                     </a>
                                                 @endif
                                             </td>  --}}
-                                            <td style="text-align: center; vertical-align: middle;">
+                                            <td style="vertical-align: middle;">
                                                 @foreach ($recue->courrier->directions as $imputation)
                                                     {{--  <span class="btn btn-default">{!! $imputation->sigle ?? '' !!}</span>  --}}
-                                                    <span>{!! $imputation->sigle ?? '' !!} <br /></span>
+                                                    <span>{!! $imputation->sigle ?? '' !!}, </span>
                                                 @endforeach
                                             </td>
                                             <td style="text-align: center; vertical-align: middle;"> <a
@@ -75,7 +75,7 @@
                                                     title="imputer">
                                                     <i class="fa fa-retweet"></i>
                                                 </a></td>
-                                            <td class="d-flex align-items-center">
+                                            <td class="d-flex align-items-center" style="text-align: center; vertical-align: middle;">
                                                 @can('courrier-edit')
                                                     <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                         title="modifier">

@@ -188,7 +188,7 @@
                             </td>
                         </tr>
 
-                        <tr class="heading">
+                        {{--  <tr class="heading">
                             <td>
                                 MESSAGE
                             </td>
@@ -196,14 +196,14 @@
 
                             </td>
 
-                        </tr>
+                        </tr>  --}}
 
-                        <tr class="item">
+                        {{--  <tr class="item">
 
                             <td colspan="2">
                                 {{ $recue->courrier->message }}
                             </td>
-                        </tr>
+                        </tr>  --}}
                         @if (isset($recue->courrier->date_imp))
                             <tr class="heading">
                                 <td>
@@ -239,14 +239,16 @@
 
                         <tr class="item">
                             <td>
-                                @foreach ($recue->courrier->imputations as $imputation)
-                                    {!! $imputation->destinataire !!}<br>
+                                <?php $i = 1; ?>
+                                @foreach ($recue->courrier->directions as $direction)
+                                {{ $i++ }}. {!! $direction->name ?? '' !!} <b>[{!! $direction->sigle ?? '' !!}]</b><br>
                                 @endforeach
                             </td>
 
                             <td>
-                                @foreach ($recue->courrier->imputations as $imputation)
-                                    {!! $imputation->sigle !!}<br>
+                                @foreach ($recue->courrier->directions as $direction)
+                                {!! $direction->chef->user->firstname ?? '' !!}&nbsp;
+                                {!! $direction->chef->user->name ?? '' !!}<br>
                                 @endforeach
                             </td>
                         </tr>

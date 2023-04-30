@@ -240,7 +240,6 @@ class RecueController extends Controller
         if (isset($imp) && $imp == "1") {
             $courrier = $recue->courrier;
             $count = count($request->product);
-
                 $courrier->directions()->sync($request->id_direction);
                 return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'Courrier imputé !');
             
@@ -253,7 +252,7 @@ class RecueController extends Controller
                 [
                     'date_recep'    =>  'required|date',
                     'date_cores'    =>  'required|date',
-                    'numero_cores'  =>  'required|string|min:4|max:4|unique:courriers,numero,'.$recue->courrier->id.',id,deleted_at,NULL',
+                    'numero_cores'  =>  'required|string|min:4|max:4|unique:recues,numero,'.$recue->id.',id,deleted_at,NULL',
                     'expediteur'    =>  'required|string|max:100',
                     'objet'         =>  'required|string|max:100',
                     'annee'         =>  'required|numeric|min:2022',
@@ -282,8 +281,6 @@ class RecueController extends Controller
                 ]
             );
         }
-
-        dd($annee);
 
         if (request('file')) {
             $filePath = request('file')->store('recues', 'public');
@@ -317,7 +314,7 @@ class RecueController extends Controller
             $recue->save();
 
             //$courrier->directions()->sync($request->input('directions'));
-            $courrier->imputations()->sync($request->input('imputations'));
+            $courrier->directions()->sync($request->input('directions'));
         } else {
             /*  dd($id); */
             $courrier = $recue->courrier;
@@ -352,7 +349,7 @@ class RecueController extends Controller
             $recue->save();
 
             //$courrier->directions()->sync($request->input('directions'));
-            $courrier->imputations()->sync($request->input('imputations'));
+            $courrier->directions()->sync($request->input('directions'));
         }
 
         return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'courrier modifié avec succès !');
