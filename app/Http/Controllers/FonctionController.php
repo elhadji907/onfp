@@ -136,15 +136,16 @@ class FonctionController extends Controller
         ->get();
 
       $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-      foreach($data as $row)
+      foreach($data as $fonction)
       {
         
-        $product = $row->name;
+        $name = $fonction->name;
+        $id = $fonction->id;
 
 
        $output .= '
        
-       <li><a href="#">'.$product.'</a></li>
+       <li data-id="'.$id.'" data-name="'.$name.'"><a href="#">'.$name.'</a></li>
        ';
       }
       $output .= '</ul>';

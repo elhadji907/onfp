@@ -16,16 +16,18 @@
         @if (session()->has('success'))
             <div class="alert alert-success" role="alert">{{ session('success') }}</div>
         @endif
-        <div class="row justify-content-center pb-2">
-            <div class="col-lg-12 margin-tb">
-                <a class="btn btn-outline-success" href="{{ route('recues.index') }}"> <i
-                        class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
-            </div>
+        
+        <div class="col-sm-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                        href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                <li class="breadcrumb-item active">{!! __("Courrier arrivé") !!}</li>
+            </ul>
         </div>
         <div class="card">
             @foreach ($recues as $recue)
                 <div class="card-body">
-                    <h3 class="card-title">{!! $recue->courrier->types_courrier->name !!}</h5>
+                    {{--  <h3 class="card-title">{!! $recue->courrier->types_courrier->name !!}</h5>  --}}
                         <h5 class="card-category">{!! $recue->courrier->objet !!}</h5>
                         <p>{{ $recue->courrier->message }}</p>
 

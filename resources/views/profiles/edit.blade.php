@@ -38,7 +38,7 @@
                                     <label for="firstname">{{ __('Prénom') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="firstname" type="text"
-                                        class="form-control form-control-user @error('firstname') is-invalid @enderror"
+                                        class="form-control  form-control-sm @error('firstname') is-invalid @enderror"
                                         name="firstname" placeholder="Votre prénom"
                                         value="{{ old('firstname') ?? Auth::user()->firstname }}"
                                         autocomplete="firstname">
@@ -53,7 +53,7 @@
                                     <label for="name">{{ __('Nom') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="name" type="text"
-                                        class="form-control form-control-user @error('name') is-invalid @enderror"
+                                        class="form-control  form-control-sm @error('name') is-invalid @enderror"
                                         name="name" placeholder="Votre nom"
                                         value="{{ old('name') ?? Auth::user()->name }}" autocomplete="name">
                                     @error('name')
@@ -70,13 +70,13 @@
                                     {{-- <div class="col-md-6"> --}}
                                     @if (Auth::user()->date_naissance !== null)
                                         <input id="date_naissance" type="date"
-                                            class="form-control form-control-user @error('date_naissance') is-invalid @enderror"
+                                            class="form-control  form-control-sm @error('date_naissance') is-invalid @enderror"
                                             name="date_naissance" placeholder="Votre date de naissance"
                                             value="{{ old('date_naissance') ?? Auth::user()->date_naissance->format('Y-m-d') }}"
                                             autocomplete="date_naissance">
                                     @else
                                         <input id="date_naissance" type="date"
-                                            class="form-control form-control-user @error('date_naissance') is-invalid @enderror"
+                                            class="form-control  form-control-sm @error('date_naissance') is-invalid @enderror"
                                             name="date_naissance" placeholder="Votre date de naissance"
                                             value="{{ old('date_naissance') ?? Auth::user()->date_naissance }}"
                                             autocomplete="date_naissance">
@@ -92,7 +92,7 @@
                                     <label for="lieu_naissance">{{ __('Lieu de naissance') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="lieu_naissance" type="text"
-                                        class="form-control form-control-user @error('lieu_naissance') is-invalid @enderror"
+                                        class="form-control  form-control-sm @error('lieu_naissance') is-invalid @enderror"
                                         name="lieu_naissance" placeholder="Votre lieu de naissance"
                                         value="{{ old('lieu_naissance') ?? Auth::user()->lieu_naissance }}"
                                         autocomplete="lieu_naissance">
@@ -107,7 +107,7 @@
                                     <label for="telephone">{{ __('Téléphone') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="telephone" type="text"
-                                        class="form-control form-control-user @error('telephone') is-invalid @enderror"
+                                        class="form-control  form-control-sm @error('telephone') is-invalid @enderror"
                                         name="telephone" placeholder="Votre numéro de téléphone"
                                         value="{{ old('telephone') ?? Auth::user()->telephone }}"
                                         autocomplete="telephone">
@@ -124,7 +124,7 @@
                                     <label for="fixe">{{ __('Téléphone secondaire') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="fixe" type="text"
-                                        class="form-control form-control-user @error('fixe') is-invalid @enderror"
+                                        class="form-control  form-control-sm @error('fixe') is-invalid @enderror"
                                         name="fixe" placeholder="Votre téléphone secondaire"
                                         value="{{ old('fixe') ?? Auth::user()->fixe }}" autocomplete="fixe">
                                     @error('fixe')
@@ -138,7 +138,7 @@
                                     <label for="bp">{{ __('BP') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="bp" type="text"
-                                        class="form-control form-control-user @error('bp') is-invalid @enderror" name="bp"
+                                        class="form-control  form-control-sm @error('bp') is-invalid @enderror" name="bp"
                                         placeholder="Votre boite postale" value="{{ old('bp') ?? Auth::user()->bp }}"
                                         autocomplete="bp">
                                     @error('bp')
@@ -152,7 +152,7 @@
                                     <label for="fax">{{ __('Fax') }}</label>
                                     {{-- <div class="col-md-6"> --}}
                                     <input id="fax" type="text"
-                                        class="form-control form-control-user @error('fax') is-invalid @enderror" name="fax"
+                                        class="form-control  form-control-sm @error('fax') is-invalid @enderror" name="fax"
                                         placeholder="Votre numéro de fax" value="{{ old('fax') ?? Auth::user()->fax }}"
                                         autocomplete="fax">
                                     @error('fax')

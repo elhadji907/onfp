@@ -3,6 +3,11 @@
 @section('content')
     <div class="container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                        href="{{ route('employees.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                <li class="breadcrumb-item active">Ajout employé</li>
+            </ul>
             {{-- @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -15,16 +20,45 @@
             @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">{{ session('success') }}</div>
             @endif
-            <div class="row pt-5"></div>
+            
             <div class="card">
-                <div class="card-header card-header-primary text-center">
+               {{--   <div class="card-header card-header-primary text-center">
                     <h3 class="card-title">Enregistrement</h3>
                     <p class="card-category">Employes</p>
-                </div>
+                </div>  --}}
 
                 <div class="card-body">
                     {!! Form::open(['url' => 'employees', 'files' => true]) !!}
-                    <div class="form-row">
+                    <div class="row form-row">
+                        {{--  <div class="form-group col-md-6">
+                            {!! Form::label('e-mail') !!}(<span class="text-danger">*</span>)
+                            {!! Form::email('email', null, [
+                                'placeholder' => 'Votre adresse e-mail',
+                                'class' => 'form-control form-control-sm',
+                                'id' => 'email',
+                            ]) !!}
+                            <small id="emailHelp" class="form-text text-muted">
+                                @if ($errors->has('email'))
+                                    @foreach ($errors->get('email') as $message)
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @endforeach
+                                @endif
+                            </small>
+                        </div>  --}}
+                        <div class="form-group col-md-6">
+                            <label for="">Adresse e-mail</label>
+                            <input type="email" placeholder="email"
+                                class="form-control form-control-sm @error('email') is-invalid @enderror" name="email"
+                                id="email" value="">
+                            <div class="col-lg-12" id="emailList">
+                            </div>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+
                         <div class="form-group col-md-6">
                             <label for="">Fonction</label>
                             <input type="text" placeholder="Fonction"
@@ -63,7 +97,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             {!! Form::label('civilite') !!}(<span class="text-danger">*</span>)
-                            {!! Form::select('civilite', $civilites, null, [
+                            {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], null, [
                                 'placeholder' => '',
                                 'class' => 'form-control form-control-sm',
                                 'id' => 'civilite',
@@ -132,21 +166,6 @@
                         </div>
                         <div class="invalid-feedback">
                             {{ $errors->first('username') }}
-                        </div>
-                        <div class="form-group col-md-6">
-                            {!! Form::label('votre adresse e-mail') !!}(<span class="text-danger">*</span>)
-                            {!! Form::email('email', null, [
-                                'placeholder' => 'Votre adresse e-mail',
-                                'class' => 'form-control form-control-sm',
-                                'id' => 'email',
-                            ]) !!}
-                            <small id="emailHelp" class="form-text text-muted">
-                                @if ($errors->has('email'))
-                                    @foreach ($errors->get('email') as $message)
-                                        <p class="text-danger">{{ $message }}</p>
-                                    @endforeach
-                                @endif
-                            </small>
                         </div>
                         <div class="form-group col-md-6">
                             {!! Form::label('cin') !!}(<span class="text-danger">*</span>)
@@ -327,9 +346,31 @@
                 });
             }
         });
+        $('#email').keyup(function() {
+            var query = $(this).val();
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: "{{ route('employe.fetch') }}",
+                    method: "POST",
+                    data: {
+                        query: query,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#emailList').fadeIn();
+                        $('#emailList').html(data);
+                    }
+                });
+            }
+        });
         $(document).on('click', 'li', function() {
-            $('#fonction').val($(this).text());
+            $('#fonction').val($(this).data("name"));
             $('#fonctionList').fadeOut();
+        });
+        $(document).on('click', 'li', function() {
+            $('#email').val($(this).data("email"));
+            $('#emailList').fadeOut();
         });
     </script>
 @endsection

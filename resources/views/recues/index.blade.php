@@ -30,8 +30,8 @@
                                 cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th style="width:11%;">{{ __('DATE ARRIVEE') }} </th>
-                                        <th style="width:11%;">{{ __('DATE CORRESP.') }}</th>
+                                        <th style="width:8%;">{{ __('ARRIVÉ') }} </th>
+                                        <th style="width:8%;">{{ __('CORRESP.') }}</th>
                                         <th style="width:8%;">{{ __('N° COR.') }}</th>
                                         <th style="width:15%;">EXPEDITEUR</th>
                                         <th>OBJET</th>

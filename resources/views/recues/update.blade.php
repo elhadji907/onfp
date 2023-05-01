@@ -17,18 +17,25 @@
                         {{ session('messages') }}
                     </div>
                 @endif
-                <div class="row justify-content-center pb-2">
-                    <div class="col-lg-12 margin-tb">
+                <div class="row">
+                    {{--  <div class="col-lg-12 margin-tb">
                         <a class="btn btn-outline-success" href="{{ route('recues.index') }}"> <i
                                 class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
+                    </div>  --}}
+                    
+                    <div class="col-sm-12">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                                    href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                            <li class="breadcrumb-item active">Modification courrier arrivé</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="row pt-5"></div>
                 <div class="card border-success">
-                    <div class="card card-header text-center bg-gradient-default border-success">
+                    {{--  <div class="card card-header text-center bg-gradient-default border-success">
                         <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
                                 class="font-italic">FORMULAIRE DE MODIFICATION COURRIERS ARRIVEES</span></h1>
-                    </div>
+                    </div>  --}}
                     <div class="card-body">
                         NB : Les champs(<span class="text-danger">*</span>)sont obligatoires
                         <hr class="sidebar-divider my-0"><br>
@@ -38,7 +45,7 @@
                                 <label for="date_recep">{{ __('DATE ARRIVEE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="date_recep" {{ $errors->has('date_recep') ? 'is-invalid' : '' }} type="date"
-                                    class="form-control @error('date_recep') is-invalid @enderror" name="date_recep"
+                                    class="form-control form-control-sm @error('date_recep') is-invalid @enderror" name="date_recep"
                                     placeholder="Votre date dépôt"
                                     value="{{ optional($recue->courrier->date_recep)->format('Y-m-d') ?? old('date_recep') }}"
                                     autocomplete="date_recep">
@@ -48,17 +55,17 @@
                                     </span>
                                 @enderror
                                 {{--  {!! Form::label('DATE D\'ARRIVEE', null, ['class' => 'control-label']) !!}  --}}
-                                {{--  {!! Form::date('date_recep', $date_r->format('Y-m-d'), ['placeholder'=>"La date de reception du courrier", 'class'=>'form-control']) !!}                      --}}
+                                {{--  {!! Form::date('date_recep', $date_r->format('Y-m-d'), ['placeholder'=>"La date de reception du courrier", 'class'=>'form-control form-control-sm']) !!}                      --}}
                                 {{--   {!! Form::date('date_recep', null, [
                                     'placeholder' => 'La date de reception du courrier',
-                                    'class' => 'form-control',
+                                    'class' => 'form-control form-control-sm',
                                 ]) !!}  --}}
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="date_cores">{{ __('DATE CORRESPONDANCE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="date_cores" {{ $errors->has('date_cores') ? 'is-invalid' : '' }} type="date"
-                                    class="form-control @error('date_cores') is-invalid @enderror" name="date_cores"
+                                    class="form-control form-control-sm @error('date_cores') is-invalid @enderror" name="date_cores"
                                     placeholder="Votre date dépôt"
                                     value="{{ optional($recue->courrier->date_cores)->format('Y-m-d') ?? old('date_cores') }}"
                                     autocomplete="date_cores">
@@ -69,10 +76,10 @@
                                 @enderror
 
                                 {{--  {!! Form::label('DATE CORRESPONDANCE', null, ['class' => 'control-label']) !!}  --}}
-                                {{--  {!! Form::date('date_cores', $date_r->format('Y-m-d'), ['placeholder'=>"La date de correspondance du courrier", 'class'=>'form-control']) !!}                      --}}
+                                {{--  {!! Form::date('date_cores', $date_r->format('Y-m-d'), ['placeholder'=>"La date de correspondance du courrier", 'class'=>'form-control form-control-sm']) !!}                      --}}
                                 {{--  {!! Form::date('date_cores', null, [
                                     'placeholder' => 'La date de correspondance du courrier',
-                                    'class' => 'form-control',
+                                    'class' => 'form-control form-control-sm',
                                 ]) !!}  --}}
                             </div>
                             <div class="form-group col-md-6">
@@ -80,7 +87,7 @@
                                 <label for="numero_cores">{{ __('NUMERO CORRESPONDANCE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="numero_cores" type="text" min="1"
-                                    class="form-control @error('numero_cores') is-invalid @enderror" name="numero_cores"
+                                    class="form-control form-control-sm @error('numero_cores') is-invalid @enderror" name="numero_cores"
                                     placeholder="NUMERO CORRESPONDANCE"
                                     value="{{ $recue->courrier->numero ?? old('numero_cores') }}"
                                     autocomplete="numero_cores">
@@ -93,7 +100,7 @@
                                 {{--    {!! Form::label('NUMERO CORRESPONDANCE') !!}
                                 {!! Form::number('numero_cores', null, [
                                     'placeholder' => 'Numéro de correspondance',
-                                    'class' => 'form-control',
+                                    'class' => 'form-control form-control-sm',
                                     'min' => '1',
                                 ]) !!}  --}}
                             </div>
@@ -102,7 +109,7 @@
                                 <label for="annee">{{ __('ANNEE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="annee" type="number" min="2022"
-                                    class="form-control @error('annee') is-invalid @enderror" name="annee"
+                                    class="form-control form-control-sm @error('annee') is-invalid @enderror" name="annee"
                                     placeholder="ANNEE"
                                     value="{{ $recue->courrier->type ?? old('annee') }}"
                                     autocomplete="annee">
@@ -114,10 +121,10 @@
                             </div>
                             <div class="form-group col-md-12">
                                 {{--  {!! Form::label('EXPEDITEUR') !!}
-                                {!! Form::text('expediteur', null, ['placeholder' => 'Expéditeur du courrier', 'class' => 'form-control']) !!}  --}}
+                                {!! Form::text('expediteur', null, ['placeholder' => 'Expéditeur du courrier', 'class' => 'form-control form-control-sm']) !!}  --}}
                                 <label for="expediteur">{{ __('EXPEDITEUR') }}(<span class="text-danger">*</span>)</label>
                                 <input id="expediteur" type="text"
-                                    class="form-control @error('expediteur') is-invalid @enderror" name="expediteur"
+                                    class="form-control form-control-sm @error('expediteur') is-invalid @enderror" name="expediteur"
                                     placeholder="Votre et expediteur"
                                     value="{{ $recue->courrier->expediteur ?? old('expediteur') }}"
                                     autocomplete="expediteur">
@@ -131,7 +138,7 @@
                             <div class="form-group col-md-12">
                                 <label for="objet">{{ __('OBJET') }}(<span class="text-danger">*</span>)</label>
                                 <input id="objet" type="text"
-                                    class="form-control @error('objet') is-invalid @enderror" name="objet"
+                                    class="form-control form-control-sm @error('objet') is-invalid @enderror" name="objet"
                                     placeholder="Votre et objet" value="{{ $recue->courrier->objet ?? old('objet') }}"
                                     autocomplete="objet">
                                 @error('objet')
@@ -143,7 +150,7 @@
                                 {{--  {!! Form::label('OBJET') !!}
                                 {!! Form::text('objet', null, [
                                     'placeholder' => 'Objet du courrier',
-                                    'class' => 'form-control',
+                                    'class' => 'form-control form-control-sm',
                                     'id' => 'objet',
                                 ]) !!}  --}}
                             </div>
@@ -151,7 +158,7 @@
                                 {!! Form::label('NUMERO REPONSE') !!}
                                 {!! Form::number('numero_reponse', $recue->courrier->name ?? old('numero_reponse'), [
                                     'placeholder' => 'Numéro réponse',
-                                    'class' => 'form-control',
+                                    'class' => 'form-control form-control-sm',
                                     'min' => '1',
                                 ]) !!}
                             </div>
@@ -159,7 +166,7 @@
                                 <label for="date_reponse">{{ __('DATE REPONSE') }}(<span
                                     class="text-danger">*</span>)</label>
                             <input id="date_reponse" {{ $errors->has('date_reponse') ? 'is-invalid' : '' }} type="date"
-                                class="form-control @error('date_reponse') is-invalid @enderror" name="date_reponse"
+                                class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" name="date_reponse"
                                 placeholder="Votre date dépôt"
                                 value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_reponse') }}"
                                 autocomplete="date_reponse">
@@ -174,7 +181,7 @@
                                 {!! Form::textarea('message', $recue->courrier->message ?? old('message'), [
                                     'placeholder' => 'Informations complémentaires...',
                                     'rows' => 2,
-                                    'class' => 'form-control',
+                                    'class' => 'form-control form-control-sm',
                                     'id' => 'message',
                                 ]) !!}
                             </div>
@@ -182,7 +189,7 @@
                                 {!! Form::label('Imputation') !!}
                                 {!! Form::select('directions[]', $directions, null, [
                                     'multiple' => 'multiple',
-                                    'class' => 'form-control',
+                                    'class' => 'form-control form-control-sm',
                                     'id' => 'direction',
                                 ]) !!}
                             </div>
@@ -191,7 +198,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 {!! Form::label('', null, ['class' => 'control-label']) !!}
-                                {!! Form::file('file', null, ['class' => 'form-control-file']) !!}
+                                {!! Form::file('file', null, ['class' => 'form-control form-control-sm-file']) !!}
                                 @if ($recue->courrier->file !== '')
                                     <a class="btn btn-outline-secondary mt-2" title="télécharger le fichier joint"
                                         target="_blank" href="{{ asset($recue->courrier->getFile()) }}">

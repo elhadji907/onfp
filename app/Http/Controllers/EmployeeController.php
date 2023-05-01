@@ -420,4 +420,30 @@ class EmployeeController extends Controller
         return Datatables::of($employees)->make(true);
     }
 
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      $data = DB::table('users')      
+      ->where('email', 'LIKE', "%{$query}%")
+        ->get();
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $user)
+      {
+        $id = $user->id;
+        $email = $user->email;                     
+
+       $output .= '
+       
+       <li data-id="'.$id.'" data-email="'.$email.'"><a href="#">'.$email.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
+    }
+
 }

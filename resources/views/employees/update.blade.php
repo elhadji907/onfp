@@ -3,18 +3,23 @@
 @section('content')
     <div class="container col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
         <div class="container-fluid">
-            <div class="col-lg-12 margin-tb">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                        href="{{ route('employees.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                <li class="breadcrumb-item active">Modification employé</li>
+            </ul>
+           {{--   <div class="col-lg-12 margin-tb">
                 <a class="btn btn-outline-success" href="{{ route('employees.index') }}"> <i
                         class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
-            </div>
+            </div>  --}}
             @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">{{ session('success') }}</div>
             @endif
-            <div class="row pt-5"></div>
+            
             <div class="card">
-                <div class="card-header card-header-primary text-center border-success">
+                {{--  <div class="card-header card-header-primary text-center border-success">
                     <h3 class="card-title">Modification employé</h3>
-                </div>
+                </div>  --}}
                 <div class="card-body">
                     {!! Form::open(['url' => 'employees/' . $employee->id, 'method' => 'PATCH', 'files' => true]) !!}
                     <div class="form-row">
