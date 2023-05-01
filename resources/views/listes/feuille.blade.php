@@ -124,11 +124,11 @@
                     <td style="width:50%;" align="center">
                         {{ __('REPUBLIQUE DU SENEGAL') }}<br>{{ __('UN PEUPLE - UN BUT - UNE FOI') }}<br>
                             ----------<br>
-                            {{ __('MINISTERE DE L’EMPLOI, DE LA FORMATION') }} <br>
-                            {{ __("PROFESSIONNELLE, DE L'APPRENTISSAGE ET DE L'INSERTION") }}<br>
+                            {{ __('MINISTERE DE LA FORMATION PROFESSIONNELLE,') }} <br>
+                            {{ __("DE L'APPRENTISSAGE ET DE L'INSERTION") }}<br>
                             ----------
                     </td>
-                    <td style="width:50%;" align="right">{{ __('ONFP/DG/DAF') }}<br><br><br><br><br><br><br><br>
+                    <td style="width:50%;" align="right">{{ __('ONFP/DG/DAF') }}<br><br><br><br>
 
                     </td>
                 </tr>
@@ -149,7 +149,7 @@
                     </td>
                     <td style="width:65%;" align="right">
                         <p>
-                             {{ __('Direction Administrative et Financière') }} <br><br>
+                             {{ __('Direction Administrative et Financière') }} <br>
                         </p>
                         <p align="center">
                              {{ __('BORDEREAU D’ENVOI N°') }} 

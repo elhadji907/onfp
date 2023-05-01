@@ -1,4 +1,12 @@
 @extends('layout.default')
+@section('extra-js')
+    <script>
+        function toggleReplayComment(id) {
+            let element = document.getElementById('replayComment-' + id);
+            element.classList.toggle('d-none');
+        }
+    </script>
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center mt-4">
@@ -43,23 +51,67 @@
             @endcan
         </div>
         <div class="list-group mt-5">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="table-courriers-emp">
+                    <thead class="table-default">
+                        <tr>
+                            <th>Imputations</th>
+                            {{--  <th style="width:50%;">Commentaires</th>  --}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (isset(auth::user()->employee->courriers) && auth::user()->employee->courriers != '[]')
+                            @foreach (auth::user()->employee->courriers as $courrier)
+                                <tr>
+                                    <td>
+                                        <h4><a href="{!! route('courriers.show', $courrier->id) !!}">{!! $courrier->objet ?? '' !!}</a></h4>
+                                        <p>{!! $courrier->message !!}</p>
+                                        <p><strong>Type de courrier : </strong> {!! $courrier->types_courrier->name ?? '' !!}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small>Posté le {!! $courrier->created_at->diffForHumans() !!} par
+                                                <b
+                                                    class="badge badge-info">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name ?? '' !!}</b></small>
+                                        </div>
+                                    </td>
+                                    {{--  <td>
+                                        @forelse ($courrier->comments as $comment)
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small>Commentaire de
+                                                    {!! $comment->user->firstname !!}&nbsp;{!! $comment->user->name !!} du
+                                                    {!! Carbon\Carbon::parse($comment->created_at)->format('d/m/Y à H:i:s') !!}: <br>
+                                                    <ul>
+                                                        <li>{!! $comment->content !!}</li>
+                                                    </ul>
+                                                </small>
+                                            @foreach ($comment->comments as $replayComment)
+                                                <div class="ml-5">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <small>Réponse de
+                                                            {!! $comment->user->firstname !!}&nbsp;{!! $comment->user->name !!} du
+                                                            {!! Carbon\Carbon::parse($replayComment->created_at)->format('d/m/Y à H:i:s') !!} : <br>
+                                                            <ul>
+                                                                <li>
+                                                                    {!! $replayComment->content !!}</li>
+                                                            </ul>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            @auth
+                                            @endauth
+                                        @empty
 
-            @if (isset(auth::user()->employee))
-                @foreach (auth::user()->employee->courriers as $courrier)
-                    <div class="list-group-item">
-                        <h4><a href="{!! route('courriers.show', $courrier->id) !!}">{!! $courrier->objet ?? '' !!}</a></h4>
-                        <p>{!! $courrier->message !!}</p>
-                        <p><strong>Type de courrier : </strong> {!! $courrier->types_courrier->name ?? '' !!}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            {{--  <small>Posté le {!! $courrier->created_at->format('d/m/Y à H:m') !!}</small>  --}}
-                            <small>Posté le {!! $courrier->created_at->diffForHumans() !!}</small>
-                            <span class="badge badge-primary">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name ?? '' !!}</span>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
-            @endif
+                                            <div class="alert alert-info">Aucun commentaire pour ce courrier</div>
+                                        @endforelse
+                                    </td>  --}}
+                                </tr>
+                            @endforeach
+                        @else
+                            <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
         {{--  <div class="d-flex justify-content-center pt-2">
             {!! $courrierss->links() !!}
@@ -90,3 +142,48 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table-courriers-emp').DataTable({
+                "lengthMenu": [
+                    [5, 10, 25, 50, 100, -1],
+                    [5, 10, 25, 50, 100, "Tout"]
+                ],
+                "order": [
+                    [0, 'desc']
+                ],
+                language: {
+                    "sProcessing": "Traitement en cours...",
+                    "sSearch": "Rechercher&nbsp;:",
+                    "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                    "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    "sInfoPostFix": "",
+                    "sLoadingRecords": "Chargement en cours...",
+                    "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                    "oPaginate": {
+                        "sFirst": "Premier",
+                        "sPrevious": "Pr&eacute;c&eacute;dent",
+                        "sNext": "Suivant",
+                        "sLast": "Dernier"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                    },
+                    "select": {
+                        "rows": {
+                            _: "%d lignes séléctionnées",
+                            0: "Aucune ligne séléctionnée",
+                            1: "1 ligne séléctionnée"
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+@endpush

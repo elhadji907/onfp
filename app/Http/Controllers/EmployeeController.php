@@ -86,6 +86,159 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (User::where('email', $request->email)->exists()) {
+            //faire une mise à jour car l'employé existe déjà
+            
+        $users = User::where('email', $request->email)->get();
+
+        foreach ($users as $key => $user) {
+            # code...
+        }
+        
+        $data = request()->validate(
+            [
+                'civilite'      =>  'required|string|max:10',
+                'direction'     =>  'required|string',
+                'email'         =>  'required|email|max:255|unique:users,email,'.$user->id,
+                'matricule'     =>  'required|string|max:15',
+                'categorie'     =>  'required|string|max:50',
+                'firstname'     =>  'required|string|max:50',
+                'fonction'      =>  'required|string',
+                'name'          =>  'required|string|max:50',
+                'telephone'     =>  'required|string|max:50',
+                'fixe'          =>  'sometimes',
+                'cin'           =>  'required|string|min:12|max:15',
+                'familiale'     =>  'required|string',
+                'adresse'       =>  'string',
+                'date_naiss'    =>  'required|date',
+                'date_embauche' =>  'required|date',
+                'lieu'          =>  'required|string',
+                'bp'            =>  'sometimes',
+                'fax'           =>  'sometimes',
+                'image'         =>  'sometimes|image|max:3000',
+                'updated_by'         =>  'string',
+            ]
+        );
+
+
+        /* $direction=$request->input('direction'); */
+        /* $directions_id = Direction::where('name', $direction)->first()->id; */
+        $directions_id = $request->input('direction');
+        
+        /* $fonction=$request->input('fonction'); */
+
+        /* $fonctions_id = Fonction::where('name', $fonction)->first()->id; */
+        $fonctions_id = $request->input('fonction');
+
+
+        /* $categorie=$request->input('categorie');
+        $categories_id = Category::where('name', $categorie)->first()->id; */
+        $categories_id = $request->input('categorie');
+
+        $roles_id = Role::where('name', 'Administrateur')->first()->id;
+
+        $date = Carbon::createFromFormat('Y-m-d', $request->input('date_naiss'));
+        $fin = $date->addYears(60);
+
+        $civilite = $request->input('civilite');
+        
+        if ($civilite == "Mme") {
+            $sexe = "F";
+        } elseif ($civilite == "M.") {
+            $sexe = "M";
+        } else {
+            $sexe = "";
+        }
+
+        /* $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id; */
+        $familiale_id = $request->input('familiale');
+        $user_connect           =              Auth::user();
+        $updated_by             =              strtolower($user_connect->username);
+                
+        if (request('image')) {
+            $imagePath = request('image')->store('avatars', 'public');
+    
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(800, 800);
+            $image->save();
+    
+            $user->profile->update([
+                'image' => $imagePath
+                ]);
+    
+            $user->update([
+                'civilite'          => $data['civilite'],
+                'sexe'              => $sexe,
+                'firstname'         => $data['firstname'],
+                'name'              => $data['name'],
+                'email'             => $data['email'],
+                'date_naissance'    => $data['date_naiss'],
+                'lieu_naissance'    => $data['lieu'],
+                'familiales_id'     => $familiale_id,
+                'adresse'           => $data['adresse'],
+                'telephone'         => $data['telephone'],
+                'fixe'              => $data['fixe'],
+                'bp'                => $data['bp'],
+                'fax'               => $data['fax'],
+                'roles_id'          => $roles_id,
+                'updated_by'        => $updated_by,
+
+                ]);
+                
+                $employee = new Employee([
+                    'matricule'     =>     $request->input('matricule'),
+                    'cin'           =>     $request->input('cin'),
+                    'date_embauche' =>     $request->input('date_embauche'),
+                    'fin'           =>     $fin,
+                    'users_id'      =>     $utilisateur->id,
+                    'adresse'       =>     $request->input('autre_adresse'),
+                    'categories_id' =>     $request->input('categorie'),
+                    'directions_id' =>     $request->input('direction'),
+                    'fonctions_id'  =>     $fonctions_id
+                ]);
+                
+                $employee->save();
+        } else {
+            $user->profile->update($data);
+
+            $user->update([
+                'civilite'          => $data['civilite'],
+                'sexe'              => $sexe,
+                'firstname'         => $data['firstname'],
+                'name'              => $data['name'],
+                'date_naissance'    => $data['date_naiss'],
+                'lieu_naissance'    => $data['lieu'],
+                'familiales_id'     => $familiale_id,
+                'adresse'           => $data['adresse'],
+                'bp'                => $data['bp'],
+                'fax'               => $data['fax'],
+                'telephone'         => $data['telephone'],
+                'fixe'              => $data['fixe'],
+                'roles_id'          => $roles_id,
+                'updated_by'        => $updated_by,
+
+                ]);
+
+                $employee = new Employee([
+                    'matricule'     =>     $request->input('matricule'),
+                    'cin'           =>     $request->input('cin'),
+                    'date_embauche' =>     $request->input('date_embauche'),
+                    'fin'           =>     $fin,
+                    'users_id'      =>     $user->id,
+                    'adresse'       =>     $request->input('autre_adresse'),
+                    'categories_id' =>     $request->input('categorie'),
+                    'directions_id' =>     $request->input('direction'),
+                    'fonctions_id'  =>     $fonctions_id
+                ]);
+                
+                $employee->save();
+        }
+
+        $success = $user->firstname.' '.$user->name.' a été modifié(e) avec succès';
+        return redirect()->route('employees.index')->with(compact('success'));
+        } else {
+             
+
         $this->validate(
             $request,
             [
@@ -159,7 +312,6 @@ class EmployeeController extends Controller
             $fonctions_id = $fonction->id;
          }
 
-
         $utilisateur = new User([
             'civilite'              =>      $request->input('civilite'),
             'sexe'                  =>      $sexe,
@@ -200,6 +352,8 @@ class EmployeeController extends Controller
         
         $employee->save();
         return redirect()->route('employees.index')->with('success', 'employee ajouté avec succès !');
+        }
+        
     }
 
     /**
