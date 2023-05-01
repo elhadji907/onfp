@@ -15,9 +15,16 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="btn btn-outline-primary btn-sm"
+                                    href="{{ route('employees.index') }}"><i class="fas fa-sync-alt"></i>&nbsp;actualiser</a></li>
+                            <li class="breadcrumb-item active">Liste des employés</li>
+                        </ul>
+                    </div>
+                    {{--  <div class="card-header">
                         <i class="fas fa-table"></i>
                         Liste du employee
-                    </div>
+                    </div>  --}}
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
@@ -41,21 +48,25 @@
                                         <th style="width:10%;">Telephone</th>
                                         <th style="width:20%;">Fonction</th>
                                         <th style="width:5%;">Direction</th>
-                                        <th style="width:8%;"></th>
+                                        <th style="width:1%;"></th>
+                                        <th style="width:1%;"></th>
+                                        <th style="width:1%;"></th>
                                     </tr>
                                 </thead>
                                 <tfoot class="table-dark">
-                             
+
                                 </tfoot>
                                 <tbody>
                                     @foreach ($employees as $employee)
                                         <tr>
                                             <td style="text-align: center; vertical-align: middle;">
                                                 <img style="width:50%; max-width:50px;" class="rounded-circle w-100"
-                                                src="{{ asset($employee->user->profile->getImage()) }}" />
+                                                    src="{{ asset($employee->user->profile->getImage()) }}" />
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle;">{!! $employee->matricule !!}</td>
-                                            <td style="vertical-align: middle;">{!! $employee->user->civilite !!} {!! $employee->user->firstname !!} {!! mb_strtoupper($employee->user->name) !!}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{!! $employee->matricule !!}
+                                            </td>
+                                            <td style="vertical-align: middle;">{!! $employee->user->civilite !!}
+                                                {!! $employee->user->firstname !!} {!! mb_strtoupper($employee->user->name) !!}</td>
                                             {{--  <td style="vertical-align: middle;"></td>
                                             <td style="vertical-align: middle;"></td>  --}}
                                             <td style="vertical-align: middle;">
@@ -65,35 +76,46 @@
                                                 @if ($employee->user->civilite == 'Mme')
                                                     née le
                                                 @endif
-                                                {!! $employee->user->date_naissance->format('d/m/Y') !!} à {!! $employee->user->lieu_naissance !!}</td>
+                                                {!! $employee->user->date_naissance->format('d/m/Y') !!} à {!! $employee->user->lieu_naissance !!}
+                                            </td>
                                             {{--  <td style="vertical-align: middle;"></td>  --}}
                                             {{--  <td style="vertical-align: middle;">{!! $employee->user->email !!}</td>  --}}
                                             <td style="vertical-align: middle;">{!! $employee->user->telephone ?? '' !!}</td>
                                             <td style="vertical-align: middle;">{!! $employee->fonction->name ?? '' !!}</td>
                                             <td style="vertical-align: middle;">
-                                                @if(isset($employee->direction->sigle ))
+                                                @if (isset($employee->direction->sigle))
                                                     {!! $employee->direction->sigle !!}
                                                 @else
-                                                
                                                 @endif
-                                                
+
                                             </td>
-                                            <td style="text-align: center;"
-                                                class="d-flex align-items-baseline align-content-center">
-                                                <a href="{!! url('employees/' . $employee->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <a href="{!! url('employees/' . $employee->id . '/edit') !!}" class='' style="color:blue"
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
-                                                &nbsp;
-                                                <a href="{!! url('employees/' . $employee->id) !!}" class='btn btn-primary btn-sm'
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <a href="{!! url('employees/' . $employee->id) !!}" class='' style="color:blue"
                                                     title="voir">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
-                                                &nbsp;
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'employees/' . $employee->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                {!! Form::open([
+                                                    'method' => 'DELETE',
+                                                    'url' => 'employees/' . $employee->id,
+                                                    'id' => 'deleteForm',
+                                                    'onsubmit' => 'return ConfirmDelete()',
+                                                ]) !!}
+                                                {!! Form::button('<i class="fa fa-times" aria-hidden="true" style="color:red"></i>', [
+                                                    'type' => 'submit',
+                                                    'class' => 'btn btn-default btn-sm',
+                                                    'title' => 'supprimer',
+                                                ]) !!}
                                                 {!! Form::close() !!}
                                             </td>
+                                            
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -135,8 +157,7 @@
         $(document).ready(function() {
             $('#table-employees').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -154,8 +175,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
@@ -202,6 +223,5 @@
                 }
             });
         });
-
     </script>
 @endpush

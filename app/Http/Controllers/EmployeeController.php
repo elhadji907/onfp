@@ -434,11 +434,15 @@ class EmployeeController extends Controller
       foreach($data as $user)
       {
         $id = $user->id;
-        $email = $user->email;                     
+        $email = $user->email;                  
+        $prenom = $user->firstname;                  
+        $nom = $user->name;                  
+        $civilite = $user->civilite;                
+        $telephone = $user->telephone;                         
 
        $output .= '
        
-       <li data-id="'.$id.'" data-email="'.$email.'"><a href="#">'.$email.'</a></li>
+       <li data-id="'.$id.'" data-email="'.$email.'" data-prenom="'.$prenom.'" data-nom="'.$nom.'" data-civilite="'.$civilite.'" data-telephone="'.$telephone.'"><a href="#">'.$email.'</a></li>
        ';
       }
       $output .= '</ul>';

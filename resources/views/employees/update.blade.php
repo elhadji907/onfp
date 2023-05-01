@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                        href="{{ route('employees.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                        href="{{ route('employees.index') }}"><i class="fas fa-undo-alt"></i>&nbsp;retour</a></li>
                 <li class="breadcrumb-item active">Modification employé</li>
             </ul>
            {{--   <div class="col-lg-12 margin-tb">
@@ -23,7 +23,7 @@
                 <div class="card-body">
                     {!! Form::open(['url' => 'employees/' . $employee->id, 'method' => 'PATCH', 'files' => true]) !!}
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {{--  {!! Form::label('fonction') !!}  --}}
                             {{--  {!! Form::select('fonction', $fonctions, $employee->fonction->name ?? '', ['placeholder' => '', 'class' => 'form-control form-control-sm', 'id' => 'fonction']) !!}  --}}
                             {{--   {!! Form::text('fonction', $employee->matricule, ['placeholder' => 'fonction', 'class' => 'form-control form-control-sm', 'id' => 'fonction']) !!}
@@ -46,7 +46,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('categorie') !!}
                             {!! Form::select('categorie', $categories, $employee->category->name, [
                                 'placeholder' => '',
@@ -61,7 +61,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('direction') !!}
                             {!! Form::select('direction', $directions, $employee->direction->name ?? '', [
                                 'placeholder' => '',
@@ -76,9 +76,9 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('civilite') !!}
-                            {!! Form::select('civilite', $civilites, $employee->user->civilite, [
+                            {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], $employee->user->civilite, [
                                 'placeholder' => '',
                                 'class' => 'form-control form-control-sm',
                                 'id' => 'civilite',
@@ -91,7 +91,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('prénom') !!}
                             {!! Form::text('firstname', $employee->user->firstname, [
                                 'placeholder' => 'Votre prenom',
@@ -105,7 +105,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('nom') !!}
                             {!! Form::text('name', $employee->user->name, [
                                 'placeholder' => 'Votre nom',
@@ -120,7 +120,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Date de naissance', null, ['class' => 'control-label']) !!}
                             {!! Form::date('date_naiss', Carbon\Carbon::parse($employee->user->date_naissance)->format('Y-m-d'), [
                                 'placeholder' => 'La date de naissance',
@@ -134,7 +134,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Lieu') !!}
                             {!! Form::text('lieu', $employee->user->lieu_naissance, [
                                 'placeholder' => 'Votre lieu de naissance',
@@ -148,7 +148,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('votre adresse e-mail') !!}(<span class="text-danger">*</span>)
                             {!! Form::email('email', $employee->user->email, [
                                 'placeholder' => 'Votre adresse e-mail',
@@ -163,7 +163,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('cin') !!}
                             {!! Form::text('cin', $employee->cin, ['placeholder' => 'Votre cin', 'class' => 'form-control form-control-sm']) !!}
                             <small id="emailHelp" class="form-text text-muted">
@@ -177,7 +177,7 @@
                         <div class="invalid-feedback">
                             {{ $errors->first('cin') }}
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('matricule') !!}
                             {!! Form::text('matricule', $employee->matricule, [
                                 'placeholder' => 'Votre matricule',
@@ -192,7 +192,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Situation familiale') !!}
                             {!! Form::select('familiale', $familiale, $employee->user->familiale->name ?? old('familiale'), [
                                 'placeholder' => 'Votre situation familiale',
@@ -208,7 +208,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('date embauche', null, ['class' => 'control-label']) !!}
                             {!! Form::date('date_embauche', Carbon\Carbon::parse($employee->date_embauche)->format('Y-m-d'), [
                                 'placeholder' => 'La date de recrutement',
@@ -222,7 +222,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Adresse') !!}
                             {!! Form::text('adresse', $employee->user->adresse, [
                                 'placeholder' => 'Votre adresse',
@@ -236,7 +236,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Telephone portable') !!}
                             {!! Form::text('telephone', $employee->user->telephone, [
                                 'placeholder' => 'Numero de telephone portable',
@@ -250,7 +250,7 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Telephone fixe') !!}
                             {!! Form::text('fixe', $employee->user->fixe, [
                                 'placeholder' => 'Numero de telephone fixe',
@@ -264,21 +264,21 @@
                                 @endif
                             </small>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Numero fax') !!}
                             {!! Form::text('fax', $employee->user->fax, [
                                 'placeholder' => 'Votre numero fax',
                                 'class' => 'form-control form-control-sm',
                             ]) !!}
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Boite postale') !!}
                             {!! Form::text('bp', $employee->user->bp, [
                                 'placeholder' => 'Votre Boite postale',
                                 'class' => 'form-control form-control-sm',
                             ]) !!}
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             {!! Form::label('Image de profile') !!}<br />
                             {!! Form::file('image', null, ['class' => 'form-control-file rounded-circle w-100']) !!}
                             <img class="pt-1" src="{{ asset($employee->user->profile->getImage()) }}" width="50"
