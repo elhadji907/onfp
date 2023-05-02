@@ -176,6 +176,15 @@
                             @enderror
                             </div>
                             <div class="form-group col-md-12">
+                                {!! Form::label('Instructions') !!}
+                                {!! Form::textarea('description', $recue->courrier->description ?? old('description'), [
+                                    'placeholder' => 'Instructions',
+                                    'rows' => 2,
+                                    'class' => 'form-control form-control-sm',
+                                    'id' => 'description',
+                                ]) !!}
+                            </div>
+                            <div class="form-group col-md-12">
                                 {!! Form::label('INFORMATIONS COMPLEMENTAIRES') !!}
                                 {!! Form::textarea('message', $recue->courrier->message ?? old('message'), [
                                     'placeholder' => 'Informations complémentaires...',

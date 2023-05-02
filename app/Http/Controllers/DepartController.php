@@ -211,6 +211,8 @@ class DepartController extends Controller
             $count = count($request->product);
                 $courrier->directions()->sync($request->id_direction);
                 $courrier->employees()->sync($request->id_employe);
+                $courrier->description =  $request->input('description');
+                $courrier->save();
                 return redirect()->route('departs.index', $depart->courrier->id)->with('success', 'Courrier imputé !');
             
             //solution, récuper l'id à partir de blade avec le mode hidden
@@ -258,6 +260,7 @@ class DepartController extends Controller
        $courrier->objet              =      $request->input('objet');
        $courrier->num_bord           =      $numero_archive;
        $courrier->observation        =      $request->input('observation');
+       $courrier->description        =      $request->input('description');
 
        $courrier->types_courriers_id =      $types_courrier_id;
        $courrier->users_id           =      $user_id;
@@ -286,6 +289,7 @@ class DepartController extends Controller
             $courrier->objet              =      $request->input('objet');
             $courrier->num_bord           =      $request->input('numero_archive');
             $courrier->observation        =      $request->input('observation');
+            $courrier->description        =      $request->input('description');
      
             $courrier->types_courriers_id =      $types_courrier_id;
             $courrier->users_id           =      $user_id;
@@ -293,14 +297,13 @@ class DepartController extends Controller
             $courrier->save();
      
             $depart->courriers_id          =      $courrier->id;
-            $depart->numero                 =      $request->input('numero_ordre');
-            $depart->destinataire           =      $request->input('destinataire'); 
-     
+            $depart->numero                =      $request->input('numero_ordre');
+            $depart->destinataire          =      $request->input('destinataire'); 
+    
             $depart->save();
             //$courrier->directions()->sync($request->input('directions'));
-            $courrier->imputations()->sync($request->input('imputations'));
+            $courrier->directions()->sync($request->input('directions'));
  
-
          }
 
        return redirect()->route('departs.index', $depart->courrier->id)->with('success','courrier modifié avec succès !');

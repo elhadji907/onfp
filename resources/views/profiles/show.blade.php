@@ -55,8 +55,8 @@
                 <table class="table table-bordered" id="table-courriers-emp">
                     <thead class="table-default">
                         <tr>
-                            <th>Imputations</th>
-                            {{--  <th style="width:50%;">Commentaires</th>  --}}
+                            <th style="width:50%;">Imputations</th>
+                            <th style="width:50%;">Instructions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,8 +70,11 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <small>Posté le {!! $courrier->created_at->diffForHumans() !!} par
                                                 <b
-                                                    class="badge badge-info">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name ?? '' !!}</b></small>
+                                                    class="badge badge-default">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name ?? '' !!}</b></small>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <p>{!! $courrier->description ?? '' !!}</p>
                                     </td>
                                     {{--  <td>
                                         @forelse ($courrier->comments as $comment)

@@ -22,7 +22,7 @@
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
                                     href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                            <li class="breadcrumb-item active">Imputer ce courrier</li>
+                            <li class="breadcrumb-item active">Imputation courrier arrivé</li>
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
@@ -39,7 +39,7 @@
                             <div class="card-body custom-edit-service">
                                 @csrf
                                 <div class="row form-row">
-                                    <div class="col-xs-6 col-sm-6 col-md-6 text-center">
+                                    <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label for="">Imputation</label>
                                             <input type="text" placeholder="Imputation"
@@ -112,6 +112,16 @@
                                     </tr>
                                 </thead>
                                 <tbody id="addRow" class="addRow">
+                                </tbody>                                
+                                <tbody>
+                                    <tr>
+                                        <td colspan="4" class="">
+                                            <strong>Instructions </strong>
+                                            <textarea type="text" placeholder="Instructions du DG"
+                                                class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                                name="description" id="description" value="" required></textarea>
+                                        </td>
+                                    </tr>
                                 </tbody>
                                 <tbody>
                                     <tr>
@@ -122,6 +132,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
+                                
                             </table>
                         </div>
 

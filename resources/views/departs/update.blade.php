@@ -210,10 +210,10 @@
                         </div>
                         <div class="form-group col-md-12">
                             {!! Form::label('Imputation') !!}
-                            {!! Form::select('imputations[]', $imputations, null, [
+                            {!! Form::select('directions[]', $directions, null, [
                                 'multiple' => 'multiple',
                                 'class' => 'form-control',
-                                'id' => 'imputation',
+                                'id' => 'direction',
                             ]) !!}
                         </div>                        
 
@@ -228,6 +228,15 @@
                                     </a>
                                 @endif
                             </div>
+                        </div>                        
+                        <div class="form-group col-md-12">
+                            {!! Form::label('Instructions') !!}
+                            {!! Form::textarea('description', $depart->courrier->description ?? old('description'), [
+                                'placeholder' => 'Instructions',
+                                'rows' => 2,
+                                'class' => 'form-control form-control-sm',
+                                'id' => 'description',
+                            ]) !!}
                         </div>
                         <div class="form-group col-md-12">
                             {!! Form::label('OBSERVATIONS') !!}
@@ -250,6 +259,6 @@
 
 @section('javascripts')
     <script type="text/javascript">
-        $('#imputation').select2().val({!! json_encode($depart->courrier->imputations()->allRelatedIds()) !!}).trigger('change');
+        $('#direction').select2().val({!! json_encode($depart->courrier->directions()->allRelatedIds()) !!}).trigger('change');
     </script>
 @endsection

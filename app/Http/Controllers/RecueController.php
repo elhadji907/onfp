@@ -244,6 +244,8 @@ class RecueController extends Controller
             $count = count($request->product);
                 $courrier->directions()->sync($request->id_direction);
                 $courrier->employees()->sync($request->id_employe);
+                $courrier->description =  $request->input('description');
+                $courrier->save();
                 return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'Courrier imputé !');
             
             //solution, récuper l'id à partir de blade avec le mode hidden
@@ -307,6 +309,7 @@ class RecueController extends Controller
             $courrier->file               =      $filePath;
             $courrier->date_imp           =      $request->input('date_reponse'); //date reponse du courrier
             $courrier->name               =      $request->input('numero_reponse'); //date reponse du courrier
+            $courrier->description        =      $request->input('description');
 
             $courrier->save();
 
@@ -341,6 +344,7 @@ class RecueController extends Controller
             $courrier->users_id           =      $user_id;
             $courrier->date_imp           =      $request->input('date_reponse'); //date reponse du courrier
             $courrier->name               =      $request->input('numero_reponse'); //date reponse du courrier
+            $courrier->description        =      $request->input('description');
 
             $courrier->save();
 
