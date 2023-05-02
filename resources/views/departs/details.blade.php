@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Fiche Courier depart')
+@section('title', 'ONFP - Fiche Courier départ')
 @section('content')
     
     <style>
@@ -99,9 +99,14 @@
     @foreach ($departs as $depart)  
     <div class="invoice-box justify-content-center">
         <div class="card">            
-            <div class="card card-header text-center bg-gradient-success">
-                <h1 class="h4 text-white mb-0">{!! $depart->courrier->types_courrier->name !!}</h1>
-            </div> 
+            {{--  <div class="card card-header text-center bg-gradient-success">  --}}
+                {{--  <h1 class="h4 text-white mb-0">{!! __("Courriers départs") !!}</h1>  --}}                
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                            href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                    <li class="breadcrumb-item active">courrier départ</li>
+                </ul>
+            {{--  </div>   --}}
         <div class="card-body">
         <table method="POST" cellpadding="0" cellspacing="0">
             <tr class="top">
@@ -113,10 +118,11 @@
                                 <img style="width:50%; max-width:100px;" src="{{ asset('images/image_onfp.jpg') }}">
                             </td>
                             <td>
-                                Numéro #:                                   
-                                {!! $depart->numero !!}<br>
+                                {{ __("N° ordre") }}: {!! $depart->numero !!}<br>
+                                {{ __("N° archive") }}: {!! $depart->courrier->num_bord !!}<br>
                                 Date correspondance:  {!! Carbon\Carbon::parse($depart->courrier->date_cores)->format('d/m/Y') !!}<br>
                                 Date réception:  {!! Carbon\Carbon::parse($depart->courrier->date_recep)->format('d/m/Y') !!}<br>
+                                {{ __("Nbre de pièces") }}: {!! $depart->courrier->nb_pc !!}<br>
                             </td>
                         </tr>
                     </table>
@@ -128,13 +134,13 @@
                     <table>
                         <tr>
                             <td>
-                                <h3>{{ __('EXPEDITEUR') }}</h3>
-                                <b>Nom:</b> {{ $depart->courrier->expediteur }}<br>
-                                <b>Adresse:</b> {{ $depart->courrier->adresse }}<br>
+                                <h3>{{ __('DESTINATAIRE') }}</h3>
+                                <b>Nom:</b> {{ $depart->destinataire }}<br>
+                                {{--  <b>Adresse:</b> {{ $depart->courrier->adresse }}<br>
                                 <b>E-mail:</b> {{ $depart->courrier->email }}<br>
                                 <b>Tel:</b> {{ $depart->courrier->telephone }}<br>
                                 <b>Fax:</b> {{ $depart->courrier->fax }}<br>
-                                <b>BP:</b> {{ $depart->courrier->bp }}<br>
+                                <b>BP:</b> {{ $depart->courrier->bp }}<br>  --}}
                             </td>
                             
                             <td>
@@ -171,7 +177,7 @@
                     @endif
                 </td>
             </tr>
-            <tr class="heading">
+            {{--  <tr class="heading">
                 <td>
                    MESSAGE
                 </td>
@@ -179,14 +185,14 @@
                    
                 </td>
                 
-            </tr>
+            </tr>  --}}
             
-            <tr class="item">
+           {{--   <tr class="item">
                 
                 <td colspan="2">
                     {{ $depart->courrier->message }} 
                 </td>
-            </tr>
+            </tr>  --}}
             <tr class="heading">
                 <td>
                    IMPUTATION

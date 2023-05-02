@@ -21,8 +21,7 @@
                     {{--  <div class="col-lg-12 margin-tb">
                         <a class="btn btn-outline-success" href="{{ route('recues.index') }}"> <i
                                 class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
-                    </div>  --}}
-                    
+                    </div>  --}}                    
                     <div class="col-sm-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"

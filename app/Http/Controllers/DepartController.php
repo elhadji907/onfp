@@ -201,8 +201,21 @@ class DepartController extends Controller
      */
     public function update(Request $request, Depart $depart)
     {
-
+        
         $this->authorize('update',  $depart->courrier);
+
+        $imp = $request->input('imp');
+
+        if (isset($imp) && $imp == "1") {
+            $courrier = $depart->courrier;
+            $count = count($request->product);
+                $courrier->directions()->sync($request->id_direction);
+                $courrier->employees()->sync($request->id_employe);
+                return redirect()->route('departs.index', $depart->courrier->id)->with('success', 'Courrier imputé !');
+            
+            //solution, récuper l'id à partir de blade avec le mode hidden
+        }
+
 
         $this->validate(
             $request, [
@@ -320,6 +333,15 @@ class DepartController extends Controller
 
         $departs=Depart::with('courrier')->where('created_at', '>=', $date)->get();
         return Datatables::of($departs)->make(true);
+    }
+
+    
+    public function departimputations($id)
+    {
+        $depart = Depart::find($id);
+        $courrier = $depart->courrier;
+
+        return view('departs.impuation', compact('courrier', 'depart'));
     }
 
 }

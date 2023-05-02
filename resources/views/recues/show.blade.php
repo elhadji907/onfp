@@ -21,7 +21,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
                         href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                <li class="breadcrumb-item active">{!! __("Courrier arrivé") !!}</li>
+                        <li class="breadcrumb-item active">Commentaires courriers arrivés</li>
             </ul>
         </div>
         <div class="card">

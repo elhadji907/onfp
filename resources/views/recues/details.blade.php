@@ -98,13 +98,19 @@
 
     @foreach ($recues as $recue)
         <div class="invoice-box justify-content-center">
-            <div class="row justify-content-center pb-2">
+           {{--   <div class="row justify-content-center pb-2">
                 <div class="col-lg-12 margin-tb">
                     <a class="btn btn-outline-success" href="{{ route('recues.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
                 </div>
-            </div>
+            </div>  --}}
             <div class="card">
+                              
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                            href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                    <li class="breadcrumb-item active">courrier départ</li>
+                </ul>
                {{--   <a class="nav-link" href="{{ route('recues.index') }}">
                     <div class="card card-header text-center bg-gradient-success">
                         <h1 class="h4 text-white mb-0">{!! $recue->courrier->types_courrier->name !!}</h1>

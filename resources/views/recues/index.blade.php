@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Liste des courriers arrivées')
+@section('title', 'ONFP - Liste des courriers arrivés')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -15,8 +15,11 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        Liste des courriers reçues
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="btn btn-outline-primary btn-sm"
+                                    href="{{ route('recues.index') }}"><i class="fas fa-sync-alt"></i>&nbsp;actualiser</a></li>
+                            <li class="breadcrumb-item active">Liste des courriers arrivés</li>
+                        </ul>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -73,7 +76,7 @@
                                                 @endforeach
                                             </td>
                                             <td style="text-align: center; vertical-align: middle;"> <a
-                                                    href="{!! url('imputations', ['$id' => $recue->id]) !!}" class='btn btn-warning btn-sm'
+                                                    href="{!! url('recuimputations', ['$id' => $recue->id]) !!}" class='btn btn-warning btn-sm'
                                                     title="imputer">
                                                     <i class="fa fa-retweet"></i>
                                                 </a></td>

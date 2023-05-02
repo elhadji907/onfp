@@ -266,7 +266,8 @@ Route::group([
             return view('etablissements.selectefilieres');
         })->name('etablissements.selectefilieres');
 
-        Route::get('imputations/{id}', [CourrierController::class, 'imputations'])->name('imputations');
+        Route::get('recuimputations/{id}', [RecueController::class, 'recuimputations'])->name('recuimputations');
+        Route::get('departimputations/{id}', [DepartController::class, 'departimputations'])->name('departimputations');
         Route::post('/arrive/fetch', [RecueController::class, 'fetch'])->name('arrive.fetch');
         Route::post('/fonction/fetch', [FonctionController::class, 'fetch'])->name('fonction.fetch');
         Route::post('/employe/fetch', [EmployeeController::class, 'fetch'])->name('employe.fetch');

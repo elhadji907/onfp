@@ -15,18 +15,28 @@
             @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">{{ session('success') }}</div>
             @endif
-            <div class="row justify-content-center pb-2">
+            {{--  <div class="row justify-content-center pb-2">
                 <div class="col-lg-12 margin-tb">
                     <a class="btn btn-outline-success" href="{{ route('departs.index') }}"> <i
                             class="fas fa-undo-alt"></i>&nbsp;Arrière</a>
                 </div>
+            </div>  --}}
+            
+            <div class="row">                  
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                                href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                        <li class="breadcrumb-item active">Modification courrier départ</li>
+                    </ul>
+                </div>
             </div>
             <div class="row pt-5"></div>
             <div class="card border-success">
-                <div class="card card-header text-center bg-gradient-default border-success">
+                {{--  <div class="card card-header text-center bg-gradient-default border-success">
                     <h1 class="h4 card-title text-center text-black h-100 text-uppercase mb-0"><b></b><span
                             class="font-italic">FORMULAIRE DE MODIFICATION COURRIER DEPART</span></h1>
-                </div>
+                </div>  --}}
 
                 <div class="card-body">
                     NB : Les champs(<span class="text-danger">*</span>)sont obligatoires

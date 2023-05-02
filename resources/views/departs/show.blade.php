@@ -16,7 +16,14 @@
             <div class="container-fluid">
                 @if (session()->has('success'))
                     <div class="alert alert-success" role="alert">{{ session('success') }}</div>
-                @endif
+                @endif                
+                <div class="col-sm-12">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
+                                href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                        <li class="breadcrumb-item active">Commentaires courriers départs</li>
+                    </ul>
+                </div>
                 <div class="card">
                     @foreach ($departs as $depart)  
                     <div class="card-body">

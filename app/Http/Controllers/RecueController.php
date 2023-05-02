@@ -421,4 +421,13 @@ class RecueController extends Controller
       echo $output;
      }
     }
+
+    
+    public function recuimputations($id)
+    {
+        $recue = Recue::find($id);
+        $courrier = $recue->courrier;
+
+        return view('recues.impuation', compact('courrier', 'recue'));
+    }
 }

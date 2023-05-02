@@ -21,17 +21,17 @@
                     <div class="col-sm-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                                    href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
                             <li class="breadcrumb-item active">Imputer ce courrier</li>
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
-                        <span class="card-category"><b>N° </b>: {!! $recue->numero ?? '' !!}</span><br />
-                        <span class="card-category"><b>Date réception </b>: {!! optional($courrier->date_recep)->format('d/m/Y') !!}</span><br />
-                        <span class="card-category"><b>Expéditeur </b>: {!! $courrier->expediteur !!}</span> <br />
+                        <span class="card-category"><b>N° ordre </b>: {!! $depart->numero ?? '' !!}</span><br />
+                        <span class="card-category"><b>Date départ </b>: {!! optional($courrier->date_imp)->format('d/m/Y') !!}</span><br />
+                        <span class="card-category"><b>Destinataire </b>: {!! $depart->destinataire !!}</span> <br />
                         <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
                         <span class="card-category"><b>Imputation </b>:
-                            @foreach ($recue->courrier->directions as $imputation)
+                            @foreach ($depart->courrier->directions as $imputation)
                                 <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
                             @endforeach
                         </span><br /><br />
@@ -100,7 +100,7 @@
                     </small>
                     <div class="col-lg-12">
                         {{--  <form method="POST" action="{{ route('sales.store') }}">  --}}
-                        {!! Form::open(['url' => 'recues/' . $recue->id, 'method' => 'PATCH', 'files' => true]) !!}
+                        {!! Form::open(['url' => 'departs/' . $depart->id, 'method' => 'PATCH', 'files' => true]) !!}
                         @csrf
                         <div class="table-responsive">
                             <table class="table table-bordered" style="display: none;">

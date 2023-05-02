@@ -107,7 +107,7 @@
                                     <thead class="table-dark">
                                         <tr>
                                             {{--  <th style="width:5%;">N°</th>  --}}
-                                            <th style="width:5%;">NUMERO</th>
+                                            <th style="width:5%;">N°</th>
                                             <th style="width:5%;">ANNEE</th>
                                             <th>OBJET</th>
                                             <th style="width:22%;">TYPE</th>

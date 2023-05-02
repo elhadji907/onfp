@@ -15,8 +15,11 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        Liste des courriers departs
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="btn btn-outline-primary btn-sm"
+                                    href="{{ route('departs.index') }}"><i class="fas fa-sync-alt"></i>&nbsp;actualiser</a></li>
+                            <li class="breadcrumb-item active">Liste des courriers départs</li>
+                        </ul>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -30,15 +33,18 @@
                                 cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th style="width:10%;">N° ORDRE</th>
-                                        <th style="width:8%;">NBRE PC</th>
-                                        <th style="width:11%;">DATE DEPART</th>
-                                        <th style="width:12%;">DESTINATAIRE</th>
-                                        <th style="width:22%;">OBJET</th>
-                                        <th style="width:10%;">N° ARCHIVES</th>
-                                        <th style="width:2%;">SCAN</th>
+                                        <th style="width:10%;">N° ordre</th>
+                                        {{--  <th style="width:8%;">NBRE PC</th>  --}}
+                                        <th style="width:11%;">Date départ</th>
+                                        <th style="width:12%;">Destinataire</th>
+                                        <th style="width:22%;">Objet</th>
+                                        <th style="width:10%;">N° archive</th>
+                                       {{--   <th style="width:2%;">SCAN</th>  --}}
                                         <th style="width:15%;">Imputation</th>
-                                        <th style="width:10%;">Action</th>
+                                        <th style="width:5%;">Imputer</th>
+                                        <th style="width:1%;"></th>
+                                        <th style="width:1%;"></th>
+                                        <th style="width:1%;"></th>
                                     </tr>
                                 </thead>
                                 {{--   <tfoot class="table-dark">
@@ -55,12 +61,12 @@
                                     @foreach ($departs as $depart)
                                         <tr>
                                             <td>{!! $depart->numero !!}</td>
-                                            <td>{!! $depart->courrier->nb_pc !!}</td>
+                                            {{--  <td>{!! $depart->courrier->nb_pc !!}</td>  --}}
                                             <td>{!! optional($depart->courrier->date_imp)->format('d/m/Y') !!}</td>
                                             <td>{!! $depart->destinataire !!}</td>
                                             <td>{!! $depart->courrier->objet !!}</td>
                                             <td>{!! $depart->courrier->num_bord !!}</td>
-                                            <td>
+                                           {{--   <td>
                                                 @if ($depart->courrier->file != '')
                                                     <a class="btn btn-outline-secondary btn-sm"
                                                         title="télécharger le fichier joint" target="_blank"
@@ -68,24 +74,33 @@
                                                         <i class="fas fa-download"></i>
                                                     </a>
                                                 @endif
-                                            </td>
+                                            </td>  --}}
                                             <td>
-                                                @foreach ($depart->courrier->imputations as $imputation)
-                                                    <span>{!! $imputation->sigle !!},</span>
-                                                @endforeach
-                                            </td>
-                                            <td class="d-flex align-items-baseline align-content-center">
+                                                @foreach ($depart->courrier->directions as $imputation)
+                                                {{--  <span class="btn btn-default">{!! $imputation->sigle ?? '' !!}</span>  --}}
+                                                <span>{!! $imputation->sigle ?? '' !!}, </span>
+                                            @endforeach
+                                            </td>                                            
+                                            <td style="text-align: center; vertical-align: middle;"> <a
+                                                href="{!! url('departimputations', ['$id' => $depart->id]) !!}" class='btn btn-warning btn-sm'
+                                                title="imputer">
+                                                <i class="fa fa-retweet"></i>
+                                            </a></td>
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 @can('update', $depart->courrier)
-                                                    <a href="{!! url('departs/' . $depart->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                                    <a href="{!! url('departs/' . $depart->id . '/edit') !!}" class=''
                                                         title="modifier">
-                                                        <i class="far fa-edit">&nbsp;</i>
+                                                        <i class="far fa-edit"></i>
                                                     </a>
                                                 @endcan
-                                                &nbsp; <a href="{!! url('courriers/' . $depart->courrier->id) !!}" class='btn btn-primary btn-sm'
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                 <a href="{!! url('courriers/' . $depart->courrier->id) !!}" class=''
                                                     title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
+                                                    <i class="far fa-eye"></i>
                                                 </a>
-                                                &nbsp;
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 @can('delete', $depart->courrier)
                                                     {!! Form::open([
                                                         'method' => 'DELETE',
@@ -93,9 +108,9 @@
                                                         'id' => 'deleteForm',
                                                         'onsubmit' => 'return ConfirmDelete()',
                                                     ]) !!}
-                                                    {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                    {!! Form::button('<i class="fa fa-times" aria-hidden="true" style="color:red"></i>', [
                                                         'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-sm',
+                                                        'class' => 'btn btn-default btn-sm',
                                                         'title' => 'supprimer',
                                                     ]) !!}
                                                     {!! Form::close() !!}
