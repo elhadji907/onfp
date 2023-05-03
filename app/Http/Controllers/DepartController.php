@@ -99,20 +99,28 @@ class DepartController extends Controller
     {
         $this->validate(
             $request, [
-                'numero_ordre'    =>  'required|string|min:4|max:4|unique:departs,numero,Null,id,deleted_at,NULL',
+                'numero_ordre'    =>  'required|string|min:4|max:6|unique:departs,numero,Null,id,deleted_at,NULL',
                 'nbre_pieces'     =>  'required|numeric',
                 'annee'           =>  'required|numeric|min:2022',
                 'destinataire'    =>  'required|string|max:100',
                 'objet'           =>  'required|string|max:200',
-                'numero_archive'  =>  'required|string|min:4|max:4|unique:courriers,num_bord,Null,id,deleted_at,NULL',
+                'numero_archive'  =>  'required|string|min:4|max:6|unique:courriers,num_bord,Null,id,deleted_at,NULL',
                 'date_depart'     =>  'required|date',
             ]
         );
-        $types_courrier_id = TypesCourrier::where('name','Courriers departs')->first()->id;
+       /*  $types_courrier_id = TypesCourrier::where('name','Courriers departs')->first()->id;
         $user_id  = Auth::user()->id;
         $courrier_id = Courrier::get()->last()->id;
         $annee = date('Y');
-        $numCourrier = $courrier_id;
+        $numCourrier = $courrier_id; */
+
+        $types_courrier_id = TypesCourrier::where('name', 'Courriers departs')->first()->id;
+        $users_id  = Auth::user()->id;
+
+        // dd($users_id);
+
+        //$courrier_id = Courrier::get()->last()->id;
+        $courrier_id = $users_id;
 
         $direction = \App\Models\Direction::first();
         $imputation = \App\Models\Imputation::first();
@@ -120,29 +128,35 @@ class DepartController extends Controller
         // $filePath = request('file')->store('recues', 'public');
 
 
-        $numero_archive = $request->input('numero_archive');
+   /*      $numero_archive = $request->input('numero_archive');
         $longueur = strlen($numero_archive);
 
         if ($longueur <= 1) {
-            $numero_archive   =   strtolower("000".$numero_archive);
+            $numero_archive   =   strtolower("00000".$numero_archive);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero_archive   =   strtolower("00".$numero_archive);
+            $numero_archive   =   strtolower("0000".$numero_archive);
         } elseif ($longueur >= 3 && $longueur < 4) {
+            $numero_archive   =   strtolower("000".$numero_archive);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numero_archive   =   strtolower("00".$numero_archive);
+        } elseif ($longueur >= 5 && $longueur < 6) {
             $numero_archive   =   strtolower("0".$numero_archive);
         } else {
             $numero_archive   =   strtolower($numero_archive);
         }
-
+ */
         $courrier = new Courrier([
             'numero'             =>      $request->input('numero_ordre'),
             'nb_pc'              =>      $request->input('nbre_pieces'),
             'type'               =>      $request->input('annee'),
-            'date_imp'           =>      $request->input('date_depart'), //date depart
+            'date_imp'           =>      $request->input('date_imp'), //date depart
+            'date_depart'        =>      $request->input('date_depart'), 
             'objet'              =>      $request->input('objet'),
             'num_bord'           =>      $request->input('numero_archive'), //numéro archive
             'observation'        =>      $request->input('observation'),
+            'reference'          =>      $request->input('reference'),
             'types_courriers_id' =>      $types_courrier_id,
-            'users_id'           =>      $user_id,
+            'users_id'           =>      $users_id,
             'file'               =>      ""
         ]);
 
@@ -222,11 +236,11 @@ class DepartController extends Controller
         $this->validate(
             $request, [
                 'annee'           =>  'required|numeric|min:2022',
-                'numero_ordre'    =>  'required|string|min:4|max:4|unique:departs,numero,'.$depart->id.',id,deleted_at,NULL',
+                'numero_ordre'    =>  'required|string|min:4|max:6|unique:departs,numero,'.$depart->id.',id,deleted_at,NULL',
                 'nbre_pieces'     =>  'required|numeric',
                 'destinataire'    =>  'required|string|max:100',
                 'objet'           =>  'required|string|max:200',
-                'numero_archive'  =>  'required|string|min:4|max:4|unique:courriers,num_bord,'.$depart->courrier->id.',id,deleted_at,NULL',
+                'numero_archive'  =>  'required|string|min:4|max:6|unique:courriers,num_bord,'.$depart->courrier->id.',id,deleted_at,NULL',
                 'date_depart'     =>  'required|date',
                 'file'            =>  'sometimes|required|file|max:30000|mimes:pdf,doc,txt,xlsx,xls,jpeg,jpg,jif,docx,png,svg,csv,rtf,bmp',
 
@@ -256,11 +270,13 @@ class DepartController extends Controller
        $courrier->type               =      $request->input('annee');
        $courrier->numero             =      $request->input('numero_ordre');
        $courrier->nb_pc              =      $request->input('nbre_pieces');
-       $courrier->date_imp           =      $request->input('date_depart'); //date depart
+       $courrier->date_imp           =      $request->input('date_imp'); //date depart
+       $courrier->date_depart        =      $request->input('date_depart'); 
        $courrier->objet              =      $request->input('objet');
        $courrier->num_bord           =      $numero_archive;
        $courrier->observation        =      $request->input('observation');
        $courrier->description        =      $request->input('description');
+       $courrier->reference          =      $request->input('reference');
 
        $courrier->types_courriers_id =      $types_courrier_id;
        $courrier->users_id           =      $user_id;
@@ -285,11 +301,13 @@ class DepartController extends Controller
             $courrier->type               =      $request->input('annee');
             $courrier->numero             =      $request->input('numero_ordre');
             $courrier->nb_pc              =      $request->input('nbre_pieces');
-            $courrier->date_imp           =      $request->input('date_depart'); //date depart
+            $courrier->date_depart        =      $request->input('date_depart'); //date depart
+            $courrier->date_imp           =      $request->input('date_imp');
             $courrier->objet              =      $request->input('objet');
             $courrier->num_bord           =      $request->input('numero_archive');
             $courrier->observation        =      $request->input('observation');
             $courrier->description        =      $request->input('description');
+            $courrier->reference          =      $request->input('reference');
      
             $courrier->types_courriers_id =      $types_courrier_id;
             $courrier->users_id           =      $user_id;

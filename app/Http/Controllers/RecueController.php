@@ -163,7 +163,7 @@ class RecueController extends Controller
             'numero'             =>      $request->input('numero_cores'),
             'type'               =>      $request->input('annee'),
             'objet'              =>      $request->input('objet'),
-            'message'            =>      $request->input('message'),
+            'observation'        =>      $request->input('observation'),
             'expediteur'         =>      $request->input('expediteur'),
             'reference'          =>      $request->input('reference'),
             'date_recep'         =>      $request->input('date_recep'),
@@ -306,7 +306,7 @@ class RecueController extends Controller
             $courrier->objet              =      $request->input('objet');
             $courrier->numero             =      $request->input('numero_cores');
             $courrier->type               =      $request->input('annee');
-            $courrier->observation            =      $request->input('observation');
+            $courrier->observation        =      $request->input('observation');
             $courrier->expediteur         =      $request->input('expediteur');
             $courrier->date_recep         =      $request->input('date_recep');
             $courrier->reference          =      $request->input('reference');

@@ -195,6 +195,18 @@
                             @enderror
                         </div>
                         <div class="form-group col-md-12">
+                            <label for="reference">{{ __('REFERENCE') }}(<span class="text-danger">*</span>)</label>
+                            <input id="reference" type="text"
+                                class="form-control form-control-sm @error('reference') is-invalid @enderror" name="reference"
+                                placeholder="Reference" value="{{ $depart->courrier->reference ?? old('reference') }}"
+                                autocomplete="reference">
+                            @error('reference')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-12">
                             <label for="numero_reponse">{{ __('NUMERO ARCHIVE') }}(<span
                                     class="text-danger">*</span>)</label>
                             <input id="numero_archive" type="number" min="1"

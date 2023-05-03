@@ -106,6 +106,7 @@ class InterneController extends Controller
             'objet'              =>      $request->input('objet'),
             'message'            =>      $request->input('message'),
             'expediteur'         =>      $request->input('expediteur'),
+            'reference'          =>      $request->input('reference');
             'telephone'          =>      $request->input('telephone'),
             'email'              =>      $request->input('email'),
             'adresse'            =>      $request->input('adresse'),
@@ -199,6 +200,7 @@ class InterneController extends Controller
        $courrier->objet              =      $request->input('objet');
        $courrier->message            =      $request->input('message');
        $courrier->expediteur         =      $request->input('expediteur');
+       $courrier->reference          =      $request->input('reference');
        $courrier->telephone          =      $request->input('telephone');
        $courrier->email              =      $request->input('email');
        $courrier->adresse            =      $request->input('adresse');
@@ -227,6 +229,7 @@ class InterneController extends Controller
             $courrier->objet              =      $request->input('objet');
             $courrier->message            =      $request->input('message');
             $courrier->expediteur         =      $request->input('expediteur');
+            $courrier->reference          =      $request->input('reference');
             $courrier->telephone          =      $request->input('telephone');
             $courrier->email              =      $request->input('email');
             $courrier->adresse            =      $request->input('adresse');

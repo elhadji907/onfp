@@ -138,6 +138,7 @@ class Courrier extends Model
 		'date',
 		'adresse',
 		'date_imp',
+		'date_depart',
 		'date_recep',
 		'date_cores',
 		'date_rejet',

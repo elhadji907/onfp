@@ -124,6 +124,7 @@
                                             {!! Form::select(
                                                 'description',
                                                 [
+                                                    'Aucune' => 'Aucune',
                                                     'Urgent' => 'Urgent',
                                                     'M\'en parler' => 'M\'en parler',
                                                     'Etudes et Avis' => 'Etudes et Avis',
@@ -138,6 +139,7 @@
                                                 [
                                                     'placeholder' => 'Instructions du DG',
                                                     'class' => 'form-control form-control-sm',
+                                                    'required' => true,
                                                     'id' => 'description',
                                                 ],
                                             ) !!}
@@ -155,7 +157,7 @@
                                             <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
                                                 type="date"
                                                 class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
-                                                name="date_imp" placeholder="Date imputation"
+                                                name="date_imp" placeholder="Date imputation" required
                                                 value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
                                                 autocomplete="date_imp">
                                             @error('date_imp')

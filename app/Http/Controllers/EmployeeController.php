@@ -89,7 +89,7 @@ class EmployeeController extends Controller
 
         if (User::where('email', $request->email)->exists()) {
             //faire une mise à jour car l'employé existe déjà
-            dd("existe");
+            /* dd("existe"); */
             
         $users = User::where('email', $request->email)->get();
 

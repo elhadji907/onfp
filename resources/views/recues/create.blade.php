@@ -185,12 +185,12 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-12">
-                                {!! Form::label('INFORMATIONS COMPLEMENTAIRES') !!}
-                                {!! Form::textarea('message', null, [
-                                    'placeholder' => 'Informations complémentaires...',
+                                {!! Form::label('Observations') !!}
+                                {!! Form::textarea('observation', null, [
+                                    'placeholder' => 'Observations',
                                     'rows' => 2,
                                     'class' => 'form-control',
-                                    'id' => 'message',
+                                    'id' => 'observation',
                                 ]) !!}
                             </div>
                         </div>

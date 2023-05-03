@@ -30,10 +30,15 @@
                         <span class="card-category"><b>Date départ </b>: {!! optional($courrier->date_imp)->format('d/m/Y') !!}</span><br />
                         <span class="card-category"><b>Destinataire </b>: {!! $depart->destinataire !!}</span> <br />
                         <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
-                        <span class="card-category"><b>Imputation </b>:
+                        
+                            @if ($depart->courrier->directions != '[]')
+                            <span class="card-category"><b>Imputation </b>:
                             @foreach ($depart->courrier->directions as $imputation)
                                 <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
                             @endforeach
+                            @else
+                                
+                            @endif
                         </span><br /><br />
                         <div class="card">
                             <div class="card-body custom-edit-service">
@@ -115,11 +120,56 @@
                                 </tbody>                            
                                 <tbody>
                                     <tr>
-                                        <td colspan="4" class="">
-                                            <strong>Instructions </strong>
-                                            <textarea type="text" placeholder="Instructions du DG"
+                                        <td colspan="1" class="">
+                                            {{--  <strong>Actions attendues </strong>  --}}
+                                            {{--   <textarea type="text" placeholder="Instructions du DG"
                                                 class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                                name="description" id="description" value="" required></textarea>
+                                                name="description" id="description" value="" required></textarea>  --}}
+                                            <strong>{!! Form::label('Actions attendues') !!}</strong>
+                                            {!! Form::select(
+                                                'description',
+                                                [
+                                                    'Aucune' => 'Aucune',
+                                                    'Urgent' => 'Urgent',
+                                                    'M\'en parler' => 'M\'en parler',
+                                                    'Etudes et Avis' => 'Etudes et Avis',
+                                                    'Répondre' => 'Répondre',
+                                                    'Suivi' => 'Suivi',
+                                                    'Information' => 'Information',
+                                                    'Diffusion' => 'Diffusion',
+                                                    'Attribution' => 'Attribution',
+                                                    'Classement' => 'Classement',
+                                                ],
+                                                $depart->courrier->description,
+                                                [
+                                                    'placeholder' => 'Instructions du DG',
+                                                    'class' => 'form-control form-control-sm',
+                                                    'required' => true,
+                                                    'id' => 'description',
+                                                ],
+                                            ) !!}
+
+                                            <small id="emailHelp" class="form-text text-muted">
+                                                @if ($errors->has('description'))
+                                                    @foreach ($errors->get('description') as $message)
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @endforeach
+                                                @endif
+                                            </small>
+                                        </td>
+                                        <td colspan="1">
+                                            <strong><label for="date_imp">{{ __('Date imputation') }}</label></strong>
+                                            <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
+                                                type="date"
+                                                class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
+                                                name="date_imp" placeholder="Date imputation"
+                                                value="{{ optional($depart->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                                                autocomplete="date_imp">
+                                            @error('date_imp')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
                                         </td>
                                     </tr>
                                 </tbody>

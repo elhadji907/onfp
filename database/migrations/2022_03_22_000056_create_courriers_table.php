@@ -42,6 +42,7 @@ class CreateCourriersTable extends Migration
             $table->timestamp('date')->nullable()->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->string('adresse', 200)->nullable();
             $table->dateTime('date_imp')->nullable();
+            $table->dateTime('date_depart')->nullable();
             $table->dateTime('date_recep')->nullable();
             $table->dateTime('date_cores')->nullable();
             $table->dateTime('date_rejet')->nullable();
