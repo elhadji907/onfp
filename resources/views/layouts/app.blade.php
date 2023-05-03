@@ -36,7 +36,7 @@
 </head>
 
 <body>
-    <div id="app" class="bg-gradient-primary center" style="height: 100vh;">
+    <div id="app" class="center" style="height: 100vh;">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm border-bottom-success">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

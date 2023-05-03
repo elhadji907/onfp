@@ -89,6 +89,7 @@ class EmployeeController extends Controller
 
         if (User::where('email', $request->email)->exists()) {
             //faire une mise à jour car l'employé existe déjà
+            dd("existe");
             
         $users = User::where('email', $request->email)->get();
 
@@ -238,7 +239,6 @@ class EmployeeController extends Controller
         return redirect()->route('employees.index')->with(compact('success'));
         } else {
              
-
         $this->validate(
             $request,
             [
@@ -264,7 +264,7 @@ class EmployeeController extends Controller
         if (isset($employee) && $employee <= 0) {
             $user_id = 0;
         } else {
-            $user_id             =   Employee::latest('id')->first()->id;
+            $user_id         =   Employee::latest('id')->first()->id;
         }
 
         $longueur            =      strlen($user_id);
@@ -298,14 +298,14 @@ class EmployeeController extends Controller
 
         $familiale_id = $request->input('familiale');
 
-        $fonction=$request->input('fonction');
+        $fonction=Fonction::find($request->input('fonction'));
 
         if (Fonction::where('name', $fonction)->exists()) {
             $fonctions_id = Fonction::where('name', $fonction)->first()->id;
          }
          else {
             $fonction = new Fonction([
-                'name'     =>     $request->input('fonction')
+                'name'     =>     $fonction->name
             ]);
             
             $fonction->save();
@@ -423,19 +423,19 @@ class EmployeeController extends Controller
         $direction=$request->input('direction');
         $directions_id = Direction::where('name', $direction)->first()->id;
 
-        $fonction=$request->input('fonction');
+        $fonction_id = Fonction::where('name', $request->input('fonction'))->first()->id;
 
-        if (Fonction::where('name', $fonction)->exists()) {
-            $fonctions_id = Fonction::where('name', $fonction)->first()->id;
+      /*   if (Fonction::where('name', $fonction)->exists()) {
+            $fonction = Fonction::where('name', $fonction)->first()->id;
          }
          else {
             $fonction = new Fonction([
-                'name'     =>     $request->input('fonction')
+                'name'     =>     $fonction->name
             ]);
             
             $fonction->save();
             $fonctions_id = $fonction->id;
-         }
+         } */
 
 
         $categorie=$request->input('categorie');
@@ -496,7 +496,7 @@ class EmployeeController extends Controller
                 'adresse'           =>      $data['adresse'],
                 'fin'               =>      $fin,
                 'directions_id'     =>      $directions_id,
-                'fonctions_id'      =>      $fonctions_id,
+                'fonctions_id'      =>      $fonction_id,
                 'categories_id'     =>      $categories_id,
                 'roles_id'          =>      $roles_id,
 
@@ -529,7 +529,7 @@ class EmployeeController extends Controller
                 'fin'               =>      $fin,
                 'adresse'           =>      $data['adresse'],
                 'directions_id'     =>      $directions_id,
-                'fonctions_id'      =>      $fonctions_id,
+                'fonctions_id'      =>      $fonction_id,
                 'categories_id'     =>      $categories_id,
                 'roles_id'          =>      $roles_id,
 

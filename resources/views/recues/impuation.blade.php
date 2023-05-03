@@ -112,14 +112,57 @@
                                     </tr>
                                 </thead>
                                 <tbody id="addRow" class="addRow">
-                                </tbody>                                
+                                </tbody>
                                 <tbody>
                                     <tr>
-                                        <td colspan="4" class="">
-                                            <strong>Instructions </strong>
-                                            <textarea type="text" placeholder="Instructions du DG"
+                                        <td colspan="1" class="">
+                                            {{--  <strong>Actions attendues </strong>  --}}
+                                            {{--   <textarea type="text" placeholder="Instructions du DG"
                                                 class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                                name="description" id="description" value="" required></textarea>
+                                                name="description" id="description" value="" required></textarea>  --}}
+                                            <strong>{!! Form::label('Actions attendues') !!}</strong>
+                                            {!! Form::select(
+                                                'description',
+                                                [
+                                                    'Urgent' => 'Urgent',
+                                                    'M\'en parler' => 'M\'en parler',
+                                                    'Etudes et Avis' => 'Etudes et Avis',
+                                                    'Répondre' => 'Répondre',
+                                                    'Suivi' => 'Suivi',
+                                                    'Information' => 'Information',
+                                                    'Diffusion' => 'Diffusion',
+                                                    'Attribution' => 'Attribution',
+                                                    'Classement' => 'Classement',
+                                                ],
+                                                $recue->courrier->description,
+                                                [
+                                                    'placeholder' => 'Instructions du DG',
+                                                    'class' => 'form-control form-control-sm',
+                                                    'id' => 'description',
+                                                ],
+                                            ) !!}
+
+                                            <small id="emailHelp" class="form-text text-muted">
+                                                @if ($errors->has('description'))
+                                                    @foreach ($errors->get('description') as $message)
+                                                        <p class="text-danger">{{ $message }}</p>
+                                                    @endforeach
+                                                @endif
+                                            </small>
+                                        </td>
+                                        <td colspan="1">
+                                            <strong><label for="date_imp">{{ __('Date imputation') }}</label></strong>
+                                            <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
+                                                type="date"
+                                                class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
+                                                name="date_imp" placeholder="Date imputation"
+                                                value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                                                autocomplete="date_imp">
+                                            @error('date_imp')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
                                         </td>
                                     </tr>
                                 </tbody>
@@ -132,7 +175,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                
+
                             </table>
                         </div>
 
@@ -152,7 +195,7 @@
                             <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
                         <td>
-                        <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="le prix total" readonly>
+                        <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="lLe nom du responsable" readonly>
                       </td>
                         <td>
                         <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>

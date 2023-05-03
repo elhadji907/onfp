@@ -126,6 +126,7 @@ class Courrier extends Model
 		'name',
 		'type',
 		'description',
+		'reference',
 		'message',
 		'email',
 		'fax',

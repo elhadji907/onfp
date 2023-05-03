@@ -122,7 +122,7 @@
                                 <label for="expediteur">{{ __('EXPEDITEUR') }}(<span class="text-danger">*</span>)</label>
                                 <input id="expediteur" type="text"
                                     class="form-control @error('expediteur') is-invalid @enderror" name="expediteur"
-                                    placeholder="Votre et expediteur" value="{{ old('expediteur') }}"
+                                    placeholder="Expediteur" value="{{ old('expediteur') }}"
                                     autocomplete="expediteur">
                                 @error('expediteur')
                                     <span class="invalid-feedback" role="alert">
@@ -135,7 +135,7 @@
                                 <label for="objet">{{ __('OBJET') }}(<span class="text-danger">*</span>)</label>
                                 <input id="objet" type="text"
                                     class="form-control @error('objet') is-invalid @enderror" name="objet"
-                                    placeholder="Votre et objet" value="{{ old('objet') }}" autocomplete="objet">
+                                    placeholder="Objet" value="{{ old('objet') }}" autocomplete="objet">
                                 @error('objet')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -148,6 +148,17 @@
                                     'class' => 'form-control',
                                     'id' => 'objet',
                                 ]) !!}  --}}
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="reference">{{ __('REFERENCE') }}</label>
+                                <input id="reference" type="text"
+                                    class="form-control @error('reference') is-invalid @enderror" name="reference"
+                                    placeholder="référence du courrier" value="{{ old('reference') }}" autocomplete="reference">
+                                @error('reference')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="numero_reponse">{{ __('NUMERO REPONSE') }}</label>

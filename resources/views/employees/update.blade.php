@@ -24,17 +24,17 @@
                     {!! Form::open(['url' => 'employees/' . $employee->id, 'method' => 'PATCH', 'files' => true]) !!}
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            {{--  {!! Form::label('fonction') !!}  --}}
-                            {{--  {!! Form::select('fonction', $fonctions, $employee->fonction->name ?? '', ['placeholder' => '', 'class' => 'form-control form-control-sm', 'id' => 'fonction']) !!}  --}}
-                            {{--   {!! Form::text('fonction', $employee->matricule, ['placeholder' => 'fonction', 'class' => 'form-control form-control-sm', 'id' => 'fonction']) !!}
+                            {!! Form::label('fonction') !!}
+                            {!! Form::select('fonction', $fonctions, $employee->fonction->name ?? '', ['placeholder' => '', 'class' => 'form-control form-control-sm', 'id' => 'fonction']) !!}
+                             {{--  {!! Form::text('fonction', $employee->matricule, ['placeholder' => 'fonction', 'class' => 'form-control form-control-sm', 'id' => 'fonction']) !!}  --}}
                             <small id="emailHelp" class="form-text text-muted">
                                 @if ($errors->has('fonction'))
                                     @foreach ($errors->get('fonction') as $message)
                                         <p class="text-danger">{{ $message }}</p>
                                     @endforeach
                                 @endif
-                            </small>  --}}
-                            <label for="">Fonction</label>
+                            </small>
+                            {{--  <label for="">Fonction</label>
                             <input type="text" placeholder="Fonction"
                                 class="form-control form-control-sm @error('fonction') is-invalid @enderror" name="fonction"
                                 id="fonction" value="{{ $employee->fonction->name ?? '' }}">
@@ -44,7 +44,7 @@
                                 <span class="invalid-feedback" role="alert">
                                     <div>{{ $message }}</div>
                                 </span>
-                            @enderror
+                            @enderror  --}}
                         </div>
                         <div class="form-group col-md-4">
                             {!! Form::label('categorie') !!}

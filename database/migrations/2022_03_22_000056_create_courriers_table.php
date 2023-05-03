@@ -30,6 +30,7 @@ class CreateCourriersTable extends Migration
             $table->string('name', 200)->nullable();
             $table->string('type', 200)->nullable();
             $table->longText('description')->nullable();
+            $table->longText('reference')->nullable();
             $table->longText('message')->nullable();
             $table->string('email', 200)->nullable();
             $table->string('fax', 200)->nullable();

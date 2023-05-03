@@ -124,7 +124,7 @@
                                 <label for="expediteur">{{ __('EXPEDITEUR') }}(<span class="text-danger">*</span>)</label>
                                 <input id="expediteur" type="text"
                                     class="form-control form-control-sm @error('expediteur') is-invalid @enderror" name="expediteur"
-                                    placeholder="Votre et expediteur"
+                                    placeholder="Expediteur"
                                     value="{{ $recue->courrier->expediteur ?? old('expediteur') }}"
                                     autocomplete="expediteur">
                                 @error('expediteur')
@@ -138,7 +138,7 @@
                                 <label for="objet">{{ __('OBJET') }}(<span class="text-danger">*</span>)</label>
                                 <input id="objet" type="text"
                                     class="form-control form-control-sm @error('objet') is-invalid @enderror" name="objet"
-                                    placeholder="Votre et objet" value="{{ $recue->courrier->objet ?? old('objet') }}"
+                                    placeholder="Objet" value="{{ $recue->courrier->objet ?? old('objet') }}"
                                     autocomplete="objet">
                                 @error('objet')
                                     <span class="invalid-feedback" role="alert">
@@ -153,6 +153,18 @@
                                     'id' => 'objet',
                                 ]) !!}  --}}
                             </div>
+                            <div class="form-group col-md-12">
+                                <label for="reference">{{ __('REFERENCE') }}(<span class="text-danger">*</span>)</label>
+                                <input id="reference" type="text"
+                                    class="form-control form-control-sm @error('reference') is-invalid @enderror" name="reference"
+                                    placeholder="Reference" value="{{ $recue->courrier->reference ?? old('reference') }}"
+                                    autocomplete="reference">
+                                @error('reference')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="form-group col-md-6">
                                 {!! Form::label('NUMERO REPONSE') !!}
                                 {!! Form::number('numero_reponse', $recue->courrier->name ?? old('numero_reponse'), [
@@ -162,14 +174,14 @@
                                 ]) !!}
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="date_reponse">{{ __('DATE REPONSE') }}(<span
+                                <label for="date_imp">{{ __('Date imputation') }}(<span
                                     class="text-danger">*</span>)</label>
-                            <input id="date_reponse" {{ $errors->has('date_reponse') ? 'is-invalid' : '' }} type="date"
-                                class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" name="date_reponse"
-                                placeholder="Votre date dépôt"
-                                value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_reponse') }}"
-                                autocomplete="date_reponse">
-                            @error('date_reponse')
+                            <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }} type="date"
+                                class="form-control form-control-sm @error('date_imp') is-invalid @enderror" name="date_imp"
+                                placeholder="Date imputation du courrier"
+                                value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                                autocomplete="date_imp">
+                            @error('date_imp')
                                 <span class="invalid-feedback" role="alert">
                                     <div>{{ $message }}</div>
                                 </span>
@@ -185,12 +197,12 @@
                                 ]) !!}
                             </div>
                             <div class="form-group col-md-12">
-                                {!! Form::label('INFORMATIONS COMPLEMENTAIRES') !!}
-                                {!! Form::textarea('message', $recue->courrier->message ?? old('message'), [
-                                    'placeholder' => 'Informations complémentaires...',
+                                {!! Form::label('Observations') !!}
+                                {!! Form::textarea('observation', $recue->courrier->observation ?? old('observation'), [
+                                    'placeholder' => 'Observations',
                                     'rows' => 2,
                                     'class' => 'form-control form-control-sm',
-                                    'id' => 'message',
+                                    'id' => 'observation',
                                 ]) !!}
                             </div>
                             <div class="form-group col-md-12">

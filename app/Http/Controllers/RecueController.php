@@ -95,17 +95,21 @@ class RecueController extends Controller
                 $numCourrier = ++$numCourrier;
            
         } else {
-            $numCourrier = "0001";
+            $numCourrier = "000001";
 
         }
 
         $longueur = strlen($numCourrier);
 
         if ($longueur <= 1) {
-            $numCourrier   =   strtolower("000".$numCourrier);
+            $numCourrier   =   strtolower("00000".$numCourrier);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numCourrier   =   strtolower("00".$numCourrier);
+            $numCourrier   =   strtolower("0000".$numCourrier);
         } elseif ($longueur >= 3 && $longueur < 4) {
+            $numCourrier   =   strtolower("000".$numCourrier);
+        } elseif ($longueur >= 4 && $longueur < 5) {
+            $numCourrier   =   strtolower("00".$numCourrier);
+        } elseif ($longueur >= 5 && $longueur < 6) {
             $numCourrier   =   strtolower("0".$numCourrier);
         } else {
             $numCourrier   =   strtolower($numCourrier);
@@ -132,7 +136,7 @@ class RecueController extends Controller
                 [
                     'date_recep'    =>  'required|date',
                     'date_cores'    =>  'required|date',
-                    'numero_cores'  =>  'required|string|min:4|max:4|unique:courriers,numero,Null,id,deleted_at,NULL',
+                    'numero_cores'  =>  'required|string|min:4|max:6|unique:courriers,numero,Null,id,deleted_at,NULL',
                     'expediteur'    =>  'required|string|max:100',
                     'objet'         =>  'required|string|max:100',
                     'annee'         =>  'required|numeric|min:2022',
@@ -161,9 +165,9 @@ class RecueController extends Controller
             'objet'              =>      $request->input('objet'),
             'message'            =>      $request->input('message'),
             'expediteur'         =>      $request->input('expediteur'),
+            'reference'          =>      $request->input('reference'),
             'date_recep'         =>      $request->input('date_recep'),
             'date_cores'         =>      $request->input('date_cores'),
-            'date_imp'           =>      $request->input('date_reponse'), //date reponse du courrier
             'name'               =>      $request->input('numero_reponse'), //date reponse du courrier
             //'legende'         =>      $request->input('legende'),
             'types_courriers_id' =>      $types_courrier_id,
@@ -245,6 +249,7 @@ class RecueController extends Controller
                 $courrier->directions()->sync($request->id_direction);
                 $courrier->employees()->sync($request->id_employe);
                 $courrier->description =  $request->input('description');
+                $courrier->date_imp    =  $request->input('date_imp');
                 $courrier->save();
                 return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'Courrier imputé !');
             
@@ -257,7 +262,7 @@ class RecueController extends Controller
                 [
                     'date_recep'    =>  'required|date',
                     'date_cores'    =>  'required|date',
-                    'numero_cores'  =>  'required|string|min:4|max:4|unique:recues,numero,'.$recue->id.',id,deleted_at,NULL',
+                    'numero_cores'  =>  'required|string|min:4|max:6|unique:recues,numero,'.$recue->id.',id,deleted_at,NULL',
                     'expediteur'    =>  'required|string|max:100',
                     'objet'         =>  'required|string|max:100',
                     'annee'         =>  'required|numeric|min:2022',
@@ -301,13 +306,15 @@ class RecueController extends Controller
             $courrier->objet              =      $request->input('objet');
             $courrier->numero             =      $request->input('numero_cores');
             $courrier->type               =      $request->input('annee');
-            $courrier->message            =      $request->input('message');
+            $courrier->observation            =      $request->input('observation');
+            $courrier->expediteur         =      $request->input('expediteur');
             $courrier->date_recep         =      $request->input('date_recep');
+            $courrier->reference          =      $request->input('reference');
             $courrier->date_cores         =      $request->input('date_cores');
             $courrier->types_courriers_id =      $types_courrier_id;
             $courrier->users_id           =      $user_id;
             $courrier->file               =      $filePath;
-            $courrier->date_imp           =      $request->input('date_reponse'); //date reponse du courrier
+            $courrier->date_imp           =      $request->input('date_imp'); //date reponse du courrier
             $courrier->name               =      $request->input('numero_reponse'); //date reponse du courrier
             $courrier->description        =      $request->input('description');
 
@@ -335,14 +342,15 @@ class RecueController extends Controller
             $courrier->objet              =      $request->input('objet');
             $courrier->numero             =      $request->input('numero_cores');
             $courrier->type               =      $request->input('annee');
-            $courrier->message            =      $request->input('message');
+            $courrier->observation            =      $request->input('observation');
             $courrier->expediteur         =      $request->input('expediteur');
+            $courrier->reference          =      $request->input('reference');
             $courrier->date_recep         =      $request->input('date_recep');
             $courrier->date_cores         =      $request->input('date_cores');
             $courrier->legende            =      $request->input('legende');
             $courrier->types_courriers_id =      $types_courrier_id;
             $courrier->users_id           =      $user_id;
-            $courrier->date_imp           =      $request->input('date_reponse'); //date reponse du courrier
+            $courrier->date_imp           =      $request->input('date_imp'); //date reponse du courrier
             $courrier->name               =      $request->input('numero_reponse'); //date reponse du courrier
             $courrier->description        =      $request->input('description');
 

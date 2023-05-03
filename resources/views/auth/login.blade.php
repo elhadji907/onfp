@@ -15,8 +15,8 @@
                 </div>
                 @endif --}}
                 <div class="card">
-                    <div class="card card-header text-center bg-gradient-success">
-                        <h1 class="h4 text-white mb-0"><span data-feather="log-in"></span> CONNEXION</h1>
+                    <div class="card card-header text-center">
+                        <h1 class="h4 mb-0"><span data-feather="log-in"></span> CONNEXION</h1>
                     </div>
 
                     <div class="card-body">

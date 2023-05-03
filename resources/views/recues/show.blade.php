@@ -34,7 +34,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <small>Posté le {!! Carbon\Carbon::parse($recue->courrier->created_at)->format('d/m/Y à H:i:s') !!}</small>
                             <span
-                                class="badge badge-primary">{!! $recue->courrier->user->firstname !!}&nbsp;{!! $recue->courrier->user->name !!}</span>
+                                class="badge badge-primary">{!! $recue->courrier->user->firstname ?? '' !!}&nbsp;{!! $recue->courrier->user->name ?? '' !!}</span>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mt-3">
@@ -72,7 +72,7 @@
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <small>Posté le {!! Carbon\Carbon::parse($comment->created_at)->format('d/m/Y à H:i:s') !!}</small>
                                     <span
-                                        class="badge badge-primary">{!! $comment->user->firstname !!}&nbsp;{!! $comment->user->name !!}</span>
+                                        class="badge badge-primary">{!! $comment->user->firstname ?? '' !!}&nbsp;{!! $comment->user->name ?? '' !!}</span>
                                 </div>
                             </div>
                             <div>
@@ -88,7 +88,7 @@
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <small>Posté le {!! Carbon\Carbon::parse($replayComment->created_at)->format('d/m/Y à H:i:s') !!}</small>
                                     <span
-                                        class="badge badge-primary">{!! $replayComment->user->firstname !!}&nbsp;{!! $replayComment->user->name !!}</span>
+                                        class="badge badge-primary">{!! $replayComment->user->firstname ?? '' !!}&nbsp;{!! $replayComment->user->name ?? '' !!}</span>
                                 </div>
                             </div>
                         </div>

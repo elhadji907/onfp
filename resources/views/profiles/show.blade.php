@@ -51,6 +51,7 @@
             @endcan
         </div>
         <div class="list-group mt-5">
+            @if (isset(auth::user()->employee->courriers) && auth::user()->employee->courriers != '[]')
             <div class="table-responsive">
                 <table class="table table-bordered" id="table-courriers-emp">
                     <thead class="table-default">
@@ -60,7 +61,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (isset(auth::user()->employee->courriers) && auth::user()->employee->courriers != '[]')
                             @foreach (auth::user()->employee->courriers as $courrier)
                                 <tr>
                                     <td>
@@ -68,9 +68,9 @@
                                         <p>{!! $courrier->message !!}</p>
                                         <p><strong>Type de courrier : </strong> {!! $courrier->types_courrier->name ?? '' !!}</p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <small>Posté le {!! $courrier->created_at->diffForHumans() !!} par
-                                                <b
-                                                    class="badge badge-default">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name ?? '' !!}</b></small>
+                                            <small>Posté le {!! Carbon\Carbon::parse($courrier->created_at)->format('d/m/Y à H:i:s') !!}</small>
+                                            <span
+                                                class="badge badge-info">{!! $courrier->user->firstname !!}&nbsp;{!! $courrier->user->name !!}</span>
                                         </div>
                                     </td>
                                     <td>
@@ -109,12 +109,12 @@
                                     </td>  --}}
                                 </tr>
                             @endforeach
-                        @else
-                            <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
-                        @endif
                     </tbody>
                 </table>
             </div>
+            @else
+                <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
+            @endif
         </div>
         {{--  <div class="d-flex justify-content-center pt-2">
             {!! $courrierss->links() !!}
