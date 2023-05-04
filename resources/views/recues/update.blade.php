@@ -65,7 +65,7 @@
                                         class="text-danger">*</span>)</label>
                                 <input id="date_cores" {{ $errors->has('date_cores') ? 'is-invalid' : '' }} type="date"
                                     class="form-control form-control-sm @error('date_cores') is-invalid @enderror" name="date_cores"
-                                    placeholder="Votre date dépôt"
+                                    placeholder="Date correspondance"
                                     value="{{ optional($recue->courrier->date_cores)->format('Y-m-d') ?? old('date_cores') }}"
                                     autocomplete="date_cores">
                                 @error('date_cores')
@@ -95,7 +95,6 @@
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
-
                                 {{--    {!! Form::label('NUMERO CORRESPONDANCE') !!}
                                 {!! Form::number('numero_cores', null, [
                                     'placeholder' => 'Numéro de correspondance',
@@ -154,7 +153,7 @@
                                 ]) !!}  --}}
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="reference">{{ __('REFERENCE') }}(<span class="text-danger">*</span>)</label>
+                                <label for="reference">{{ __('REFERENCE') }}</label>
                                 <input id="reference" type="text"
                                     class="form-control form-control-sm @error('reference') is-invalid @enderror" name="reference"
                                     placeholder="Reference" value="{{ $recue->courrier->reference ?? old('reference') }}"

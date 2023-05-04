@@ -104,7 +104,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
                             href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                    <li class="breadcrumb-item active">courrier départ</li>
+                    <li class="breadcrumb-item active">Détails courrier départ</li>
                 </ul>
             {{--  </div>   --}}
         <div class="card-body">
@@ -136,6 +136,9 @@
                             <td>
                                 <h3>{{ __('DESTINATAIRE') }}</h3>
                                 <b>Nom:</b> {{ $depart->destinataire }}<br>
+                                @if (isset($depart->courrier->reference))
+                                <b>Réf courrier:</b> {{ $depart->courrier->reference }}<br>                                    
+                                @endif
                                 {{--  <b>Adresse:</b> {{ $depart->courrier->adresse }}<br>
                                 <b>E-mail:</b> {{ $depart->courrier->email }}<br>
                                 <b>Tel:</b> {{ $depart->courrier->telephone }}<br>
@@ -205,17 +208,19 @@
             
             <tr class="item">
                 <td>
-                    @foreach ($depart->courrier->imputations as $imputation)
-                      {!! $imputation->destinataire !!}<br>
-                    @endforeach
-               </td>
-                
-                <td>
-                    @foreach ($depart->courrier->imputations as $imputation)
-                    {!! $imputation->sigle !!}<br>
+                    <?php $i = 1; ?>
+                    @foreach ($depart->courrier->directions as $direction)
+                    {{ $i++ }}. {!! $direction->name ?? '' !!} <b>[{!! $direction->sigle ?? '' !!}]</b><br>
                     @endforeach
                 </td>
-            </tr>            
+
+                <td>
+                    @foreach ($depart->courrier->directions as $direction)
+                    {!! $direction->chef->user->firstname ?? '' !!}&nbsp;
+                    {!! $direction->chef->user->name ?? '' !!}<br>
+                    @endforeach
+                </td>
+            </tr>       
         </table>
 
         <div class="d-flex justify-content-between align-items-center mt-5">

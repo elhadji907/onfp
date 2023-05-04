@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
                         <span class="card-category"><b>N° ordre </b>: {!! $depart->numero ?? '' !!}</span><br />
-                        <span class="card-category"><b>Date départ </b>: {!! optional($courrier->date_imp)->format('d/m/Y') !!}</span><br />
+                        <span class="card-category"><b>Date départ </b>: {!! \Carbon\Carbon::parse($courrier->date_depart)->format('d/m/Y') !!}</span><br />
                         <span class="card-category"><b>Destinataire </b>: {!! $depart->destinataire !!}</span> <br />
                         <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
                         
@@ -201,7 +201,7 @@
                             <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
                         <td>
-                        <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="le prix total" readonly>
+                        <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="Le nom du responsable" readonly>
                       </td>
                         <td>
                         <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>

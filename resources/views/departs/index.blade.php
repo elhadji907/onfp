@@ -62,7 +62,7 @@
                                         <tr>
                                             <td>{!! $depart->numero !!}</td>
                                             {{--  <td>{!! $depart->courrier->nb_pc !!}</td>  --}}
-                                            <td>{!! optional($depart->courrier->date_imp)->format('d/m/Y') !!}</td>
+                                            <td> {!! \Carbon\Carbon::parse($depart->courrier->date_depart)->format('d/m/Y') !!}</td>
                                             <td>{!! $depart->destinataire !!}</td>
                                             <td>{!! $depart->courrier->objet !!}</td>
                                             <td>{!! $depart->courrier->num_bord !!}</td>

@@ -52,15 +52,16 @@
         </div>
         <div class="list-group mt-5">
             @if (isset(auth::user()->employee->courriers) && auth::user()->employee->courriers != '[]')
-            <div class="table-responsive">
-                <table class="table table-bordered" id="table-courriers-emp">
-                    <thead class="table-default">
-                        <tr>
-                            <th style="width:50%;">Imputations</th>
-                            <th style="width:50%;">Instructions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="table-courriers-emp">
+                        <thead class="table-default">
+                            <tr>
+                                <th style="width:60%;">Imputations</th>
+                                <th style="width:20%;">Instructions</th>
+                                <th style="width:20%;">Suivi dossier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach (auth::user()->employee->courriers as $courrier)
                                 <tr>
                                     <td>
@@ -75,6 +76,12 @@
                                     </td>
                                     <td>
                                         <p>{!! $courrier->description ?? '' !!}</p>
+                                    </td>
+                                    <td>
+                                        @foreach ($courrier->employees as $employee)
+                                            {{ $employee->user->firstname .' '.$employee->user->name}}
+                                        @endforeach
+
                                     </td>
                                     {{--  <td>
                                         @forelse ($courrier->comments as $comment)
@@ -109,9 +116,9 @@
                                     </td>  --}}
                                 </tr>
                             @endforeach
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
             @else
                 <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }} </div>
             @endif

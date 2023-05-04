@@ -108,8 +108,8 @@
                               
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                            href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                    <li class="breadcrumb-item active">courrier départ</li>
+                            href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                    <li class="breadcrumb-item active">Détails courrier reçu</li>
                 </ul>
                {{--   <a class="nav-link" href="{{ route('recues.index') }}">
                     <div class="card card-header text-center bg-gradient-success">
@@ -150,6 +150,9 @@
                                         <td>
                                             <h3>{{ __('EXPEDITEUR') }}</h3>
                                             {{ $recue->courrier->expediteur }}<br>
+                                            @if (isset($recue->courrier->reference))
+                                            <b>Réf courrier:</b> {{ $recue->courrier->reference }}<br>                                    
+                                            @endif
                                             {{--  <b>Adresse:</b> {{ $recue->courrier->adresse }}<br>
                                 <b>E-mail:</b> {{ $recue->courrier->email }}<br>
                                 <b>Tel:</b> {{ $recue->courrier->telephone }}<br>

@@ -159,11 +159,11 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="date_depart">{{ __('DATE DEPART') }}(<span class="text-danger">*</span>)</label>
-                            <input id="date_depart" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
+                            <input id="date_depart" {{ $errors->has('date_depart') ? 'is-invalid' : '' }} type="date"
                                 class="form-control @error('date_depart') is-invalid @enderror" name="date_depart"
                                 placeholder="Date de départt"
-                                value="{{ optional($depart->courrier->date_imp)->format('Y-m-d') ?? old('date_depart') }}"
-                                autocomplete="username">
+                                value="{{ \Carbon\Carbon::parse($depart->courrier->date_depart)->format('Y-m-d') ?? old('date_depart') }}"
+                                autocomplete="date_depart">
                             @error('date_depart')
                                 <span class="invalid-feedback" role="alert">
                                     <div>{{ $message }}</div>
@@ -194,7 +194,7 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="reference">{{ __('REFERENCE') }}(<span class="text-danger">*</span>)</label>
                             <input id="reference" type="text"
                                 class="form-control form-control-sm @error('reference') is-invalid @enderror" name="reference"
@@ -205,6 +205,20 @@
                                     <div>{{ $message }}</div>
                                 </span>
                             @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="date_imp">{{ __('Date imputation') }}(<span
+                                class="text-danger">*</span>)</label>
+                        <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }} type="date"
+                            class="form-control form-control-sm @error('date_imp') is-invalid @enderror" name="date_imp"
+                            placeholder="Date imputation du courrier"
+                            value="{{ optional($depart->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                            autocomplete="date_imp">
+                        @error('date_imp')
+                            <span class="invalid-feedback" role="alert">
+                                <div>{{ $message }}</div>
+                            </span>
+                        @enderror
                         </div>
                         <div class="form-group col-md-12">
                             <label for="numero_reponse">{{ __('NUMERO ARCHIVE') }}(<span

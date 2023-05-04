@@ -215,7 +215,6 @@ class DepartController extends Controller
      */
     public function update(Request $request, Depart $depart)
     {
-        
         $this->authorize('update',  $depart->courrier);
 
         $imp = $request->input('imp');
@@ -226,6 +225,7 @@ class DepartController extends Controller
                 $courrier->directions()->sync($request->id_direction);
                 $courrier->employees()->sync($request->id_employe);
                 $courrier->description =  $request->input('description');
+                $courrier->date_imp    =  $request->input('date_imp'); 
                 $courrier->save();
                 return redirect()->route('departs.index', $depart->courrier->id)->with('success', 'Courrier imputé !');
             
@@ -270,7 +270,7 @@ class DepartController extends Controller
        $courrier->type               =      $request->input('annee');
        $courrier->numero             =      $request->input('numero_ordre');
        $courrier->nb_pc              =      $request->input('nbre_pieces');
-       $courrier->date_imp           =      $request->input('date_imp'); //date depart
+       $courrier->date_imp           =      $request->input('date_imp'); 
        $courrier->date_depart        =      $request->input('date_depart'); 
        $courrier->objet              =      $request->input('objet');
        $courrier->num_bord           =      $numero_archive;
@@ -301,7 +301,7 @@ class DepartController extends Controller
             $courrier->type               =      $request->input('annee');
             $courrier->numero             =      $request->input('numero_ordre');
             $courrier->nb_pc              =      $request->input('nbre_pieces');
-            $courrier->date_depart        =      $request->input('date_depart'); //date depart
+            $courrier->date_depart        =      $request->input('date_depart'); 
             $courrier->date_imp           =      $request->input('date_imp');
             $courrier->objet              =      $request->input('objet');
             $courrier->num_bord           =      $request->input('numero_archive');
