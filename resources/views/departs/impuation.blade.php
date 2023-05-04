@@ -30,15 +30,13 @@
                         <span class="card-category"><b>Date départ </b>: {!! \Carbon\Carbon::parse($courrier->date_depart)->format('d/m/Y') !!}</span><br />
                         <span class="card-category"><b>Destinataire </b>: {!! $depart->destinataire !!}</span> <br />
                         <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
-                        
-                            @if ($depart->courrier->directions != '[]')
+                        @if ($depart->courrier->directions != '[]')
                             <span class="card-category"><b>Imputation </b>:
-                            @foreach ($depart->courrier->directions as $imputation)
-                                <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
-                            @endforeach
+                                @foreach ($depart->courrier->directions as $imputation)
+                                    <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
+                                @endforeach
                             @else
-                                
-                            @endif
+                        @endif
                         </span><br /><br />
                         <div class="card">
                             <div class="card-body custom-edit-service">
@@ -117,7 +115,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="addRow" class="addRow">
-                                </tbody>                            
+                                </tbody>
                                 <tbody>
                                     <tr>
                                         <td colspan="1" class="">

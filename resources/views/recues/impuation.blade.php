@@ -30,10 +30,13 @@
                         <span class="card-category"><b>Date réception </b>: {!! optional($courrier->date_recep)->format('d/m/Y') !!}</span><br />
                         <span class="card-category"><b>Expéditeur </b>: {!! $courrier->expediteur !!}</span> <br />
                         <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
-                        <span class="card-category"><b>Imputation </b>:
-                            @foreach ($recue->courrier->directions as $imputation)
-                                <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
-                            @endforeach
+                        @if ($recue->courrier->directions != '[]')
+                            <span class="card-category"><b>Imputation </b>:
+                                @foreach ($recue->courrier->directions as $imputation)
+                                    <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
+                                @endforeach
+                            @else
+                        @endif
                         </span><br /><br />
                         <div class="card">
                             <div class="card-body custom-edit-service">
@@ -88,15 +91,12 @@
                             </div>
                         </div>
                     </div>
-
-                    <small class="row form-row justify-content-center pb-4">
-                        {{--  @foreach ($sales as $sale)
-                                    <a href="{{ url('admin/sales/facture', ['$id' => $sale->id]) }}" class="showbtn"
-                                        target="_blank" title="Télécharger la dernière facture"><button
-                                            class="btn btn-outline-secondary btn-sm"><i class="fa fa-print"
-                                                aria-hidden="true">&nbsp;Télécharger la facture de la dernière
-                                                vente</i></button></a>
-                                @endforeach  --}}
+                    <small style="text-align: center; vertical-align: middle;" class="p-4">
+                        <a
+                        href="{!! url('recufactures', ['$id' => $recue->id]) !!}" class='btn btn-warning btn-sm'
+                        title="imputer">
+                        <i class="fa fa-retweet"></i>
+                    </a>
                     </small>
                     <div class="col-lg-12">
                         {{--  <form method="POST" action="{{ route('sales.store') }}">  --}}
@@ -124,7 +124,6 @@
                                             {!! Form::select(
                                                 'description',
                                                 [
-                                                    'Aucune' => 'Aucune',
                                                     'Urgent' => 'Urgent',
                                                     'M\'en parler' => 'M\'en parler',
                                                     'Etudes et Avis' => 'Etudes et Avis',
@@ -139,7 +138,6 @@
                                                 [
                                                     'placeholder' => 'Instructions du DG',
                                                     'class' => 'form-control form-control-sm',
-                                                    'required' => true,
                                                     'id' => 'description',
                                                 ],
                                             ) !!}

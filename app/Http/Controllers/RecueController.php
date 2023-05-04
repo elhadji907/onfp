@@ -14,6 +14,7 @@ use Yajra\Datatables\Datatables;
 use DB;
 use App\Models\Employee;
 use App\Models\User;
+use Dompdf\Dompdf;
 
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
@@ -441,5 +442,58 @@ class RecueController extends Controller
         $courrier = $recue->courrier;
 
         return view('recues.impuation', compact('courrier', 'recue'));
+    }
+
+     public function recufactures($id)
+    {
+        $recu = Recue::find($id);
+        $courrier = $recu->courrier;
+        $numero = $courrier->numero;
+      
+        $title =' Coupon d\'envoi n° '.$numero;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $actions = [
+            'Urgent',
+            'M\'en parler',
+            'Etudes et Avis',
+            'Répondre',
+            'Suivi',
+            'Information',
+            'Diffusion',
+            'Attribution',
+            'Classement',
+            ];
+
+        $dompdf->loadHtml(view('recues.coupon', compact(
+            'recu',
+            'courrier',
+            'title',
+            'actions'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $name = $courrier->expediteur.', facture n° '.$numero.' du '.$anne.'.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+
     }
 }
