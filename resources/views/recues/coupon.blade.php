@@ -21,8 +21,8 @@
         }
 
         .invoice-box table tr.heading td {
-            background: rgb(194, 194, 194);
-            border-bottom: 1px solid #ddd;
+            background: rgb(255, 255, 255);
+            border: 1px solid #000000;
             font-weight: bold;
         }
 
@@ -36,9 +36,7 @@
         }
 
         .invoice-box table tr.item td {
-            border-bottom: 1px solid #eee;
-            border-left: 1px solid #eee;
-            border-right: 1px solid #eee;
+            border: 1px solid #000000;
         }
 
         table {
@@ -81,14 +79,19 @@
                         </b>
                     </td>
                     <td colspan="2" align="right" valign="top">
-                        <p>
+                        <h3>
                             <b> {{ __("Date d'imputation : ") }} </b>
-                            {{ optional($courrier->date_imp)->format('d/m/Y') }} <span><br />
-                                <b> {{ __("Date d'arrivée : ") }} </b>
-                                {{ optional($courrier->date_recep)->format('d/m/Y') }} <span><br />
-                                    <b> {{ __('N° du courrier : ') }} </b> {{ $courrier->numero }} <span><br />
+                            @if (isset($courrier->date_imp))                                
+                            {{ optional($courrier->date_imp)->format('d/m/Y') }} <br />
+                            @else
+                            {{ __('- - - - - - - - - - - -') }} <br />
+                            @endif
+                            <b> {{ __("Date d'arrivée : ") }} </b>
+                            {{ optional($courrier->date_recep)->format('d/m/Y') }} <br />
+                            <b> {{ __('N° du courrier : ') }} </b> <span
+                                style="color:red">{{ $courrier->numero }}</span> <br />
 
-                        </p>
+                        </h3>
                     </td>
                 </tr>
             </tbody>
@@ -112,17 +115,73 @@
             <tbody>
                 <tr>
                     <td colspan="4" align="left" valign="top">
-                        <b><u>{{ __('Expéditeur') }}</u></b> : {{ $courrier->expediteur }}<br><br>
-                        
-                        <b><u>{{ __('Réf') }}</u></b> : {{ $courrier->reference }}&nbsp;&nbsp;&nbsp;&nbsp;
-                        <b><u>{{ __('du') }}</u></b> : {{ optional($courrier->date_recep)->format('d/m/Y') }}<br><br>
-                        <b><u>{{ __('Objet') }}</u></b> : {{ $courrier->objet }}<br><br>
+                        <h3>
+                            <b><u>{{ __('Expéditeur') }}</u></b> : {{ mb_strtoupper($courrier->expediteur) }}<br>
+                            <b><u>{{ __('Réf') }}</u></b> : {{ $courrier->reference }}&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b><u>{{ __('du') }}</u></b> :
+                            {{ optional($courrier->date_recep)->format('d/m/Y') }}<br>
+                            <b><u>{{ __('Objet') }}</u></b> : {{ ucfirst($courrier->objet) }}<br>
+                        </h3>
+                        <table class="table table-responsive table-striped">
+                            <tbody>
+                                <tr class="item">
+                                    @foreach ($directions as $direction)
+                                        <td>
+                                            {!! $direction ?? 'Aucune' !!}
+                                        </td>
+                                    @endforeach
+                                </tr>
+                                <tr class="item">
+                                    @foreach ($directions2 as $direction)
+                                        <td>
+                                            {!! $direction ?? 'Aucune' !!}
+                                        </td>
+                                    @endforeach
+                                </tr>
+                                <tr class="item">
+                                    @foreach ($directions3 as $direction)
+                                        <td>
+                                            {!! $direction ?? 'Aucune' !!}
+                                        </td>
+                                    @endforeach
+                                </tr>
+                                <tr class="item">
+                                    @foreach ($directions4 as $direction)
+                                        <td>
+                                            {!! $direction ?? 'Aucune' !!}
+                                        </td>
+                                    @endforeach
+                                </tr>
+                                <tr class="item">
+                                    @foreach ($directions5 as $direction)
+                                        <td>
+                                            {!! $direction ?? 'Aucune' !!}
+                                        </td>
+                                    @endforeach
+                                </tr>
+                                <tr class="item">
+                                    @foreach ($directions6 as $direction)
+                                        <td>
+                                            {!! $direction ?? 'Aucune' !!}
+                                        </td>
+                                    @endforeach
+                                </tr>
+                                <tr class="item">
+                                    @foreach ($directions7 as $direction)
+                                        <td>
+                                            {!! $direction ?? 'Aucune' !!}
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </td>
                     <td colspan="4" align="right" valign="top">
                         <table class="table table-responsive table-striped">
                             <tbody>
                                 <tr class="heading">
-                                    <td colspan="4" align="center"><b>{{ __('Actions attendues') }}</b>
+                                    <td colspan="4" align="center"><b>{{ __('ACTIONS ATTENDUES') }}</b>
                                     </td>
                                 </tr>
                                 @foreach ($actions as $action)
@@ -143,7 +202,7 @@
                 </tr>
             </tbody>
         </table>
-        <br>
+        {{--         <br>
         <table class="table table-responsive">
             <tbody>
                 <tr>
@@ -151,23 +210,64 @@
                         <table class="table table-responsive table-striped">
                             <tbody>
                                 <tr class="heading">
-                                    <td colspan="4" align="center"><b>{{ __('Imputations') }}</b>
+                                    <td colspan="2" align="center"><b>{{ __('Direction / Service / Cellule') }}</b>
                                     </td>
-                                </tr>                               
+                                    <td colspan="2" align="center"><b>{{ __('Sigle') }}</b>
+                                    </td>
+                                </tr>
                                 @if ($courrier->directions != '[]')
-                                @foreach ($courrier->directions as $imputation)
-                                    <tr class="item">
-                                        <td colspan="2" align="center">
-                                            <span>{!! $imputation->name ?? 'Aucune' !!}, </span>
-                                        </td>
-                                        <td colspan="2" align="center">
-                                            <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    @foreach ($courrier->directions->unique('id') as $imputation)
+                                        <tr class="item">
+                                            <td colspan="2" align="center">
+                                                <span>{!! $imputation->name ?? 'Aucune' !!} </span>
+                                            </td>
+                                            <td colspan="2" align="center">
+                                                <span>{!! $imputation->sigle ?? 'Aucune' !!} </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @endif
                             </tbody>
                         </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>  --}}
+        <br>
+        <table class="table table-responsive">
+            <tbody>
+                <tr>
+                    <td colspan="2" align="left" valign="top">
+                        @if (isset($courrier->observation))
+                        <h2><u>Observations</u></h2>
+                            {{ $courrier->observation }}
+                        @else
+                        <h2><u>Observations</u>: _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _<br><br>_ _ _ _ _ _
+                            _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                 @endif</h2>
+                            
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-responsive">
+            <tbody>
+                <tr>
+                    <td colspan="1" align="left">
+
+                    </td>
+                    <td colspan="3" align="right" valign="top">
+                        <h2>
+                            <b><u> {{ __('Dossier suivi par :') }}</u></b><br><br>
+                            @if ($courrier->employees == '[]')
+                            {{__("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _")}}
+                            @endif
+                            
+                            @foreach ($courrier->employees->unique('id') as $employee)
+                                {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
+                            @endforeach
+
+                        </h2>
                     </td>
                 </tr>
             </tbody>

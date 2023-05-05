@@ -21,18 +21,16 @@
                     <div class="col-sm-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                            <li class="breadcrumb-item active">Imputation courrier arrivé</li>
+                                    href="{{ route('profiles.show', ['user'=>auth()->user()]) }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                            <li class="breadcrumb-item active">Imputation agent de suivi</li>
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
-                        <span class="card-category"><b>N° </b>: {!! $recue->numero ?? '' !!}</span><br />
-                        <span class="card-category"><b>Date réception </b>: {!! optional($courrier->date_recep)->format('d/m/Y') !!}</span><br />
-                        <span class="card-category"><b>Expéditeur </b>: {!! $courrier->expediteur !!}</span> <br />
+                        <span class="card-category"><b>N° </b>: {!! $courrier->numero ?? '' !!}</span><br />
                         <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
-                        @if ($recue->courrier->directions != '[]')
+                        @if ($courrier->directions != '[]')
                             <span class="card-category"><b>Imputation </b>:
-                                @foreach ($recue->courrier->directions as $imputation)
+                                @foreach ($courrier->directions as $imputation)
                                     <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
                                 @endforeach
                             @else
@@ -60,11 +58,11 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="">Chef</label>
-                                            <input type="text" placeholder="Entrer prix de vente"
-                                                class="form-control form-control-sm @error('chef') is-invalid @enderror"
-                                                name="chef" id="chef" value="">
-                                            @error('chef')
+                                            <label for="">direction</label>
+                                            <input type="text" placeholder="Centre de responsablité"
+                                                class="form-control form-control-sm @error('direction') is-invalid @enderror"
+                                                name="direction" id="direction" value="">
+                                            @error('direction')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
@@ -91,16 +89,20 @@
                             </div>
                         </div>
                     </div>
-                    <small style="text-align: center; vertical-align: middle;" class="p-4">
+                    {{--  @if ($courrier->directions != '[]')
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center p-4">
+                    <small style="text-align: center; vertical-align: middle;">
                         <a
-                        href="{!! url('recufactures', ['$id' => $recue->id]) !!}" class='btn btn-warning btn-sm'
-                        title="imputer">
-                        <i class="fa fa-retweet"></i>
+                        href="{!! url('recufactures', ['$id' => $courrier->id]) !!}" class='btn btn-primary btn-sm'
+                        title="télécharger le coupon" target="_blank">
+                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
                     </a>
                     </small>
+                    </div>
+                    @endif  --}}
                     <div class="col-lg-12">
                         {{--  <form method="POST" action="{{ route('sales.store') }}">  --}}
-                        {!! Form::open(['url' => 'recues/' . $recue->id, 'method' => 'PATCH', 'files' => true]) !!}
+                        {!! Form::open(['url' => 'courriers/' . $courrier->id, 'method' => 'PATCH', 'files' => true]) !!}
                         @csrf
                         <div class="table-responsive">
                             <table class="table table-bordered" style="display: none;">
@@ -115,12 +117,12 @@
                                 </tbody>
                                 <tbody>
                                     <tr>
-                                        <td colspan="1" class="">
-                                            {{--  <strong>Actions attendues </strong>  --}}
-                                            {{--   <textarea type="text" placeholder="Instructions du DG"
-                                                class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                                name="description" id="description" value="" required></textarea>  --}}
-                                            <strong>{!! Form::label('Actions attendues') !!}</strong>
+                                        <td colspan="3" class="">
+                                            <strong>Indications </strong>
+                                             <textarea type="text" placeholder="Instructions..."
+                                                class="form-control form-control-sm @error('message') is-invalid @enderror"
+                                                name="message" id="message" value="" required></textarea>
+                                            {{--  <strong>{!! Form::label('Actions attendues') !!}</strong>
                                             {!! Form::select(
                                                 'description',
                                                 [
@@ -134,36 +136,36 @@
                                                     'Attribution' => 'Attribution',
                                                     'Classement' => 'Classement',
                                                 ],
-                                                $recue->courrier->description,
+                                                $courrier->description,
                                                 [
                                                     'placeholder' => 'Instructions du DG',
                                                     'class' => 'form-control form-control-sm',
                                                     'id' => 'description',
                                                 ],
-                                            ) !!}
+                                            ) !!}  --}}
 
-                                            <small id="emailHelp" class="form-text text-muted">
-                                                @if ($errors->has('description'))
-                                                    @foreach ($errors->get('description') as $message)
+                                            <small id="messagelHelp" class="form-text text-muted">
+                                                @if ($errors->has('message'))
+                                                    @foreach ($errors->get('message') as $message)
                                                         <p class="text-danger">{{ $message }}</p>
                                                     @endforeach
                                                 @endif
                                             </small>
                                         </td>
-                                        <td colspan="1">
+                                        {{--  <td colspan="1">
                                             <strong><label for="date_imp">{{ __('Date imputation') }}</label></strong>
                                             <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
                                                 type="date"
                                                 class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
                                                 name="date_imp" placeholder="Date imputation" required
-                                                value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                                                value="{{ optional($courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
                                                 autocomplete="date_imp">
                                             @error('date_imp')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
                                             @enderror
-                                        </td>
+                                        </td>  --}}
                                     </tr>
                                 </tbody>
                                 <tbody>
@@ -195,7 +197,7 @@
                             <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
                         <td>
-                        <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="Le nom du responsable" readonly>
+                        <input type="text" class="direction form-control form-control-sm" name="direction[]" value="@{{ direction }}" required min="1" placeholder="Le nom du responsable" readonly>
                       </td>
                         <td>
                         <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>
@@ -208,7 +210,7 @@
                             var product = $("#product").val();
                             var id_direction = $("#id_direction").val();
                             var id_employe = $("#id_employe").val();
-                            var chef = $("#chef").val();
+                            var direction = $("#direction").val();
                             var imp = $("#imp").val();
                             var source = $("#document-template").html();
                             var template = Handlebars.compile(source);
@@ -216,7 +218,7 @@
                                 product: product,
                                 id_direction: id_direction,
                                 id_employe: id_employe,
-                                chef: chef,
+                                direction: direction,
                                 imp: imp,
                             }
                             var html = template(data);
@@ -233,7 +235,7 @@
                             if (query != '') {
                                 var _token = $('input[name="_token"]').val();
                                 $.ajax({
-                                    url: "{{ route('arrive.fetch') }}",
+                                    url: "{{ route('courrier.fetch') }}",
                                     method: "POST",
                                     data: {
                                         query: query,
@@ -248,9 +250,9 @@
                         });
                         $(document).on('click', 'li', function() {
                             $('#product').val($(this).text());
-                            $('#id_direction').val($(this).data("id"));
-                            $('#id_employe').val($(this).data("employeeid"));
-                            $('#chef').val($(this).data("chef"));
+                            $('#direction').val($(this).data("direction"));
+                            $('#id_direction').val($(this).data("iddirection"));
+                            $('#id_employe').val($(this).data("idemploye"));
                             $('#productList').fadeOut();
                         });
                     </script>

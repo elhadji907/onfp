@@ -21,18 +21,18 @@
                     <div class="col-sm-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('departs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                            <li class="breadcrumb-item active">Imputation courrier départ</li>
+                                    href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                            <li class="breadcrumb-item active">Imputation courrier arrivé</li>
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
-                        <span class="card-category"><b>N° ordre </b>: {!! $depart->numero ?? '' !!}</span><br />
-                        <span class="card-category"><b>Date départ </b>: {!! \Carbon\Carbon::parse($courrier->date_depart)->format('d/m/Y') !!}</span><br />
-                        <span class="card-category"><b>Destinataire </b>: {!! $depart->destinataire !!}</span> <br />
+                        <span class="card-category"><b>N° </b>: {!! $recue->numero ?? '' !!}</span><br />
+                        <span class="card-category"><b>Date réception </b>: {!! optional($courrier->date_recep)->format('d/m/Y') !!}</span><br />
+                        <span class="card-category"><b>Expéditeur </b>: {!! $courrier->expediteur !!}</span> <br />
                         <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
-                        @if ($depart->courrier->directions != '[]')
+                        @if ($recue->courrier->directions != '[]')
                             <span class="card-category"><b>Imputation </b>:
-                                @foreach ($depart->courrier->directions as $imputation)
+                                @foreach ($recue->courrier->directions as $imputation)
                                     <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
                                 @endforeach
                             @else
@@ -61,7 +61,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="">Chef</label>
-                                            <input type="text" placeholder="Entrer prix de vente"
+                                            <input type="text" placeholder="Nom du responsable"
                                                 class="form-control form-control-sm @error('chef') is-invalid @enderror"
                                                 name="chef" id="chef" value="">
                                             @error('chef')
@@ -91,19 +91,20 @@
                             </div>
                         </div>
                     </div>
-
-                    <small class="row form-row justify-content-center pb-4">
-                        {{--  @foreach ($sales as $sale)
-                                    <a href="{{ url('admin/sales/facture', ['$id' => $sale->id]) }}" class="showbtn"
-                                        target="_blank" title="Télécharger la dernière facture"><button
-                                            class="btn btn-outline-secondary btn-sm"><i class="fa fa-print"
-                                                aria-hidden="true">&nbsp;Télécharger la facture de la dernière
-                                                vente</i></button></a>
-                                @endforeach  --}}
+                    {{--  @if ($recue->courrier->directions != '[]')  --}}
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center p-4">
+                    <small style="text-align: center; vertical-align: middle;">
+                        <a
+                        href="{!! url('recufactures', ['$id' => $recue->id]) !!}" class='btn btn-primary btn-sm'
+                        title="télécharger le coupon" target="_blank">
+                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
+                    </a>
                     </small>
+                    </div>
+                    {{--  @endif  --}}
                     <div class="col-lg-12">
                         {{--  <form method="POST" action="{{ route('sales.store') }}">  --}}
-                        {!! Form::open(['url' => 'departs/' . $depart->id, 'method' => 'PATCH', 'files' => true]) !!}
+                        {!! Form::open(['url' => 'recues/' . $recue->id, 'method' => 'PATCH', 'files' => true]) !!}
                         @csrf
                         <div class="table-responsive">
                             <table class="table table-bordered" style="display: none;">
@@ -127,7 +128,6 @@
                                             {!! Form::select(
                                                 'description',
                                                 [
-                                                    'Aucune' => 'Aucune',
                                                     'Urgent' => 'Urgent',
                                                     'M\'en parler' => 'M\'en parler',
                                                     'Etudes et Avis' => 'Etudes et Avis',
@@ -138,11 +138,10 @@
                                                     'Attribution' => 'Attribution',
                                                     'Classement' => 'Classement',
                                                 ],
-                                                $depart->courrier->description,
+                                                $recue->courrier->description,
                                                 [
                                                     'placeholder' => 'Instructions du DG',
                                                     'class' => 'form-control form-control-sm',
-                                                    'required' => true,
                                                     'id' => 'description',
                                                 ],
                                             ) !!}
@@ -160,8 +159,8 @@
                                             <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
                                                 type="date"
                                                 class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
-                                                name="date_imp" placeholder="Date imputation"
-                                                value="{{ optional($depart->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                                                name="date_imp" placeholder="Date imputation" required
+                                                value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
                                                 autocomplete="date_imp">
                                             @error('date_imp')
                                                 <span class="invalid-feedback" role="alert">
@@ -180,6 +179,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
+
                             </table>
                         </div>
 

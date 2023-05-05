@@ -434,19 +434,26 @@ class RecueController extends Controller
       echo $output;
      }
     }
-
     
     public function recuimputations($id)
     {
         $recue = Recue::find($id);
         $courrier = $recue->courrier;
 
-        return view('recues.impuation', compact('courrier', 'recue'));
+        return view('recues.imputation', compact('courrier', 'recue'));
     }
 
      public function recufactures($id)
     {
         $recu = Recue::find($id);
+        $directions     = Direction::where('id', '<=' ,'4')->pluck('sigle', 'id');
+        $directions2    = Direction::where('id', '>' ,'4')->where('id', '<=' ,'8')->pluck('sigle', 'id');
+        $directions3    = Direction::where('id', '>' ,'8')->where('id', '<=' ,'12')->pluck('sigle', 'id');
+        $directions4    = Direction::where('id', '>' ,'12')->where('id', '<=' ,'16')->pluck('sigle', 'id');
+        $directions5    = Direction::where('id', '>' ,'16')->where('id', '<=' ,'20')->pluck('sigle', 'id');
+        $directions6    = Direction::where('id', '>' ,'20')->where('id', '<=' ,'24')->pluck('sigle', 'id');
+        $directions7    = Direction::where('id', '>' ,'24')->where('id', '<=' ,'28')->pluck('sigle', 'id');
+        
         $courrier = $recu->courrier;
         $numero = $courrier->numero;
       
@@ -473,6 +480,13 @@ class RecueController extends Controller
         $dompdf->loadHtml(view('recues.coupon', compact(
             'recu',
             'courrier',
+            'directions',
+            'directions2',
+            'directions3',
+            'directions4',
+            'directions5',
+            'directions6',
+            'directions7',
             'title',
             'actions'
         )));

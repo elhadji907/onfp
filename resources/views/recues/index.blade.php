@@ -70,7 +70,7 @@
                                                 @endif
                                             </td>  --}}
                                             <td style="vertical-align: middle;">
-                                                @foreach ($recue->courrier->directions as $imputation)
+                                                @foreach ($recue->courrier->directions->unique('id') as $imputation)
                                                     {{--  <span class="btn btn-default">{!! $imputation->sigle ?? '' !!}</span>  --}}
                                                     <span>{!! $imputation->sigle ?? '' !!}, </span>
                                                 @endforeach

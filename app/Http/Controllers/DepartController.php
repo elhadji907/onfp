@@ -14,6 +14,7 @@ use App\Models\Courrier;
 
 use Illuminate\Support\Facades\Date;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
 
 class DepartController extends Controller
 {
@@ -362,7 +363,59 @@ class DepartController extends Controller
         $depart = Depart::find($id);
         $courrier = $depart->courrier;
 
-        return view('departs.impuation', compact('courrier', 'depart'));
+        return view('departs.imputation', compact('courrier', 'depart'));
     }
 
+    public function departfactures($id)
+    {
+        $depart = Depart::find($id);
+        $courrier = $depart->courrier;
+        $numero = $courrier->numero;
+      
+        $title =' Coupon d\'envoi n° '.$numero;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $actions = [
+            'Urgent',
+            'M\'en parler',
+            'Etudes et Avis',
+            'Répondre',
+            'Suivi',
+            'Information',
+            'Diffusion',
+            'Attribution',
+            'Classement',
+            ];
+
+        $dompdf->loadHtml(view('departs.coupon', compact(
+            'depart',
+            'courrier',
+            'title',
+            'actions'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $name = $courrier->expediteur.', facture n° '.$numero.' du '.$anne.'.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+
+    }
 }

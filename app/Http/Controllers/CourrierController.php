@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Courrier;
 use App\Models\Recue;
+use App\Models\User;
+use App\Models\TypesCourrier;
 use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
@@ -287,7 +289,16 @@ class CourrierController extends Controller
     public function update(Request $request, Courrier $courrier)
     {
         $this->authorize('update', $courrier);
-        dd($courrier);
+
+        $courrier->message     =  $request->input('message');
+
+        $courrier->directions()->attach($request->id_direction);
+        $courrier->employees()->attach($request->id_employe);
+
+        $courrier->save();
+
+        return back()->with('success', 'Courrier imputé !');
+
     }
 
     /**
@@ -308,5 +319,56 @@ class CourrierController extends Controller
         
     }
 
+    public function courrierimputations($type, $id)
+    {
+        $type = TypesCourrier::find($type);
+        $courrier = Courrier::find($id);
 
+        return view('courriers.imputation', compact('courrier', 'type'));
+    }
+
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      /* $data = DB::table('employees.users')      
+      ->where('email', 'LIKE', "%{$query}%")
+        ->get(); */
+
+        $data = DB::table('users')
+        ->join('employees', function($join)
+        {
+            $join->on('users.id', '=', 'employees.users_id');
+        })          
+      ->where('firstname', 'LIKE', "%{$query}%")
+        ->get();
+        
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      
+      foreach($data as $user)
+      {
+        $id         =   $user->id;
+        $name       =   $user->firstname.' '.$user->name;
+        
+        $user = User::findOrFail($id);
+        $employe      =   $user->employee;
+        $idemploye    =   $user->employee->id;
+        $direction    =   $employe->direction->name;
+        $iddirection  =   $employe->direction->id;
+
+
+        /* $direction  =   $employe->direction->name; */
+
+       $output .= '
+       
+       <li data-id="'.$id.'" data-direction="'.$direction.'" data-iddirection="'.$iddirection.'" data-idemploye="'.$idemploye.'"><a href="#">'.$name.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
+    }
 }

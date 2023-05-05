@@ -272,6 +272,9 @@ Route::group([
         Route::post('/fonction/fetch', [FonctionController::class, 'fetch'])->name('fonction.fetch');
         Route::post('/employe/fetch', [EmployeeController::class, 'fetch'])->name('employe.fetch');
         Route::get('recufactures/{id}', [RecueController::class, 'recufactures'])->name('recufactures');
+        Route::get('departfactures/{id}', [DepartController::class, 'departfactures'])->name('departfactures');
+        Route::get('courrierimputations/{type}/{id}', [CourrierController::class, 'courrierimputations'])->name('courrierimputations');
+        Route::post('/courrier/fetch', [CourrierController::class, 'fetch'])->name('courrier.fetch');
 
         Route::get('preview', [PDFController::class,  'preview']);
         Route::get('download', [PDFController::class, 'download'])->name('download');

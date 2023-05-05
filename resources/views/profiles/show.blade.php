@@ -78,9 +78,18 @@
                                         <p>{!! $courrier->description ?? '' !!}</p>
                                     </td>
                                     <td>
-                                        @foreach ($courrier->employees as $employee)
-                                            {{ $employee->user->firstname .' '.$employee->user->name}}
-                                        @endforeach
+                                        
+                                        <div class="d-flex justify-content-between align-items-center">                                            
+                                        @foreach ($courrier->employees->unique('id') as $employee)
+                                        {{ $employee->user->firstname .' '.$employee->user->name}}<br>
+                                    @endforeach
+                                    <a
+                                    href="{!! url('courrierimputations', ['$type' => $courrier->types_courrier->id, '$id' => $courrier->id]) !!}" class='btn btn-warning btn-sm'
+                                    title="changer agent suivi">
+                                    <i class="fa fa-retweet"></i>
+                                </a>
+                                        </div>
+
 
                                     </td>
                                     {{--  <td>
