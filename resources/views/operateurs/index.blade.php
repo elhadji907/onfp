@@ -13,11 +13,15 @@
                         {{ session('message') }}
                     </div>
                 @endif
-                <div class="card">
+                <div class="card">                    
                     <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        Liste des opérateurs
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="btn btn-outline-primary btn-sm"
+                                    href="{{ route('operateurs.index') }}"><i class="fas fa-sync-alt"></i>&nbsp;actualiser</a></li>
+                            <li class="breadcrumb-item active">Liste des opérateurs</li>
+                        </ul>
                     </div>
+
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
@@ -28,9 +32,9 @@
                             <br />
                             <table class="table table-bordered table-striped" id="operateurTable" width="100%"
                                 cellspacing="0">
-                                <thead class="table-dark">
+                                <thead class="">
                                     <tr>
-                                        <th width="12%">Numéro agrément</th>
+                                        <th width="12%">N° agrément</th>
                                         <th width="50%">Opérateur</th>
                                         <th width="10%">Sigle</th>
                                         <th width="5%">Modules</th>
@@ -38,7 +42,7 @@
                                         <th width="8%"></th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                               {{--   <tfoot class="table-dark">
                                     <tr>
                                         <th>Numéro agrément</th>
                                         <th>Opérateur</th>
@@ -47,7 +51,7 @@
                                         <th>Formations</th>
                                         <th></th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($operateurs as $operateur)

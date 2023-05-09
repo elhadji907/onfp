@@ -10,6 +10,8 @@ use App\Models\Typedemande;
 use App\Models\Module;
 use App\Models\Commune;
 use App\Models\TypesOperateur;
+use App\Models\Arrondissement;
+use App\Models\Departement;
 use App\Models\Region;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Date;
@@ -86,6 +88,14 @@ class OperateurController extends Controller
     public function store(Request $request)
     {
         $user = auth::user();
+        if ($request->input('type_operateur') == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autres_type_operateur'                              =>    'required',
+                ]
+            );
+        }
 
         $this->validate(
             $request,
@@ -102,7 +112,10 @@ class OperateurController extends Controller
                 'nom'                       =>       'required|string|max:50',
                 'email'                     =>       'required|email|max:255|unique:users,email,'.$user->id,
                 'telephone'                 =>       'required|string|max:15',
+                'telephone1'                =>       'required|string|max:15',
                 'region'                    =>       'required',
+                'departement'               =>       'required',
+                'commune'                   =>       'required',
                 'type_structure'            =>       'required',
                 'type_operateur'            =>       'required',
                 'fonction_responsable'      =>       'required',
@@ -111,6 +124,15 @@ class OperateurController extends Controller
                 'fin_quitus'                =>       'required|date',
             ]
         );
+
+        if ($request->input('autres_type_operateur') == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autres_type_operateur'                              =>    'required',
+                ]
+            );
+        }
 
         /* dd($user); */
       
@@ -383,5 +405,42 @@ class OperateurController extends Controller
     {
         $operateurs=Operateur::withCount('formations')->get();
         return Datatables::of($operateurs)->make(true);
+    }
+
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      $data = DB::table('communes')      
+      ->where('nom', 'LIKE', "%{$query}%")
+        ->get();
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $commune)
+      {
+        $id = $commune->id;
+        $commune = $commune->nom;
+        $communes = Commune::find($id);
+
+        $arrondissement_id = $communes->arrondissement->id;
+        $arrondissement_name = $communes->arrondissement->nom;
+        $arrondissement = Arrondissement::find($arrondissement_id);
+
+        $departement_id = $arrondissement->departement->id;
+        $departement_name = $arrondissement->departement->nom;
+        $departement    = Departement::find($departement_id);
+
+        $region = $departement->region->nom;
+
+       $output .= '
+       
+       <li data-id="'.$id.'" data-commune="'.$commune.'" data-arrondissement="'.$arrondissement_name.'" data-departement="'.$departement_name.'" data-region="'.$region.'"><a href="#">'.$commune.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
     }
 }

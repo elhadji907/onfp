@@ -6,7 +6,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
                         href="{{ route('employees.index') }}"><i class="fas fa-undo-alt"></i>&nbsp;retour</a></li>
-                <li class="breadcrumb-item active">Ajout employé</li>
+                <li class="breadcrumb-item active">ajout employé</li>
             </ul>
             {{-- @if ($errors->any())
             <div class="alert alert-danger">

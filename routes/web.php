@@ -72,6 +72,7 @@ use App\Http\Controllers\IndividuellemotifController;
 use App\Http\Controllers\IndividuellerangController;
 use App\Http\Controllers\AgerouteretenuController;
 use App\Http\Controllers\AgeroutelisteattenteController;
+use App\Http\Controllers\DropdownController;
 
 /*
 |--------------------------------------------------------------------------
@@ -271,6 +272,7 @@ Route::group([
         Route::post('/arrive/fetch', [RecueController::class, 'fetch'])->name('arrive.fetch');
         Route::post('/fonction/fetch', [FonctionController::class, 'fetch'])->name('fonction.fetch');
         Route::post('/employe/fetch', [EmployeeController::class, 'fetch'])->name('employe.fetch');
+        Route::post('/commune/fetch', [OperateurController::class, 'fetch'])->name('commune.fetch');
         Route::get('recufactures/{id}', [RecueController::class, 'recufactures'])->name('recufactures');
         Route::get('departfactures/{id}', [DepartController::class, 'departfactures'])->name('departfactures');
         Route::get('courrierimputations/{type}/{id}', [CourrierController::class, 'courrierimputations'])->name('courrierimputations');
