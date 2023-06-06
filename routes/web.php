@@ -278,6 +278,10 @@ Route::group([
         Route::get('courrierimputations/{type}/{id}', [CourrierController::class, 'courrierimputations'])->name('courrierimputations');
         Route::post('/courrier/fetch', [CourrierController::class, 'fetch'])->name('courrier.fetch');
 
+        
+        Route::get('moduleoperateurs/{id}', [OperateurController::class, 'moduleoperateurs'])->name('moduleoperateurs');
+        Route::post('/moduleoperateur/fetche', [OperateurController::class, 'fetche'])->name('moduleoperateur.fetche');
+
         Route::get('preview', [PDFController::class,  'preview']);
         Route::get('download', [PDFController::class, 'download'])->name('download');
         Route::get('contrat/{pcharges}', [PchargeController::class, 'contrat'])->name('contrat');

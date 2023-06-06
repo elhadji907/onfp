@@ -131,9 +131,14 @@
     });
 </script>  
 <script type="text/javascript">
-
   $("#commune").select2({
         placeholder: "sélectionner commune",
+        allowClear: true
+    });
+</script>  
+<script type="text/javascript">
+  $("#laregion").select2({
+        placeholder: "sélectionner la région",
         allowClear: true
     });
 </script>  

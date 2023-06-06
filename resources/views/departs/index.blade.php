@@ -81,7 +81,8 @@
                                                 <span>{!! $imputation->sigle ?? '' !!}, </span>
                                             @endforeach
                                             </td>                                            
-                                            <td style="text-align: center; vertical-align: middle;"> <a
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                 <a
                                                 href="{!! url('departimputations', ['$id' => $depart->id]) !!}" class='btn btn-warning btn-sm'
                                                 title="imputer">
                                                 <i class="fa fa-retweet"></i>

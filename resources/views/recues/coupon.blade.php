@@ -126,49 +126,49 @@
                             <tbody>
                                 <tr class="item">
                                     @foreach ($directions as $direction)
-                                        <td>
+                                        <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
                                     @endforeach
                                 </tr>
                                 <tr class="item">
                                     @foreach ($directions2 as $direction)
-                                        <td>
+                                        <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
                                     @endforeach
                                 </tr>
                                 <tr class="item">
                                     @foreach ($directions3 as $direction)
-                                        <td>
+                                        <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
                                     @endforeach
                                 </tr>
                                 <tr class="item">
                                     @foreach ($directions4 as $direction)
-                                        <td>
+                                        <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
                                     @endforeach
                                 </tr>
                                 <tr class="item">
                                     @foreach ($directions5 as $direction)
-                                        <td>
+                                        <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
                                     @endforeach
                                 </tr>
                                 <tr class="item">
                                     @foreach ($directions6 as $direction)
-                                        <td>
+                                        <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
                                     @endforeach
                                 </tr>
                                 <tr class="item">
                                     @foreach ($directions7 as $direction)
-                                        <td>
+                                        <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
                                     @endforeach
@@ -177,7 +177,7 @@
                         </table>
 
                     </td>
-                    <td colspan="4" align="right" valign="top">
+                    <td style="padding-left:10px; padding-top:20px" colspan="4" align="right" valign="top">
                         <table class="table table-responsive table-striped">
                             <tbody>
                                 <tr class="heading">

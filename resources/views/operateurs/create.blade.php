@@ -128,13 +128,13 @@
                                         <label for="autres_type_operateur">{{ __('Si autre, précisez :') }}</label>
                                         <textarea class="form-control form-control-sm  @error('autres_type_operateur') is-invalid @enderror"
                                             name="autres_type_operateur" id="autres_type_operateur" rows="1" placeholder="autre type opérateur">{{ old('autres_type_operateur') }}</textarea>
-                                            <small id="emailHelp" class="form-text text-muted">
-                                                @if ($errors->has('autres_type_operateur'))
-                                                    @foreach ($errors->get('autres_type_operateur') as $message)
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @endforeach
-                                                @endif
-                                            </small>
+                                        <small id="emailHelp" class="form-text text-muted">
+                                            @if ($errors->has('autres_type_operateur'))
+                                                @foreach ($errors->get('autres_type_operateur') as $message)
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @endforeach
+                                            @endif
+                                        </small>
                                     </div>
                                     {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="operateur">{{ __('Type opérateur') }}(<span
@@ -195,7 +195,7 @@
                                         <label for="departement">{{ __('Département') }}</label>
                                         <input id="departement" type="text"
                                             class="form-control form-control-sm @error('departement') is-invalid @enderror"
-                                            name="departement" placeholder="Téléphone fixe opérateur"
+                                            name="departement" placeholder="Département"
                                             value="{{ old('departement') }}" autocomplete="departement" autofocus>
                                         @error('departement')
                                             <span class="invalid-feedback" role="alert">
@@ -204,11 +204,11 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4 col-lg-4 col-xs-4 col-sm-4">
-                                        <label for="region">{{ __('Région') }}</label>
-                                        <input id="region" type="text"
-                                            class="form-control form-control-sm @error('region') is-invalid @enderror"
-                                            name="region" placeholder="Téléphone fixe opérateur"
-                                            value="{{ old('region') }}" autocomplete="region" autofocus>
+                                        <label for="laregion">{{ __('Région') }}</label>
+                                        <input id="laregion" type="text"
+                                            class="form-control form-control-sm @error('laregion') is-invalid @enderror"
+                                            name="laregion" placeholder="Région" value="{{ old('laregion') }}"
+                                            autocomplete="laregion" autofocus>
                                         @error('region')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -505,9 +505,17 @@
                                     <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                         <strong>Regions(<span class="text-danger">*</span>)</strong>
                                         <br />
-                                        @foreach ($region as $value)
-                                            <label>{{ Form::checkbox('region[]', $value->id, false, ['class' => 'name-input']) }}
-                                                {{ $value->nom }}</label>
+                                        <div class="checkbox select-all">
+                                            <input id="all" type="checkbox" />
+                                            <label for="all">Toutes</label>
+                                        </div>
+                                        @foreach ($region as $regions)
+                                        <span class="checkbox rows">
+                                            <label for="regions"><input id="region" name="regions[]" value="{{ $regions->id }}" type="checkbox" />
+                                                {{ $regions->nom }}</label>
+                                        </span>
+                                            {{--  <label>{{ Form::checkbox('region[]', $regions->id, false, ['class' => 'name-input checkbox rows']) }}
+                                                {{ $regions->nom }}</label>  --}}
                                         @endforeach
                                         <small id="emailHelp" class="form-text text-muted">
                                             @if ($errors->has('region'))
@@ -573,7 +581,6 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="//code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
@@ -625,8 +632,17 @@
             $('#commune').val($(this).data("commune"));
             $('#arrondissement').val($(this).data("arrondissement"));
             $('#departement').val($(this).data("departement"));
-            $('#region').val($(this).data("region"));
+            $('#laregion').val($(this).data("region"));
             $('#communeList').fadeOut();
+        });
+    </script>
+    <script type="text/javascript">
+        $('#all').change(function(e) {
+            if (e.currentTarget.checked) {
+                $('.rows').find('input[type="checkbox"]').prop('checked', true);
+            } else {
+                $('.rows').find('input[type="checkbox"]').prop('checked', false);
+            }
         });
     </script>
 @endsection

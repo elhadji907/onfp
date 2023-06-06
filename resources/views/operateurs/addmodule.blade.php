@@ -1,5 +1,5 @@
 @extends('layout.default')
-@section('title', 'ONFP - Imputation des courriers arrivées')
+@section('title', 'ONFP - Ajouter modules')
 @section('content')
     <div class="content mb-5">
         <div class="container col-8 col-md-8 col-lg-8 col-xl-8">
@@ -21,21 +21,22 @@
                     <div class="col-sm-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('recues.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                            <li class="breadcrumb-item active">Imputation courrier arrivé</li>
+                                    href="{{ route('operateurs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
+                            <li class="breadcrumb-item active">Ajouter modules</li>
                         </ul>
                     </div>
                     <div class="col-sm-12 col-md-12 pt-2">
-                        <span class="card-category"><b>N° </b>: {!! $recue->numero ?? '' !!}</span><br />
-                        <span class="card-category"><b>Date réception </b>: {!! optional($courrier->date_recep)->format('d/m/Y') !!}</span><br />
-                        <span class="card-category"><b>Expéditeur </b>: {!! $courrier->expediteur !!}</span> <br />
-                        <span class="card-category"><b>Objet </b>: {!! $courrier->objet !!}</span><br />
-                        @if ($recue->courrier->directions != '[]')
-                            <span class="card-category"><b>Imputation </b>:
-                                @foreach ($recue->courrier->directions as $imputation)
-                                    <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
+                        <span class="card-category"><b>N° agrément </b>: {!! $operateur->numero_agrement ?? '' !!}</span><br />
+                        <span class="card-category"><b>Opérateur </b>: {!! $operateur->name !!}</span> <br />
+                        <span class="card-category"><b>Sigle </b>: {!! $operateur->sigle !!}</span><br />
+                        <span class="card-category"><b>Modules </b>: 
+                        @if ($operateur->modules != '[]')
+                            <span class="card-category"><b>Module </b>:
+                                @foreach ($operateur->modules as $module)
+                                    <span>{!! $module->name ?? '' !!}, </span>
                                 @endforeach
                             @else
+                            <span class="badge badge-danger">Aucun module</span>
                         @endif
                         </span><br /><br />
                         <div class="card">
@@ -44,8 +45,8 @@
                                 <div class="row form-row">
                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <label for="">Imputation</label>
-                                            <input type="text" placeholder="Imputation"
+                                            <label for="">Module</label>
+                                            <input type="text" placeholder="Module"
                                                 class="form-control form-control-sm @error('product') is-invalid @enderror"
                                                 name="product" id="product" value="">
                                             <div class="col-lg-6" id="productList">
@@ -60,11 +61,11 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label for="">Chef</label>
-                                            <input type="text" placeholder="Nom du responsable"
-                                                class="form-control form-control-sm @error('chef') is-invalid @enderror"
-                                                name="chef" id="chef" value="">
-                                            @error('chef')
+                                            <label for="">Domaine</label>
+                                            <input type="text" placeholder="Domaine"
+                                                class="form-control form-control-sm @error('domaine') is-invalid @enderror"
+                                                name="domaine" id="domaine" value="">
+                                            @error('domaine')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
@@ -73,11 +74,8 @@
                                     </div>
 
                                     <input type="hidden" placeholder="ID"
-                                        class="form-control form-control-sm @error('id_direction') is-invalid @enderror"
-                                        name="id_direction" id="id_direction" value="0.0" min="0">
-                                    <input type="hidden" placeholder="ID"
-                                        class="form-control form-control-sm @error('id_employe') is-invalid @enderror"
-                                        name="id_employe" id="id_employe" value="" min="0">
+                                        class="form-control form-control-sm @error('id_module') is-invalid @enderror"
+                                        name="id_module" id="id_module" value="0.0" min="0">
                                     <input type="hidden" placeholder="imp"
                                         class="form-control form-control-sm @error('imp') is-invalid @enderror"
                                         name="imp" id="imp" value="1">
@@ -91,39 +89,35 @@
                             </div>
                         </div>
                     </div>
-                    {{--  @if ($recue->courrier->directions != '[]')  --}}
-                    <div class="col-xs-12 col-sm-12 col-md-12 text-center p-4">
+                    {{--  @if ($operateur->courrier->directions != '[]')  --}}
+                    {{--    <div class="col-xs-12 col-sm-12 col-md-12 text-center p-4">
                     <small style="text-align: center; vertical-align: middle;">
                         <a
-                        href="{!! url('recufactures', ['$id' => $recue->id]) !!}" class='btn btn-primary btn-sm'
+                        href="{!! url('recufactures', ['$id' => $operateur->id]) !!}" class='btn btn-primary btn-sm'
                         title="télécharger le coupon" target="_blank">
                         <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
                     </a>
                     </small>
-                    </div>
+                    </div>  --}}
                     {{--  @endif  --}}
                     <div class="col-lg-12">
                         {{--  <form method="POST" action="{{ route('sales.store') }}">  --}}
-                        {!! Form::open(['url' => 'recues/' . $recue->id, 'method' => 'PATCH', 'files' => true]) !!}
+                        {!! Form::open(['url' => 'operateurs/' . $operateur->id, 'method' => 'PATCH', 'files' => true]) !!}
                         @csrf
                         <div class="table-responsive">
                             <table class="table table-bordered" style="display: none;">
                                 <thead>
                                     <tr>
-                                        <th style="width: 50%">Direction</th>
-                                        <th>Responsable</th>
+                                        <th style="width: 50%">Module</th>
+                                        <th>Domaine</th>
                                         <th style="width: 5%"></th>
                                     </tr>
                                 </thead>
                                 <tbody id="addRow" class="addRow">
                                 </tbody>
-                                <tbody>
+                                {{--  <tbody>
                                     <tr>
                                         <td colspan="1" class="">
-                                            {{--  <strong>Actions attendues </strong>  --}}
-                                            {{--   <textarea type="text" placeholder="Instructions du DG"
-                                                class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                                name="description" id="description" value="" required></textarea>  --}}
                                             <strong>{!! Form::label('Actions attendues') !!}</strong>
                                             {!! Form::select(
                                                 'description',
@@ -138,7 +132,7 @@
                                                     'Attribution' => 'Attribution',
                                                     'Classement' => 'Classement',
                                                 ],
-                                                $recue->courrier->description,
+                                                $operateur->courrier->description,
                                                 [
                                                     'placeholder' => 'Instructions du DG',
                                                     'class' => 'form-control form-control-sm',
@@ -155,12 +149,12 @@
                                             </small>
                                         </td>
                                         <td colspan="1">
-                                            <strong><label for="date_imp">{{ __('Date imputation') }}</label></strong>
+                                            <strong><label for="date_imp">{{ __('Date Module') }}</label></strong>
                                             <input id="date_imp" {{ $errors->has('date_imp') ? 'is-invalid' : '' }}
                                                 type="date"
                                                 class="form-control form-control-sm @error('date_imp') is-invalid @enderror"
-                                                name="date_imp" placeholder="Date imputation" required
-                                                value="{{ optional($recue->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
+                                                name="date_imp" placeholder="Date Module" required
+                                                value="{{ optional($operateur->courrier->date_imp)->format('Y-m-d') ?? old('date_imp') }}"
                                                 autocomplete="date_imp">
                                             @error('date_imp')
                                                 <span class="invalid-feedback" role="alert">
@@ -169,13 +163,13 @@
                                             @enderror
                                         </td>
                                     </tr>
-                                </tbody>
+                                </tbody>  --}}
                                 <tbody>
                                     <tr>
                                         <td colspan="4" class="text-center">
                                             {{--  <button type="submit" class="btn btn-success btn-sm">
                                                     Imputer</button>  --}}
-                                            {!! Form::submit('Imputer', ['class' => 'btn btn-outline-primary pull-right']) !!}
+                                            {!! Form::submit('Enregistrer', ['class' => 'btn btn-outline-primary pull-right']) !!}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -193,13 +187,12 @@
                     <script id="document-template" type="text/x-handlebars-template">
                     <tr class="delete_add_more_item" id="delete_add_more_item">    
                         <td>
-                            <input type="hidden" name="id_direction[]" value="@{{ id_direction }}" required placeholder="Id direction" class="form-control form-control-sm">
-                            <input type="hidden" name="id_employe[]" value="@{{ id_employe }}" required placeholder="Id employe" class="form-control form-control-sm">
-                            <input type="text" name="product[]" value="@{{ product }}" required placeholder="Direction" class="form-control form-control-sm">                            
+                            <input type="hidden" name="id_module[]" value="@{{ id_module }}" required placeholder="Id direction" class="form-control form-control-sm">
+                            <input type="text" name="product[]" value="@{{ product }}" required placeholder="Module" class="form-control form-control-sm">                            
                             <input type="hidden" name="imp" value="@{{ imp }}">
                         </td>
                         <td>
-                        <input type="text" class="chef form-control form-control-sm" name="chef[]" value="@{{ chef }}" required min="1" placeholder="Le nom du responsable" readonly>
+                        <input type="text" class="domaine form-control form-control-sm" name="domaine[]" value="@{{ domaine }}" required min="1" placeholder="Domaine">
                       </td>
                         <td>
                         <i class="removeaddmore" style="cursor:pointer;color:red;" title="supprimer"><i class="fas fa-trash"></i></i>
@@ -210,17 +203,15 @@
                         $(document).on('click', '#addMore', function() {
                             $('.table').show();
                             var product = $("#product").val();
-                            var id_direction = $("#id_direction").val();
-                            var id_employe = $("#id_employe").val();
-                            var chef = $("#chef").val();
+                            var id_module = $("#id_module").val();
+                            var domaine = $("#domaine").val();
                             var imp = $("#imp").val();
                             var source = $("#document-template").html();
                             var template = Handlebars.compile(source);
                             var data = {
                                 product: product,
-                                id_direction: id_direction,
-                                id_employe: id_employe,
-                                chef: chef,
+                                id_module: id_module,
+                                domaine: domaine,
                                 imp: imp,
                             }
                             var html = template(data);
@@ -237,7 +228,7 @@
                             if (query != '') {
                                 var _token = $('input[name="_token"]').val();
                                 $.ajax({
-                                    url: "{{ route('arrive.fetch') }}",
+                                    url: "{{ route('moduleoperateur.fetche') }}",
                                     method: "POST",
                                     data: {
                                         query: query,
@@ -252,9 +243,8 @@
                         });
                         $(document).on('click', 'li', function() {
                             $('#product').val($(this).text());
-                            $('#id_direction').val($(this).data("id"));
-                            $('#id_employe').val($(this).data("employeeid"));
-                            $('#chef').val($(this).data("chef"));
+                            $('#id_module').val($(this).data("id"));
+                            $('#domaine').val($(this).data("domaine"));
                             $('#productList').fadeOut();
                         });
                     </script>

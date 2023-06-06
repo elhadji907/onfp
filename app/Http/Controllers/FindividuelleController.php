@@ -10,6 +10,8 @@ use App\Models\Commune;
 use Carbon\Carbon;
 use App\Models\Programme;
 use App\Models\Formation;
+use App\Models\Operateur;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FindividuelleController extends Controller

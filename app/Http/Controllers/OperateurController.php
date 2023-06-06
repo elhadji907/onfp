@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\User;
 use App\Models\Typedemande;
 use App\Models\Module;
+use App\Models\Domaine;
 use App\Models\Commune;
 use App\Models\TypesOperateur;
 use App\Models\Arrondissement;
@@ -87,7 +88,9 @@ class OperateurController extends Controller
      */
     public function store(Request $request)
     {
+        /* dd($request->input('regions')); */
         $user = auth::user();
+        
         if ($request->input('type_operateur') == "Autre") {
             $this->validate(
                 $request,
@@ -97,6 +100,7 @@ class OperateurController extends Controller
             );
         }
 
+        
         $this->validate(
             $request,
             [
@@ -106,14 +110,14 @@ class OperateurController extends Controller
                 'sigle'                     =>       "required|string|max:50|unique:operateurs,sigle,NULL,id,deleted_at,NULL",
                 'ninea'                     =>       "required|string|max:255|unique:operateurs,ninea,NULL,id,deleted_at,NULL",
                 'quitus'                    =>       "required|string|max:255|unique:operateurs,quitus,NULL,id,deleted_at,NULL",
-                'cin'                       =>       'required|string|min:13|max:15|unique:operateurs,cin_responsable',
+               /*  'cin'                       =>       'required|string|min:13|max:15|unique:operateurs,cin_responsable', */
                 'adresse_op'                =>       'required|string',
                 'prenom'                    =>       'required|string|max:50',
                 'nom'                       =>       'required|string|max:50',
                 'email'                     =>       'required|email|max:255|unique:users,email,'.$user->id,
                 'telephone'                 =>       'required|string|max:15',
                 'telephone1'                =>       'required|string|max:15',
-                'region'                    =>       'required',
+                'regions'                   =>       'required',
                 'departement'               =>       'required',
                 'commune'                   =>       'required',
                 'type_structure'            =>       'required',
@@ -125,21 +129,11 @@ class OperateurController extends Controller
             ]
         );
 
-        if ($request->input('autres_type_operateur') == "Autre") {
-            $this->validate(
-                $request,
-                [
-                    'autres_type_operateur'                              =>    'required',
-                ]
-            );
-        }
-
         /* dd($user); */
       
         $user_id = User::latest('id')->first()->id;
         $username   =   strtolower($request->input('nom').$user_id);
 
-        /* dd($username); */
        
         $created_by1 = $user->firstname;
         $created_by2 = $user->name;
@@ -251,6 +245,8 @@ class OperateurController extends Controller
         $civilites = User::pluck('civilite', 'civilite');
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $departements = Departement::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $lesregion = Region::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $types_operateurs = TypesOperateur::distinct('name')->get()->pluck('name', 'name')->unique();
         $regions = Region::distinct('nom')->get()->pluck('nom', 'id')->unique();
         
@@ -264,7 +260,7 @@ class OperateurController extends Controller
         ->pluck('operateursregions.regions_id', 'operateursregions.regions_id')
         ->all();
 
-        return view('operateurs.update', compact('operateur', 'modules', 'utilisateurs', 'civilites', 'communes', 'regions', 'types_operateurs', 'module', 'region', 'operateurRegions', 'operateurModules'));
+        return view('operateurs.update', compact('lesregion', 'departements', 'operateur', 'modules', 'utilisateurs', 'civilites', 'communes', 'regions', 'types_operateurs', 'module', 'region', 'operateurRegions', 'operateurModules'));
     }
 
     /**
@@ -276,6 +272,17 @@ class OperateurController extends Controller
      */
     public function update(Request $request, Operateur $operateur)
     {
+        $imp = $request->input('imp');
+
+        if (isset($imp) && $imp == "1") {
+            $count = count($request->product);
+                $operateur->modules()->attach($request->id_module);
+                $operateur->save();
+                return redirect()->route('operateurs.index')->with('success', 'module ajouté avec succès !');
+            
+            //solution, récuper l'id à partir de blade avec le mode hidden
+        }
+
         $user = auth::user();
 
         $this->validate(
@@ -437,6 +444,46 @@ class OperateurController extends Controller
        $output .= '
        
        <li data-id="'.$id.'" data-commune="'.$commune.'" data-arrondissement="'.$arrondissement_name.'" data-departement="'.$departement_name.'" data-region="'.$region.'"><a href="#">'.$commune.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
+    }
+
+    public function moduleoperateurs($id)
+    {
+        $operateur = Operateur::find($id);
+
+        return view('operateurs.addmodule', compact('operateur'));
+    }
+    
+    
+    function fetche(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+
+      $data = DB::table('modules')      
+      ->where('name', 'LIKE', "%{$query}%")
+        ->get();
+
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $module)
+      {
+        $id = $module->id;
+        $module = $module->name;     
+        
+        $modules = Module::findOrFail($id);
+        $domaines_id = $modules->domaines_id;
+
+        $domaines = Domaine::findOrFail($domaines_id);
+        $domaine = $domaines->name;
+
+       $output .= '
+       
+       <li data-id="'.$id.'" data-domaine="'.$domaine.'"><a href="#">'.$module.'</a></li>
        ';
       }
       $output .= '</ul>';

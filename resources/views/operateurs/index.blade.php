@@ -34,12 +34,14 @@
                                 cellspacing="0">
                                 <thead class="">
                                     <tr>
-                                        <th width="12%">N° agrément</th>
+                                        <th width="10%" style="text-align: center; vertical-align: middle;">N° agrément</th>
                                         <th width="50%">Opérateur</th>
-                                        <th width="10%">Sigle</th>
-                                        <th width="5%">Modules</th>
-                                        <th width="5%">Formations</th>
-                                        <th width="8%"></th>
+                                        <th width="10%" style="text-align: center; vertical-align: middle;">Sigle</th>
+                                        <th width="5%" style="text-align: center; vertical-align: middle;">Modules</th>
+                                        {{--  <th width="5%">Formations</th>  --}}
+                                       {{--   <th style="width:1%;"></th>  --}}
+                                        <th style="width:1%;"></th>
+                                        {{--  <th style="width:1%;"></th>  --}}
                                     </tr>
                                 </thead>
                                {{--   <tfoot class="table-dark">
@@ -56,42 +58,60 @@
                                     <?php $i = 1; ?>
                                     @foreach ($operateurs as $operateur)
                                         <tr>
-                                            <td>{!! $operateur->numero_agrement !!}</td>
+                                            <td style="text-align: center; vertical-align: middle;">{!! $operateur->numero_agrement !!}</td>
                                             <td>{!! $operateur->name !!}</td>
-                                            <td>{!! $operateur->sigle !!}</td>
-                                            <td align="center">
+                                            <td style="text-align: center; vertical-align: middle;">{!! $operateur->sigle !!}</td>
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 @foreach ($operateur->modules as $key => $module)
                                                     @if ($loop->last)
                                                         <a class="nav-link badge badge-default" href="#"
                                                             target="_blank">{!! $loop->count !!}</a>
                                                     @endif
                                                 @endforeach
+                                                <small style="text-align: center; vertical-align: middle;">
+                                                    <a href="{!! url('moduleoperateurs', ['$id' => $operateur->id]) !!}" class='btn-sm'
+                                                        title="ajouter">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </small>
+
                                             </td>
-                                            <td align="center">
+                                           {{--   <td style="text-align: center; vertical-align: middle;">
                                                 @foreach ($operateur->formations as $key => $formation)
                                                     @if ($loop->last)
                                                         <a class="nav-link badge badge-default" href="#"
                                                             target="_blank">{!! $loop->count !!}</a>
                                                     @endif
                                                 @endforeach
+                                            </td>  --}}
+                                            
+                                           {{--   <td style="text-align: center; vertical-align: middle;">
+                                                @can('update', $operateur)
+                                                    <a href="{!! url('operateurs/' . $operateur->id . '/edit') !!}" class='' title="modifier">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                @endcan
+                                            </td>  --}}
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <a href="{!! url('operateurs/' . $operateur->id) !!}" class='btn-sm' title="voir">
+                                                    <i class="far fa-eye"></i>
+                                                </a>
                                             </td>
-                                            <td class="d-flex align-items-baseline align-content-center">
-                                                {{-- @can('update', $operateur) --}}
-                                                <a href="{!! url('operateurs/' . $operateur->id . '/edit') !!}" class='btn btn-success btn-sm'
-                                                    title="modifier">
-                                                    <i class="far fa-edit">&nbsp;</i>
-                                                </a>
-                                                {{-- @endcan --}}
-                                                &nbsp; <a href="{!! url('operateurs/' . $operateur->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir">
-                                                    <i class="far fa-eye">&nbsp;</i>
-                                                </a>
-                                                &nbsp;
-                                                {{-- @can('delete', $operateur) --}}
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'operateurs/' . $operateur->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                {!! Form::close() !!}
-                                                {{-- @endcan --}}
+                                            {{--  <td style="text-align: center; vertical-align: middle;">
+                                                @can('delete', $operateur)
+                                                    {!! Form::open([
+                                                        'method' => 'DELETE',
+                                                        'url' => 'operateurs/' . $operateur->id,
+                                                        'id' => 'deleteForm',
+                                                        'onsubmit' => 'return ConfirmDelete()',
+                                                    ]) !!}
+                                                    {!! Form::button('<i class="fa fa-times" aria-hidden="true" style="color:red"></i>', [
+                                                        'type' => 'submit',
+                                                        'class' => 'btn btn-default btn-sm',
+                                                        'title' => 'supprimer',
+                                                    ]) !!}
+                                                    {!! Form::close() !!}
+                                                @end  --}}can
                                             </td>
                                         </tr>
                                     @endforeach

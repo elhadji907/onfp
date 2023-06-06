@@ -17,7 +17,8 @@
                     <div class="card-header">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-primary btn-sm"
-                                    href="{{ route('recues.index') }}"><i class="fas fa-sync-alt"></i>&nbsp;actualiser</a></li>
+                                    href="{{ route('recues.index') }}"><i class="fas fa-sync-alt"></i>&nbsp;actualiser</a>
+                            </li>
                             <li class="breadcrumb-item active">Liste des courriers arrivés</li>
                         </ul>
                     </div>
@@ -43,7 +44,7 @@
                                         <th style="width:2%;">IMPUTER</th>
                                         <th style="width:1%;"></th>
                                         <th style="width:1%;"></th>
-                                        <th style="width:1%;"></th>
+                                        {{--  <th style="width:1%;"></th>  --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,26 +76,35 @@
                                                     <span>{!! $imputation->sigle ?? '' !!}, </span>
                                                 @endforeach
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle;"> <a
-                                                    href="{!! url('recuimputations', ['$id' => $recue->id]) !!}" class='btn btn-warning btn-sm'
-                                                    title="imputer">
-                                                    <i class="fa fa-retweet"></i>
-                                                </a></td>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <td style="text-align: center; vertical-align: middle;">
+                                                    <small style="text-align: center; vertical-align: middle;">
+                                                        <a href="{!! url('recufactures', ['$id' => $recue->id]) !!}" class='btn btn-primary btn-sm'
+                                                            title="télécharger le coupon" target="_blank">
+                                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                                        </a>
+                                                    </small>
+                                                    <small style="text-align: center; vertical-align: middle;">
+                                                    <a href="{!! url('recuimputations', ['$id' => $recue->id]) !!}" class='btn btn-warning btn-sm'
+                                                        title="imputer">
+                                                        <i class="fa fa-retweet"></i>
+                                                    </a>
+                                                    </small>
+                                                </td>
+                                            </div>
                                             <td style="text-align: center; vertical-align: middle;">
                                                 @can('courrier-edit')
-                                                    <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class=''
-                                                        title="modifier">
+                                                    <a href="{!! url('recues/' . $recue->id . '/edit') !!}" class='btn-sm' title="modifier">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                 @endcan
                                             </td>
                                             <td style="text-align: center; vertical-align: middle;">
-                                                 <a href="{!! url('courriers/' . $recue->courrier->id) !!}" class=''
-                                                    title="voir">
+                                                <a href="{!! url('courriers/' . $recue->courrier->id) !!}" class='btn-sm' title="voir">
                                                     <i class="far fa-eye"></i>
                                                 </a>
                                             </td>
-                                            <td style="text-align: center; vertical-align: middle;">
+                                           {{--   <td style="text-align: center; vertical-align: middle;">
                                                 @can('courrier-delete')
                                                     {!! Form::open([
                                                         'method' => 'DELETE',
@@ -109,7 +119,7 @@
                                                     ]) !!}
                                                     {!! Form::close() !!}
                                                 @endcan
-                                            </td>
+                                            </td>  --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
