@@ -81,10 +81,10 @@
                     <td colspan="2" align="right" valign="top">
                         <h3>
                             <b> {{ __("Date d'imputation : ") }} </b>
-                            @if (isset($courrier->date_imp))                                
-                            {{ optional($courrier->date_imp)->format('d/m/Y') }} <br />
+                            @if (isset($courrier->date_imp))
+                                {{ optional($courrier->date_imp)->format('d/m/Y') }} <br />
                             @else
-                            {{ __('- - - - - - - - - - - -') }} <br />
+                                {{ __('- - - - - - - - - - - -') }} <br />
                             @endif
                             <b> {{ __("Date d'arrivée : ") }} </b>
                             {{ optional($courrier->date_recep)->format('d/m/Y') }} <br />
@@ -125,52 +125,16 @@
                         <table class="table table-responsive table-striped">
                             <tbody>
                                 <tr class="item">
+                                    <?php $i = 1; ?>
                                     @foreach ($directions as $direction)
                                         <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
                                         </td>
-                                    @endforeach
+                                        @if ($i % 5 == 0)
                                 </tr>
                                 <tr class="item">
-                                    @foreach ($directions2 as $direction)
-                                        <td style="padding-left:10px">
-                                            {!! $direction ?? 'Aucune' !!}
-                                        </td>
-                                    @endforeach
-                                </tr>
-                                <tr class="item">
-                                    @foreach ($directions3 as $direction)
-                                        <td style="padding-left:10px">
-                                            {!! $direction ?? 'Aucune' !!}
-                                        </td>
-                                    @endforeach
-                                </tr>
-                                <tr class="item">
-                                    @foreach ($directions4 as $direction)
-                                        <td style="padding-left:10px">
-                                            {!! $direction ?? 'Aucune' !!}
-                                        </td>
-                                    @endforeach
-                                </tr>
-                                <tr class="item">
-                                    @foreach ($directions5 as $direction)
-                                        <td style="padding-left:10px">
-                                            {!! $direction ?? 'Aucune' !!}
-                                        </td>
-                                    @endforeach
-                                </tr>
-                                <tr class="item">
-                                    @foreach ($directions6 as $direction)
-                                        <td style="padding-left:10px">
-                                            {!! $direction ?? 'Aucune' !!}
-                                        </td>
-                                    @endforeach
-                                </tr>
-                                <tr class="item">
-                                    @foreach ($directions7 as $direction)
-                                        <td style="padding-left:10px">
-                                            {!! $direction ?? 'Aucune' !!}
-                                        </td>
+                                    @endif
+                                    <?php $i++; ?>
                                     @endforeach
                                 </tr>
                             </tbody>
@@ -239,13 +203,15 @@
                 <tr>
                     <td colspan="2" align="left" valign="top">
                         @if (isset($courrier->observation))
-                        <h2><u>Observations</u></h2>
+                            <h2><u>Observations</u></h2>
                             {{ $courrier->observation }}
                         @else
-                        <h2><u>Observations</u>: _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _<br><br>_ _ _ _ _ _
-                            _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-                 @endif</h2>
-                            
+                            <h2><u>Observations</u>: _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                                _ _ _ _ _<br><br>_ _ _ _ _ _
+                                _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                        @endif
+                        </h2>
+
                     </td>
                 </tr>
             </tbody>
@@ -260,9 +226,9 @@
                         <h2>
                             <b><u> {{ __('Dossier suivi par :') }}</u></b><br><br>
                             @if ($courrier->employees == '[]')
-                            {{__("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _")}}
+                                {{ __('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _') }}
                             @endif
-                            
+
                             @foreach ($courrier->employees->unique('id') as $employee)
                                 {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
                             @endforeach

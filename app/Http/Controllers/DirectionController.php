@@ -160,8 +160,8 @@ class DirectionController extends Controller
         $this->validate(
             $request,
             [
-                'name'                  => 'required|unique:directions,name,'.$direction->id,
-                'sigle'                 => 'sometimes|unique:directions,sigle,'.$direction->id,
+                'name'                  => 'required|unique:directions,name,'.$direction->id.',id,deleted_at,NULL',
+                'sigle'                 => 'sometimes|unique:directions,sigle,'.$direction->id.',id,deleted_at,NULL',
                 'type_direction'        => 'required',
             ]
         );
@@ -186,7 +186,7 @@ class DirectionController extends Controller
      */
     public function destroy(Direction $direction)
     {
-        dd("ok");
+        
         $direction->delete();
         $message = $direction->sigle.' a été supprimé(e)';
         return redirect()->route('directions.index')->with(compact('message'));
