@@ -110,8 +110,8 @@
                                                         'title' => 'supprimer',
                                                     ]) !!}
                                                     {!! Form::close() !!}
-                                                @end  --}}can
-                                            </td>
+                                                @endcan 
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>

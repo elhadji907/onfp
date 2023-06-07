@@ -229,7 +229,7 @@ class OperateurController extends Controller
 
         $modules = $operateur->modules;
         
-        return view('operateurs.details', compact('operateur', 'user', 'modules'));
+        return view('operateurs.show', compact('operateur', 'user', 'modules'));
     }
 
     /**
