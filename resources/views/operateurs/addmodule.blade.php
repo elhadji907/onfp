@@ -28,17 +28,24 @@
                     <div class="col-sm-12 col-md-12 pt-2">
                         <span class="card-category"><b>N° agrément </b>: {!! $operateur->numero_agrement ?? '' !!}</span><br />
                         <span class="card-category"><b>Opérateur </b>: {!! $operateur->name !!}</span> <br />
-                        <span class="card-category"><b>Sigle </b>: {!! $operateur->sigle !!}</span><br />
-                        <span class="card-category"><b>Modules </b>: 
+                        <span class="card-category"><b>Sigle </b>: {!! $operateur->sigle !!}</span><br />                        
+                        <span class="card-category"><b>Modules </b>: </span>
                         @if ($operateur->modules != '[]')
-                            <span class="card-category"><b>Module </b>:
-                                @foreach ($operateur->modules as $module)
-                                    <span>{!! $module->name ?? '' !!}, </span>
+                                @foreach ($operateur->modules->unique('id') as $key => $module)
+                                    @if ($loop->last)
+                                        <div class="badge badge-info">{!! $loop->count !!}</div>
+                                    @endif
                                 @endforeach
-                            @else
+                            
+                            <?php $i = 1; ?>
+                            @foreach ($operateur->modules->unique('id') as $module)
+                                <div> {{ $i }}{{ '.' }} {!! $module->name ?? '' !!}</div>
+                                <?php $i++; ?>
+                            @endforeach
+                        @else
                             <span class="badge badge-danger">Aucun module</span>
                         @endif
-                        </span><br /><br />
+                        <br /><br />
                         <div class="card">
                             <div class="card-body custom-edit-service">
                                 @csrf

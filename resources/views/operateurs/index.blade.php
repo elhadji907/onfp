@@ -62,10 +62,9 @@
                                             <td>{!! $operateur->name !!}</td>
                                             <td style="text-align: center; vertical-align: middle;">{!! $operateur->sigle !!}</td>
                                             <td style="text-align: center; vertical-align: middle;">
-                                                @foreach ($operateur->modules as $key => $module)
+                                                @foreach ($operateur->modules->unique('id') as $key => $module)
                                                     @if ($loop->last)
-                                                        <a class="nav-link badge badge-default" href="#"
-                                                            target="_blank">{!! $loop->count !!}</a>
+                                                        <a class="nav-link badge badge-default" href="#">{!! $loop->count !!}</a>
                                                     @endif
                                                 @endforeach
                                                 <small style="text-align: center; vertical-align: middle;">

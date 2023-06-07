@@ -278,7 +278,7 @@ class OperateurController extends Controller
             $count = count($request->product);
                 $operateur->modules()->attach($request->id_module);
                 $operateur->save();
-                return redirect()->route('operateurs.index')->with('success', 'module ajouté avec succès !');
+                return redirect()->back();
             
             //solution, récuper l'id à partir de blade avec le mode hidden
         }
