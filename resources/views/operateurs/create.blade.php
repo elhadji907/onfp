@@ -61,7 +61,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="numero_agrement">{{ __('numero agrement') }}(<span
                                                 class="text-danger">*</span>)</label>
                                         <input id="numero_agrement" type="text"
@@ -74,7 +74,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="email1">{{ __('E-mail') }}(<span
                                                 class="text-danger">*</span>)</label>
                                         <input id="email1" type="text"
@@ -87,7 +87,19 @@
                                             </span>
                                         @enderror
                                     </div>
-
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label for="fixe_op">{{ __('Téléphone fixe') }}(<span
+                                            class="text-danger">*</span>)</label>
+                                        <input id="fixe_op" type="text"
+                                            class="form-control form-control-sm @error('fixe_op') is-invalid @enderror"
+                                            name="fixe_op" placeholder="Téléphone fixe opérateur"
+                                            value="{{ old('fixe_op') }}" autocomplete="fixe_op" autofocus>
+                                        @error('fixe_op')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label>{{ __('Type structure :') }}</label>(<span class="text-danger">*</span>)
                                         <br />
@@ -163,7 +175,7 @@
 
 
                                     <div class="form-group col-md-4 col-lg-4 col-xs-4 col-sm-4">
-                                        <label for="">Commune</label>
+                                        <label for="">Commune</label>(<span class="text-danger">*</span>)
                                         <input type="commune" placeholder="Commune"
                                             class="form-control form-control-sm @error('commune') is-invalid @enderror"
                                             name="commune" id="commune" value="">
@@ -192,7 +204,7 @@
                                     </div>  --}}
 
                                     <div class="form-group col-md-4 col-lg-4 col-xs-4 col-sm-4">
-                                        <label for="departement">{{ __('Département') }}</label>
+                                        <label for="departement">{{ __('Département') }}</label>(<span class="text-danger">*</span>)
                                         <input id="departement" type="text"
                                             class="form-control form-control-sm @error('departement') is-invalid @enderror"
                                             name="departement" placeholder="Département"
@@ -203,8 +215,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-4 col-lg-4 col-xs-4 col-sm-4">
-                                        <label for="laregion">{{ __('Région') }}</label>
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label for="laregion">{{ __('Région') }}</label>(<span class="text-danger">*</span>)
                                         <input id="laregion" type="text"
                                             class="form-control form-control-sm @error('laregion') is-invalid @enderror"
                                             name="laregion" placeholder="Région" value="{{ old('laregion') }}"
@@ -215,7 +227,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="adresse">{{ __('Adresse complète') }}(<span
                                                 class="text-danger">*</span>)</label>
                                         <textarea id="adresse_op" rows="1"
@@ -239,23 +251,11 @@
                                             @endif
                                         </small>
                                     </div>  --}}
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                        <label for="fixe_op">{{ __('Fixe') }}</label>
-                                        <input id="fixe_op" type="text"
-                                            class="form-control form-control-sm @error('fixe_op') is-invalid @enderror"
-                                            name="fixe_op" placeholder="Téléphone fixe opérateur"
-                                            value="{{ old('fixe_op') }}" autocomplete="fixe_op" autofocus>
-                                        @error('fixe_op')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                        <label for="telephone1">{{ __('Téléphone') }}</label>
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label for="telephone1">{{ __('Téléphone secondaire') }}</label>
                                         <input id="telephone1" type="text"
                                             class="form-control form-control-sm @error('telephone1') is-invalid @enderror"
-                                            name="telephone1" placeholder="Téléphone portable opérateur"
+                                            name="telephone1" placeholder="Téléphone secondaire"
                                             value="{{ old('telephone1') }}" autocomplete="telephone1" autofocus>
                                         @error('telephone1')
                                             <span class="invalid-feedback" role="alert">
@@ -263,7 +263,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    {{--  <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                         {!! Form::label('E-mail secondaire:') !!}
                                         {!! Form::text('email2', null, [
                                             'placeholder' => 'adresse e-mail secondaire de la structure',
@@ -276,8 +276,8 @@
                                             'placeholder' => 'Numero de telephone secondaire de la structure',
                                             'class' => 'form-control form-control-sm',
                                         ]) !!}
-                                    </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    </div>  --}}
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="bp">{{ __('Boite postale') }}</label>
                                         <input id="bp" type="text"
                                             class="form-control form-control-sm @error('bp') is-invalid @enderror"
@@ -289,7 +289,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="fax">{{ __('Téléphone fax') }}</label>
                                         <input id="fax" type="text"
                                             class="form-control form-control-sm @error('fax') is-invalid @enderror"
@@ -301,8 +301,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                        <label for="ninea">{{ __('Ninéa ') }}</label>
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label for="ninea">{{ __('Ninéa ') }}</label>(<span class="text-danger">*</span>)
                                         <input id="ninea" type="text"
                                             class="form-control form-control-sm @error('ninea') is-invalid @enderror"
                                             name="ninea" placeholder="Ninea" value="{{ old('ninea') }}"
@@ -313,7 +313,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         {!! Form::label('Régistre de commerce:') !!}
                                         {!! Form::text('registre', null, [
                                             'placeholder' => 'Le registre de commerce de votre établissement',
@@ -429,7 +429,7 @@
                                         <label for="fonction_responsable">{{ __('Fonction  ') }}</label>
                                         <input id="fonction_responsable" type="text"
                                             class="form-control form-control-sm @error('fonction_responsable') is-invalid @enderror"
-                                            name="fonction_responsable" placeholder="Votre numero de fonction_responsable"
+                                            name="fonction_responsable" placeholder="Fonction du responsable"
                                             value="{{ old('fonction_responsable') }}" autocomplete="fonction_responsable"
                                             autofocus>
                                         @error('fonction_responsable')
@@ -438,7 +438,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                   {{--   <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         {!! Form::label('civilite :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
                                         {!! Form::select('civilite', ['M.' => 'M.', 'Mme' => 'Mme'], null, [
                                             'placeholder' => 'sélectionner civilite',
@@ -478,7 +478,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div>  --}}
                                     <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="adresse">{{ __('Adresse') }}</label>
                                         <textarea id="adresse" rows="1" class="form-control form-control-sm @error('adresse') is-invalid @enderror"
@@ -510,10 +510,11 @@
                                             <label for="all">Toutes</label>
                                         </div>
                                         @foreach ($region as $regions)
-                                        <span class="checkbox rows">
-                                            <label for="regions"><input id="region" name="regions[]" value="{{ $regions->id }}" type="checkbox" />
-                                                {{ $regions->nom }}</label>
-                                        </span>
+                                            <span class="checkbox rows">
+                                                <label for="regions"><input id="region" name="regions[]"
+                                                        value="{{ $regions->id }}" type="checkbox" />
+                                                    {{ $regions->nom }}</label>
+                                            </span>
                                             {{--  <label>{{ Form::checkbox('region[]', $regions->id, false, ['class' => 'name-input checkbox rows']) }}
                                                 {{ $regions->nom }}</label>  --}}
                                         @endforeach

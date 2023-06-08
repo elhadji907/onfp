@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Findividuelle;
 use App\Models\Individuelle;
+use App\Models\TypesOperateur;
+use App\Models\Region;
+use App\Models\TypesFormation;
+use App\Models\Choixoperateur;
+use App\Models\Projet;
 use App\Models\Ingenieur;
 use App\Models\Module;
 use App\Models\Commune;
+use App\Models\Convention;
+use App\Models\Departement;
 use Carbon\Carbon;
 use App\Models\Programme;
 use App\Models\Formation;
@@ -92,6 +99,8 @@ class FindividuelleController extends Controller
         $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
         $programmes = Programme::distinct('name')->get()->pluck('sigle', 'id')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $departements = Departement::distinct('nom')->get()->pluck('nom', 'id')->unique();
+        $conventions = Convention::distinct('name')->get()->pluck('name', 'id')->unique();
        
         $date_debut = Carbon::now();
         $date_fin = Carbon::now()->addMonth();
@@ -104,7 +113,9 @@ class FindividuelleController extends Controller
         $choixoperateur = Choixoperateur::distinct('trimestre')->get()->pluck('trimestre', 'trimestre')->unique();
         $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        return view('findividuelles.create', compact('ingenieur', 'modules', 'communes', 'date_debut', 'date_fin', 'programmes', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
+        
+
+        return view('findividuelles.create', compact('ingenieur', 'modules', 'communes', 'departements', 'conventions', 'date_debut', 'date_fin', 'programmes', 'types_operateurs', 'operateur', 'types_formations', 'choixoperateur', 'projets', 'programmes'));
     }
 
     /**

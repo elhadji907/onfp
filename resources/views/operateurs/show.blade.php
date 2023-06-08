@@ -27,7 +27,11 @@
         }
 
         .invoice-box table tr td:nth-child(2) {
-            text-align: right;
+            text-align: left;
+        }
+
+        .invoice-box table tr td:nth-child(3) {
+            text-align: left;
         }
 
         .invoice-box table tr.top table td {
@@ -104,37 +108,62 @@
                 <li class="breadcrumb-item active">Détails opérateur</li>
             </ul>
             <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mt-0">
+
+                    {{--  @can('update', $recue->courrier)  --}}
+                    <a href="{!! url('operateurs/' . $operateur->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning btn-sm">
+                        <i class="far fa-edit">&nbsp;Modifier</i>
+                    </a>
+                    {{--  @endcan  --}}
+
+                    {{--  @can('delete', $operateur)  --}}
+                    {!! Form::open([
+                        'method' => 'DELETE',
+                        'url' => 'operateurs/' . $operateur->id,
+                        'id' => 'deleteForm',
+                        'onsubmit' => 'return ConfirmDelete()',
+                    ]) !!}
+                    {!! Form::button('<i class="fa fa-times" aria-hidden="true">&nbsp;Supprimer</i>', [
+                        'type' => 'submit',
+                        'class' => 'btn btn-outline-danger btn-sm',
+                        'title' => 'supprimer',
+                    ]) !!}
+                    {!! Form::close() !!}
+                    {{--  @endcan  --}}
+
+                </div>
                 <table method="POST" cellpadding="0" cellspacing="0">
                     <tr class="top">
                         <td colspan="2">
                             <table>
                                 <tr>
                                     <td>
+                                        {{-- <img src="" style="width:100%; max-width:300px;"> --}}
+                                        {{--  <img style="width:50%; max-width:100px;"
+                                            src="{{ asset('images/image_onfp.jpg') }}">  --}}
                                         <b>Numéro</b> : {!! $operateur->numero_agrement !!}<br>
                                         <b>Opérateur</b> : {!! $operateur->name !!} ({!! $operateur->sigle !!})<br>
                                         <b>Adresse E-mail</b> : {!! $operateur->email1 !!}<br>
                                         <b>Téléphone </b> : {!! $operateur->fixe !!} <b>/</b> {!! $operateur->telephone1 !!}<br>
                                         <b>Adresse </b> : {!! $operateur->adresse !!}<br>
-                                        <b>Modules</b> : @if ($operateur->modules != '[]')
-                                            @foreach ($operateur->modules->unique('id') as $key => $module)
-                                                @if ($loop->last)
-                                                    <div class="badge badge-info">{!! $loop->count !!}</div>
-                                                @endif
-                                            @endforeach
-                                            <?php $i = 1; ?>
-                                            @foreach ($operateur->modules->unique('id') as $module)
-                                                <div> {{ $i }}{{ '.' }} {!! $module->name ?? '' !!}</div>
-                                                <?php $i++; ?>
-                                            @endforeach
-                                        @else
-                                            <span class="badge badge-danger">Aucun module</span>
-                                        @endif
-                                        <b>Régions</b> : @if ($operateur->regions != '[]')
-                                            @foreach ($operateur->regions->unique('id') as $key => $region)
-                                                @if ($loop->last)
-                                                    <div class="badge badge-info">{!! $loop->count !!}</div>
-                                                @endif
-                                            @endforeach
+                                    </td>
+                                </tr>
+
+                                <tr class="heading">
+                                    <td>
+                                        {{ __('Régions') }}
+                                    </td>
+                                    <td>
+                                        {{ __('Modules') }}
+                                    </td>
+                                    <td>
+                                        {{ __('Formations') }}
+                                    </td>
+                                </tr>
+
+                                <tr class="details">
+                                    <td>
+                                        @if ($operateur->regions != '[]')
                                             <?php $i = 1; ?>
                                             @foreach ($operateur->regions->unique('id') as $region)
                                                 <div> {{ $i }}{{ '.' }} {!! $region->nom ?? '' !!}</div>
@@ -144,35 +173,34 @@
                                             <span class="badge badge-danger">Aucune région</span>
                                         @endif
                                     </td>
+
+                                    <td>
+                                        @if ($operateur->modules != '[]')
+                                            <?php $i = 1; ?>
+                                            @foreach ($operateur->modules->unique('id') as $module)
+                                                <div> {{ $i }}{{ '.' }} {!! $module->name ?? '' !!}</div>
+                                                <?php $i++; ?>
+                                            @endforeach
+                                        @else
+                                            <span class="badge badge-danger">Aucun module</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($operateur->formations != '[]')
+                                            <?php $i = 1; ?>
+                                            @foreach ($operateur->formations->unique('id') as $formation)
+                                                <div> {{ $i }}{{ '.' }} {!! $formation->beneficiaires ?? '' !!}</div>
+                                                <?php $i++; ?>
+                                            @endforeach
+                                        @else
+                                            <span class="badge badge-danger">Aucune formation</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                 </table>
-                <div class="d-flex justify-content-between align-items-center mt-5">
-
-                    {{--  @can('update', $recue->courrier)  --}}
-                    <a href="{!! url('operateurs/' . $operateur->id . '/edit') !!}" title="modifier" class="btn btn-outline-warning btn-sm">
-                        <i class="far fa-edit">&nbsp;Modifier</i>
-                    </a>
-                    {{--  @endcan  --}}
-
-                    {{--  @can('delete', $operateur)  --}}
-                        {!! Form::open([
-                            'method' => 'DELETE',
-                            'url' => 'operateurs/' . $operateur->id,
-                            'id' => 'deleteForm',
-                            'onsubmit' => 'return ConfirmDelete()',
-                        ]) !!}
-                        {!! Form::button('<i class="fa fa-times" aria-hidden="true">&nbsp;Supprimer</i>', [
-                            'type' => 'submit',
-                            'class' => 'btn btn-outline-danger btn-sm',
-                            'title' => 'supprimer',
-                        ]) !!}
-                        {!! Form::close() !!}
-                    {{--  @endcan  --}}
-
-                </div>
 
             </div>
         </div>

@@ -51,7 +51,7 @@ class OperateurController extends Controller
      */
     public function index()
     {
-        $operateurs = Operateur::all();
+        $operateurs = Operateur::latest()->get();
  
         return view('operateurs.index', compact('operateurs'));
     }
@@ -116,7 +116,6 @@ class OperateurController extends Controller
                 'nom'                       =>       'required|string|max:50',
                 'email'                     =>       'required|email|max:255|unique:users,email,'.$user->id,
                 'telephone'                 =>       'required|string|max:15',
-                'telephone1'                =>       'required|string|max:15',
                 'regions'                   =>       'required',
                 'departement'               =>       'required',
                 'commune'                   =>       'required',

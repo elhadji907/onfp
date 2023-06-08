@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Convention :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('convention', $departements, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'convention', 'data-width' => '100%']) !!}
+                                {!! Form::select('convention', $conventions, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'convention', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('convention'))
                                         @foreach ($errors->get('convention') as $message)
