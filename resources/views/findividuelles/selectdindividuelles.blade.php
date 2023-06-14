@@ -23,7 +23,7 @@
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
                                 style="height: 100px;" id="table-selectdindividuelles">
-                                <thead class="table-dark">
+                                <thead class="table-default">
                                     <tr>
                                         <th width="50px">Cin</th>
                                         <th width="25px">Civilité</th>
@@ -37,7 +37,7 @@
                                         <th width="50px">Ajouter</th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                                {{--  <tfoot class="table-default">
                                     <tr>
                                         <th>Cin</th>
                                         <th>Civilité</th>
@@ -50,7 +50,7 @@
                                         <th>Région</th>
                                         <th>Ajouter</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                     @if ($individuelles->count())
                                         @foreach ($individuelles as $key => $individuelle)

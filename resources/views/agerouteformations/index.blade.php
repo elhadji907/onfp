@@ -59,7 +59,7 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($findividuelles as $findividuelle)
-                                        @if (isset($findividuelle) && $findividuelle->formation->projet->name == $projet_name)
+                                        {{--  @if (isset($findividuelle) && $findividuelle->formation->projet->name == $projet_name)  --}}
                                             <tr>
                                                 <td>{!! $findividuelle->formation->code !!}</td>
                                                 <td>
@@ -110,7 +110,7 @@
                                                     {!! Form::close() !!}
                                                 </td>
                                             </tr>
-                                        @endif
+                                        {{--  @endif  --}}
                                     @endforeach
                                 </tbody>
                             </table>

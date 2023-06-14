@@ -20,6 +20,7 @@ use App\Models\Formation;
 use App\Models\Operateur;
 use App\Models\User;
 use Illuminate\Http\Request;
+use DB;
 
 class FindividuelleController extends Controller
 {
@@ -149,9 +150,12 @@ class FindividuelleController extends Controller
      * @param  \App\Models\Findividuelle  $findividuelle
      * @return \Illuminate\Http\Response
      */
-    public function show(Findividuelle $findividuelle)
-    {
-        //
+    public function show($id)
+    { 
+        $findividuelle = Findividuelle::find($id);
+        $formation = $findividuelle->formation;
+        $EffectifdemandeurFormations = DB::table("demandeursformations")->where("demandeursformations.formations_id", $formation->id)->count();
+        return view('findividuelles.show', compact('formation', 'findividuelle', 'EffectifdemandeurFormations'));
     }
 
     /**
@@ -201,4 +205,23 @@ class FindividuelleController extends Controller
         dd($individuelles);
         return Datatables::of($individuelles)->make(true);
     }
+
+    
+    public function beneficiairesformation($module, $projet, $programme, $findividuelle)
+    {
+        $individuelles      =           Individuelle::get();
+        $module             =           Module::find($module);
+        $module_id          =           $module->id;
+        $projet             =           Projet::find($projet);
+        $findividuelle      =           Findividuelle::find($findividuelle);
+        $programme          =           Programme::find($programme);
+        $programme_id       =           $programme->id;
+        $projet_name        =           $projet->name;
+        $projet_id          =           $projet->id;
+        $module_name        =           $module->name;
+        $code               =           $findividuelle->formation->code;
+
+        return view('findividuelles.beneficiairesformation', compact('code', 'projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle', 'projet_id', 'module_id', 'programme_id'));
+    }
+
 }

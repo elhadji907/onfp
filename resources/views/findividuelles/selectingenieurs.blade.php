@@ -15,7 +15,7 @@
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
                                 id="table-ingenieurs" style="height: 100px;">
-                                <thead class="table-dark">
+                                <thead class="table-default">
                                     <tr>
                                         <th style="width:5%;">ID</th>
                                         <th style="width:10%;">{!! __('Matricule') !!}</th>
@@ -26,7 +26,7 @@
                                         <th style="width:2%;">Choisir</th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
+                                {{--  <tfoot class="table-default">
                                     <tr>
                                         <th>ID</th>
                                         <th>{!! __('Matricule') !!}</th>
@@ -36,7 +36,7 @@
                                         <th>{!! __('Formations') !!}</th>
                                         <th>Choisir</th>
                                     </tr>
-                                </tfoot>
+                                </tfoot>  --}}
                                 <tbody>
                                 </tbody>
                             </table>

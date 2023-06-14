@@ -282,6 +282,8 @@ Route::group([
         Route::get('moduleoperateurs/{id}', [OperateurController::class, 'moduleoperateurs'])->name('moduleoperateurs');
         Route::post('/moduleoperateur/fetche', [OperateurController::class, 'fetche'])->name('moduleoperateur.fetche');
 
+        Route::get('beneficiairesformation/{module}/{projet}/{programme}/{findividuelle}', [FindividuelleController::class, 'beneficiairesformation'])->name('beneficiairesformation');
+
         Route::get('preview', [PDFController::class,  'preview']);
         Route::get('download', [PDFController::class, 'download'])->name('download');
         Route::get('contrat/{pcharges}', [PchargeController::class, 'contrat'])->name('contrat');

@@ -31,7 +31,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="annee">{{ __('Année') }}</label>(<span class="text-danger">*</span>)
-                                {!! Form::number('annee', null, ['placeholder' => 'année', 'class' => 'form-control', 'min' => '2018', 'max' => '2030']) !!}
+                                {!! Form::number('annee', null, ['placeholder' => 'année', 'class' => 'form-control form-control-sm', 'min' => '2018', 'max' => '2030']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('annee'))
                                         @foreach ($errors->get('annee') as $message)
@@ -62,7 +62,7 @@
                                 <label for="code">{{ __('CODE') }}(<span
                                         class="text-danger">*</span>)</label>
                                 <input id="code" type="text"
-                                    class="form-control @error('code') is-invalid @enderror" name="code"
+                                    class="form-control form-control-sm @error('code') is-invalid @enderror" name="code"
                                     placeholder="Code formation" value="{{ old('code') }}"
                                     autocomplete="code">
                                 @error('code')
@@ -73,7 +73,7 @@
                             </div> --}}
                             {{-- <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Type de formation:') !!}(<span class="text-danger">*</span>) --}}
-                            {!! Form::hidden('types_formations', $types_formations, null, ['placeholder' => 'types_formations', 'class' => 'form-control', 'id' => 'types_formations', 'data-width' => '100%']) !!}
+                            {!! Form::hidden('types_formations', $types_formations, null, ['placeholder' => 'types_formations', 'class' => 'form-control form-control-sm', 'id' => 'types_formations', 'data-width' => '100%']) !!}
                             {{-- <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('types_formations'))
                                         @foreach ($errors->get('types_formations') as $message)
@@ -84,7 +84,7 @@
                             </div> --}}
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('modules', $modules, null, ['placeholder' => 'module', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'moduleageroute']) !!}
+                                {!! Form::select('modules', $modules, null, ['placeholder' => 'module', 'data-width' => '100%', 'class' => 'form-control form-control-sm', 'id' => 'moduleageroute']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('modules'))
                                         @foreach ($errors->get('modules') as $message)
@@ -95,7 +95,7 @@
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Convention :') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('conventions', $conventions, null, ['placeholder' => 'convention', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'convention']) !!}
+                                {!! Form::select('conventions', $conventions, null, ['placeholder' => 'convention', 'data-width' => '100%', 'class' => 'form-control form-control-sm', 'id' => 'convention']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('conventions'))
                                         @foreach ($errors->get('conventions') as $message)
@@ -107,7 +107,7 @@
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="beneficiaire">{{ __('Bénéficiaires') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <textarea class="form-control  @error('beneficiaire') is-invalid @enderror" name="beneficiaire" id="beneficiaire"
+                                <textarea class="form-control form-control-sm  @error('beneficiaire') is-invalid @enderror" name="beneficiaire" id="beneficiaire"
                                     rows="1"
                                     placeholder="Ex : Jeune de la région de dakar">{{ old('beneficiaire') }}</textarea>
                                 @error('beneficiaire')
@@ -116,7 +116,7 @@
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="adresse">{{ __('Adresse') }}(<span class="text-danger">*</span>)</label>
-                                <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
+                                <textarea class="form-control form-control-sm  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
                                     placeholder="adresse exacte des bénéficiares">{{ old('adresse') }}</textarea>
                                 @error('adresse')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -126,7 +126,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Ingénieur:') !!}
-                                {!! Form::select('ingenieur', $ingenieurs, null, ['placeholder' => 'ingenieur', 'class' => 'form-control', 'id' => 'ingenieur', 'data-width' => '100%']) !!}
+                                {!! Form::select('ingenieur', $ingenieurs, null, ['placeholder' => 'ingenieur', 'class' => 'form-control form-control-sm', 'id' => 'ingenieur', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('ingenieur'))
                                         @foreach ($errors->get('ingenieur') as $message)
@@ -139,7 +139,7 @@
                         <div class="form-row">
                             {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 {!! Form::label('Programme :') !!}
-                                {!! Form::select('programme', $programmes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
+                                {!! Form::select('programme', $programmes, null, ['placeholder' => '', 'class' => 'form-control form-control-sm', 'id' => 'programme', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('programme'))
                                         @foreach ($errors->get('programme') as $message)
@@ -153,7 +153,7 @@
                             <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
                                 <label for="lieu">{{ __('Lieu formation') }}(<span
                                         class="text-danger">*</span>)</label>
-                                <textarea class="form-control  @error('lieu') is-invalid @enderror" name="lieu" id="lieu" rows="1"
+                                <textarea class="form-control form-control-sm  @error('lieu') is-invalid @enderror" name="lieu" id="lieu" rows="1"
                                     placeholder="Lieu de la formation">{{ old('lieu') }}</textarea>
                                 @error('lieu')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -161,7 +161,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="total">{{ __('Effectif à former') }}</label>
-                                {!! Form::number('total', null, ['placeholder' => 'Ex: 20', 'class' => 'form-control', 'min' => '10', 'max' => '25']) !!}
+                                {!! Form::number('total', null, ['placeholder' => 'Ex: 20', 'class' => 'form-control form-control-sm', 'min' => '10', 'max' => '25']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('total'))
                                         @foreach ($errors->get('total') as $message)
@@ -174,7 +174,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="frais_operateurs">{{ __('Frais opérateur') }}</label>
-                                {!! Form::text('frais_operateurs', '0.00', ['class' => 'form-control']) !!}
+                                {!! Form::text('frais_operateurs', '0.00', ['class' => 'form-control form-control-sm']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('frais_operateurs'))
                                         @foreach ($errors->get('frais_operateurs') as $message)
@@ -185,7 +185,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="frais_additionnels">{{ __('Frais additionnels') }}</label>
-                                {!! Form::text('frais_additionnels', '0.00', ['class' => 'form-control']) !!}
+                                {!! Form::text('frais_additionnels', '0.00', ['class' => 'form-control form-control-sm']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('frais_additionnels'))
                                         @foreach ($errors->get('frais_additionnels') as $message)
@@ -196,7 +196,7 @@
                             </div>
                             <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="autres_frais">{{ __('Autres frais') }}</label>
-                                {!! Form::text('autres_frais', '0.00', ['class' => 'form-control']) !!}
+                                {!! Form::text('autres_frais', '0.00', ['class' => 'form-control form-control-sm']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('autres_frais'))
                                         @foreach ($errors->get('autres_frais') as $message)
@@ -209,7 +209,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 {!! Form::label('Localité:') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('localite', $localites, null, ['placeholder' => 'localite', 'class' => 'form-control', 'id' => 'localite', 'data-width' => '100%']) !!}
+                                {!! Form::select('localite', $localites, null, ['placeholder' => 'localite', 'class' => 'form-control form-control-sm', 'id' => 'localite', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('localite'))
                                         @foreach ($errors->get('localite') as $message)
@@ -219,8 +219,8 @@
                                 </small>
                             </div>
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                {!! Form::label('Choix opérateur:') !!}(<span class="text-danger">*</span>)
-                                {!! Form::select('choixoperateur', $choixoperateur, null, ['placeholder' => 'choix operateur', 'class' => 'form-control', 'id' => 'choixoperateur', 'data-width' => '100%']) !!}
+                                {!! Form::label('commission choix opérateur:') !!}(<span class="text-danger">*</span>)
+                                {!! Form::select('choixoperateur', $choixoperateur, null, ['placeholder' => 'choix operateur', 'class' => 'form-control form-control-sm', 'id' => 'choixoperateur', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('choixoperateur'))
                                         @foreach ($errors->get('choixoperateur') as $message)
@@ -233,7 +233,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Projet:') !!}
-                                {!! Form::select('projet', $projets, null, ['placeholder' => 'projet', 'class' => 'form-control', 'id' => 'projet', 'data-width' => '100%']) !!}
+                                {!! Form::select('projet', $projets, null, ['placeholder' => 'projet', 'class' => 'form-control form-control-sm', 'id' => 'projet', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('projet'))
                                         @foreach ($errors->get('projet') as $message)
@@ -244,7 +244,7 @@
                             </div>
                             <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                 {!! Form::label('Programme:') !!}
-                                {!! Form::select('programme', $programmes, null, ['placeholder' => 'programme', 'class' => 'form-control', 'id' => 'programme', 'data-width' => '100%']) !!}
+                                {!! Form::select('programme', $programmes, null, ['placeholder' => 'programme', 'class' => 'form-control form-control-sm', 'id' => 'programme', 'data-width' => '100%']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('programme'))
                                         @foreach ($errors->get('programme') as $message)
@@ -258,7 +258,7 @@
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="date_debut">{{ __('Début') }}</label>
                                 <input id="date_debut" {{ $errors->has('date_debut') ? 'is-invalid' : '' }} type="date"
-                                    class="form-control @error('date_debut') is-invalid @enderror" name="date_debut"
+                                    class="form-control form-control-sm @error('date_debut') is-invalid @enderror" name="date_debut"
                                     placeholder="Votre date de debutance" value="{{ old('date_debut') }}"
                                     autocomplete="username">
                                 @error('date_debut')
@@ -270,7 +270,7 @@
                             <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                 <label for="date_fin">{{ __('Fin') }}</label>
                                 <input id="date_fin" {{ $errors->has('date_fin') ? 'is-invalid' : '' }} type="date"
-                                    class="form-control @error('date_fin') is-invalid @enderror" name="date_fin"
+                                    class="form-control form-control-sm @error('date_fin') is-invalid @enderror" name="date_fin"
                                     placeholder="Votre date de finance" value="{{ old('date_fin') }}"
                                     autocomplete="username">
                                 @error('date_fin')
@@ -280,7 +280,7 @@
                                 @enderror
                             </div>
                         </div>
-                        {!! Form::hidden('operateur', $operateur->name, null, ['placeholder' => 'operateur', 'class' => 'form-control', 'id' => 'operateur', 'data-width' => '100%']) !!}
+                        {!! Form::hidden('operateur', $operateur->name, null, ['placeholder' => 'operateur', 'class' => 'form-control form-control-sm', 'id' => 'operateur', 'data-width' => '100%']) !!}
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit" class="btn btn-outline-primary"><i
                                     class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>

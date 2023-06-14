@@ -12,7 +12,6 @@
                         {{ session('message') }}
                     </div>
                 @endif
-
                 <div class="card">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
@@ -21,74 +20,88 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div align="right">
-                                <a href="{{ route('findividuelles.selectingenieurs') }}">
-                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i></div>
+                                <a href="{{ route('agerouteformations.selectoperateurs') }}">
+                                    <div class="btn btn-success  btn-sm"><i class="fas fa-plus"></i>&nbsp;Ajouter</i>
+                                    </div>
                                 </a>
                             </div>
                             <br />
                             <table class="table table-bordered table-striped" width="100%" cellspacing="0"
-                                id="table-findividuelles">
-                                <thead class="table-dark">
+                                id="table-agerouteformations">
+                                <thead class="table-default">
                                     <tr>
-                                        <th>Code</th>
-                                        <th>Module</th>
-                                        <th>Bénéficiares</th>
-                                        <th>Localité</th>
-                                        {{--  <th>Adresse</th>  --}}
-                                        <th style="width:5%;">Effectif</th>
-                                        <th style="width:08%;">Début</th>
-                                        <th style="width:08%;">Fin</th>
-                                        <th>Ingénieur</th>
-                                        <th style="width:10%;"></th>
+                                        <th style="width:5%;">Code</th>
+                                        <th style="width:5%;">Année</th>
+                                        <th style="width:15%;">Module</th>
+                                        <th style="width:5%;">Qualif.</th>
+                                        <th style="width:10%;">Bénéficiares</th>
+                                        <th style="width:10%;">Département</th>
+                                        <th style="width:22%;">Opérateurs</th>
+                                        <th style="width:5%;">Statut</th>
+                                        <th style="width:4%;">Effectif</th>
+                                        <th style="width:2%;"></th>
                                     </tr>
                                 </thead>
-                                <tfoot class="table-dark">
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Module</th>
-                                        <th>Bénéficiares</th>
-                                        <th>Localité</th>
-                                       {{--   <th>Adresse</th>  --}}
-                                        <th>Effectif</th>
-                                        <th>Début</th>
-                                        <th>Fin</th>
-                                        <th>Ingénieur</th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($findividuelles as $findividuelle)
                                         <tr>
-                                            <td>{!! $findividuelle->code !!}</td>
-                                            <td>{!! $findividuelle->module->name !!}</td>
-                                            <td>{!! $findividuelle->formation->beneficiaires !!}</td>
-                                            <td>{!! $findividuelle->formation->commune->nom ?? ' ' !!}</td>
-                                           {{--   <td>{!! $findividuelle->formation->adresse ?? ' ' !!}</td>  --}}
-                                            <td class="text-center">
-                                                @foreach ($findividuelle->formation->individuelles as $individuelle)
-                                                    @if ($loop->last)
-                                                        {!! $loop->count !!}
-                                                    @endif
-                                                @endforeach
+                                            <td style="vertical-align: middle;">{!! $findividuelle->formation->code !!}</td>
+                                            <td style="vertical-align: middle;">
+                                                <a href="{{ url('formationsannee', ['$findividuelle' => $findividuelle->id, '$annee' => $findividuelle->formation->annee]) }}"
+                                                    class="btn btn-outline-info btn-sm" target="_blank">
+                                                    {!! $findividuelle->formation->annee !!}
+                                                </a>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{!! $findividuelle->formation->ingenieur->name ?? ' ' !!}</td>
-                                            <td class="d-flex align-items-baseline text-center-row">
-                                                <a href="{!! url('findividuelles/' . $findividuelle->formation->id . '/edit') !!}" class='btn btn-success btn-sm'
+                                            <td style="vertical-align: middle;">{!! $findividuelle->module->name !!}</td>
+                                            <td style="vertical-align: middle;">
+                                                <a href="{{ url('formationsattestations', ['$findividuelle' => $findividuelle->id, '$attestation' => $findividuelle->formation->qualifications]) }}"
+                                                    class="btn btn-outline-primary btn-sm" target="_blank">
+                                                    {!! $findividuelle->formation->qualifications !!}
+                                                </a>
+                                            </td>
+                                            <td style="vertical-align: middle;">{!! $findividuelle->formation->beneficiaires !!}</td>
+                                            <td style="vertical-align: middle;">{!! $findividuelle->formation->localite->nom !!}</td>
+                                            <td style="vertical-align: middle;">{!! $findividuelle->formation->operateur->name ?? '' !!}</td>
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                <a href="{{ url('formationsstatut', ['$findividuelle' => $findividuelle->id, '$statut' => $findividuelle->formation->statut->name]) }}"
+                                                    class="btn btn-outline-warning btn-sm" target="_blank">
+                                                    {!! $findividuelle->formation->statut->name !!}
+                                                </a>
+                                            </td>
+                                            <td style="text-align: center; vertical-align: middle;"><label
+                                                    class="badge badge-default">
+                                                    @foreach ($findividuelle->formation->demandeurs as $demandeur)
+                                                        @if ($loop->last)
+                                                            {!! $loop->count !!}
+                                                        @endif
+                                                    @endforeach
+                                                </label>
+                                            </td>
+                                            {{--  <td class="d-flex align-items-baseline text-center-row">  --}}
+                                            <td style="text-align: center; vertical-align: middle;">
+                                                {{--   <a href="{!! url('agerouteformations/' . $findividuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
-                                                </a>
-                                                &nbsp;
-                                                <a href="{!! url('formations/' . $findividuelle->formation->id) !!}" class='btn btn-primary btn-sm'
-                                                    title="voir" target="__blank">
+                                                </a>  --}}
+
+                                                <a href="{!! url('findividuelles/' . $findividuelle->id) !!}" class='btn btn-info btn-sm' title="voir"
+                                                    target="__blank">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
-                                                &nbsp;
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'findividuelles/' . $findividuelle->formation->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                {!! Form::close() !!}
+
+                                                {{--  {!! Form::open([
+                                                    'method' => 'DELETE',
+                                                    'url' => 'agerouteformations/' . $findividuelle->id,
+                                                    'id' => 'deleteForm',
+                                                    'onsubmit' => 'return ConfirmDelete()',
+                                                ]) !!}
+                                                {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                    'type' => 'submit',
+                                                    'class' => 'btn btn-danger btn-sm',
+                                                    'title' => 'supprimer',
+                                                ]) !!}
+                                                {!! Form::close() !!}  --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -101,14 +114,12 @@
         </div>
     </div>
 @endsection
-
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#table-findividuelles').DataTable({
+            $('#table-agerouteformations').DataTable({
                 dom: 'lBfrtip',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copyHtml5',
                         text: '<i class="fas fa-copy"></i> Copy',
                         titleAttr: 'Copy'
@@ -126,8 +137,8 @@
                     {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        orientation : 'landscape',
-                        pageSize : 'RA4',
+                        orientation: 'landscape',
+                        pageSize: 'RA4',
                         titleAttr: 'PDF'
                     },
                     {
@@ -141,7 +152,7 @@
                     [5, 10, 25, 50, 100, "Tout"]
                 ],
                 "order": [
-                    [0, 'asc']
+                    [1, 'desc']
                 ],
                 language: {
                     "sProcessing": "Traitement en cours...",

@@ -34,7 +34,7 @@
                                 cellspacing="0">
                                 <thead class="">
                                     <tr>
-                                        <th width="10%" style="text-align: center; vertical-align: middle;">N° agrément</th>
+                                        <th width="10%" style="vertical-align: middle;">N° agrément</th>
                                         <th width="50%">Opérateur</th>
                                         <th width="10%" style="text-align: center; vertical-align: middle;">Sigle</th>
                                         <th width="5%" style="text-align: center; vertical-align: middle;">Modules</th>
@@ -58,7 +58,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($operateurs as $operateur)
                                         <tr>
-                                            <td style="text-align: center; vertical-align: middle;">{!! $operateur->numero_agrement !!}</td>
+                                            <td style="vertical-align: middle;">{!! $operateur->numero_agrement !!}</td>
                                             <td>{!! $operateur->name !!}</td>
                                             <td style="text-align: center; vertical-align: middle;">{!! $operateur->sigle !!}</td>
                                             <td style="text-align: center; vertical-align: middle;">

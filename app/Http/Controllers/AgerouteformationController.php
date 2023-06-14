@@ -45,7 +45,9 @@ class AgerouteformationController extends Controller
         $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
         $projets = Projet::find($projet_id);
-        $findividuelles = $projets->findividuelles;
+        /* $findividuelles = $projets->findividuelles; */
+
+        $findividuelles = Findividuelle::all();
 
         return view('agerouteformations.index', compact('projets', 'projet_name', 'projet_id', 'findividuelles'));
     }
