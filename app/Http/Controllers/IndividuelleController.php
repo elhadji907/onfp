@@ -19,9 +19,15 @@ use App\Models\User;
 use App\Models\Etude;
 use App\Models\Convention;
 use App\Models\Projet;
+use App\Models\Diplomespro;
+use App\Models\Localite;
+use App\Models\Zone;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
+use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Auth;
 use Carbon\Carbon;
 
@@ -68,43 +74,24 @@ class IndividuelleController extends Controller
      */
     public function create()
     {
-        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-        $conventions = Convention::distinct('name')->get()->pluck('name', 'name')->unique();
-        $projets = Projet::distinct('name')->get()->pluck('name', 'name')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
+       
+        $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
         $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
-        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
         $etude = Etude::distinct('name')->get()->pluck('name', 'id')->unique();
-        
-        $date_depot = Carbon::now();
 
-        $user = auth::user();
-        
-        $civilites = User::pluck('civilite', 'civilite');
-        return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
+        $id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
 
- /*        if (isset($user->demandeur->individuelles)) {
-            foreach ($user->demandeur->individuelles as $key => $individuelle) {
-            }
-        }
+        $projetLocalites = Localite::join("projetslocalites", "projetslocalites.localites_id", "=", "localites.id")
+        ->where("projetslocalites.projets_id", $id)
+        ->get()->pluck('nom', 'nom')->unique();
 
-        $demandeurs = $user->demandeur;
-        $individuelles = $demandeurs->individuelles;
-        $utilisateurs = $user;
+        $modules = Module::distinct('name')
+        ->get()->pluck('name', 'name')->unique();
 
-        $cont = $individuelle->where('demandeurs_id', '=', $demandeurs->id)->count();
-
-        if (isset($individuelle->cin) && $cont >= 2) {
-            $message = $user->firstname.' '.$user->name.', vous avez certainement atteint la limite du nombre de demandes autorisées !';
-            return redirect()->route('profiles.show', ['user'=>$user])->with('attention', $message);
-        }
-        if (isset($individuelle->cin) && !$user->hasRole('Administrateur')) {
-            return view('individuelles.icreate', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
-        } else {
-            return view('individuelles.create', compact('etude', 'civilites', 'familiale', 'professionnelle', 'user', 'communes', 'diplomes', 'modules', 'programmes', 'date_depot', 'conventions', 'projets'));
-        } */
+        return view('individuelles.create', compact('etude', 'familiale', 'communes', 'diplomes', 'modules', 'projet_name', 'diplomespros'));
     }
 
     public function findNomDept(Request $request)
@@ -124,98 +111,226 @@ class IndividuelleController extends Controller
         $this->validate(
             $request,
             [
-                'sexe'                =>  'required|string|max:10',
-                'cin'                 =>  'required|string|min:13|max:15|unique:demandeurs,cin',
-                'prenom'              =>  'required|string|max:50',
-                'nom'                 =>  'required|string|max:50',
-                'date_naiss'          =>  'required|date_format:Y-m-d',
-                'date_depot'          =>  'required|date_format:Y-m-d',
-                'lieu_naissance'      =>  'required|string|max:50',
-                'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
-                'etablissement'       =>  'required|string|max:100',
-                'adresse'             =>  'required|string|max:100',
-                'prerequis'           =>  'required|string|max:1500',
-                'motivation'          =>  'required|string|max:1500',
-                'email'               =>  "required|string|email|max:255|unique:users,email",
-                'professionnelle'     =>  'required',
-                'etude'               =>  'required',
-                'commune'             =>  'required',
-                'diplome'             =>  'required',
-                'optiondiplome'       =>  'required',
-                'projet_professionnel'=>  'required|string|max:1000',
-            ]
+                'sexe'                              =>    'required|string|max:10',
+                'cin'                               =>    'required|string|min:13|max:15|unique:demandeurs,cin',
+                /* 'numero_dossier'                    =>    'required|string|min:4|max:4|unique:demandeurs,numero_dossier', */
+                'numero_dossier'                    =>    'required|string|min:4|max:4',
+                'prenom'                            =>    'required|string|max:50',
+                'nom'                               =>    'required|string|max:50',
+                'date_naiss'                        =>    'required|date_format:Y-m-d',
+                'date_depot'                        =>    'required|date_format:Y-m-d',
+                'lieu_naissance'                    =>    'required|string|max:50',
+                'telephone'                         =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
+                'telephone_secondaire'              =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
+                'adresse'                           =>    'required|string|max:100',
+                /* 'email'                             =>    'required|string|email|max:255|unique:users,email', */
+                'familiale'                         =>    'required',
+                'enfant'                            =>    'required|numeric',
+                'etude'                             =>    'required',
+                'commune'                           =>    'required',
+                'diplome'                           =>    'required',
+                'diplomespro'                       =>    'required',
+                'activite_travail'                  =>    'required',
+                'travail_renumeration'              =>    'required',
+                /* 'localites'                         =>    'required', */
+                'activite_avenir'                   =>    'required',
+                /* 'zones'                             =>    'required', */
+                'handicap'                          =>    'required',
+                'situation_economique'              =>    'required',
+                'victime_social'                    =>    'required',
+                'modules'                           =>    'required',
+        ]
         );
+        
+        $handicap                           =        $request->input('handicap');
+        $diplome                            =        $request->input('diplome');
+        $diplomespro                        =        $request->input('diplomespro');
+        $travail_renumeration               =        $request->input('travail_renumeration');
+        $victime_social                     =        $request->input('victime_social');
+        $autre_victime                      =        $request->input('autre_victime');
+        $dossiers                           =        $request->input('dossiers');
+        $salaire                            =        $request->input('salaire');
+        $situation_economique               =        $request->input('situation_economique');
+        $sexe                               =        $request->input('sexe');
+
+        if ($diplome == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autres_diplomes'                              =>    'required',
+                    'annee_diplome'                                =>    'required|numeric',
+                ]
+            );
+        }
+        if ($diplomespro == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autres_diplomes_pros'                         =>    'required',
+                    'annee_diplome_professionelle'                 =>    'required|numeric',
+                ]
+            );
+        }
+        if ($diplome != "Aucun") {
+            $this->validate(
+                $request,
+                [
+                    'annee_diplome'                                 =>    'required|numeric',
+                ]
+            );
+        }
+        if ($diplomespro != "Aucun") {
+            $this->validate(
+                $request,
+                [
+                    'specialite'                                   =>    'required',
+                    'annee_diplome_professionelle'                 =>    'required|numeric',
+                ]
+            );
+        }
+        if ($travail_renumeration == "Oui") {
+            $this->validate(
+                $request,
+                [
+                    'salaire'                                      =>    'required',
+                ]
+            );
+        }
+        if ($handicap == "Oui") {
+            $this->validate(
+                $request,
+                [
+                    'preciser_handicap'                             =>    'required'
+                ]
+            );
+        }
+        if ($victime_social == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autre_victime'                                 =>    'required'
+                ]
+            );
+        }
+        if ($dossiers == "Copie diplomes ou attestations") {
+            $this->validate(
+                $request,
+                [
+                    'autre_diplomes_fournis'                         =>    'required'
+                ]
+            );
+        }
+        if ($dossiers == "Copie diplomes ou attestations") {
+            $this->validate(
+                $request,
+                [
+                    'autre_diplomes_fournis'                         =>    'required',
+                    'nbre_pieces'                                    =>    'required'
+                ]
+            );
+        }
+
+        $note = 0;
+
+        if ($travail_renumeration == "Oui") {
+            $note = $note + 1;
+        } elseif ($travail_renumeration == "Non") {
+            $note = $note + 5;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($handicap == "Oui") {
+            $note = $note + 5;
+        } elseif ($handicap == "Non") {
+            $note = $note + 0;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($sexe == "M") {
+            $note = $note + 1;
+        } elseif ($sexe == "F") {
+            $note = $note + 2;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($salaire == "Indécent") {
+            $note = $note + 5;
+        } elseif ($salaire == "Moyen") {
+            $note = $note + 2;
+        } elseif ($salaire == "Bien") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($situation_economique == "Très faible") {
+            $note = $note + 5;
+        } elseif ($situation_economique == "Faible") {
+            $note = $note + 4;
+        } elseif ($situation_economique == "Moyenne") {
+            $note = $note + 2;
+        } elseif ($situation_economique == "Correcte") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($situation_economique == "Emigration irrégulière") {
+            $note = $note + 4;
+        } elseif ($situation_economique == "Déplacé ou démobilisé par le conflit") {
+            $note = $note + 6;
+        } elseif ($situation_economique == "Emprisonnement") {
+            $note = $note + 3;
+        } elseif ($situation_economique == "Aucun") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($diplomespro == "Aucun") {
+            $note = $note + 5;
+        } elseif ($diplomespro == "CAP") {
+            $note = $note + 3;
+        } elseif ($diplomespro == "BEP") {
+            $note = $note + 2;
+        } elseif ($diplomespro == "BT") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        $user_connect           =   Auth::user();
 
         $user_id             =   User::latest('id')->first()->id;
         $username            =   strtolower($request->input('nom').$user_id);
+        $numero_dossier      =   $request->input('numero_dossier');
+        $email               =   $username.".".$numero_dossier."@gmail.com";
 
+        $created_by  = strtolower($user_connect->username);
+        $updated_by  = strtolower($user_connect->username);
 
-        $numero = Demandeur::get()->last();
-
-        if (isset($numero)) {
-            $numero = Demandeur::get()->last()->numero_dossier;
-            $numero = ++$numero;
-        } else {
-            $numero = "0000001";
-
-        }
-
-        $longueur = strlen($numero);
+        $annee = date('y');
+        $longueur = strlen($user_id);
 
         if ($longueur <= 1) {
-            $numero   =   strtolower("000000".$user_id);
+            $numero   =   "I".strtolower("000000".$user_id."".$annee);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero   =   strtolower("00000".$user_id);
+            $numero   =   "I".strtolower("00000".$user_id."".$annee);
         } elseif ($longueur >= 3 && $longueur < 4) {
-            $numero   =   strtolower("0000".$user_id);
+            $numero   =   "I".strtolower("0000".$user_id."".$annee);
         } elseif ($longueur >= 4 && $longueur < 5) {
-            $numero   =   strtolower("000".$user_id);
+            $numero   =   "I".strtolower("000".$user_id."".$annee);
         } elseif ($longueur >= 5 && $longueur < 6) {
-            $numero   =   strtolower("00".$user_id);
+            $numero   =   "I".strtolower("00".$user_id."".$annee);
         } elseif ($longueur >= 6 && $longueur < 7) {
-            $numero   =   strtolower("0".$user_id);
+            $numero   =   "I".strtolower("0".$user_id."".$annee);
         } else {
-            $numero   =   strtolower($user_id);
+            $numero   =   "I".strtolower($user_id."".$annee);
         }
 
-        $created_by1 = Auth::user()->firstname;
-        $created_by2 = Auth::user()->name;
-        $created_by3 = Auth::user()->username;
-
-        $created_by = $created_by1.' '.$created_by2.' ('.$created_by3.')';
-
-        $telephone = $request->input('telephone');
-        $telephone = str_replace(' ', '', $telephone);
-
-        $autre_tel = $request->input('autre_tel');
-        $autre_tel = str_replace(' ', '', $autre_tel);
-
-        if ($request->input('programme') !== null) {
-            $programme_id = Programme::where('sigle', $request->input('programme'))->first()->id;
-        } else {
-            $programme_id = null;
-        }
-        if ($request->input('convention') !== null) {
-            $convention_id = Convention::where('name', $request->input('convention'))->first()->id;
-        } else {
-            $convention_id = null;
-        }
-        if ($request->input('projet') !== null) {
-            $projet_id = Projet::where('name', $request->input('projet'))->first()->id;
-        } else {
-            $projet_id = null;
-        }
-
-        $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
-        $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $professionnelle_id = $request->input('professionnelle');
-        $familiale_id = $request->input('familiale');
-        $etude_id = $request->input('etude');
-        $cin = $request->input('cin');
-        $cin = str_replace(' ', '', $cin);
-
-        $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
-        
         if ($request->input('sexe') == "M") {
             $civilite = "M.";
         } elseif ($request->input('sexe') == "F") {
@@ -224,101 +339,103 @@ class IndividuelleController extends Controller
             $civilite = "";
         }
 
-      /*   if (isset($individuelle->cin) && !$user_connect->hasRole('Administrateur')) {
-            $individuelle = new Individuelle([
-                'cin'                       =>     $cin,
-                'experience'                =>     $request->input('experience'),
-                'information'               =>     $request->input('information'),
-                'date_depot'                =>     $request->input('date_depot'),
-                'nbre_pieces'               =>     $request->input('nombre_de_piece'),
-                'prerequis'                 =>     $request->input('prerequis'),
-                'etablissement'             =>     $request->input('etablissement'),
-                'optiondiplome'             =>     $request->input('optiondiplome'),
-                'adresse'                   =>     $request->input('adresse'),
-                'motivation'                =>     $request->input('motivation'),
-                'autres_diplomes'           =>     $request->input('autres_diplomes'),
-                'qualification'             =>     $request->input('qualification'),
-                'projetprofessionnel'       =>     $request->input('projet_professionnel'),
-                'statut'                    =>     'Attente',
-                'telephone'                 =>     $autre_tel,
-                'etudes_id'                 =>     $etude_id,
-                'communes_id'               =>     $commune_id,
-                'programmes_id'             =>     $programme_id,
-                'conventions_id'            =>     $convention_id,
-                'projets_id'                =>     $projet_id,
-                'diplomes_id'               =>     $diplome_id,
-                'demandeurs_id'             =>     $demandeur->id
-                ]);
+        $telephone = $request->input('telephone');
+        $telephone = str_replace(' ', '', $telephone);
+        $telephone_secondaire = $request->input('telephone_secondaire');
+        $telephone_secondaire = str_replace(' ', '', $telephone_secondaire);
         
-            $individuelle->save();
-            
-            $individuelle->modules()->sync($request->input('modules'));
-            return redirect()->route('profiles.show', ['user'=>$individuelle->demandeur->user, 'user_connect'=>$user_connect]);
-        } else { */
-            $user = new User([
-                'sexe'                      =>      $request->input('sexe'),
-                'civilite'                  =>      $civilite,
-                'firstname'                 =>      $request->input('prenom'),
-                'name'                      =>      $request->input('nom'),
-                'email'                     =>      $request->input('email'),
-                'username'                  =>      $username,
-                'telephone'                 =>      $telephone,
-                'bp'                        =>      $request->input('bp'),
-                'fax'                       =>      $request->input('fax'),
-                'date_naissance'            =>      $request->input('date_naiss'),
-                'lieu_naissance'            =>      $request->input('lieu_naissance'),
-                'adresse'                   =>      $request->input('adresse'),
-                'password'                  =>      Hash::make($request->input('email')),
-                'professionnelles_id'       =>      $professionnelle_id,
-                'familiales_id'             =>      $familiale_id,
-                'created_by'                =>      $created_by,
-                'updated_by'                =>      $created_by
-    
-            ]);
-        
-            $user->save();
+        $diplome_id = Diplome::where('sigle', $request->input('diplome'))->first()->id;
+        $diplomepro_id = Diplomespro::where('sigle', $request->input('diplomespro'))->first()->id;
+        $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
+        /* $zones_id = Zone::where('nom', $request->input('zones'))->first()->id; */
+        $modules_id = Module::where('name', $request->input('modules'))->first()->id;
+        /* $localites_id = Localite::where('nom', $request->input('localites'))->first()->id; */
+        $familiale_id = $request->input('familiale');
+        $etude_id = $request->input('etude');
+        $cin = $request->input('cin');
+        $cin = str_replace(' ', '', $cin);
 
-            $user->assignRole('Individuelle');
-                
-            $demandeur = new Demandeur([
+
+
+        $user = new User([
+            'sexe'                      =>      $sexe,
+            'civilite'                  =>      $civilite,
+            'firstname'                 =>      $request->input('prenom'),
+            'name'                      =>      $request->input('nom'),
+            'email'                     =>      $email,
+            'username'                  =>      $username,
+            'telephone'                 =>      $telephone,
+            'bp'                        =>      $request->input('bp'),
+            'fax'                       =>      $request->input('fax'),
+            'date_naissance'            =>      $request->input('date_naiss'),
+            'lieu_naissance'            =>      $request->input('lieu_naissance'),
+            'adresse'                   =>      $request->input('adresse'),
+            'password'                  =>      Hash::make($email),
+            'familiales_id'             =>      $familiale_id,
+            'created_by'                =>      $created_by,
+            'updated_by'                =>      $updated_by
+
+        ]);
+
+        $user->save();
+        
+        $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
+
+        $demandeur = new Demandeur([
                     'cin'                       =>     $cin,
-                    'numero_dossier'            =>     $numero,
+                    'numero_dossier'            =>     $numero_dossier,
                     'types_demandes_id'         =>     $types_demandes_id,
                     'users_id'                  =>     $user->id
                 ]);
         
-            $demandeur->save();
+        $demandeur->save();
 
-            $individuelle = new Individuelle([
-                'experience'                =>     $request->input('experience'),
-                'information'               =>     $request->input('information'),
-                'date_depot'                =>     $request->input('date_depot'),
-                'nbre_pieces'               =>     $request->input('nombre_de_piece'),
-                'prerequis'                 =>     $request->input('prerequis'),
-                'etablissement'             =>     $request->input('etablissement'),
-                'optiondiplome'             =>     $request->input('optiondiplome'),
-                'adresse'                   =>     $request->input('adresse'),
-                'motivation'                =>     $request->input('motivation'),
-                'autres_diplomes'           =>     $request->input('autres_diplomes'),
-                'qualification'             =>     $request->input('qualification'),
-                'projetprofessionnel'       =>     $request->input('projet_professionnel'),
-                'statut'                    =>     'Attente',
-                'telephone'                 =>     $autre_tel,
-                'etudes_id'                 =>     $etude_id,
-                'communes_id'               =>     $commune_id,
-                'programmes_id'             =>     $programme_id,
-                'conventions_id'            =>     $convention_id,
-                'projets_id'                =>     $projet_id,
-                'diplomes_id'               =>     $diplome_id,
-                'demandeurs_id'             =>     $demandeur->id
-                ]);
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet = Projet::find($projet_id);
         
-            $individuelle->save();
-
+        $individuelle = new Individuelle([
+            'date_depot'                        =>     $request->input('date_depot'),
+            'optiondiplome'                     =>     $request->input('specialite'),
+            'adresse'                           =>     $request->input('adresse'),
+            'autres_diplomes'                   =>     $request->input('autres_diplomes'),
+            'autres_diplomes_pros'              =>     $request->input('autres_diplomes_pros'),
+            'nbre_enfants'                      =>     $request->input('enfant'),
+            'annee_diplome'                     =>     $request->input('annee_diplome'),
+            'annee_diplome_professionelle'      =>     $request->input('annee_diplome_professionelle'),
+            'activite_travail'                  =>     $request->input('activite_travail'),
+            'travail_renumeration'              =>     $request->input('travail_renumeration'),
+            'activite_avenir'                   =>     $request->input('activite_avenir'),
+            'handicap'                          =>     $request->input('handicap'),
+            'preciser_handicap'                 =>     $request->input('preciser_handicap'),
+            'situation_economique'              =>     $situation_economique,
+            'victime_social'                    =>     $victime_social,
+            'autre_victime'                     =>     $request->input('autre_victime'),
+            'salaire'                           =>     $salaire,
+            'dossier'                           =>     $request->get('dossiers'),
+            'autre_diplomes_fournis'            =>     $request->input('autre_diplomes_fournis'),
+            'nbre_pieces'                       =>     $request->input('nbre_pieces'),
+            'statut'                            =>     'attente',
+            'note'                              =>     $note,
+            'telephone'                         =>     $telephone_secondaire,
+            'etudes_id'                         =>     $etude_id,
+            'communes_id'                       =>     $commune_id,
+            'diplomes_id'                       =>     $diplome_id,
+            'diplomespros_id'                   =>     $diplomepro_id,
+            /* 'zones_id'                          =>     $zones_id,
+            'localites_id'                      =>     $localites_id, */
+            'projets_id'                        =>     $projet_id,
+            'modules_id'                        =>     $modules_id,
+            'created_by'                        =>     $created_by,
+            'updated_by'                        =>     $updated_by,
+            'demandeurs_id'                     =>     $demandeur->id
+            ]);
             
-            /* $individuelle->modules()->sync($request->input('modules')); */
-            return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !');
-       /*  } */
+        $individuelle->save();
+
+        $success = "demande ajouté avec succès !";
+        return back()->with(compact('success'));
+
+        /* return redirect()->route('individuelles.index')->with('success', 'demandeur ajouté avec succès !'); */
     }
 
     /**
@@ -327,31 +444,73 @@ class IndividuelleController extends Controller
      * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function show(Individuelle $individuelle)
+    public function show($id)
     {
-        $utilisateurs = $individuelle->demandeur->user;
+        $individuelle = Individuelle::find($id);
+        $localites = Localite::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $zones = Zone::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        $civilites = User::pluck('civilite', 'civilite');
-        $modules = Module::distinct('name')->get()->pluck('name', 'id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'id')->unique();
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-        $niveaux = Niveaux::distinct('name')->get()->pluck('name', 'name')->unique();
-        $communes = Commune::distinct('nom')->get()->pluck('nom', 'id')->unique();
-        $familiale = Familiale::distinct('name')->get()->pluck('name', 'id')->unique();
-        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'id')->unique();
+        $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
+        $etude = Etude::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $projet_name = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->name;
+        $projet_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+
+        $projetModules = DB::table("projetsmodules")->where("projetsmodules.projets_id", $projet_id)
+        ->pluck('projetsmodules.modules_id', 'projetsmodules.modules_id')
+        ->all();
+
+        $projetModules  = Module::find($projetModules);
+
+        $prenom = $individuelle->demandeur->user->firstname;
+        $nom = $individuelle->demandeur->user->name;
+
+        $name = $prenom.' '.$nom;
+
+        $name = htmlentities($name, ENT_NOQUOTES, 'utf-8');
+        $name = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $name);
+        $name = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $name);
+        $name = preg_replace('#&[^;]+;#', '', $name);
         
-        return view('individuelles.show', compact(
-            'individuelle',
-            'communes',
-            'niveaux',
-            'familiale',
-            'professionnelle',
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('individuelles.show', compact(
+            'localites',
+            'projetModules',
+            'zones',
             'modules',
-            'programmes',
+            'individuelle',
+            'etude',
+            'familiale',
+            'communes',
             'diplomes',
-            'utilisateurs',
-            'civilites'
-        ));
+            'projet_name',
+            'diplomespros'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('Fiche de candidature de '.$name.' du '.$anne.'.pdf', ['Attachment' => false]);
     }
 
     public function details($id)
@@ -387,31 +546,40 @@ class IndividuelleController extends Controller
      * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function edit(Individuelle $individuelle)
+    public function edit(Request $request, $id)
     {
-        /* $this->authorize('update',  $individuelle); */
-       
-        $demandeurs = $individuelle->demandeur;
-        $utilisateurs = $demandeurs->user;
+        $auth_user      =       Auth::user();
+        $individuelle = Individuelle::find($id);
+        
+        if ($individuelle->demandeur->user->created_by != $individuelle->demandeur->user->updated_by && !$auth_user->hasRole('Administrateur|Super-admin')) {
+            $messages = "Désolé ! vous n'avez pas le droit de modifier cet enregistrement, veuillez contacter la personne qui a effectué cet enregistrement";
+            return back()->with(compact('messages'));
+        }
 
-        $civilites = User::pluck('civilite', 'civilite');
+        $localites = Localite::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $zones = Zone::distinct('nom')->get()->pluck('nom', 'nom')->unique();
+        $modules = Module::distinct('name')->get()->pluck('name', 'name')->unique();
+
+        $diplomes = Diplome::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $diplomespros = Diplomespro::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
+        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
         $familiale = Familiale::distinct('name')->get()->pluck('name', 'name')->unique();
-        $professionnelle = Professionnelle::distinct('name')->get()->pluck('name', 'name')->unique();
         $etude = Etude::distinct('name')->get()->pluck('name', 'name')->unique();
 
-        $modules = Module::distinct('name')->pluck('name', 'id')->unique();
-        $moduleIndividuelle = $individuelle->modules->pluck('name', 'name')->all();
-        /* dd($moduleIndividuelle); */
-        $programmes = Programme::distinct('sigle')->get()->pluck('sigle', 'sigle')->unique();
-        $conventions = Convention::distinct('name')->get()->pluck('name', 'name')->unique();
-        $projets = Projet::distinct('name')->pluck('name', 'id')->unique();
-        $diplomes = Diplome::distinct('name')->get()->pluck('name', 'name')->unique();
-        $communes = Commune::distinct('nom')->get()->pluck('nom', 'nom')->unique();
-
-        $date_depot = Carbon::now();
-
-        return view('individuelles.update', compact('projets', 'conventions', 'etude', 'civilites', 'individuelle', 'communes', 
-        'familiale', 'professionnelle', 'diplomes', 'modules', 'programmes', 'date_depot', 'utilisateurs', 'moduleIndividuelle'));
+        return view(
+            'individuelles.update',
+            compact(
+                'localites',
+                'zones',
+                'modules',
+                'individuelle',
+                'etude',
+                'familiale',
+                'communes',
+                'diplomes',
+                'diplomespros'
+            )
+        );
     }
 
     /**
@@ -421,88 +589,244 @@ class IndividuelleController extends Controller
      * @param  \App\Models\Individuelle  $individuelle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Individuelle $individuelle)
+    public function update(Request $request, $id)
     {
-        $user_connect = Auth::user();
+        $individuelle = Individuelle::find($id);
+        $user_connect           =   Auth::user();
         $demandeur = $individuelle->demandeur;
+        $id_demandeur = $demandeur->id;
         $utilisateur   =   $demandeur->user;
 
-        /* $this->authorize('update',  $individuelle); */
+        $formation = $individuelle->formation;
+  
+        $auth_user      =       Auth::user();
 
         $this->validate(
             $request,
             [
-               'sexe'                =>  'required|string|max:10',
-               'cin'                 =>  "required|string|min:13|max:15",
-               'prenom'              =>  'required|string|max:50',
-               'nom'                 =>  'required|string|max:50',
-               'date_naiss'          =>  'required|date_format:Y-m-d',
-               'date_depot'          =>  'required|date_format:Y-m-d',
-               'lieu_naissance'      =>  'required|string|max:50',
-               'telephone'           =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:17',
-               'etablissement'       =>  'required|string|max:100',
-               'adresse'             =>  'required|string|max:100',
-               'prerequis'           =>  'required|string|max:1500',
-               'motivation'          =>  'required|string|max:1500',
-               'familiale'           =>  'required',
-               'professionnelle'     =>  'required',
-               'etude'               =>  'required',
-               'commune'             =>  'required',
-               'modules'             =>  'required',
-               'diplome'             =>  'required',
-               'optiondiplome'       =>  'required',
-               ]
+                'sexe'                              =>    'required|string|max:10',
+                'cin'                               =>    'required|string|min:13|max:15|unique:demandeurs,cin,'.$id_demandeur,
+                'prenom'                            =>    'required|string|max:50',
+                'nom'                               =>    'required|string|max:50',
+                'date_naiss'                        =>    'required|date_format:Y-m-d',
+                'date_depot'                        =>    'required|date_format:Y-m-d',
+                'lieu_naissance'                    =>    'required|string|max:50',
+                'telephone'                         =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
+                'telephone_secondaire'              =>    'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|max:12',
+                'adresse'                           =>    'required|string|max:100',
+                'email'                             =>    'required|string|email|max:255|unique:users,email,'.$utilisateur->id,
+                'familiale'                         =>    'required',
+                'enfant'                            =>    'required|numeric',
+                'etude'                             =>    'required',
+                'commune'                           =>    'required',
+                'diplome'                           =>    'required',
+                'diplomespro'                       =>    'required',
+                'activite_travail'                  =>    'required',
+                'travail_renumeration'              =>    'required',
+                'activite_avenir'                   =>    'required',
+                'handicap'                          =>    'required',
+                'situation_economique'              =>    'required',
+                'victime_social'                    =>    'required',
+                'module'                            =>    'required',
+        ]
         );
-
-        $updated_by1 = $user_connect->firstname;
-        $updated_by2 = $user_connect->name;
-        $updated_by3 = $user_connect->username;
-
-        $updated_by = $updated_by1.' '.$updated_by2.' ('.$updated_by3.')';
-
-
-        $telephone = $request->input('telephone');
-        $telephone = str_replace(' ', '', $telephone);
- 
-        $autre_tel = $request->input('autre_tel');
-        $autre_tel = str_replace(' ', '', $autre_tel);
- 
-        $cin = $request->input('cin');
-        $cin = str_replace(' ', '', $cin);
-        if ($request->input('programme') !== null) {
-            $programme_id = Programme::where('sigle', $request->input('programme'))->first()->id;
-        } else {
-            $programme_id = "";
-        }
-        if ($request->input('convention') !== null) {
-            $convention_id = Convention::where('name', $request->input('convention'))->first()->id;
-        } else {
-            $convention_id = "";
+        
+        if (isset($formation) && $formation->module->name != $request->input('module')) {
+            $messages = "Désolé ! vous ne pouvez pas changer le module demandé, car ce demandeur bénéficie déjà d'une formation";
+            return back()->with(compact('messages'));
         }
 
-        $sexe = $request->input('sexe');
+        $handicap                           =        $request->input('handicap');
+        $diplome                            =        $request->input('diplome');
+        $diplomespro                        =        $request->input('diplomespro');
+        $travail_renumeration               =        $request->input('travail_renumeration');
+        $victime_social                     =        $request->input('victime_social');
+        $autre_victime                      =        $request->input('autre_victime');
+        $dossiers                           =        $request->input('dossiers');
+        $salaire                            =        $request->input('salaire');
+        $situation_economique               =        $request->input('situation_economique');
+        $sexe                               =        $request->input('sexe');
+
+        if ($diplome == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autres_diplomes'                              =>    'required',
+                    'annee_diplome'                                =>    'required|numeric',
+                ]
+            );
+        }
+        
+        if ($diplomespro == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autres_diplomes_pros'                         =>    'required',
+                    'annee_diplome_professionelle'                 =>    'required|numeric',
+                ]
+            );
+        }
+        
+        if ($diplome != "Aucun") {
+            $this->validate(
+                $request,
+                [
+                    'annee_diplome'                                 =>    'required|numeric',
+                ]
+            );
+        }
+        
+        if ($diplomespro != "Aucun") {
+            $this->validate(
+                $request,
+                [
+                    'specialite'                                   =>    'required',
+                    'annee_diplome_professionelle'                 =>    'required|numeric',
+                ]
+            );
+        }
+        
+        if ($travail_renumeration == "Oui") {
+            $this->validate(
+                $request,
+                [
+                    'salaire'                                      =>    'required',
+                ]
+            );
+        }
+        
+        if ($handicap == "Oui") {
+            $this->validate(
+                $request,
+                [
+                    'preciser_handicap'                             =>    'required'
+                ]
+            );
+        }
+        
+        if ($victime_social == "Autre") {
+            $this->validate(
+                $request,
+                [
+                    'autre_victime'                                 =>    'required'
+                ]
+            );
+        }
+        if ($dossiers == "Copie diplomes ou attestations") {
+            $this->validate(
+                $request,
+                [
+                    'autre_diplomes_fournis'                         =>    'required',
+                    'nbre_pieces'                                    =>    'required'
+                ]
+            );
+        }
+        
+        $note = 0;
+
+        if ($travail_renumeration == "Oui") {
+            $note = $note + 1;
+        } elseif ($travail_renumeration == "Non") {
+            $note = $note + 5;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($handicap == "Oui") {
+            $note = $note + 5;
+        } elseif ($handicap == "Non") {
+            $note = $note + 0;
+        } else {
+            $note = $note + 0;
+        }
+
         if ($sexe == "M") {
-            $civilite = "M.";
+            $note = $note + 1;
         } elseif ($sexe == "F") {
+            $note = $note + 2;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($salaire == "Indécent") {
+            $note = $note + 5;
+        } elseif ($salaire == "Moyen") {
+            $note = $note + 2;
+        } elseif ($salaire == "Bien") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($situation_economique == "Très faible") {
+            $note = $note + 5;
+        } elseif ($situation_economique == "Faible") {
+            $note = $note + 4;
+        } elseif ($situation_economique == "Moyenne") {
+            $note = $note + 2;
+        } elseif ($situation_economique == "Correcte") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($situation_economique == "Emigration irrégulière") {
+            $note = $note + 4;
+        } elseif ($situation_economique == "Déplacé ou démobilisé par le conflit") {
+            $note = $note + 6;
+        } elseif ($situation_economique == "Emprisonnement") {
+            $note = $note + 3;
+        } elseif ($situation_economique == "Aucun") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        if ($diplomespro == "Aucun") {
+            $note = $note + 5;
+        } elseif ($diplomespro == "CAP") {
+            $note = $note + 3;
+        } elseif ($diplomespro == "BEP") {
+            $note = $note + 2;
+        } elseif ($diplomespro == "BT") {
+            $note = $note + 1;
+        } else {
+            $note = $note + 0;
+        }
+
+        $user_id             =   User::latest('id')->first()->id;
+
+        if ($request->input('sexe') == "M") {
+            $civilite = "M.";
+        } elseif ($request->input('sexe') == "F") {
             $civilite = "Mme";
         } else {
             $civilite = "";
         }
 
-        $diplome_id = Diplome::where('name', $request->input('diplome'))->first()->id;
-        $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
-        $communes = Commune::find($commune_id);
-        $region = $communes->arrondissement->departement->region->nom;
+        $telephone = $request->input('telephone');
+        $telephone = str_replace(' ', '', $telephone);
+        $telephone_secondaire = $request->input('telephone_secondaire');
+        $telephone_secondaire = str_replace(' ', '', $telephone_secondaire);
         
-        $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
+        $diplome_id = Diplome::where('sigle', $request->input('diplome'))->first()->id;
+        $diplomepro_id = Diplomespro::where('sigle', $request->input('diplomespro'))->first()->id;
         $familiale_id = Familiale::where('name', $request->input('familiale'))->first()->id;
-        $professionnelle_id = Professionnelle::where('name', $request->input('professionnelle'))->first()->id;
-        $etude_id     = Etude::where('name', $request->input('etude'))->first()->id;
+        $commune_id = Commune::where('nom', $request->input('commune'))->first()->id;
+        $etude_id = Etude::where('name', $request->input('etude'))->first()->id;
+        $modules_id = Module::where('name', $request->input('module'))->first()->id;
 
+        $cin = $request->input('cin');
+        $cin = str_replace(' ', '', $cin);
+        
+        $user_connect           =              Auth::user();
+        $updated_by             =              strtolower($user_connect->username);
+        
         $utilisateur->sexe                      =      $sexe;
         $utilisateur->civilite                  =      $civilite;
         $utilisateur->firstname                 =      $request->input('prenom');
         $utilisateur->name                      =      $request->input('nom');
+        $utilisateur->email                     =      $request->input('email');
         $utilisateur->username                  =      $request->input('username');
         $utilisateur->telephone                 =      $telephone;
         $utilisateur->bp                        =      $request->input('bp');
@@ -511,54 +835,58 @@ class IndividuelleController extends Controller
         $utilisateur->lieu_naissance            =      $request->input('lieu_naissance');
         $utilisateur->adresse                   =      $request->input('adresse');
         $utilisateur->familiales_id             =      $familiale_id;
-        $utilisateur->professionnelles_id       =      $professionnelle_id;
-        $utilisateur->updated_by                =      $updated_by;
+        $utilisateur->updated_by                =      $request->input('updated_by');
 
         $utilisateur->save();
 
-        $demandeur->numero                      =      $request->input('numero');
+        $types_demandes_id = TypesDemande::where('name', 'Individuelle')->first()->id;
+        
+        $demandeur->cin                         =     $cin;
+        $demandeur->numero_dossier              =     $request->input('numero_dossier');
         $demandeur->types_demandes_id           =      $types_demandes_id;
         $demandeur->users_id                    =      $utilisateur->id;
 
         $demandeur->save();
 
-        $individuelle->statut                      =     $request->input('statut');
-        $individuelle->cin                         =     $cin;
-        $individuelle->experience                  =     $request->input('experience');
-        $individuelle->information                 =     $request->input('information');
-        $individuelle->nbre_pieces                 =     $request->input('nombre_de_piece');
-        $individuelle->prerequis                   =     $request->input('prerequis');
-        $individuelle->date_depot                  =     $request->input('date_depot');
-        $individuelle->etablissement               =     $request->input('etablissement');
-        $individuelle->telephone                   =     $autre_tel;
-        $individuelle->optiondiplome               =     $request->input('optiondiplome');
-        $individuelle->adresse                     =     $request->input('adresse');
-        $individuelle->motivation                  =     $request->input('motivation');
-        $individuelle->autres_diplomes             =     $request->input('autres_diplomes');
-        $individuelle->qualification               =     $request->input('qualification');
-        $individuelle->projetprofessionnel         =     $request->input('projet_professionnel');
-        if ($request->input('programme') !== null) {
-            $individuelle->programmes_id           =     $programme_id;
-        }
-        if ($request->input('convention') !== null) {
-            $individuelle->conventions_id           =     $convention_id;
-        }
-        $individuelle->diplomes_id                 =     $diplome_id;
-        $individuelle->communes_id                 =     $commune_id;
-        $individuelle->etudes_id                   =     $etude_id;
-        $individuelle->demandeurs_id               =     $demandeur->id;
-        $individuelle->antennes_id                 =     '1';
-
+        $projets_id = Projet::where('name', 'PROJET DE REHABILITATION DE LA ROUTE SENOBA-ZIGUINCHOR-MPACK ET DE DESENCLAVEMENT DES REGIONS DU SUD')->first()->id;
+        $projet = Projet::find($projets_id);
+        /* $dossier = implode(";", $request->get('dossier')); */
+        
+        $individuelle->date_depot                      =     $request->input('date_depot');
+        $individuelle->nbre_pieces                     =     $request->input('nbre_pieces');
+        $individuelle->optiondiplome                   =     $request->input('specialite');
+        $individuelle->adresse                         =     $request->input('adresse');
+        $individuelle->autres_diplomes                 =     $request->input('autres_diplomes');
+        $individuelle->autres_diplomes_pros            =     $request->input('autres_diplomes_pros');
+        $individuelle->nbre_enfants                    =     $request->input('enfant');
+        $individuelle->annee_diplome                   =     $request->input('annee_diplome');
+        $individuelle->annee_diplome_professionelle    =     $request->input('annee_diplome_professionelle');
+        $individuelle->activite_travail                =     $request->input('activite_travail');
+        $individuelle->travail_renumeration            =     $request->input('travail_renumeration');
+        $individuelle->activite_avenir                 =     $request->input('activite_avenir');
+        $individuelle->handicap                        =     $request->input('handicap');
+        $individuelle->preciser_handicap               =     $request->input('preciser_handicap');
+        $individuelle->situation_economique            =     $situation_economique;
+        $individuelle->victime_social                  =     $request->input('victime_social');
+        $individuelle->autre_victime                   =     $request->input('autre_victime');
+        $individuelle->salaire                         =     $salaire;
+        $individuelle->note                            =     $note;
+        $individuelle->dossier                         =     $request->input('dossiers');
+        $individuelle->autre_diplomes_fournis          =     $request->input('autre_diplomes_fournis');
+        $individuelle->telephone                       =     $telephone_secondaire;
+        $individuelle->etudes_id                       =     $etude_id;
+        $individuelle->communes_id                     =     $commune_id;
+        $individuelle->diplomes_id                     =     $diplome_id;
+        $individuelle->diplomespros_id                 =     $diplomepro_id;
+        $individuelle->modules_id                      =     $modules_id;
+        $individuelle->projets_id                      =     $projets_id;
+        $individuelle->demandeurs_id                   =     $demandeur->id;
+            
         $individuelle->save();
         
-        $individuelle->modules()->sync($request->input('modules'));
-        $individuelle->projets()->sync($request->input('projets'));
 
-        if (!$user_connect->hasRole('Demandeur') && !$user_connect->hasRole('Individuelle') && !$user_connect->hasRole('Collective') && !$user_connect->hasRole('Pcharge')) {
-            return redirect()->route('individuelles.index')->with('success', 'demande modifiée avec succès !');
-        } else {
-            return redirect()->route('profiles.show', ['user'=>$user_connect, 'user_connect'=>$user_connect])->with('success', 'votre demande modifiée avec succès !');
-        }
+        $message = 'demandeur '.$utilisateur->firstname.' '.$utilisateur->name.' a été modifié avec succès';
+        return redirect()->route('individuelles.index')->with(compact('message'));
     }
 
     /**

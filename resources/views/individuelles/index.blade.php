@@ -39,25 +39,9 @@
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
                                         <th>Commune</th>
-                                        <th>Région</th>
                                         <th style="width:10%;"></th>
                                     </tr>
                                 </thead>
-                                {{--  <tfoot class="table-dark">
-                                    <tr>
-                                        <th>N°</th>
-                                        <th>Cin</th>
-                                        <th>Civilité</th>
-                                        <th>Prenom</th>
-                                        <th>Nom</th>
-                                        <th>Date nais.</th>
-                                        <th>Lieu nais.</th>
-                                        <th>Téléphone</th>
-                                        <th>Commune</th>
-                                        <th>Région</th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>  --}}
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($individuelles as $individuelle)
@@ -71,7 +55,6 @@
                                             <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                             <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                             <td>{!! $individuelle->commune->nom ?? '' !!}</td>
-                                            <td>{!! $individuelle->commune->arrondissement->departement->region->sigle ?? '' !!}</td>
                                             <td class="d-flex align-items-baseline text-center-row">
                                                 {{--  @can('update', $individuelle->demandeur)  --}}
                                                 <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
@@ -80,8 +63,8 @@
                                                 </a>
                                                 {{--  @endcan  --}}
                                                 &nbsp;
-                                                <a href="{{ url('indetails', ['$id' => $individuelle->id]) }}" class='btn btn-primary btn-sm'
-                                                    title="voir">
+                                                <a href="{{ url('individuelles', ['$id' => $individuelle->id]) }}"
+                                                    class='btn btn-primary btn-sm' title="voir" target="_blank">
                                                     <i class="far fa-eye">&nbsp;</i>
                                                 </a>
                                                 &nbsp;

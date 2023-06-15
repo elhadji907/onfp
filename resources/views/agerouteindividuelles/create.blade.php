@@ -31,7 +31,7 @@
                                     <label for="date_depot">{{ __('Date dépôt') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="date_depot" {{ $errors->has('date_r') ? 'is-invalid' : '' }} type="date"
-                                        class="form-control @error('date_depot') is-invalid @enderror" name="date_depot"
+                                        class="form-control form-control-sm @error('date_depot') is-invalid @enderror" name="date_depot"
                                         placeholder="Votre date dépôt" value="{{ old('date_depot') }}"
                                         autocomplete="username">
                                     @error('date_depot')
@@ -44,7 +44,7 @@
                                     <label for="numero_dossier">{{ __('Numero de dossier') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="numero_dossier" type="text"
-                                        class="form-control @error('numero_dossier') is-invalid @enderror"
+                                        class="form-control form-control-sm @error('numero_dossier') is-invalid @enderror"
                                         name="numero_dossier" placeholder="Votre et numero de dossier"
                                         value="{{ old('numero_dossier') }}" autocomplete="numero_dossier">
                                     @error('numero_dossier')
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="cin">{{ __('CIN') }}(<span class="text-danger">*</span>)</label>
-                                    <input id="cin" type="text" class="form-control @error('cin') is-invalid @enderror"
+                                    <input id="cin" type="text" class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         name="cin" placeholder="Votre et cin" value="{{ old('cin') }}"
                                         autocomplete="cin">
                                     @error('cin')
@@ -67,7 +67,7 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="prenom">{{ __('Prénom') }}(<span class="text-danger">*</span>)</label>
                                     <input id="prenom" type="text"
-                                        class="form-control @error('prenom') is-invalid @enderror" name="prenom"
+                                        class="form-control form-control-sm @error('prenom') is-invalid @enderror" name="prenom"
                                         placeholder="Votre et prenom" value="{{ old('prenom') }}" autocomplete="prenom">
                                     @error('prenom')
                                         <span class="invalid-feedback" role="alert">
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="nom">{{ __('Nom') }}(<span class="text-danger">*</span>)</label>
-                                    <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror"
+                                    <input id="nom" type="text" class="form-control form-control-sm @error('nom') is-invalid @enderror"
                                         name="nom" placeholder="Votre et nom" value="{{ old('nom') }}"
                                         autocomplete="nom">
                                     @error('nom')
@@ -90,7 +90,7 @@
                                     <label for="date_naiss">{{ __('Date de naissance') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="date_naiss" {{ $errors->has('date_naiss') ? 'is-invalid' : '' }}
-                                        type="date" class="form-control @error('date_naiss') is-invalid @enderror"
+                                        type="date" class="form-control form-control-sm @error('date_naiss') is-invalid @enderror"
                                         name="date_naiss" placeholder="Votre date de naissance"
                                         value="{{ old('date_naiss') }}" autocomplete="username">
                                     @error('date_naiss')
@@ -103,7 +103,7 @@
                                     <label for="lieu_naissance">{{ __('Lieu de naissance') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="lieu_naissance" type="text"
-                                        class="form-control @error('lieu_naissance') is-invalid @enderror"
+                                        class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
                                         name="lieu_naissance" placeholder="Votre lieu de naissance"
                                         value="{{ old('lieu_naissance') }}" autocomplete="lieu_naissance">
                                     @error('lieu_naissance')
@@ -115,7 +115,7 @@
                                 {{--  <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="email">{{ __('Addresse E-Mail') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    <input id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror"
                                         name="email" placeholder="Votre adresse e-mail" value="{{ old('email') }}"
                                         autocomplete="email">
                                     @error('email')
@@ -129,7 +129,7 @@
                                     <label for="telephone">{{ __('Telephone') }}(<span
                                             class="text-danger">*</span>)</label>
                                     <input id="telephone" type="text"
-                                        class="form-control @error('telephone') is-invalid @enderror" name="telephone"
+                                        class="form-control form-control-sm @error('telephone') is-invalid @enderror" name="telephone"
                                         placeholder="70 000 00 00" value="{{ old('telephone') }}"
                                         autocomplete="telephone">
                                     @error('telephone')
@@ -141,7 +141,7 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="telephone_secondaire">{{ __('Téléphone parent (ou tuteur)') }}</label>
                                     <input id="telephone_secondaire" type="text"
-                                        class="form-control @error('telephone_secondaire') is-invalid @enderror"
+                                        class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
                                         name="telephone_secondaire" placeholder="70 000 00 00"
                                         value="{{ old('telephone_secondaire') }}" autocomplete="telephone_secondaire">
                                     @error('telephone_secondaire')
@@ -153,7 +153,7 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="adresse">{{ __('Adresse de résidence') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
+                                    <textarea class="form-control form-control-sm  @error('adresse') is-invalid @enderror" name="adresse" id="adresse" rows="1"
                                         placeholder="Votre adresse complète">{{ old('adresse') }}</textarea>
                                     @error('adresse')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Commune :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('commune', $communes, null, ['placeholder' => '', 'class' => 'form-control', 'id' => 'commune', 'data-width' => '100%']) !!}
+                                    {!! Form::select('commune', $communes, null, ['placeholder' => '', 'class' => 'form-control form-control-sm', 'id' => 'commune', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('commune'))
                                             @foreach ($errors->get('commune') as $message)
@@ -172,7 +172,7 @@
                                 </div>
                                 {{-- <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Situation professionnelle :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('professionnelle', $professionnelle, null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
+                                    {!! Form::select('professionnelle', $professionnelle, null, ['placeholder' => 'Votre situation professionnelle', 'class' => 'form-control form-control-sm', 'id' => 'professionnelle', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('professionnelle'))
                                             @foreach ($errors->get('professionnelle') as $message)
@@ -183,7 +183,7 @@
                                 </div> --}}
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label>{{ __('Situation matrimoniale  : ') }}</label>
-                                    {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control', 'id' => 'familiale', 'data-width' => '100%']) !!}
+                                    {!! Form::select('familiale', $familiale, null, ['placeholder' => 'Votre situation familiale', 'class' => 'form-control form-control-sm', 'id' => 'familiale', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('familiale'))
                                             @foreach ($errors->get('familiale') as $message)
@@ -195,7 +195,7 @@
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label>{{ __("Nombre d'enfants en charge : ") }}</label> (<span
                                         class="text-danger">*</span>)
-                                    {!! Form::number('enfant', null, ['placeholder' => 'Ex: 2', 'class' => 'form-control', 'min' => '0', 'max' => '50']) !!}
+                                    {!! Form::number('enfant', null, ['placeholder' => 'Ex: 2', 'class' => 'form-control form-control-sm', 'min' => '0', 'max' => '50']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('enfant'))
                                             @foreach ($errors->get('enfant') as $message)
@@ -206,7 +206,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     {!! Form::label('Genre :', null, ['class' => 'control-label']) !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
+                                    {!! Form::select('sexe', ['M' => 'M', 'F' => 'F'], null, ['placeholder' => 'sélectionner sexe', 'class' => 'form-control form-control-sm-lg', 'id' => 'sexe', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('sexe'))
                                             @foreach ($errors->get('sexe') as $message)
@@ -222,7 +222,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     <label>{{ __("Niveau d'étude : ") }}</label> (<span class="text-danger">*</span>)
-                                    {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control', 'id' => 'etude', 'data-width' => '100%']) !!}
+                                    {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control form-control-sm', 'id' => 'etude', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('etude'))
                                             @foreach ($errors->get('etude') as $message)
@@ -234,7 +234,7 @@
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     <label>{{ __('Diplômes académiques : ') }}</label> (<span
                                         class="text-danger">*</span>)
-                                    {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control', 'id' => 'diplome', 'data-width' => '100%']) !!}
+                                    {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control form-control-sm', 'id' => 'diplome', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('diplome'))
                                             @foreach ($errors->get('diplome') as $message)
@@ -245,7 +245,7 @@
                                 </div>
                                 <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                     <label>{{ __("Année d'obtention : ") }}</label>
-                                    {!! Form::number('annee_diplome', null, ['placeholder' => 'Ex: 2010', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
+                                    {!! Form::number('annee_diplome', null, ['placeholder' => 'Ex: 2010', 'class' => 'form-control form-control-sm', 'min' => '2000', 'max' => '2022']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('annee_diplome'))
                                             @foreach ($errors->get('annee_diplome') as $message)
@@ -256,7 +256,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="autres_diplomes">{{ __('Si autre, précisez :') }}</label>
-                                    <textarea class="form-control  @error('autres_diplomes') is-invalid @enderror" name="autres_diplomes"
+                                    <textarea class="form-control form-control-sm  @error('autres_diplomes') is-invalid @enderror" name="autres_diplomes"
                                         id="autres_diplomes" rows="1"
                                         placeholder="autre diplôme académique">{{ old('autres_diplomes') }}</textarea>
                                     @error('autres_diplomes')
@@ -266,7 +266,7 @@
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     <label>{{ __('Diplômes professionnels : ') }}</label>(<span
                                         class="text-danger">*</span>)
-                                    {!! Form::select('diplomespro', $diplomespros, null, ['placeholder' => 'diplomespro', 'class' => 'form-control', 'id' => 'diplome_pros', 'data-width' => '100%']) !!}
+                                    {!! Form::select('diplomespro', $diplomespros, null, ['placeholder' => 'diplomespro', 'class' => 'form-control form-control-sm', 'id' => 'diplome_pros', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('diplomespro'))
                                             @foreach ($errors->get('diplomespro') as $message)
@@ -277,7 +277,7 @@
                                 </div>
                                 <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                     <label>{{ __("Année d'obtention : ") }}</label> :
-                                    {!! Form::number('annee_diplome_professionelle', null, ['placeholder' => 'Ex: 2021', 'class' => 'form-control', 'min' => '2000', 'max' => '2022']) !!}
+                                    {!! Form::number('annee_diplome_professionelle', null, ['placeholder' => 'Ex: 2021', 'class' => 'form-control form-control-sm', 'min' => '2000', 'max' => '2022']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('annee_diplome_professionelle'))
                                             @foreach ($errors->get('annee_diplome_professionelle') as $message)
@@ -289,7 +289,7 @@
                                 <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
                                     <label for="specialite">{{ __('Spécialité') }}</label>
                                     <input id="specialite" type="specialite"
-                                        class="form-control @error('specialite') is-invalid @enderror" name="specialite"
+                                        class="form-control form-control-sm @error('specialite') is-invalid @enderror" name="specialite"
                                         placeholder="Ex: Comptabilité" value="{{ old('specialite') }}"
                                         autocomplete="specialite">
                                     <small id="emailHelp" class="form-text text-muted">
@@ -302,7 +302,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="autres_diplomes_pros">{{ __('Si autre, précisez :') }}</label>
-                                    <textarea class="form-control  @error('autres_diplomes_pros') is-invalid @enderror" name="autres_diplomes_pros"
+                                    <textarea class="form-control form-control-sm  @error('autres_diplomes_pros') is-invalid @enderror" name="autres_diplomes_pros"
                                         id="autres_diplomes_pros" rows="1"
                                         placeholder="autre diplôme professionnel">{{ old('autres_diplomes_pros') }}</textarea>
                                     @error('autres_diplomes_pros')
@@ -318,7 +318,7 @@
                                     <label
                                         for="activite_travail">{{ __('Quellle activité ou travail exercez-vous ? ') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('activite_travail') is-invalid @enderror" name="activite_travail"
+                                    <textarea class="form-control form-control-sm  @error('activite_travail') is-invalid @enderror" name="activite_travail"
                                         id="activite_travail" rows="1"
                                         placeholder="Votre activité ou travail que vous exercez">{{ old('activite_travail') }}</textarea>
                                     @error('activite_travail')
@@ -369,7 +369,7 @@
                                     <label
                                         for="activite_avenir">{{ __('Dans quellle activité voulez-vous travailler à l\'avenir ? ') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('activite_avenir') is-invalid @enderror" name="activite_avenir"
+                                    <textarea class="form-control form-control-sm  @error('activite_avenir') is-invalid @enderror" name="activite_avenir"
                                         id="activite_avenir" rows="1"
                                         placeholder="Votre activité ou travail dans l'avenir">{{ old('activite_avenir') }}</textarea>
                                     <small id="emailHelp" class="form-text text-muted">
@@ -406,7 +406,7 @@
                                 </div>
                                 <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
                                     <label for="preciser_handicap">{{ __('Si oui, précisez-le ou lesquels ? ') }}</label>
-                                    <textarea class="form-control  @error('preciser_handicap') is-invalid @enderror" name="preciser_handicap"
+                                    <textarea class="form-control form-control-sm  @error('preciser_handicap') is-invalid @enderror" name="preciser_handicap"
                                         id="preciser_handicap" rows="1"
                                         placeholder="Précisez le type de handicap">{{ old('preciser_handicap') }}</textarea>
                                     @error('preciser_handicap')
@@ -474,7 +474,7 @@
                                 </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="autre_victime">{{ __('Si autre, précisez :') }}</label>
-                                    <textarea class="form-control  @error('autre_victime') is-invalid @enderror" name="autre_victime" id="autre_victime"
+                                    <textarea class="form-control form-control-sm  @error('autre_victime') is-invalid @enderror" name="autre_victime" id="autre_victime"
                                         rows="1"
                                         placeholder="autre diplôme professionnel">{{ old('autre_victime') }}</textarea>
                                     @error('autre_victime')
@@ -486,7 +486,7 @@
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
                                             class="text-danger">*</span>)</label>
-                                    <textarea class="form-control  @error('etablissement') is-invalid @enderror"
+                                    <textarea class="form-control form-control-sm  @error('etablissement') is-invalid @enderror"
                                         name="etablissement" id="etablissement" rows="1"
                                         placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
                                     @error('etablissement')
@@ -500,7 +500,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Localité :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('localites', $projetLocalites, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'localite']) !!}
+                                    {!! Form::select('localites', $projetLocalites, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control form-control-sm', 'id' => 'localite']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('localites'))
                                             @foreach ($errors->get('localites') as $message)
@@ -511,7 +511,7 @@
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     {!! Form::label('Zone :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('zones', $projetZones, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'zone']) !!}
+                                    {!! Form::select('zones', $projetZones, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control form-control-sm', 'id' => 'zone']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('zones'))
                                             @foreach ($errors->get('zones') as $message)
@@ -522,7 +522,7 @@
                                 </div>
                                 <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                     {!! Form::label('module :') !!}(<span class="text-danger">*</span>)
-                                    {!! Form::select('modules', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control', 'id' => 'module-ageroute']) !!}
+                                    {!! Form::select('modules', $projetModules, null, ['placeholder' => '', 'data-width' => '100%', 'class' => 'form-control form-control-sm', 'id' => 'module-ageroute']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('modules'))
                                             @foreach ($errors->get('modules') as $message)
@@ -552,7 +552,7 @@
                                 <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
                                     <label
                                         for="autre_diplomes_fournis"><b>{{ __('Total documents fournis :') }}</b></label>
-                                    {!! Form::number('nbre_pieces', null, ['placeholder' => 'Ex: 4', 'class' => 'form-control', 'min' => '4', 'max' => '25']) !!}
+                                    {!! Form::number('nbre_pieces', null, ['placeholder' => 'Ex: 4', 'class' => 'form-control form-control-sm', 'min' => '4', 'max' => '25']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
                                         @if ($errors->has('nbre_pieces'))
                                             @foreach ($errors->get('nbre_pieces') as $message)
@@ -563,7 +563,7 @@
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
                                     <label for="autre_diplomes_fournis">{{ __('Si autre, précisez :') }}</label>
-                                    <textarea class="form-control  @error('autre_diplomes_fournis') is-invalid @enderror" name="autre_diplomes_fournis"
+                                    <textarea class="form-control form-control-sm  @error('autre_diplomes_fournis') is-invalid @enderror" name="autre_diplomes_fournis"
                                         id="autre_diplomes_fournis" rows="4"
                                         placeholder="lister les autres diplômes fournis">{{ old('autre_diplomes_fournis') }}</textarea>
                                     <small id="emailHelp" class="form-text text-muted">
@@ -578,9 +578,9 @@
                     </div>
                 </div>
                 <br />
-                <input type="hidden" name="password" class="form-control" id="exampleInputPassword1"
+                <input type="hidden" name="password" class="form-control form-control-sm" id="exampleInputPassword1"
                     placeholder="Mot de passe">
-                {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control']) !!}
+                {!! Form::hidden('password', null, ['placeholder' => 'Votre mot de passe', 'class' => 'form-control form-control-sm']) !!}
                 <div class="col-xs-12 col-sm-12 col-md-12 text-right">
                     <button type="submit" class="btn btn-outline-primary"><i
                             class="far fa-paper-plane"></i>&nbsp;Enregistrer</button>
