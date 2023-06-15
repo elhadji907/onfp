@@ -102,18 +102,17 @@
         .rtl table tr td:nth-child(2) {
             text-align: left;
         }
-
     </style>
     <?php $i = 1; ?>
     <div class="invoice-box justify-content-center">
         <div class="d-flex col-lg-12 margin-tb justify-content-between align-items-center pb-3">
-            <a href="{{ url('fichesuivieval', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+            <a href="{{ url('suivieval', ['$module' => $findividuelle->module->id, '$projet' => $findividuelle->projet->id, '$programme' => $findividuelle->programme->id, '$findividuelle' => $findividuelle->id]) }}"
                 target="_blank">
                 <div class="btn btn-outline-info btn-md" title="afficher">
                     Fiche de suivi
                 </div>
             </a>
-            <a href="{{ url('pvevaluation', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+            <a href="{{ url('pvevaluation', ['$module' => $findividuelle->module->id, '$projet' => $findividuelle->projet->id, '$programme' => $findividuelle->programme->id, '$findividuelle' => $findividuelle->id]) }}"
                 target="_blank">
                 <div class="btn btn-outline-primary btn-md" title="afficher">
                     PV Evaluation
@@ -233,7 +232,7 @@
                             </div>
                         @endif
                         <div align="right" class="pb-3">
-                            <a href="{{ url('beneficiairesformation', ['$module' => $findividuelle->module->id,'$projet' => $findividuelle->projet->id,'$programme' => $findividuelle->programme->id,'$findividuelle' => $findividuelle->id]) }}"
+                            <a href="{{ url('beneficiairesformation', ['$module' => $findividuelle->module->id, '$projet' => $findividuelle->projet->id, '$programme' => $findividuelle->programme->id, '$findividuelle' => $findividuelle->id]) }}"
                                 target="_blank">
                                 <div class="btn btn-outline-success  btn-md" title="ajouter bénéficiaires">
                                     <i class="fas fa-plus"></i>
@@ -260,7 +259,8 @@
                         <tbody class="details" id="liste">
                             <?php $i = 1; ?>
                             @foreach ($formation->individuelles as $individuelle)
-                                @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))
+                                {{--  @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))  --}}
+                                @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name)
                                     <tr>
                                         <td align="center">{{ $i++ }}</td>
                                         <td>
@@ -287,7 +287,7 @@
                                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                                                 </a>
                                             @else
-                                               {{--   <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
+                                                {{--   <a href="{{ url('formationcandidatsdelete', ['$individuelle' => $individuelle->id,'$findividuelle' => $findividuelle->id]) }}"
                                                     title="retirer" class="btn btn-outline-warning btn-sm mt-0" target="_blank">
                                                     <i class="fa fa-share" aria-hidden="true"></i>
                                                 </a>  --}}

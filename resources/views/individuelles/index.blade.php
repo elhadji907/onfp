@@ -12,11 +12,14 @@
                         {{ session('message') }}
                     </div>
                 @endif
-
                 <div class="card">
                     <div class="card-header">
-                        <i class="fas fa-table"></i>
-                        Liste des demandeurs individuelles
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a class="btn btn-outline-primary btn-sm"
+                                    href="{{ route('individuelles.index') }}"><i class="fas fa-sync-alt"></i>&nbsp;actualiser</a>
+                            </li>
+                            <li class="breadcrumb-item active">Liste des demandes individuelles</li>
+                        </ul>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -31,37 +34,33 @@
                                 <thead>
                                     <tr>
                                         <th style="width:5%;">N°</th>
-                                        <th>Cin</th>
-                                        <th>Civilité</th>
-                                        <th>Prenom</th>
+                                        <th style="width:10%;">Cin</th>
+                                        <th>Prénom</th>
                                         <th>Nom</th>
-                                        <th>Date nais.</th>
+                                        <th style="width:8%;">Date nais.</th>
                                         <th>Lieu nais.</th>
                                         <th>Téléphone</th>
                                         <th>Commune</th>
-                                        <th style="width:10%;"></th>
+                                        <th style="width:8%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($individuelles as $individuelle)
                                         <tr>
-                                            <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
-                                            <td>{!! $individuelle->demandeur->cin !!}</td>
-                                            <td>{!! $individuelle->demandeur->user->civilite !!}</td>
-                                            <td>{!! $individuelle->demandeur->user->firstname !!} </td>
-                                            <td>{!! $individuelle->demandeur->user->name !!} </td>
-                                            <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                            <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
-                                            <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                            <td>{!! $individuelle->commune->nom ?? '' !!}</td>
-                                            <td class="d-flex align-items-baseline text-center-row">
-                                                {{--  @can('update', $individuelle->demandeur)  --}}
+                                            <td style="vertical-align: middle;">{!! $individuelle->demandeur->numero_dossier !!}</td>
+                                            <td style="vertical-align: middle;">{!! $individuelle->demandeur->cin !!}</td>
+                                            <td style="vertical-align: middle;">{!! $individuelle->demandeur->user->firstname !!} </td>
+                                            <td style="vertical-align: middle;">{!! $individuelle->demandeur->user->name !!} </td>
+                                            <td style="vertical-align: middle;">{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
+                                            <td style="vertical-align: middle;">{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
+                                            <td style="vertical-align: middle;">{!! $individuelle->demandeur->user->telephone !!}</td>
+                                            <td style="vertical-align: middle;">{!! $individuelle->commune->nom ?? '' !!}</td>
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 <a href="{!! url('individuelles/' . $individuelle->id . '/edit') !!}" class='btn btn-success btn-sm'
                                                     title="modifier">
                                                     <i class="far fa-edit">&nbsp;</i>
                                                 </a>
-                                                {{--  @endcan  --}}
                                                 &nbsp;
                                                 <a href="{{ url('individuelles', ['$id' => $individuelle->id]) }}"
                                                     class='btn btn-primary btn-sm' title="voir" target="_blank">
@@ -69,9 +68,18 @@
                                                 </a>
                                                 &nbsp;
                                                 @can('delete', $individuelle)
-                                                {!! Form::open(['method' => 'DELETE', 'url' => 'individuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
-                                                {!! Form::close() !!}
+                                                    {!! Form::open([
+                                                        'method' => 'DELETE',
+                                                        'url' => 'individuelles/' . $individuelle->id,
+                                                        'id' => 'deleteForm',
+                                                        'onsubmit' => 'return ConfirmDelete()',
+                                                    ]) !!}
+                                                    {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                        'type' => 'submit',
+                                                        'class' => 'btn btn-danger btn-sm',
+                                                        'title' => 'supprimer',
+                                                    ]) !!}
+                                                    {!! Form::close() !!}
                                                 @endcan
                                             </td>
                                         </tr>

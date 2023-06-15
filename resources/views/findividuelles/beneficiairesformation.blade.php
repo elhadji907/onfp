@@ -44,7 +44,8 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $key => $individuelle)
-                                            @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name) && $individuelle->statut == 'accepter')
+                                            {{--  @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name) && $individuelle->statut == 'accepter')  --}}
+                                            @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name)
                                                 <tr>
                                                     <td>{!! $individuelle->demandeur->numero_dossier !!}</td>
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
@@ -53,8 +54,8 @@
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->lieu_naissance !!}</td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
-                                                    <td>{!! $individuelle->localite->nom ?? '' !!}</td>
-                                                    <td>{!! $individuelle->zone->nom ?? '' !!}</td>
+                                                    <td>{!! $individuelle->commune->arrondissement->departement->nom ?? '' !!}</td>
+                                                    <td>{!! $individuelle->commune->nom ?? '' !!}</td>
                                                     <td ALIGN="CENTER">{!! $individuelle->note ?? '' !!}</td>
                                                     <td ALIGN="CENTER">
                                                         <?php $h = 1; ?>

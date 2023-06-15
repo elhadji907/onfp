@@ -38,7 +38,7 @@
                                         <th width="50%">Opérateur</th>
                                         <th width="10%" style="text-align: center; vertical-align: middle;">Sigle</th>
                                         <th width="5%" style="text-align: center; vertical-align: middle;">Modules</th>
-                                        {{--  <th width="5%">Formations</th>  --}}
+                                        <th width="5%">Formations</th>
                                        {{--   <th style="width:1%;"></th>  --}}
                                         <th style="width:1%;"></th>
                                         {{--  <th style="width:1%;"></th>  --}}
@@ -73,16 +73,15 @@
                                                         <i class="fa fa-plus"></i>
                                                     </a>
                                                 </small>
-
                                             </td>
-                                           {{--   <td style="text-align: center; vertical-align: middle;">
+                                            <td style="text-align: center; vertical-align: middle;">
                                                 @foreach ($operateur->formations as $key => $formation)
                                                     @if ($loop->last)
                                                         <a class="nav-link badge badge-default" href="#"
                                                             target="_blank">{!! $loop->count !!}</a>
                                                     @endif
                                                 @endforeach
-                                            </td>  --}}
+                                            </td>
                                             
                                            {{--   <td style="text-align: center; vertical-align: middle;">
                                                 @can('update', $operateur)

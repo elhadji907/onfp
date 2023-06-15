@@ -21,6 +21,9 @@ use App\Models\Operateur;
 use App\Models\User;
 use Illuminate\Http\Request;
 use DB;
+use PDF;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class FindividuelleController extends Controller
 {
@@ -224,4 +227,95 @@ class FindividuelleController extends Controller
         return view('findividuelles.beneficiairesformation', compact('code', 'projet_name', 'individuelles', 'module_name', 'programme', 'findividuelle', 'projet_id', 'module_id', 'programme_id'));
     }
 
+    public function suivieval($module, $projet, $programme, $findividuelle)
+    {
+        $individuelles      =           Individuelle::get();
+        $module             =           Module::find($module);
+        $module_id          =           $module->id;
+        $projet             =           Projet::find($projet);
+        $findividuelle      =           Findividuelle::find($findividuelle);
+        $programme          =           Programme::find($programme);
+        $programme_id       =           $programme->id;
+        $projet_name        =           $projet->name;
+        $projet_id          =           $projet->id;
+        $module_name        =           $module->name;
+        $code               =           $findividuelle->formation->code;
+        $formation          =           $findividuelle->formation;
+        $beneficiaires      =           $findividuelle->formation->beneficiaires;
+
+        $beneficiaires = htmlentities($beneficiaires, ENT_NOQUOTES, 'utf-8');
+        $beneficiaires = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $beneficiaires);
+        $beneficiaires = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $beneficiaires);
+        $beneficiaires = preg_replace('#&[^;]+;#', '', $beneficiaires);
+        
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('findividuelles.suivieval', compact('beneficiaires', 'formation', 'findividuelle')));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('Fiche de suivi evaluation pour les '.$beneficiaires.' du '.$anne.'.pdf', ['Attachment' => false]);
+    }
+    public function pvevaluation($module, $projet, $programme, $findividuelle)
+    {
+        $individuelles      =           Individuelle::get();
+        $module             =           Module::find($module);
+        $module_id          =           $module->id;
+        $projet             =           Projet::find($projet);
+        $findividuelle      =           Findividuelle::find($findividuelle);
+        $programme          =           Programme::find($programme);
+        $programme_id       =           $programme->id;
+        $projet_name        =           $projet->name;
+        $projet_id          =           $projet->id;
+        $module_name        =           $module->name;
+        $code               =           $findividuelle->formation->code;
+        $formation          =           $findividuelle->formation;
+        $beneficiaires      =           $findividuelle->formation->beneficiaires;
+
+        $beneficiaires = htmlentities($beneficiaires, ENT_NOQUOTES, 'utf-8');
+        $beneficiaires = preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', $beneficiaires);
+        $beneficiaires = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $beneficiaires);
+        $beneficiaires = preg_replace('#&[^;]+;#', '', $beneficiaires);
+        
+        $anne = date('d');
+        $anne = $anne.' '.date('m');
+        $anne = $anne.' '.date('Y');
+        $anne = $anne.' à '.date('H').'h';
+        $anne = $anne.' '.date('i').'min';
+        $anne = $anne.' '.date('s').'s';
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $options->setIsHtml5ParserEnabled(true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('findividuelles.pvevaluation', compact('beneficiaires', 'formation', 'findividuelle')));
+
+        // (Optional) Setup the paper size and orientation
+        /* $dompdf->setPaper('A4', 'portrait'); */
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream('PV evaluation pour les '.$beneficiaires.' du '.$anne.'.pdf', ['Attachment' => false]);
+    }
 }

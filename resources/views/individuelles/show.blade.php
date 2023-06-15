@@ -57,10 +57,10 @@
                 color: white;
                 text-align: center;
                 line-height: 35px;">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/enteteonfpageroute.png'))) }}"
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/onfp_entete.png'))) }}"
                     style="width: 100%; height: auto;">
             </div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br />
             <div align="right">
                 <p><b><u>N° Dossier</u></b> : <span style="color: rgb(255, 0, 0); text-shadow: 2px 2px;">
                         {{ $individuelle->demandeur->numero_dossier ?? '' }}</span></p>
@@ -242,10 +242,10 @@
                 <tbody>
                     <tr>
                         <td colspan="2"><b>{{ __('Département : ') }}</b>
-                            {{ $individuelle->localite->nom ?? '' }}
+                            {{ $individuelle->commune->arrondissement->departement->nom ?? '' }}
                         </td>
                         <td colspan="1"><b>{{ __('Commune : ') }}</b>
-                            {{ $individuelle->zone->nom ?? '' }}
+                            {{ $individuelle->commune->nom ?? '' }}
                         </td>
                     </tr>
                 </tbody>

@@ -220,7 +220,7 @@
                                 <p class="h5 text-white mb-2">PARCOURS ACADEMIQUE ET PROFESSIONNEL</p>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label>{{ __("Niveau d'étude : ") }}</label> (<span class="text-danger">*</span>)
                                     {!! Form::select('etude', $etude, null, ['placeholder' => 'Niveau d\'étude', 'class' => 'form-control form-control-sm', 'id' => 'etude', 'data-width' => '100%']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -231,7 +231,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label>{{ __('Diplômes académiques : ') }}</label> (<span
                                         class="text-danger">*</span>)
                                     {!! Form::select('diplome', $diplomes, null, ['placeholder' => 'diplome', 'class' => 'form-control form-control-sm', 'id' => 'diplome', 'data-width' => '100%']) !!}
@@ -243,7 +243,7 @@
                                         @endif
                                     </small>
                                 </div>
-                                <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                                <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label>{{ __("Année d'obtention : ") }}</label>
                                     {!! Form::number('annee_diplome', null, ['placeholder' => 'Ex: 2010', 'class' => 'form-control form-control-sm', 'min' => '2000', 'max' => '2022']) !!}
                                     <small id="emailHelp" class="form-text text-muted">
@@ -254,6 +254,16 @@
                                         @endif
                                     </small>
                                 </div>
+                                    <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                        <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
+                                                class="text-danger">*</span>)</label>
+                                        <textarea class="form-control form-control-sm  @error('etablissement') is-invalid @enderror"
+                                            name="etablissement" id="etablissement" rows="1"
+                                            placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
+                                        @error('etablissement')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                     <label for="autres_diplomes">{{ __('Si autre, précisez :') }}</label>
                                     <textarea class="form-control form-control-sm  @error('autres_diplomes') is-invalid @enderror" name="autres_diplomes"
@@ -478,18 +488,6 @@
                                         rows="1"
                                         placeholder="autre diplôme professionnel">{{ old('autre_victime') }}</textarea>
                                     @error('autre_victime')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                    <label for="etablissement">{{ __('Etablissement d\'obtention') }}(<span
-                                            class="text-danger">*</span>)</label>
-                                    <textarea class="form-control form-control-sm  @error('etablissement') is-invalid @enderror"
-                                        name="etablissement" id="etablissement" rows="1"
-                                        placeholder="Votre etablissement complète">{{ old('etablissement') }}</textarea>
-                                    @error('etablissement')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

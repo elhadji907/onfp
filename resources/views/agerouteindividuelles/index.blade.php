@@ -2,129 +2,129 @@
 @section('title', 'ONFP - AGEROUTE BENEFICIAIRES')
 @section('content')
     {{--  @can('role-delete')  --}}
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-80 py-2">
-                        <a class="nav-link" href="#">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            {{ __('TOTAL') }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            {{ $total_count }}
-                                        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-80 py-2">
+                    <a class="nav-link" href="#">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ __('TOTAL') }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        {{ $total_count }}
                                     </div>
-                                    <div class="col-auto">
-                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                </div>
+                                <div class="col-auto">
+                                    {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div> --}}
-                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $total_p }}
-                                                {{ __('%') }}</label>
-                                        </div>
+                                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                        <label class="badge badge-pill badge-info">{{ $total_p }}
+                                            {{ __('%') }}</label>
                                     </div>
-                                    {{-- <div class="col-auto">
+                                </div>
+                                {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
                                     </div> --}}
-                                </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success shadow h-80 py-2">
-                        <a class="nav-link"
-                            href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Ziguinchor']) }}"
-                            target="_blank">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            {{ __('ZIGUINCHOR') }}
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            {{ $ziguinchor_count }}
-                                        </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-80 py-2">
+                    <a class="nav-link"
+                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Ziguinchor']) }}"
+                        target="_blank">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        {{ __('ZIGUINCHOR') }}
                                     </div>
-                                    <div class="col-auto">
-                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        {{ $ziguinchor_count }}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div> --}}
-                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $ziguinchor_p }}
-                                                {{ __('%') }}</label>
-                                        </div>
+                                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                        <label class="badge badge-pill badge-info">{{ $ziguinchor_p }}
+                                            {{ __('%') }}</label>
                                     </div>
-                                    {{-- <div class="col-auto">
+                                </div>
+                                {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
                                     </div> --}}
-                                </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-info shadow h-80 py-2">
-                        <a class="nav-link"
-                            href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bignona']) }}"
-                            target="_blank">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                            {{ __('BIGNONA') }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            {{ $bignona_count }}
-                                        </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-80 py-2">
+                    <a class="nav-link"
+                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bignona']) }}"
+                        target="_blank">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        {{ __('BIGNONA') }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        {{ $bignona_count }}
                                     </div>
-                                    <div class="col-auto">
-                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                </div>
+                                <div class="col-auto">
+                                    {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div> --}}
-                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $bignona_p }}
-                                                {{ __('%') }}</label>
-                                        </div>
+                                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                        <label class="badge badge-pill badge-info">{{ $bignona_p }}
+                                            {{ __('%') }}</label>
                                     </div>
-                                    {{-- <div class="col-auto">
+                                </div>
+                                {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
                                     </div> --}}
-                                </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-80 py-2">
-                        <a class="nav-link"
-                            href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}"
-                            target="_blank">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            {{ __('BOUNKILING') }}</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            {{ $bounkiling_count }}
-                                        </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-80 py-2">
+                    <a class="nav-link"
+                        href="{{ url('listerparlocalite', ['$projet' => $projet, '$localite' => 'Bounkiling']) }}"
+                        target="_blank">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        {{ __('BOUNKILING') }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        {{ $bounkiling_count }}
                                     </div>
-                                    <div class="col-auto">
-                                        {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                </div>
+                                <div class="col-auto">
+                                    {{-- <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             {{ __('%') }}</div> --}}
-                                        <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                            <label class="badge badge-pill badge-info">{{ $bounkiling_p }}
-                                                {{ __('%') }}</label>
-                                        </div>
+                                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                        <label class="badge badge-pill badge-info">{{ $bounkiling_p }}
+                                            {{ __('%') }}</label>
                                     </div>
-                                    {{-- <div class="col-auto">
+                                </div>
+                                {{-- <div class="col-auto">
                                         <span data-feather="mail"></span>
                                     </div> --}}
-                                </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
     {{--  @endcan  --}}
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -183,9 +183,37 @@
                                                     {{-- <td>{!! $individuelle->demandeur->numero_dossier !!}</td> --}}
                                                     <td>{!! $individuelle->demandeur->cin !!}</td>
                                                     <td>{!! ucwords(strtolower($individuelle->demandeur->user->firstname)) !!} </td>
-                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                                    <td>{!! strtoupper(
+                                                        preg_replace(
+                                                            '#&[^;]+;#',
+                                                            '',
+                                                            preg_replace(
+                                                                '#&([A-za-z]{2})(?:lig);#',
+                                                                '\1',
+                                                                preg_replace(
+                                                                    '#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#',
+                                                                    '\1',
+                                                                    htmlentities($individuelle->demandeur->user->name, ENT_NOQUOTES, 'utf-8'),
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->date_naissance->format('d/m/Y') !!}</td>
-                                                    <td>{!! strtoupper(preg_replace('#&[^;]+;#', '', preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', preg_replace('#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#', '\1', htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'))))) !!} </td>
+                                                    <td>{!! strtoupper(
+                                                        preg_replace(
+                                                            '#&[^;]+;#',
+                                                            '',
+                                                            preg_replace(
+                                                                '#&([A-za-z]{2})(?:lig);#',
+                                                                '\1',
+                                                                preg_replace(
+                                                                    '#&([A-za-z])(?:uml|circ|tilde|acute|grave|cedil|ring);#',
+                                                                    '\1',
+                                                                    htmlentities($individuelle->demandeur->user->lieu_naissance, ENT_NOQUOTES, 'utf-8'),
+                                                                ),
+                                                            ),
+                                                        ),
+                                                    ) !!} </td>
                                                     <td>{!! $individuelle->demandeur->user->telephone !!}</td>
                                                     <td>{!! $individuelle->localite->nom ?? '' !!}</td>
                                                     {{-- <td>{!! $individuelle->zone->nom ?? '' !!}</td> --}}
@@ -221,8 +249,17 @@
                                                                 <i class="far fa-eye">&nbsp;</i>
                                                             </a>
                                                             &nbsp;
-                                                            {!! Form::open(['method' => 'DELETE', 'url' => 'agerouteindividuelles/' . $individuelle->id, 'id' => 'deleteForm', 'onsubmit' => 'return ConfirmDelete()']) !!}
-                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'title' => 'supprimer']) !!}
+                                                            {!! Form::open([
+                                                                'method' => 'DELETE',
+                                                                'url' => 'agerouteindividuelles/' . $individuelle->id,
+                                                                'id' => 'deleteForm',
+                                                                'onsubmit' => 'return ConfirmDelete()',
+                                                            ]) !!}
+                                                            {!! Form::button('<i class="fa fa-trash"></i>', [
+                                                                'type' => 'submit',
+                                                                'class' => 'btn btn-danger btn-sm',
+                                                                'title' => 'supprimer',
+                                                            ]) !!}
                                                             {!! Form::close() !!}
                                                         </td>
                                                     @endcan

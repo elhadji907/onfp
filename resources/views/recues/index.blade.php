@@ -51,7 +51,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($recues as $recue)
                                         <tr>
-                                            <td style="text-align: center; vertical-align: middle;">{!! optional($recue->courrier->date_recep)->format('d/m/Y') !!}
+                                            <td style="vertical-align: middle;">{!! optional($recue->courrier->date_recep)->format('d/m/Y') !!}
                                             </td>
                                             <td style="text-align: center; vertical-align: middle;">{!! optional($recue->courrier->date_cores)->format('d/m/Y') !!}
                                             </td>

@@ -247,7 +247,7 @@ Route::group([
         Route::get('fichesuivieval/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'fichesuivieval'])->name('fichesuivieval');
         Route::get('listecandidatacceptes/{projet}/{localite}/{module}', [AgerouteformationController::class, 'listecandidatacceptes'])->name('listecandidatacceptes');
         Route::get('listecandidatretenus/{projet}/{zone}/{module}', [AgerouteformationController::class, 'listecandidatretenus'])->name('listecandidatretenus');
-        Route::get('pvevaluation/{module}/{projet}/{programme}/{findividuelle}', [AgerouteformationController::class, 'pvevaluation'])->name('pvevaluation');
+        Route::get('pvevaluation/{module}/{projet}/{programme}/{findividuelle}', [FindividuelleController::class, 'pvevaluation'])->name('pvevaluation');
         
         Route::get('ajouternote/{individuelle}/{findividuelle}', [AgerouteformationController::class, 'ajouternote'])->name('ajouternote');
         Route::get('feuille/{id}', [ListeController::class, 'feuille'])->name('feuille');
@@ -281,6 +281,7 @@ Route::group([
         
         Route::get('moduleoperateurs/{id}', [OperateurController::class, 'moduleoperateurs'])->name('moduleoperateurs');
         Route::post('/moduleoperateur/fetche', [OperateurController::class, 'fetche'])->name('moduleoperateur.fetche');
+        Route::get('suivieval/{module}/{projet}/{programme}/{findividuelle}', [FindividuelleController::class, 'suivieval'])->name('suivieval');
 
         Route::get('beneficiairesformation/{module}/{projet}/{programme}/{findividuelle}', [FindividuelleController::class, 'beneficiairesformation'])->name('beneficiairesformation');
 

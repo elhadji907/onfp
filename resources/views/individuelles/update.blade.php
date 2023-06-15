@@ -481,7 +481,7 @@
                             <p class="h5 text-white mb-2">COMPOSITION DOSSIER</p>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            {{--  <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="autre_diplomes_fournis"><b>{{ __('Composition dossier :') }}</b></label>
                                 <br />
                                 {{ Form::checkbox('dossier', 'Fiche de candidature', true, ['class' => 'name', 'disabled' => 'disabled']) }}
@@ -502,10 +502,10 @@
                                         @endforeach
                                     @endif
                                 </small>
-                            </div>
-                            <div class="form-group col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                            </div>  --}}
+                            <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <label for="autre_diplomes_fournis"><b>{{ __('Total documents fournis :') }}</b></label>
-                                {!! Form::number('nbre_pieces', $individuelle->nbre_pieces, ['placeholder' => 'Ex: 4', 'class' => 'form-control form-control-sm', 'min' => '4', 'max' => '25']) !!}
+                                {!! Form::number('nbre_pieces', $individuelle->nbre_pieces, ['placeholder' => 'Ex: 4', 'class' => 'form-control form-control-sm', 'min' => '0', 'max' => '25']) !!}
                                 <small id="emailHelp" class="form-text text-muted">
                                     @if ($errors->has('nbre_pieces'))
                                         @foreach ($errors->get('nbre_pieces') as $message)
@@ -514,22 +514,16 @@
                                     @endif
                                 </small>
                             </div>
-                            <div class="form-group col-md-6 col-lg-6 col-xs-12 col-sm-12">
-                                <label for="autre_diplomes_fournis"><b>{{ __('Si autres, précisez :') }}</b></label>
+                            <div class="form-group col-md-8 col-lg-8 col-xs-12 col-sm-12">
+                                <label for="autre_diplomes_fournis"><b>{{ __('Précisez-les :') }}</b></label>
                                 <textarea class="form-control form-control-sm  @error('autre_diplomes_fournis') is-invalid @enderror" name="autre_diplomes_fournis"
-                                    id="autre_diplomes_fournis" rows="4"
+                                    id="autre_diplomes_fournis" rows="1"
                                     placeholder="Enumérer les autres diplômes, certificats, titres, attestations, contrats de travail ou stage">{{ $individuelle->autre_diplomes_fournis ?? old('autre_diplomes_fournis') }}</textarea>
                                 @error('autre_diplomes_fournis')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button type="submit" class="btn btn-outline-primary"><i
-                                    class="far fa-paper-plane"></i>&nbsp;Modifier</button>
-                        </div>
-                        <br />
-                        <br />
                         <div class="bg-gradient-secondary text-center">
                             <p class="h5 text-white mb-2">MODULE</p>
                         </div>
@@ -545,6 +539,10 @@
                                     @endif
                                 </small>
                             </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="submit" class="btn btn-outline-primary"><i
+                                    class="far fa-paper-plane"></i>&nbsp;Modifier</button>
                         </div>
                     </div>
                 </div>
