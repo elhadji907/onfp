@@ -37,6 +37,12 @@
                                 @endforeach
                             @else
                         @endif
+                        </span><br />
+                        @if ($recue->courrier->description != '')
+                            <span class="card-category"><b>Indication </b>:
+                                 <span>{!! $recue->courrier->description ?? 'Aucune' !!}, </span>
+                            @else
+                        @endif
                         </span><br /><br />
                         <div class="card">
                             <div class="card-body custom-edit-service">
@@ -45,7 +51,7 @@
                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
                                             <label for="">Imputation</label>
-                                            <input type="text" placeholder="Imputation"
+                                            <input type="text" placeholder="Saisir un nom..."
                                                 class="form-control form-control-sm @error('product') is-invalid @enderror"
                                                 name="product" id="product" value="">
                                             <div class="col-lg-6" id="productList">
@@ -61,9 +67,9 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="">Chef</label>
-                                            <input type="text" placeholder="Nom du responsable"
+                                            <input type="text" placeholder="Personne responsable"
                                                 class="form-control form-control-sm @error('chef') is-invalid @enderror"
-                                                name="chef" id="chef" value="">
+                                                name="chef" id="chef" value="" readonly>
                                             @error('chef')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -140,8 +146,9 @@
                                                 ],
                                                 $recue->courrier->description,
                                                 [
-                                                    'placeholder' => 'Instructions du DG',
-                                                    'class' => 'form-control form-control-sm',
+                                                    'placeholder' => 'Choisir une instruction...',
+                                                    'class' => 'form-control form-control-sm font-italic',
+                                                    'required' => 'required',
                                                     'id' => 'description',
                                                 ],
                                             ) !!}

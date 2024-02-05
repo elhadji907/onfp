@@ -190,7 +190,8 @@
                                 {!! Form::label('Instructions') !!}
                                 {!! Form::textarea('description', $recue->courrier->description ?? old('description'), [
                                     'placeholder' => 'Instructions',
-                                    'rows' => 2,
+                                    'rows' => 1,
+                                    'readonly' => 'readonly',
                                     'class' => 'form-control form-control-sm',
                                     'id' => 'description',
                                 ]) !!}
@@ -199,19 +200,19 @@
                                 {!! Form::label('Observations') !!}
                                 {!! Form::textarea('observation', $recue->courrier->observation ?? old('observation'), [
                                     'placeholder' => 'Observations',
-                                    'rows' => 2,
+                                    'rows' => 3,
                                     'class' => 'form-control form-control-sm',
                                     'id' => 'observation',
                                 ]) !!}
                             </div>
-                            <div class="form-group col-md-12">
-                                {!! Form::label('Imputation') !!}
+                            <!-- <div class="form-group col-md-12">
+                                {!! Form::label('Imputations') !!}
                                 {!! Form::select('directions[]', $directions, null, [
                                     'multiple' => 'multiple',
                                     'class' => 'form-control form-control-sm',
                                     'id' => 'direction',
                                 ]) !!}
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="form-row">

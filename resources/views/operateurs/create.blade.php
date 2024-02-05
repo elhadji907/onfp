@@ -21,8 +21,8 @@
                     <div class="col-sm-12">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a class="btn btn-outline-success btn-sm"
-                                    href="{{ route('operateurs.index') }}"><i class="fas fa-undo-alt"></i>Retour</a></li>
-                            <li class="breadcrumb-item active">Enregistrement courrier arrivé</li>
+                                    href="{{ route('operateurs.index') }}"><i class="fas fa-undo-alt"></i>&nbsp;retour</a></li>
+                            <li class="breadcrumb-item active">enregistrement opérateur</li>
                         </ul>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                             <form method="POST" action="{{ url('operateurs') }}">
                                 @csrf
                                 <div class="bg-gradient-secondary text-center">
-                                    <p class="h5 text-white mb-2 mt-0">INFORMATIONS GENERALES</p>
+                                    <p class="h5 text-white mb-2 mt-0">IDENTIFICATION</p>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-10">
@@ -116,7 +116,7 @@
                                         </small>
                                     </div>
                                     <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                                        <label>{{ __('Type opérateur :') }}</label>(<span class="text-danger">*</span>)
+                                        <label>{{ __('Statut juridique :') }}</label>(<span class="text-danger">*</span>)
                                         <br />
                                         {{ Form::radio('type_operateur', 'GIE', false, ['class' => 'name']) }}
                                         {{ __('GIE') }}
@@ -361,9 +361,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="bg-gradient-secondary text-center">
+                                {{--  <div class="bg-gradient-secondary text-center">
                                     <p class="h5 text-white mb-2">RESPONSABLE</p>
-                                </div>
+                                </div>  --}}
                                 <div class="form-row">
                                     <div class="form-group col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                         <label for="prenom">{{ __('Prénom ') }}</label>
@@ -498,9 +498,9 @@
                                 ]) !!}
                                 {{-- <button type="submit" class="btn btn-primary"><i
                                         class="far fa-paper-plane"></i>&nbsp;Enregistrer</button> --}}
-                                <div class="bg-gradient-secondary text-center">
+                                {{--  <div class="bg-gradient-secondary text-center">
                                     <p class="h5 text-white mb-2">{{ __("ZONES D'INTERVENTION") }}</p>
-                                </div>
+                                </div>  --}}
                                 <div class="form-row">
                                     <div class="form-group col-md-12 col-lg-12 col-xs-12 col-sm-12">
                                         <strong>Regions(<span class="text-danger">*</span>)</strong>

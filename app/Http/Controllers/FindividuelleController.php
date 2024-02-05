@@ -157,8 +157,16 @@ class FindividuelleController extends Controller
     { 
         $findividuelle = Findividuelle::find($id);
         $formation = $findividuelle->formation;
+        $individuelle = $formation->individuelles;
+
+        foreach ($individuelle as $key => $individuelles) {
+            # code...
+        }
+
         $EffectifdemandeurFormations = DB::table("demandeursformations")->where("demandeursformations.formations_id", $formation->id)->count();
-        return view('findividuelles.show', compact('formation', 'findividuelle', 'EffectifdemandeurFormations'));
+
+        
+        return view('findividuelles.show', compact('formation', 'findividuelle', 'EffectifdemandeurFormations', 'individuelles'));
     }
 
     /**

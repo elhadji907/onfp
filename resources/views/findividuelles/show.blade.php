@@ -257,7 +257,6 @@
                             </tr>
                         </thead>
                         <tbody class="details" id="liste">
-                            <?php $i = 1; ?>
                             @foreach ($formation->individuelles as $individuelle)
                                 {{--  @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name && strtolower($individuelle->localite->nom) == strtolower($findividuelle->formation->localite->nom) && strtolower($individuelle->projet->name) == strtolower($findividuelle->projet->name))  --}}
                                 @if (isset($individuelle) && $individuelle->module->name == $findividuelle->module->name)

@@ -241,6 +241,7 @@ class RecueController extends Controller
     public function update(Request $request, Recue $recue)
     {
         $annee = date('Y');
+        dd($annee);
         $annee_precedente = $request->input('annee');
         $imp = $request->input('imp');
 
@@ -249,14 +250,13 @@ class RecueController extends Controller
             $count = count($request->product);
                 $courrier->directions()->sync($request->id_direction);
                 $courrier->employees()->sync($request->id_employe);
-                $courrier->description =  $request->input('description');
+                /* $courrier->description =  $request->input('description'); */
                 $courrier->date_imp    =  $request->input('date_imp');
                 $courrier->save();
                 return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'Courrier imputé !');
             
             //solution, récuper l'id à partir de blade avec le mode hidden
         }
-
         if($annee == $annee_precedente){
             $this->validate(
                 $request,
@@ -408,14 +408,14 @@ class RecueController extends Controller
       $query = $request->get('query');
 
       $data = DB::table('directions')      
-      ->where('name', 'LIKE', "%{$query}%")
+      ->where('sigle', 'LIKE', "%{$query}%")
         ->get();
 
       $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
       foreach($data as $direction)
       {
         $id = $direction->id;
-        $name = $direction->name;                                              
+        $sigle = $direction->sigle;                                              
         $chef_id = $direction->chef_id;
         $chef = Employee::findOrFail($chef_id);
 
@@ -427,7 +427,7 @@ class RecueController extends Controller
 
        $output .= '
        
-       <li data-id="'.$id.'" data-chef="'.$user.'" data-matricule="'.$matricule.'" data-employeeid="'.$employee_id.'"><a href="#">'.$name.'</a></li>
+       <li data-id="'.$id.'" data-chef="'.$user.'" data-matricule="'.$matricule.'" data-employeeid="'.$employee_id.'"><a href="#">'.$sigle.'</a></li>
        ';
       }
       $output .= '</ul>';
