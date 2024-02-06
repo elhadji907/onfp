@@ -241,7 +241,7 @@ class RecueController extends Controller
     public function update(Request $request, Recue $recue)
     {
         $annee = date('Y');
-        dd($annee);
+        /* dd($annee); */
         $annee_precedente = $request->input('annee');
         $imp = $request->input('imp');
 
@@ -250,7 +250,7 @@ class RecueController extends Controller
             $count = count($request->product);
                 $courrier->directions()->sync($request->id_direction);
                 $courrier->employees()->sync($request->id_employe);
-                /* $courrier->description =  $request->input('description'); */
+                $courrier->description =  $request->input('description');
                 $courrier->date_imp    =  $request->input('date_imp');
                 $courrier->save();
                 return redirect()->route('recues.index', $recue->courrier->id)->with('success', 'Courrier imputé !');
@@ -343,7 +343,7 @@ class RecueController extends Controller
             $courrier->objet              =      $request->input('objet');
             $courrier->numero             =      $request->input('numero_cores');
             $courrier->type               =      $request->input('annee');
-            $courrier->observation            =      $request->input('observation');
+            $courrier->observation        =      $request->input('observation');
             $courrier->expediteur         =      $request->input('expediteur');
             $courrier->reference          =      $request->input('reference');
             $courrier->date_recep         =      $request->input('date_recep');

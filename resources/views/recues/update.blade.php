@@ -205,14 +205,14 @@
                                     'id' => 'observation',
                                 ]) !!}
                             </div>
-                            <!-- <div class="form-group col-md-12">
+                            <div class="form-group col-md-12">
                                 {!! Form::label('Imputations') !!}
                                 {!! Form::select('directions[]', $directions, null, [
                                     'multiple' => 'multiple',
                                     'class' => 'form-control form-control-sm',
                                     'id' => 'direction',
                                 ]) !!}
-                            </div> -->
+                            </div>
                         </div>
 
                         <div class="form-row">

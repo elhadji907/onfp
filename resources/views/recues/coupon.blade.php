@@ -110,7 +110,6 @@
                 </tr>
             </tbody>
         </table>
-        <br>
         <table class="table table-responsive">
             <tbody>
                 <tr>
@@ -121,14 +120,27 @@
                             <b><u>{{ __('du') }}</u></b> :
                             {{ optional($courrier->date_recep)->format('d/m/Y') }}<br>
                             <b><u>{{ __('Objet') }}</u></b> : {{ ucfirst($courrier->objet) }}<br>
+                            @if ($courrier->directions != '[]')
+                            <span class="card-category"><b><u>Imputation </u></b>:
+                                @foreach ($courrier->directions->unique('id') as $imputation)
+                                    <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
+                                @endforeach
+                            @else
+                        @endif
+                        <br>
                         </h3>
                         <table class="table table-responsive table-striped">
                             <tbody>
                                 <tr class="item">
                                     <?php $i = 1; ?>
+                                    {{-- @foreach ($courrier->directions->unique('id') as $imputation)
+                                    @endforeach --}}
                                     @foreach ($directions as $direction)
                                         <td style="padding-left:10px">
                                             {!! $direction ?? 'Aucune' !!}
+                                            {{-- @if ($direction == $imputation->sigle)
+                                                <span style="color: red;text-align:center">{{ __(' X') }}</span>
+                                            @endif --}}
                                         </td>
                                         @if ($i % 5 == 0)
                                 </tr>
@@ -137,6 +149,9 @@
                                     <?php $i++; ?>
                                     @endforeach
                                 </tr>
+                               {{--  @foreach ($courrier->directions->unique('id') as $imputation)
+                                    <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
+                                @endforeach --}}
                             </tbody>
                         </table>
 
@@ -197,7 +212,6 @@
                 </tr>
             </tbody>
         </table>  --}}
-        <br>
         <table class="table table-responsive">
             <tbody>
                 <tr>
@@ -230,7 +244,7 @@
                             @endif
 
                             @foreach ($courrier->employees->unique('id') as $employee)
-                                {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
+                                {{ $employee->user->firstname . ' ' . $employee->user->name }} [{{ $employee->direction->sigle }}]<br>
                             @endforeach
 
                         </h2>
